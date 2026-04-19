@@ -40,6 +40,21 @@ heroGradient: "..."      # featured 글의 히어로 배경 (선택)
 - 지식형 카테고리/태그 → `/knowledge/categories`, `/knowledge/tags`
 - 통합 아카이브(기록+지식) → `/posts`
 
+### 글 작성 필수 규칙
+
+- 글마다 **이미지 1개 이상** 포함
+- 글마다 **코드/도식 블록 1개 이상** 포함
+  - 예: ` ```ts `, ` ```bash `, ` ```mermaid `
+- 설명 흐름 권장: 문제 → 개념/키워드 → 코드/시각자료 → 실무 적용 포인트
+
+템플릿은 [`docs/post-template.md`](docs/post-template.md) 참고.
+
+```bash
+npm run validate:posts
+```
+
+`npm run build` 실행 시 위 검사가 자동으로 함께 실행됩니다.
+
 ## 배포
 
 `main` 브랜치에 푸시하면 `.github/workflows/deploy.yml` 이 자동으로 빌드 후 GitHub Pages에 올립니다.

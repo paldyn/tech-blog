@@ -16,6 +16,8 @@ draft: false
 자주 쓰는 테크 지식까지 팀의 자산으로 남기기 위해 만든 기술블로그입니다.
 한 번 해결한 문제를 다음에는 더 빠르고 정확하게 풀 수 있도록, 과정을 기록하고 공유하겠습니다.
 
+![PALDYN 기술블로그 시작 이미지](/assets/posts/paldyn-tech-blog-kickoff-cover.svg)
+
 ## 왜 시작했나요
 
 프로젝트를 하다 보면 같은 질문이 반복됩니다.
@@ -45,6 +47,14 @@ PALDYN 기술블로그는 아래 원칙을 지키겠습니다.
 1. 성공보다 실패 맥락을 먼저 적는다.
 2. 느낌보다 데이터와 근거를 우선한다.
 3. 다음 사람이 바로 활용할 수 있게 쓴다.
+
+```ts
+const postGuideline = {
+  includeImage: true,
+  includeCodeOrDiagram: true,
+  shareDecisionContext: true,
+};
+```
 
 ## 다음 글 예고
 
