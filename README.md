@@ -38,9 +38,10 @@ heroGradient: "..."      # featured 글의 히어로 배경 (선택)
 
 **저장소 설정**: GitHub 저장소 → Settings → Pages → Source를 **GitHub Actions** 로 변경.
 
-**도메인 설정**: `astro.config.mjs` 의 `site` / `base` 를 본인 레포에 맞춰 수정.
-- 프로젝트 페이지 (`username.github.io/tech-blog`): 둘 다 설정
-- 사용자 페이지 (`username.github.io`): `base` 는 제거
+**도메인 설정**:
+- `astro.config.mjs` 의 `site`를 실제 운영 도메인으로 설정
+- 루트 도메인 경로로 배포할 경우(`https://techblog.paldyn.com`) `base`는 설정하지 않음
+- GitHub Pages 커스텀 도메인은 `public/CNAME`에 도메인을 기록
 
 ## 구조
 
