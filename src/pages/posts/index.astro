@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts, postUrl } from '../../utils/posts';
+import ExploreNav from '../../components/ExploreNav.astro';
+import { getPublishedPosts, postTypeLabel, postUrl } from '../../utils/posts';
 
 const posts = await getPublishedPosts();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -36,23 +37,25 @@ function krDate(date: Date): string {
 ---
 
 <BaseLayout title="Archive">
-  <div class="wrap">
+  <div class="wrap" data-archive-filter-root>
     <header class="page-header" id="all">
       <div class="label">ARCHIVE</div>
       <h1>아카이브</h1>
-      <p>연도별로 전체 글을 한 번에 볼 수 있습니다.</p>
+      <p>연도별로 기록과 지식을 함께 볼 수 있는 통합 아카이브입니다.</p>
+      <ExploreNav mode="all" section="archive" />
     </header>
 
     {years.length > 0 ? (
       <div class="layout">
         <section class="main">
           {years.map((group) => (
-            <section class="year-group" id={`year-${group.year}`}>
+            <section class="year-group" data-year={group.year} id={`year-${group.year}`}>
               <h2>{group.year}</h2>
               <ul class="rows">
                 {group.posts.map((post) => (
-                  <li>
+                  <li data-post-type={post.data.type}>
                     <time datetime={post.data.pubDate.toISOString()}>{krDate(post.data.pubDate)}</time>
+                    <span class="type-chip">{postTypeLabel(post.data.type)}</span>
                     <a href={postUrl(post)}>{post.data.title}</a>
                     {isNew(post.data.pubDate) && <span class="badge">NEW</span>}
                   </li>
@@ -64,19 +67,23 @@ function krDate(date: Date): string {
 
         <aside class="side" aria-label="연도 목록">
           <nav>
-            <a class="side-link" href={`${base}/posts/#all`}>
+            <a class="side-link" data-side-all href={`${base}/posts/#all`}>
               <span>All</span>
-              <span class="count">{totalPosts}</span>
+              <span class="count" data-side-all-count>{totalPosts}</span>
             </a>
             {years.map((group) => (
-              <a class="side-link" href={`${base}/posts/#year-${group.year}`}>
+              <a class="side-link" data-side-year={group.year} href={`${base}/posts/#year-${group.year}`}>
                 <span>{group.year}</span>
-                <span class="count">{group.count}</span>
+                <span class="count" data-side-year-count>{group.count}</span>
               </a>
             ))}
           </nav>
         </aside>
       </div>
+      <section class="filtered-empty" data-filter-empty hidden>
+        <h2>선택한 탭에 해당하는 글이 없습니다.</h2>
+        <p>다른 탭을 선택해서 글을 확인해보세요.</p>
+      </section>
     ) : (
       <section class="empty">
         <h2>아직 글이 없습니다.</h2>
@@ -110,7 +117,6 @@ function krDate(date: Date): string {
     color: var(--text-dim);
     font-size: 14px;
   }
-
   .layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 280px;
@@ -158,6 +164,22 @@ function krDate(date: Date): string {
     text-decoration: none;
     font-size: 1.05rem;
     line-height: 1.4;
+  }
+  .type-chip {
+    min-width: 34px;
+    height: 20px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: var(--text-dim);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 7px;
+    flex-shrink: 0;
   }
   .rows a:hover {
     text-decoration: underline;
@@ -231,13 +253,29 @@ function krDate(date: Date): string {
     padding: 36px 28px;
     margin-bottom: 80px;
   }
+  .filtered-empty {
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    padding: 36px 28px;
+    margin-bottom: 80px;
+  }
   .empty h2 {
     font-size: 1.2rem;
     font-weight: 400;
     margin-bottom: 10px;
     color: var(--accent-bright);
   }
+  .filtered-empty h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
   .empty p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .filtered-empty p {
     color: var(--text-dim);
     font-size: 14px;
   }
@@ -304,3 +342,95 @@ function krDate(date: Date): string {
     }
   }
 </style>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-archive-filter-root]');
+    if (!root) return;
+
+    const tabs = Array.from(root.querySelectorAll('.explore-nav .primary .tab[data-tab-mode]'));
+    if (tabs.length === 0) return;
+
+    const yearGroups = Array.from(root.querySelectorAll('.year-group[data-year]'));
+    const sideAllCount = root.querySelector('[data-side-all-count]');
+    const sideYearLinks = Array.from(root.querySelectorAll('.side-link[data-side-year]'));
+    const filteredEmpty = root.querySelector('[data-filter-empty]');
+    const allowedModes = new Set(['all', 'record', 'knowledge']);
+
+    const sideYearMap = new Map();
+    for (const link of sideYearLinks) {
+      const year = link.getAttribute('data-side-year');
+      const countEl = link.querySelector('[data-side-year-count]');
+      if (!year || !countEl) continue;
+      sideYearMap.set(year, { link, countEl });
+    }
+
+    const applyFilter = (mode, updateUrl) => {
+      let visibleTotal = 0;
+
+      for (const group of yearGroups) {
+        const year = group.getAttribute('data-year');
+        const rows = Array.from(group.querySelectorAll('li[data-post-type]'));
+        let visibleInGroup = 0;
+
+        for (const row of rows) {
+          const rowType = row.getAttribute('data-post-type');
+          const isVisible = mode === 'all' || rowType === mode;
+          row.hidden = !isVisible;
+          if (isVisible) visibleInGroup += 1;
+        }
+
+        group.hidden = visibleInGroup === 0;
+        visibleTotal += visibleInGroup;
+
+        if (year && sideYearMap.has(year)) {
+          const entry = sideYearMap.get(year);
+          entry.countEl.textContent = String(visibleInGroup);
+          entry.link.hidden = visibleInGroup === 0;
+        }
+      }
+
+      if (sideAllCount) {
+        sideAllCount.textContent = String(visibleTotal);
+      }
+      if (filteredEmpty) {
+        filteredEmpty.hidden = visibleTotal !== 0;
+      }
+
+      for (const tab of tabs) {
+        const tabMode = tab.getAttribute('data-tab-mode') || 'all';
+        const isActive = tabMode === mode;
+        tab.classList.toggle('active', isActive);
+        if (isActive) {
+          tab.setAttribute('aria-current', 'page');
+        } else {
+          tab.removeAttribute('aria-current');
+        }
+      }
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (mode === 'all') {
+          url.searchParams.delete('view');
+        } else {
+          url.searchParams.set('view', mode);
+        }
+        window.history.replaceState({}, '', url);
+      }
+    };
+
+    for (const tab of tabs) {
+      tab.addEventListener('click', (event) => {
+        const mode = tab.getAttribute('data-tab-mode') || 'all';
+        if (!allowedModes.has(mode)) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        applyFilter(mode, true);
+      });
+    }
+
+    const initialView = new URL(window.location.href).searchParams.get('view');
+    const initialMode = initialView && allowedModes.has(initialView) ? initialView : 'all';
+    applyFilter(initialMode, false);
+  })();
+</script>
