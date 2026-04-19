@@ -1,0 +1,88 @@
+<button class="scroll-top" id="scrollTopButton" type="button" aria-label="맨 위로 이동" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 6l-6 6h4v6h4v-6h4z"></path>
+  </svg>
+  <span>TOP</span>
+</button>
+
+<script is:inline>
+  (function () {
+    var button = document.getElementById('scrollTopButton');
+    if (!button) return;
+
+    var threshold = 360;
+
+    function updateVisibility() {
+      var visible = window.scrollY > threshold;
+      button.hidden = !visible;
+      button.classList.toggle('is-visible', visible);
+    }
+
+    button.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    updateVisibility();
+  })();
+</script>
+
+<style>
+  .scroll-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 40;
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .scroll-top[hidden] {
+    display: none;
+  }
+  .scroll-top.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .scroll-top:hover {
+    border-color: var(--text-dim);
+    color: var(--accent-bright);
+  }
+  .scroll-top svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .scroll-top span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  @media (max-width: 640px) {
+    .scroll-top {
+      right: 14px;
+      bottom: 16px;
+      width: 48px;
+      height: 48px;
+    }
+    .scroll-top svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+</style>
