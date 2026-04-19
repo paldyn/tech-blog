@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import {
+  getPublishedPosts,
+  getCategories,
+  categorySlug,
+  readingTimeFor,
+  thumbFor,
+  variantFor,
+  postUrl,
+} from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const categories = await getCategories();
+  return categories.map((cat) => ({
+    params: { category: cat.slug },
+    props: {
+      category: cat.name,
+      posts: posts.filter((p) => p.data.category === cat.name),
+      categories,
+    },
+  }));
+}
+
+const { category, posts, categories } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const activeSlug = categorySlug(category);
+---
+
+<BaseLayout title={category}>
+  <div class="wrap">
+    <header class="page-header">
+      <div class="label">CATEGORY</div>
+      <h1>{category}</h1>
+      <p>{posts.length}개의 글이 있습니다.</p>
+    </header>
+
+    <nav class="sub-nav">
+      <a href={`${base}/categories/`} class="sub-link">All</a>
+      {categories.map((c) => (
+        <a
+          href={`${base}/categories/${c.slug}/`}
+          class:list={['sub-link', { active: c.slug === activeSlug }]}
+        >{c.name}</a>
+      ))}
+    </nav>
+
+    {posts.length > 0 ? (
+      <div class="grid">
+        {posts.map(p => (
+          <PostCard
+            title={p.data.title}
+            description={p.data.description}
+            author={p.data.author}
+            pubDate={p.data.pubDate}
+            readingTime={readingTimeFor(p)}
+            category={p.data.category}
+            url={postUrl(p)}
+            thumb={thumbFor(p)}
+            thumbVariant={variantFor(p)}
+          />
+        ))}
+      </div>
+    ) : (
+      <section class="empty">
+        <h2>아직 글이 없습니다.</h2>
+        <p>이 카테고리의 첫 글을 준비 중입니다. 곧 업데이트할게요.</p>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 80px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .sub-nav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 48px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .sub-nav::-webkit-scrollbar { display: none; }
+  .sub-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    text-transform: uppercase;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .sub-link:hover { color: var(--accent-bright); border-color: var(--text-dim); }
+  .sub-link.active {
+    color: var(--bg);
+    background: var(--accent-bright);
+    border-color: var(--accent-bright);
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.3em;
+    margin-bottom: 16px;
+  }
+  .page-header h1 {
+    font-size: 2.4rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
+  .page-header p { color: var(--text-dim); font-size: 14px; font-weight: 300; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .empty {
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    padding: 36px 28px;
+  }
+  .empty h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
+  .empty p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+</style>

@@ -1,0 +1,147 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  author?: string;
+  pubDate: Date;
+  readingTime: string;
+  url: string;
+  category?: string;
+}
+const { title, description, author = 'PALDYN', pubDate, readingTime, url, category } = Astro.props;
+---
+
+<a href={url} class="hero-feature">
+  <div class="bg-rings">
+    <span class="ring"></span>
+    <span class="ring"></span>
+    <span class="ring"></span>
+    <span class="core"></span>
+  </div>
+  <div class="label-featured">★ FEATURED {category && `· ${category.toUpperCase()}`}</div>
+  <h1>{title}</h1>
+  <p>{description}</p>
+  <div class="hero-meta">
+    <span>{readingTime}</span>
+    <span class="sep">·</span>
+    <FormattedDate date={pubDate} />
+    <span class="sep">·</span>
+    <span>{author}</span>
+    <span class="read-more">READ →</span>
+  </div>
+</a>
+
+<style>
+  .hero-feature {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background:
+      linear-gradient(140deg, rgba(126, 153, 186, 0.16) 0%, rgba(0, 0, 0, 0) 44%),
+      var(--gradient-hero);
+    color: #ffffff;
+    padding: 48px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  :global([data-theme="dark"]) .hero-feature {
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  .hero-feature:hover { transform: translateY(-3px); }
+
+  .bg-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .bg-rings .ring {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    animation: ringRotate 30s linear infinite;
+  }
+  .bg-rings .ring:nth-child(1) { width: 520px; height: 520px; }
+  .bg-rings .ring:nth-child(2) { width: 360px; height: 360px; animation-duration: 22s; animation-direction: reverse; }
+  .bg-rings .ring:nth-child(3) { width: 200px; height: 200px; animation-duration: 35s; }
+  .bg-rings .core {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 28px rgba(255,255,255,0.3);
+  }
+
+  .label-featured {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-feature h1 {
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    background: var(--gradient-silver);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-feature p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 26px;
+    max-width: 500px;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    position: relative;
+    z-index: 1;
+    align-items: center;
+  }
+  .sep { opacity: 0.5; }
+  .read-more {
+    margin-left: auto;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.85);
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 640px) {
+    .hero-feature { padding: 32px; min-height: 340px; }
+    .hero-feature h1 { font-size: 26px; }
+  }
+</style>

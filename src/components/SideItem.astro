@@ -1,0 +1,58 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  title: string;
+  category: string;
+  pubDate: Date;
+  readingTime: string;
+  url: string;
+}
+const { title, category, pubDate, readingTime, url } = Astro.props;
+---
+
+<a href={url} class="side-item">
+  <div class="side-category">{category}</div>
+  <h3>{title}</h3>
+  <div class="date">
+    <FormattedDate date={pubDate} /> <span class="sep">·</span> {readingTime}
+  </div>
+</a>
+
+<style>
+  .side-item {
+    padding: 20px 0 24px;
+    border-bottom: 1px solid var(--border);
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s;
+  }
+  .side-item:hover { transform: translateX(4px); }
+  .side-item:hover h3 { color: var(--accent-bright); }
+  .side-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .side-category {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .side-item h3 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin-bottom: 10px;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    transition: color 0.25s;
+  }
+  .side-item .date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+  .sep { opacity: 0.5; }
+</style>

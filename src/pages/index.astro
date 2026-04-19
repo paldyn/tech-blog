@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeaturedPost from '../components/FeaturedPost.astro';
+import SideItem from '../components/SideItem.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts, readingTimeFor, thumbFor, variantFor, postUrl } from '../utils/posts';
+
+const posts = await getPublishedPosts();
+const featured = posts.find(p => p.data.featured) ?? posts[0];
+const sidePosts = posts.filter(p => p.id !== featured?.id).slice(0, 3);
+const gridPosts = posts.filter(p => p.id !== featured?.id).slice(3, 9);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout>
+  <section class="intro wrap">
+    <p class="section-label">TECH BLOG</p>
+    <h1 class="section-title">함께하는 힘으로 기술을 기록합니다</h1>
+    <p class="section-desc">
+      PALDYN이 실무에서 배운 것, 실패하고 돌아본 것, 그리고 팀이 함께 일하는 방식에 대한 기록입니다.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  {featured && (
+    <section class="hero wrap">
+      <FeaturedPost
+        title={featured.data.title}
+        description={featured.data.description}
+        author={featured.data.author}
+        pubDate={featured.data.pubDate}
+        readingTime={readingTimeFor(featured)}
+        url={postUrl(featured)}
+        category={featured.data.category}
+      />
+      <aside class="hero-side">
+        {sidePosts.map(p => (
+          <SideItem
+            title={p.data.title}
+            category={p.data.category}
+            pubDate={p.data.pubDate}
+            readingTime={readingTimeFor(p)}
+            url={postUrl(p)}
+          />
+        ))}
+      </aside>
+    </section>
+  )}
+
+  {gridPosts.length > 0 && (
+    <section class="latest wrap">
+      <div class="section-head">
+        <div>
+          <p class="section-label">LATEST</p>
+          <h2>최근 글</h2>
+        </div>
+        <a href={`${base}/posts/`} class="see-all">모든 글 →</a>
+      </div>
+
+      <div class="grid">
+        {gridPosts.map(p => (
+          <PostCard
+            title={p.data.title}
+            description={p.data.description}
+            author={p.data.author}
+            pubDate={p.data.pubDate}
+            readingTime={readingTimeFor(p)}
+            category={p.data.category}
+            url={postUrl(p)}
+            thumb={thumbFor(p)}
+            thumbVariant={variantFor(p)}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .section-title {
+    font-size: 2.4rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+    line-height: 1.3;
+    color: var(--accent-bright);
+  }
+  .section-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 590px;
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .intro {
+    padding: 100px 40px 80px;
+  }
+
+  .divider {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+
+  .hero {
+    padding: 80px 40px 40px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+  }
+  .hero-side { display: flex; flex-direction: column; }
+
+  .latest {
+    padding: 80px 40px 40px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .section-head h2 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--accent-bright);
+  }
+  .section-head .see-all {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    transition: color 0.25s;
+  }
+  .section-head .see-all:hover { color: var(--accent-bright); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  @media (max-width: 900px) {
+    .intro { padding: 72px 40px 60px; }
+    .section-title { font-size: 1.9rem; }
+    .hero { grid-template-columns: 1fr; gap: 40px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .intro, .hero, .latest { padding-left: 20px; padding-right: 20px; }
+  }
+</style>

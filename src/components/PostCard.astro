@@ -1,0 +1,131 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  author?: string;
+  pubDate: Date;
+  readingTime: string;
+  category: string;
+  url: string;
+  thumb?: string;
+  thumbVariant?: 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
+}
+const {
+  title, description, author = 'PALDYN', pubDate, readingTime, category, url,
+  thumb = '</>', thumbVariant = 'a'
+} = Astro.props;
+---
+
+<article class="card">
+  <a href={url} class="thumb-link" aria-label={title}>
+    <div class={`thumb ${thumbVariant}`}>
+      <span class="thumb-symbol">{thumb}</span>
+      <span class="thumb-rings" aria-hidden="true">
+        <span></span><span></span>
+      </span>
+    </div>
+  </a>
+  <div class="card-category">{category}</div>
+  <h3><a href={url}>{title}</a></h3>
+  <p>{description}</p>
+  <div class="card-meta">
+    <FormattedDate date={pubDate} />
+    <span class="sep">·</span>
+    <span>{readingTime}</span>
+    <span class="sep">·</span>
+    <span>{author}</span>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+  .thumb-link { text-decoration: none; display: block; }
+  .thumb {
+    aspect-ratio: 16 / 10;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    font-size: 40px;
+    letter-spacing: 0.02em;
+    position: relative;
+    border: 1px solid var(--border-strong);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  .card:hover .thumb { transform: translateY(-3px); }
+
+  .thumb-symbol {
+    position: relative;
+    z-index: 1;
+    background: var(--gradient-silver);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+  }
+
+  .thumb-rings {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .thumb-rings span {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .thumb-rings span:nth-child(1) { width: 70%; aspect-ratio: 1; }
+  .thumb-rings span:nth-child(2) { width: 45%; aspect-ratio: 1; }
+
+  /* 6 tonal variants in monochrome — gradient from graphite to silver-ish */
+  .thumb.a { background: linear-gradient(135deg, #0a0a0a, #262626); }
+  .thumb.b { background: linear-gradient(135deg, #1a1a1a, #333); }
+  .thumb.c { background: linear-gradient(135deg, #111, #1e2028); }
+  .thumb.d { background: linear-gradient(135deg, #141414, #2a2a2a); }
+  .thumb.e { background: linear-gradient(135deg, #0f0f0f, #222); }
+  .thumb.f { background: linear-gradient(135deg, #1c1c1c, #3a3a3a); }
+
+  .card-category {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .card h3 {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    margin-bottom: 10px;
+  }
+  .card h3 a { color: var(--text); text-decoration: none; transition: color 0.25s; }
+  .card h3 a:hover { color: var(--accent-bright); }
+  .card p {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 14px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .card-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    letter-spacing: 0.08em;
+  }
+  .sep { opacity: 0.5; }
+</style>

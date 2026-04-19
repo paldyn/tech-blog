@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paldyn Tech — Magazine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #0a0a0a;
+    --muted: #5a5a5a;
+    --subtle: #8a8a8a;
+    --border: #ececec;
+    --card: #fafafa;
+    --accent: #2563eb;
+    --accent-dark: #1e3a8a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  /* Header */
+  header.site-header {
+    border-bottom: 2px solid var(--fg);
+    padding: 20px 0;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+  }
+  .brand .dot { color: var(--accent); }
+  nav.main-nav { display: flex; gap: 32px; }
+  nav.main-nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    position: relative;
+  }
+  nav.main-nav a:hover { color: var(--accent); }
+  nav.main-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  /* Hero featured */
+  section.hero {
+    padding: 56px 0 40px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-feature {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #7dd3fc 100%);
+    border-radius: 4px;
+    padding: 48px;
+    color: white;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-feature::before {
+    content: '</>';
+    position: absolute;
+    top: 30px; right: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 180px;
+    font-weight: 500;
+    opacity: 0.1;
+    line-height: 1;
+  }
+  .label-featured {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 16px;
+  }
+  .hero-feature h1 {
+    font-family: 'Playfair Display', 'Pretendard', serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero-feature p { opacity: 0.88; font-size: 16px; margin-bottom: 24px; max-width: 480px; }
+  .hero-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    opacity: 0.8;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .hero-side { display: flex; flex-direction: column; gap: 24px; }
+  .side-item {
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .side-item:last-child { border-bottom: none; }
+  .side-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .side-item h3 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .side-item h3 a { color: var(--fg); text-decoration: none; }
+  .side-item h3 a:hover { color: var(--accent); }
+  .side-item .date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--subtle); }
+
+  /* Section heading */
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 64px 0 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--fg);
+  }
+  .section-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .section-head .see-all {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  article.card {
+    display: flex;
+    flex-direction: column;
+  }
+  .thumb {
+    aspect-ratio: 16 / 10;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: white;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+  }
+  .thumb.a { background: linear-gradient(135deg, #0f172a, #1e40af); }
+  .thumb.b { background: linear-gradient(135deg, #064e3b, #10b981); }
+  .thumb.c { background: linear-gradient(135deg, #7c2d12, #f97316); }
+  .thumb.d { background: linear-gradient(135deg, #4a044e, #d946ef); }
+  .thumb.e { background: linear-gradient(135deg, #334155, #64748b); }
+  .thumb.f { background: linear-gradient(135deg, #78350f, #fbbf24); }
+
+  .card-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .card h3 a { color: var(--fg); text-decoration: none; }
+  .card h3 a:hover { color: var(--accent); }
+  .card p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+  .card-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--subtle);
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  footer.site-footer {
+    margin-top: 100px;
+    padding: 40px 0;
+    border-top: 2px solid var(--fg);
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: none; margin-left: 20px; }
+  footer a:hover { color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <div class="header-top">
+      <div>VOL. 01 / ISSUE 42</div>
+      <div>2026 · 04 · 18 · SAT</div>
+    </div>
+    <div class="header-inner">
+      <div class="brand">Paldyn<span class="dot">.</span>Tech</div>
+      <nav class="main-nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">Backend</a>
+        <a href="#">Infra</a>
+        <a href="#">Frontend</a>
+        <a href="#">Team</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <article class="hero-feature">
+      <div class="label-featured">★ Featured · Deep dive</div>
+      <h1>모노레포 1년 운영기: Turborepo 도입 전후</h1>
+      <p>빌드 7분에서 40초로. 4개 팀이 함께 쓰는 모노레포를 설계하면서 내린 의사결정과 그 결과를 정리합니다.</p>
+      <div class="hero-meta">
+        <span>14 min read</span>
+        <span>·</span>
+        <span>2026.04.12</span>
+      </div>
+    </article>
+
+    <aside class="hero-side">
+      <div class="side-item">
+        <div class="side-category">Database</div>
+        <h3><a href="#">PostgreSQL 인덱스, 이것만 알면 90%</a></h3>
+        <div class="date">2026.03.28 · 9 min</div>
+      </div>
+      <div class="side-item">
+        <div class="side-category">Frontend</div>
+        <h3><a href="#">TypeScript 제네릭, 타입 레벨 프로그래밍 입문</a></h3>
+        <div class="date">2026.03.14 · 11 min</div>
+      </div>
+      <div class="side-item">
+        <div class="side-category">Infra</div>
+        <h3><a href="#">Kubernetes 운영 1년, 우리 팀이 얻은 교훈</a></h3>
+        <div class="date">2026.02.22 · 18 min</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="section-head">
+    <h2>Latest Posts</h2>
+    <a href="#" class="see-all">모든 글 →</a>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <div class="thumb a">&lt;/&gt;</div>
+      <div class="card-category">Backend</div>
+      <h3><a href="#">gRPC 도입 후 남은 숙제들</a></h3>
+      <p>HTTP에서 gRPC로 전환하며 실제로 마주친 운영 이슈.</p>
+      <div class="card-meta"><span>7 min</span><span>2026.01.30</span></div>
+    </article>
+
+    <article class="card">
+      <div class="thumb b">DB</div>
+      <div class="card-category">Database</div>
+      <h3><a href="#">Read replica 지연, 이렇게 잡았다</a></h3>
+      <p>Lag 30초에서 500ms로. 모니터링부터 튜닝까지.</p>
+      <div class="card-meta"><span>12 min</span><span>2026.01.18</span></div>
+    </article>
+
+    <article class="card">
+      <div class="thumb c">☸</div>
+      <div class="card-category">Infra</div>
+      <h3><a href="#">EKS Autoscaler, Karpenter로 갈아탄 이유</a></h3>
+      <p>비용 35% 절감, 스케일 속도 3배 개선.</p>
+      <div class="card-meta"><span>10 min</span><span>2026.01.05</span></div>
+    </article>
+
+    <article class="card">
+      <div class="thumb d">TS</div>
+      <div class="card-category">Frontend</div>
+      <h3><a href="#">React Server Component, 실전 도입기</a></h3>
+      <p>Next.js 14로 마이그레이션하며 배운 것들.</p>
+      <div class="card-meta"><span>15 min</span><span>2025.12.20</span></div>
+    </article>
+
+    <article class="card">
+      <div class="thumb e">{ }</div>
+      <div class="card-category">Team</div>
+      <h3><a href="#">코드 리뷰 문화, 숫자로 말하기</a></h3>
+      <p>PR 머지 시간을 72시간에서 4시간으로.</p>
+      <div class="card-meta"><span>8 min</span><span>2025.12.08</span></div>
+    </article>
+
+    <article class="card">
+      <div class="thumb f">⚡</div>
+      <div class="card-category">Performance</div>
+      <h3><a href="#">LCP 4.2s에서 1.1s로, 최적화 여정</a></h3>
+      <p>이미지, 폰트, 스크립트 로딩 전략 총정리.</p>
+      <div class="card-meta"><span>13 min</span><span>2025.11.25</span></div>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div>© 2026 Paldyn.Tech — Built with markdown &amp; GitHub Pages</div>
+    <div>
+      <a href="#">GitHub</a>
+      <a href="#">RSS</a>
+      <a href="#">Email</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

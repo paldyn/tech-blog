@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>paldyn ~ /tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f12;
+    --panel: #13161b;
+    --fg: #d4d4d4;
+    --muted: #6b7280;
+    --dim: #3f4451;
+    --accent: #7dd3fc;
+    --accent-2: #a3e635;
+    --pink: #f472b6;
+    --yellow: #fbbf24;
+    --border: #1f2328;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    font-size: 14px;
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(125, 211, 252, 0.05), transparent 50%),
+      radial-gradient(circle at 80% 100%, rgba(163, 230, 53, 0.04), transparent 50%);
+    min-height: 100vh;
+  }
+  .terminal {
+    max-width: 920px;
+    margin: 40px auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+  .titlebar {
+    background: #1a1d23;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #ff5f56; }
+  .dot.y { background: #ffbd2e; }
+  .dot.g { background: #27c93f; }
+  .titlebar-title {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .content { padding: 32px 36px; }
+
+  .prompt-line { margin-bottom: 4px; color: var(--muted); }
+  .prompt { color: var(--accent-2); }
+  .path { color: var(--accent); }
+  .branch { color: var(--pink); }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: var(--fg);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .ascii {
+    color: var(--accent);
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: pre;
+    margin: 24px 0;
+  }
+
+  .meta-block {
+    margin: 24px 0 32px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .meta-block .key { color: var(--yellow); }
+  .meta-block .val { color: var(--fg); }
+
+  h2.section {
+    color: var(--accent-2);
+    font-size: 14px;
+    margin: 32px 0 16px;
+    font-weight: 500;
+  }
+  h2.section::before { content: "$ "; color: var(--muted); }
+
+  table.posts {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.posts th {
+    text-align: left;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  table.posts td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.posts tr:hover td { background: rgba(125, 211, 252, 0.04); }
+  .col-date { color: var(--muted); width: 110px; white-space: nowrap; }
+  .col-title a {
+    color: var(--fg);
+    text-decoration: none;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .col-title a:hover { color: var(--accent); text-decoration: underline; }
+  .col-title .excerpt {
+    color: var(--muted);
+    font-family: 'Pretendard', sans-serif;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .col-tags { width: 200px; }
+  .tag {
+    display: inline-block;
+    color: var(--yellow);
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    padding: 1px 6px;
+    margin: 0 4px 4px 0;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+  .tag.blue { color: var(--accent); background: rgba(125, 211, 252, 0.08); border-color: rgba(125, 211, 252, 0.2); }
+  .tag.pink { color: var(--pink); background: rgba(244, 114, 182, 0.08); border-color: rgba(244, 114, 182, 0.2); }
+  .tag.green { color: var(--accent-2); background: rgba(163, 230, 53, 0.08); border-color: rgba(163, 230, 53, 0.2); }
+
+  .footer-cmd {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .footer-cmd a { color: var(--accent); text-decoration: none; margin-right: 16px; }
+  .footer-cmd a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="terminal">
+  <div class="titlebar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <div class="titlebar-title">paldyn@dev ~ /tech-blog</div>
+  </div>
+
+  <div class="content">
+    <div class="prompt-line">
+      <span class="prompt">➜</span>
+      <span class="path">~/tech-blog</span>
+      <span class="branch">git:(main)</span>
+      <span>cat README.md</span>
+    </div>
+
+<pre class="ascii">  ____        _     _
+ |  _ \ __ _| | __| |_   _ _ __
+ | |_) / _` | |/ _` | | | | '_ \
+ |  __/ (_| | | (_| | |_| | | | |
+ |_|   \__,_|_|\__,_|\__, |_| |_|
+                     |___/       </pre>
+
+    <div class="meta-block">
+      <div><span class="key">author</span>  : <span class="val">Paldyn</span></div>
+      <div><span class="key">bio</span>     : <span class="val">backend · infra · team</span></div>
+      <div><span class="key">posts</span>   : <span class="val">42</span></div>
+      <div><span class="key">updated</span> : <span class="val">2026-04-12</span></div>
+    </div>
+
+    <h2 class="section">ls -lt posts/</h2>
+
+    <table class="posts">
+      <thead>
+        <tr>
+          <th>date</th>
+          <th>title</th>
+          <th>tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-date">2026-04-12</td>
+          <td class="col-title">
+            <a href="#">모노레포 1년 운영기: Turborepo 도입 전후</a>
+            <div class="excerpt">빌드 7분 → 40초. 설계 의사결정 회고.</div>
+          </td>
+          <td class="col-tags">
+            <span class="tag green">monorepo</span>
+            <span class="tag blue">devops</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-date">2026-03-28</td>
+          <td class="col-title">
+            <a href="#">PostgreSQL 인덱스, 이것만 알면 90%</a>
+            <div class="excerpt">B-tree, GIN, BRIN 실전 가이드.</div>
+          </td>
+          <td class="col-tags">
+            <span class="tag">postgres</span>
+            <span class="tag pink">database</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-date">2026-03-14</td>
+          <td class="col-title">
+            <a href="#">TypeScript 제네릭, 타입 레벨 프로그래밍</a>
+            <div class="excerpt">조건부 타입과 infer 실전 활용.</div>
+          </td>
+          <td class="col-tags">
+            <span class="tag blue">typescript</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-date">2026-02-22</td>
+          <td class="col-title">
+            <a href="#">Kubernetes 운영 1년, 얻은 교훈</a>
+            <div class="excerpt">온프렘 → EKS 마이그레이션 회고.</div>
+          </td>
+          <td class="col-tags">
+            <span class="tag blue">kubernetes</span>
+            <span class="tag">aws</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-date">2026-02-05</td>
+          <td class="col-title">
+            <a href="#">코드 리뷰 문화, 숫자로 말하기</a>
+            <div class="excerpt">PR 머지 시간을 72h → 4h로.</div>
+          </td>
+          <td class="col-tags">
+            <span class="tag pink">team</span>
+            <span class="tag green">process</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="prompt-line" style="margin-top:40px">
+      <span class="prompt">➜</span>
+      <span class="path">~/tech-blog</span>
+      <span class="branch">git:(main)</span>
+      <span class="cursor"></span>
+    </div>
+
+    <div class="footer-cmd">
+      <a href="#">github.com/paldyn</a>
+      <a href="#">/rss.xml</a>
+      <a href="#">/about</a>
+      <a href="#">/tags</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
