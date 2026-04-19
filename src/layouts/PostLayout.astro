@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import type { CollectionEntry } from 'astro:content';
+import { postTypeLabel } from '../utils/posts';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -10,6 +11,7 @@ interface Props {
 }
 const { post, readingTime, headings = [] } = Astro.props;
 const { title, description, author, pubDate, updatedDate, category, tags } = post.data;
+const typeLabel = postTypeLabel(post.data.type);
 const tocHeadings = headings.filter((h) => h.slug && h.text);
 ---
 
@@ -18,7 +20,10 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     <header class="post-header">
       <div class:list={['post-shell', { 'has-toc': tocHeadings.length > 0 }]}>
         <div class="post-primary">
-          <div class="category">{category}</div>
+          <div class="post-labels">
+            <div class:list={['type-badge', post.data.type]}>{typeLabel}</div>
+            <div class="category">{category}</div>
+          </div>
           <h1>{title}</h1>
           <p class="description">{description}</p>
           <div class="meta">
@@ -77,13 +82,40 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     border-bottom: 1px solid var(--border);
     margin-bottom: 48px;
   }
-  .category {
+  .post-header .post-labels {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 20px;
+    white-space: nowrap;
+  }
+  .post-header .category {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-dim);
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+  .post-header .type-badge {
+    width: fit-content;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    padding: 5px 10px;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+  .post-header .type-badge.knowledge {
+    color: var(--accent-bright);
   }
   .post-header h1 {
     font-size: 38px;
