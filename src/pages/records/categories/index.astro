@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ExploreNav from '../../../components/ExploreNav.astro';
+import { getPostsByType, categorySlug, postUrl } from '../../../utils/posts';
+
+const posts = await getPostsByType('record');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const grouped = new Map<string, typeof posts>();
+for (const post of posts) {
+  const name = post.data.category.trim() || 'Uncategorized';
+  const current = grouped.get(name);
+  if (current) {
+    current.push(post);
+  } else {
+    grouped.set(name, [post]);
+  }
+}
+
+const categories = Array.from(grouped.entries())
+  .map(([name, items]) => ({
+    name,
+    slug: categorySlug(name),
+    count: items.length,
+    latest: items[0]!.data.pubDate,
+    posts: items,
+  }))
+  .sort((a, b) => {
+    if (b.count !== a.count) return b.count - a.count;
+    const byLatest = b.latest.getTime() - a.latest.getTime();
+    if (byLatest !== 0) return byLatest;
+    return a.name.localeCompare(b.name);
+  });
+
+const totalPosts = posts.length;
+const newWindowMs = 1000 * 60 * 60 * 24 * 30;
+
+function isNew(pubDate: Date): boolean {
+  return Date.now() - pubDate.getTime() <= newWindowMs;
+}
+
+function dotDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+}
+---
+
+<BaseLayout title="Records · Categories">
+  <div class="wrap">
+    <header class="page-header" id="all">
+      <div class="label">RECORDS · CATEGORIES</div>
+      <h1>기록 · 카테고리</h1>
+      <p>기록형 글만 모아 카테고리별로 정리한 페이지입니다.</p>
+      <ExploreNav mode="record" section="categories" showPrimary={false} />
+    </header>
+
+    {categories.length > 0 ? (
+      <div class="layout">
+        <section class="main">
+          {categories.map((cat) => (
+            <section class="group" id={`cat-${cat.slug}`}>
+              <h2>{cat.name}</h2>
+              <ul class="posts">
+                {cat.posts.map((post) => (
+                  <li>
+                    <a href={postUrl(post)}>{post.data.title}</a>
+                    {isNew(post.data.pubDate) && <span class="badge">NEW</span>}
+                    <time datetime={post.data.pubDate.toISOString()}>{dotDate(post.data.pubDate)}</time>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </section>
+
+        <aside class="side" aria-label="카테고리 목록">
+          <nav>
+            <a class="side-link" href={`${base}/records/categories/#all`}>
+              <span>All</span>
+              <span class="count">{totalPosts}</span>
+            </a>
+            {categories.map((cat) => (
+              <a class="side-link" href={`${base}/records/categories/#cat-${cat.slug}`}>
+                <span>{cat.name}</span>
+                <span class="count">{cat.count}</span>
+              </a>
+            ))}
+          </nav>
+        </aside>
+      </div>
+    ) : (
+      <section class="empty">
+        <h2>아직 기록 글 카테고리가 없습니다.</h2>
+        <p>기록형 글을 발행하면 카테고리가 자동으로 채워집니다.</p>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 76px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.28em;
+    margin-bottom: 14px;
+  }
+  .page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
+  .page-header p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 68px;
+    margin-bottom: 80px;
+  }
+
+  .group {
+    padding: 8px 0 26px;
+    border-bottom: 1px solid var(--border);
+  }
+  .group:first-child { padding-top: 0; }
+  .group:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .group h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent-bright);
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+  }
+
+  .posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .posts li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+  }
+  .posts time {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .posts a {
+    flex: 1;
+    min-width: 0;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+  .posts a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .badge {
+    background: #ff6400;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    padding: 5px 7px 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .side nav {
+    position: sticky;
+    top: 96px;
+    border-top: 1px solid var(--border);
+    max-height: calc(100vh - 116px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-dim) transparent;
+    padding-right: 4px;
+  }
+  .side nav::-webkit-scrollbar { width: 10px; }
+  .side nav::-webkit-scrollbar-track { background: transparent; }
+  .side nav::-webkit-scrollbar-thumb {
+    background: var(--text-dim);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  .side-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.84rem;
+    line-height: 1.1;
+  }
+  .side-link:hover { color: var(--accent-bright); }
+  .count {
+    min-width: 26px;
+    height: 22px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    color: var(--text);
+  }
+
+  .empty {
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    padding: 36px 28px;
+    margin-bottom: 80px;
+  }
+  .empty h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
+  .empty p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  @media (max-width: 1080px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) 240px;
+      gap: 44px;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .side nav {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      border-top: none;
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+    .side-link {
+      border: 1px solid var(--border);
+      padding: 7px 9px;
+      background: var(--bg-subtle);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding-top: 56px;
+    }
+    .page-header h1 {
+      font-size: 1.8rem;
+    }
+    .group {
+      padding: 6px 0 22px;
+    }
+    .group h2 {
+      font-size: 1.75rem;
+      margin-bottom: 14px;
+    }
+    .posts li {
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 6px 8px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 10px;
+    }
+    .posts time {
+      width: auto;
+      flex-basis: auto;
+      margin-left: auto;
+    }
+    .posts a {
+      flex-basis: 100%;
+      font-size: 1rem;
+    }
+    .side nav {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -9,6 +9,7 @@ const posts = defineCollection({
     author: z.string().min(1).default('PALDYN'),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
+    type: z.enum(['record', 'knowledge']).default('record'),
     category: z.string().min(1),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),

@@ -7,11 +7,10 @@ export const SITE_AUTHOR = 'PALDYN';
 export const OFFICIAL_URL = 'https://paldyn.com';
 
 export const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/categories', label: 'Categories' },
-  { href: '/tags', label: 'Tags' },
-  { href: '/posts', label: 'Archive' },
-  { href: '/about', label: 'About' },
+  { href: '/records', label: '기록' },
+  { href: '/knowledge', label: '지식' },
+  { href: '/posts', label: '아카이브' },
+  { href: '/about', label: '소개' },
 ];
 
 export const SOCIAL_LINKS = {

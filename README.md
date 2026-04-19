@@ -21,6 +21,7 @@ title: "제목"
 description: "짧은 요약"
 author: "작성자 이름"
 pubDate: 2026-04-18
+type: "record"         # "record" | "knowledge"
 category: "Backend"      # 자유 입력 (예: Backend, Infra, Platform, Data-Infra ...)
 tags: ["ts", "node"]
 featured: false          # 홈 히어로로 띄울지
@@ -31,6 +32,13 @@ heroGradient: "..."      # featured 글의 히어로 배경 (선택)
 
 본문...
 ```
+
+`type` 기준 페이지:
+- `record` → `/records`
+- `knowledge` → `/knowledge`
+- 기록형 카테고리/태그 → `/records/categories`, `/records/tags`
+- 지식형 카테고리/태그 → `/knowledge/categories`, `/knowledge/tags`
+- 통합 아카이브(기록+지식) → `/posts`
 
 ## 배포
 

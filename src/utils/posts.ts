@@ -2,6 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import readingTime from 'reading-time';
 
 export type Post = CollectionEntry<'posts'>;
+export type PostType = 'record' | 'knowledge';
 
 function textSlug(name: string): string {
   return name
@@ -35,8 +36,7 @@ export function categoryBadgeText(name: string): string {
 
 export type CategoryEntry = { name: string; slug: string; count: number };
 
-export async function getCategories(): Promise<CategoryEntry[]> {
-  const posts = await getPublishedPosts();
+function buildCategoryEntries(posts: Post[]): CategoryEntry[] {
   const counts = new Map<string, number>();
   for (const p of posts) {
     const c = p.data.category;
@@ -47,10 +47,19 @@ export async function getCategories(): Promise<CategoryEntry[]> {
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 }
 
+export async function getCategories(): Promise<CategoryEntry[]> {
+  const posts = await getPublishedPosts();
+  return buildCategoryEntries(posts);
+}
+
+export async function getCategoriesByType(type: PostType): Promise<CategoryEntry[]> {
+  const posts = await getPostsByType(type);
+  return buildCategoryEntries(posts);
+}
+
 export type TagEntry = { name: string; slug: string; count: number };
 
-export async function getTags(): Promise<TagEntry[]> {
-  const posts = await getPublishedPosts();
+function buildTagEntries(posts: Post[]): TagEntry[] {
   const counts = new Map<string, TagEntry>();
 
   for (const post of posts) {
@@ -70,6 +79,16 @@ export async function getTags(): Promise<TagEntry[]> {
   }
 
   return Array.from(counts.values()).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+}
+
+export async function getTags(): Promise<TagEntry[]> {
+  const posts = await getPublishedPosts();
+  return buildTagEntries(posts);
+}
+
+export async function getTagsByType(type: PostType): Promise<TagEntry[]> {
+  const posts = await getPostsByType(type);
+  return buildTagEntries(posts);
 }
 
 const THUMB_VARIANTS: Array<'a' | 'b' | 'c' | 'd' | 'e' | 'f'> = ['a', 'b', 'c', 'd', 'e', 'f'];
@@ -100,6 +119,15 @@ export function readingTimeFor(post: Post): string {
 export async function getPublishedPosts(): Promise<Post[]> {
   const all = await getCollection('posts', ({ data }) => !data.draft);
   return all.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+}
+
+export async function getPostsByType(type: PostType): Promise<Post[]> {
+  const posts = await getPublishedPosts();
+  return posts.filter((post) => post.data.type === type);
+}
+
+export function postTypeLabel(type: PostType): string {
+  return type === 'knowledge' ? '지식' : '기록';
 }
 
 export function postUrl(post: Post): string {

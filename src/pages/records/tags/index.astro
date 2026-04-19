@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ExploreNav from '../../../components/ExploreNav.astro';
+import { getPostsByType, getTagsByType, tagSlug, postUrl } from '../../../utils/posts';
+
+const posts = await getPostsByType('record');
+const tags = await getTagsByType('record');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const postsByTag = new Map<string, typeof posts>();
+for (const post of posts) {
+  for (const rawTag of post.data.tags) {
+    const tag = rawTag.trim();
+    if (!tag) continue;
+    const slug = tagSlug(tag);
+    if (!slug) continue;
+
+    const current = postsByTag.get(slug);
+    if (current) {
+      current.push(post);
+    } else {
+      postsByTag.set(slug, [post]);
+    }
+  }
+}
+
+const tagRows = tags
+  .map((tag) => {
+    const related = postsByTag.get(tag.slug) ?? [];
+    return {
+      ...tag,
+      latest: related[0]?.data.pubDate,
+      preview: related,
+    };
+  })
+  .sort((a, b) => {
+    if (b.count !== a.count) return b.count - a.count;
+    const aTime = a.latest?.getTime() ?? 0;
+    const bTime = b.latest?.getTime() ?? 0;
+    if (bTime !== aTime) return bTime - aTime;
+    return a.name.localeCompare(b.name);
+  });
+
+const totalTaggedPosts = posts.filter((post) => post.data.tags.length > 0).length;
+
+function dotDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+}
+---
+
+<BaseLayout title="Records · Tags">
+  <div class="wrap">
+    <header class="page-header" id="all-tags">
+      <div class="label">RECORDS · TAGS</div>
+      <h1>기록 · 태그</h1>
+      <p>기록형 글만 모아 태그별로 정리한 페이지입니다.</p>
+      <ExploreNav mode="record" section="tags" showPrimary={false} />
+    </header>
+
+    {tagRows.length > 0 ? (
+      <div class="layout">
+        <section class="main">
+          {tagRows.map((tag) => (
+            <article class="row" id={`tag-${tag.slug}`}>
+              <div class="row-head">
+                <span class="name">#{tag.name}</span>
+                <div class="meta">
+                  <span>{tag.count} posts</span>
+                  {tag.latest && <span>{dotDate(tag.latest)} 최신</span>}
+                </div>
+              </div>
+
+              <ul class="preview">
+                {tag.preview.map((post) => (
+                  <li><a href={postUrl(post)}>{post.data.title}</a></li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </section>
+
+        <aside class="side" aria-label="태그 목록">
+          <nav>
+            <a class="side-link" href={`${base}/records/tags/#all-tags`}>
+              <span>All</span>
+              <span class="count">{totalTaggedPosts}</span>
+            </a>
+            {tagRows.map((tag) => (
+              <a class="side-link" href={`${base}/records/tags/#tag-${tag.slug}`}>
+                <span>#{tag.name}</span>
+                <span class="count">{tag.count}</span>
+              </a>
+            ))}
+          </nav>
+        </aside>
+      </div>
+    ) : (
+      <section class="empty">
+        <h2>아직 기록 글 태그가 없습니다.</h2>
+        <p>기록형 글에 tags를 추가하면 자동으로 태그 페이지가 채워집니다.</p>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 76px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.28em;
+    margin-bottom: 14px;
+  }
+  .page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
+  .page-header p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 68px;
+    margin-bottom: 80px;
+  }
+
+  .row {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    display: grid;
+    gap: 12px;
+  }
+  .row:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .row-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .name {
+    font-size: 1.3rem;
+    color: var(--accent-bright);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .meta {
+    display: flex;
+    gap: 14px;
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .preview {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .preview a {
+    display: block;
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    color: var(--text);
+    text-decoration: none;
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 72px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .preview a:hover {
+    border-color: var(--text-dim);
+    transform: translateY(-2px);
+  }
+
+  .side nav {
+    position: sticky;
+    top: 96px;
+    border-top: 1px solid var(--border);
+    max-height: calc(100vh - 116px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-dim) transparent;
+    padding-right: 4px;
+  }
+  .side nav::-webkit-scrollbar { width: 10px; }
+  .side nav::-webkit-scrollbar-track { background: transparent; }
+  .side nav::-webkit-scrollbar-thumb {
+    background: var(--text-dim);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  .side-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.84rem;
+    line-height: 1.1;
+  }
+  .side-link:hover { color: var(--accent-bright); }
+  .count {
+    min-width: 26px;
+    height: 22px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    color: var(--text);
+  }
+
+  .empty {
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    padding: 36px 28px;
+    margin-bottom: 80px;
+  }
+  .empty h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--accent-bright);
+  }
+  .empty p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  @media (max-width: 1080px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) 240px;
+      gap: 44px;
+    }
+  }
+  @media (max-width: 900px) {
+    .preview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 860px) {
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .side nav {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      border-top: none;
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+    .side-link {
+      border: 1px solid var(--border);
+      padding: 7px 9px;
+      background: var(--bg-subtle);
+    }
+  }
+  @media (max-width: 640px) {
+    .page-header {
+      padding-top: 56px;
+    }
+    .page-header h1 {
+      font-size: 1.8rem;
+    }
+    .preview { grid-template-columns: 1fr; }
+    .name { font-size: 1.15rem; }
+    .side nav { grid-template-columns: 1fr; }
+  }
+</style>
