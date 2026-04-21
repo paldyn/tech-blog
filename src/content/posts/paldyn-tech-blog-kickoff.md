@@ -6,7 +6,7 @@ pubDate: "2026-04-19"
 type: "record"
 category: "Team"
 tags: ["intro", "culture", "knowledge-sharing"]
-featured: true
+featured: false
 draft: false
 ---
 
