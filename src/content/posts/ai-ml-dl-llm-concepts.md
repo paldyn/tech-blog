@@ -6,7 +6,7 @@ pubDate: "2026-04-19"
 type: "knowledge"
 category: "AI"
 tags: ["ai", "ml", "deep-learning", "llm", "basics"]
-featured: true
+featured: false
 draft: false
 ---
 
