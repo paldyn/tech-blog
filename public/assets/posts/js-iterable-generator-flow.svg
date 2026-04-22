@@ -1,0 +1,64 @@
+<svg width="880" height="480" viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="18" font-weight="700">제너레이터 함수의 실행 흐름</text>
+  <text x="440" y="68" text-anchor="middle" fill="#555" font-size="13">yield 지점에서 일시정지, next() 호출로 재개</text>
+
+  <!-- Generator function code panel -->
+  <rect x="60" y="90" width="340" height="320" rx="10" fill="#111" stroke="#2a3a2a" stroke-width="1.5"/>
+  <rect x="60" y="90" width="340" height="40" rx="10" fill="#1a2a1a"/>
+  <text x="230" y="116" text-anchor="middle" fill="#88cc88" font-size="13" font-weight="700">제너레이터 함수</text>
+
+  <text x="84" y="152" fill="#555" font-size="12" font-family="monospace">function* count() {</text>
+  <text x="100" y="178" fill="#99eeaa" font-size="12" font-family="monospace">  yield 1;   ← ① 정지</text>
+  <text x="100" y="204" fill="#ffdd88" font-size="12" font-family="monospace">  yield 2;   ← ② 정지</text>
+  <text x="100" y="230" fill="#ff9999" font-size="12" font-family="monospace">  yield 3;   ← ③ 정지</text>
+  <text x="84" y="256" fill="#555" font-size="12" font-family="monospace">}              ← ④ 완료</text>
+
+  <!-- Highlight lines -->
+  <rect x="84" y="166" width="296" height="22" rx="3" fill="#1a3a1a" opacity="0.5"/>
+  <rect x="84" y="192" width="296" height="22" rx="3" fill="#2a2a0a" opacity="0.5"/>
+  <rect x="84" y="218" width="296" height="22" rx="3" fill="#3a1a1a" opacity="0.5"/>
+
+  <!-- State box -->
+  <rect x="84" y="290" width="296" height="100" rx="7" fill="#161616" stroke="#333" stroke-width="1"/>
+  <text x="232" y="312" text-anchor="middle" fill="#666" font-size="11" font-weight="600">제너레이터 상태</text>
+  <text x="104" y="334" fill="#555" font-size="11">suspended  — yield 이후 대기 중</text>
+  <text x="104" y="354" fill="#555" font-size="11">running    — next() 호출로 실행 중</text>
+  <text x="104" y="374" fill="#555" font-size="11">completed  — return / 끝까지 실행됨</text>
+
+  <!-- Right side: caller panel -->
+  <rect x="480" y="90" width="340" height="320" rx="10" fill="#111" stroke="#2a2a3a" stroke-width="1.5"/>
+  <rect x="480" y="90" width="340" height="40" rx="10" fill="#1a1a2a"/>
+  <text x="650" y="116" text-anchor="middle" fill="#8888ee" font-size="13" font-weight="700">호출부 (next() 시퀀스)</text>
+
+  <!-- call rows -->
+  <rect x="500" y="144" width="300" height="40" rx="6" fill="#1a1a30" stroke="#3a3a5a" stroke-width="1"/>
+  <text x="650" y="160" text-anchor="middle" fill="#aaaaff" font-size="11">const gen = count()</text>
+  <text x="650" y="177" text-anchor="middle" fill="#555" font-size="10">제너레이터 객체 생성 — 아직 실행 안 됨</text>
+
+  <rect x="500" y="198" width="300" height="40" rx="6" fill="#1a301a" stroke="#3a5a3a" stroke-width="1"/>
+  <text x="650" y="214" text-anchor="middle" fill="#99eeaa" font-size="11">gen.next() → { value: 1, done: false }</text>
+  <text x="650" y="231" text-anchor="middle" fill="#555" font-size="10">yield 1 에서 일시정지</text>
+
+  <rect x="500" y="252" width="300" height="40" rx="6" fill="#302a0a" stroke="#5a4a1a" stroke-width="1"/>
+  <text x="650" y="268" text-anchor="middle" fill="#ffdd88" font-size="11">gen.next() → { value: 2, done: false }</text>
+  <text x="650" y="285" text-anchor="middle" fill="#555" font-size="10">yield 2 에서 일시정지</text>
+
+  <rect x="500" y="306" width="300" height="40" rx="6" fill="#301a1a" stroke="#5a3a3a" stroke-width="1"/>
+  <text x="650" y="322" text-anchor="middle" fill="#ff9999" font-size="11">gen.next() → { value: 3, done: false }</text>
+  <text x="650" y="339" text-anchor="middle" fill="#555" font-size="10">yield 3 에서 일시정지</text>
+
+  <rect x="500" y="360" width="300" height="40" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  <text x="650" y="376" text-anchor="middle" fill="#666" font-size="11">gen.next() → { value: undefined, done: true }</text>
+  <text x="650" y="393" text-anchor="middle" fill="#444" font-size="10">함수 끝 — 완료</text>
+
+  <!-- Connecting arrows -->
+  <line x1="400" y1="177" x2="498" y2="218" stroke="#3a5a3a" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="400" y1="203" x2="498" y2="272" stroke="#4a4a1a" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="400" y1="229" x2="498" y2="326" stroke="#5a3a3a" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Bottom note -->
+  <text x="440" y="448" text-anchor="middle" fill="#444" font-size="12">제너레이터는 이터러블이기도 합니다 — for...of로 순회, 스프레드로 배열 변환 가능</text>
+</svg>

@@ -1,0 +1,83 @@
+<svg width="880" height="500" viewBox="0 0 880 500" xmlns="http://www.w3.org/2000/svg" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="18" font-weight="700">이터레이션 프로토콜</text>
+  <text x="440" y="68" text-anchor="middle" fill="#555" font-size="13">이터러블과 이터레이터의 관계</text>
+
+  <!-- Iterable box -->
+  <rect x="60" y="100" width="260" height="160" rx="10" fill="#111" stroke="#4a3a1a" stroke-width="1.5"/>
+  <rect x="60" y="100" width="260" height="42" rx="10" fill="#2a1f0a"/>
+  <text x="190" y="127" text-anchor="middle" fill="#ddaa55" font-size="14" font-weight="700">Iterable (이터러블)</text>
+  <text x="190" y="163" text-anchor="middle" fill="#aa8844" font-size="12">Symbol.iterator 메서드를 가진 객체</text>
+  <text x="190" y="185" text-anchor="middle" fill="#666" font-size="11">Array, String, Map, Set, NodeList</text>
+  <text x="190" y="205" text-anchor="middle" fill="#666" font-size="11">for...of, 스프레드, 구조분해 사용 가능</text>
+  <text x="190" y="225" text-anchor="middle" fill="#555" font-size="11">obj[Symbol.iterator]() → Iterator 반환</text>
+
+  <!-- Arrow: iterable → iterator -->
+  <text x="345" y="188" text-anchor="middle" fill="#555" font-size="11">호출</text>
+  <line x1="320" y1="180" x2="375" y2="180" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Iterator box -->
+  <rect x="380" y="100" width="260" height="160" rx="10" fill="#111" stroke="#1a3a4a" stroke-width="1.5"/>
+  <rect x="380" y="100" width="260" height="42" rx="10" fill="#0a1f2a"/>
+  <text x="510" y="127" text-anchor="middle" fill="#55aadd" font-size="14" font-weight="700">Iterator (이터레이터)</text>
+  <text x="510" y="163" text-anchor="middle" fill="#4488aa" font-size="12">next() 메서드를 가진 객체</text>
+  <text x="510" y="185" text-anchor="middle" fill="#666" font-size="11">next() 호출 → IteratorResult 반환</text>
+  <text x="510" y="207" text-anchor="middle" fill="#444" font-size="11">{ value: any, done: boolean }</text>
+  <text x="510" y="225" text-anchor="middle" fill="#555" font-size="11">done: true 이면 반복 종료</text>
+
+  <!-- IteratorResult -->
+  <rect x="700" y="130" width="150" height="100" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="775" y="155" text-anchor="middle" fill="#888" font-size="12" font-weight="600">IteratorResult</text>
+  <text x="775" y="178" text-anchor="middle" fill="#666" font-size="11">value: "a"</text>
+  <text x="775" y="196" text-anchor="middle" fill="#666" font-size="11">done: false</text>
+  <line x1="640" y1="180" x2="698" y2="180" stroke="#333" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- defs for arrow marker -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- for...of flow -->
+  <rect x="60" y="310" width="780" height="150" rx="10" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="450" y="338" text-anchor="middle" fill="#888" font-size="13" font-weight="600">for...of 동작 순서</text>
+
+  <!-- Steps -->
+  <rect x="80" y="352" width="130" height="88" rx="7" fill="#161616" stroke="#333" stroke-width="1"/>
+  <text x="145" y="374" text-anchor="middle" fill="#aaa" font-size="11" font-weight="600">① iterator 획득</text>
+  <text x="145" y="394" text-anchor="middle" fill="#555" font-size="10">obj[Symbol.iterator]()</text>
+  <text x="145" y="412" text-anchor="middle" fill="#555" font-size="10">→ iterator 반환</text>
+
+  <text x="234" y="400" text-anchor="middle" fill="#444" font-size="18">→</text>
+
+  <rect x="250" y="352" width="130" height="88" rx="7" fill="#161616" stroke="#333" stroke-width="1"/>
+  <text x="315" y="374" text-anchor="middle" fill="#aaa" font-size="11" font-weight="600">② next() 호출</text>
+  <text x="315" y="394" text-anchor="middle" fill="#555" font-size="10">iterator.next()</text>
+  <text x="315" y="412" text-anchor="middle" fill="#555" font-size="10">→ { value, done }</text>
+
+  <text x="404" y="400" text-anchor="middle" fill="#444" font-size="18">→</text>
+
+  <rect x="420" y="352" width="130" height="88" rx="7" fill="#161616" stroke="#333" stroke-width="1"/>
+  <text x="485" y="374" text-anchor="middle" fill="#aaa" font-size="11" font-weight="600">③ done 확인</text>
+  <text x="485" y="394" text-anchor="middle" fill="#555" font-size="10">done: false → 루프 실행</text>
+  <text x="485" y="412" text-anchor="middle" fill="#555" font-size="10">done: true → 루프 종료</text>
+
+  <text x="574" y="400" text-anchor="middle" fill="#444" font-size="18">→</text>
+
+  <rect x="590" y="352" width="130" height="88" rx="7" fill="#161616" stroke="#333" stroke-width="1"/>
+  <text x="655" y="374" text-anchor="middle" fill="#aaa" font-size="11" font-weight="600">④ value 사용</text>
+  <text x="655" y="394" text-anchor="middle" fill="#555" font-size="10">루프 바디에서</text>
+  <text x="655" y="412" text-anchor="middle" fill="#555" font-size="10">value 처리</text>
+
+  <!-- back arrow -->
+  <path d="M720 396 Q760 396 760 420 Q760 440 655 440 Q485 440 315 440 Q250 440 250 440" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow2)"/>
+  <defs>
+    <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="490" y="455" text-anchor="middle" fill="#444" font-size="10">done: false 이면 ②로 반복</text>
+</svg>
