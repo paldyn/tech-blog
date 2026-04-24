@@ -1,0 +1,49 @@
+<svg width="880" height="440" viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="18" font-weight="700" fill="#e8e8e8" text-anchor="middle">Promise 체이닝 vs async/await — 동일한 로직</text>
+
+  <!-- Left panel: Promise -->
+  <rect x="30" y="64" width="390" height="340" rx="10" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="225" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#8888ff" text-anchor="middle">Promise 체이닝</text>
+
+  <text x="50" y="116" font-family="'Courier New',monospace" font-size="12" fill="#888">function loadUser(id) {</text>
+  <text x="50" y="136" font-family="'Courier New',monospace" font-size="12" fill="#888">  return fetch(`/user/${id}`)</text>
+  <text x="50" y="156" font-family="'Courier New',monospace" font-size="12" fill="#4caf7d">    .then(res =&gt; res.json())</text>
+  <text x="50" y="176" font-family="'Courier New',monospace" font-size="12" fill="#4caf7d">    .then(user =&gt; {</text>
+  <text x="50" y="196" font-family="'Courier New',monospace" font-size="12" fill="#888">      return getOrders(user.id)</text>
+  <text x="50" y="216" font-family="'Courier New',monospace" font-size="12" fill="#888">        .then(orders =&gt; ({</text>
+  <text x="50" y="236" font-family="'Courier New',monospace" font-size="12" fill="#888">          ...user, orders</text>
+  <text x="50" y="256" font-family="'Courier New',monospace" font-size="12" fill="#888">        }));</text>
+  <text x="50" y="276" font-family="'Courier New',monospace" font-size="12" fill="#4caf7d">    })</text>
+  <text x="50" y="296" font-family="'Courier New',monospace" font-size="12" fill="#e05252">    .catch(err =&gt; {</text>
+  <text x="50" y="316" font-family="'Courier New',monospace" font-size="12" fill="#888">      console.error(err);</text>
+  <text x="50" y="336" font-family="'Courier New',monospace" font-size="12" fill="#e05252">    });</text>
+  <text x="50" y="356" font-family="'Courier New',monospace" font-size="12" fill="#888">}</text>
+
+  <!-- Right panel: async/await -->
+  <rect x="460" y="64" width="390" height="340" rx="10" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="655" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#f4a942" text-anchor="middle">async / await</text>
+
+  <text x="480" y="116" font-family="'Courier New',monospace" font-size="12" fill="#f4a942">async function loadUser(id) {</text>
+  <text x="480" y="136" font-family="'Courier New',monospace" font-size="12" fill="#e05252">  try {</text>
+  <text x="480" y="156" font-family="'Courier New',monospace" font-size="12" fill="#888">    const res =</text>
+  <text x="480" y="176" font-family="'Courier New',monospace" font-size="12" fill="#f4a942">      await fetch(`/user/${id}`);</text>
+  <text x="480" y="196" font-family="'Courier New',monospace" font-size="12" fill="#888">    const user =</text>
+  <text x="480" y="216" font-family="'Courier New',monospace" font-size="12" fill="#f4a942">      await res.json();</text>
+  <text x="480" y="236" font-family="'Courier New',monospace" font-size="12" fill="#888">    const orders =</text>
+  <text x="480" y="256" font-family="'Courier New',monospace" font-size="12" fill="#f4a942">      await getOrders(user.id);</text>
+  <text x="480" y="276" font-family="'Courier New',monospace" font-size="12" fill="#888">    return { ...user, orders };</text>
+  <text x="480" y="296" font-family="'Courier New',monospace" font-size="12" fill="#e05252">  } catch (err) {</text>
+  <text x="480" y="316" font-family="'Courier New',monospace" font-size="12" fill="#888">    console.error(err);</text>
+  <text x="480" y="336" font-family="'Courier New',monospace" font-size="12" fill="#e05252">  }</text>
+  <text x="480" y="356" font-family="'Courier New',monospace" font-size="12" fill="#888">}</text>
+
+  <!-- Arrow between panels -->
+  <text x="440" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" fill="#555" text-anchor="middle">⟺</text>
+  <text x="440" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#444" text-anchor="middle">동일 동작</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">async 함수는 항상 Promise를 반환 — await는 Promise가 settled될 때까지 일시 정지</text>
+</svg>
