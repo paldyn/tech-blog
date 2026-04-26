@@ -17,12 +17,13 @@ const {
   title, description, author = 'PALDYN', pubDate, readingTime, category, url,
   thumb = '</>', thumbVariant = 'a', logo,
 } = Astro.props;
+const shouldFillLogo = logo?.endsWith('/javascript.jpeg') || logo?.endsWith('/nexacro.png');
 ---
 
 <article class="card">
   <a href={url} class="thumb-link" aria-label={title}>
     {logo ? (
-      <div class="thumb logo-thumb">
+      <div class:list={['thumb', 'logo-thumb', { 'logo-fill': shouldFillLogo }]}>
         <img src={logo} alt={`${category} 로고`} loading="lazy" />
       </div>
     ) : (
@@ -104,6 +105,16 @@ const {
     max-height: 100%;
     object-fit: contain;
     display: block;
+  }
+  .thumb.logo-thumb.logo-fill {
+    padding: 0;
+  }
+  .thumb.logo-thumb.logo-fill img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
   }
 
   /* 6 tonal variants in monochrome — gradient from graphite to silver-ish */
