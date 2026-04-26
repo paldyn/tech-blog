@@ -130,6 +130,8 @@ a { color: inherit; }
 }
 .prose code {
   font-family: var(--font-mono);
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
   font-size: 0.88em;
   background: var(--surface);
   padding: 2px 6px;
@@ -138,6 +140,11 @@ a { color: inherit; }
 }
 .prose pre {
   font-family: var(--font-mono);
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
   background: var(--code-bg) !important;
   padding: 22px 26px;
   border-radius: 4px;
@@ -147,7 +154,17 @@ a { color: inherit; }
   font-size: 14px;
   line-height: 1.7;
 }
-.prose pre code { background: transparent; padding: 0; font-size: inherit; border: none; }
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  border: none;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+}
 
 /* Ensure Shiki follows manual theme toggle (data-theme), not only OS media query */
 [data-theme="light"] .prose pre.astro-code {
@@ -164,7 +181,57 @@ a { color: inherit; }
 [data-theme="light"] .prose pre.astro-code span {
   background-color: transparent !important;
 }
+.prose pre.astro-code code,
+.prose pre.astro-code span {
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
 .prose img { max-width: 100%; border: 1px solid var(--border); margin: 1em 0; }
+
+/* Code block scrollbars — themed */
+.prose pre {
+  scrollbar-width: thin;
+}
+[data-theme="light"] .prose pre {
+  scrollbar-color: rgba(20, 30, 50, 0.22) transparent;
+}
+[data-theme="light"] .prose pre::-webkit-scrollbar { height: 10px; background: transparent; }
+[data-theme="light"] .prose pre::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0 8px;
+}
+[data-theme="light"] .prose pre::-webkit-scrollbar-thumb {
+  background: rgba(20, 30, 50, 0.22);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+[data-theme="light"] .prose pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(20, 30, 50, 0.42);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+[data-theme="dark"] .prose pre {
+  scrollbar-color: rgba(232, 232, 232, 0.18) transparent;
+}
+[data-theme="dark"] .prose pre::-webkit-scrollbar { height: 10px; background: transparent; }
+[data-theme="dark"] .prose pre::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0 8px;
+}
+[data-theme="dark"] .prose pre::-webkit-scrollbar-thumb {
+  background: rgba(232, 232, 232, 0.18);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+[data-theme="dark"] .prose pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 232, 232, 0.38);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
 .prose hr { border: none; border-top: 1px solid var(--border); margin: 2.8em 0; }
 .prose table {
   width: 100%;
