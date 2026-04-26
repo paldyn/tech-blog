@@ -117,6 +117,7 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Nexacro: '/assets/logos/nexacro.png',
   Spring: '/assets/logos/spring.png',
   SQL: '/assets/logos/sql.png',
+  Java: '/assets/logos/java.png',
   Team: '/assets/logo-symbol-dark.png',
 };
 
