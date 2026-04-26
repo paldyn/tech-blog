@@ -3,6 +3,7 @@ title: "토크나이저와 토큰: LLM이 텍스트를 읽는 방법"
 description: "LLM은 텍스트를 문자가 아닌 '토큰' 단위로 읽습니다. 토크나이저의 작동 원리, BPE 알고리즘, 언어별 토큰 효율 차이, 그리고 실전에서 토큰을 다루는 법까지 핵심을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-26"
+archiveOrder: 2
 type: "knowledge"
 category: "AI"
 tags: ["AI", "LLM", "토크나이저", "토큰", "BPE", "NLP", "프롬프트 엔지니어링"]
