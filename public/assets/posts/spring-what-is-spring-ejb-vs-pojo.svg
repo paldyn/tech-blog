@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540" style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif;">
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">EJB의 한계 vs 스프링 POJO 철학</text>
+
+  <!-- EJB Side -->
+  <rect x="60" y="76" width="340" height="400" fill="#0f0f0f" stroke="#2a1a1a" stroke-width="1.5" rx="10"/>
+  <rect x="60" y="76" width="340" height="44" fill="#1e1010" rx="10"/>
+  <rect x="60" y="108" width="340" height="12" fill="#1e1010"/>
+  <text x="230" y="104" text-anchor="middle" font-size="14" font-weight="700" fill="#e05555">EJB (Enterprise JavaBeans)</text>
+
+  <!-- EJB code block -->
+  <rect x="80" y="134" width="300" height="180" fill="#070b14" stroke="#1e2433" stroke-width="1" rx="6"/>
+  <text x="96" y="155" font-size="11" fill="#888" font-family="'JetBrains Mono','Menlo','Consolas',monospace">// Session Bean — 무거운 설정</text>
+  <text x="96" y="173" font-size="11" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace">@Stateless</text>
+  <text x="96" y="189" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">public class OrderEJB</text>
+  <text x="96" y="205" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">    implements OrderRemote,</text>
+  <text x="96" y="221" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">               OrderLocal {</text>
+  <text x="96" y="240" font-size="11" fill="#888" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  // EJB 컨테이너에 종속</text>
+  <text x="96" y="256" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  @EJB</text>
+  <text x="96" y="272" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  private DataSource ds;</text>
+  <text x="96" y="291" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">}</text>
+
+  <!-- EJB pain points -->
+  <text x="80" y="336" font-size="12" fill="#e05555">✕</text>
+  <text x="96" y="336" font-size="12" fill="#aaa">컨테이너 없이 단위 테스트 불가</text>
+  <text x="80" y="358" font-size="12" fill="#e05555">✕</text>
+  <text x="96" y="358" font-size="12" fill="#aaa">배포 서술자(XML) 수백 줄</text>
+  <text x="80" y="380" font-size="12" fill="#e05555">✕</text>
+  <text x="96" y="380" font-size="12" fill="#aaa">인터페이스 강제 상속</text>
+  <text x="80" y="402" font-size="12" fill="#e05555">✕</text>
+  <text x="96" y="402" font-size="12" fill="#aaa">느린 시작, 높은 학습 비용</text>
+  <text x="80" y="424" font-size="12" fill="#e05555">✕</text>
+  <text x="96" y="424" font-size="12" fill="#aaa">WAS 벤더에 강하게 결합</text>
+
+  <!-- Arrow -->
+  <line x1="420" y1="280" x2="460" y2="280" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Spring Side -->
+  <rect x="480" y="76" width="340" height="400" fill="#0f0f0f" stroke="#1a2a1a" stroke-width="1.5" rx="10"/>
+  <rect x="480" y="76" width="340" height="44" fill="#101e10" rx="10"/>
+  <rect x="480" y="108" width="340" height="12" fill="#101e10"/>
+  <text x="650" y="104" text-anchor="middle" font-size="14" font-weight="700" fill="#55c555">Spring (POJO 철학)</text>
+
+  <!-- Spring code block -->
+  <rect x="500" y="134" width="300" height="180" fill="#070b14" stroke="#1e2433" stroke-width="1" rx="6"/>
+  <text x="516" y="155" font-size="11" fill="#888" font-family="'JetBrains Mono','Menlo','Consolas',monospace">// 평범한 자바 클래스</text>
+  <text x="516" y="173" font-size="11" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace">@Service</text>
+  <text x="516" y="189" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">public class OrderService {</text>
+  <text x="516" y="210" font-size="11" fill="#888" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  // 생성자 주입 (POJO)</text>
+  <text x="516" y="226" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  private final OrderRepo repo;</text>
+  <text x="516" y="245" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  public OrderService(</text>
+  <text x="516" y="261" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">      OrderRepo repo) {</text>
+  <text x="516" y="277" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">    this.repo = repo;</text>
+  <text x="516" y="296" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">  }</text>
+  <text x="516" y="308" font-size="11" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace">}</text>
+
+  <!-- Spring benefits -->
+  <text x="500" y="336" font-size="12" fill="#55c555">✓</text>
+  <text x="516" y="336" font-size="12" fill="#aaa">new OrderService(mockRepo) — 즉시 테스트</text>
+  <text x="500" y="358" font-size="12" fill="#55c555">✓</text>
+  <text x="516" y="358" font-size="12" fill="#aaa">프레임워크 클래스 상속 불필요</text>
+  <text x="500" y="380" font-size="12" fill="#55c555">✓</text>
+  <text x="516" y="380" font-size="12" fill="#aaa">WAS 없이 로컬에서 실행</text>
+  <text x="500" y="402" font-size="12" fill="#55c555">✓</text>
+  <text x="516" y="402" font-size="12" fill="#aaa">애노테이션으로 간결한 설정</text>
+  <text x="500" y="424" font-size="12" fill="#55c555">✓</text>
+  <text x="516" y="424" font-size="12" fill="#aaa">비침투적(Non-invasive) 설계</text>
+
+  <!-- Footer -->
+  <text x="440" y="504" text-anchor="middle" font-size="11" fill="#444">POJO = Plain Old Java Object · 스프링의 핵심 철학은 "비즈니스 로직은 순수 자바로"</text>
+</svg>
