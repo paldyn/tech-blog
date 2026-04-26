@@ -29,6 +29,8 @@ draft: false
 
 ## 넥사크로를 구성하는 3가지 축
 
+![넥사크로의 3가지 축: 화면 · 데이터 · 서버 연동](/assets/posts/nexacro-three-axes.svg)
+
 ### 1) 화면(Form + 컴포넌트)
 - `Form` 안에 `Button`, `Edit`, `Grid`, `Combo` 같은 컴포넌트를 배치합니다.
 - 이벤트(`onload`, `onclick`, `onchanged`)로 사용자 상호작용을 처리합니다.

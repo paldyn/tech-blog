@@ -49,6 +49,8 @@ PALDYN 기술블로그는 아래 원칙을 지키겠습니다.
 2. 느낌보다 데이터와 근거를 우선한다.
 3. 다음 사람이 바로 활용할 수 있게 쓴다.
 
+![PALDYN 기술블로그 기록 원칙](/assets/posts/paldyn-tech-blog-principles.svg)
+
 ```ts
 const postGuideline = {
   includeImage: true,

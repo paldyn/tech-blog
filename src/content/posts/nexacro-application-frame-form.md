@@ -27,6 +27,8 @@ draft: false
 
 ---
 
+![Application · Frame · Form 의 책임 분리](/assets/posts/nexacro-app-frame-form-hierarchy.svg)
+
 ## 1) Application: 앱의 전역 컨텍스트
 
 `Application`은 넥사크로 앱 전체의 시작점입니다.
