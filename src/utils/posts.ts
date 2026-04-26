@@ -112,7 +112,7 @@ export function thumbFor(post: Post): string {
 }
 
 const CATEGORY_LOGOS: Record<string, string> = {
-  JavaScript: '/assets/logos/javascript.svg',
+  JavaScript: '/assets/logos/javascript.jpeg',
   AI: '/assets/logos/ai.svg',
   Nexacro: '/assets/logos/nexacro.svg',
   Team: '/assets/logo-symbol-dark.png',
