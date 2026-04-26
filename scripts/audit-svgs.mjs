@@ -24,8 +24,9 @@ for (const f of files) {
   const dupFf = [...src.matchAll(/<\w+\b([^>]*)>/g)].filter(m => (m[1].match(/font-family\s*=/g) || []).length > 1);
   if (dupFf.length) issues.push(`font-family 중복 ${dupFf.length}건 (XML invalid 가능성)`);
 
-  // Detect unescaped & not part of an entity (e.g., &amp; &lt; &#123;)
-  const badAmps = (src.match(/&(?!(amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/g) || []).length;
+  // Detect unescaped & not part of an entity (e.g., &amp; &lt; &#123;), excluding XML comments
+  const noComments = src.replace(/<!--[\s\S]*?-->/g, '');
+  const badAmps = (noComments.match(/&(?!(amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/g) || []).length;
   if (badAmps > 0) issues.push(`이스케이프 안 된 & ${badAmps}건 (→ &amp; 로 교체)`);
 
   if (!/xmlns=/.test(tag)) issues.push('xmlns 누락');
