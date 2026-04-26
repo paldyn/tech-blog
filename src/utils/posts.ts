@@ -124,9 +124,9 @@ function comparePosts(a: Post, b: Post): number {
   const dateCompare = postDateKey(b).localeCompare(postDateKey(a));
   if (dateCompare !== 0) return dateCompare;
 
-  const orderA = a.data.archiveOrder ?? Number.POSITIVE_INFINITY;
-  const orderB = b.data.archiveOrder ?? Number.POSITIVE_INFINITY;
-  if (orderA !== orderB) return orderA - orderB;
+  const orderA = a.data.archiveOrder ?? Number.NEGATIVE_INFINITY;
+  const orderB = b.data.archiveOrder ?? Number.NEGATIVE_INFINITY;
+  if (orderA !== orderB) return orderB - orderA;
 
   const timeCompare = b.data.pubDate.getTime() - a.data.pubDate.getTime();
   if (timeCompare !== 0) return timeCompare;
