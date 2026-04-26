@@ -111,6 +111,17 @@ export function thumbFor(post: Post): string {
   return categoryBadgeText(post.data.category);
 }
 
+const CATEGORY_LOGOS: Record<string, string> = {
+  JavaScript: '/assets/logos/javascript.svg',
+  AI: '/assets/logos/ai.svg',
+  Nexacro: '/assets/logos/nexacro.svg',
+  Team: '/assets/logo-symbol-dark.png',
+};
+
+export function logoFor(post: Post): string | undefined {
+  return CATEGORY_LOGOS[post.data.category];
+}
+
 export function readingTimeFor(post: Post): string {
   const minutes = Math.max(1, Math.round(readingTime(post.body ?? '').minutes));
   return `${minutes} min read`;
