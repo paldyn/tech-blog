@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">타임존 함정 · INTERVAL 산술</text>
+
+  <!-- ── Left: Timezone-aware vs naive ── -->
+  <rect x="60" y="68" width="350" height="376" rx="8" fill="#0d0d0d" stroke="#3a2a1a"/>
+  <text x="235" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#ce9178">타임존: naive vs aware</text>
+  <line x1="60" y1="108" x2="410" y2="108" stroke="#2a1a0a"/>
+
+  <!-- Naive block -->
+  <rect x="78" y="118" width="314" height="54" rx="4" fill="#1a0a0a" stroke="#3a1a1a"/>
+  <text x="90" y="136" font-size="12" font-weight="600" fill="#e05555">✗ Timezone-naive (TIMESTAMP)</text>
+  <text x="90" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">2026-04-26 14:30:00</text>
+  <text x="90" y="166" font-size="10" fill="#e05555">어느 나라 14:30인지 알 수 없음</text>
+
+  <!-- Aware block -->
+  <rect x="78" y="178" width="314" height="54" rx="4" fill="#0a1a0a" stroke="#1a3a1a"/>
+  <text x="90" y="196" font-size="12" font-weight="600" fill="#55c555">✓ Timezone-aware (TIMESTAMPTZ)</text>
+  <text x="90" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">2026-04-26 14:30:00+09:00</text>
+  <text x="90" y="226" font-size="10" fill="#55c555">한국 시간 → 내부적으로 UTC 변환 저장</text>
+
+  <!-- Arrow showing conversion -->
+  <line x1="235" y1="232" x2="235" y2="246" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="235,252 229,244 241,244" fill="#7ec8e3"/>
+
+  <!-- Stored as UTC -->
+  <rect x="78" y="254" width="314" height="34" rx="4" fill="#0a1520" stroke="#1e3045"/>
+  <text x="90" y="268" font-size="11" fill="#888">DB 내부 저장값 (UTC):</text>
+  <text x="90" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">2026-04-26 05:30:00+00:00</text>
+
+  <!-- Code block -->
+  <rect x="78" y="298" width="314" height="132" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="90" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- 타임존 변환 쿼리</text>
+  <text x="90" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- PostgreSQL</text>
+  <text x="90" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">created_at </text>
+  <text x="160" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">AT TIME ZONE</text>
+  <text x="264" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178"> 'Asia/Seoul'</text>
+  <text x="90" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- MySQL</text>
+  <text x="90" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">CONVERT_TZ</text>
+  <text x="172" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">(created_at,</text>
+  <text x="90" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">  'UTC'</text>
+  <text x="138" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">, </text>
+  <text x="150" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">'Asia/Seoul'</text>
+  <text x="246" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">)</text>
+  <text x="90" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- Oracle</text>
+  <text x="90" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- AT TIME ZONE 'Asia/Seoul'</text>
+
+  <!-- ── Right: INTERVAL ── -->
+  <rect x="470" y="68" width="350" height="376" rx="8" fill="#0d0d0d" stroke="#1a1a3a"/>
+  <text x="645" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#7777cc">INTERVAL 산술</text>
+  <line x1="470" y1="108" x2="820" y2="108" stroke="#1a1a2a"/>
+
+  <!-- INTERVAL explanation -->
+  <rect x="488" y="118" width="314" height="42" rx="4" fill="#0a0a1a" stroke="#2a2a4a"/>
+  <text x="500" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" font-weight="700" fill="#7777cc">INTERVAL</text>
+  <text x="572" y="136" font-size="11" fill="#888">  기간/간격 타입</text>
+  <text x="500" y="154" font-size="11" fill="#888">날짜·시간 값에 더하거나 뺄 수 있음</text>
+
+  <!-- Code block: date arithmetic -->
+  <rect x="488" y="170" width="314" height="164" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="500" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- 날짜 덧셈·뺄셈</text>
+  <text x="500" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">NOW() + </text>
+  <text x="548" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">INTERVAL</text>
+  <text x="608" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178"> '7 days'</text>
+  <text x="500" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">NOW() + </text>
+  <text x="548" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">INTERVAL</text>
+  <text x="608" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178"> '1 month'</text>
+  <text x="500" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">NOW() - </text>
+  <text x="548" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">INTERVAL</text>
+  <text x="608" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178"> '30 minutes'</text>
+  <text x="500" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- 날짜 차이 계산</text>
+  <text x="500" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">end_date - start_date</text>
+  <text x="500" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- EXTRACT로 부분 추출</text>
+  <text x="500" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">EXTRACT</text>
+  <text x="548" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">(</text>
+  <text x="558" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">YEAR</text>
+  <text x="590" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3"> FROM</text>
+  <text x="626" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8"> created_at)</text>
+  <text x="500" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">-- MONTH, DAY, HOUR, MINUTE, SECOND</text>
+
+  <!-- Practical examples -->
+  <rect x="488" y="344" width="314" height="90" rx="4" fill="#060e06" stroke="#1a2a1a"/>
+  <text x="500" y="362" font-size="11" font-weight="600" fill="#55c555">실용 예시</text>
+  <text x="500" y="380" font-size="11" fill="#888">만료 30일 전 알림:</text>
+  <text x="500" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7ec8e3">WHERE</text>
+  <text x="538" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#e8e8e8"> expires_at - NOW() &lt;</text>
+  <text x="500" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7777cc">  INTERVAL</text>
+  <text x="568" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#ce9178"> '30 days'</text>
+  <text x="500" y="428" font-size="10" fill="#888">주문 후 30일 지난 미처리 건 조회</text>
+
+  <!-- Footer -->
+  <text x="440" y="474" text-anchor="middle" font-size="11" fill="#444">PALDYN · SQL 완전 정복 · Part I · Chapter 2</text>
+</svg>

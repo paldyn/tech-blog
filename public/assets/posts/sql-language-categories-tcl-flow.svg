@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="20" font-weight="700" fill="#e8e8e8">트랜잭션 흐름 — TCL 명령어 시퀀스</text>
+
+  <!-- Timeline baseline -->
+  <line x1="80" y1="200" x2="800" y2="200" stroke="#2a2a2a" stroke-width="2"/>
+
+  <!-- BEGIN -->
+  <circle cx="110" cy="200" r="8" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="2"/>
+  <line x1="110" y1="192" x2="110" y2="150" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <rect x="70" y="126" width="80" height="22" rx="4" fill="#0a1520" stroke="#1a3a5a"/>
+  <text x="110" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#7ec8e3">BEGIN</text>
+  <text x="110" y="220" text-anchor="middle" font-size="10" fill="#555">트랜잭션 시작</text>
+
+  <!-- INSERT (DML op) -->
+  <circle cx="220" cy="200" r="6" fill="#55c555" stroke="#0a0a0a" stroke-width="1.5"/>
+  <line x1="220" y1="194" x2="220" y2="162" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="170" y="146" width="100" height="14" rx="3" fill="#0a1a0a"/>
+  <text x="220" y="156" text-anchor="middle" font-size="10" fill="#55c555">INSERT 실행</text>
+  <text x="220" y="220" text-anchor="middle" font-size="10" fill="#555">DML 수행</text>
+
+  <!-- SAVEPOINT -->
+  <circle cx="340" cy="200" r="8" fill="#e8c555" stroke="#0a0a0a" stroke-width="2"/>
+  <line x1="340" y1="192" x2="340" y2="150" stroke="#e8c555" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <rect x="293" y="126" width="94" height="22" rx="4" fill="#1a1400" stroke="#5a4400"/>
+  <text x="340" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#e8c555">SAVEPOINT</text>
+  <text x="340" y="220" text-anchor="middle" font-size="10" fill="#555">중간 저장점</text>
+
+  <!-- UPDATE (DML op) -->
+  <circle cx="450" cy="200" r="6" fill="#55c555" stroke="#0a0a0a" stroke-width="1.5"/>
+  <line x1="450" y1="194" x2="450" y2="162" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="400" y="146" width="100" height="14" rx="3" fill="#0a1a0a"/>
+  <text x="450" y="156" text-anchor="middle" font-size="10" fill="#55c555">UPDATE 실행</text>
+  <text x="450" y="220" text-anchor="middle" font-size="10" fill="#555">DML 수행</text>
+
+  <!-- ROLLBACK TO SAVEPOINT -->
+  <circle cx="570" cy="200" r="8" fill="#e05555" stroke="#0a0a0a" stroke-width="2"/>
+  <line x1="570" y1="208" x2="570" y2="260" stroke="#e05555" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <rect x="498" y="262" width="144" height="22" rx="4" fill="#1a0a0a" stroke="#5a1a1a"/>
+  <text x="570" y="277" text-anchor="middle" font-size="11" font-weight="600" fill="#e05555">ROLLBACK TO sp1</text>
+  <!-- Undo arc arrow from 570 back to 340 -->
+  <path d="M 568,260 C 540,300 390,300 342,260" stroke="#e05555" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+  <polygon points="342,255 337,265 347,268" fill="#e05555"/>
+  <text x="455" y="315" text-anchor="middle" font-size="10" fill="#e05555">↩ UPDATE 취소, SAVEPOINT로 복귀</text>
+
+  <!-- DELETE (DML op after partial rollback) -->
+  <circle cx="680" cy="200" r="6" fill="#55c555" stroke="#0a0a0a" stroke-width="1.5"/>
+  <line x1="680" y1="194" x2="680" y2="162" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="630" y="146" width="100" height="14" rx="3" fill="#0a1a0a"/>
+  <text x="680" y="156" text-anchor="middle" font-size="10" fill="#55c555">DELETE 실행</text>
+
+  <!-- COMMIT -->
+  <circle cx="780" cy="200" r="8" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="2"/>
+  <line x1="780" y1="192" x2="780" y2="150" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <rect x="736" y="126" width="88" height="22" rx="4" fill="#0a1520" stroke="#1a3a5a"/>
+  <text x="780" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#7ec8e3">COMMIT</text>
+  <text x="780" y="220" text-anchor="middle" font-size="10" fill="#555">영구 반영</text>
+
+  <!-- Transaction span annotation -->
+  <line x1="110" y1="350" x2="780" y2="350" stroke="#333" stroke-width="1.5"/>
+  <line x1="110" y1="344" x2="110" y2="356" stroke="#333" stroke-width="1.5"/>
+  <line x1="780" y1="344" x2="780" y2="356" stroke="#333" stroke-width="1.5"/>
+  <text x="445" y="370" text-anchor="middle" font-size="11" fill="#555">트랜잭션 범위 (BEGIN ~ COMMIT)</text>
+  <text x="445" y="387" text-anchor="middle" font-size="10" fill="#444">INSERT + DELETE만 최종 반영됨 (UPDATE는 취소됨)</text>
+
+  <!-- Footer -->
+  <text x="440" y="405" text-anchor="middle" font-size="11" fill="#444">PALDYN · SQL 완전 정복 · Part I · Chapter 1</text>
+</svg>
