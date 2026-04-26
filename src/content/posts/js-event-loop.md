@@ -3,6 +3,7 @@ title: "이벤트 루프 — 싱글 스레드가 비동기를 다루는 방법"
 description: "JavaScript 런타임의 핵심인 이벤트 루프를 콜 스택·Web API·마이크로태스크 큐·태스크 큐로 나눠 이해하고, 비동기 코드의 실행 순서가 왜 그렇게 되는지 파악합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 9
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "이벤트루프", "비동기", "콜스택", "마이크로태스크", "태스크큐", "싱글스레드"]

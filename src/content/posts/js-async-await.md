@@ -3,6 +3,7 @@ title: "async/await — 비동기를 동기처럼 쓰다"
 description: "ES2017에 도입된 async/await 문법이 Promise 위에서 어떻게 동작하는지, 오류 처리와 실행 흐름, 주의해야 할 함정까지 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-24"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "async", "await", "Promise", "ES2017", "비동기", "에러처리"]

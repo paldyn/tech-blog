@@ -3,6 +3,7 @@ title: "Promise — 비동기를 값으로 다루다"
 description: "콜백 헬의 대안으로 설계된 Promise의 상태 모델, 체이닝, 오류 처리 방식을 이해하고, 제어의 역전 문제가 어떻게 해결되는지 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-24"
+archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "Promise", "비동기", "체이닝", "ES6", "마이크로태스크", "비동기패턴"]

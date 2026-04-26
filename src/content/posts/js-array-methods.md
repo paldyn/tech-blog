@@ -3,6 +3,7 @@ title: "배열 메서드 — map·filter·reduce부터 불변 메서드까지"
 description: "JavaScript 배열을 선언적으로 다루는 핵심 메서드들을 정리합니다. map, filter, reduce 삼총사부터 flatMap, find, some, every, 그리고 ES2023의 toSorted·toReversed·with까지."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "배열", "map", "filter", "reduce", "flatMap", "toSorted", "ES2023", "배열메서드"]

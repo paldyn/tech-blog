@@ -7,16 +7,29 @@ interface Props {
   section?: ExploreSection;
   showPrimary?: boolean;
   showSecondary?: boolean;
+  archiveFilterTabs?: boolean;
 }
 
-const { mode, section = 'archive', showPrimary = true, showSecondary = true } = Astro.props as Props;
+const {
+  mode,
+  section = 'archive',
+  showPrimary = true,
+  showSecondary = true,
+  archiveFilterTabs = false,
+} = Astro.props as Props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const primaryTabs = [
-  { mode: 'all' as ExploreMode, label: '전체', href: `${base}/posts/` },
-  { mode: 'record' as ExploreMode, label: '기록', href: `${base}/records/` },
-  { mode: 'knowledge' as ExploreMode, label: '지식', href: `${base}/knowledge/` },
-];
+const primaryTabs = archiveFilterTabs
+  ? [
+      { mode: 'all' as ExploreMode, label: '전체', href: `${base}/posts/` },
+      { mode: 'record' as ExploreMode, label: '기록', href: `${base}/posts/?view=record` },
+      { mode: 'knowledge' as ExploreMode, label: '지식', href: `${base}/posts/?view=knowledge` },
+    ]
+  : [
+      { mode: 'all' as ExploreMode, label: '전체', href: `${base}/posts/` },
+      { mode: 'record' as ExploreMode, label: '기록', href: `${base}/records/` },
+      { mode: 'knowledge' as ExploreMode, label: '지식', href: `${base}/knowledge/` },
+    ];
 
 const secondaryTabs = mode === 'record'
   ? [

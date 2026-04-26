@@ -3,6 +3,7 @@ title: "변수와 타입 — var, let, const 그리고 8가지 데이터 타입"
 description: "JavaScript에서 변수를 선언하는 세 가지 방법의 차이와, 값이 가질 수 있는 8가지 타입을 명확하게 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-21"
+archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "변수", "var", "let", "const", "데이터타입", "typeof"]

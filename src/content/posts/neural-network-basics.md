@@ -3,6 +3,7 @@ title: "신경망(Neural Network)이란 무엇인가"
 description: "딥러닝의 기반인 신경망 구조를 뉴런부터 학습 과정까지 그림으로 이해합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-19"
+archiveOrder: 2
 type: "knowledge"
 category: "AI"
 tags: ["neural-network", "deep-learning", "backpropagation", "basics"]

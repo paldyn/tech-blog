@@ -116,9 +116,30 @@ export function readingTimeFor(post: Post): string {
   return `${minutes} min read`;
 }
 
+function postDateKey(post: Post): string {
+  return post.data.pubDate.toISOString().slice(0, 10);
+}
+
+function comparePosts(a: Post, b: Post): number {
+  const dateCompare = postDateKey(b).localeCompare(postDateKey(a));
+  if (dateCompare !== 0) return dateCompare;
+
+  const orderA = a.data.archiveOrder ?? Number.POSITIVE_INFINITY;
+  const orderB = b.data.archiveOrder ?? Number.POSITIVE_INFINITY;
+  if (orderA !== orderB) return orderA - orderB;
+
+  const timeCompare = b.data.pubDate.getTime() - a.data.pubDate.getTime();
+  if (timeCompare !== 0) return timeCompare;
+
+  const titleCompare = a.data.title.localeCompare(b.data.title);
+  if (titleCompare !== 0) return titleCompare;
+
+  return a.id.localeCompare(b.id);
+}
+
 export async function getPublishedPosts(): Promise<Post[]> {
   const all = await getCollection('posts', ({ data }) => !data.draft);
-  return all.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+  return all.sort(comparePosts);
 }
 
 export async function getPostsByType(type: PostType): Promise<Post[]> {

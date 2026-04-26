@@ -3,6 +3,7 @@ title: "화면 기본 단위 이해하기: Application · Frame · Form"
 description: "넥사크로 구조를 Application, Frame, Form 단위로 나눠서 역할과 책임을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-19"
+archiveOrder: 4
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "application", "frame", "form", "architecture"]

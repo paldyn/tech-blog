@@ -3,6 +3,7 @@ title: "이터러블과 제너레이터 — 반복을 프로토콜로 다루다"
 description: "JavaScript의 이터레이션 프로토콜이 무엇인지 이해하고, 제너레이터 함수로 지연 평가·무한 수열·비동기 흐름 제어를 구현하는 방법을 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 7
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "이터러블", "이터레이터", "제너레이터", "Symbol.iterator", "지연평가", "ES6"]

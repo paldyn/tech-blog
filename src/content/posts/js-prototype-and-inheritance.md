@@ -3,6 +3,7 @@ title: "프로토타입과 상속 — JavaScript 객체 지향의 실체"
 description: "JavaScript가 프로토타입 체인으로 상속을 구현하는 원리를 이해하고, ES6 클래스가 그 위에서 어떻게 동작하는지 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 6
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "프로토타입", "prototype", "상속", "클래스", "class", "객체지향", "OOP"]

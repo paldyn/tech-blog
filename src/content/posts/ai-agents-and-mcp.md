@@ -3,6 +3,7 @@ title: "AI 에이전트와 MCP — LLM이 스스로 일한다는 것"
 description: "단순 질의응답을 넘어 도구를 쓰고, 계획하고, 반복하는 AI 에이전트의 원리와 Model Context Protocol(MCP)의 동작 방식을 알기 쉽게 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-26"
+archiveOrder: 1
 type: "knowledge"
 category: "AI"
 tags: ["AI", "Agent", "MCP", "LLM", "ReAct", "Tool Use", "AI 기초"]

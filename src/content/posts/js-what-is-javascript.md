@@ -3,6 +3,7 @@ title: "자바스크립트란 무엇인가"
 description: "10일 만에 탄생한 언어가 어떻게 세상에서 가장 많이 쓰이는 프로그래밍 언어가 됐는지, JavaScript의 본질과 역할을 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-21"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "ECMAScript", "web", "브라우저", "Node.js"]

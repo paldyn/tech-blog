@@ -21,6 +21,7 @@ title: "제목"
 description: "짧은 요약"
 author: "작성자 이름"
 pubDate: 2026-04-18
+archiveOrder: 1           # 같은 날짜 안에서 보여줄 순서 (선택)
 type: "record"         # "record" | "knowledge"
 category: "Backend"      # 자유 입력 (예: Backend, Infra, Platform, Data-Infra ...)
 tags: ["ts", "node"]

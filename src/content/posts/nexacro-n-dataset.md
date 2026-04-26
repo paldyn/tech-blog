@@ -3,6 +3,7 @@ title: "[Nexacro N] Dataset — 화면 데이터의 핵심 저장소"
 description: "Nexacro N에서 화면 데이터를 관리하는 Dataset의 구조, Column 정의, Row 추가/수정/삭제, 검색과 필터, 그리고 실무 CRUD 패턴을 코드 중심으로 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 11
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "dataset", "getColumn", "setColumn", "addRow", "deleteRow", "filter"]

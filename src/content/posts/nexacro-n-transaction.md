@@ -3,6 +3,7 @@ title: "[Nexacro N] Transaction — 서버 통신의 모든 것"
 description: "Nexacro N의 transaction() 메서드 구조와 인자를 완전 분해하고, 조회·저장·다중 서비스 호출·오류 처리·취소까지 실전 패턴으로 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
+archiveOrder: 7
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "transaction", "http", "dataset"]

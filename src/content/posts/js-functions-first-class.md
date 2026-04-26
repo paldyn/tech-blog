@@ -3,6 +3,7 @@ title: "함수는 일급 객체다 — 값처럼 다루는 함수"
 description: "JavaScript에서 함수를 변수에 저장하고, 인자로 전달하고, 반환값으로 쓸 수 있다는 것이 왜 강력한지 알아봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-21"
+archiveOrder: 6
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "함수", "일급객체", "고차함수", "콜백", "화살표함수", "함수형프로그래밍"]

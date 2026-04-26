@@ -3,6 +3,7 @@ title: "비동기 패턴 — 병렬, 순차, 재시도, 타임아웃"
 description: "실전에서 자주 마주치는 비동기 처리 패턴들을 정리합니다. 병렬 실행, 순차 실행, 재시도 로직, 타임아웃, 요청 취소까지 async/await와 Promise를 조합하는 방법을 알아봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-24"
+archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "비동기패턴", "Promise", "async", "await", "병렬처리", "재시도", "타임아웃"]

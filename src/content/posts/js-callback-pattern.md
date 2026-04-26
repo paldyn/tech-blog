@@ -3,6 +3,7 @@ title: "콜백 패턴 — 비동기의 시작과 콜백 헬"
 description: "JavaScript 비동기의 원형인 콜백 패턴의 구조와 유형을 이해하고, 콜백 헬이 왜 발생하는지, 어떻게 벗어날 수 있는지 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 8
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "콜백", "비동기", "콜백헬", "에러퍼스트", "이벤트리스너", "비동기패턴"]

@@ -3,6 +3,7 @@ title: "[Nexacro N] 이벤트와 스크립트 작성법"
 description: "Nexacro N의 이벤트 구조, 핸들러 작성 패턴, this·nexacro·application 스코프 차이, 동적 이벤트 바인딩까지 실무 코드 중심으로 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 13
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "event", "script", "onload", "onclick", "transaction"]

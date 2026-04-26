@@ -7,6 +7,7 @@ description: ""        # 한두 줄 요약. 검색/카드에 노출됨
 author: "PALDYN Team"
 pubDate: "YYYY-MM-DD"
 updatedDate: "YYYY-MM-DD"   # 수정 시에만 기입, 없으면 줄 삭제
+archiveOrder: 1        # 같은 날짜 안에서 보여줄 순서. 필요 없으면 줄 삭제
 type: "knowledge"
 category: ""           # 예: AI / Frontend / Backend / Infra / Team
 tags: []               # 예: ["llm", "basics", "python"]

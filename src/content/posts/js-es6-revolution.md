@@ -3,6 +3,7 @@ title: "ES6 대혁신 — JavaScript가 달라진 날"
 description: "2015년 ECMAScript 6가 가져온 변화를 큰 그림으로 살펴봅니다. let/const, 화살표 함수, 클래스, 모듈, 구조 분해, 템플릿 리터럴 — JavaScript를 현대 언어로 탈바꿈시킨 핵심 기능들을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-24"
+archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "ES6", "ES2015", "화살표함수", "클래스", "모듈", "구조분해", "let", "const"]

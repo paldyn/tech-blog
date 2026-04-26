@@ -3,6 +3,7 @@ title: "프롬프트 엔지니어링 — AI에게 제대로 말 거는 법"
 description: "LLM의 출력 품질을 결정하는 프롬프트의 구조와 핵심 기법을 이해한다. Zero-shot, Few-shot, Chain-of-Thought, Role Prompting까지 실전 예시로 배워보자."
 author: "PALDYN Team"
 pubDate: "2026-04-21"
+archiveOrder: 2
 type: "knowledge"
 category: "AI"
 tags: ["프롬프트 엔지니어링", "LLM", "AI", "Chain-of-Thought", "Few-shot", "GPT", "AI 기초"]

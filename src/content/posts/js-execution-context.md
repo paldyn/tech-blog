@@ -3,6 +3,7 @@ title: "실행 컨텍스트 — JavaScript가 코드를 실행하는 방식"
 description: "JavaScript 엔진이 코드를 실행할 때 내부에서 만드는 실행 컨텍스트의 구조와 동작을 이해하고, 호이스팅·스코프·클로저가 왜 그렇게 동작하는지 근거를 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "실행컨텍스트", "콜스택", "호이스팅", "렉시컬환경", "TDZ", "스코프체인"]

@@ -3,6 +3,7 @@ title: "[Nexacro N] 주요 컴포넌트 한눈에 파악하기"
 description: "Nexacro N에서 자주 쓰는 컴포넌트(Edit, MaskEdit, ComboBox, CheckBox, Radio, Grid, Calendar 등)의 속성·메서드·이벤트를 실무 코드와 함께 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 10
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "components", "edit", "grid", "combobox", "calendar"]

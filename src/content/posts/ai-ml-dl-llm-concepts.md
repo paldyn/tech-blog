@@ -3,6 +3,7 @@ title: "AI · ML · DL · LLM, 뭐가 다른가"
 description: "매일 쓰이지만 정작 관계가 헷갈리는 AI 핵심 개념 네 가지를 한 번에 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-19"
+archiveOrder: 1
 type: "knowledge"
 category: "AI"
 tags: ["ai", "ml", "deep-learning", "llm", "basics"]

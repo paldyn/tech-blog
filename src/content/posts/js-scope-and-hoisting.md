@@ -3,6 +3,7 @@ title: "스코프와 호이스팅 — 변수는 어디서 보이는가"
 description: "JavaScript에서 변수가 유효한 범위(스코프)와 선언이 끌어올려지는 현상(호이스팅)을 깊이 이해합니다. var, let, const, function의 차이를 정확히 파악합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "스코프", "호이스팅", "var", "let", "const", "TDZ", "실행컨텍스트"]

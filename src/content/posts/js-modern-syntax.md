@@ -3,6 +3,7 @@ title: "모던 문법 — ES2018 이후 필수 문법 정리"
 description: "옵셔널 체이닝, 널 병합 연산자, 논리 할당, 구조 분해 고급 패턴까지. ES2018부터 ES2023까지 실무에서 가장 많이 쓰이는 모던 JavaScript 문법을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
+archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "모던문법", "옵셔널체이닝", "널병합", "구조분해", "ES2020", "ES2021", "ES2023"]

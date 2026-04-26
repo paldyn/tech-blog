@@ -3,6 +3,7 @@ title: "넥사크로란 무엇인가"
 description: "넥사크로를 처음 접하는 팀을 위해 구조, 핵심 개념, 실무 활용 포인트를 한 번에 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-19"
+archiveOrder: 3
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "basics", "dataset", "transaction", "enterprise-ui"]

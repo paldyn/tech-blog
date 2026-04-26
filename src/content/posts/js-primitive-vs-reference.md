@@ -3,6 +3,7 @@ title: "원시 타입 vs 참조 타입 — 복사 버그의 근원"
 description: "JavaScript에서 값이 어떻게 메모리에 저장되고 복사되는지 이해하면, 흔한 버그의 원인이 한눈에 보입니다."
 author: "PALDYN Team"
 pubDate: "2026-04-21"
+archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "원시타입", "참조타입", "메모리", "스택", "힙", "얕은복사", "깊은복사"]

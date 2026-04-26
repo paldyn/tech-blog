@@ -3,6 +3,7 @@ title: "트랜스포머(Transformer)란 무엇인가"
 description: "GPT, BERT 등 현대 LLM의 근간인 트랜스포머 아키텍처를 셀프 어텐션부터 인코더-디코더 구조까지 직관적으로 이해합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-21"
+archiveOrder: 1
 type: "knowledge"
 category: "AI"
 tags: ["transformer", "self-attention", "LLM", "encoder-decoder", "deep-learning"]

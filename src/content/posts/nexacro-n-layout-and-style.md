@@ -3,6 +3,7 @@ title: "[Nexacro N] 레이아웃과 스타일 완전 정복"
 description: "Nexacro N에서 컴포넌트를 배치하는 좌표 기반 레이아웃, 앵커(Anchor) 기능, XCSS 스타일 시스템과 테마 관리를 실무 코드와 함께 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-22"
+archiveOrder: 12
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "layout", "style", "xcss", "cssclass"]

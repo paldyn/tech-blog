@@ -3,6 +3,7 @@ title: "모듈 시스템 — CommonJS에서 ES Module까지"
 description: "전역 스크립트 공유의 혼돈에서 벗어나 코드를 독립된 모듈로 나누는 방법. CommonJS와 ES Module의 차이, named/default export, 동적 import(), 트리 쉐이킹까지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
+archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "모듈", "CommonJS", "ESModule", "import", "export", "트리쉐이킹", "번들러"]

@@ -3,6 +3,7 @@ title: "객체 패턴 — 단축 프로퍼티부터 프로퍼티 디스크립터
 description: "JavaScript 객체를 다루는 핵심 패턴들을 정리합니다. 단축 프로퍼티, 계산 프로퍼티명, Object.entries/fromEntries 변환 패턴, 객체 불변성, 게터/세터, 프로퍼티 디스크립터까지."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
+archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "객체", "Object", "프로퍼티디스크립터", "게터세터", "freeze", "entries", "fromEntries"]
