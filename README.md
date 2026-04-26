@@ -48,8 +48,6 @@ heroGradient: "..."      # featured 글의 히어로 배경 (선택)
   - 예: ` ```ts `, ` ```bash `, ` ```mermaid `
 - 설명 흐름 권장: 문제 → 개념/키워드 → 코드/시각자료 → 실무 적용 포인트
 
-템플릿은 [`docs/post-template.md`](docs/post-template.md) 참고.
-
 ```bash
 npm run validate:posts
 ```
