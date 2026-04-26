@@ -37,12 +37,18 @@ function shouldFillLogo(logo: string | undefined): boolean {
     {posts.map((post) => {
       const logo = logoFor(post);
       const fillLogo = shouldFillLogo(logo);
+      const useThemeLogo = post.data.category === 'Team';
       const url = postUrl(post);
 
       return (
         <li class="post-row">
           <a href={url} class="thumb-link" aria-label={post.data.title}>
-            {logo ? (
+            {useThemeLogo ? (
+              <div class="thumb logo-thumb team-logo-thumb">
+                <img class="team-logo team-logo-light-mode" src="/assets/logo-symbol-light.png" alt={`${post.data.category} 로고`} loading="lazy" />
+                <img class="team-logo team-logo-dark-mode" src="/assets/logo-symbol-dark.png" alt="" loading="lazy" aria-hidden="true" />
+              </div>
+            ) : logo ? (
               <div class:list={['thumb', 'logo-thumb', { 'logo-fill': fillLogo }]}>
                 <img src={logo} alt={`${post.data.category} 로고`} loading="lazy" />
               </div>
@@ -163,6 +169,34 @@ function shouldFillLogo(logo: string | undefined): boolean {
     max-width: none;
     max-height: none;
     object-fit: cover;
+  }
+  .thumb.logo-thumb.team-logo-thumb {
+    background: #050505;
+    padding: 0;
+  }
+  .thumb.logo-thumb.team-logo-thumb .team-logo {
+    width: 42px;
+    height: 42px;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .thumb.logo-thumb.team-logo-thumb .team-logo-dark-mode {
+    display: none !important;
+  }
+  :global(html[data-theme="dark"]) .thumb.logo-thumb.team-logo-thumb {
+    background: #ffffff;
+    border-color: var(--border);
+  }
+  :global(html[data-theme="dark"]) .thumb.logo-thumb.team-logo-thumb .team-logo-light-mode {
+    display: none !important;
+  }
+  :global(html[data-theme="dark"]) .thumb.logo-thumb.team-logo-thumb .team-logo-dark-mode {
+    display: block !important;
   }
   .thumb.a { background: linear-gradient(135deg, #0a0a0a, #262626); }
   .thumb.b { background: linear-gradient(135deg, #1a1a1a, #333); }
