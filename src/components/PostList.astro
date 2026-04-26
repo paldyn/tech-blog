@@ -1,0 +1,264 @@
+---
+import {
+  logoFor,
+  postUrl,
+  readingTimeFor,
+  thumbFor,
+  variantFor,
+  type Post,
+} from '../utils/posts';
+
+interface Props {
+  posts: Post[];
+  ariaLabel: string;
+}
+
+const { posts, ariaLabel } = Astro.props;
+const newWindowMs = 1000 * 60 * 60 * 24 * 30;
+
+function isNew(pubDate: Date): boolean {
+  return Date.now() - pubDate.getTime() <= newWindowMs;
+}
+
+function dotDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+}
+
+function shouldFillLogo(logo: string | undefined): boolean {
+  return Boolean(logo?.endsWith('/javascript.jpeg') || logo?.endsWith('/nexacro.png'));
+}
+---
+
+<section class="post-list" aria-label={ariaLabel}>
+  <ul>
+    {posts.map((post) => {
+      const logo = logoFor(post);
+      const fillLogo = shouldFillLogo(logo);
+      const url = postUrl(post);
+
+      return (
+        <li class="post-row">
+          <a href={url} class="thumb-link" aria-label={post.data.title}>
+            {logo ? (
+              <div class:list={['thumb', 'logo-thumb', { 'logo-fill': fillLogo }]}>
+                <img src={logo} alt={`${post.data.category} 로고`} loading="lazy" />
+              </div>
+            ) : (
+              <div class={`thumb ${variantFor(post)}`}>
+                <span class="thumb-symbol">{thumbFor(post)}</span>
+                <span class="thumb-rings" aria-hidden="true">
+                  <span></span><span></span>
+                </span>
+              </div>
+            )}
+          </a>
+          <div class="post-content">
+            <div class="post-meta">
+              <span class="category">{post.data.category}</span>
+              <span class="sep">·</span>
+              <time datetime={post.data.pubDate.toISOString()}>{dotDate(post.data.pubDate)}</time>
+              <span class="sep">·</span>
+              <span>{readingTimeFor(post)}</span>
+            </div>
+            <div class="post-title">
+              <a href={url}>{post.data.title}</a>
+              {isNew(post.data.pubDate) && <span class="badge">NEW</span>}
+            </div>
+            <p>{post.data.description}</p>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<style>
+  .post-list {
+    margin-bottom: 80px;
+  }
+  .post-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+  .post-row {
+    display: grid;
+    grid-template-columns: 144px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+  }
+  .post-row:first-child {
+    border-top: 1px solid var(--border);
+  }
+  .thumb-link {
+    display: block;
+    text-decoration: none;
+  }
+  .thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    font-size: 24px;
+    letter-spacing: 0.02em;
+    position: relative;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    transition: transform 0.35s ease, border-color 0.35s ease;
+  }
+  .post-row:hover .thumb {
+    transform: translateY(-2px);
+  }
+  .thumb-symbol {
+    position: relative;
+    z-index: 1;
+    background: var(--gradient-silver);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+  }
+  .thumb-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .thumb-rings span {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .thumb-rings span:nth-child(1) { width: 70%; aspect-ratio: 1; }
+  .thumb-rings span:nth-child(2) { width: 45%; aspect-ratio: 1; }
+  .thumb.logo-thumb {
+    background: #fff;
+    border-color: var(--border);
+    padding: 18% 22%;
+  }
+  .thumb.logo-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .thumb.logo-thumb.logo-fill {
+    padding: 0;
+  }
+  .thumb.logo-thumb.logo-fill img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+  }
+  .thumb.a { background: linear-gradient(135deg, #0a0a0a, #262626); }
+  .thumb.b { background: linear-gradient(135deg, #1a1a1a, #333); }
+  .thumb.c { background: linear-gradient(135deg, #111, #1e2028); }
+  .thumb.d { background: linear-gradient(135deg, #141414, #2a2a2a); }
+  .thumb.e { background: linear-gradient(135deg, #0f0f0f, #222); }
+  .thumb.f { background: linear-gradient(135deg, #1c1c1c, #3a3a3a); }
+
+  .post-content {
+    min-width: 0;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .category {
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .sep {
+    opacity: 0.5;
+  }
+  .post-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    margin-bottom: 6px;
+  }
+  .post-title a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.08rem;
+    line-height: 1.35;
+    font-weight: 500;
+  }
+  .post-title a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .post-content p {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.7;
+    font-weight: 300;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .badge {
+    background: #ff6400;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    padding: 5px 7px 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .post-row {
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 14px 0;
+    }
+    .thumb {
+      font-size: 18px;
+      border-radius: 6px;
+    }
+    .post-meta {
+      gap: 5px;
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+    .post-title {
+      align-items: flex-start;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+    .post-title a {
+      font-size: 1rem;
+    }
+    .post-content p {
+      font-size: 12px;
+      line-height: 1.55;
+    }
+  }
+</style>
