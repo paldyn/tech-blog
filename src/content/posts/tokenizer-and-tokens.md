@@ -49,7 +49,7 @@ for text in texts:
 
 실행 결과는 대략 이렇습니다.
 
-```
+```text
 [ 4 tokens] Hello, world!
 [10 tokens] 안녕하세요, 세상!
 [10 tokens] The quick brown fox jumps over the lazy dog.
@@ -105,7 +105,7 @@ for tid in token_ids:
 
 BPE는 대규모 텍스트 코퍼스에서 다음 과정을 반복합니다.
 
-```
+```text
 초기 상태: u n h a p p i n e s s
 (모든 문자를 개별 토큰으로 시작)
 
@@ -264,7 +264,6 @@ original = """
 
 저는 오늘    날씨에 대해서    물어보고 싶습니다.
 
-
 오늘 서울    날씨가 어떤가요?
 """
 compressed = compress_prompt(original)
@@ -277,7 +276,12 @@ print(f"압축: {count_tokens(compressed)} 토큰")
 긴 문서를 다룰 때는 의미 단위로 자르고 필요한 부분만 컨텍스트에 넣는 것이 핵심입니다. 이것이 RAG(검색 증강 생성)의 핵심 아이디어이기도 합니다.
 
 ```python
-def chunk_by_tokens(text: str, chunk_size: int = 500, overlap: int = 50, model: str = "gpt-4o") -> list[str]:
+def chunk_by_tokens(
+    text: str,
+    chunk_size: int = 500,
+    overlap: int = 50,
+    model: str = "gpt-4o",
+) -> list[str]:
     """토큰 수 기준으로 텍스트를 청크로 분할 (overlap 포함)"""
     enc = tiktoken.encoding_for_model(model)
     tokens = enc.encode(text)
