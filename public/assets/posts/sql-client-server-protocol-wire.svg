@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 530"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="530" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">와이어 프로토콜 — PostgreSQL v3 기준</text>
+
+  <!-- ── Section 1: Client Query Message ── -->
+  <text x="440" y="78" text-anchor="middle" font-size="13" fill="#55c555">① 클라이언트 → 서버: 쿼리 메시지</text>
+
+  <!-- Packet boxes -->
+  <!-- Type byte -->
+  <rect x="100" y="90" width="60" height="56" rx="4" fill="#1a2a1a" stroke="#2a4a2a"/>
+  <text x="130" y="116" text-anchor="middle" font-size="20" font-weight="700" fill="#55c555">'Q'</text>
+  <text x="130" y="136" text-anchor="middle" font-size="10" fill="#888">0x51</text>
+
+  <!-- Length -->
+  <rect x="170" y="90" width="120" height="56" rx="4" fill="#1a1a2a" stroke="#2a2a4a"/>
+  <text x="230" y="112" text-anchor="middle" font-size="12" font-weight="600" fill="#7ec8e3">00 00 00 1F</text>
+  <text x="230" y="130" text-anchor="middle" font-size="10" fill="#888">Big-Endian int32 = 31</text>
+  <text x="230" y="143" text-anchor="middle" font-size="10" fill="#555">(페이로드 길이 포함)</text>
+
+  <!-- Query string -->
+  <rect x="300" y="90" width="480" height="56" rx="4" fill="#1a0a0a" stroke="#3a1a1a"/>
+  <text x="540" y="112" text-anchor="middle" font-size="12" font-weight="600" fill="#ce9178">SELECT id, name FROM employees\0</text>
+  <text x="540" y="132" text-anchor="middle" font-size="10" fill="#888">UTF-8 인코딩 쿼리 문자열 + NULL 종료자(0x00)</text>
+
+  <!-- Annotations -->
+  <text x="130" y="164" text-anchor="middle" font-size="11" fill="#555">메시지 타입</text>
+  <text x="130" y="177" text-anchor="middle" font-size="11" fill="#555">(1 byte)</text>
+  <text x="230" y="164" text-anchor="middle" font-size="11" fill="#555">메시지 길이</text>
+  <text x="230" y="177" text-anchor="middle" font-size="11" fill="#555">(4 bytes)</text>
+  <text x="540" y="164" text-anchor="middle" font-size="11" fill="#555">페이로드 (가변 길이)</text>
+
+  <!-- ── Section 2: Server Response Messages ── -->
+  <line x1="60" y1="196" x2="820" y2="196" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="440" y="218" text-anchor="middle" font-size="13" fill="#7ec8e3">② 서버 → 클라이언트: 응답 메시지 시퀀스</text>
+
+  <!-- Table header -->
+  <rect x="60" y="228" width="760" height="30" rx="4" fill="#0d0d2a"/>
+  <text x="106" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="#7ec8e3">타입</text>
+  <text x="250" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="#7ec8e3">메시지 이름</text>
+  <text x="560" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="#7ec8e3">역할 / 내용</text>
+  <line x1="152" y1="228" x2="152" y2="472" stroke="#1a1a3a" stroke-width="1"/>
+  <line x1="348" y1="228" x2="348" y2="472" stroke="#1a1a3a" stroke-width="1"/>
+
+  <!-- Row 1: RowDescription -->
+  <rect x="60" y="258" width="760" height="38" rx="0" fill="#0d0d18"/>
+  <text x="106" y="282" text-anchor="middle" font-size="14" font-weight="700" fill="#7ec8e3">'T'</text>
+  <text x="250" y="277" text-anchor="middle" font-size="12" fill="#e8e8e8">RowDescription</text>
+  <text x="250" y="292" text-anchor="middle" font-size="10" fill="#555">0x54</text>
+  <text x="560" y="282" text-anchor="middle" font-size="11" fill="#888">컬럼 수, 이름, 타입 OID, 크기 등 메타데이터</text>
+
+  <!-- Row 2: DataRow -->
+  <rect x="60" y="296" width="760" height="38" rx="0" fill="#0d1a0d"/>
+  <text x="106" y="320" text-anchor="middle" font-size="14" font-weight="700" fill="#55c555">'D'</text>
+  <text x="250" y="315" text-anchor="middle" font-size="12" fill="#e8e8e8">DataRow</text>
+  <text x="250" y="330" text-anchor="middle" font-size="10" fill="#555">0x44 (행마다 반복)</text>
+  <text x="560" y="320" text-anchor="middle" font-size="11" fill="#888">컬럼 수 + 각 컬럼 값 길이(int32) + 바이트열</text>
+
+  <!-- Row 3: DataRow (repeated) -->
+  <rect x="60" y="334" width="760" height="38" rx="0" fill="#0d1a0d"/>
+  <text x="106" y="358" text-anchor="middle" font-size="14" font-weight="700" fill="#55c555">'D'</text>
+  <text x="250" y="353" text-anchor="middle" font-size="12" fill="#e8e8e8">DataRow</text>
+  <text x="250" y="368" text-anchor="middle" font-size="10" fill="#555">0x44 (행 2 …)</text>
+  <text x="560" y="358" text-anchor="middle" font-size="11" fill="#888">결과 행이 N개면 'D' 메시지도 N개 전송</text>
+
+  <!-- Row 4: CommandComplete -->
+  <rect x="60" y="372" width="760" height="38" rx="0" fill="#1a1a08"/>
+  <text x="106" y="396" text-anchor="middle" font-size="14" font-weight="700" fill="#e8c555">'C'</text>
+  <text x="250" y="391" text-anchor="middle" font-size="12" fill="#e8e8e8">CommandComplete</text>
+  <text x="250" y="406" text-anchor="middle" font-size="10" fill="#555">0x43</text>
+  <text x="560" y="396" text-anchor="middle" font-size="11" fill="#888">"SELECT 2" 등 완료 태그 문자열 반환</text>
+
+  <!-- Row 5: ReadyForQuery -->
+  <rect x="60" y="410" width="760" height="38" rx="0" fill="#0a0a0a"/>
+  <text x="106" y="434" text-anchor="middle" font-size="14" font-weight="700" fill="#e05555">'Z'</text>
+  <text x="250" y="429" text-anchor="middle" font-size="12" fill="#e8e8e8">ReadyForQuery</text>
+  <text x="250" y="444" text-anchor="middle" font-size="10" fill="#555">0x5A</text>
+  <text x="560" y="434" text-anchor="middle" font-size="11" fill="#888">트랜잭션 상태 'I'(idle)/'T'(tx)/'E'(error)</text>
+
+  <!-- Table border -->
+  <rect x="60" y="228" width="760" height="220" fill="none" stroke="#2a2a4a" stroke-width="1"/>
+
+  <!-- Note about MySQL -->
+  <rect x="60" y="454" width="760" height="36" rx="4" fill="#0d0d0d" stroke="#222"/>
+  <text x="80" y="472" font-size="11" fill="#555">MySQL 프로토콜(COM_QUERY): 헤더 3+1 bytes(길이+시퀀스) + 커맨드 byte(0x03) + 쿼리 문자열. 클라이언트 플래그로 기능 협상.</text>
+
+  <!-- Footer -->
+  <text x="440" y="500" text-anchor="middle" font-size="11" fill="#444">PALDYN · SQL 완전 정복 · Part I · Chapter 1</text>
+</svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">SQL 쿼리 실행 흐름 — 클라이언트 → 서버</text>
+
+  <!-- ── Left Panel: Client ── -->
+  <rect x="60" y="76" width="350" height="390" rx="8" fill="#0d0d0d" stroke="#333"/>
+  <rect x="60" y="76" width="350" height="44" rx="8" fill="#0a1a0a"/>
+  <rect x="60" y="104" width="350" height="16" fill="#0a1a0a"/>
+  <text x="235" y="103" text-anchor="middle" font-size="16" font-weight="600" fill="#55c555">클라이언트</text>
+  <line x1="60" y1="120" x2="410" y2="120" stroke="#1a2a1a" stroke-width="1"/>
+
+  <!-- Step 1 -->
+  <rect x="80" y="134" width="310" height="60" rx="5" fill="#0d1a0d" stroke="#1e3a1e"/>
+  <text x="98" y="156" font-size="13" font-weight="600" fill="#55c555">① 쿼리 작성 (Application)</text>
+  <text x="98" y="174" font-size="11" fill="#888">connection.query("SELECT id, name FROM employees")</text>
+
+  <!-- Arrow down -->
+  <line x1="235" y1="196" x2="235" y2="218" stroke="#333" stroke-width="1.5"/>
+  <polygon points="231,214 235,224 239,214" fill="#333"/>
+
+  <!-- Step 2 -->
+  <rect x="80" y="222" width="310" height="60" rx="5" fill="#0d1a0d" stroke="#1e3a1e"/>
+  <text x="98" y="244" font-size="13" font-weight="600" fill="#55c555">② DB 드라이버</text>
+  <text x="98" y="262" font-size="11" fill="#888">JDBC · psycopg2 · mysql2 · go-sql-driver</text>
+
+  <!-- Arrow down -->
+  <line x1="235" y1="284" x2="235" y2="306" stroke="#333" stroke-width="1.5"/>
+  <polygon points="231,302 235,312 239,302" fill="#333"/>
+
+  <!-- Step 3 -->
+  <rect x="80" y="310" width="310" height="60" rx="5" fill="#0d1a0d" stroke="#1e3a1e"/>
+  <text x="98" y="332" font-size="13" font-weight="600" fill="#55c555">③ 프로토콜 직렬화</text>
+  <text x="98" y="350" font-size="11" fill="#888">와이어 프로토콜 패킷으로 인코딩</text>
+
+  <!-- Dashed step 4 (waiting for result) -->
+  <rect x="80" y="398" width="310" height="52" rx="5" fill="#080808" stroke="#1a1a1a" stroke-dasharray="4,3"/>
+  <text x="235" y="420" text-anchor="middle" font-size="13" fill="#555">④ ResultSet 수신 대기</text>
+  <text x="235" y="438" text-anchor="middle" font-size="11" fill="#333">← 네트워크 왕복 응답 기다림</text>
+
+  <!-- ── Right Panel: Server ── -->
+  <rect x="470" y="76" width="350" height="390" rx="8" fill="#0d0d0d" stroke="#333"/>
+  <rect x="470" y="76" width="350" height="44" rx="8" fill="#0a0a1a"/>
+  <rect x="470" y="104" width="350" height="16" fill="#0a0a1a"/>
+  <text x="645" y="103" text-anchor="middle" font-size="16" font-weight="600" fill="#7ec8e3">DBMS 서버</text>
+  <line x1="470" y1="120" x2="820" y2="120" stroke="#1a1a2a" stroke-width="1"/>
+
+  <!-- Step A -->
+  <rect x="490" y="134" width="310" height="60" rx="5" fill="#0d0d1a" stroke="#1e1e3a"/>
+  <text x="508" y="156" font-size="13" font-weight="600" fill="#7ec8e3">⑤ 수신 & 파싱 (Parser)</text>
+  <text x="508" y="174" font-size="11" fill="#888">토큰화 → AST 생성 → 의미 분석</text>
+
+  <!-- Arrow down -->
+  <line x1="645" y1="196" x2="645" y2="218" stroke="#333" stroke-width="1.5"/>
+  <polygon points="641,214 645,224 649,214" fill="#333"/>
+
+  <!-- Step B -->
+  <rect x="490" y="222" width="310" height="60" rx="5" fill="#0d0d1a" stroke="#1e1e3a"/>
+  <text x="508" y="244" font-size="13" font-weight="600" fill="#7ec8e3">⑥ 옵티마이저 (Optimizer)</text>
+  <text x="508" y="262" font-size="11" fill="#888">비용 기반 실행 계획 수립</text>
+
+  <!-- Arrow down -->
+  <line x1="645" y1="284" x2="645" y2="306" stroke="#333" stroke-width="1.5"/>
+  <polygon points="641,302 645,312 649,302" fill="#333"/>
+
+  <!-- Step C -->
+  <rect x="490" y="310" width="310" height="60" rx="5" fill="#0d0d1a" stroke="#1e1e3a"/>
+  <text x="508" y="332" font-size="13" font-weight="600" fill="#7ec8e3">⑦ 실행 엔진 (Executor)</text>
+  <text x="508" y="350" font-size="11" fill="#888">스토리지 I/O → 인덱스 탐색 → 결과 집계</text>
+
+  <!-- Step D (result) -->
+  <rect x="490" y="398" width="310" height="52" rx="5" fill="#0d1a0d" stroke="#1e3a1e"/>
+  <text x="645" y="420" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">⑧ ResultSet 직렬화 & 전송</text>
+  <text x="645" y="438" text-anchor="middle" font-size="11" fill="#888">행 데이터 패킷으로 인코딩 후 전송</text>
+
+  <!-- ── Center Arrows ── -->
+  <!-- Query → (left to right) at y=340 -->
+  <polygon points="413,335 452,335 452,330 467,340 452,350 452,345 413,345"
+           fill="#55c555" stroke="#0a0a0a" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="440" y="325" text-anchor="middle" font-size="10" fill="#55c555">SQL 쿼리</text>
+
+  <!-- Result ← (right to left) at y=424 -->
+  <polygon points="467,419 428,419 428,414 413,424 428,434 428,429 467,429"
+           fill="#7ec8e3" stroke="#0a0a0a" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="440" y="410" text-anchor="middle" font-size="10" fill="#7ec8e3">ResultSet</text>
+
+  <!-- Footer -->
+  <text x="440" y="488" text-anchor="middle" font-size="11" fill="#444">PALDYN · SQL 완전 정복 · Part I · Chapter 1</text>
+</svg>
