@@ -11,11 +11,9 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-language-categories/)에서 이어집니다.
-
 ## 테이블 생성은 데이터 모델링의 출발점
 
-앞 글에서 DDL이 스키마를 정의한다고 배웠다. DDL 중 가장 기본이 되는 명령어가 `CREATE TABLE`이다. 잘 설계된 테이블은 이후 모든 쿼리를 간결하게 만들고, 잘못 설계된 테이블은 평생 기술 부채가 된다.
+[지난 글](/posts/sql-language-categories/)에서 DDL이 스키마를 정의한다고 배웠다. DDL 중 가장 기본이 되는 명령어가 `CREATE TABLE`이다. 잘 설계된 테이블은 이후 모든 쿼리를 간결하게 만들고, 잘못 설계된 테이블은 평생 기술 부채가 된다.
 
 이 글에서는 `CREATE TABLE`의 문법 구조와 자주 하는 실수를 살펴본다.
 

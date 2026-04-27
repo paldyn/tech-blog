@@ -11,11 +11,9 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-engines/)에서 이어집니다.
-
 ## 엔진과 런타임 — 무엇이 다른가
 
-지난 글에서 JavaScript 엔진(V8, SpiderMonkey, JavaScriptCore)이 코드를 파싱하고 최적화해 실행하는 과정을 살펴봤습니다. 그런데 아무리 좋은 엔진이 있어도 파일을 읽거나, HTTP 요청을 보내거나, DOM을 조작하는 것은 엔진 혼자 할 수 없습니다.
+[지난 글](/posts/js-engines/)에서 JavaScript 엔진(V8, SpiderMonkey, JavaScriptCore)이 코드를 파싱하고 최적화해 실행하는 과정을 살펴봤습니다. 그런데 아무리 좋은 엔진이 있어도 파일을 읽거나, HTTP 요청을 보내거나, DOM을 조작하는 것은 엔진 혼자 할 수 없습니다.
 
 **런타임(Runtime)**은 엔진 위에 이런 기능들을 제공하는 환경입니다.
 

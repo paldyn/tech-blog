@@ -11,11 +11,9 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-ecmascript-standard/)에서 이어집니다.
-
 ## 엔진이란 무엇인가
 
-앞선 두 글에서 JavaScript가 무엇인지, ECMAScript 표준이 어떻게 발전했는지 살펴봤습니다. 그런데 JavaScript 코드는 실제로 어떻게 실행될까요? `const x = 1 + 2`라고 쓰면 컴퓨터가 그 의미를 어떻게 파악하고 계산 결과를 낼까요?
+[지난 글](/posts/js-ecmascript-standard/)에서 JavaScript가 무엇인지, ECMAScript 표준이 어떻게 발전했는지 살펴봤습니다. 그런데 JavaScript 코드는 실제로 어떻게 실행될까요? `const x = 1 + 2`라고 쓰면 컴퓨터가 그 의미를 어떻게 파악하고 계산 결과를 낼까요?
 
 이 역할을 하는 것이 **JavaScript 엔진**입니다. 엔진은 JavaScript 소스 코드를 받아 분석하고, 최종적으로는 CPU가 이해할 수 있는 기계어 명령어로 실행합니다.
 

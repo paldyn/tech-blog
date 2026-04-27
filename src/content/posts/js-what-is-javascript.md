@@ -11,8 +11,6 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-object-patterns/)에서 이어집니다.
-
 ## 10일 만에 탄생한 언어의 30년
 
 1995년 넷스케이프의 엔지니어 브렌던 아이크(Brendan Eich)는 단 10일 만에 새 언어를 만들어냈습니다. 처음 이름은 **Mocha**, 그다음은 **LiveScript**, 마케팅 전략으로 최종 이름은 **JavaScript**가 됐습니다. Java의 인기에 편승하려는 의도였지만, 이 두 언어는 설계 철학부터 전혀 다릅니다.

@@ -11,8 +11,6 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-create-table-basics/)에서 이어집니다.
-
 ## 타입 선택이 중요한 이유
 
 `CREATE TABLE`에서 컬럼 타입을 잘못 잡으면 나중에 `ALTER TABLE`로 바꿔야 한다. 운영 DB에서 타입 변경은 테이블 잠금이나 풀 리빌드를 동반하는 경우가 많다. 처음 설계할 때 한 번만 제대로 하면 평생 편하다.
