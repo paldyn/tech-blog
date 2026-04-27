@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">TDZ가 발생하는 의외의 상황들</text>
+
+  <!-- Case 1: Default parameter -->
+  <rect x="60" y="68" width="380" height="150" rx="10" fill="#0d1117" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="250" y="92" text-anchor="middle" font-size="14" font-weight="600" fill="#ce9178">① 기본 매개변수에서의 TDZ</text>
+  <rect x="76" y="102" width="348" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// a의 기본값이 b를 참조</text>
+  <text x="92" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="164" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> foo(a = b, b = </text>
+  <text x="308" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="316" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">) {}</text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">foo(); // ReferenceError!</text>
+  <text x="92" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// a 평가 시점에 b는 아직 TDZ</text>
+  <text x="92" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">foo(undefined, 1); // OK</text>
+
+  <!-- Case 2: Closure in class -->
+  <rect x="460" y="68" width="380" height="150" rx="10" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="650" y="92" text-anchor="middle" font-size="14" font-weight="600" fill="#7777cc">② 클래스 상속과 TDZ</text>
+  <rect x="476" y="102" width="348" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="492" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">class</text>
+  <text x="528" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> A {}</text>
+  <text x="492" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">class</text>
+  <text x="528" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> B </text>
+  <text x="552" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">extends</text>
+  <text x="616" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> A {</text>
+  <text x="492" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  constructor() {</text>
+  <text x="492" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">    // super() 전 this → TDZ</text>
+  <text x="492" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">    super(); // 반드시 먼저!</text>
+
+  <!-- Case 3: typeof and TDZ -->
+  <rect x="60" y="238" width="380" height="150" rx="10" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="250" y="262" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">③ typeof와 TDZ</text>
+  <rect x="76" y="272" width="348" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 선언 안된 변수 → "undefined"</text>
+  <text x="92" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">typeof</text>
+  <text x="140" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> undeclared; // "undefined"</text>
+  <text x="92" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// TDZ에 있는 변수 → 오류!</text>
+  <text x="92" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">typeof</text>
+  <text x="140" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> x;</text>
+  <text x="92" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// ReferenceError!</text>
+  <text x="92" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">let x = 1;</text>
+
+  <!-- redraw case 3 cleanly -->
+  <rect x="76" y="272" width="348" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 선언 안된 변수</text>
+  <text x="92" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">typeof</text>
+  <text x="140" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> notDefined;</text>
+  <text x="92" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// → "undefined" (안전)</text>
+  <text x="92" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// TDZ에 있는 let 변수</text>
+  <text x="92" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">typeof</text>
+  <text x="140" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> x;</text>
+  <text x="92" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">               // ReferenceError!</text>
+  <text x="92" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">let</text>
+  <text x="116" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> x = </text>
+  <text x="152" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="160" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <!-- Case 4: Key insight -->
+  <rect x="460" y="238" width="380" height="150" rx="10" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="262" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">TDZ 존재 이유</text>
+  <text x="480" y="294" font-size="12" fill="#e8e8e8">초기화 전 접근을 허용하면:</text>
+  <text x="480" y="314" font-size="12" fill="#e05555">• 예기치 않은 undefined 버그</text>
+  <text x="480" y="332" font-size="12" fill="#e05555">• 논리 오류 숨김</text>
+  <text x="480" y="352" font-size="12" fill="#e05555">• const가 의미 없어짐</text>
+  <text x="480" y="380" font-size="12" fill="#55c555">TDZ가 있어서:</text>
+  <text x="480" y="398" font-size="12" fill="#55c555">• 즉각적인 오류 → 버그 조기 발견</text>
+
+  <!-- Footer -->
+  <text x="440" y="404" text-anchor="middle" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복 시리즈 #8</text>
+</svg>
