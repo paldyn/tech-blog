@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] Nexacro란 무엇인가 (RIA 시대부터 N까지)](/posts/nexacro-n-what-is-nexacro/) 글에서 이어집니다.
+
 이 글은 **Nexacro N 기준**으로 작성되었습니다.
 
 투비소프트 Nexacro는 10년 넘는 시간 동안 여러 차례 큰 전환점을 거쳤다.

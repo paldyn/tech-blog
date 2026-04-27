@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] 레이아웃과 스타일 완전 정복](/posts/nexacro-n-layout-and-style/) 글에서 이어집니다.
+
 이 글은 **Nexacro N 기준으로 작성되었습니다.**
 넥사크로를 처음 배울 때 가장 헷갈리는 부분 중 하나가 바로 "스크립트를 어디에, 어떻게 써야 하나"입니다.
 웹 개발의 `addEventListener`나 React의 `onClick`에 익숙한 분들도, 넥사크로의 이벤트 등록 방식과 스코프 체계는 생소하게 느껴질 수 있습니다.

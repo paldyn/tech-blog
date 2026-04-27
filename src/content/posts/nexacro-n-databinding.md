@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] 이벤트와 스크립트 작성법](/posts/nexacro-n-events-and-scripts/) 글에서 이어집니다.
+
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 
 Nexacro N 개발에서 데이터바인딩(Data Binding)은 거의 모든 UI 구성의 토대입니다. Dataset에 데이터를 채우면 바인딩된 컴포넌트가 자동으로 갱신되고, 사용자가 컴포넌트를 수정하면 Dataset에 즉시 반영됩니다. 이 양방향 동기화 덕분에 "Grid에서 선택한 행을 Edit에 표시"하는 패턴 같은 복잡한 UI 흐름을 단 몇 줄의 속성 설정으로 완성할 수 있습니다.

@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] Transaction — 서버 통신의 모든 것](/posts/nexacro-n-transaction/) 글에서 이어집니다.
+
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 
 기업 업무 시스템의 80%는 데이터를 조회하고, 추가하고, 수정하고, 삭제하는 작업으로 이루어집니다. Nexacro N은 이 CRUD 흐름을 **Dataset → Grid → Transaction** 구조로 일관성 있게 처리합니다. 이 글에서는 실무에서 반복적으로 사용하는 함수 패턴을 단계별로 정리하고, 각 단계에서 Dataset이 어떻게 행(Row)의 상태를 추적하는지 설명합니다.

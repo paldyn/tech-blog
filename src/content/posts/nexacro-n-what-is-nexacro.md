@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] 유효성 검사 — 저장 전 데이터 무결성 보장하기](/posts/nexacro-n-validation/) 글에서 이어집니다.
+
 이 글은 **Nexacro N 기준**으로 작성되었습니다.
 
 Nexacro를 처음 접하는 개발자라면 "이게 React나 Vue와 뭐가 다른가?" 라는 의문이 먼저 들 것이다.

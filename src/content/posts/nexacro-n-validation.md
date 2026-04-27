@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] CRUD 패턴 — 조회·신규·수정·삭제·저장 완전 정리](/posts/nexacro-n-crud-pattern/) 글에서 이어집니다.
+
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 
 아무리 잘 만든 CRUD 화면도 잘못된 데이터가 서버에 전달되면 의미가 없습니다. Nexacro N에서는 `this.transaction()` 호출 직전에 스크립트로 유효성 검사를 수행하는 것이 일반적인 패턴입니다. 이 글에서는 실무에서 필요한 다섯 가지 검사 유형과 공통 함수 구조, Grid 셀 수준 검증 방법, UX 친화적 오류 표시까지 코드와 함께 상세히 정리합니다.

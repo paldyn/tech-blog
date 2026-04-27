@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/) 글에서 이어집니다.
+
 모던 문법 정리에 이어, 이번에는 코드를 파일 단위로 나누고 조합하는 방법인 **모듈 시스템**을 살펴봅니다. 모듈은 JavaScript 생태계를 이해하는 데 빠질 수 없는 개념입니다. `require`와 `import`가 공존하는 이유, `.mjs`와 `.cjs` 확장자가 생긴 배경, 그리고 번들러가 하는 일까지 차례로 짚어봅니다.
 
 ---

@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [이벤트 루프 — 싱글 스레드가 비동기를 다루는 방법](/posts/js-event-loop/) 글에서 이어집니다.
+
 지금까지 비동기 시리즈(콜백, Promise, async/await, 비동기 패턴)를 달려왔습니다. 이 모든 것의 뿌리를 짚는 글로 잠시 돌아봅니다. **2015년, ECMAScript 6**가 나왔습니다. JavaScript 역사에서 이 해를 기점으로 "이전"과 "이후"를 나눌 수 있을 만큼 큰 변화였습니다.
 
 ---

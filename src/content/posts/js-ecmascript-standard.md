@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로](/posts/js-what-is-javascript/) 글에서 이어집니다.
+
 ## JavaScript와 ECMAScript — 같은 듯 다른 이름
 
 지난 글에서 JavaScript가 어떻게 탄생했는지 살펴봤습니다. 그런데 공식 문서나 MDN을 보다 보면 "JavaScript" 대신 "ECMAScript"라는 단어가 자주 등장합니다. 이 둘은 무엇이 다를까요?

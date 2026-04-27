@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] 데이터바인딩 — Dataset과 컴포넌트를 연결하는 핵심 메커니즘](/posts/nexacro-n-databinding/) 글에서 이어집니다.
+
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 
 Nexacro N 애플리케이션은 서버와 통신할 때 표준 HTTP를 사용하지만, 그 위에 **Dataset 직렬화 프로토콜**이라는 자체 규약을 얹습니다. 개발자가 직접 XMLHttpRequest를 다루는 대신 `this.transaction()` 한 메서드로 "요청 Dataset 전송 → 서버 처리 → 응답 Dataset 수신 → 콜백 실행"을 모두 처리합니다. 이 글에서는 그 메커니즘을 낱낱이 분해하고, 실무에서 반드시 필요한 패턴들을 코드와 함께 정리합니다.

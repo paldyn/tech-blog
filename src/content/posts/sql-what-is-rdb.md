@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [데이터 타입 표준 (날짜·시간) — DATE·TIME·TIMESTAMP와 타임존 함정](/posts/sql-data-types-datetime/) 글에서 이어집니다.
+
 ## 왜 데이터베이스가 필요할까?
 
 1990년대 초 한 유통 회사가 있었다고 상상해 보세요. 상품 목록은 `products.csv`, 고객 정보는 `customers.txt`, 주문은 `orders.dat`. 세 팀이 각자의 파일을 담당했고, 매달 말 정산 보고서를 만들려면 개발자가 직접 파이썬 스크립트를 돌려 파일 세 개를 합쳐야 했습니다. 그러던 어느 날 두 팀이 동시에 `customers.txt`에 쓰기를 시도했고, 파일이 절반만 갱신된 채 망가졌습니다.

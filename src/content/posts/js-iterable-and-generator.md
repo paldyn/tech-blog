@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 글에서 실행 컨텍스트가 어떻게 코드 실행 환경을 구성하는지 살펴봤습니다. 이번에는 그 위에서 동작하는 언어 기능 중 하나인 **이터레이션 프로토콜(Iteration Protocol)** 을 살펴봅니다.
+지난 [프로토타입과 상속 — JavaScript 객체 지향의 실체](/posts/js-prototype-and-inheritance/) 글에서 실행 컨텍스트가 어떻게 코드 실행 환경을 구성하는지 살펴봤습니다. 이번에는 그 위에서 동작하는 언어 기능 중 하나인 **이터레이션 프로토콜(Iteration Protocol)** 을 살펴봅니다.
 
 `for...of`, 스프레드 문법 `[...arr]`, 구조분해 `const [a, b] = ...` — 이 모든 문법은 이터레이션 프로토콜을 사용합니다. 배열뿐 아니라 문자열, Map, Set, DOM의 NodeList도 이 규약을 따르기 때문에 동일한 문법으로 다룰 수 있습니다. ES6(ES2015)에서 도입된 이 프로토콜은 JavaScript 반복의 표준 인터페이스입니다.
 

@@ -11,6 +11,8 @@ featured: false
 draft: false
 ---
 
+지난 [\[Nexacro N\] 주요 컴포넌트 한눈에 파악하기](/posts/nexacro-n-components-overview/) 글에서 이어집니다.
+
 이 글은 **Nexacro N 기준으로 작성되었습니다.**
 넥사크로 개발을 하면서 "Dataset은 결국 테이블이다"라는 말을 자주 듣게 됩니다.
 맞습니다. Dataset은 열(Column)과 행(Row)으로 이루어진 **인메모리 테이블**이며, 서버에서 받아온 데이터를 화면에 표시하거나 사용자 입력을 서버로 전송하기 위한 중간 저장소 역할을 합니다.
