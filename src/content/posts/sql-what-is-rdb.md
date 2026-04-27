@@ -2,7 +2,7 @@
 title: "데이터베이스란 무엇인가 — 파일 시스템과의 차이"
 description: "파일 시스템과 데이터베이스를 비교하며 DBMS가 왜 필요한지, ANSI/SPARC 3단계 아키텍처가 어떻게 데이터 독립성을 보장하는지 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
