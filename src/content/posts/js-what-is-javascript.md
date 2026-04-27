@@ -2,7 +2,7 @@
 title: "JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로"
 description: "JavaScript의 탄생 배경, Java와의 차이, 그리고 브라우저를 넘어 서버·모바일·엣지까지 확장된 범용 언어로서의 JavaScript를 소개합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
+pubDate: "2026-04-22"
 archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"

@@ -2,7 +2,7 @@
 title: "클로저 — 함수가 기억하는 것들"
 description: "JavaScript 클로저의 동작 원리를 렉시컬 스코프와 연결해 이해하고, 상태 은닉·팩토리·모듈 패턴 등 실용적인 활용법을 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-24"
+pubDate: "2026-04-25"
 archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"

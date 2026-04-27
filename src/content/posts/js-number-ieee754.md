@@ -2,8 +2,8 @@
 title: "number의 IEEE 754 정밀도와 함정"
 description: "JavaScript number 타입의 IEEE 754 배정밀도 구조, 0.1+0.2≠0.3의 이유, NaN·-0·Infinity의 특성, 그리고 부동소수점 문제를 안전하게 다루는 패턴을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
-archiveOrder: 10
+pubDate: "2026-04-24"
+archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "number", "IEEE754", "부동소수점", "NaN", "BigInt", "정밀도"]

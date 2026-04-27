@@ -2,8 +2,8 @@
 title: "호이스팅의 본질 — 선언이 끌어올려지는 원리"
 description: "JavaScript 호이스팅이 실제로 어떻게 동작하는지, var/let/const/함수 선언문의 호이스팅 차이와 실행 컨텍스트와의 연관성을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
-archiveOrder: 7
+pubDate: "2026-04-23"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "호이스팅", "hoisting", "var", "실행 컨텍스트", "스코프"]

@@ -2,8 +2,8 @@
 title: "원시 타입 7가지 — JavaScript의 기본 데이터"
 description: "JavaScript의 7가지 원시 타입(number, string, boolean, null, undefined, Symbol, BigInt)의 특징과 typeof 동작, 원시 타입과 참조 타입의 차이를 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
-archiveOrder: 9
+pubDate: "2026-04-24"
+archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "원시 타입", "primitive", "typeof", "null", "undefined", "Symbol", "BigInt"]

@@ -2,8 +2,8 @@
 title: "var · let · const 차이 — 스코프, 호이스팅, 재할당"
 description: "JavaScript 변수 선언의 세 가지 방법인 var, let, const의 스코프 규칙, 호이스팅 동작, 재선언/재할당 제한을 예제와 함께 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
-archiveOrder: 6
+pubDate: "2026-04-23"
+archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "var", "let", "const", "스코프", "호이스팅", "ES6"]

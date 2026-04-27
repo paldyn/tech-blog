@@ -2,7 +2,7 @@
 title: "런타임 환경 — 브라우저 · Node · Deno · Bun"
 description: "JavaScript를 실행하는 네 가지 주요 런타임(브라우저, Node.js, Deno, Bun)의 아키텍처와 차이점, 그리고 각각의 선택 기준을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
+pubDate: "2026-04-22"
 archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"

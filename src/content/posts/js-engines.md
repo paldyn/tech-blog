@@ -2,7 +2,7 @@
 title: "JS 엔진 — V8 · SpiderMonkey · JavaScriptCore"
 description: "JavaScript 엔진의 내부 동작 원리(파싱·AST·인터프리터·JIT 컴파일)와 V8·SpiderMonkey·JavaScriptCore 3대 엔진의 특징을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
+pubDate: "2026-04-22"
 archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"

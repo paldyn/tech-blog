@@ -2,8 +2,8 @@
 title: "TDZ (Temporal Dead Zone) — 시간적 사각지대"
 description: "let과 const의 Temporal Dead Zone이 무엇인지, 왜 존재하는지, 그리고 예기치 못한 TDZ 오류 패턴을 실제 코드와 함께 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
-archiveOrder: 8
+pubDate: "2026-04-23"
+archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "TDZ", "Temporal Dead Zone", "let", "const", "호이스팅", "ReferenceError"]

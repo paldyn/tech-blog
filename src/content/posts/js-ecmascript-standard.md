@@ -2,7 +2,7 @@
 title: "ECMAScript 표준과 버전 이름 — ES5·ES6·ES2015~ES2024"
 description: "JavaScript의 공식 명세인 ECMAScript의 탄생부터 TC39 제안 프로세스, ES5/ES6/ES2015~ES2024 각 버전의 핵심 기능까지 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
+pubDate: "2026-04-22"
 archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"

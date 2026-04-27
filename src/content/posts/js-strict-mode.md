@@ -2,8 +2,8 @@
 title: "Strict mode와 Sloppy mode — 더 안전한 JavaScript"
 description: "ES5에서 도입된 strict mode가 해결하는 문제들, sloppy mode와의 차이점, 그리고 현대 JavaScript에서의 자동 적용 케이스를 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-28"
-archiveOrder: 5
+pubDate: "2026-04-23"
+archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "strict mode", "ES5", "sloppy mode", "보안", "버그"]
