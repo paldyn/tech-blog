@@ -1,265 +1,245 @@
 ---
 title: "스프링의 4대 핵심 — IoC, DI, AOP, PSA"
-description: "스프링을 스프링답게 만드는 네 가지 기둥. IoC와 DI의 차이, AOP가 코드를 어떻게 깨끗하게 유지하는지, PSA가 왜 기술 교체를 쉽게 만드는지 구체적인 코드와 함께 살펴본다."
+description: "스프링을 지탱하는 네 가지 핵심 개념 IoC, DI, AOP, PSA를 코드 예시와 함께 명확하게 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 2
 type: "knowledge"
 category: "Spring"
-tags: ["spring", "ioc", "di", "aop", "psa", "core"]
+tags: ["spring", "ioc", "di", "aop", "psa"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-what-is-spring/)에서 EJB의 한계와 스프링의 POJO 철학을 살펴봤다. "비즈니스 코드는 순수 자바로, 인프라 관심사는 프레임워크가"라는 원칙을 실현하기 위해 스프링은 네 가지 핵심 개념을 설계의 기둥으로 삼았다.
+[지난 글](/posts/spring-what-is-spring/)에서 EJB의 한계와 스프링이 POJO 철학으로 그것을 어떻게 극복했는지 살펴봤습니다. 그렇다면 스프링은 구체적으로 어떤 메커니즘으로 동작할까요? 스프링의 모든 기능은 네 가지 핵심 개념 위에 세워져 있습니다. IoC, DI, AOP, PSA — 이 네 가지를 제대로 이해하면 스프링의 나머지 모든 것이 자연스럽게 보입니다.
 
-**IoC**, **DI**, **AOP**, **PSA** — 이 네 단어는 스프링 문서 첫 페이지에 등장하지만, 처음 보면 모두 비슷하게 들린다. 이 글에서는 각 개념의 의미, 서로의 관계, 그리고 왜 지금도 중요한지를 코드로 풀어본다.
+## IoC — 제어의 역전
 
-![스프링의 4대 핵심 개요](/assets/posts/spring-four-pillars-overview.svg)
+**IoC(Inversion of Control, 제어의 역전)** 는 스프링의 가장 근본적인 원칙입니다. 이름이 조금 거창하지만 개념 자체는 단순합니다.
 
-## 1. IoC — 제어의 역전
-
-**IoC(Inversion of Control)** 는 특정 기술이 아니라 소프트웨어 설계 **원칙**이다.
-
-전통적인 자바 코드에서는 개발자가 객체의 생성과 소멸, 의존 관계를 직접 제어한다.
+전통적인 프로그래밍에서는 개발자 코드가 라이브러리를 호출합니다. 내가 주도권을 가집니다.
 
 ```java
-// 제어가 개발자에게 있는 전통 방식
-public class OrderController {
-
-    private OrderService orderService;
-
-    public OrderController() {
-        // 개발자가 직접 new
-        OrderRepository repo = new OrderRepository();
-        this.orderService = new OrderService(repo);
-    }
-}
+// 전통 방식 — 개발자가 직접 제어
+OrderRepository repo = new JdbcOrderRepository("jdbc:mysql://...");
+OrderService service = new OrderService(repo);
+service.placeOrder(itemId, quantity);
 ```
 
-이 코드의 문제점은 분명하다. `OrderController`가 `OrderService`와 `OrderRepository`를 어떻게 만드는지까지 알아야 한다. 테스트할 때 `OrderService`를 가짜(Mock)로 교체하려면 코드를 수정해야 한다.
-
-IoC는 이 **제어의 방향을 뒤집는다**. 객체 생성과 의존 관계 연결의 책임을 **컨테이너**에게 넘긴다.
+IoC에서는 반대입니다. 개발자는 컴포넌트를 등록하고, **프레임워크(컨테이너)가 컴포넌트를 호출**합니다. 마치 식당에서 셰프(개발자)는 요리만 하고, 홀 매니저(스프링)가 알아서 주문을 받아 적절한 요리를 내어주는 것과 같습니다.
 
 ```java
-// IoC — 제어가 컨테이너에 있는 스프링 방식
-@RestController
-public class OrderController {
+// IoC 방식 — 스프링이 제어
+// 개발자는 컴포넌트를 선언만 한다
+@Service
+public class OrderService { ... }
 
-    private final OrderService orderService;
+@Repository
+public class JdbcOrderRepository { ... }
 
-    // 컨테이너가 호출해서 주입해준다
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
-}
+// 어플리케이션 시작시 스프링이 알아서 객체를 만들고 연결
 ```
 
-`OrderController`는 이제 `OrderService`가 어떻게 만들어지는지, 내부에 어떤 의존성이 있는지 전혀 모른다. "나는 `OrderService`가 필요하다"는 선언만 할 뿐이고, 실제 제공은 스프링 컨테이너가 한다.
+이 "컨테이너"가 바로 스프링의 **ApplicationContext**입니다. 모든 빈(Bean)의 생성, 의존성 연결, 소멸을 컨테이너가 책임집니다.
 
-마틴 파울러는 이 원칙을 "**헐리우드 원칙**"이라고도 불렀다. "전화하지 마세요, 우리가 전화할게요(Don't call us, we'll call you)".
+![스프링 4대 핵심 개념 구조도](/assets/posts/spring-four-pillars-overview.svg)
 
-## 2. DI — IoC를 구현하는 방법
+## DI — 의존성 주입
 
-**DI(Dependency Injection, 의존성 주입)** 는 IoC를 달성하는 구체적인 패턴이다. IoC라는 목표를 DI라는 방법으로 달성한다고 이해하면 된다.
+**DI(Dependency Injection, 의존성 주입)** 는 IoC를 구현하는 구체적인 방법입니다. IoC가 "무엇을 역전시키는가"에 대한 원칙이라면, DI는 "어떻게 역전시키는가"에 대한 패턴입니다.
 
-스프링에서 DI는 세 가지 방식으로 이뤄진다.
+A 객체가 B 객체를 필요로 할 때, A가 B를 직접 만드는 것이 아니라 **외부(컨테이너)에서 B를 만들어 A에게 넣어줍니다**. 이것이 주입(Injection)입니다.
 
-### 생성자 주입 (권장)
+![DI 전·후 비교](/assets/posts/spring-four-pillars-di-code.svg)
+
+DI의 가장 큰 가치는 **교체 가능성**과 **테스트 용이성**입니다.
 
 ```java
+// OrderRepository 인터페이스
+public interface OrderRepository {
+    void save(Order order);
+}
+
+// 실제 운영 구현체
+@Repository
+public class JpaOrderRepository implements OrderRepository {
+    public void save(Order order) { /* DB 저장 */ }
+}
+
+// 테스트용 Mock 구현체
+public class FakeOrderRepository implements OrderRepository {
+    private List<Order> orders = new ArrayList<>();
+    public void save(Order order) { orders.add(order); }
+}
+
+// OrderService는 어떤 구현체가 오는지 모른다
 @Service
 public class OrderService {
-
     private final OrderRepository orderRepository;
-    private final PaymentGateway paymentGateway;
 
-    // Spring 4.3+: 생성자가 하나면 @Autowired 생략 가능
-    public OrderService(
-            OrderRepository orderRepository,
-            PaymentGateway paymentGateway) {
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.paymentGateway = paymentGateway;
     }
 }
 ```
 
-`final` 필드로 선언되므로 불변성이 보장된다. 필수 의존성이 없으면 객체 자체가 만들어지지 않아 NPE를 원천 차단한다.
+운영 환경에서는 스프링이 `JpaOrderRepository`를 주입하고, 테스트에서는 `FakeOrderRepository`를 주입합니다. `OrderService` 코드는 한 줄도 바뀌지 않습니다.
 
-### 세터 주입 (선택적 의존성)
+DI 방식은 세 가지가 있습니다. 스프링 팀이 권장하는 방식은 **생성자 주입**입니다.
 
 ```java
+// 1. 생성자 주입 (권장) — 불변성 보장, null 방지
 @Service
-public class NotificationService {
+public class PaymentService {
+    private final OrderRepository repo;
+    private final NotificationService notifier;
 
+    public PaymentService(OrderRepository repo,
+                          NotificationService notifier) {
+        this.repo = repo;
+        this.notifier = notifier;
+    }
+}
+
+// 2. 세터 주입 — 선택적 의존성에 사용
+@Service
+public class ReportService {
     private EmailSender emailSender;
 
-    // 선택적 의존성: 없어도 동작하되, 있으면 이메일 발송
     @Autowired(required = false)
     public void setEmailSender(EmailSender emailSender) {
         this.emailSender = emailSender;
     }
 }
-```
 
-### 필드 주입 (테스트·유지보수 불리, 지양)
-
-```java
+// 3. 필드 주입 — 간결하지만 테스트 어려움 (비권장)
 @Service
-public class OrderService {
-
-    @Autowired  // 리플렉션으로 직접 주입 — final 불가, 테스트 어려움
-    private OrderRepository orderRepository;
+public class UserService {
+    @Autowired
+    private UserRepository userRepository; // 비권장
 }
 ```
 
-필드 주입은 코드가 짧아 보이지만, 외부에서 의존성을 교체할 방법이 없어 단위 테스트가 어렵다. 스프링 공식 문서도 생성자 주입을 권장한다.
+## AOP — 관점 지향 프로그래밍
 
-### DI의 진짜 가치 — 테스트 가능성
+**AOP(Aspect-Oriented Programming, 관점 지향 프로그래밍)** 는 "여러 곳에 반복되는 관심사"를 한 곳으로 모으는 기법입니다.
 
-```java
-// 스프링 없이, JUnit 단독으로 테스트
-@Test
-void createOrder_deductsInventory() {
-    // given
-    OrderRepository mockRepo = mock(OrderRepository.class);
-    PaymentGateway mockPay = mock(PaymentGateway.class);
-    OrderService svc = new OrderService(mockRepo, mockPay);  // new!
-
-    // when
-    svc.createOrder(someRequest);
-
-    // then
-    verify(mockRepo).save(any());
-    verify(mockPay).charge(any());
-}
-```
-
-WAS도, ApplicationContext도 없이 순수 JVM에서 실행된다. 이것이 POJO + DI 조합이 주는 최대의 이점이다.
-
-## 3. AOP — 횡단 관심사 분리
-
-비즈니스 로직을 작성하다 보면 로직과 직접 관계없는 코드들이 반복되는 것을 느낀다.
+예를 들어, 메서드 실행 시간을 로깅하고 싶다고 생각해 봅시다. AOP 없이는 모든 서비스 메서드마다 똑같은 코드를 넣어야 합니다.
 
 ```java
-// AOP 없이 — 로깅·트랜잭션이 비즈니스 로직과 뒤섞임
-public Order createOrder(OrderRequest request) {
-    log.info("createOrder 시작: {}", request);  // 로깅
-    Transaction tx = txManager.begin();          // 트랜잭션
+// AOP 없이 — 모든 메서드에 중복 코드
+public Order placeOrder(Long itemId) {
+    long start = System.currentTimeMillis();
     try {
-        Order order = doCreateOrder(request);    // ← 진짜 로직
-        tx.commit();
-        log.info("createOrder 완료: {}", order.getId());
+        Order order = orderRepo.findAndCreate(itemId);
         return order;
-    } catch (Exception e) {
-        tx.rollback();
-        log.error("createOrder 실패", e);
-        throw e;
+    } finally {
+        long elapsed = System.currentTimeMillis() - start;
+        log.info("placeOrder took {}ms", elapsed);
     }
 }
 ```
 
-로깅과 트랜잭션 관리가 핵심 로직 `doCreateOrder`를 감싸고 있다. 메서드 100개에 이 패턴을 반복해야 한다면? 그리고 어느 날 로깅 형식을 바꿔야 한다면?
-
-**AOP(Aspect-Oriented Programming)** 는 이런 **횡단 관심사(Cross-Cutting Concern)** 를 별도 모듈(Aspect)로 분리한다.
+AOP를 사용하면 이 "횡단 관심사(cross-cutting concern)"를 **Aspect**라는 별도 클래스에 한 번만 정의하면 됩니다.
 
 ```java
+// AOP 적용 — 한 곳에서 모든 서비스 메서드에 적용
 @Aspect
 @Component
-public class LoggingAspect {
-
-    private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
+public class PerformanceLoggingAspect {
 
     @Around("execution(* com.example.service.*.*(..))")
-    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logExecutionTime(ProceedingJoinPoint pjp)
+            throws Throwable {
         long start = System.currentTimeMillis();
-        String method = joinPoint.getSignature().toShortString();
-
-        try {
-            Object result = joinPoint.proceed();  // 실제 메서드 호출
-            log.info("{} 완료 ({}ms)", method, System.currentTimeMillis() - start);
-            return result;
-        } catch (Exception e) {
-            log.error("{} 실패: {}", method, e.getMessage());
-            throw e;
-        }
+        Object result = pjp.proceed();
+        long elapsed = System.currentTimeMillis() - start;
+        log.info("{} took {}ms",
+            pjp.getSignature().getName(), elapsed);
+        return result;
     }
 }
 ```
 
-이제 `OrderService`의 모든 메서드에 로깅이 자동 적용된다. 비즈니스 코드 한 줄도 건드리지 않고.
+이 Aspect 하나가 `service` 패키지의 모든 메서드에 자동으로 적용됩니다. 서비스 코드는 아무것도 바꾸지 않아도 됩니다.
+
+AOP의 핵심 용어를 간략히 정리하면:
+
+| 용어 | 의미 |
+|------|------|
+| **Aspect** | 횡단 관심사 모듈 (예: 로깅 Aspect) |
+| **Advice** | 실제로 실행될 코드 (`@Around`, `@Before` 등) |
+| **Pointcut** | Advice가 적용될 위치 지정 표현식 |
+| **JoinPoint** | Advice가 끼어들 수 있는 실행 시점 |
+| **Weaving** | Aspect를 대상 코드에 엮는 과정 |
+
+스프링 AOP는 **프록시 패턴** 기반으로 동작합니다. 스프링이 빈 사이에 프록시 객체를 심어 Aspect가 실행되게 합니다. 코드 수정 없이 동작이 추가되는 마법처럼 보이지만, 내부적으로는 명확한 메커니즘입니다. AOP에 대한 자세한 내용은 Chapter 4에서 깊이 다룹니다.
+
+## PSA — 이식 가능한 서비스 추상화
+
+**PSA(Portable Service Abstraction, 이식 가능한 서비스 추상화)** 는 스프링이 제공하는 일관된 인터페이스를 통해 다양한 기술을 동일한 방식으로 사용하게 해주는 원칙입니다.
 
 ```java
-// AOP 적용 후 — 순수 비즈니스 로직만 남음
-@Transactional  // AOP가 트랜잭션 처리
-public Order createOrder(OrderRequest request) {
-    Order order = new Order(request.getCustomerId(), request.getItems());
-    return orderRepository.save(order);
+// PSA 예시: 캐시 기술이 Caffeine이든 Redis든
+// 개발자 코드는 동일
+@Service
+public class ProductService {
+
+    @Cacheable("products")
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElseThrow();
+    }
 }
 ```
 
-`@Transactional`도 AOP로 동작한다. 메서드 진입 시 트랜잭션을 시작하고, 정상 종료 시 커밋, 예외 시 롤백하는 `@Around` Advice가 스프링 내부에 구현되어 있다.
+`@Cacheable` 어노테이션 아래에는 Caffeine, Redis, EhCache 등 어떤 캐시 구현체가 와도 됩니다. 스프링이 중간에서 추상화 계층을 제공하므로 코드는 바뀌지 않습니다.
 
-![DI 흐름과 AOP 레이어](/assets/posts/spring-four-pillars-di-flow.svg)
-
-## 4. PSA — 이식 가능한 서비스 추상화
-
-**PSA(Portable Service Abstraction)** 는 스프링이 제공하는 다양한 기술 추상화 계층이다. 특정 구현 기술에 의존하지 않고 일관된 인터페이스로 다양한 기술을 다룰 수 있게 한다.
-
-대표적인 예: 트랜잭션 관리
+PSA가 빛나는 곳은 트랜잭션 처리입니다.
 
 ```java
-// JPA를 쓰든, JDBC를 쓰든, JTA를 쓰든 — 같은 애노테이션
-@Transactional
-public void transferMoney(Long fromId, Long toId, BigDecimal amount) {
-    Account from = accountRepository.findById(fromId).orElseThrow();
-    Account to = accountRepository.findById(toId).orElseThrow();
-    from.withdraw(amount);
-    to.deposit(amount);
+// @Transactional — JPA든, JDBC든, JTA든 동일하게 동작
+@Service
+public class TransferService {
+
+    @Transactional
+    public void transfer(Long fromId, Long toId, int amount) {
+        Account from = accountRepo.findById(fromId).orElseThrow();
+        Account to = accountRepo.findById(toId).orElseThrow();
+        from.deduct(amount);
+        to.add(amount);
+        // 예외 발생 시 자동 롤백
+    }
 }
 ```
 
-내부적으로 스프링은 `PlatformTransactionManager` 인터페이스를 통해 트랜잭션을 관리한다. JPA를 쓰면 `JpaTransactionManager`가, JDBC를 쓰면 `DataSourceTransactionManager`가 주입된다. 코드는 바뀌지 않는다.
+`@Transactional`은 내부적으로 `PlatformTransactionManager` 인터페이스를 사용합니다. JPA를 쓰면 `JpaTransactionManager`가, 단순 JDBC면 `DataSourceTransactionManager`가 동작합니다. 개발자는 어떤 구현체를 쓰는지 신경 쓸 필요가 없습니다.
 
-캐시 추상화 역시 마찬가지다.
+## 네 가지가 함께 만드는 시너지
 
-```java
-// 로컬 캐시(Caffeine)에서 Redis로 바꿔도 코드 그대로
-@Cacheable(value = "products", key = "#productId")
-public Product findProduct(Long productId) {
-    return productRepository.findById(productId).orElseThrow();
-}
+이 네 가지 개념은 독립적이 아니라 서로 맞물려 동작합니다.
+
+```
+IoC 컨테이너가 빈을 관리한다
+      ↓
+DI로 빈들 사이의 의존성을 연결한다
+      ↓
+AOP로 빈 사이에 횡단 관심사를 투명하게 추가한다
+      ↓
+PSA로 어떤 기술 스택을 써도 동일한 코드로 동작한다
 ```
 
-`application.yml` 설정 한 줄로 캐시 구현체를 바꿀 수 있다.
+실제 스프링 애플리케이션에서 하나의 요청이 처리되는 흐름을 보면:
 
-```yaml
-spring:
-  cache:
-    type: redis   # caffeine → redis로 교체. 비즈니스 코드 무변경
-```
+1. `@Controller` 빈이 IoC 컨테이너에 등록된다 (IoC)
+2. `@Service` 의존성이 생성자로 주입된다 (DI)
+3. 컨트롤러 메서드 호출 전후로 트랜잭션이 자동으로 시작·종료된다 (AOP)
+4. JPA든 JDBC든 동일한 `@Transactional`로 처리된다 (PSA)
 
-## 네 기둥의 관계
-
-```text
-IoC  ←  "객체 제어를 컨테이너에게"  (원칙)
- └─ DI  ← IoC를 구현하는 패턴
- └─ AOP ← IoC 컨테이너가 가로채서 적용하는 기술
- └─ PSA ← IoC 컨테이너 위에서 통일된 인터페이스 제공
-```
-
-IoC가 가장 상위 개념이고, DI·AOP·PSA는 IoC 컨테이너가 있기에 가능한 기법들이다. DI 덕분에 AOP 프록시를 투명하게 주입할 수 있고, PSA의 구현체 교체도 DI로 이뤄진다.
+이 구조가 스프링 코드를 단순하게 유지하면서도 강력하게 만드는 비결입니다.
 
 ## 정리
 
-| 개념 | 핵심 질문 | 이점 |
-|------|-----------|------|
-| IoC | "누가 객체를 관리하는가?" | 결합도 감소, 테스트 용이 |
-| DI | "의존성을 어떻게 공급하는가?" | 교체 가능, 불변성, 명시적 의존 |
-| AOP | "횡단 관심사를 어디에 두는가?" | 비즈니스 코드 순수성 유지 |
-| PSA | "기술을 어떻게 추상화하는가?" | 벤더 독립, 이식성 |
-
-이 네 가지를 이해하고 나면 스프링의 수많은 기능들 — `@Transactional`, `@Cacheable`, `@Async`, `@Scheduled` — 이 모두 같은 원칙 위에 서 있음을 알게 된다. 스프링을 외우는 것이 아니라 **이해하게 되는** 순간이 온다.
+스프링의 네 기둥은 단순히 기술 용어가 아닙니다. 각각은 소프트웨어 설계의 오랜 원칙(결합도 감소, 단일 책임, 의존성 역전)을 실용적으로 구현한 것입니다. 이 개념들을 머릿속에 넣어 두고 이후 챕터를 읽으면, 각 기능이 왜 그런 방식으로 설계됐는지 자연스럽게 이해됩니다.
 
 ---
 

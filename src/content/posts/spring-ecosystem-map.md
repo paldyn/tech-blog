@@ -1,244 +1,220 @@
 ---
 title: "스프링 생태계 지도 — Framework, Boot, Data, Security, Cloud"
-description: "스프링은 하나의 프레임워크가 아니라 수십 개의 프로젝트 생태계다. 각 프로젝트의 역할, 서로의 관계, 어떤 상황에서 무엇을 선택해야 하는지 한눈에 정리한다."
+description: "spring.io의 주요 프로젝트들을 한눈에 파악하고, 각각의 역할과 관계를 명확히 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 3
 type: "knowledge"
 category: "Spring"
-tags: ["spring", "spring-boot", "spring-data", "spring-security", "spring-cloud", "ecosystem"]
+tags: ["spring", "spring-boot", "spring-data", "spring-security", "spring-cloud"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-four-pillars/)에서 IoC, DI, AOP, PSA라는 네 가지 핵심 원칙을 살펴봤다. 이번에는 시야를 넓혀보자. "스프링을 배운다"고 했을 때, 그 스프링은 정확히 무엇을 가리키는 걸까?
+[지난 글](/posts/spring-four-pillars/)에서 IoC, DI, AOP, PSA라는 스프링의 네 가지 핵심 원칙을 살펴봤습니다. 이 원칙들이 실제로 어떤 프로젝트들 안에 녹아 있는지, 스프링 생태계 전체를 지도처럼 조망해 보겠습니다. "스프링"이라는 단어는 하나이지만 실제로는 수십 개의 독립 프로젝트를 가리킵니다.
 
-결론부터 말하면, **스프링은 단일 프레임워크가 아니다**. spring.io에는 현재 수십 개의 프로젝트가 등록돼 있다. 이 글에서는 가장 중요한 다섯 축 — Spring Framework, Spring Boot, Spring Data, Spring Security, Spring Cloud — 을 지도처럼 펼쳐보겠다.
+## "스프링"은 하나가 아니다
 
-![스프링 생태계 지도](/assets/posts/spring-ecosystem-map-diagram.svg)
+처음 스프링을 공부하면 혼란스러운 게 있습니다. Spring Framework, Spring Boot, Spring Data, Spring Security, Spring Cloud — 이게 다 뭐가 다른 걸까요?
 
-## Spring Framework — 모든 것의 기반
+**spring.io**에 접속하면 수십 개의 스프링 프로젝트가 나옵니다. 이 프로젝트들은 각각 독립적으로 버전이 관리되고, 서로 조합해서 사용합니다. 큰 그림을 먼저 잡아두지 않으면 문서를 볼 때마다 어느 프로젝트의 이야기인지 헷갈립니다.
 
-**Spring Framework**는 생태계 전체의 토대다. 나머지 모든 스프링 프로젝트는 이 위에서 동작한다.
+## 생태계의 토대 — Spring Framework
 
-핵심 구성요소는 크게 세 레이어다.
+**Spring Framework**는 모든 스프링 프로젝트의 기반입니다. 앞서 설명한 IoC 컨테이너, DI, AOP가 여기에 들어 있습니다. Spring Boot도, Spring Data도, Spring Security도 내부적으로는 Spring Framework 위에 얹혀 있습니다.
 
-```
-spring-core        : 기본 유틸리티, 타입 변환, SpEL
-spring-beans       : BeanFactory, 의존성 주입
-spring-context     : ApplicationContext, 이벤트, 국제화
-spring-web         : MVC, WebFlux, REST
-spring-tx          : 트랜잭션 추상화
-spring-jdbc        : JdbcTemplate, DataSource 지원
-spring-test        : MockMvc, @SpringRunner 등
-```
+주요 모듈을 살펴보면:
 
-Spring Framework 6.x(Boot 3.x에 포함)는 **Jakarta EE 9+** 기반으로 전환됐다. `javax.*` 패키지가 모두 `jakarta.*`로 바뀐 것이 가장 큰 변화다. 최소 JDK 17 이상이 필요하며, 이 시리즈는 Spring Boot 3.x + JDK 21을 기준으로 작성된다.
+| 모듈 | 역할 |
+|------|------|
+| `spring-core` | IoC 컨테이너, BeanFactory |
+| `spring-context` | ApplicationContext, 이벤트, 리소스 |
+| `spring-webmvc` | DispatcherServlet, @Controller |
+| `spring-webflux` | 리액티브 웹(Reactor 기반) |
+| `spring-jdbc` | JdbcTemplate, 트랜잭션 |
+| `spring-test` | 테스트 지원 (@SpringRunner 등) |
+| `spring-aop` | AOP 프록시 구현 |
 
-Spring Framework를 직접 사용하는 경우는 오늘날 드물다. 레거시 시스템 통합이나 특수한 경량 배포를 제외하면 거의 모든 새 프로젝트는 Spring Boot를 통해 접근한다.
+실무에서 Spring Framework를 직접 의존성에 추가할 일은 드뭅니다. 대신 **Spring Boot를 통해 간접적으로 포함**됩니다.
 
-## Spring Boot — 생산성의 혁명
+![스프링 생태계 지도](/assets/posts/spring-ecosystem-map-projects.svg)
 
-**Spring Boot**는 "스프링 개발자를 위한 스프링"이라고 할 수 있다. 스프링 프레임워크를 직접 사용할 때의 번거로운 설정과 의존성 관리를 자동화한다.
+## Spring Boot — 실무의 시작점
 
-Spring Boot가 해결하는 네 가지 문제:
+**Spring Boot**가 등장한 2014년 이전까지는 스프링 프로젝트를 시작하기 위해 XML 설정 수십 줄과 의존성 충돌 해결, 톰캣 설치·설정 같은 준비 작업을 해야 했습니다. Spring Boot는 이 모든 의식적인 준비 작업을 없앴습니다.
 
-### 1. Auto-Configuration
+Spring Boot가 해결하는 핵심 네 가지:
 
-`spring-boot-starter-web`을 의존성에 추가하는 순간, 스프링 부트는 자동으로 `DispatcherServlet`을 등록하고, Jackson을 JSON 직렬화기로 설정하고, 내장 톰캣을 구성한다.
-
-```java
-// 이것만으로 완전한 REST API 서버가 구동된다
-@SpringBootApplication
-public class ShopApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ShopApplication.class, args);
-    }
-}
-```
-
-수백 줄의 XML 설정이 사라진다.
-
-### 2. Starter 의존성
-
-스타터는 관련된 의존성을 묶어놓은 메타 패키지다.
-
-```xml
-<!-- 이 한 줄로 Spring MVC + Jackson + Tomcat이 모두 들어온다 -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-```
-
-버전 충돌 걱정도 없다. `spring-boot-starter-parent` 또는 BOM이 버전을 통합 관리한다.
-
-### 3. 임베디드 서버
-
-WAR 파일로 WAS에 배포하던 방식 대신, 실행 가능한 **Executable JAR** 하나로 패키징한다.
-
-```bash
-# 빌드
-./gradlew bootJar
-
-# 실행 — Tomcat이 jar 안에 내장되어 있음
-java -jar shop-0.0.1-SNAPSHOT.jar
-```
-
-컨테이너(Docker) 환경과 궁합이 완벽하다.
-
-### 4. Actuator
-
-운영에 필요한 모니터링 엔드포인트를 자동으로 제공한다.
+1. **Auto-Configuration**: 클래스패스에 라이브러리가 있으면 자동으로 설정
+2. **Starter**: 관련 의존성을 묶은 편의 패키지
+3. **Embedded Server**: 톰캣이 JAR 안에 포함 (배포가 `java -jar app.jar` 한 줄)
+4. **Actuator**: 헬스체크, 메트릭 등 운영 정보 엔드포인트 자동 제공
 
 ```yaml
-# application.yml
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, metrics, env
+# application.yml — Spring Boot가 이 한 줄로 DataSource를 자동 구성
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: user
+    password: pass
+  jpa:
+    hibernate:
+      ddl-auto: validate
 ```
 
-`/actuator/health`, `/actuator/metrics` 같은 엔드포인트가 자동으로 활성화된다.
+이 YAML만 있으면 Spring Boot는 HikariCP 커넥션 풀, JPA EntityManagerFactory, 트랜잭션 매니저를 모두 자동으로 세팅합니다. 개발자가 직접 빈으로 등록하지 않아도 됩니다.
 
-## Spring Data — 데이터 액세스의 통일
+![Spring Boot 스타터 구조](/assets/posts/spring-ecosystem-map-boot-structure.svg)
 
-**Spring Data**는 다양한 데이터 저장소(JPA, MongoDB, Redis, Elasticsearch 등)에 대한 일관된 접근 방식을 제공한다.
+## Spring Data — 데이터 접근 통합
 
-핵심은 **리포지토리 추상화**다.
+**Spring Data**는 다양한 데이터 저장소(RDB, NoSQL, Cache 등)에 대한 일관된 추상화를 제공합니다. 핵심 아이디어는 반복적인 데이터 접근 코드를 없애는 것입니다.
 
 ```java
-// JPA 기반 리포지토리 — 구현 코드 없음
-public interface OrderRepository extends JpaRepository<Order, Long> {
+// Spring Data JPA — 인터페이스 선언만으로 CRUD + 페이징 완성
+public interface ProductRepository
+        extends JpaRepository<Product, Long> {
 
-    // 메서드 이름만으로 쿼리 생성
-    List<Order> findByCustomerIdAndStatus(Long customerId, OrderStatus status);
+    // 메서드 이름으로 쿼리 자동 생성
+    List<Product> findByNameContaining(String keyword);
 
-    // JPQL로 직접 작성도 가능
-    @Query("SELECT o FROM Order o WHERE o.totalAmount > :minAmount")
-    List<Order> findExpensiveOrders(@Param("minAmount") BigDecimal minAmount);
+    // 가격 범위 조회
+    List<Product> findByPriceBetween(int min, int max);
+
+    // 카테고리별 최신순 페이징
+    Page<Product> findByCategoryOrderByCreatedAtDesc(
+        String category, Pageable pageable);
 }
 ```
 
-메서드 이름을 파싱해 쿼리를 자동 생성한다. `findByCustomerIdAndStatus`는 `WHERE customer_id = ? AND status = ?`로 변환된다.
+구현체를 직접 작성하지 않아도 스프링이 런타임에 프록시 구현체를 만들어줍니다. Spring Data가 지원하는 저장소:
 
-MongoDB로 바꿔도 동일한 인터페이스를 사용한다. 데이터 저장소가 바뀌어도 리포지토리 인터페이스는 거의 변경이 없다.
+- **Spring Data JPA** — RDB + JPA/Hibernate
+- **Spring Data MongoDB** — MongoDB
+- **Spring Data Redis** — Redis 캐시
+- **Spring Data R2DBC** — 리액티브 JDBC
+- **Spring Data Elasticsearch** — 검색 엔진
 
-### Spring Data 서브 프로젝트
+## Spring Security — 보안 전담
 
-| 서브 프로젝트 | 대상 저장소 |
-|---|---|
-| Spring Data JPA | JPA (Hibernate) |
-| Spring Data JDBC | 순수 JDBC |
-| Spring Data MongoDB | MongoDB |
-| Spring Data Redis | Redis |
-| Spring Data Elasticsearch | Elasticsearch |
-| Spring Data R2DBC | 리액티브 관계형 DB |
-
-## Spring Security — 보안의 표준
-
-**Spring Security**는 인증(Authentication)과 인가(Authorization)를 담당한다. 필터 체인 기반으로 동작하며, 스프링 애플리케이션에서 사실상 표준 보안 프레임워크다.
+**Spring Security**는 인증(Authentication)과 인가(Authorization)를 담당하는 프레임워크입니다. 보안은 애플리케이션 전반에 걸쳐 있는 횡단 관심사이므로, AOP와 서블릿 필터 체인 기반으로 구현됩니다.
 
 ```java
+// Spring Boot 3.x — SecurityFilterChain 기반 설정
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http)
+            throws Exception {
         return http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/public/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+            .formLogin(Customizer.withDefaults())
             .build();
     }
 }
 ```
 
-Spring Boot Auto-Configuration과 결합하면 `spring-boot-starter-security`를 추가하는 것만으로 기본 폼 로그인 + CSRF 보호가 활성화된다.
+Spring Security는 폼 로그인, HTTP Basic, OAuth 2.0/OIDC, JWT, SAML 등 거의 모든 인증 방식을 지원합니다. 또한 CSRF, CORS, 세션 고정 공격 방어 같은 보안 기본기도 기본 설정으로 제공합니다.
 
-OAuth 2.0, JWT, OIDC, 세션 관리, 메서드 수준 보안 등 현대 애플리케이션에 필요한 모든 보안 기능을 제공한다.
+## Spring Cloud — 마이크로서비스
 
-## Spring Cloud — 마이크로서비스 인프라
-
-**Spring Cloud**는 마이크로서비스 아키텍처 구성에 필요한 패턴들을 구현체로 제공한다.
-
-![프로젝트 선택 가이드](/assets/posts/spring-ecosystem-map-selection-guide.svg)
+**Spring Cloud**는 클라우드 환경, 특히 마이크로서비스 아키텍처를 위한 도구 모음입니다. Netflix OSS 컴포넌트들을 스프링스럽게 통합한 것이 시작이었고, 지금은 독자적인 구현체들도 있습니다.
 
 주요 컴포넌트:
 
+| 프로젝트 | 역할 |
+|----------|------|
+| Spring Cloud Gateway | API 게이트웨이, 라우팅 |
+| Spring Cloud Config | 중앙 집중 설정 서버 |
+| Spring Cloud Netflix Eureka | 서비스 디스커버리 |
+| OpenFeign | 선언적 HTTP 클라이언트 |
+| Resilience4j | 서킷 브레이커, 재시도, 벌크헤드 |
+
 ```yaml
-# Spring Cloud 컴포넌트 구성 예시
-# Config Server — 중앙 집중식 설정 관리
+# Spring Cloud Gateway 라우팅 설정
 spring:
   cloud:
-    config:
-      uri: http://config-server:8888
-
-# Eureka — 서비스 디스커버리
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka:8761/eureka/
+    gateway:
+      routes:
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - StripPrefix=2
 ```
 
-```java
-// OpenFeign — 선언적 HTTP 클라이언트
-@FeignClient(name = "payment-service")
-public interface PaymentClient {
+## 기타 주요 프로젝트
 
-    @PostMapping("/api/payments")
-    PaymentResult charge(@RequestBody PaymentRequest request);
-}
-```
+- **Spring Batch**: 대용량 배치 처리 (Job/Step/Chunk 기반)
+- **Spring Integration**: 엔터프라이즈 통합 패턴 (메시지 파이프라인)
+- **Spring AMQP**: RabbitMQ 통합
+- **Spring Kafka**: Apache Kafka 통합
+- **Spring AI**: LLM(ChatGPT, Claude 등) 통합 (2024년~ 활발히 개발 중)
 
-Spring Cloud는 마이크로서비스 환경에서만 필요하다. 서비스 수가 적다면 Spring Boot만으로 충분하다.
+## 버전 호환성 — 무엇을 함께 쓸 수 있나
 
-## 그 외 주목할 프로젝트
-
-**Spring Batch**: 대용량 배치 처리. Job, Step, ItemReader/Writer/Processor 추상화로 ETL 파이프라인을 구성한다.
-
-**Spring Integration**: 기업 통합 패턴(EIP) 구현. 메시지 기반 시스템 통합에 사용한다.
-
-**Spring AI**: LLM(대규모 언어 모델) 연동 추상화. OpenAI, Anthropic Claude 등 다양한 AI 프로바이더를 일관된 API로 사용한다.
-
-**Spring Authorization Server**: OAuth 2.0 인가 서버 구현. Keycloak 대신 자체 인가 서버를 구축할 때 사용한다.
-
-## 어떤 조합을 선택할 것인가
-
-신규 프로젝트라면 거의 항상 이 조합으로 시작한다.
+이 프로젝트들은 각각 독립적으로 버전이 올라가므로 호환성 확인이 중요합니다. Spring Boot의 BOM(Bill of Materials)이 이를 해결합니다.
 
 ```gradle
-// build.gradle (Kotlin DSL)
+// build.gradle — Spring Boot BOM이 모든 버전을 관리
+plugins {
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+}
+
 dependencies {
-    // 웹 API
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    // 버전 번호 없이 선언 — BOM이 호환되는 버전을 자동 결정
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+}
 
-    // 데이터베이스 (JPA)
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    // 보안
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
-    // 운영 모니터링
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    // 테스트
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+// Spring Cloud는 별도 BOM 추가 필요
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.0"
+    }
 }
 ```
 
-서비스가 성장하고 마이크로서비스 분리가 필요해지면 Spring Cloud를 점진적으로 도입한다. 배치 작업이 생기면 Spring Batch를, 복잡한 메시징 통합이 필요해지면 Spring Integration이나 Spring Kafka를 추가한다.
+Spring Boot 3.x는 Spring Framework 6.x를 사용하며, Jakarta EE 9+ 네임스페이스(`jakarta.*`)를 기반으로 합니다. JDK 17이 최소 요구 버전입니다.
 
-생태계는 넓지만 출발점은 단순하다. **Spring Boot + Web + Data JPA + Security** 이 네 가지가 대부분의 웹 애플리케이션을 완성시킨다.
+## 어디서 시작해야 할까
+
+실무 애플리케이션을 만든다면 일반적인 순서는 이렇습니다.
+
+```
+1단계: Spring Boot + spring-boot-starter-web
+       → 기본 REST API 서버
+
+2단계: + spring-boot-starter-data-jpa + DB 드라이버
+       → 데이터베이스 연동
+
+3단계: + spring-boot-starter-security
+       → 인증·인가
+
+4단계 (필요시): + Spring Cloud 컴포넌트들
+               → 마이크로서비스 아키텍처
+```
+
+이 시리즈도 같은 순서를 따릅니다. Chapter 3~8은 Spring Framework 코어와 데이터 접근을, Chapter 9~11은 Spring Boot를, Chapter 14는 Spring Security를, Chapter 20은 Spring Cloud를 다룹니다.
+
+## 정리
+
+스프링 생태계는 한 덩어리가 아니라 명확한 관심사로 분리된 프로젝트들의 집합입니다. Spring Framework가 기반을 제공하고, Spring Boot가 시작을 쉽게 하며, Spring Data·Security·Cloud가 각 도메인의 복잡함을 추상화합니다. 다음 글에서는 이 생태계가 어떤 역사적 과정을 거쳐 현재에 이르렀는지 살펴봅니다.
 
 ---
 
-**지난 글:** [스프링의 4대 핵심 — IoC, DI, AOP, PSA](/posts/spring-four-pillars/)
+**지난 글:** [스프링의 4대 핵심 (IoC, DI, AOP, PSA)](/posts/spring-four-pillars/)
 
 **다음 글:** [스프링의 역사 — 1.x XML 시대부터 6.x까지](/posts/spring-history/)
 

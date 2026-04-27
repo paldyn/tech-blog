@@ -1,248 +1,290 @@
 ---
 title: "스프링의 역사 — 1.x XML 시대부터 6.x까지"
-description: "2003년 Rod Johnson의 도전부터 Spring Boot, 리액티브, Jakarta EE 전환까지. 스프링이 어떻게 진화해왔는지 버전별 핵심 변화를 짚는다."
+description: "Spring Framework 1.0부터 6.x, Spring Boot 3.x까지 버전별 핵심 변화와 자바 생태계의 진화를 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 4
 type: "knowledge"
 category: "Spring"
-tags: ["spring", "history", "spring-boot", "jakarta", "spring6", "evolution"]
+tags: ["spring", "spring-history", "spring-boot", "jakarta-ee", "spring6"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-ecosystem-map/)에서 스프링 생태계의 지형도를 살펴봤다. 이번에는 그 생태계가 어떻게 탄생하고 성장해왔는지 역사의 흐름을 따라가 본다. 버전별 변화를 이해하면 "왜 이렇게 설계됐는가"라는 질문에 답할 수 있게 된다.
+[지난 글](/posts/spring-ecosystem-map/)에서 스프링 생태계의 다양한 프로젝트들을 한눈에 정리했습니다. 이번 글에서는 그 생태계가 어떤 경로를 걸어 지금에 이르렀는지 살펴봅니다. 역사를 아는 것은 단순한 교양이 아닙니다. 왜 특정 방식이 레거시로 불리는지, 왜 마이그레이션이 필요한지, 현재의 모범 사례가 왜 그런지를 이해하는 데 역사적 맥락이 필수입니다.
 
-![스프링 버전 타임라인](/assets/posts/spring-history-timeline.svg)
+## 2003 — Spring 1.x: XML 설정의 시대
 
-## Spring 1.x (2003) — POJO의 선언
+로드 존슨이 2002년 책에서 공개한 코드를 기반으로, 2003년 Apache 라이선스로 스프링 1.0이 출시됩니다. 당시 자바 생태계의 주류는 EJB 2.x였고, 스프링은 그 대안으로 등장했습니다.
 
-2003년 6월, 세상에 나온 Spring 1.0은 `interface21` 프로젝트에서 시작됐다. Rod Johnson이 저서 *Expert One-on-One J2EE Design and Development*(2002)에 첨부한 예제 코드가 씨앗이었다.
-
-1.0의 핵심은 세 가지였다.
-
-**XML 기반 Bean 정의**: 모든 빈 설정을 `applicationContext.xml`에 작성했다.
+Spring 1.x의 특징은 **XML 중심 설정**입니다. 모든 빈 정의와 의존성을 XML로 작성했습니다.
 
 ```xml
-<!-- Spring 1.x 스타일 — XML로 모든 것을 정의 -->
-<beans xmlns="http://www.springframework.org/schema/beans">
-
-    <bean id="orderRepository" class="com.example.OrderRepositoryImpl"/>
-
-    <bean id="orderService" class="com.example.OrderServiceImpl">
-        <!-- 생성자 주입 -->
-        <constructor-arg ref="orderRepository"/>
+<!-- Spring 1.x 스타일 applicationContext.xml -->
+<beans>
+    <bean id="orderRepository"
+          class="com.example.JdbcOrderRepository">
+        <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="orderController" class="com.example.OrderController">
-        <!-- 세터 주입 -->
-        <property name="orderService" ref="orderService"/>
+    <bean id="orderService"
+          class="com.example.OrderService">
+        <property name="orderRepository"
+                  ref="orderRepository"/>
     </bean>
 
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName"
+                  value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost/mydb"/>
+    </bean>
 </beans>
 ```
 
-장황하지만 혁신이었다. EJB의 홈 인터페이스, 배포 서술자, WAS 종속성을 모두 버리고 순수 POJO로 엔터프라이즈 애플리케이션을 만들 수 있었다.
+이 방식은 EJB보다는 훨씬 낫지만, 규모가 커질수록 XML 파일이 수천 줄로 불어났습니다. 컴파일 타임 검증이 없어 오타로 인한 런타임 오류도 자주 발생했습니다.
 
-**BeanFactory와 ApplicationContext**: IoC 컨테이너의 원형이 이때 등장했다.
+그럼에도 스프링은 빠르게 인기를 얻었습니다. EJB가 강요하던 복잡성 없이도 트랜잭션 관리, AOP, MVC를 제공했기 때문입니다.
 
-**JdbcTemplate**: JDBC 보일러플레이트(connection 열기, PreparedStatement 생성, 예외 처리, 닫기)를 캡슐화했다.
+## 2006 — Spring 2.x: 어노테이션의 시작
 
-```java
-// Spring 1.x — JdbcTemplate으로 JDBC 단순화
-JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-List<Order> orders = jdbc.query(
-    "SELECT * FROM orders WHERE customer_id = ?",
-    new Object[]{customerId},
-    new OrderRowMapper()
-);
-```
-
-## Spring 2.x (2006) — 어노테이션의 시작
-
-자바 5가 출시되며 어노테이션이 언어 기능으로 자리잡자, 스프링 2.0은 이를 적극 활용했다.
+Java 5가 어노테이션을 도입(2004년)하면서, Spring 2.0은 이를 활용하기 시작합니다.
 
 ```java
-// Spring 2.x — 어노테이션으로 트랜잭션 선언
-@Transactional
-public void placeOrder(Order order) {
-    orderRepository.save(order);
-    inventoryService.deductStock(order.getItems());
+// Spring 2.x — @Component 어노테이션 도입
+@Repository
+public class JdbcOrderRepository {
+    // 여전히 XML에 <context:component-scan> 선언 필요
 }
 ```
 
-XML에서 `<tx:advice>`와 AOP 설정으로 트랜잭션을 선언하던 방식을 `@Transactional` 하나로 대체했다. AspectJ 통합도 이 버전에서 크게 강화됐다.
+하지만 2.x에서 어노테이션은 보조 수단이었습니다. 여전히 XML이 주설정이었고, 어노테이션은 빈 감지를 쉽게 하는 정도였습니다. 그래도 방향은 분명했습니다. "XML을 줄이자."
 
-XML 네임스페이스가 도입되어 설정이 한결 간결해졌다.
+## 2009 — Spring 3.x: Java Config 등장
 
-```xml
-<!-- Spring 2.x — XML 네임스페이스로 간결해진 설정 -->
-<context:component-scan base-package="com.example"/>
-<tx:annotation-driven/>
-<aop:aspectj-autoproxy/>
-```
-
-## Spring 3.x (2009) — Java Config의 등장
-
-Spring 3.0은 패러다임 전환을 예고했다. **Java Config** — 즉, XML 대신 자바 클래스로 빈을 정의하는 방식이 본격 도입됐다.
+Spring 3.0은 스프링 역사에서 중요한 전환점입니다. **XML 없이 순수 자바 코드로 스프링 설정**이 가능해졌습니다.
 
 ```java
-// Spring 3.x — @Configuration, @Bean으로 XML 대체
+// Spring 3.x — @Configuration과 @Bean으로 XML 완전 대체 가능
 @Configuration
 public class AppConfig {
 
     @Bean
+    public DataSource dataSource() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl("jdbc:mysql://localhost/mydb");
+        return ds;
+    }
+
+    @Bean
     public OrderRepository orderRepository() {
-        return new OrderRepositoryImpl(dataSource());
+        return new JdbcOrderRepository(dataSource());
     }
 
     @Bean
     public OrderService orderService() {
-        return new OrderServiceImpl(orderRepository());
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        // 타입 안전, IDE 자동완성, 리팩터링 가능
-        HikariDataSource ds = new HikariDataSource();
-        ds.setJdbcUrl("jdbc:h2:mem:test");
-        return ds;
+        return new OrderService(orderRepository());
     }
 }
 ```
 
-XML에서 Java로의 이전을 강하게 권고하기 시작한 시점이다. **Spring Expression Language(SpEL)** 과 REST 지원 강화(`@ResponseBody`, `RestTemplate`)도 3.x의 주요 성과다.
-
-## Spring 4.x (2013) — 모던 자바와 스프링 부트의 탄생
-
-Spring 4.0은 자바 8과 동시에 출발했다. 람다, `Optional`, Stream을 스프링 API 전반에 걸쳐 활용할 수 있게 됐다.
+또한 Spring 3.x는 **RESTful 웹 서비스**에 대한 지원을 크게 강화했습니다. `@RequestBody`, `@ResponseBody`, `@PathVariable` 같은 어노테이션이 이 시기에 등장했습니다.
 
 ```java
-// Spring 4.x — @RestController 도입 (@Controller + @ResponseBody)
-@RestController
+// Spring 3.x — REST API 지원 강화
+@Controller
 @RequestMapping("/api/orders")
 public class OrderController {
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
-        return orderService.findById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+    @ResponseBody
+    public Order getOrder(@PathVariable Long id) {
+        return orderService.findById(id);
     }
 }
 ```
 
-그러나 4.x의 가장 큰 사건은 **2014년 4월 Spring Boot 1.0 출시**였다.
+## 2013~2014 — Spring 4.x & Spring Boot 1.x
 
-```bash
-# Spring Boot 등장 전후
-# Before: web.xml + applicationContext.xml + servlet-context.xml + pom.xml 수백 줄
-# After:
-spring init --dependencies=web,data-jpa,security my-app
-cd my-app && ./mvnw spring-boot:run
-```
+### Spring 4.x — Java 8과 웹소켓
 
-"30초 만에 실행 가능한 스프링 애플리케이션"이라는 슬로건은 과장이 아니었다. 임베디드 톰캣, 자동 구성, 스타터 의존성이 스프링 개발의 모습을 완전히 바꿨다.
-
-WebSocket 지원, 조건부 빈(`@Conditional`), 제네릭 타입 의존성 주입도 4.x에서 추가됐다.
-
-## Spring 5.x (2017) — 리액티브의 도전
-
-**Spring 5.0**은 스프링 역사에서 가장 과감한 아키텍처 변화를 담았다. **리액티브 프로그래밍 모델(WebFlux)** 이 공식 지원으로 편입됐다.
+Spring 4.0은 **Java 8**과 함께 진화했습니다. 람다식, 스트림, `Optional`을 활용한 API들이 추가됐습니다. 또한 WebSocket, STOMP 지원, 조건부 빈 등록(`@Conditional`)이 도입됐습니다.
 
 ```java
-// Spring 5.x — WebFlux, Reactive API
+// Spring 4.x — @Conditional과 람다 스타일
+@Configuration
+public class DataConfig {
+
+    @Bean
+    @ConditionalOnProperty(name = "db.type",
+                           havingValue = "h2")
+    public DataSource h2DataSource() {
+        return new EmbeddedDatabaseBuilder()
+            .setType(EmbeddedDatabaseType.H2)
+            .build();
+    }
+}
+```
+
+### Spring Boot 1.x — 패러다임의 전환
+
+2014년 Spring Boot 1.0 출시는 스프링 역사에서 가장 큰 사건 중 하나입니다. "스프링 설정의 복잡함"이라는 오래된 불평이 단번에 해소됐습니다.
+
+```bash
+# Spring Boot 이전: 프로젝트 시작까지 30분~1시간
+# Spring Boot 이후: start.spring.io에서 프로젝트 생성 후 즉시 실행
+
+$ mvn spring-boot:run
+# 혹은
+$ ./gradlew bootRun
+```
+
+`spring-boot-starter-*`라는 의존성 묶음과 자동 구성(Auto-Configuration)이 핵심이었습니다. 클래스패스를 보고 스프링이 스스로 적절한 빈을 구성하는 "약속에 의한 구성(Convention over Configuration)"이 본격화됐습니다.
+
+## 2017~2018 — Spring 5.x & Spring Boot 2.x
+
+### 리액티브 프로그래밍의 시대
+
+Spring 5.0의 가장 큰 혁신은 **WebFlux**입니다. Reactor 라이브러리 기반의 완전한 비동기·리액티브 웹 프레임워크가 스프링에 공식 통합됐습니다.
+
+```java
+// Spring 5.x — WebFlux 리액티브 컨트롤러
 @RestController
-public class ReactiveOrderController {
+@RequestMapping("/api/orders")
+public class OrderController {
 
-    @GetMapping("/api/orders/{id}")
+    private final OrderService orderService;
+
+    // Mono: 0 또는 1개의 비동기 결과
+    @GetMapping("/{id}")
     public Mono<Order> getOrder(@PathVariable Long id) {
-        return orderRepository.findById(id);  // Mono = 0 or 1개의 비동기 결과
+        return orderService.findById(id);
     }
 
-    @GetMapping("/api/orders")
+    // Flux: 0개 이상의 비동기 스트림
+    @GetMapping
     public Flux<Order> getAllOrders() {
-        return orderRepository.findAll();     // Flux = N개의 비동기 스트림
+        return orderService.findAll();
     }
 }
 ```
 
-기존 MVC(서블릿 기반, 스레드당 요청)와 WebFlux(이벤트 루프, 논블로킹)가 공존하는 이중 스택 구조가 됐다. 언제 무엇을 써야 하는지는 Chapter 21에서 자세히 다룬다.
+**Kotlin** 공식 지원도 Spring 5에서 이루어졌습니다. Spring Boot 2.x는 Micrometer 기반 메트릭 수집을 내장하고, Actuator를 크게 개선했습니다.
 
-**Kotlin 공식 지원** 도 5.x의 주요 성과다. 스프링 팀이 자체 프로젝트 일부를 Kotlin으로 작성할 만큼 적극적이었다.
-
-Spring Boot 2.x도 5.x 위에서 동작하며, 2019년부터는 Spring Boot가 사실상 스프링의 기본 접근 방식으로 자리잡았다.
-
-## Spring 6.x (2022) — Jakarta EE와 현대 자바
-
-2022년 11월 출시된 **Spring 6.0** 은 역사적인 패키지 네임스페이스 전환을 단행했다.
-
-![javax에서 jakarta로 패키지 전환](/assets/posts/spring-history-jakarta-migration.svg)
-
-### javax → jakarta: 왜 바뀌었나
-
-Oracle이 Java EE를 Eclipse Foundation에 기증하면서 "Java" 상표 사용권을 넘기지 않았다. 결과적으로 Eclipse Foundation은 패키지명을 `javax.*`에서 `jakarta.*`로 변경해야 했다. Jakarta EE 9(2020)부터 적용됐고, Spring 6는 이를 필수 기반으로 채택했다.
-
-```java
-// Spring Boot 2.x → 3.x 마이그레이션 핵심 변경
-// Before (Boot 2.x, Spring 5)
-import javax.persistence.Entity;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotBlank;
-
-// After (Boot 3.x, Spring 6)
-import jakarta.persistence.Entity;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.NotBlank;
-```
-
-단순한 문자열 교체처럼 보이지만, 사용하는 모든 라이브러리가 Jakarta EE 9+ 호환 버전으로 업그레이드돼야 한다. Hibernate 6.x, Tomcat 10.x, WildFly 27+ 등.
-
-### Spring 6.x의 다른 주요 변화
-
-**GraalVM Native Image 지원**: AOT(Ahead-of-Time) 처리를 통해 스프링 애플리케이션을 네이티브 실행 파일로 컴파일한다. JVM 없이 실행되므로 시작 시간이 수백 밀리초에서 수십 밀리초로 단축된다.
-
-```bash
-# GraalVM으로 네이티브 이미지 빌드 (Spring Boot 3.x)
-./mvnw -Pnative native:compile
-
-# 실행 — JVM 불필요
-./target/my-app
-# Started MyApplication in 0.043 seconds
-```
-
-**가상 스레드 (Project Loom)**: JDK 21의 가상 스레드를 스프링 MVC에서 활용할 수 있다. 기존 블로킹 코드를 리팩터링 없이 높은 동시성으로 운영 가능하다.
+### Spring Boot 2.x 주요 변화
 
 ```yaml
-# application.yml — 가상 스레드 활성화
+# Spring Boot 2.x application.yml — 풍부해진 속성들
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+```
+
+## 2022~ — Spring 6.x & Spring Boot 3.x
+
+![Spring 6 / Boot 3 — javax에서 jakarta로](/assets/posts/spring-history-jakarta-migration.svg)
+
+### Jakarta EE 9+ 전환
+
+2022년 출시된 Spring 6.0 / Spring Boot 3.0은 **가장 큰 브레이킹 체인지**를 포함합니다. Oracle이 Java EE 명세를 Eclipse Foundation에 이관하면서 패키지 네임스페이스가 `javax.*`에서 `jakarta.*`로 변경됐습니다.
+
+```java
+// Spring Boot 2.x — javax
+import javax.persistence.Entity;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+// Spring Boot 3.x — jakarta
+import jakarta.persistence.Entity;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+```
+
+단순한 import 변경이지만, 수천 줄의 코드가 있는 프로젝트라면 마이그레이션이 쉽지 않습니다.
+
+### JDK 17 최소 요구
+
+Spring Boot 3.x는 **JDK 17을 최소 요구 버전**으로 합니다. JDK 17의 주요 기능들(레코드, 봉인 클래스, 텍스트 블록, 패턴 매칭)을 스프링이 활용합니다.
+
+```java
+// Java 17 Record — DTO로 활용
+public record OrderRequest(
+    Long itemId,
+    int quantity,
+    String shippingAddress
+) {}
+
+// Spring MVC에서 바로 사용
+@PostMapping("/orders")
+public ResponseEntity<Order> createOrder(
+        @RequestBody @Valid OrderRequest request) {
+    // request.itemId(), request.quantity() 등 접근자 자동 생성
+    return ResponseEntity.ok(orderService.place(request));
+}
+```
+
+### GraalVM Native Image
+
+Spring Boot 3.x의 또 다른 핵심은 **GraalVM Native Image** 공식 지원입니다. JVM 없이 네이티브 바이너리로 컴파일해 JVM 시작 시간(수백ms)을 수ms로 단축할 수 있습니다. 특히 서버리스, 컨테이너 환경에서 유용합니다.
+
+```bash
+# Spring Boot 3.x — 네이티브 이미지 빌드
+$ ./gradlew nativeCompile
+
+# 결과: JVM 없이 바로 실행 가능한 바이너리
+$ ./build/native/nativeCompile/myapp
+Started MyApplication in 0.083 seconds
+```
+
+### 가상 스레드 (Project Loom)
+
+JDK 21에서 정식 도입된 **가상 스레드**를 Spring Boot 3.2+에서 쉽게 활성화할 수 있습니다.
+
+```yaml
+# application.yml — 가상 스레드 한 줄로 활성화 (Spring Boot 3.2+)
 spring:
   threads:
     virtual:
       enabled: true
 ```
 
-**Java 17 최소 요구**: Spring 6.x와 Spring Boot 3.x는 Java 17 이상을 요구한다. Record, Sealed Class, Text Block, Pattern Matching 등 현대 자바 문법을 활용한다.
+가상 스레드를 활성화하면 기존 블로킹 코드(JdbcTemplate, RestTemplate 등)를 그대로 쓰면서도 동시성이 대폭 향상됩니다.
 
-## 버전 로드맵 한눈에
+## 버전 선택 가이드
 
-| 버전 | 출시 | 최소 Java | 베이스 | 비고 |
-|------|------|-----------|--------|------|
-| Spring 1.x | 2003 | Java 1.3+ | J2EE | POJO 철학의 시작 |
-| Spring 2.x | 2006 | Java 5+ | J2EE | @Transactional, AspectJ |
-| Spring 3.x | 2009 | Java 5+ | Java EE 5 | Java Config, SpEL |
-| Spring 4.x | 2013 | Java 6+ | Java EE 6 | Spring Boot 1.x 출시 |
-| Spring 5.x | 2017 | Java 8+ | Java EE 7 | WebFlux, Kotlin |
-| Spring 6.x | 2022 | **Java 17+** | **Jakarta EE 9+** | GraalVM, 가상 스레드 |
+![스프링 역사 타임라인](/assets/posts/spring-history-timeline.svg)
+
+| 상황 | 권장 버전 |
+|------|-----------|
+| 신규 프로젝트 | Spring Boot 3.3+, JDK 21+ |
+| JDK 8/11 유지 필요 | Spring Boot 2.7.x (2026년 EOL) |
+| 레거시 유지보수 | 현 버전 유지, 마이그레이션 계획 수립 |
+| Spring Boot 2→3 마이그레이션 | `javax→jakarta` 일괄 치환, JDK 17 업그레이드 |
+
+Spring Boot 2.7.x는 2026년에 OSS 지원이 종료됩니다. 가능하면 Spring Boot 3.x로 이전하는 것을 권장합니다. 마이그레이션 방법은 Chapter 23에서 자세히 다룹니다.
 
 ## 이 시리즈의 기준
 
-이 *Spring 완전 정복* 시리즈는 **Spring Boot 3.x + Spring Framework 6.x + Java 21** 기준으로 모든 예제를 작성한다. Jakarta EE 패키지명을 사용하고, 레거시 패턴(XML 설정, EJB 스타일)은 해당 챕터에서 별도로 명시한다.
+이 시리즈는 **Spring Boot 3.x(Jakarta EE 9+ 기반)** 를 기준으로 작성합니다. 레거시와 명시적 비교가 필요한 챕터(XML 설정, 마이그레이션 등)에서만 구버전 코드를 병기합니다. 독자 여러분이 코드를 직접 실행해 볼 때 JDK 17 이상을 사용하시길 권장합니다.
 
-Chapter 2부터는 실제 환경 구축에 들어간다. JDK 설치부터 IDE, 빌드 도구까지 순서대로 설정해보자.
+## 정리
+
+스프링은 EJB의 복잡성에 대한 반발로 태어나, XML 설정 → 어노테이션 → Java Config → 자동 구성의 방향으로 꾸준히 진화했습니다. 각 세대의 변화는 "더 적은 설정, 더 좋은 개발자 경험"이라는 일관된 방향을 향해 있었습니다. Spring 6.x / Boot 3.x는 그 여정의 현재 최신판이며, 가상 스레드와 GraalVM Native라는 두 가지 큰 변화를 끌어안고 있습니다.
+
+다음 Chapter 2부터는 실제로 스프링 프로젝트를 만들기 위한 환경 구성부터 시작합니다.
 
 ---
 
 **지난 글:** [스프링 생태계 지도 — Framework, Boot, Data, Security, Cloud](/posts/spring-ecosystem-map/)
+
+**다음 글:** [JDK·IDE·빌드도구 한눈에](/posts/spring-environment-jdk-ide-build/)
 
 <br>
 읽어주셔서 감사합니다. 😊

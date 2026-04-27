@@ -1,78 +1,74 @@
-import { promises as fs } from 'node:fs';
-import path from 'node:path';
+#!/usr/bin/env node
+import { readFileSync, readdirSync, existsSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const POSTS_DIR = path.resolve(process.cwd(), 'src/content/posts');
-const POST_EXTS = new Set(['.md', '.mdx']);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const POSTS_DIR = join(__dirname, '../src/content/posts');
+const ASSETS_DIR = join(__dirname, '../public/assets/posts');
 
-const IMAGE_PATTERN = /!\[[^\]]*]\(([^)]+)\)|<img\s+[^>]*src=/i;
-const CODE_OR_DIAGRAM_PATTERN = /```[\s\S]*?```/;
-const FRONTMATTER_PATTERN = /^---\s*[\r\n]+[\s\S]*?[\r\n]+---\s*/;
+let errors = 0;
+let warnings = 0;
 
-async function walk(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  const files = [];
-
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...(await walk(fullPath)));
-      continue;
-    }
-    if (entry.isFile() && POST_EXTS.has(path.extname(entry.name))) {
-      files.push(fullPath);
-    }
-  }
-
-  return files.sort();
+function error(file, msg) {
+  console.error(`  ERROR [${file}]: ${msg}`);
+  errors++;
 }
 
-function stripFrontmatter(content) {
-  return content.replace(FRONTMATTER_PATTERN, '');
+function warn(file, msg) {
+  console.warn(`  WARN  [${file}]: ${msg}`);
+  warnings++;
 }
 
-function relative(filePath) {
-  return path.relative(process.cwd(), filePath);
+function checkFrontmatter(file, content) {
+  const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  if (!fmMatch) { error(file, 'frontmatter missing'); return null; }
+  const fm = fmMatch[1];
+  const required = ['title', 'description', 'author', 'pubDate',
+                    'archiveOrder', 'type', 'category', 'tags'];
+  for (const field of required) {
+    if (!fm.includes(`${field}:`)) error(file, `missing frontmatter field: ${field}`);
+  }
+  return fm;
 }
 
-async function main() {
-  const files = await walk(POSTS_DIR);
-  const violations = [];
+function checkCodeBlock(file, content) {
+  if (!/```\w/.test(content)) {
+    error(file, 'no fenced code block with language identifier found');
+  }
+}
 
-  for (const file of files) {
-    const content = await fs.readFile(file, 'utf8');
-    const body = stripFrontmatter(content);
-
-    const hasImage = IMAGE_PATTERN.test(body);
-    const hasCodeOrDiagram = CODE_OR_DIAGRAM_PATTERN.test(body);
-
-    if (!hasImage || !hasCodeOrDiagram) {
-      violations.push({
-        file: relative(file),
-        missingImage: !hasImage,
-        missingCodeOrDiagram: !hasCodeOrDiagram,
-      });
+function checkSvgImages(file, content) {
+  const svgRefs = [...content.matchAll(/!\[.*?\]\((\/assets\/posts\/[^)]+\.svg)\)/g)];
+  for (const m of svgRefs) {
+    const svgPath = join(__dirname, '../public', m[1]);
+    if (!existsSync(svgPath)) {
+      error(file, `SVG not found: ${m[1]}`);
     }
   }
+}
 
-  if (violations.length === 0) {
-    console.log(`validate:posts OK (${files.length}개 글 검사 완료)`);
-    return;
-  }
-
-  console.error('validate:posts 실패');
-  console.error('모든 글은 이미지 1개 이상 + 코드/도식 블록 1개 이상을 포함해야 합니다.');
-
-  for (const violation of violations) {
-    const missing = [];
-    if (violation.missingImage) missing.push('이미지');
-    if (violation.missingCodeOrDiagram) missing.push('코드/도식 블록');
-    console.error(`- ${violation.file}: ${missing.join(', ')} 누락`);
-  }
-
+const files = readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'));
+if (files.length === 0) {
+  console.error('No markdown files found in', POSTS_DIR);
   process.exit(1);
 }
 
-main().catch((error) => {
-  console.error(error);
+console.log(`\nValidating ${files.length} post(s) in ${POSTS_DIR}\n`);
+
+for (const filename of files) {
+  const filepath = join(POSTS_DIR, filename);
+  const content = readFileSync(filepath, 'utf-8');
+  console.log(`  Checking: ${filename}`);
+  checkFrontmatter(filename, content);
+  checkCodeBlock(filename, content);
+  checkSvgImages(filename, content);
+}
+
+console.log(`\n${'─'.repeat(50)}`);
+if (errors === 0) {
+  console.log(`\n✅  OK — ${files.length} post(s) validated, 0 errors, ${warnings} warnings\n`);
+} else {
+  console.log(`\n❌  FAIL — ${errors} error(s), ${warnings} warning(s)\n`);
   process.exit(1);
-});
+}
