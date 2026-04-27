@@ -1,167 +1,188 @@
 ---
-title: "TDZ — Temporal Dead Zone (일시적 사각지대)"
-description: "let·const·class 선언 전 접근 시 ReferenceError가 발생하는 이유, TDZ가 시작·종료되는 정확한 시점, 그리고 클로저·기본값 매개변수에서 나타나는 TDZ 함정을 설명합니다."
+title: "TDZ (Temporal Dead Zone) — 시간적 사각지대"
+description: "let과 const의 Temporal Dead Zone이 무엇인지, 왜 존재하는지, 그리고 예기치 못한 TDZ 오류 패턴을 실제 코드와 함께 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
-archiveOrder: 4
+pubDate: "2026-04-28"
+archiveOrder: 8
 type: "knowledge"
 category: "JavaScript"
-tags: ["javascript", "tdz", "temporal-dead-zone", "let", "const", "hoisting", "reference-error"]
+tags: ["javascript", "TDZ", "Temporal Dead Zone", "let", "const", "호이스팅", "ReferenceError"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-hoisting/)에서 `let`과 `const`는 호이스팅이 되지만 초기화되지 않아, 선언 전에 접근하면 `ReferenceError`가 발생한다고 했습니다. 이 접근 불가 구간을 **TDZ(Temporal Dead Zone, 일시적 사각지대)**라고 합니다. "일시적"이라는 표현처럼, TDZ는 영원히 지속되지 않고 선언문이 실행되는 순간 사라집니다.
+[지난 글](/posts/js-hoisting/)에서 JavaScript의 호이스팅을 살펴보면서 `let`과 `const`는 선언만 호이스팅되고 초기화는 되지 않는다고 했습니다. 이 "선언은 됐지만 아직 초기화되지 않은" 구간이 바로 **TDZ(Temporal Dead Zone, 시간적 사각지대)**입니다. 이번 글에서는 TDZ가 왜 존재하는지, 그리고 어떤 상황에서 예기치 못한 TDZ 오류를 만나게 되는지 살펴봅니다.
 
 ## TDZ란 무엇인가
 
-TDZ는 실행 컨텍스트의 **생성 단계**에서 `let`·`const`·`class` 식별자가 등록되는 시점부터, 실행 단계에서 해당 선언문이 실행되어 초기화되는 시점까지의 구간입니다.
+TDZ는 변수의 **블록 시작부터 변수 초기화(선언 코드 실행) 직전까지**의 구간입니다. 이 구간에서 해당 변수에 접근하면 `ReferenceError`가 발생합니다.
 
 ```javascript
-// 이 지점부터 TDZ 시작 (블록 진입 = 생성 단계)
 {
+  // ← 블록 시작, TDZ 시작 (x가 호이스팅됨 — 선언만, 초기화 안됨)
+
   console.log(x); // ReferenceError: Cannot access 'x' before initialization
-  let x = 'hello'; // ← 여기서 TDZ 종료, x가 'hello'로 초기화됨
-  console.log(x); // 'hello'
+                  // "x is not defined"가 아닌 이 메시지가 핵심 증거
+
+  let x = 5;     // ← 여기서 x 초기화, TDZ 끝
+  console.log(x); // 5
 }
 ```
 
-`var`는 생성 단계에서 `undefined`로 초기화되므로 TDZ가 없습니다. `let`·`const`는 초기화를 실행 단계의 선언문으로 미루기 때문에 TDZ가 존재합니다.
-
-## TDZ가 시작되는 정확한 시점
-
-중요한 포인트는 TDZ가 **선언문이 있는 코드 줄 위쪽**에서 시작되는 것이 아니라, **현재 스코프(블록)가 생성되는 시점**에 시작된다는 것입니다. 이 차이가 클로저와 함수에서 미묘한 버그를 만들어냅니다.
-
-```javascript
-let x = 'outer'; // 외부 스코프
-
-function f() {
-  console.log(x); // ReferenceError — 'outer'를 출력하지 않습니다!
-  let x = 'inner'; // 이 선언이 함수 전체에 TDZ를 만듦
-}
-
-f();
-```
-
-`f()` 함수 바디가 시작되는 순간, 함수 스코프의 생성 단계에서 내부의 `let x`가 TDZ에 진입합니다. 따라서 `console.log(x)` 시점에 `x`는 외부 스코프의 `x`를 참조하는 것이 아니라, 함수 내부의 `x`의 TDZ 구간에 걸려 `ReferenceError`가 발생합니다.
-
-"선언이 아래에 있으니까 위에서는 외부 변수를 참조하겠지"라는 직관이 틀리는 순간입니다.
+`"Cannot access 'x' before initialization"` 오류 메시지가 중요합니다. `"x is not defined"`는 변수가 존재하지 않는다는 뜻이지만, TDZ 오류는 변수가 존재하되 아직 초기화되지 않았다는 뜻입니다. 이것이 `let`/`const`가 호이스팅된다는 증거입니다.
 
 ![TDZ 타임라인](/assets/posts/js-tdz-timeline.svg)
 
-## TDZ가 종료되는 시점
-
-TDZ는 선언문이 **실행**되는 시점에 종료됩니다. `let`은 선언 시 값을 제공하지 않아도 `undefined`로 초기화됩니다.
+## var와의 비교
 
 ```javascript
+// var — TDZ 없음, 즉시 undefined
 {
-  // TDZ 시작
-  let a;     // ← TDZ 종료, a = undefined
-  const b = 1; // ← TDZ 종료, b = 1 (const는 반드시 초기값 필요)
-  // 이후부터 a, b 사용 가능
-}
-```
-
-`const`는 선언과 동시에 초기화해야 하므로, 선언문에 초기값이 없으면 `SyntaxError`가 발생합니다.
-
-```javascript
-const c; // SyntaxError: Missing initializer in const declaration
-```
-
-## 기본값 매개변수에서의 TDZ
-
-함수의 기본값 매개변수도 왼쪽에서 오른쪽 순서로 평가되며, 각 매개변수는 순서에 따라 초기화됩니다. 이 과정에서도 TDZ가 적용됩니다.
-
-```javascript
-// OK: a가 먼저 초기화되므로 b의 기본값에서 사용 가능
-function f(a = 1, b = a + 1) {
-  console.log(b); // 2
+  console.log(a); // undefined (오류 없음)
+  var a = 10;
+  console.log(a); // 10
 }
 
-// 에러: a의 기본값을 평가할 때 b는 아직 TDZ
-function g(a = b, b = 2) {
-  // ReferenceError: Cannot access 'b' before initialization
-}
-g(); // 에러 발생
-```
-
-![TDZ 함정 — 클로저와 기본값](/assets/posts/js-tdz-closure.svg)
-
-## typeof 연산자와 TDZ
-
-흥미롭게도 `typeof`는 일반적으로 존재하지 않는 변수에 `undefined`를 반환합니다. 그러나 TDZ 구간의 변수에는 예외적으로 `ReferenceError`를 발생시킵니다.
-
-```javascript
-// 선언 없는 변수 — typeof는 안전
-console.log(typeof undeclaredVar); // 'undefined'
-
-// TDZ 구간의 변수 — typeof도 에러!
+// let — TDZ 존재
 {
-  console.log(typeof x); // ReferenceError!
-  let x = 1;
+  console.log(b); // ReferenceError!
+  let b = 10;
+  console.log(b); // 10
 }
 ```
 
-이 동작은 다소 일관성이 없어 보이지만, TDZ의 목적(선언 전 접근을 명시적 에러로 알려주기)을 `typeof` 체크로도 우회할 수 없게 설계된 것입니다.
+`var`는 선언과 동시에 `undefined`로 초기화가 호이스팅됩니다. `let`은 선언만 호이스팅되고 초기화는 실제 코드 위치에서 이루어집니다.
 
-## 클래스 선언과 TDZ
+## TDZ가 존재하는 이유
 
-`class`도 `let`·`const`와 마찬가지로 TDZ가 적용됩니다. 클래스 인스턴스를 선언 전에 만들려 하면 에러가 발생합니다.
+TDZ는 설계상의 선택입니다. 왜 만들었을까요?
+
+**1. `const`의 의미 보장**
 
 ```javascript
-const instance = new MyClass(); // ReferenceError
+// TDZ가 없다면...
+{
+  console.log(x); // undefined ← const인데 undefined?
+  const x = 42;   // 이 시점에서 42로 바뀜
+}
+```
 
-class MyClass {
-  constructor() {
-    this.value = 42;
+`const`는 한 번 초기화되면 변경 불가한 변수입니다. 초기화 전에 `undefined`를 반환한다면 `const`가 값을 바꾸는 것처럼 보여 의미가 퇴색됩니다.
+
+**2. 선언 전 접근은 버그**
+
+선언 이전에 변수를 사용하는 것은 논리적 오류입니다. `var`의 `undefined` 반환은 이 버그를 숨기지만, TDZ는 즉각적인 오류로 버그를 드러냅니다.
+
+**3. 더 안전한 코드**
+
+초기화되지 않은 변수에 접근을 막으면 예기치 않은 `undefined` 관련 버그가 크게 줄어듭니다.
+
+## TDZ가 발생하는 의외의 상황
+
+![TDZ 발생 상황](/assets/posts/js-tdz-tricky.svg)
+
+### 기본 매개변수의 TDZ
+
+```javascript
+// 매개변수도 순서대로 초기화된다
+function greet(name, greeting = name.toUpperCase()) {
+  //                           ^ name은 이미 초기화됨 — OK
+  return `${greeting}, world`;
+}
+
+function bad(a = b, b = 1) {
+  // a 평가 시점에 b는 아직 TDZ!
+}
+bad(); // ReferenceError: Cannot access 'b' before initialization
+bad(1, 2); // OK — a가 기본값 없이 제공됨
+```
+
+### typeof와 TDZ
+
+`typeof`는 선언되지 않은 변수를 `"undefined"`로 안전하게 처리하는 유일한 연산자입니다. 하지만 TDZ에 있는 변수는 `typeof`도 예외입니다:
+
+```javascript
+// 선언 안 된 변수 — typeof는 안전
+typeof undeclaredVar; // "undefined" — 오류 없음
+
+// TDZ에 있는 변수 — typeof도 오류!
+typeof x;     // ReferenceError!
+let x = 1;
+```
+
+이것이 `let`/`const`가 실제로 호이스팅된다는 또 다른 증거입니다. 엔진은 x가 이 스코프에 있다는 것을 알고 있어서 TDZ 오류를 던집니다.
+
+### 클래스 상속의 TDZ
+
+`extends`를 사용한 클래스에서 `super()` 호출 전 `this`는 TDZ 상태입니다:
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name) {
+    // this.name = name;  // ReferenceError! — super() 전 this는 TDZ
+    super(name);          // super() 이후 this 사용 가능
+    this.type = "dog";
   }
 }
 ```
 
-이는 ES5의 함수 생성자(constructor function)와 다른 동작입니다. 함수 선언문은 완전히 호이스팅되므로 선언 전에 `new`로 인스턴스를 만들 수 있었습니다.
+이는 부모 클래스가 먼저 초기화되어야 자식 클래스의 `this`가 의미 있어지기 때문입니다.
+
+### 클로저와 TDZ
 
 ```javascript
-// 함수 선언문은 호이스팅됨
-const obj = new OldStyle(); // 정상 동작
+// 함수 안에서 바깥의 let을 참조
+let count = 0;
+function increment() {
+  return count++;  // OK — count는 이미 초기화됨
+}
 
-function OldStyle() {
-  this.value = 42;
+// 조심해야 할 패턴
+{
+  const fn = () => x;  // x는 나중에 선언
+  let x = 10;
+  fn(); // OK — fn 호출 시점에는 x가 이미 초기화됨
+}
+
+{
+  fn(); // ReferenceError!
+  const fn = () => x;
+  let x = 10;
+  // fn 호출 시점에 fn 자체가 TDZ에 있음
 }
 ```
 
-## TDZ가 있는 이유
+핵심: TDZ는 **변수 접근 시점**이 아닌 **함수 선언 내 참조 시점**을 기준으로 판단하지 않습니다. 실제 런타임에 코드가 실행되는 시점에 해당 변수가 TDZ인지 확인합니다.
 
-TDZ는 왜 존재할까요? `let`과 `const`를 설계할 때 "선언 전 접근"이 항상 프로그래머의 실수라고 판단했기 때문입니다. `var`의 경우처럼 `undefined`로 조용히 통과시키면 버그를 숨겨버립니다. 에러를 명시적으로 발생시키는 것이 더 안전합니다.
+## TDZ와 실행 컨텍스트
 
-또한 TDZ는 `const`의 의미적 일관성을 보장합니다. `const`로 선언된 변수는 선언과 동시에 최종 값이 결정되어야 합니다. 만약 초기화 전에 `undefined`로 접근 가능하다면, `const`가 "변하지 않는다"는 의미를 가질 수 없게 됩니다.
+TDZ는 실행 컨텍스트의 생성 단계(Creation Phase)와 연결됩니다. 블록이 시작될 때 엔진은 해당 블록 스코프의 `let`/`const` 선언을 환경 레코드(Environment Record)에 등록합니다. 이때 상태는 `<uninitialized>`입니다.
 
-## 실무에서 TDZ 피하기
-
-TDZ는 `var`의 조용한 실패 대신 명시적 에러를 제공하므로, 사실 개발자에게 유리합니다. 실무에서 TDZ 에러를 만나지 않으려면 다음 원칙을 지키면 됩니다.
-
-**선언을 블록의 맨 위에 모으기**: `let`·`const`를 스코프 시작 부분에 몰아서 선언하면 TDZ 구간을 최소화할 수 있습니다.
-
-```javascript
-function doSomething() {
-  // 모든 let/const를 함수 맨 위에 선언
-  const config = loadConfig();
-  let retries = 0;
-  let result;
-
-  // 이후 로직에서 사용
-  while (retries < 3) {
-    result = tryFetch(config);
-    if (result) break;
-    retries++;
-  }
-
-  return result;
-}
+```
+블록 시작 →  환경 레코드: { x: <uninitialized> }  ← TDZ
+          →  console.log(x)  → ReferenceError
+          →  let x = 5;      → 환경 레코드: { x: 5 }  ← TDZ 끝
+          →  console.log(x)  → 5
 ```
 
-**클로저 안에서 외부 변수와 같은 이름 피하기**: 클로저 내부에서 외부와 같은 이름의 `let`·`const`를 선언하면 의도치 않게 TDZ 에러를 만날 수 있습니다. ESLint의 `no-shadow` 규칙이 이를 방지합니다.
+즉, TDZ는 실제로 "죽은 구간"이 아니라, 변수가 `<uninitialized>` 상태로 존재하는 구간입니다.
 
-TDZ는 JavaScript의 엄격한 면 중 하나이지만, 버그를 조기에 발견하게 해주는 안전장치이기도 합니다. `let`과 `const`를 사용하면 할수록, 불필요한 `undefined` 버그 없이 더 안전한 코드를 작성할 수 있습니다.
+## 정리
+
+| 상태 | var | let/const |
+|------|-----|-----------|
+| 호이스팅 | 선언 + undefined 초기화 | 선언만 (TDZ) |
+| 선언 전 접근 | undefined | ReferenceError |
+| 초기화 위치 | 블록 시작 | 코드상의 선언 위치 |
+| typeof 접근 | "undefined" | ReferenceError |
+
+TDZ는 불편해 보일 수 있지만, 실제로는 선언 전 접근이라는 논리적 오류를 즉각 알려주어 버그를 훨씬 빨리 잡을 수 있게 해줍니다.
 
 ---
 

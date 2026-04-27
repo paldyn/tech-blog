@@ -1,72 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500"
-  style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
-  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
 
   <!-- Title -->
-  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">브라우저 vs Node.js 이벤트 루프 구조</text>
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">Node.js 아키텍처 — V8 + libuv</text>
 
-  <!-- Browser side -->
-  <rect x="60" y="80" width="360" height="340" rx="10" fill="#0d1928" stroke="#7ec8e3" stroke-width="1.5"/>
-  <text x="240" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#7ec8e3">브라우저 이벤트 루프</text>
+  <!-- Your JS Code box -->
+  <rect x="60" y="72" width="200" height="70" rx="8" fill="#0d1117" stroke="#f7df1e" stroke-width="2"/>
+  <text x="160" y="100" text-anchor="middle" font-size="14" font-weight="700" fill="#f7df1e">JavaScript 코드</text>
+  <text x="160" y="118" text-anchor="middle" font-size="12" fill="#888">당신이 작성한 .js 파일</text>
+  <text x="160" y="134" text-anchor="middle" font-size="11" fill="#555">async, await, Promise...</text>
 
-  <!-- JS Engine box -->
-  <rect x="80" y="120" width="320" height="60" rx="7" fill="#070b14" stroke="#7ec8e3"/>
-  <text x="240" y="145" text-anchor="middle" font-size="13" fill="#e8e8e8">JS 엔진 (V8 / JSC / SpiderMonkey)</text>
-  <text x="240" y="163" text-anchor="middle" font-size="11" fill="#888">싱글 스레드 — 한 번에 하나의 작업</text>
+  <!-- Arrow down to V8 -->
+  <line x1="160" y1="142" x2="160" y2="168" stroke="#444" stroke-width="2"/>
+  <polygon points="154,168 160,178 166,168" fill="#444"/>
 
-  <!-- Call Stack -->
-  <rect x="80" y="200" width="140" height="90" rx="6" fill="#111827" stroke="#555"/>
-  <text x="150" y="222" text-anchor="middle" font-size="12" font-weight="600" fill="#aaa">콜 스택</text>
-  <text x="150" y="242" text-anchor="middle" font-size="11" fill="#666">함수 실행 추적</text>
-  <text x="150" y="260" text-anchor="middle" font-size="11" fill="#666">LIFO 구조</text>
-  <text x="150" y="278" text-anchor="middle" font-size="11" fill="#666">동기 실행</text>
+  <!-- V8 Engine box -->
+  <rect x="60" y="178" width="200" height="70" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="206" text-anchor="middle" font-size="14" font-weight="700" fill="#7ec8e3">V8 엔진</text>
+  <text x="160" y="224" text-anchor="middle" font-size="12" fill="#888">파싱 · 실행 · JIT</text>
+  <text x="160" y="240" text-anchor="middle" font-size="11" fill="#555">JS 코드 실행 전담</text>
 
-  <!-- Task Queue -->
-  <rect x="240" y="200" width="140" height="90" rx="6" fill="#111827" stroke="#555"/>
-  <text x="310" y="222" text-anchor="middle" font-size="12" font-weight="600" fill="#aaa">태스크 큐</text>
-  <text x="310" y="242" text-anchor="middle" font-size="11" fill="#666">setTimeout</text>
-  <text x="310" y="260" text-anchor="middle" font-size="11" fill="#666">DOM 이벤트</text>
-  <text x="310" y="278" text-anchor="middle" font-size="11" fill="#666">fetch 콜백</text>
+  <!-- Arrow down to Node API -->
+  <line x1="160" y1="248" x2="160" y2="272" stroke="#444" stroke-width="2"/>
+  <polygon points="154,272 160,282 166,272" fill="#444"/>
 
-  <!-- Microtask Queue -->
-  <rect x="80" y="310" width="300" height="70" rx="6" fill="#0d1f0d" stroke="#55c555"/>
-  <text x="230" y="332" text-anchor="middle" font-size="12" font-weight="600" fill="#55c555">마이크로태스크 큐 (우선순위 높음)</text>
-  <text x="230" y="352" text-anchor="middle" font-size="11" fill="#888">Promise.then · queueMicrotask · MutationObserver</text>
-  <text x="230" y="370" text-anchor="middle" font-size="11" fill="#555">각 태스크 끝날 때마다 전부 처리</text>
+  <!-- Node API / Bindings -->
+  <rect x="60" y="282" width="200" height="70" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="160" y="310" text-anchor="middle" font-size="14" font-weight="700" fill="#7777cc">Node.js API</text>
+  <text x="160" y="328" text-anchor="middle" font-size="12" fill="#888">fs · http · crypto · net</text>
+  <text x="160" y="344" text-anchor="middle" font-size="11" fill="#555">C++ 바인딩 (N-API)</text>
 
-  <!-- Web APIs box -->
-  <rect x="80" y="395" width="300" height="14" rx="4" fill="#1e2a3a"/>
-  <text x="230" y="406" text-anchor="middle" font-size="10" fill="#7ec8e3">Web APIs: setTimeout · fetch · DOM 이벤트 · requestAnimationFrame</text>
+  <!-- libuv box (right side, tall) -->
+  <rect x="380" y="100" width="220" height="280" rx="10" fill="#0d1117" stroke="#ce9178" stroke-width="2"/>
+  <text x="490" y="130" text-anchor="middle" font-size="16" font-weight="700" fill="#ce9178">libuv</text>
+  <text x="490" y="150" text-anchor="middle" font-size="12" fill="#888">이벤트 루프 · 비동기 I/O</text>
 
-  <!-- Node.js side -->
-  <rect x="460" y="80" width="360" height="340" rx="10" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
-  <text x="640" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#55c555">Node.js 이벤트 루프 (libuv)</text>
+  <text x="400" y="180" font-size="13" font-weight="600" fill="#e8e8e8">이벤트 루프 단계:</text>
+  <text x="400" y="200" font-size="12" fill="#7ec8e3">1. timers</text>
+  <text x="400" y="218" font-size="11" fill="#888">   setTimeout · setInterval 콜백</text>
+  <text x="400" y="238" font-size="12" fill="#7ec8e3">2. I/O callbacks</text>
+  <text x="400" y="256" font-size="11" fill="#888">   fs, 네트워크 완료 콜백</text>
+  <text x="400" y="276" font-size="12" fill="#7ec8e3">3. poll</text>
+  <text x="400" y="294" font-size="11" fill="#888">   새 I/O 이벤트 대기</text>
+  <text x="400" y="314" font-size="12" fill="#7ec8e3">4. check</text>
+  <text x="400" y="332" font-size="11" fill="#888">   setImmediate 콜백</text>
+  <text x="400" y="352" font-size="12" fill="#7ec8e3">5. close callbacks</text>
+  <text x="400" y="370" font-size="11" fill="#888">   소켓 close 등</text>
 
-  <!-- JS Engine -->
-  <rect x="480" y="120" width="320" height="60" rx="7" fill="#070b14" stroke="#55c555"/>
-  <text x="640" y="145" text-anchor="middle" font-size="13" fill="#e8e8e8">V8 엔진</text>
-  <text x="640" y="163" text-anchor="middle" font-size="11" fill="#888">libuv가 이벤트 루프 제어권 담당</text>
+  <!-- Thread Pool (OS) -->
+  <rect x="640" y="100" width="200" height="130" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="126" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">스레드 풀</text>
+  <text x="740" y="144" text-anchor="middle" font-size="12" fill="#888">(libuv 내부)</text>
+  <text x="740" y="168" text-anchor="middle" font-size="12" fill="#e8e8e8">무거운 작업 처리:</text>
+  <text x="740" y="186" text-anchor="middle" font-size="11" fill="#888">파일 I/O (fs)</text>
+  <text x="740" y="204" text-anchor="middle" font-size="11" fill="#888">DNS 조회</text>
+  <text x="740" y="220" text-anchor="middle" font-size="11" fill="#888">crypto (암호화)</text>
 
-  <!-- libuv phases -->
-  <rect x="480" y="200" width="320" height="160" rx="6" fill="#111827" stroke="#333"/>
-  <text x="640" y="222" text-anchor="middle" font-size="12" font-weight="600" fill="#aaa">libuv 이벤트 루프 단계</text>
-  <text x="496" y="244" font-size="11" fill="#888">1. timers — setTimeout · setInterval</text>
-  <text x="496" y="262" font-size="11" fill="#888">2. I/O callbacks — 네트워크·파일 콜백</text>
-  <text x="496" y="280" font-size="11" fill="#888">3. idle · prepare</text>
-  <text x="496" y="298" font-size="11" fill="#888">4. poll — 새 I/O 이벤트 대기</text>
-  <text x="496" y="316" font-size="11" fill="#888">5. check — setImmediate</text>
-  <text x="496" y="334" font-size="11" fill="#888">6. close callbacks</text>
+  <!-- OS box -->
+  <rect x="640" y="252" width="200" height="80" rx="8" fill="#0d1117" stroke="#555" stroke-width="1.5"/>
+  <text x="740" y="278" text-anchor="middle" font-size="14" font-weight="600" fill="#888">운영체제</text>
+  <text x="740" y="300" text-anchor="middle" font-size="12" fill="#555">네트워크 스택 · 파일 시스템</text>
+  <text x="740" y="316" text-anchor="middle" font-size="11" fill="#555">epoll(Linux) · kqueue(macOS)</text>
 
-  <!-- process.nextTick -->
-  <rect x="480" y="370" width="320" height="38" rx="5" fill="#0d1f0d" stroke="#55c555"/>
-  <text x="640" y="385" text-anchor="middle" font-size="11" fill="#55c555">process.nextTick — 마이크로태스크보다도 먼저 실행</text>
-  <text x="640" y="400" text-anchor="middle" font-size="10" fill="#555">각 단계 전환 전에 큐를 비움</text>
+  <!-- Arrows between sections -->
+  <line x1="265" y1="317" x2="375" y2="317" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="370,312 380,317 370,322" fill="#7777cc"/>
+  <text x="318" y="310" text-anchor="middle" font-size="10" fill="#555">비동기</text>
+  <text x="318" y="325" text-anchor="middle" font-size="10" fill="#555">요청</text>
 
-  <!-- Bottom note -->
-  <rect x="60" y="440" width="760" height="38" rx="7" fill="#111" stroke="#333"/>
-  <text x="440" y="458" text-anchor="middle" font-size="12" fill="#888">공통: 싱글 스레드 + 이벤트 루프 + 비동기 I/O 모델</text>
-  <text x="440" y="472" text-anchor="middle" font-size="11" fill="#555">차이: Web API 종류 · 이벤트 루프 단계 수 · process.nextTick 존재 여부</text>
+  <line x1="605" y1="165" x2="635" y2="165" stroke="#ce9178" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="630,160 640,165 630,170" fill="#ce9178"/>
+
+  <line x1="605" y1="285" x2="635" y2="285" stroke="#ce9178" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="630,280 640,285 630,290" fill="#ce9178"/>
 
   <!-- Footer -->
-  <text x="440" y="492" text-anchor="middle" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복 시리즈 · Part I</text>
+  <text x="440" y="412" text-anchor="middle" font-size="11" fill="#888">V8은 JS 실행만 담당. I/O와 이벤트 루프는 libuv가 처리합니다.</text>
+  <text x="440" y="430" text-anchor="middle" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복 시리즈 #4</text>
 </svg>
