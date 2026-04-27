@@ -1,174 +1,166 @@
 ---
-title: "호이스팅의 본질 — JavaScript가 코드를 실행하기 전에 하는 일"
-description: "호이스팅이 '코드가 위로 올라간다'는 오해를 바로잡고, 실행 컨텍스트 생성 단계에서 어떤 일이 일어나는지, 함수 선언문·var·let·const·class의 호이스팅이 각각 어떻게 다른지 설명합니다."
+title: "호이스팅의 본질 — 선언이 끌어올려지는 원리"
+description: "JavaScript 호이스팅이 실제로 어떻게 동작하는지, var/let/const/함수 선언문의 호이스팅 차이와 실행 컨텍스트와의 연관성을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
-archiveOrder: 3
+pubDate: "2026-04-28"
+archiveOrder: 7
 type: "knowledge"
 category: "JavaScript"
-tags: ["javascript", "hoisting", "var", "let", "const", "execution-context", "tdz"]
+tags: ["javascript", "호이스팅", "hoisting", "var", "실행 컨텍스트", "스코프"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-var-let-const/)에서 `var`로 선언된 변수를 선언 이전에 참조하면 에러 없이 `undefined`가 반환된다는 것을 봤습니다. 이 직관에 반하는 동작의 이름이 **호이스팅(hoisting)**입니다. 많은 설명에서 "코드가 위로 올라간다"고 표현하지만, 이는 비유일 뿐 정확한 설명이 아닙니다. 실제로 무슨 일이 일어나는지 알아봅시다.
+[지난 글](/posts/js-var-let-const/)에서 `var`, `let`, `const`의 스코프 규칙과 재선언/재할당 제한을 살펴봤습니다. 그 과정에서 "호이스팅"을 잠깐 언급했는데, 이번 글에서 호이스팅의 본질을 깊이 파고들겠습니다. 많은 사람이 "코드가 위로 이동한다"고 오해하지만, 실제로는 엔진의 코드 처리 순서와 관련된 더 정확한 이야기가 있습니다.
 
-## 호이스팅이란 무엇인가 — 비유의 함정
+## 호이스팅이란 무엇인가
 
-"hoisting"은 영어로 "끌어올리기"를 뜻합니다. 다음 코드를 보면 그 이유를 알 수 있습니다.
+호이스팅(hoisting)은 **"끌어올리기"**라는 뜻입니다. JavaScript 엔진이 코드를 실행하기 전에 변수와 함수 선언을 해당 스코프의 최상단으로 끌어올리는 동작처럼 보이는 현상을 말합니다.
 
-```javascript
-console.log(name); // undefined
-var name = 'Lee';
-console.log(name); // 'Lee'
-```
+중요한 점: 코드가 실제로 이동하지는 않습니다. 엔진이 **두 단계**로 코드를 처리하기 때문에 생기는 현상입니다:
 
-선언이 코드 아래에 있는데 위에서 참조할 수 있습니다. 마치 선언이 맨 위로 "올라간" 것처럼 보입니다. 그래서 "호이스팅"이라 부르지만, 실제로 코드가 이동하는 것이 아닙니다.
+1. **생성 단계(Creation Phase)**: 실행 컨텍스트를 만들고 스코프에 있는 모든 선언을 등록
+2. **실행 단계(Execution Phase)**: 코드를 위에서 아래로 순서대로 실행
 
-## 실제 동작: 실행 컨텍스트 생성 단계
+선언이 생성 단계에서 먼저 처리되기 때문에, 실행 단계에서는 선언 코드보다 앞에 있는 참조도 이미 등록된 상태입니다.
 
-JavaScript 엔진은 코드를 실행하기 전에 **생성 단계(Creation Phase)**를 거칩니다. 이 단계에서 엔진은 현재 스코프(전역 또는 함수)를 스캔하며 **모든 선언을 미리 수집**합니다. 실제 할당 코드(오른쪽 값)는 아직 처리하지 않고, 선언만 처리합니다.
+![호이스팅 메커니즘](/assets/posts/js-hoisting-mechanism.svg)
 
-`var name = 'Lee'`에서 생성 단계에 일어나는 일:
-- `name`이라는 식별자를 현재 스코프에 등록합니다
-- `undefined`로 초기화합니다
+## var의 호이스팅
 
-그 다음 실행 단계에서 코드가 순서대로 실행되며, `name = 'Lee'` 할당이 만나는 시점에 값이 갱신됩니다.
-
-따라서 `console.log(name)`이 선언 전에 나오더라도, 생성 단계에서 이미 `name`은 `undefined`로 존재하기 때문에 에러가 나지 않는 것입니다.
-
-## 선언 종류별 호이스팅
-
-모든 선언이 같은 방식으로 호이스팅되는 것은 아닙니다.
-
-![선언 종류별 호이스팅 동작](/assets/posts/js-hoisting-types.svg)
-
-### 함수 선언문: 완전 호이스팅
-
-함수 선언문(`function` 키워드로 시작하는)은 선언과 함수 바디 전체가 호이스팅됩니다.
+`var` 선언은 가장 관대한 호이스팅을 합니다. **선언과 `undefined` 초기화**가 함께 끌어올려집니다.
 
 ```javascript
-sayHello(); // 'Hello!' — 선언 전에 호출해도 정상 동작
-
-function sayHello() {
-  console.log('Hello!');
-}
-```
-
-함수 선언문은 생성 단계에서 함수 전체가 등록되기 때문에, 선언 이전 어디서든 호출할 수 있습니다. 이를 **완전 호이스팅(full hoisting)**이라 합니다.
-
-### var: undefined로 초기화
-
-`var`는 선언이 호이스팅되어 `undefined`로 초기화됩니다. 할당(`=` 오른쪽)은 호이스팅되지 않습니다.
-
-```javascript
-console.log(x); // undefined
+console.log(x); // undefined — 오류 없음!
 var x = 10;
 console.log(x); // 10
 ```
 
-### 함수 표현식: var의 함정
-
-변수에 함수를 담는 **함수 표현식**에서 `var`를 쓰면, 변수 선언은 호이스팅되지만 함수 자체는 아닙니다.
+엔진이 실제로 처리하는 순서:
 
 ```javascript
-sayBye(); // TypeError: sayBye is not a function
-var sayBye = function() {
-  console.log('Bye!');
-};
+// 엔진 내부 처리 (개념적)
+var x = undefined;  // 생성 단계: 선언 + 초기화
+
+console.log(x);     // undefined
+x = 10;             // 실행 단계: 값 할당
+console.log(x);     // 10
 ```
 
-`sayBye`는 생성 단계에서 `undefined`로 등록됩니다. `undefined()`를 호출하면 `TypeError`가 발생합니다. 함수 선언문과 혼동하기 쉬운 치명적인 차이입니다.
+이 때문에 `var`로 선언된 변수를 선언 이전에 참조해도 `ReferenceError`가 아닌 `undefined`를 반환합니다.
 
-### let · const · class: TDZ
+### 함수 스코프와 호이스팅
 
-`let`, `const`, `class`는 호이스팅이 되지만 초기화되지 않습니다. 선언문에 도달하기 전까지 **TDZ(Temporal Dead Zone, 일시적 사각지대)**에 놓입니다.
-
-```javascript
-console.log(y); // ReferenceError: Cannot access 'y' before initialization
-let y = 20;
-```
-
-TDZ 안에서 변수에 접근하면 `ReferenceError`가 발생합니다. `var`와 달리 에러가 명시적으로 발생하므로 버그를 훨씬 빨리 찾을 수 있습니다.
-
-![호이스팅 동작 다이어그램](/assets/posts/js-hoisting-diagram.svg)
-
-## 실행 컨텍스트와 호이스팅의 관계
-
-호이스팅은 실행 컨텍스트(Execution Context)의 생성 단계에서 일어납니다. JavaScript 코드가 실행될 때마다 실행 컨텍스트가 만들어지며, 이 과정은 두 단계로 나뉩니다.
-
-**생성 단계(Creation Phase)**
-- 변수 환경(Variable Environment)을 생성합니다
-- 현재 스코프의 모든 `var` 선언을 찾아 `undefined`로 초기화합니다
-- 모든 함수 선언문을 찾아 함수 객체를 생성하고 등록합니다
-- `let`·`const`·`class`는 등록만 하고 초기화하지 않습니다 (TDZ 시작)
-
-**실행 단계(Execution Phase)**
-- 코드를 위에서 아래로 한 줄씩 실행합니다
-- 할당문을 만나면 변수에 값을 저장합니다
-- `let`·`const`의 선언문을 만나면 초기화(TDZ 종료)합니다
-
-## 함수 스코프와 호이스팅
-
-함수 내부에서도 동일한 메커니즘이 작동합니다. 각 함수 호출마다 새로운 실행 컨텍스트가 생성되고, 그 안의 선언들이 함수 범위 내에서 호이스팅됩니다.
+`var`는 함수 스코프이므로, 함수 안에서의 `var`는 함수 내 최상단으로 호이스팅됩니다:
 
 ```javascript
-function outer() {
-  console.log(a); // undefined (inner var 호이스팅)
-  if (true) {
-    var a = 1;
+function example() {
+  console.log(y); // undefined — 함수 내 호이스팅
+  if (false) {
+    var y = 5;    // 실행되지 않아도 선언은 호이스팅됨!
   }
-  console.log(a); // 1
+  console.log(y); // undefined
 }
 ```
 
-`outer` 함수가 호출될 때 새 실행 컨텍스트가 생성되고, `var a`가 함수 스코프 내에서 `undefined`로 호이스팅됩니다.
+이 동작이 `var`가 혼란스러운 이유입니다. `if (false)` 블록 안의 선언조차도 함수 최상단으로 끌어올려집니다.
 
-## 호이스팅이 일어나는 이유
+## 함수 선언문의 호이스팅
 
-호이스팅은 설계 실수라기보다는 JavaScript가 단일 패스 파서로 동작하던 초기 시대의 유산입니다. 함수 선언문의 호이스팅은 특히 실용적 이유가 있었습니다. 코드 어느 곳에서나 함수를 정의하고 어느 곳에서나 호출할 수 있게 해주므로, 파일 구성 순서를 신경 쓰지 않아도 됩니다.
+함수 선언문(`function` 키워드로 시작하는 것)은 **완전 호이스팅**이 일어납니다. 선언뿐 아니라 **함수 본문 전체**가 끌어올려져 선언 이전에도 호출할 수 있습니다.
 
 ```javascript
-// 메인 로직 먼저, 구현은 아래
-main();
+// 선언 전에 호출 — 정상 작동!
+const result = double(5);
+console.log(result); // 10
 
-function main() {
-  helper1();
-  helper2();
+function double(n) {
+  return n * 2;
 }
-
-function helper1() { /* ... */ }
-function helper2() { /* ... */ }
 ```
 
-이렇게 "상위 수준 흐름을 먼저, 세부 구현은 아래"로 코드를 구성할 수 있어서 가독성에 도움이 됩니다.
+이는 의도적인 설계입니다. 함수를 파일 하단에 정의해 두고 상단에서 사용하는 코딩 스타일을 지원하기 위해서입니다.
 
-## 실무 권장 패턴
+## 함수 표현식은 다르다
 
-호이스팅의 혼란을 피하는 가장 간단한 방법은 **사용하기 전에 선언**하는 것입니다.
+함수 표현식(변수에 함수를 할당하는 것)은 함수 선언문과 다르게 동작합니다:
 
 ```javascript
-// 권장: 선언 후 사용
-const MAX = 100;
-let count = 0;
+// var로 선언된 함수 표현식
+console.log(fn); // undefined — var가 호이스팅됨
+fn();            // TypeError: fn is not a function
 
-function greet(name) {
-  console.log(`Hi, ${name}`);
-}
-
-// 함수 표현식을 const로 선언 — TDZ 덕분에 실수 방지
-const sayBye = function() {
-  console.log('Bye');
+var fn = function() {
+  return "hello";
 };
 ```
 
-`let`·`const` 사용, 함수 선언문보다 함수 표현식 선호, 선언을 스코프 맨 위로 모으는 관례 등이 호이스팅으로 인한 버그를 예방합니다. ESLint의 `no-use-before-define` 규칙이 이를 자동으로 잡아줍니다.
+`var fn`은 `undefined`로 초기화되어 호이스팅됩니다. 실제 함수 할당은 원래 코드 위치에서 실행됩니다. 따라서 할당 전에 호출하면 `undefined()`가 되어 `TypeError`가 발생합니다.
+
+```javascript
+// let/const로 선언된 함수 표현식 — TDZ
+console.log(fn); // ReferenceError — TDZ에 있음
+fn();
+
+const fn = () => "hello";
+```
+
+## let, const, class의 호이스팅
+
+`let`, `const`, `class`도 호이스팅됩니다. 하지만 `var`와 달리 **초기화 없이 선언만** 호이스팅됩니다. 이로 인해 **TDZ(Temporal Dead Zone)**가 생깁니다.
+
+```javascript
+console.log(a); // ReferenceError — TDZ에 있음
+let a = 10;
+
+new MyClass();  // ReferenceError — class도 TDZ
+class MyClass {}
+```
+
+TDZ는 블록 시작부터 실제 선언 코드까지의 구간입니다. 이 구간에서 변수에 접근하면 `ReferenceError`가 발생합니다. TDZ에 대한 자세한 설명은 다음 글에서 이어집니다.
+
+![호이스팅 유형 정리](/assets/posts/js-hoisting-types.svg)
+
+## 같은 이름의 함수와 변수 호이스팅
+
+같은 스코프에 같은 이름으로 함수 선언과 `var` 선언이 있다면 어떻게 될까요?
+
+```javascript
+console.log(typeof foo); // "function" — 함수가 우선
+var foo = 1;
+console.log(typeof foo); // "number" — 이제 값으로 덮임
+
+function foo() {}        // 함수 선언이 var보다 먼저 호이스팅
+```
+
+엔진은 함수 선언을 먼저, `var` 선언을 나중에 처리합니다. 단, 실행 단계에서 `var foo = 1`이 실행되면 함수를 숫자로 덮어씁니다.
+
+## 실무에서의 호이스팅
+
+호이스팅을 이해하는 것은 중요하지만, 호이스팅에 의존하는 코드는 피하는 것이 좋습니다:
+
+```javascript
+// 피해야 할 패턴 (hoisting 의존)
+console.log(count); // undefined
+doSomething();      // 함수 선언문이라 동작하지만...
+
+var count = 0;
+function doSomething() { /* ... */ }
+
+// 권장 패턴 — 선언 후 사용
+const count = 0;
+
+const doSomething = () => { /* ... */ };
+doSomething();  // 명확하게 선언 후 호출
+```
+
+특히 `const`와 `let`을 기본으로 사용하면 TDZ가 실수를 잡아주어 호이스팅 관련 버그를 예방할 수 있습니다.
 
 ---
 
 **지난 글:** [var · let · const 차이](/posts/js-var-let-const/)
 
-**다음 글:** [TDZ — Temporal Dead Zone](/posts/js-tdz/)
+**다음 글:** [TDZ (Temporal Dead Zone)](/posts/js-tdz/)
 
 <br>
 읽어주셔서 감사합니다. 😊

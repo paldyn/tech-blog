@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">IEEE 754 배정밀도 — 64비트 구조</text>
+
+  <!-- 64-bit structure -->
+  <!-- Sign bit (1) -->
+  <rect x="60" y="72" width="40" height="50" rx="4" fill="#2d0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#e05555">S</text>
+  <text x="80" y="114" text-anchor="middle" font-size="9" fill="#e05555">1bit</text>
+
+  <!-- Exponent (11) -->
+  <rect x="106" y="72" width="264" height="50" rx="4" fill="#0a1a2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="238" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#7ec8e3">지수 (Exponent)</text>
+  <text x="238" y="114" text-anchor="middle" font-size="9" fill="#7ec8e3">11 bits</text>
+
+  <!-- Mantissa (52) -->
+  <rect x="376" y="72" width="444" height="50" rx="4" fill="#0a2d0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="598" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#55c555">가수 (Mantissa / Fraction)</text>
+  <text x="598" y="114" text-anchor="middle" font-size="9" fill="#55c555">52 bits</text>
+
+  <!-- Bit count indicators -->
+  <text x="80" y="138" text-anchor="middle" font-size="10" fill="#888">부호</text>
+  <text x="238" y="138" text-anchor="middle" font-size="10" fill="#888">범위 결정 · 편향값 1023</text>
+  <text x="598" y="138" text-anchor="middle" font-size="10" fill="#888">정밀도 결정 (약 15~17자리 십진수)</text>
+
+  <!-- Formula -->
+  <rect x="60" y="158" width="760" height="44" rx="8" fill="#0d1117" stroke="#333"/>
+  <text x="440" y="175" text-anchor="middle" font-size="12" fill="#888">값 = (-1)^부호 × 1.가수 × 2^(지수-1023)</text>
+  <text x="440" y="193" text-anchor="middle" font-size="11" fill="#555">예: 3.14 → 부호=0, 지수=1024(=1+1023), 가수=이진 소수점 이하 비트들</text>
+
+  <!-- Common pitfalls -->
+  <text x="60" y="226" font-size="16" font-weight="600" fill="#e8e8e8">흔한 함정들</text>
+
+  <!-- Pitfall 1: 0.1+0.2 -->
+  <rect x="60" y="238" width="360" height="100" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="260" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">① 0.1 + 0.2 ≠ 0.3</text>
+  <rect x="76" y="268" width="328" height="60" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0.1</text>
+  <text x="116" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> + </text>
+  <text x="140" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0.2</text>
+  <text x="164" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">;</text>
+  <text x="92" y="305" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// 0.30000000000000004</text>
+  <text x="92" y="323" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 0.1, 0.2는 이진수로 무한소수</text>
+
+  <!-- Pitfall 2: MAX_SAFE_INTEGER -->
+  <rect x="460" y="238" width="360" height="100" rx="8" fill="#0d1117" stroke="#ce9178" stroke-width="1"/>
+  <text x="640" y="260" text-anchor="middle" font-size="13" font-weight="600" fill="#ce9178">② 정수 정밀도 한계</text>
+  <rect x="476" y="268" width="328" height="60" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="492" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Number.MAX_SAFE_INTEGER</text>
+  <text x="492" y="305" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">// 9007199254740991</text>
+  <text x="492" y="323" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// 이 값 이상 → 정밀도 손실</text>
+
+  <!-- Pitfall 3: NaN -->
+  <rect x="60" y="352" width="360" height="90" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1"/>
+  <text x="240" y="374" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">③ NaN ≠ NaN</text>
+  <rect x="76" y="382" width="328" height="50" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">NaN</text>
+  <text x="116" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> === </text>
+  <text x="152" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">NaN</text>
+  <text x="176" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">; // false!</text>
+  <text x="92" y="419" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">Number.isNaN(NaN); // true</text>
+
+  <!-- Pitfall 4: -0 -->
+  <rect x="460" y="352" width="360" height="90" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="640" y="374" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">④ -0 의 존재</text>
+  <rect x="476" y="382" width="328" height="50" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="492" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">-0</text>
+  <text x="508" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> === </text>
+  <text x="544" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0</text>
+  <text x="552" y="401" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">; // true (함정!)</text>
+  <text x="492" y="419" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">Object.is(-0, 0); // false</text>
+
+  <!-- Footer -->
+  <text x="440" y="460" text-anchor="middle" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복 시리즈 #10</text>
+</svg>
