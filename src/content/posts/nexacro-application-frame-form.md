@@ -140,7 +140,9 @@ this.fnSearch = function () {
 
 ---
 
-**다음 글:** Dataset 기본기 — 컬럼, RowType, 바인딩 이해하기
+**지난 글:** [넥사크로란 무엇인가](/posts/what-is-nexacro/)
+
+**다음 글:** [[Nexacro N] 주요 컴포넌트 한눈에 파악하기](/posts/nexacro-n-components-overview/)
 
 <br>
 읽어주셔서 감사합니다. 😊

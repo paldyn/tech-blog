@@ -277,8 +277,11 @@ Nexacro N은 "웹인데 데스크톱 앱처럼 동작해야 하는" 엔터프라
 
 다음 글부터는 **Nexacro 14 → Platform → N · V24**의 버전 진화를 세부적으로 다루며, 각 버전에서 무엇이 바뀌었는지 마이그레이션 관점까지 정리한다.
 
-**다음 글:** Nexacro 14 → Platform → N · V24 진화 상세
+---
+
+**지난 글:** [[Nexacro N] 유효성 검사 — 저장 전 데이터 무결성 보장하기](/posts/nexacro-n-validation/)
+
+**다음 글:** [[Nexacro N] Nexacro 14 → Platform → N · V24 진화](/posts/nexacro-n-history/)
 
 <br>
-
-읽어주셔서 감사합니다 😊
+읽어주셔서 감사합니다. 😊

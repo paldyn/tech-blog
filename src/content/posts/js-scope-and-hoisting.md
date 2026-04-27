@@ -192,7 +192,9 @@ for (let i = 0; i < 3; i++) {
 
 ---
 
-**다음 글:** 클로저 — 함수가 기억하는 것들
+**지난 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
+
+**다음 글:** [클로저 — 함수가 기억하는 것들](/posts/js-closure/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -154,7 +154,9 @@ endless(); // RangeError: Maximum call stack size exceeded
 
 ---
 
-**다음 글:** 이터러블과 제너레이터 — 반복을 프로토콜로 다루다
+**지난 글:** [함수는 일급 객체다 — 값처럼 다루는 함수](/posts/js-functions-first-class/)
+
+**다음 글:** [스코프와 호이스팅 — 변수는 어디서 보이는가](/posts/js-scope-and-hoisting/)
 
 <br>
 읽어주셔서 감사합니다. 😊

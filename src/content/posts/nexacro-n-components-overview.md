@@ -482,6 +482,11 @@ function fn_loadCodes() {
 컴포넌트마다 고유 속성과 이벤트가 있지만, **값을 읽으려면 `.value`, 쓰려면 `set_value()`**라는 원칙은 거의 모든 컴포넌트에서 동일하게 적용됩니다.
 이 원칙 하나만 기억해도 낯선 컴포넌트를 만났을 때 빠르게 적응할 수 있습니다.
 
-**다음 글:** [Nexacro N] 이벤트와 스크립트 작성법
+---
+
+**지난 글:** [화면 기본 단위 이해하기: Application · Frame · Form](/posts/nexacro-application-frame-form/)
+
+**다음 글:** [[Nexacro N] Dataset — 화면 데이터의 핵심 저장소](/posts/nexacro-n-dataset/)
+
 <br>
 읽어주셔서 감사합니다. 😊

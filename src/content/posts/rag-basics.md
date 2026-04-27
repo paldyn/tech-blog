@@ -161,7 +161,9 @@ RAG를 이해하면 왜 요즘 AI 서비스들이 "출처를 함께 보여주는
 
 ---
 
-**다음 글:** 파인튜닝 vs 프롬프트 엔지니어링 vs RAG — 언제 무엇을 써야 하나
+**지난 글:** [프롬프트 엔지니어링 — AI에게 제대로 말 거는 법](/posts/prompt-engineering/)
+
+**다음 글:** [파인튜닝 vs 프롬프트 엔지니어링 vs RAG — 언제 무엇을 써야 하나](/posts/finetuning-vs-prompt-vs-rag/)
 
 <br>
 읽어주셔서 감사합니다. 😊

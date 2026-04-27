@@ -154,7 +154,7 @@ public class DemoApplication {
 
 ---
 
-**다음 글:** Java 역사 (1991 ~ 2023+) — Oak에서 Virtual Threads까지
+**다음 글:** [Java 역사 (1991 ~ 2023+)](/posts/java-history/)
 
 <br>
 읽어주셔서 감사합니다. 😊

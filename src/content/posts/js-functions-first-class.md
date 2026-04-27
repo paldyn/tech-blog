@@ -175,7 +175,9 @@ function increment() { count += 1; } // 외부 상태 변경
 
 ---
 
-**다음 글:** 스코프와 호이스팅 — 변수는 어디서 보이는가
+**지난 글:** [원시 타입 vs 참조 타입 — 복사 버그의 근원](/posts/js-primitive-vs-reference/)
+
+**다음 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
 
 <br>
 읽어주셔서 감사합니다. 😊

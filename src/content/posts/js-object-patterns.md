@@ -288,7 +288,9 @@ const deep = structuredClone(obj);
 
 ---
 
-**다음 글:** 에러 핸들링 — try·catch·finally와 커스텀 에러
+**지난 글:** [비동기 패턴 — 병렬, 순차, 재시도, 타임아웃](/posts/js-async-patterns/)
+
+**다음 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -213,7 +213,9 @@ GPT-3(175B), GPT-4, Claude 같은 초대형 모델이 등장할 수 있었습니
 
 ---
 
-**다음 글:** 프롬프트 엔지니어링 — LLM에게 잘 말을 거는 방법
+**지난 글:** [신경망(Neural Network)이란 무엇인가](/posts/neural-network-basics/)
+
+**다음 글:** [프롬프트 엔지니어링 — AI에게 제대로 말 거는 법](/posts/prompt-engineering/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -361,6 +361,9 @@ Grid의 `datacolumn`에 존재하지 않는 컬럼명을 지정하면 빈 열이
 
 ---
 
-**다음 글:** Nexacro N Transaction — 서버 통신의 모든 것
+**지난 글:** [[Nexacro N] 이벤트와 스크립트 작성법](/posts/nexacro-n-events-and-scripts/)
 
-<br>읽어주셔서 감사합니다 😊
+**다음 글:** [[Nexacro N] Transaction — 서버 통신의 모든 것](/posts/nexacro-n-transaction/)
+
+<br>
+읽어주셔서 감사합니다. 😊

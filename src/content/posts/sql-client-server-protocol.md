@@ -166,7 +166,9 @@ with connection.cursor() as cur:
 
 SQL 쿼리 한 줄이 실행되기까지 TCP 연결, 프로토콜 직렬화, 파싱, 실행 계획, 스토리지 접근, 결과 직렬화, TCP 전송이 모두 이루어집니다. Prepared Statement는 이 과정에서 파싱 비용을 줄이고 SQL Injection을 막는 핵심 메커니즘입니다. 커넥션 풀은 TCP 연결 비용을 분산해 성능을 높입니다. 다음 글에서는 SQL을 DDL·DML·DCL·TCL로 분류하는 **언어 카테고리**를 살펴보겠습니다.
 
-**다음 글:** SQL 언어 분류 — DDL · DML · DCL · TCL
+---
+
+**지난 글:** [SQL의 역사와 표준 — ANSI/ISO/JIS](/posts/sql-history-and-standard/)
 
 <br>
 읽어주셔서 감사합니다. 😊

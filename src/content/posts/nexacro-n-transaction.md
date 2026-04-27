@@ -468,6 +468,9 @@ function fn_transaction(svcid, svcNm, inDs, outDs, args, callbackFn) {
 
 ---
 
-**다음 글:** Nexacro N CRUD 패턴 — 한 화면에서 조회·등록·수정·삭제 완성하기
+**지난 글:** [[Nexacro N] 데이터바인딩 — Dataset과 컴포넌트를 연결하는 핵심 메커니즘](/posts/nexacro-n-databinding/)
 
-<br>읽어주셔서 감사합니다 😊
+**다음 글:** [[Nexacro N] CRUD 패턴 — 조회·신규·수정·삭제·저장 완전 정리](/posts/nexacro-n-crud-pattern/)
+
+<br>
+읽어주셔서 감사합니다. 😊

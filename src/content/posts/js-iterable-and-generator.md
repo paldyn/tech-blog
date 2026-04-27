@@ -170,7 +170,9 @@ console.log([...concat([1, 2], [3, 4], [5])]); // [1, 2, 3, 4, 5]
 
 ---
 
-**다음 글:** 이벤트 루프 — 싱글 스레드가 비동기를 다루는 방법
+**지난 글:** [프로토타입과 상속 — JavaScript 객체 지향의 실체](/posts/js-prototype-and-inheritance/)
+
+**다음 글:** [콜백 패턴 — 비동기의 시작과 콜백 헬](/posts/js-callback-pattern/)
 
 <br>
 읽어주셔서 감사합니다. 😊

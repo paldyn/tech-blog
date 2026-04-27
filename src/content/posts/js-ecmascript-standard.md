@@ -203,7 +203,9 @@ ECMAScript는 JavaScript의 표준이고, TC39가 매년 새 버전을 발표합
 
 ---
 
-**다음 글:** JS 엔진 — V8·SpiderMonkey·JavaScriptCore 동작 원리
+**지난 글:** [JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로](/posts/js-what-is-javascript/)
+
+**다음 글:** [JS 엔진 — V8·SpiderMonkey·JavaScriptCore 동작 원리](/posts/js-engines/)
 
 <br>
 읽어주셔서 감사합니다. 😊

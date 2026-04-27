@@ -142,7 +142,9 @@ thirdPartyLib.doSomething(data, (result) => {
 
 ---
 
-**다음 글:** Promise — 비동기를 값으로 다루다
+**지난 글:** [이터러블과 제너레이터 — 반복을 프로토콜로 다루다](/posts/js-iterable-and-generator/)
+
+**다음 글:** [이벤트 루프 — 싱글 스레드가 비동기를 다루는 방법](/posts/js-event-loop/)
 
 <br>
 읽어주셔서 감사합니다. 😊

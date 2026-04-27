@@ -209,7 +209,11 @@ WHERE birthdate = DATE '2026-04-26'  -- TO_DATE 리터럴
 - Oracle `DATE`는 시간도 포함한다. 날짜만 비교할 때는 `TRUNC`를 사용하자.
 - `INTERVAL`로 기간 연산, `EXTRACT`로 부분 추출.
 
-**다음 글:** NULL의 의미와 3값 논리 — IS NULL · COALESCE · NULL 관련 함정
+---
+
+**지난 글:** [데이터 타입 표준 (숫자·문자열·불리언) — 언제 어떤 타입을 써야 하는가](/posts/sql-data-types-numeric-string-bool/)
+
+**다음 글:** [데이터베이스란 무엇인가 — 파일 시스템과의 차이](/posts/sql-what-is-rdb/)
 
 <br>
 읽어주셔서 감사합니다. 😊

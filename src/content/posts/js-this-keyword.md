@@ -218,7 +218,9 @@ class EventHandler {
 
 ---
 
-**다음 글:** 프로토타입과 상속 — JavaScript 객체 지향의 실체
+**지난 글:** [클로저 — 함수가 기억하는 것들](/posts/js-closure/)
+
+**다음 글:** [프로토타입과 상속 — JavaScript 객체 지향의 실체](/posts/js-prototype-and-inheritance/)
 
 <br>
 읽어주셔서 감사합니다. 😊

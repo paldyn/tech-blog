@@ -214,7 +214,11 @@ id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
 - 복합 PK/FK 등 여러 컬럼에 걸친 제약은 테이블 수준 제약으로 정의한다.
 - VARCHAR 길이는 넉넉히 잡고, PRIMARY KEY는 항상 지정하는 습관을 들이자.
 
-**다음 글:** 데이터 타입 표준 (숫자·문자열·불리언) — 각 타입을 언제 어떻게 쓸지, 그리고 DBMS별 차이
+---
+
+**지난 글:** [SQL 언어 분류 — DDL · DML · DCL · TCL](/posts/sql-language-categories/)
+
+**다음 글:** [데이터 타입 표준 (숫자·문자열·불리언) — 언제 어떤 타입을 써야 하는가](/posts/sql-data-types-numeric-string-bool/)
 
 <br>
 읽어주셔서 감사합니다. 😊

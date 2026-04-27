@@ -194,7 +194,9 @@ alice.greet(); // "안녕하세요, Alice입니다."
 
 ---
 
-**다음 글:** 실행 컨텍스트 — 코드가 실행되는 공간
+**지난 글:** [this 키워드 — 호출 방식이 this를 결정한다](/posts/js-this-keyword/)
+
+**다음 글:** [이터러블과 제너레이터 — 반복을 프로토콜로 다루다](/posts/js-iterable-and-generator/)
 
 <br>
 읽어주셔서 감사합니다. 😊

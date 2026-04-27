@@ -181,7 +181,11 @@ MySQL에서 `BOOLEAN`으로 정의한 컬럼은 실제로 `TINYINT(1)`로 저장
 - **불리언**은 SQL 3값 논리(`TRUE`, `FALSE`, `NULL`)임을 기억하자.
 - DBMS마다 타입 이름이 다르지만 표준 타입을 쓰면 이식성이 높아진다.
 
-**다음 글:** 데이터 타입 표준 (날짜·시간) — DATE·TIME·TIMESTAMP와 타임존 함정
+---
+
+**지난 글:** [CREATE TABLE 기초 — 테이블을 제대로 정의하는 방법](/posts/sql-create-table-basics/)
+
+**다음 글:** [데이터 타입 표준 (날짜·시간) — DATE·TIME·TIMESTAMP와 타임존 함정](/posts/sql-data-types-datetime/)
 
 <br>
 읽어주셔서 감사합니다. 😊

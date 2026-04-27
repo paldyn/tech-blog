@@ -239,7 +239,9 @@ JavaScript 문법은 계속 진화하고 있습니다. 지금 살펴본 `?.`, `?
 
 ---
 
-**다음 글:** 모듈 시스템 — CommonJS에서 ES Module까지
+**지난 글:** [모듈 시스템 — CommonJS에서 ES Module까지](/posts/js-module-system/)
+
+**다음 글:** [JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로](/posts/js-what-is-javascript/)
 
 <br>
 읽어주셔서 감사합니다. 😊

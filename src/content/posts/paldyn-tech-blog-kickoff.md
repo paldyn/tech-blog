@@ -58,6 +58,3 @@ const postGuideline = {
   shareDecisionContext: true,
 };
 ```
-
-<br>
-읽어주셔서 감사합니다. 😊

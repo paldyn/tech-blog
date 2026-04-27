@@ -233,7 +233,9 @@ async function fetchOnce(url) {
 
 ---
 
-**다음 글:** ES6 대혁신 — JavaScript가 달라진 날
+**지난 글:** [async/await — 비동기를 동기처럼 쓰다](/posts/js-async-await/)
+
+**다음 글:** [객체 패턴 — 단축 프로퍼티부터 프로퍼티 디스크립터까지](/posts/js-object-patterns/)
 
 <br>
 읽어주셔서 감사합니다. 😊

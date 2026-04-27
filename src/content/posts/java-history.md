@@ -268,7 +268,7 @@ Java 30년 역사를 돌아보면 몇 가지 패턴이 보입니다.
 
 ---
 
-**다음 글:** SE · EE · ME · Jakarta EE — Java 에디션별 차이와 선택 기준
+**지난 글:** [Java란 무엇인가](/posts/java-what-is-java/)
 
 <br>
 읽어주셔서 감사합니다. 😊

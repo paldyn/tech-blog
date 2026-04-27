@@ -253,7 +253,7 @@ LLM  →  DL의 결과.  언어를 다루는 초대형 모델, 토큰 예측이 
 
 ---
 
-**다음 글:** 신경망(Neural Network)이란 무엇인가 — 딥러닝의 기반 구조를 그림으로 이해하기
+**다음 글:** [신경망(Neural Network)이란 무엇인가](/posts/neural-network-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

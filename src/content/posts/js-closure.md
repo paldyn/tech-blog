@@ -192,7 +192,9 @@ React의 `useState`, `useEffect`, `useMemo` 같은 훅은 내부적으로 클로
 
 ---
 
-**다음 글:** this 키워드 — 호출 방식이 this를 결정한다
+**지난 글:** [스코프와 호이스팅 — 변수는 어디서 보이는가](/posts/js-scope-and-hoisting/)
+
+**다음 글:** [this 키워드 — 호출 방식이 this를 결정한다](/posts/js-this-keyword/)
 
 <br>
 읽어주셔서 감사합니다. 😊

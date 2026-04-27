@@ -623,6 +623,11 @@ Dataset은 넥사크로 개발의 중심축입니다.
 `getColumn` / `setColumn` / `addRow` / `deleteRow` 네 가지만 완벽히 익혀도 대부분의 CRUD 화면을 구현할 수 있습니다.
 다음 글에서는 Dataset과 서버를 연결하는 **Transaction** 메커니즘을 다룹니다.
 
-**다음 글:** [Nexacro N] Transaction — 서버와 데이터를 주고받는 방법
+---
+
+**지난 글:** [[Nexacro N] 주요 컴포넌트 한눈에 파악하기](/posts/nexacro-n-components-overview/)
+
+**다음 글:** [[Nexacro N] 레이아웃과 스타일 완전 정복](/posts/nexacro-n-layout-and-style/)
+
 <br>
 읽어주셔서 감사합니다. 😊

@@ -263,7 +263,9 @@ IoC가 가장 상위 개념이고, DI·AOP·PSA는 IoC 컨테이너가 있기에
 
 ---
 
-**다음 글:** 스프링 생태계 지도 — Framework / Boot / Data / Security / Cloud
+**지난 글:** [스프링이란 무엇인가 — EJB의 한계와 POJO 철학](/posts/spring-what-is-spring/)
+
+**다음 글:** [스프링 생태계 지도 — Framework, Boot, Data, Security, Cloud](/posts/spring-ecosystem-map/)
 
 <br>
 읽어주셔서 감사합니다. 😊

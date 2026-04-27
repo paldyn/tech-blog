@@ -135,7 +135,9 @@ console.log("B");
 
 ---
 
-**다음 글:** 콜백 패턴 — 비동기의 시작과 콜백 헬
+**지난 글:** [콜백 패턴 — 비동기의 시작과 콜백 헬](/posts/js-callback-pattern/)
+
+**다음 글:** [ES6 대혁신 — JavaScript가 달라진 날](/posts/js-es6-revolution/)
 
 <br>
 읽어주셔서 감사합니다. 😊

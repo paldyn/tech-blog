@@ -238,7 +238,9 @@ dependencies {
 
 ---
 
-**다음 글:** 스프링의 역사 — 1.x XML 시대부터 6.x까지
+**지난 글:** [스프링의 4대 핵심 — IoC, DI, AOP, PSA](/posts/spring-four-pillars/)
+
+**다음 글:** [스프링의 역사 — 1.x XML 시대부터 6.x까지](/posts/spring-history/)
 
 <br>
 읽어주셔서 감사합니다. 😊

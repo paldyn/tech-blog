@@ -169,7 +169,9 @@ console.log(a === c); // true  — 같은 객체를 가리킴
 
 ---
 
-**다음 글:** 함수는 일급 객체다 — 값처럼 다루는 함수
+**지난 글:** [변수와 타입 — var, let, const 그리고 8가지 데이터 타입](/posts/js-variables-and-types/)
+
+**다음 글:** [함수는 일급 객체다 — 값처럼 다루는 함수](/posts/js-functions-first-class/)
 
 <br>
 읽어주셔서 감사합니다. 😊

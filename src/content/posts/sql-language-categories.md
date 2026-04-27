@@ -195,7 +195,9 @@ PostgreSQL, Oracle은 기본값이 수동 커밋 모드다. JDBC 드라이버도
 
 DDL이 암묵적으로 커밋된다는 사실은 운영 DB에서 실수를 되돌릴 수 없게 만든다. DDL 실행 전에는 반드시 명시적 `COMMIT`으로 현재 트랜잭션을 정리하고, PostgreSQL이 아닌 DBMS에서는 DDL을 트랜잭션 안에 넣는 것이 위험하다는 점을 기억하자.
 
-**다음 글:** CREATE TABLE 기초 — 테이블을 제대로 정의하는 방법과 자주 하는 실수
+---
+
+**다음 글:** [CREATE TABLE 기초 — 테이블을 제대로 정의하는 방법](/posts/sql-create-table-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

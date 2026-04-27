@@ -357,6 +357,11 @@ function fn_layoutComponents() {
 넥사크로 N의 레이아웃은 웹 표준과 다르지만, 규칙을 이해하면 오히려 예측 가능하고 제어하기 쉽습니다.
 `Div` 그룹화와 앵커 조합을 적극적으로 활용하면 유지보수가 편한 화면 구조를 만들 수 있습니다.
 
-**다음 글:** [Nexacro N] 주요 컴포넌트 한눈에 파악하기
+---
+
+**지난 글:** [[Nexacro N] Dataset — 화면 데이터의 핵심 저장소](/posts/nexacro-n-dataset/)
+
+**다음 글:** [[Nexacro N] 이벤트와 스크립트 작성법](/posts/nexacro-n-events-and-scripts/)
+
 <br>
 읽어주셔서 감사합니다. 😊

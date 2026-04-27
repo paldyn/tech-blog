@@ -552,6 +552,11 @@ function grdList_oncellclick(obj, e) {
 이벤트 핸들러는 넥사크로 개발의 뼈대입니다.
 `this` · `nexacro` · `application` 세 스코프의 역할을 명확히 구분하고, 콜백 패턴과 유효성 검사 흐름을 몸에 익히면 이후 Dataset, Transaction 편의 코드가 훨씬 자연스럽게 읽힙니다.
 
-**다음 글:** [Nexacro N] Dataset — 화면 데이터의 핵심 저장소
+---
+
+**지난 글:** [[Nexacro N] 레이아웃과 스타일 완전 정복](/posts/nexacro-n-layout-and-style/)
+
+**다음 글:** [[Nexacro N] 데이터바인딩 — Dataset과 컴포넌트를 연결하는 핵심 메커니즘](/posts/nexacro-n-databinding/)
+
 <br>
 읽어주셔서 감사합니다. 😊

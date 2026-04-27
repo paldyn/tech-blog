@@ -246,7 +246,9 @@ learning_rate가 너무 작으면 →  학습이 극도로 느려짐
 
 ---
 
-**다음 글:** 트랜스포머(Transformer)란 무엇인가 — LLM이 언어를 이해하는 방법
+**지난 글:** [AI · ML · DL · LLM, 뭐가 다른가](/posts/ai-ml-dl-llm-concepts/)
+
+**다음 글:** [트랜스포머(Transformer)란 무엇인가](/posts/transformer-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

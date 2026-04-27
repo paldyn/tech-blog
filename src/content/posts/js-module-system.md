@@ -231,7 +231,9 @@ ES Module은 순환 의존성을 허용하지만, 초기화 순서에 따라 값
 
 ---
 
-**다음 글:** 배열 메서드 — map·filter·reduce부터 불변 메서드까지
+**지난 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
+
+**다음 글:** [모던 문법 — ES2018 이후 필수 문법 정리](/posts/js-modern-syntax/)
 
 <br>
 읽어주셔서 감사합니다. 😊

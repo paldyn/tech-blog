@@ -433,6 +433,9 @@ this.stcError.color    = "#ef5350"; // 붉은색
 
 ---
 
-**다음 글:** [Nexacro N] Grid — 고급 활용과 커스터마이징
+**지난 글:** [[Nexacro N] CRUD 패턴 — 조회·신규·수정·삭제·저장 완전 정리](/posts/nexacro-n-crud-pattern/)
 
-<br>읽어주셔서 감사합니다 😊
+**다음 글:** [[Nexacro N] Nexacro란 무엇인가 (RIA 시대부터 N까지)](/posts/nexacro-n-what-is-nexacro/)
+
+<br>
+읽어주셔서 감사합니다. 😊

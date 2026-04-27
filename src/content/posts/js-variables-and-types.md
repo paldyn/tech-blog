@@ -162,7 +162,7 @@ Boolean(0)        // false
 
 ---
 
-**다음 글:** 원시 타입 vs 참조 타입 — 복사 버그의 근원
+**다음 글:** [원시 타입 vs 참조 타입 — 복사 버그의 근원](/posts/js-primitive-vs-reference/)
 
 <br>
 읽어주셔서 감사합니다. 😊

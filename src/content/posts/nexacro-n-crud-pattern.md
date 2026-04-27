@@ -330,6 +330,9 @@ CRUD 기능을 개발할 때 놓치기 쉬운 항목들입니다.
 
 ---
 
-**다음 글:** [Nexacro N] 유효성 검사 — 저장 전 데이터 무결성 보장하기
+**지난 글:** [[Nexacro N] Transaction — 서버 통신의 모든 것](/posts/nexacro-n-transaction/)
 
-<br>읽어주셔서 감사합니다 😊
+**다음 글:** [[Nexacro N] 유효성 검사 — 저장 전 데이터 무결성 보장하기](/posts/nexacro-n-validation/)
+
+<br>
+읽어주셔서 감사합니다. 😊

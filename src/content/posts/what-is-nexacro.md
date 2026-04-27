@@ -123,7 +123,7 @@ this.fnCallback = function (svcId, errorCode, errorMsg) {
 
 ---
 
-**다음 글:** 화면 기본 단위 이해하기 — Application · Frame · Form
+**다음 글:** [화면 기본 단위 이해하기: Application · Frame · Form](/posts/nexacro-application-frame-form/)
 
 <br>
 읽어주셔서 감사합니다. 😊
