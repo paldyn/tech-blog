@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [Java란 무엇인가](/posts/java-what-is-java/) 글에서 이어집니다.
+[지난 글](/posts/java-what-is-java/)에서 이어집니다.
 
 ## 역사를 알면 현재가 보인다
 

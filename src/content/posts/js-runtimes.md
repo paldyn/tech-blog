@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [JS 엔진 — V8·SpiderMonkey·JavaScriptCore 동작 원리](/posts/js-engines/) 글에서 이어집니다.
+[지난 글](/posts/js-engines/)에서 이어집니다.
 
 ## 엔진과 런타임 — 무엇이 다른가
 

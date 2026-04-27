@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] 주요 컴포넌트 한눈에 파악하기](/posts/nexacro-n-components-overview/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-components-overview/)에서 이어집니다.
 
 이 글은 **Nexacro N 기준으로 작성되었습니다.**
 넥사크로 개발을 하면서 "Dataset은 결국 테이블이다"라는 말을 자주 듣게 됩니다.

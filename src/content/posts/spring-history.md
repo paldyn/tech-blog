@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[이전 글](/posts/spring-ecosystem-map)에서 스프링 생태계의 지형도를 살펴봤다. 이번에는 그 생태계가 어떻게 탄생하고 성장해왔는지 역사의 흐름을 따라가 본다. 버전별 변화를 이해하면 "왜 이렇게 설계됐는가"라는 질문에 답할 수 있게 된다.
+[지난 글](/posts/spring-ecosystem-map/)에서 스프링 생태계의 지형도를 살펴봤다. 이번에는 그 생태계가 어떻게 탄생하고 성장해왔는지 역사의 흐름을 따라가 본다. 버전별 변화를 이해하면 "왜 이렇게 설계됐는가"라는 질문에 답할 수 있게 된다.
 
 ![스프링 버전 타임라인](/assets/posts/spring-history-timeline.svg)
 

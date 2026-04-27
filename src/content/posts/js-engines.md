@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [ECMAScript 표준과 버전 이름 — ES5·ES6·ES2015~ES2024](/posts/js-ecmascript-standard/) 글에서 이어집니다.
+[지난 글](/posts/js-ecmascript-standard/)에서 이어집니다.
 
 ## 엔진이란 무엇인가
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[이전 글](/posts/spring-four-pillars)에서 IoC, DI, AOP, PSA라는 네 가지 핵심 원칙을 살펴봤다. 이번에는 시야를 넓혀보자. "스프링을 배운다"고 했을 때, 그 스프링은 정확히 무엇을 가리키는 걸까?
+[지난 글](/posts/spring-four-pillars/)에서 IoC, DI, AOP, PSA라는 네 가지 핵심 원칙을 살펴봤다. 이번에는 시야를 넓혀보자. "스프링을 배운다"고 했을 때, 그 스프링은 정확히 무엇을 가리키는 걸까?
 
 결론부터 말하면, **스프링은 단일 프레임워크가 아니다**. spring.io에는 현재 수십 개의 프로젝트가 등록돼 있다. 이 글에서는 가장 중요한 다섯 축 — Spring Framework, Spring Boot, Spring Data, Spring Security, Spring Cloud — 을 지도처럼 펼쳐보겠다.
 

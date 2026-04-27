@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] Transaction — 서버 통신의 모든 것](/posts/nexacro-n-transaction/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-transaction/)에서 이어집니다.
 
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 

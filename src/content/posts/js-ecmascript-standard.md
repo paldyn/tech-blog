@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로](/posts/js-what-is-javascript/) 글에서 이어집니다.
+[지난 글](/posts/js-what-is-javascript/)에서 이어집니다.
 
 ## JavaScript와 ECMAScript — 같은 듯 다른 이름
 

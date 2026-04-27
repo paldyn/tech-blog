@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [콜백 패턴 — 비동기의 시작과 콜백 헬](/posts/js-callback-pattern/) 글에서 이어집니다.
+[지난 글](/posts/js-callback-pattern/)에서 이어집니다.
 
 JavaScript는 **싱글 스레드(single-threaded)** 언어입니다. 한 번에 한 가지 일만 합니다. 그런데 우리는 버튼 클릭을 기다리면서 동시에 타이머를 돌리고, 서버에서 데이터를 받아오면서 UI를 업데이트합니다. 싱글 스레드인데 어떻게 가능한 걸까요?
 

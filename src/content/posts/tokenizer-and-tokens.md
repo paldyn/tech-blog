@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [AI 에이전트와 MCP — LLM이 스스로 일한다는 것](/posts/ai-agents-and-mcp/) 글에서 이어집니다.
+[지난 글](/posts/ai-agents-and-mcp/)에서 이어집니다.
 
 ## "AI가 내 글을 읽는다"는 게 정확히 무슨 뜻일까?
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] Nexacro란 무엇인가 (RIA 시대부터 N까지)](/posts/nexacro-n-what-is-nexacro/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-what-is-nexacro/)에서 이어집니다.
 
 이 글은 **Nexacro N 기준**으로 작성되었습니다.
 

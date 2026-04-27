@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [데이터 타입 표준 (날짜·시간) — DATE·TIME·TIMESTAMP와 타임존 함정](/posts/sql-data-types-datetime/) 글에서 이어집니다.
+[지난 글](/posts/sql-data-types-datetime/)에서 이어집니다.
 
 ## 왜 데이터베이스가 필요할까?
 

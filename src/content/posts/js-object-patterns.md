@@ -3,7 +3,7 @@ title: "객체 패턴 — 단축 프로퍼티부터 프로퍼티 디스크립터
 description: "JavaScript 객체를 다루는 핵심 패턴들을 정리합니다. 단축 프로퍼티, 계산 프로퍼티명, Object.entries/fromEntries 변환 패턴, 객체 불변성, 게터/세터, 프로퍼티 디스크립터까지."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
-archiveOrder: 2
+archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "객체", "Object", "프로퍼티디스크립터", "게터세터", "freeze", "entries", "fromEntries"]
@@ -11,9 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [비동기 패턴 — 병렬, 순차, 재시도, 타임아웃](/posts/js-async-patterns/) 글에서 이어집니다.
-
-배열 메서드로 데이터를 선언적으로 다루는 방법을 살펴봤습니다. 이번에는 배열과 함께 JavaScript의 핵심 자료구조인 **객체(Object)**를 다루는 패턴들을 정리합니다. 단순히 `{}`를 만들고 점 표기법으로 접근하는 것을 넘어, 객체를 더 정밀하게 제어하고 변환하는 방법들입니다.
+[지난 글](/posts/js-array-methods/)에서 배열 메서드로 데이터를 선언적으로 다루는 방법을 살펴봤습니다. 이번에는 배열과 함께 JavaScript의 핵심 자료구조인 **객체(Object)**를 다루는 패턴들을 정리합니다. 단순히 `{}`를 만들고 점 표기법으로 접근하는 것을 넘어, 객체를 더 정밀하게 제어하고 변환하는 방법들입니다.
 
 ---
 
@@ -290,9 +288,9 @@ const deep = structuredClone(obj);
 
 ---
 
-**지난 글:** [비동기 패턴 — 병렬, 순차, 재시도, 타임아웃](/posts/js-async-patterns/)
+**지난 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
 
-**다음 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
+**다음 글:** [JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로](/posts/js-what-is-javascript/)
 
 <br>
 읽어주셔서 감사합니다. 😊

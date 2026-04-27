@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [CREATE TABLE 기초 — 테이블을 제대로 정의하는 방법](/posts/sql-create-table-basics/) 글에서 이어집니다.
+[지난 글](/posts/sql-create-table-basics/)에서 이어집니다.
 
 ## 타입 선택이 중요한 이유
 

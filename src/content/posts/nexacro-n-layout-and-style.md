@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] Dataset — 화면 데이터의 핵심 저장소](/posts/nexacro-n-dataset/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-dataset/)에서 이어집니다.
 
 이 글은 **Nexacro N 기준으로 작성되었습니다.**
 넥사크로를 처음 접하면 컴포넌트를 어디에, 어떻게 배치해야 하는지부터 막힙니다.

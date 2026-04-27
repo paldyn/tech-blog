@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [파인튜닝 vs 프롬프트 엔지니어링 vs RAG — 언제 무엇을 써야 하나](/posts/finetuning-vs-prompt-vs-rag/) 글에서 이어집니다.
+[지난 글](/posts/finetuning-vs-prompt-vs-rag/)에서 이어집니다.
 
 ChatGPT에게 "서울에서 2박 3일 여행 일정 짜줘"라고 물어보면 꽤 그럴싸한 답이 돌아옵니다. 하지만 그 답이 오늘 날씨를 고려했을까요? 호텔 예약 가격은 실시간으로 확인했을까요? 여러분 캘린더에 이미 잡힌 일정은 피해갔을까요?
 

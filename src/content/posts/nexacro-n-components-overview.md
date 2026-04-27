@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [화면 기본 단위 이해하기: Application · Frame · Form](/posts/nexacro-application-frame-form/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-application-frame-form/)에서 이어집니다.
 
 이 글은 **Nexacro N 기준으로 작성되었습니다.**
 넥사크로 개발을 막 시작한 분들이 가장 먼저 마주치는 질문은 대부분 이렇습니다.

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] 데이터바인딩 — Dataset과 컴포넌트를 연결하는 핵심 메커니즘](/posts/nexacro-n-databinding/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-databinding/)에서 이어집니다.
 
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 

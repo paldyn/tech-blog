@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [SQL의 역사와 표준 — ANSI/ISO/JIS](/posts/sql-history-and-standard/) 글에서 SQL이 어떻게 표준화됐는지 살펴봤습니다. 그런데 우리가 코드에서 `connection.execute("SELECT ...")` 한 줄을 실행할 때, 실제로는 무슨 일이 벌어질까요? SQL 문자열이 어떻게 DBMS에 전달되고, 결과가 어떻게 돌아오는지 이해하면 성능 튜닝과 보안 취약점 방어 모두에서 큰 그림이 보입니다.
+[지난 글](/posts/sql-history-and-standard/)에서 SQL이 어떻게 표준화됐는지 살펴봤습니다. 그런데 우리가 코드에서 `connection.execute("SELECT ...")` 한 줄을 실행할 때, 실제로는 무슨 일이 벌어질까요? SQL 문자열이 어떻게 DBMS에 전달되고, 결과가 어떻게 돌아오는지 이해하면 성능 튜닝과 보안 취약점 방어 모두에서 큰 그림이 보입니다.
 
 ## 클라이언트-서버 모델
 

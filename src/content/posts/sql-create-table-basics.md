@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [SQL 언어 분류 — DDL · DML · DCL · TCL](/posts/sql-language-categories/) 글에서 이어집니다.
+[지난 글](/posts/sql-language-categories/)에서 이어집니다.
 
 ## 테이블 생성은 데이터 모델링의 출발점
 

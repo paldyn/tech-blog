@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] CRUD 패턴 — 조회·신규·수정·삭제·저장 완전 정리](/posts/nexacro-n-crud-pattern/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-crud-pattern/)에서 이어집니다.
 
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 

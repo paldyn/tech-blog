@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [토크나이저와 토큰: LLM이 텍스트를 읽는 방법](/posts/tokenizer-and-tokens/) 글에서 이어집니다.
+[지난 글](/posts/tokenizer-and-tokens/)에서 이어집니다.
 
 "고양이"와 "강아지"는 비슷한 단어입니다. 그런데 컴퓨터는 어떻게 이 사실을 알 수 있을까요? 텍스트 자체로는 두 단어가 다른 문자열일 뿐입니다. 컴퓨터가 언어의 **의미**를 다루기 위해 탄생한 기술이 바로 **임베딩(Embedding)** 입니다.
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [\[Nexacro N\] 이벤트와 스크립트 작성법](/posts/nexacro-n-events-and-scripts/) 글에서 이어집니다.
+[지난 글](/posts/nexacro-n-events-and-scripts/)에서 이어집니다.
 
 이 글은 **Nexacro N** 기준으로 작성되었습니다.
 

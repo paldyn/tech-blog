@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [이터러블과 제너레이터 — 반복을 프로토콜로 다루다](/posts/js-iterable-and-generator/) 글에서 이벤트 루프를 살펴봤습니다. 콜 스택이 비면 이벤트 루프가 큐에서 함수를 꺼내 실행한다고 했습니다. 그 "큐에 들어가는 함수"가 바로 **콜백(Callback)** 입니다.
+[지난 글](/posts/js-iterable-and-generator/)에서 이벤트 루프를 살펴봤습니다. 콜 스택이 비면 이벤트 루프가 큐에서 함수를 꺼내 실행한다고 했습니다. 그 "큐에 들어가는 함수"가 바로 **콜백(Callback)** 입니다.
 
 콜백은 JavaScript 비동기의 출발점입니다. "나중에 실행할 함수를 지금 인자로 넘겨라" — 이 단순한 아이디어 위에 초기 JavaScript의 비동기 모델이 만들어졌습니다. 그리고 이 단순함이 복잡해지면서 **콜백 헬(Callback Hell)** 이라는 악명 높은 문제가 생겼고, 이것이 Promise와 async/await 탄생의 직접적인 동기가 됩니다.
 

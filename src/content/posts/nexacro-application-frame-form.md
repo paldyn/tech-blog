@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [넥사크로란 무엇인가](/posts/what-is-nexacro/) 글에서 이어집니다.
+[지난 글](/posts/what-is-nexacro/)에서 이어집니다.
 
 넥사크로를 처음 잡으면 화면부터 만들고 싶어집니다.
 그런데 구조를 모르고 `Form`만 늘리기 시작하면, 나중에 공통 기능과 화면 책임이 엉켜 유지보수가 급격히 어려워집니다.

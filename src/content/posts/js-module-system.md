@@ -3,7 +3,7 @@ title: "모듈 시스템 — CommonJS에서 ES Module까지"
 description: "전역 스크립트 공유의 혼돈에서 벗어나 코드를 독립된 모듈로 나누는 방법. CommonJS와 ES Module의 차이, named/default export, 동적 import(), 트리 쉐이킹까지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
-archiveOrder: 4
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "모듈", "CommonJS", "ESModule", "import", "export", "트리쉐이킹", "번들러"]
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/) 글에서 이어집니다.
+[지난 글](/posts/js-modern-syntax/)에서 이어집니다.
 
 모던 문법 정리에 이어, 이번에는 코드를 파일 단위로 나누고 조합하는 방법인 **모듈 시스템**을 살펴봅니다. 모듈은 JavaScript 생태계를 이해하는 데 빠질 수 없는 개념입니다. `require`와 `import`가 공존하는 이유, `.mjs`와 `.cjs` 확장자가 생긴 배경, 그리고 번들러가 하는 일까지 차례로 짚어봅니다.
 
@@ -233,9 +233,9 @@ ES Module은 순환 의존성을 허용하지만, 초기화 순서에 따라 값
 
 ---
 
-**지난 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
+**지난 글:** [모던 문법 — ES2018 이후 필수 문법 정리](/posts/js-modern-syntax/)
 
-**다음 글:** [모던 문법 — ES2018 이후 필수 문법 정리](/posts/js-modern-syntax/)
+**다음 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
 
 <br>
 읽어주셔서 감사합니다. 😊

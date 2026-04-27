@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [데이터 타입 표준 (숫자·문자열·불리언) — 언제 어떤 타입을 써야 하는가](/posts/sql-data-types-numeric-string-bool/) 글에서 이어집니다.
+[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 이어집니다.
 
 ## 날짜·시간 타입이 특별한 이유
 

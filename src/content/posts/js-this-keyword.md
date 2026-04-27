@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 [클로저 — 함수가 기억하는 것들](/posts/js-closure/) 글에서 이어집니다.
+[지난 글](/posts/js-closure/)에서 이어집니다.
 
 JavaScript를 배우다 보면 반드시 만나는 혼란이 있습니다. 분명 같은 함수인데, 어떤 때는 `this`가 전역 객체고, 어떤 때는 특정 객체이고, 어떤 때는 `undefined`입니다. 규칙이 없는 것처럼 느껴지죠.
 
