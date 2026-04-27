@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Gradle 태스크 의존성 DAG</text>
+  <text x="440" y="66" font-size="13" fill="#888" text-anchor="middle">./gradlew build 실행 시 실제 태스크 흐름</text>
+
+  <!-- DAG nodes -->
+  <!-- compileJava -->
+  <rect x="60" y="100" width="160" height="44" fill="#131a2a" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="127" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">compileJava</text>
+
+  <!-- processResources -->
+  <rect x="60" y="190" width="160" height="44" fill="#131a2a" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="210" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">processResources</text>
+  <text x="140" y="226" font-size="11" fill="#888" text-anchor="middle">리소스 복사</text>
+
+  <!-- compileTestJava -->
+  <rect x="280" y="100" width="160" height="44" fill="#0e1420" rx="8" stroke="#888" stroke-width="1"/>
+  <text x="360" y="120" font-size="12" font-weight="600" fill="#888" text-anchor="middle">compileTestJava</text>
+  <text x="360" y="136" font-size="11" fill="#555" text-anchor="middle">테스트 컴파일</text>
+
+  <!-- classes (combines compileJava + processResources) -->
+  <rect x="280" y="190" width="160" height="44" fill="#131a2a" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="360" y="217" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">classes</text>
+
+  <!-- test -->
+  <rect x="500" y="145" width="160" height="44" fill="#0e1420" rx="8" stroke="#888" stroke-width="1"/>
+  <text x="580" y="172" font-size="13" font-weight="600" fill="#888" text-anchor="middle">test</text>
+
+  <!-- jar -->
+  <rect x="500" y="235" width="160" height="44" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="2"/>
+  <text x="580" y="262" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">jar</text>
+
+  <!-- bootJar -->
+  <rect x="700" y="190" width="140" height="44" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="2.5"/>
+  <text x="770" y="210" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">bootJar</text>
+  <text x="770" y="226" font-size="11" fill="#888" text-anchor="middle">실행 가능 JAR</text>
+
+  <!-- build (final) -->
+  <rect x="700" y="290" width="140" height="44" fill="#0a120a" rx="8" stroke="#55c555" stroke-width="3"/>
+  <text x="770" y="317" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">build</text>
+
+  <!-- Edges -->
+  <!-- compileJava → classes -->
+  <line x1="220" y1="122" x2="280" y2="212" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#garr)"/>
+  <!-- processResources → classes -->
+  <line x1="220" y1="212" x2="280" y2="212" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#garr)"/>
+  <!-- compileJava → compileTestJava -->
+  <line x1="220" y1="122" x2="280" y2="122" stroke="#555" stroke-width="1" marker-end="url(#garrd)"/>
+  <!-- classes → test -->
+  <line x1="360" y1="234" x2="500" y2="167" stroke="#555" stroke-width="1" marker-end="url(#garrd)"/>
+  <!-- compileTestJava → test -->
+  <line x1="440" y1="122" x2="500" y2="155" stroke="#555" stroke-width="1" marker-end="url(#garrd)"/>
+  <!-- classes → jar -->
+  <line x1="440" y1="212" x2="500" y2="257" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#garr)"/>
+  <!-- jar → bootJar -->
+  <line x1="660" y1="250" x2="700" y2="220" stroke="#55c555" stroke-width="1.5" marker-end="url(#garrg)"/>
+  <!-- bootJar → build -->
+  <line x1="770" y1="234" x2="770" y2="290" stroke="#55c555" stroke-width="1.5" marker-end="url(#garrg)"/>
+  <!-- test → build -->
+  <line x1="660" y1="167" x2="700" y2="307" stroke="#555" stroke-width="1" marker-end="url(#garrd)"/>
+
+  <defs>
+    <marker id="garr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="garrg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#55c555"/>
+    </marker>
+    <marker id="garrd" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Incremental build note -->
+  <rect x="60" y="380" width="760" height="52" fill="#0e1420" rx="8" stroke="#333" stroke-width="1"/>
+  <text x="440" y="400" font-size="13" fill="#888" text-anchor="middle">Gradle 증분 빌드: 입력·출력이 바뀐 태스크만 재실행 — UP-TO-DATE 표시가 뜨면 생략</text>
+  <text x="440" y="420" font-size="13" fill="#7ec8e3" text-anchor="middle">빌드 캐시: 이전 빌드 결과를 원격 공유 → CI 빌드 시간 대폭 단축 가능</text>
+
+  <!-- Footer -->
+  <text x="440" y="456" font-size="11" fill="#444" text-anchor="middle">PALDYN · Spring 완전 정복 시리즈 #7 · Chapter 2</text>
+</svg>
