@@ -2,7 +2,7 @@
 title: "SQL 언어 분류 — DDL · DML · DCL · TCL"
 description: "SQL 명령어를 DDL, DML, DCL, TCL 네 범주로 나누어 각각의 역할과 트랜잭션 동작 방식의 차이를 정리합니다. 왜 DDL은 롤백이 안 되는지, TRUNCATE은 왜 DDL인지도 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-## SQL 명령어를 네 가지로 나누는 이유
+[지난 글](/posts/sql-client-server-protocol/)에 이어 ## SQL 명령어를 네 가지로 나누는 이유
 
 이전 글들에서 SQL의 탄생 배경과 표준화 과정을 살펴봤다. 이제부터는 실제 SQL 문법을 배울 차례다. 그 전에 SQL 명령어가 어떻게 분류되는지 먼저 잡아두자.
 
@@ -196,6 +196,8 @@ PostgreSQL, Oracle은 기본값이 수동 커밋 모드다. JDBC 드라이버도
 DDL이 암묵적으로 커밋된다는 사실은 운영 DB에서 실수를 되돌릴 수 없게 만든다. DDL 실행 전에는 반드시 명시적 `COMMIT`으로 현재 트랜잭션을 정리하고, PostgreSQL이 아닌 DBMS에서는 DDL을 트랜잭션 안에 넣는 것이 위험하다는 점을 기억하자.
 
 ---
+
+**지난 글:** [클라이언트-서버 모델과 와이어 프로토콜](/posts/sql-client-server-protocol/)
 
 **다음 글:** [CREATE TABLE 기초 — 테이블을 제대로 정의하는 방법](/posts/sql-create-table-basics/)
 

@@ -2,7 +2,7 @@
 title: "관계형 모델 이론 — 관계·튜플·속성"
 description: "E.F. Codd가 정립한 관계형 모델의 수학적 기반을 살펴봅니다. 릴레이션·튜플·속성·도메인·카디널리티의 의미와 이것이 실제 SQL 설계에 주는 시사점을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"

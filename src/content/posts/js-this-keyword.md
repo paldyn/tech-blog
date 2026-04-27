@@ -2,8 +2,8 @@
 title: "this 키워드 — 호출 방식이 this를 결정한다"
 description: "JavaScript에서 가장 혼란스러운 개념인 this를 호출 방식에 따른 4가지 바인딩 규칙으로 완전히 정리합니다. 화살표 함수의 렉시컬 this도 함께 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-04-22"
-archiveOrder: 5
+pubDate: "2026-04-24"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "this", "바인딩", "call", "apply", "bind", "화살표함수", "렉시컬this"]

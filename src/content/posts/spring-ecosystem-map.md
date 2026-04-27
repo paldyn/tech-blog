@@ -2,7 +2,7 @@
 title: "스프링 생태계 지도 — Framework, Boot, Data, Security, Cloud"
 description: "spring.io의 주요 프로젝트들을 한눈에 파악하고, 각각의 역할과 관계를 명확히 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 3
 type: "knowledge"
 category: "Spring"
@@ -214,7 +214,7 @@ Spring Boot 3.x는 Spring Framework 6.x를 사용하며, Jakarta EE 9+ 네임스
 
 ---
 
-**지난 글:** [스프링의 4대 핵심 (IoC, DI, AOP, PSA)](/posts/spring-four-pillars/)
+**지난 글:** [스프링의 4대 핵심 — IoC, DI, AOP, PSA](/posts/spring-four-pillars/)
 
 **다음 글:** [스프링의 역사 — 1.x XML 시대부터 6.x까지](/posts/spring-history/)
 

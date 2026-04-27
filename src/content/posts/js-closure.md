@@ -2,8 +2,8 @@
 title: "클로저 — 함수가 기억하는 것들"
 description: "JavaScript 클로저의 동작 원리를 렉시컬 스코프와 연결해 이해하고, 상태 은닉·팩토리·모듈 패턴 등 실용적인 활용법을 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-22"
-archiveOrder: 4
+pubDate: "2026-04-24"
+archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "클로저", "closure", "렉시컬스코프", "상태은닉", "팩토리함수", "모듈패턴"]
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-scope-and-hoisting/)에서 스코프 체인을 살펴봤습니다. 안쪽 함수가 바깥 함수의 변수를 참조할 수 있고, 탐색은 안에서 밖으로 이루어진다고 했죠. **클로저(Closure)** 는 그 연장선입니다. 단순히 "바깥 변수를 쓸 수 있다"가 아니라, **함수가 종료된 뒤에도 바깥 스코프의 변수를 붙잡아 기억한다**는 것이 핵심입니다.
+[지난 글](/posts/js-execution-context/)에서 스코프 체인을 살펴봤습니다. 안쪽 함수가 바깥 함수의 변수를 참조할 수 있고, 탐색은 안에서 밖으로 이루어진다고 했죠. **클로저(Closure)** 는 그 연장선입니다. 단순히 "바깥 변수를 쓸 수 있다"가 아니라, **함수가 종료된 뒤에도 바깥 스코프의 변수를 붙잡아 기억한다**는 것이 핵심입니다.
 
 많은 개발자들이 클로저를 어려워합니다. 하지만 스코프 체인을 이해했다면 클로저는 "그 다음 자연스러운 결론"입니다.
 
@@ -192,7 +192,7 @@ React의 `useState`, `useEffect`, `useMemo` 같은 훅은 내부적으로 클로
 
 ---
 
-**지난 글:** [스코프와 호이스팅 — 변수는 어디서 보이는가](/posts/js-scope-and-hoisting/)
+**지난 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
 
 **다음 글:** [this 키워드 — 호출 방식이 this를 결정한다](/posts/js-this-keyword/)
 

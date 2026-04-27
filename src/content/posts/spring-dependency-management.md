@@ -299,7 +299,5 @@ dependencies {
 
 **지난 글:** [Gradle 기초 — build.gradle과 태스크](/posts/spring-gradle-basics/)
 
-**다음 글:** [IoC 컨테이너의 정체 — BeanFactory vs ApplicationContext](/posts/spring-ioc-container/)
-
 <br>
 읽어주셔서 감사합니다. 😊

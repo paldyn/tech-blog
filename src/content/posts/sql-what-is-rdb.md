@@ -2,7 +2,7 @@
 title: "데이터베이스란 무엇인가 — 파일 시스템과의 차이"
 description: "파일 시스템과 데이터베이스를 비교하며 DBMS가 왜 필요한지, ANSI/SPARC 3단계 아키텍처가 어떻게 데이터 독립성을 보장하는지 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
@@ -96,8 +96,6 @@ ALTER TABLE orders
 파일 시스템은 단순한 데이터 저장에는 충분하지만, **동시성·무결성·복구·보안** 측면에서 근본적인 한계를 가집니다. DBMS는 ANSI/SPARC 3단계 아키텍처를 통해 데이터 독립성을 확보하고, SQL이라는 표준 선언형 언어로 복잡한 저수준 처리를 추상화합니다. 다음 글에서는 관계형 모델의 이론적 근거인 **관계·튜플·속성** 개념을 깊이 들여다봅니다.
 
 ---
-
-**지난 글:** [데이터 타입 표준 (날짜·시간) — DATE·TIME·TIMESTAMP와 타임존 함정](/posts/sql-data-types-datetime/)
 
 **다음 글:** [관계형 모델 이론 — 관계·튜플·속성](/posts/sql-relational-model/)
 

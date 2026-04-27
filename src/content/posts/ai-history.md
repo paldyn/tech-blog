@@ -2,8 +2,8 @@
 title: "AI 역사 — 1956년 다트머스에서 LLM 시대까지"
 description: "AI의 70년 역사를 두 번의 겨울과 세 번의 부흥으로 정리합니다. 왜 AI는 실패를 반복했고, 딥러닝 혁명은 어떻게 가능했는지 맥락으로 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
-archiveOrder: 1
+pubDate: "2026-04-22"
+archiveOrder: 2
 type: "knowledge"
 category: "AI"
 tags: ["AI역사", "딥러닝", "LLM", "전문가시스템", "AI겨울", "Transformer"]
@@ -221,7 +221,7 @@ AI의 70년 역사는 과장→실망→겨울→혁신의 반복입니다.
 
 **지난 글:** [AI · ML · DL · LLM, 뭐가 다른가](/posts/ai-ml-dl-llm-concepts/)
 
-**다음 글:** [Narrow vs General vs Super AI](/posts/ai-types/)
+**다음 글:** [Narrow AI vs General AI vs Super AI — 세 가지 AI 유형 완전 정리](/posts/ai-types/)
 
 <br>
 읽어주셔서 감사합니다. 😊

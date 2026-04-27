@@ -2,7 +2,7 @@
 title: "트랜스포머(Transformer)란 무엇인가"
 description: "GPT, BERT 등 현대 LLM의 근간인 트랜스포머 아키텍처를 셀프 어텐션부터 인코더-디코더 구조까지 직관적으로 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-21"
+pubDate: "2026-04-24"
 archiveOrder: 1
 type: "knowledge"
 category: "AI"
@@ -215,7 +215,7 @@ GPT-3(175B), GPT-4, Claude 같은 초대형 모델이 등장할 수 있었습니
 
 **지난 글:** [신경망(Neural Network)이란 무엇인가](/posts/neural-network-basics/)
 
-**다음 글:** [프롬프트 엔지니어링 — AI에게 제대로 말 거는 법](/posts/prompt-engineering/)
+**다음 글:** [토크나이저와 토큰: LLM이 텍스트를 읽는 방법](/posts/tokenizer-and-tokens/)
 
 <br>
 읽어주셔서 감사합니다. 😊

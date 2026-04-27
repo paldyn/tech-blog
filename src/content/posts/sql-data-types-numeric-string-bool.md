@@ -2,7 +2,7 @@
 title: "데이터 타입 표준 (숫자·문자열·불리언) — 언제 어떤 타입을 써야 하는가"
 description: "INTEGER·DECIMAL·FLOAT의 차이, CHAR·VARCHAR·TEXT의 선택 기준, 불리언 타입의 DBMS별 차이를 정리합니다. 부동소수점 오차 함정과 VARCHAR 길이 설계 가이드도 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"

@@ -2,8 +2,8 @@
 title: "객체 패턴 — 단축 프로퍼티부터 프로퍼티 디스크립터까지"
 description: "JavaScript 객체를 다루는 핵심 패턴들을 정리합니다. 단축 프로퍼티, 계산 프로퍼티명, Object.entries/fromEntries 변환 패턴, 객체 불변성, 게터/세터, 프로퍼티 디스크립터까지."
 author: "PALDYN Team"
-pubDate: "2026-04-25"
-archiveOrder: 5
+pubDate: "2026-04-27"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "객체", "Object", "프로퍼티디스크립터", "게터세터", "freeze", "entries", "fromEntries"]
@@ -289,8 +289,6 @@ const deep = structuredClone(obj);
 ---
 
 **지난 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
-
-**다음 글:** [JavaScript란 무엇인가 — 브라우저 스크립팅에서 범용 언어로](/posts/js-what-is-javascript/)
 
 <br>
 읽어주셔서 감사합니다. 😊

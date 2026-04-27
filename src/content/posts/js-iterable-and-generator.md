@@ -2,8 +2,8 @@
 title: "이터러블과 제너레이터 — 반복을 프로토콜로 다루다"
 description: "JavaScript의 이터레이션 프로토콜이 무엇인지 이해하고, 제너레이터 함수로 지연 평가·무한 수열·비동기 흐름 제어를 구현하는 방법을 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-22"
-archiveOrder: 7
+pubDate: "2026-04-25"
+archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "이터러블", "이터레이터", "제너레이터", "Symbol.iterator", "지연평가", "ES6"]
@@ -172,7 +172,7 @@ console.log([...concat([1, 2], [3, 4], [5])]); // [1, 2, 3, 4, 5]
 
 **지난 글:** [프로토타입과 상속 — JavaScript 객체 지향의 실체](/posts/js-prototype-and-inheritance/)
 
-**다음 글:** [콜백 패턴 — 비동기의 시작과 콜백 헬](/posts/js-callback-pattern/)
+**다음 글:** [ES6 대혁신 — JavaScript가 달라진 날](/posts/js-es6-revolution/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -3,7 +3,7 @@ title: "모던 문법 — ES2018 이후 필수 문법 정리"
 description: "옵셔널 체이닝, 널 병합 연산자, 논리 할당, 구조 분해 고급 패턴까지. ES2018부터 ES2023까지 실무에서 가장 많이 쓰이는 모던 JavaScript 문법을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
-archiveOrder: 2
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "모던문법", "옵셔널체이닝", "널병합", "구조분해", "ES2020", "ES2021", "ES2023"]
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-async-patterns/)에서 ES6가 JavaScript의 판도를 어떻게 바꿨는지 살펴봤습니다. 하지만 혁신은 거기서 끝나지 않았습니다. TC39는 ES6 이후 매년 업데이트를 배포하겠다고 약속했고, 실제로 그 약속을 지켰습니다. ES2017의 `async/await`, ES2018의 객체 스프레드, ES2020의 옵셔널 체이닝… 매년 크고 작은 편의 문법이 추가되었습니다.
+[지난 글](/posts/js-es6-revolution/)에서 ES6가 JavaScript의 판도를 어떻게 바꿨는지 살펴봤습니다. 하지만 혁신은 거기서 끝나지 않았습니다. TC39는 ES6 이후 매년 업데이트를 배포하겠다고 약속했고, 실제로 그 약속을 지켰습니다. ES2017의 `async/await`, ES2018의 객체 스프레드, ES2020의 옵셔널 체이닝… 매년 크고 작은 편의 문법이 추가되었습니다.
 
 이 글에서는 그 중에서도 **실무 코드에서 가장 자주 마주치는 문법**들을 추려 정리합니다. "이게 뭔가?" 하고 멈추게 만들었던 `?.`, `??`, `&&=`, `??=` 같은 연산자들의 정확한 의미와 차이를 짚어봅니다.
 
@@ -239,7 +239,7 @@ JavaScript 문법은 계속 진화하고 있습니다. 지금 살펴본 `?.`, `?
 
 ---
 
-**지난 글:** [비동기 패턴 — 병렬, 순차, 재시도, 타임아웃](/posts/js-async-patterns/)
+**지난 글:** [ES6 대혁신 — JavaScript가 달라진 날](/posts/js-es6-revolution/)
 
 **다음 글:** [모듈 시스템 — CommonJS에서 ES Module까지](/posts/js-module-system/)
 

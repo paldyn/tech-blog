@@ -2,7 +2,7 @@
 title: "스프링이란 무엇인가 — EJB의 한계와 POJO 철학"
 description: "자바 엔터프라이즈 개발의 복잡도를 낮춘 스프링의 탄생 배경과 POJO 철학을 깊이 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 1
 type: "knowledge"
 category: "Spring"
@@ -166,7 +166,7 @@ public class OrderProcessor {
 
 ---
 
-**다음 글:** [스프링의 4대 핵심 (IoC, DI, AOP, PSA)](/posts/spring-four-pillars/)
+**다음 글:** [스프링의 4대 핵심 — IoC, DI, AOP, PSA](/posts/spring-four-pillars/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -2,7 +2,7 @@
 title: "토크나이저와 토큰: LLM이 텍스트를 읽는 방법"
 description: "LLM은 텍스트를 문자가 아닌 '토큰' 단위로 읽습니다. 토크나이저의 작동 원리, BPE 알고리즘, 언어별 토큰 효율 차이, 그리고 실전에서 토큰을 다루는 법까지 핵심을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-24"
 archiveOrder: 2
 type: "knowledge"
 category: "AI"
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-agents-and-mcp/)에서 이어집니다.
+[지난 글](/posts/transformer-basics/)에서 이어집니다.
 
 ## "AI가 내 글을 읽는다"는 게 정확히 무슨 뜻일까?
 
@@ -373,7 +373,7 @@ EOF
 
 ---
 
-**지난 글:** [AI 에이전트와 MCP — LLM이 스스로 일한다는 것](/posts/ai-agents-and-mcp/)
+**지난 글:** [트랜스포머(Transformer)란 무엇인가](/posts/transformer-basics/)
 
 **다음 글:** [임베딩(Embedding)이란 무엇인가 — 의미를 숫자로 바꾸는 기술](/posts/embedding-basics/)
 

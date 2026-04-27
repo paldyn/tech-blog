@@ -2,7 +2,7 @@
 title: "SQL의 역사와 표준 — ANSI/ISO/JIS"
 description: "1970년 Codd 논문부터 SQL:2023까지, SQL이 어떻게 표준화되었는지 알아봅니다. 각 표준 버전의 핵심 추가 기능과 DBMS별 방언(Dialect)의 차이를 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"

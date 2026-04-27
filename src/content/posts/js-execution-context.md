@@ -2,8 +2,8 @@
 title: "실행 컨텍스트 — JavaScript가 코드를 실행하는 방식"
 description: "JavaScript 엔진이 코드를 실행할 때 내부에서 만드는 실행 컨텍스트의 구조와 동작을 이해하고, 호이스팅·스코프·클로저가 왜 그렇게 동작하는지 근거를 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-22"
-archiveOrder: 2
+pubDate: "2026-04-24"
+archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "실행컨텍스트", "콜스택", "호이스팅", "렉시컬환경", "TDZ", "스코프체인"]
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-functions-first-class/)에서 클로저, 스코프, 호이스팅, `this` 바인딩 — 이 개념들을 앞의 글들에서 하나씩 살펴봤습니다. 그런데 이 모든 현상에는 공통적인 기반이 있습니다. JavaScript 엔진이 코드를 실행할 때 내부적으로 만드는 **실행 컨텍스트(Execution Context)** 입니다.
+[지난 글](/posts/js-scope-and-hoisting/)에서 클로저, 스코프, 호이스팅, `this` 바인딩 — 이 개념들을 앞의 글들에서 하나씩 살펴봤습니다. 그런데 이 모든 현상에는 공통적인 기반이 있습니다. JavaScript 엔진이 코드를 실행할 때 내부적으로 만드는 **실행 컨텍스트(Execution Context)** 입니다.
 
 실행 컨텍스트를 이해하면 "왜 호이스팅이 발생하는가", "왜 `let`은 `var`와 다르게 동작하는가", "클로저는 어떻게 바깥 변수를 기억하는가" 같은 질문에 각각의 단편적인 규칙이 아니라 하나의 통일된 원리로 답할 수 있게 됩니다.
 
@@ -154,9 +154,9 @@ endless(); // RangeError: Maximum call stack size exceeded
 
 ---
 
-**지난 글:** [함수는 일급 객체다 — 값처럼 다루는 함수](/posts/js-functions-first-class/)
+**지난 글:** [스코프와 호이스팅 — 변수는 어디서 보이는가](/posts/js-scope-and-hoisting/)
 
-**다음 글:** [스코프와 호이스팅 — 변수는 어디서 보이는가](/posts/js-scope-and-hoisting/)
+**다음 글:** [클로저 — 함수가 기억하는 것들](/posts/js-closure/)
 
 <br>
 읽어주셔서 감사합니다. 😊

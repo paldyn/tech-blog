@@ -2,8 +2,8 @@
 title: "스코프와 호이스팅 — 변수는 어디서 보이는가"
 description: "JavaScript에서 변수가 유효한 범위(스코프)와 선언이 끌어올려지는 현상(호이스팅)을 깊이 이해합니다. var, let, const, function의 차이를 정확히 파악합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-22"
-archiveOrder: 3
+pubDate: "2026-04-23"
+archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "스코프", "호이스팅", "var", "let", "const", "TDZ", "실행컨텍스트"]
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-execution-context/)에서 함수가 일급 객체라는 것을 살펴봤습니다. 함수를 변수에 담고, 전달하고, 반환할 수 있었죠. 그런데 변수나 함수를 자유롭게 다루다 보면 자연스럽게 한 가지 의문이 생깁니다. **"이 변수는 지금 여기서 쓸 수 있는 건가?"**
+[지난 글](/posts/js-functions-first-class/)에서 함수가 일급 객체라는 것을 살펴봤습니다. 함수를 변수에 담고, 전달하고, 반환할 수 있었죠. 그런데 변수나 함수를 자유롭게 다루다 보면 자연스럽게 한 가지 의문이 생깁니다. **"이 변수는 지금 여기서 쓸 수 있는 건가?"**
 
 이 질문에 답하는 개념이 **스코프(Scope)** 입니다. 그리고 스코프를 이해하다 보면 반드시 만나게 되는 낯선 현상이 있습니다. 선언하기 전에 변수를 읽어도 에러가 나지 않는 현상, **호이스팅(Hoisting)** 입니다.
 
@@ -192,9 +192,9 @@ for (let i = 0; i < 3; i++) {
 
 ---
 
-**지난 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
+**지난 글:** [함수는 일급 객체다 — 값처럼 다루는 함수](/posts/js-functions-first-class/)
 
-**다음 글:** [클로저 — 함수가 기억하는 것들](/posts/js-closure/)
+**다음 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
 
 <br>
 읽어주셔서 감사합니다. 😊

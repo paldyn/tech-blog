@@ -2,7 +2,7 @@
 title: "데이터 타입 표준 (날짜·시간) — DATE·TIME·TIMESTAMP와 타임존 함정"
 description: "DATE·TIME·TIMESTAMP·TIMESTAMPTZ 네 타입을 비교하고, 타임존 naive vs aware의 차이와 INTERVAL 산술을 정리합니다. MySQL 2038 문제와 Oracle DATE 함정도 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
@@ -214,8 +214,6 @@ WHERE birthdate = DATE '2026-04-26'  -- TO_DATE 리터럴
 ---
 
 **지난 글:** [데이터 타입 표준 (숫자·문자열·불리언) — 언제 어떤 타입을 써야 하는가](/posts/sql-data-types-numeric-string-bool/)
-
-**다음 글:** [데이터베이스란 무엇인가 — 파일 시스템과의 차이](/posts/sql-what-is-rdb/)
 
 <br>
 읽어주셔서 감사합니다. 😊

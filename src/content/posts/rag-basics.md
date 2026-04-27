@@ -2,7 +2,7 @@
 title: "RAG(검색 증강 생성) — LLM에게 외부 지식을 연결하는 법"
 description: "LLM의 지식 한계와 할루시네이션 문제를 해결하는 RAG의 작동 원리를 파헤친다. 인덱싱부터 검색, 생성까지 전체 파이프라인을 이해해보자."
 author: "PALDYN Team"
-pubDate: "2026-04-22"
+pubDate: "2026-04-26"
 archiveOrder: 1
 type: "knowledge"
 category: "AI"

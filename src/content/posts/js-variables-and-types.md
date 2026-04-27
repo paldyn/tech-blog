@@ -2,8 +2,8 @@
 title: "변수와 타입 — var, let, const 그리고 8가지 데이터 타입"
 description: "JavaScript에서 변수를 선언하는 세 가지 방법의 차이와, 값이 가질 수 있는 8가지 타입을 명확하게 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-21"
-archiveOrder: 4
+pubDate: "2026-04-23"
+archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "변수", "var", "let", "const", "데이터타입", "typeof"]
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-지난 글에서 JavaScript가 무엇인지, 어떻게 탄생했는지 살펴봤습니다. 언어의 역사와 특징을 알았으니, 이제 코드를 직접 다룰 차례입니다. 모든 프로그램은 **데이터를 저장하고 처리**하는 일을 합니다. 그 첫 관문이 변수와 타입입니다.
+[지난 글](/posts/js-runtimes/)에서 JavaScript가 무엇인지, 어떻게 탄생했는지 살펴봤습니다. 언어의 역사와 특징을 알았으니, 이제 코드를 직접 다룰 차례입니다. 모든 프로그램은 **데이터를 저장하고 처리**하는 일을 합니다. 그 첫 관문이 변수와 타입입니다.
 
 ---
 
@@ -161,6 +161,8 @@ Boolean(0)        // false
 변수와 타입을 제대로 이해하면, 코드를 읽을 때 "이 값이 지금 어떤 타입이지?"를 자동으로 추적하게 됩니다. 다음 글에서는 원시 타입과 객체 타입이 메모리에서 어떻게 다르게 처리되는지를 살펴봅니다. 복사 버그의 원인이 바로 거기 있습니다.
 
 ---
+
+**지난 글:** [런타임 환경 — 브라우저·Node·Deno·Bun의 차이](/posts/js-runtimes/)
 
 **다음 글:** [원시 타입 vs 참조 타입 — 복사 버그의 근원](/posts/js-primitive-vs-reference/)
 

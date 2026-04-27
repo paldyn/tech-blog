@@ -2,7 +2,7 @@
 title: "스프링의 역사 — 1.x XML 시대부터 6.x까지"
 description: "Spring Framework 1.0부터 6.x, Spring Boot 3.x까지 버전별 핵심 변화와 자바 생태계의 진화를 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 4
 type: "knowledge"
 category: "Spring"
@@ -284,7 +284,7 @@ Spring Boot 2.7.x는 2026년에 OSS 지원이 종료됩니다. 가능하면 Spri
 
 **지난 글:** [스프링 생태계 지도 — Framework, Boot, Data, Security, Cloud](/posts/spring-ecosystem-map/)
 
-**다음 글:** [JDK·IDE·빌드도구 한눈에](/posts/spring-environment-jdk-ide-build/)
+**다음 글:** [JDK·IDE·빌드도구 한눈에 — 스프링 개발 환경 구축](/posts/spring-environment-jdk-ide-build/)
 
 <br>
 읽어주셔서 감사합니다. 😊

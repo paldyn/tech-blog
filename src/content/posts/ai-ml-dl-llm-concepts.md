@@ -2,7 +2,7 @@
 title: "AI · ML · DL · LLM, 뭐가 다른가"
 description: "매일 쓰이지만 정작 관계가 헷갈리는 AI 핵심 개념 네 가지를 한 번에 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-19"
+pubDate: "2026-04-22"
 archiveOrder: 1
 type: "knowledge"
 category: "AI"
@@ -253,7 +253,7 @@ LLM  →  DL의 결과.  언어를 다루는 초대형 모델, 토큰 예측이 
 
 ---
 
-**다음 글:** [신경망(Neural Network)이란 무엇인가](/posts/neural-network-basics/)
+**다음 글:** [AI 역사 — 1956년 다트머스에서 LLM 시대까지](/posts/ai-history/)
 
 <br>
 읽어주셔서 감사합니다. 😊

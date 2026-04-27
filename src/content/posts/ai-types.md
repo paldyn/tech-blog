@@ -2,7 +2,7 @@
 title: "Narrow AI vs General AI vs Super AI — 세 가지 AI 유형 완전 정리"
 description: "Narrow AI, AGI, ASI의 차이를 명확히 정리합니다. 현재 ChatGPT와 Claude는 어디에 속하며, AGI는 언제 올 수 있는지 다양한 관점을 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-23"
 archiveOrder: 1
 type: "knowledge"
 category: "AI"
@@ -287,9 +287,9 @@ Narrow AI, AGI, ASI는 AI의 능력 범위에 따른 분류입니다.
 
 ---
 
-**지난 글:** [AI 역사 — 1956년부터 LLM 시대까지](/posts/ai-history/)
+**지난 글:** [AI 역사 — 1956년 다트머스에서 LLM 시대까지](/posts/ai-history/)
 
-**다음 글:** [기호주의 vs 통계주의](/posts/ai-symbolic-vs-statistical/)
+**다음 글:** [신경망(Neural Network)이란 무엇인가](/posts/neural-network-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -2,8 +2,8 @@
 title: "파인튜닝 vs 프롬프트 엔지니어링 vs RAG — 언제 무엇을 써야 하나"
 description: "LLM을 내 용도에 맞게 조정하는 세 가지 방법의 원리, 장단점, 그리고 실전 선택 기준을 한 번에 정리한다."
 author: "PALDYN Team"
-pubDate: "2026-04-25"
-archiveOrder: 1
+pubDate: "2026-04-26"
+archiveOrder: 2
 type: "knowledge"
 category: "AI"
 tags: ["파인튜닝", "프롬프트 엔지니어링", "RAG", "LLM", "AI 기초", "fine-tuning"]

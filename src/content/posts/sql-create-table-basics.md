@@ -2,7 +2,7 @@
 title: "CREATE TABLE 기초 — 테이블을 제대로 정의하는 방법"
 description: "CREATE TABLE 문법의 세 구성 요소(테이블명, 컬럼 정의, 테이블 제약)를 해부하고, 좋은 이름 규칙과 흔한 실수를 정리합니다. 열 수준 제약과 테이블 수준 제약의 차이도 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-27"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"

@@ -2,7 +2,7 @@
 title: "클라이언트-서버 모델과 와이어 프로토콜"
 description: "SQL 쿼리가 애플리케이션에서 DBMS 서버까지 어떻게 전달되는지 살펴봅니다. TCP/IP 위에서 동작하는 DBMS별 와이어 프로토콜, Simple vs Extended Query Protocol, 커넥션 풀의 역할을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
@@ -169,6 +169,8 @@ SQL 쿼리 한 줄이 실행되기까지 TCP 연결, 프로토콜 직렬화, 파
 ---
 
 **지난 글:** [SQL의 역사와 표준 — ANSI/ISO/JIS](/posts/sql-history-and-standard/)
+
+**다음 글:** [SQL 언어 분류 — DDL · DML · DCL · TCL](/posts/sql-language-categories/)
 
 <br>
 읽어주셔서 감사합니다. 😊

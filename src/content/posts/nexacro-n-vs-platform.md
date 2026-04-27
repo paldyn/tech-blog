@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-이 글은 **Nexacro N 기준**으로 작성되었습니다.
+[지난 글](/posts/nexacro-n-architecture/)에 이어 이 글은 **Nexacro N 기준**으로 작성되었습니다.
 
 [지난 글](/posts/nexacro-n-architecture/)에서 Nexacro N의 3-Tier 아키텍처와 Transaction 관리자가 어떻게 동작하는지를 살펴봤습니다. 이번 글에서는 많은 기업 현장에서 실제로 부딪히는 질문, "Platform에서 N으로 올리면 코드를 얼마나 고쳐야 하나?"에 집중적으로 답합니다. 두 버전이 공유하는 것과 달라진 것을 명확히 나눠서 정리합니다.
 
@@ -184,9 +184,7 @@ Nexacro N은 Platform에서 파생된 다음 세대이지만, **비즈니스 로
 
 ---
 
-**지난 글:** [Nexacro N 아키텍처 개요 — 브라우저·런타임·서버](/posts/nexacro-n-architecture/)
-
-**다음 글:** [언제 Nexacro를 선택하는가](/posts/nexacro-n-when-to-use/)
+**지난 글:** [[Nexacro N] 아키텍처 개요 — 브라우저·런타임·서버](/posts/nexacro-n-architecture/)
 
 <br>
 읽어주셔서 감사합니다. 😊

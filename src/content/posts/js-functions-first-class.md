@@ -2,8 +2,8 @@
 title: "함수는 일급 객체다 — 값처럼 다루는 함수"
 description: "JavaScript에서 함수를 변수에 저장하고, 인자로 전달하고, 반환값으로 쓸 수 있다는 것이 왜 강력한지 알아봅니다."
 author: "PALDYN Team"
-pubDate: "2026-04-21"
-archiveOrder: 6
+pubDate: "2026-04-23"
+archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "함수", "일급객체", "고차함수", "콜백", "화살표함수", "함수형프로그래밍"]
@@ -177,7 +177,7 @@ function increment() { count += 1; } // 외부 상태 변경
 
 **지난 글:** [원시 타입 vs 참조 타입 — 복사 버그의 근원](/posts/js-primitive-vs-reference/)
 
-**다음 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
+**다음 글:** [스코프와 호이스팅 — 변수는 어디서 보이는가](/posts/js-scope-and-hoisting/)
 
 <br>
 읽어주셔서 감사합니다. 😊

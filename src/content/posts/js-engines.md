@@ -2,7 +2,7 @@
 title: "JS 엔진 — V8·SpiderMonkey·JavaScriptCore 동작 원리"
 description: "JavaScript 코드를 실제로 실행하는 엔진의 내부 동작을 파헤칩니다. 파싱부터 JIT 컴파일, Hidden Class, 인라인 캐싱까지 성능의 비밀을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-04-22"
 archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"

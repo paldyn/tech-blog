@@ -2,7 +2,7 @@
 title: "스프링의 4대 핵심 — IoC, DI, AOP, PSA"
 description: "스프링을 지탱하는 네 가지 핵심 개념 IoC, DI, AOP, PSA를 코드 예시와 함께 명확하게 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-27"
+pubDate: "2026-04-26"
 archiveOrder: 2
 type: "knowledge"
 category: "Spring"

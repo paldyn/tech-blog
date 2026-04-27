@@ -3,7 +3,7 @@ title: "모듈 시스템 — CommonJS에서 ES Module까지"
 description: "전역 스크립트 공유의 혼돈에서 벗어나 코드를 독립된 모듈로 나누는 방법. CommonJS와 ES Module의 차이, named/default export, 동적 import(), 트리 쉐이킹까지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-25"
-archiveOrder: 3
+archiveOrder: 4
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "모듈", "CommonJS", "ESModule", "import", "export", "트리쉐이킹", "번들러"]
@@ -235,7 +235,7 @@ ES Module은 순환 의존성을 허용하지만, 초기화 순서에 따라 값
 
 **지난 글:** [모던 문법 — ES2018 이후 필수 문법 정리](/posts/js-modern-syntax/)
 
-**다음 글:** [배열 메서드 — map·filter·reduce부터 불변 메서드까지](/posts/js-array-methods/)
+**다음 글:** [콜백 패턴 — 비동기의 시작과 콜백 헬](/posts/js-callback-pattern/)
 
 <br>
 읽어주셔서 감사합니다. 😊

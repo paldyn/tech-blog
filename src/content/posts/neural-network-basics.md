@@ -2,7 +2,7 @@
 title: "신경망(Neural Network)이란 무엇인가"
 description: "딥러닝의 기반인 신경망 구조를 뉴런부터 학습 과정까지 그림으로 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-19"
+pubDate: "2026-04-23"
 archiveOrder: 2
 type: "knowledge"
 category: "AI"
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-ml-dl-llm-concepts/)에서 딥러닝(DL)은 **다층 신경망 구조로 학습하는 ML의 한 방식**이라고 했습니다.
+[지난 글](/posts/ai-types/)에서 딥러닝(DL)은 **다층 신경망 구조로 학습하는 ML의 한 방식**이라고 했습니다.
 그런데 신경망이 정확히 어떻게 생겼고, 어떻게 "학습"하는 걸까요?
 
 어떤 설명은 너무 수식 중심이라 와닿지 않고,
@@ -246,7 +246,7 @@ learning_rate가 너무 작으면 →  학습이 극도로 느려짐
 
 ---
 
-**지난 글:** [AI · ML · DL · LLM, 뭐가 다른가](/posts/ai-ml-dl-llm-concepts/)
+**지난 글:** [Narrow AI vs General AI vs Super AI — 세 가지 AI 유형 완전 정리](/posts/ai-types/)
 
 **다음 글:** [트랜스포머(Transformer)란 무엇인가](/posts/transformer-basics/)
 
