@@ -11,8 +11,6 @@ featured: false
 draft: false
 ---
 
-## 이전 글 연결
-
 지난 글에서 파일 시스템의 한계를 살펴보고 DBMS가 왜 필요한지 확인했습니다. 그렇다면 DBMS는 데이터를 어떤 수학적 원리로 저장하고 조작할까요? 그 답이 **관계형 모델(Relational Model)**입니다.
 
 ## Codd의 혁명 (1970)
