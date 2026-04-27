@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="880"
+     viewBox="0 0 880 530"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="60" y="52" font-size="22" font-weight="700" fill="#e8e8e8">JS 엔진의 코드 실행 파이프라인</text>
+  <text x="60" y="78" font-size="16" font-weight="600" fill="#888">소스 코드 → 바이트코드 → JIT 컴파일 → 최적화</text>
+
+  <!--
+    Pipeline: 5 stages laid out horizontally
+    Left margin=60, right margin=60, usable=760px
+    5 boxes × 110px + 4 arrows × 37px = 550+148=698px → fits in 760px (31px margin each side extra)
+    Adjusted: left=60+31=91, right=880-60-31=789 (center at 440)
+    Actually: just evenly space with left=60:
+    Boxes at x=60,207,354,501,648 (width=110, gap=37)
+    Box 5 right=758. Right margin=880-758=122px. Not perfectly symmetric but fine (>60px margin).
+  -->
+
+  <!-- Step 1: Source Code (x=60) -->
+  <rect x="60" y="108" width="110" height="200" fill="#0f1624" rx="8" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="115" y="132" font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">소스 코드</text>
+  <text x="115" y="150" font-size="11" fill="#5a8a9a" text-anchor="middle">Source</text>
+  <text x="115" y="186" font-size="11" fill="#888" text-anchor="middle">JavaScript</text>
+  <text x="115" y="204" font-size="11" fill="#888" text-anchor="middle">텍스트 파일</text>
+  <text x="115" y="222" font-size="11" fill="#666" text-anchor="middle">.js / .mjs</text>
+
+  <!-- Arrow 1→2 (gap x=170→207) -->
+  <polygon points="172,215 172,203 196,203 196,197 207,208 196,219 196,215"
+           fill="#7ec8e3" stroke="#0a0a0a" stroke-width="1" stroke-linejoin="round"/>
+
+  <!-- Step 2: Parser / AST (x=207) -->
+  <rect x="207" y="108" width="110" height="200" fill="#0f1a14" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="262" y="132" font-size="12" font-weight="700" fill="#55c555" text-anchor="middle">파서 / AST</text>
+  <text x="262" y="150" font-size="11" fill="#4a8a5a" text-anchor="middle">Parser</text>
+  <text x="262" y="186" font-size="11" fill="#888" text-anchor="middle">어휘 분석</text>
+  <text x="262" y="204" font-size="11" fill="#888" text-anchor="middle">구문 분석</text>
+  <text x="262" y="222" font-size="11" fill="#666" text-anchor="middle">AST 생성</text>
+
+  <!-- Arrow 2→3 -->
+  <polygon points="319,215 319,203 343,203 343,197 354,208 343,219 343,215"
+           fill="#55c555" stroke="#0a0a0a" stroke-width="1" stroke-linejoin="round"/>
+
+  <!-- Step 3: Interpreter / Bytecode (x=354) -->
+  <rect x="354" y="108" width="110" height="200" fill="#1a1508" rx="8" stroke="#e8a53f" stroke-width="1"/>
+  <text x="409" y="132" font-size="12" font-weight="700" fill="#e8a53f" text-anchor="middle">인터프리터</text>
+  <text x="409" y="150" font-size="11" fill="#8a7030" text-anchor="middle">Ignition(V8)</text>
+  <text x="409" y="186" font-size="11" fill="#888" text-anchor="middle">AST →</text>
+  <text x="409" y="204" font-size="11" fill="#888" text-anchor="middle">바이트코드</text>
+  <text x="409" y="222" font-size="11" fill="#666" text-anchor="middle">즉시 실행</text>
+
+  <!-- Arrow 3→4 -->
+  <polygon points="466,215 466,203 490,203 490,197 501,208 490,219 490,215"
+           fill="#e8a53f" stroke="#0a0a0a" stroke-width="1" stroke-linejoin="round"/>
+
+  <!-- Step 4: JIT Compiler (x=501) -->
+  <rect x="501" y="108" width="110" height="200" fill="#1a0808" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="556" y="132" font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">JIT 컴파일러</text>
+  <text x="556" y="150" font-size="11" fill="#8a3030" text-anchor="middle">TurboFan(V8)</text>
+  <text x="556" y="186" font-size="11" fill="#888" text-anchor="middle">핫 코드</text>
+  <text x="556" y="204" font-size="11" fill="#888" text-anchor="middle">최적화</text>
+  <text x="556" y="222" font-size="11" fill="#666" text-anchor="middle">네이티브 코드</text>
+
+  <!-- Arrow 4→5 -->
+  <polygon points="613,215 613,203 637,203 637,197 648,208 637,219 637,215"
+           fill="#e05555" stroke="#0a0a0a" stroke-width="1" stroke-linejoin="round"/>
+
+  <!-- Step 5: Execution (x=648) -->
+  <rect x="648" y="108" width="110" height="200" fill="#0a0a1a" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="703" y="132" font-size="12" font-weight="700" fill="#7777cc" text-anchor="middle">실행</text>
+  <text x="703" y="150" font-size="11" fill="#5555aa" text-anchor="middle">Execution</text>
+  <text x="703" y="186" font-size="11" fill="#888" text-anchor="middle">CPU에서</text>
+  <text x="703" y="204" font-size="11" fill="#888" text-anchor="middle">직접 실행</text>
+  <text x="703" y="222" font-size="11" fill="#55c555" text-anchor="middle">⚡ 고속</text>
+
+  <!-- De-optimization feedback arrow (bottom arc label) -->
+  <text x="440" y="342" font-size="11" fill="#666" text-anchor="middle">타입이 변경되면 역최적화(Deoptimization) 후 인터프리터로 복귀</text>
+  <!-- simple dashed line hint -->
+  <line x1="648" y1="308" x2="501" y2="308" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+  <polygon points="501,305 494,308 501,311" fill="#333"/>
+
+  <!-- Bottom: 3 engines comparison -->
+  <rect x="60" y="360" width="226" height="100" fill="#0f1624" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="173" y="384" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">V8</text>
+  <text x="173" y="402" font-size="11" fill="#888" text-anchor="middle">Google · Chrome · Node.js</text>
+  <text x="173" y="420" font-size="11" fill="#666" text-anchor="middle">Ignition + TurboFan + Maglev</text>
+  <text x="173" y="438" font-size="11" fill="#666" text-anchor="middle">오픈소스 C++</text>
+
+  <rect x="307" y="360" width="226" height="100" fill="#0f1a14" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="420" y="384" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">SpiderMonkey</text>
+  <text x="420" y="402" font-size="11" fill="#888" text-anchor="middle">Mozilla · Firefox</text>
+  <text x="420" y="420" font-size="11" fill="#666" text-anchor="middle">C++ · Rust 일부</text>
+  <text x="420" y="438" font-size="11" fill="#666" text-anchor="middle">최초의 JS 엔진</text>
+
+  <rect x="554" y="360" width="226" height="100" fill="#14100a" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="667" y="384" font-size="13" font-weight="600" fill="#e8a53f" text-anchor="middle">JavaScriptCore</text>
+  <text x="667" y="402" font-size="11" fill="#888" text-anchor="middle">Apple · Safari · Bun</text>
+  <text x="667" y="420" font-size="11" fill="#666" text-anchor="middle">LLInt + DFG + FTL</text>
+  <text x="667" y="438" font-size="11" fill="#666" text-anchor="middle">WebKit의 일부</text>
+
+  <!-- Footer -->
+  <text x="60" y="484" font-size="11" fill="#444">PALDYN · JavaScript 완전정복 · Part I — JS 엔진</text>
+</svg>

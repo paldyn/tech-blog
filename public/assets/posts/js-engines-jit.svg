@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="880"
+     viewBox="0 0 880 510"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="60" y="52" font-size="22" font-weight="700" fill="#e8e8e8">JIT 컴파일의 핵심 — 왜 JavaScript가 빠른가</text>
+  <text x="60" y="78" font-size="16" font-weight="600" fill="#888">인터프리트와 네이티브 컴파일의 결합</text>
+
+  <!--
+    Left box : x=60, width=340 (right edge=400)
+    Right box: x=462, width=358 (right edge=820 = 880-60 ✓)
+    Gap center: x=(400+462)/2=431 → use 430
+    Arrow: x=402→458 (56px gap), center y=238
+    Shaft: y=232 to y=244 (12px), arrowhead y=226 to y=250, tip x=458
+  -->
+
+  <!-- Left column: "처음 실행" -->
+  <rect x="60" y="108" width="340" height="270" fill="#0f1624" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="230" y="134" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">처음 실행 (Cold Start)</text>
+
+  <!-- Code block inside left box (rect: x=78,y=148, w=304, h=114 → bottom=262) -->
+  <rect x="78" y="148" width="304" height="114" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <!-- Lines: base y=168, spacing=18 → 168,186,204,222,240 -->
+  <text x="94" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 처음 호출 — 타입 정보 없음</text>
+  <text x="94" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">function add(a, b) {</text>
+  <text x="94" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  return a + b;</text>
+  <text x="94" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="94" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// → 바이트코드로 해석 실행</text>
+
+  <text x="78" y="284" font-size="12" fill="#888">인터프리터가 바이트코드를 한 줄씩 해석</text>
+  <text x="78" y="302" font-size="12" fill="#888">실행 속도는 느리지만 즉시 시작 가능</text>
+  <text x="78" y="320" font-size="12" fill="#666">타입 정보 수집 시작 (프로파일링)</text>
+  <text x="78" y="338" font-size="12" fill="#666">→ 충분히 호출되면 "핫 코드"로 분류</text>
+
+  <!-- Center arrow (gap x=402→458, center y=238) -->
+  <!-- shaft: y=232 to y=244, arrowhead: y=226 to y=250, tip=458 -->
+  <polygon points="404,244 404,232 440,232 440,226 458,238 440,250 440,244"
+           fill="#7777cc" stroke="#0a0a0a" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- label above arrow (masked rect first) -->
+  <rect x="396" y="196" width="68" height="20" fill="#0a0a0a"/>
+  <text x="430" y="210" font-size="11" fill="#7777cc" text-anchor="middle">충분히</text>
+  <!-- label below arrow -->
+  <rect x="396" y="260" width="68" height="20" fill="#0a0a0a"/>
+  <text x="430" y="274" font-size="11" fill="#7777cc" text-anchor="middle">호출되면</text>
+
+  <!-- Right column: "JIT 최적화 후" -->
+  <rect x="462" y="108" width="358" height="270" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="641" y="134" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">JIT 최적화 후 (Warm)</text>
+
+  <!-- Code block inside right box (rect: x=480,y=148, w=322, h=114 → bottom=262) -->
+  <rect x="480" y="148" width="322" height="114" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <!-- Lines: base y=168, spacing=18 → 168,186,204,222,240 -->
+  <text x="496" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 타입 확정: a=number, b=number</text>
+  <text x="496" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">function add(a, b) {</text>
+  <text x="496" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  return a + b;</text>
+  <text x="496" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="496" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">// → 네이티브 머신코드로 컴파일</text>
+
+  <text x="480" y="284" font-size="12" fill="#888">타입 가정으로 네이티브 코드 생성</text>
+  <text x="480" y="302" font-size="12" fill="#55c555">⚡ C++ 수준에 근접하는 실행 속도</text>
+  <text x="480" y="320" font-size="12" fill="#666">타입 바뀌면 → 역최적화(Deopt)</text>
+  <text x="480" y="338" font-size="12" fill="#666">인터프리터로 복귀 후 재프로파일링</text>
+
+  <!-- Bottom notes -->
+  <text x="440" y="410" font-size="12" fill="#666" text-anchor="middle">동적 타입 언어인 JS가 정적 타입 가정으로 고성능을 달성하는 핵심 원리</text>
+  <text x="440" y="428" font-size="12" fill="#555" text-anchor="middle">→ 타입 안정적인 코드 작성이 성능에 직결됨</text>
+
+  <!-- Footer -->
+  <text x="60" y="462" font-size="11" fill="#444">PALDYN · JavaScript 완전정복 · Part I — JS 엔진 · JIT 컴파일</text>
+</svg>
