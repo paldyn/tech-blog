@@ -194,7 +194,7 @@ React의 `useState`, `useEffect`, `useMemo` 같은 훅은 내부적으로 클로
 
 **지난 글:** [실행 컨텍스트 — JavaScript가 코드를 실행하는 방식](/posts/js-execution-context/)
 
-**다음 글:** [this 키워드 — 호출 방식이 this를 결정한다](/posts/js-this-keyword/)
+**다음 글:** [이벤트 루프 — 싱글 스레드가 비동기를 다루는 방법](/posts/js-event-loop/)
 
 <br>
 읽어주셔서 감사합니다. 😊
