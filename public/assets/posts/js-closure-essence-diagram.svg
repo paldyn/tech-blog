@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">클로저의 구조 — 함수 + 렉시컬 환경</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">내부 함수가 외부 스코프를 기억하는 원리</text>
+
+  <!-- Code block -->
+  <rect x="60" y="90" width="380" height="270" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="154" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> makeCounter() {</text>
+  <text x="80" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  let</text>
+  <text x="110" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> count = </text>
+  <text x="180" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0</text>
+  <text x="190" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">;</text>
+  <text x="80" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  return</text>
+  <text x="138" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve"> function</text>
+  <text x="210" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> increment() {</text>
+  <text x="80" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    count++;</text>
+  <text x="80" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    return</text>
+  <text x="148" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> count;</text>
+  <text x="80" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  };</text>
+  <text x="80" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">}</text>
+  <text x="80" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">const</text>
+  <text x="118" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> counter = makeCounter();</text>
+  <text x="80" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">counter(); </text>
+  <text x="178" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 1</text>
+  <text x="80" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">counter(); </text>
+  <text x="178" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 2</text>
+  <text x="80" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">counter(); </text>
+  <text x="178" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 3</text>
+
+  <!-- Closure structure diagram -->
+  <!-- Outer function env box -->
+  <rect x="500" y="96" width="320" height="120" rx="8" fill="#0d1a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="660" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" font-weight="600">makeCounter 렉시컬 환경</text>
+  <text x="520" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">변수:</text>
+  <rect x="576" y="128" width="220" height="30" rx="4" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="686" y="148" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">count = 3</text>
+  <text x="520" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">makeCounter() 반환 후에도 count는 살아있음</text>
+  <text x="520" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">내부 함수 increment가 참조하기 때문</text>
+
+  <!-- Inner function box -->
+  <rect x="500" y="240" width="320" height="100" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="660" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" font-weight="600">increment 함수 (클로저)</text>
+  <text x="520" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">[[Environment]]</text>
+  <line x1="640" y1="286" x2="700" y2="286" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="700,282 714,286 700,290" fill="#7777cc"/>
+  <text x="716" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">외부 env 참조</text>
+  <text x="520" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">counter 변수에 저장되어 살아있음</text>
+
+  <!-- Arrow from inner to outer -->
+  <line x1="660" y1="240" x2="660" y2="216" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="656,218 660,202 664,218" fill="#7777cc"/>
+  <text x="672" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">스코프 체인</text>
+
+  <!-- Bottom explanation -->
+  <rect x="60" y="390" width="760" height="80" rx="6" fill="#0d0d0d" stroke="#1e2433"/>
+  <text x="440" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#e8e8e8" font-weight="600">클로저 = 함수 + 함수가 선언된 시점의 렉시컬 환경 (스코프 체인)</text>
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">내부 함수가 살아있는 한, 외부 함수의 변수도 GC되지 않고 메모리에 유지됩니다</text>
+  <text x="440" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">모든 JavaScript 함수는 클로저입니다 — 단지 사용하는지가 다를 뿐</text>
+
+  <!-- Footer -->
+  <text x="440" y="500" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

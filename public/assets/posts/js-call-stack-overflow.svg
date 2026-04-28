@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">스택 오버플로우 &amp; 비동기 탈출</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">재귀 호출의 위험과 setTimeout을 이용한 회피 패턴</text>
+
+  <!-- Left: Overflow code -->
+  <rect x="60" y="96" width="360" height="250" rx="6" fill="#070b14" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// ❌ 스택 오버플로우</text>
+  <text x="80" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="154" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> infinite() {</text>
+  <text x="80" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  infinite();</text>
+  <text x="80" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">}</text>
+  <text x="80" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">infinite();</text>
+  <text x="80" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// Uncaught RangeError:</text>
+  <text x="80" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// Maximum call stack</text>
+  <text x="80" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// size exceeded</text>
+  <text x="80" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">// 호출 깊이:</text>
+  <text x="80" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">// V8 ≈ 10,000~15,000</text>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">// 브라우저마다 상이</text>
+
+  <!-- Right: Safe async recursion -->
+  <rect x="460" y="96" width="360" height="250" rx="6" fill="#070b14" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// ✓ 비동기로 스택 비우기</text>
+  <text x="480" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="554" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> safeLoop(n) {</text>
+  <text x="480" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  if</text>
+  <text x="506" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> (n &lt;= 0) </text>
+  <text x="578" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">return</text>
+  <text x="618" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">;</text>
+  <text x="480" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 현재 작업</text>
+  <text x="480" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  doWork(n);</text>
+  <text x="480" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 이벤트 루프로 제어 반환</text>
+  <text x="480" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  setTimeout(() </text>
+  <text x="584" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">=&gt;</text>
+  <text x="604" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> {</text>
+  <text x="480" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    safeLoop(n - </text>
+  <text x="592" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="604" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="480" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  }, </text>
+  <text x="510" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0</text>
+  <text x="520" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="480" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">}</text>
+  <text x="480" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">safeLoop(</text>
+  <text x="554" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">100000</text>
+  <text x="608" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+
+  <!-- Labels below boxes -->
+  <rect x="60" y="360" width="360" height="60" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" font-weight="600">스택 쌓임: 한계 초과 → 에러</text>
+  <text x="240" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">V8 기준 약 10,000~15,000 프레임</text>
+
+  <rect x="460" y="360" width="360" height="60" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="600">setTimeout → 스택이 비워진 후 재호출</text>
+  <text x="640" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">이벤트 루프를 통해 무한 반복 가능</text>
+
+  <!-- VS separator -->
+  <rect x="420" y="150" width="20" height="50" rx="4" fill="#222"/>
+  <text x="430" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555" font-weight="700">VS</text>
+
+  <!-- Footer -->
+  <text x="440" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

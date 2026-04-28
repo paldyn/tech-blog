@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">GC와 클로저 — 참조 사슬이 끊겨야 해제된다</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">Mark-and-Sweep 관점에서 본 클로저 메모리 유지 원리</text>
+
+  <!-- Left column: Active closure (memory held) -->
+  <text x="240" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#e05555" font-weight="600">참조 유지 → GC 불가</text>
+
+  <!-- Root -->
+  <rect x="160" y="120" width="160" height="44" rx="6" fill="#1a1000" stroke="#e8a000" stroke-width="1.5"/>
+  <text x="240" y="147" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8a000">GC 루트 (전역/스택)</text>
+
+  <!-- counter variable -->
+  <line x1="240" y1="164" x2="240" y2="196" stroke="#e8a000" stroke-width="1.5"/>
+  <polygon points="236,194 240,208 244,194" fill="#e8a000"/>
+
+  <rect x="150" y="208" width="180" height="44" rx="6" fill="#1a1000" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">counter 변수</text>
+  <text x="240" y="242" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">→ increment fn</text>
+
+  <!-- increment fn -->
+  <line x1="240" y1="252" x2="240" y2="284" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="236,282 240,296 244,282" fill="#7ec8e3"/>
+
+  <rect x="130" y="296" width="220" height="44" rx="6" fill="#0d0d1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="240" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">increment 함수 객체</text>
+  <text x="240" y="330" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">[[Environment]] 참조</text>
+
+  <!-- Lexical env -->
+  <line x1="240" y1="340" x2="240" y2="372" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="236,370 240,384 244,370" fill="#7777cc"/>
+
+  <rect x="110" y="384" width="260" height="44" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="401" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">makeCounter 렉시컬 환경</text>
+  <text x="240" y="418" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">count = 2  ← GC 불가</text>
+
+  <!-- Right column: Broken reference (GC can collect) -->
+  <text x="640" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#55c555" font-weight="600">참조 해제 → GC 가능</text>
+
+  <!-- Root -->
+  <rect x="560" y="120" width="160" height="44" rx="6" fill="#1a1000" stroke="#e8a000" stroke-width="1.5"/>
+  <text x="640" y="147" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8a000">GC 루트 (전역/스택)</text>
+
+  <!-- counter = null -->
+  <line x1="640" y1="164" x2="640" y2="196" stroke="#555" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="655" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">counter = null</text>
+
+  <!-- Detached chain -->
+  <rect x="550" y="208" width="180" height="44" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="640" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#444">increment fn</text>
+  <text x="640" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#333">(미접근 → 수거 예정)</text>
+
+  <rect x="530" y="296" width="220" height="44" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="640" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#444">렉시컬 환경</text>
+  <text x="640" y="330" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#333">count (수거 예정)</text>
+
+  <!-- GC collected label -->
+  <rect x="530" y="370" width="220" height="44" rx="6" fill="#0a1a0a" stroke="#55c555"/>
+  <text x="640" y="393" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="600">✓ 다음 GC 사이클에 회수</text>
+
+  <!-- Vertical divider -->
+  <line x1="440" y1="96" x2="440" y2="440" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Footer -->
+  <text x="440" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

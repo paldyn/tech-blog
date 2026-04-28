@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">클로저 메모리 누수 패턴</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">의도치 않은 참조 유지로 GC가 회수하지 못하는 경우</text>
+
+  <!-- Left: Leak code -->
+  <rect x="60" y="90" width="380" height="260" rx="6" fill="#070b14" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// ❌ 메모리 누수: element 참조 유지</text>
+  <text x="80" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="154" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> setupHandler() {</text>
+  <text x="80" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text>
+  <text x="118" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> el = document.getElementById(</text>
+  <text x="80" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">    'button'</text>
+  <text x="148" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="80" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text>
+  <text x="118" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> data = loadLargeData();</text>
+
+  <text x="80" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  el.addEventListener(</text>
+  <text x="218" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'click'</text>
+  <text x="264" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, () </text>
+  <text x="298" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">=&gt;</text>
+  <text x="318" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> {</text>
+  <text x="80" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">    // el과 data를 클로저로 캡처</text>
+  <text x="80" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    console.log(el.id, data);</text>
+  <text x="80" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  });</text>
+  <text x="80" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // el이 DOM에서 제거되어도</text>
+  <text x="80" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 핸들러가 el과 data를 계속 참조</text>
+  <text x="80" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // → GC 불가</text>
+
+  <!-- Right: Fixed code -->
+  <rect x="460" y="90" width="360" height="260" rx="6" fill="#070b14" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// ✓ 정리 함수로 참조 해제</text>
+  <text x="480" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="554" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> setupHandler() {</text>
+  <text x="480" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text>
+  <text x="518" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> el = document.getElementById(</text>
+  <text x="480" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">    'button'</text>
+  <text x="548" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="480" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text>
+  <text x="518" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> data = loadLargeData();</text>
+
+  <text x="480" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text>
+  <text x="518" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> handler = () </text>
+  <text x="598" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">=&gt;</text>
+  <text x="618" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> {</text>
+  <text x="480" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    console.log(el.id, data);</text>
+  <text x="480" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  };</text>
+
+  <text x="480" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  el.addEventListener(</text>
+  <text x="614" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'click'</text>
+  <text x="660" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, handler);</text>
+
+  <text x="480" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 정리 함수 반환</text>
+  <text x="480" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  return</text>
+  <text x="528" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> () </text>
+  <text x="552" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">=&gt;</text>
+  <text x="572" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> {</text>
+  <text x="480" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    el.removeEventListener(</text>
+  <text x="480" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">      'click'</text>
+  <text x="548" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, handler);</text>
+
+  <!-- Bottom labels -->
+  <rect x="60" y="370" width="380" height="50" rx="6" fill="#1a0a0a" stroke="#e05555"/>
+  <text x="250" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" font-weight="600">익명 핸들러 → 제거 불가 → 계속 참조 유지</text>
+  <text x="250" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">el + data 모두 GC 불가</text>
+
+  <rect x="460" y="370" width="360" height="50" rx="6" fill="#0a1a0a" stroke="#55c555"/>
+  <text x="640" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" font-weight="600">named handler → removeEventListener 가능</text>
+  <text x="640" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">정리 함수 호출 시 참조 해제 → GC 가능</text>
+
+  <!-- Footer -->
+  <text x="440" y="500" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>
