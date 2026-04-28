@@ -11,8 +11,6 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-history/)에 이어 이 글은 **Nexacro N 기준**으로 작성되었습니다.
-
 [지난 글](/posts/nexacro-n-history/)에서 Nexacro가 ActiveX 기반의 14버전에서 HTML5 순수 엔진의 N·V24까지 진화해 온 역사를 살펴봤습니다. 그렇다면 현재의 Nexacro N은 내부적으로 어떤 구조로 동작할까요? 이번 글에서는 브라우저부터 서버까지 3개 레이어를 세로로 쌓은 전체 아키텍처를 분해하고, 각 레이어가 맡은 역할을 구체적으로 살펴봅니다.
 
 ## 전체 구조: 3-Tier 아키텍처

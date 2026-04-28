@@ -11,8 +11,6 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-what-is-nexacro/)에 이어 이 글은 **Nexacro N 기준**으로 작성되었습니다.
-
 [지난 글](/posts/nexacro-n-what-is-nexacro/)에서 Nexacro N이 RIA 시대의 흐름 위에서 탄생한 엔터프라이즈 UI 플랫폼이라는 점을 살펴봤습니다. 그런데 현장에서는 "우리 시스템이 Nexacro 14인지 Platform인지 N인지 모르겠다", "Platform에서 N으로 올리면 코드를 많이 고쳐야 하나?" 하는 질문이 끊이지 않습니다. 이 글에서는 버전 간 무엇이 바뀌었는지, 어떤 부분이 호환되고 어디서 주의해야 하는지를 구체적으로 살펴봅니다.
 
 ## Nexacro 14 — C/S를 웹으로 옮기다
