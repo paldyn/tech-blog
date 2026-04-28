@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500"
+     font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">@Configuration CGLIB 프록시 동작 원리</text>
+  <text x="440" y="68" text-anchor="middle" font-size="14" font-weight="600" fill="#888">@Bean 메서드 간 호출이 싱글톤을 보장하는 이유</text>
+
+  <!-- ─── Step 1: Developer writes @Configuration class ─── -->
+  <!-- Label -->
+  <text x="80" y="102" font-size="13" font-weight="600" fill="#888">① 개발자 작성 코드</text>
+  <!-- Code block -->
+  <rect x="60" y="110" width="350" height="148" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="133" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">@Configuration</text>
+  <text x="76" y="151" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">public class </text>
+  <text x="184" y="151" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">AppConfig {</text>
+  <text x="76" y="169" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">  </text>
+  <text x="76" y="187" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">  @Bean</text>
+  <text x="76" y="205" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">  </text>
+  <text x="76" y="205" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">  public </text>
+  <text x="142" y="205" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">Service service() {</text>
+  <text x="76" y="223" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">    return new </text>
+  <text x="172" y="223" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">Service(repo());</text>
+  <text x="76" y="241" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">  }</text>
+  <text x="76" y="259" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">  @Bean</text>
+  <text x="76" y="277" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">  public </text>
+  <text x="142" y="277" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">Repo repo() {</text>
+  <text x="76" y="295" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#7ec8e3">    return new </text>
+  <text x="172" y="295" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">JdbcRepo();</text>
+  <text x="76" y="313" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" fill="#e8e8e8">  }}</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="410" y1="220" x2="470" y2="220" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="473,220 463,214 463,226" fill="#7777cc"/>
+  <text x="416" y="212" font-size="11" fill="#7777cc">CGLIB 프록시 생성</text>
+  <text x="416" y="227" font-size="11" fill="#555">(컨테이너 기동 시)</text>
+
+  <!-- ─── Step 2: CGLIB subclass intercepts @Bean calls ─── -->
+  <!-- Label -->
+  <text x="496" y="102" font-size="13" font-weight="600" fill="#888">② CGLIB 프록시 (런타임 서브클래스)</text>
+  <!-- Box -->
+  <rect x="480" y="110" width="340" height="268" rx="8" fill="#0d1824" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="650" y="138" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">AppConfig$$EnhancerByCGLIB</text>
+  <!-- interception note -->
+  <rect x="496" y="150" width="308" height="80" rx="6" fill="#111" stroke="#1e2433"/>
+  <text x="650" y="172" text-anchor="middle" font-size="12" fill="#888">repo() 최초 호출</text>
+  <text x="650" y="192" text-anchor="middle" font-size="12" fill="#e8e8e8">→ 컨테이너에 캐시 없음</text>
+  <text x="650" y="212" text-anchor="middle" font-size="12" fill="#55c555">→ 실제 new JdbcRepo() 실행 후 등록</text>
+  <text x="496" y="250" width="308" font-size="11" fill="#888">──────────────────────────────</text>
+  <rect x="496" y="256" width="308" height="80" rx="6" fill="#111" stroke="#1e2433"/>
+  <text x="650" y="278" text-anchor="middle" font-size="12" fill="#888">repo() 재호출 (service() 내부)</text>
+  <text x="650" y="298" text-anchor="middle" font-size="12" fill="#e8e8e8">→ 컨테이너에 캐시 있음</text>
+  <text x="650" y="318" text-anchor="middle" font-size="12" fill="#55c555">→ new 호출 없이 캐시 반환 ★</text>
+  <!-- warn label -->
+  <text x="650" y="358" text-anchor="middle" font-size="12" fill="#e05555">싱글톤 보장 — new가 몇 번 불려도 같은 객체</text>
+
+  <!-- ─── Bottom: lite mode warning ─── -->
+  <rect x="60" y="400" width="760" height="60" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="424" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">⚠ @Component 안의 @Bean (Lite Mode)</text>
+  <text x="440" y="446" text-anchor="middle" font-size="12" fill="#888">CGLIB 프록시가 없어 @Bean 메서드 간 호출 시 매번 new 실행 → 싱글톤 보장 안 됨. 항상 @Configuration을 사용하세요.</text>
+
+  <!-- Footer -->
+  <text x="440" y="484" text-anchor="middle" font-size="11" fill="#444">proxyBeanMethods=false 옵션으로 CGLIB 프록시를 비활성화하면 Lite Mode와 동일하게 동작합니다</text>
+</svg>
