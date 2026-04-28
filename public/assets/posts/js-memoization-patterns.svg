@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" text-anchor="middle">메모이제이션 심화 패턴</text>
+  <text x="440" y="70" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" text-anchor="middle">TTL Cache · React useMemo · Fibonacci</text>
+
+  <!-- Left: TTL cache -->
+  <rect x="60" y="90" width="360" height="260" fill="#111" rx="10" stroke="#1e2433" stroke-width="1"/>
+  <text x="240" y="112" fill="#7ec8e3" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" text-anchor="middle">TTL 캐시 (만료 시간)</text>
+
+  <rect x="76" y="122" width="328" height="208" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="92" y="142" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3">const</tspan> memoWithTTL = (fn, ttl) =&gt; {</text>
+  <text x="92" y="160" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">  <tspan fill="#7ec8e3">const</tspan> cache = <tspan fill="#7ec8e3">new</tspan> Map();</text>
+  <text x="92" y="178" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">  <tspan fill="#7ec8e3">return</tspan> (...args) =&gt; {</text>
+  <text x="92" y="196" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">const</tspan> k = JSON.stringify(args);</text>
+  <text x="92" y="214" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">const</tspan> hit = cache.get(k);</text>
+  <text x="92" y="232" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">if</tspan> (hit &amp;&amp; Date.now() &lt; hit.exp)</text>
+  <text x="92" y="250" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">      <tspan fill="#7ec8e3">return</tspan> hit.value;</text>
+  <text x="92" y="268" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">const</tspan> val = fn(...args);</text>
+  <text x="92" y="286" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    cache.set(k, {</text>
+  <text x="92" y="304" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">      value: val, exp: Date.now()+ttl</text>
+  <text x="92" y="322" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    }); <tspan fill="#7ec8e3">return</tspan> val;</text>
+
+  <!-- Right: React useMemo / Fibonacci -->
+  <rect x="460" y="90" width="360" height="260" fill="#111" rx="10" stroke="#1e2433" stroke-width="1"/>
+  <text x="640" y="112" fill="#7ec8e3" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" text-anchor="middle">재귀 메모이제이션</text>
+
+  <rect x="476" y="122" width="328" height="208" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="492" y="142" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">// 피보나치 — 지수 → 선형</text>
+  <text x="492" y="160" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3">function</tspan> <tspan fill="#e8e8e8">makeFib</tspan>() {</text>
+  <text x="492" y="178" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">  <tspan fill="#7ec8e3">const</tspan> memo = <tspan fill="#7ec8e3">new</tspan> Map();</text>
+  <text x="492" y="196" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">  <tspan fill="#7ec8e3">return function</tspan> fib(n) {</text>
+  <text x="492" y="214" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">if</tspan> (memo.has(n)) <tspan fill="#7ec8e3">return</tspan> memo.get(n);</text>
+  <text x="492" y="232" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">const</tspan> r = n &lt;= <tspan fill="#b5cea8">1</tspan> ? n</text>
+  <text x="492" y="250" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">      : fib(n-<tspan fill="#b5cea8">1</tspan>) + fib(n-<tspan fill="#b5cea8">2</tspan>);</text>
+  <text x="492" y="268" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    memo.set(n, r);</text>
+  <text x="492" y="286" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">    <tspan fill="#7ec8e3">return</tspan> r;</text>
+  <text x="492" y="304" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">  };</text>
+  <text x="492" y="322" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve">}</text>
+
+  <!-- Bottom row: performance comparison -->
+  <rect x="60" y="370" width="360" height="60" fill="#0d0d0d" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="240" y="392" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" text-anchor="middle">메모이제이션 없이 fib(40)</text>
+  <text x="240" y="412" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" text-anchor="middle">약 165,580,141 번 호출 (지수)</text>
+  <text x="240" y="426" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" text-anchor="middle">O(2^n)</text>
+
+  <rect x="460" y="370" width="360" height="60" fill="#0a1a0a" rx="8" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="640" y="392" fill="#55c555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" text-anchor="middle">메모이제이션 후 fib(40)</text>
+  <text x="640" y="412" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" text-anchor="middle">단 41번 호출 (선형)</text>
+  <text x="640" y="426" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" text-anchor="middle">O(n)</text>
+
+  <!-- Footer -->
+  <text x="440" y="462" fill="#444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" text-anchor="middle">PALDYN · JavaScript 완전 정복</text>
+</svg>
