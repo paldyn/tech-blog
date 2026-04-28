@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" style="background:#0a0a0a;border-radius:12px">
+  <!-- Header -->
+  <rect x="0" y="0" width="880" height="72" rx="12" fill="#0d1a2a"/>
+  <rect x="0" y="60" width="880" height="12" fill="#0d1a2a"/>
+  <text x="60" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff">로지스틱 회귀 구현 및 다중 분류</text>
+  <text x="60" y="62" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">sklearn, PyTorch, Softmax 다중 분류 코드</text>
+  <line x1="60" y1="82" x2="820" y2="82" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Left: sklearn -->
+  <text x="60" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">scikit-learn: 이진 및 다중 분류</text>
+  <rect x="60" y="115" width="370" height="232" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">from</text>
+  <text x="112" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">sklearn.linear_model</text>
+  <text x="264" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">import</text>
+  <text x="312" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">LogisticRegression</text>
+  <text x="76" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 이진 분류</text>
+  <text x="76" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">clf = LogisticRegression(</text>
+  <text x="76" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    C=</text>
+  <text x="108" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1.0</text>
+  <text x="132" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="140" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  # 1/λ (역 정규화 강도)</text>
+  <text x="76" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    penalty=</text>
+  <text x="148" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'l2'</text>
+  <text x="176" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="184" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  # L2 정규화</text>
+  <text x="76" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    solver=</text>
+  <text x="144" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'lbfgs'</text>
+  <text x="196" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="204" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  # 최적화 알고리즘</text>
+  <text x="76" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    max_iter=</text>
+  <text x="152" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1000</text>
+  <text x="76" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="76" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">clf.fit(X_train, y_train)</text>
+  <text x="76" y="299" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">proba = clf.predict_proba(X_test)</text>
+  <text x="76" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># proba: [[P(0), P(1)], ...]</text>
+  <text x="76" y="335" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">pred = clf.predict(X_test)</text>
+
+  <!-- Right: PyTorch with softmax -->
+  <text x="460" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">PyTorch: 소프트맥스 다중 분류</text>
+  <rect x="460" y="115" width="360" height="232" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="476" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">import</text>
+  <text x="524" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">torch.nn as nn</text>
+  <text x="476" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 다중 분류: Softmax + CE</text>
+  <text x="476" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># Softmax: P(class=k) = e^zₖ / Σe^zⱼ</text>
+  <text x="476" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">model = nn.Sequential(</text>
+  <text x="476" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.Linear(</text>
+  <text x="572" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">n_features, 64</text>
+  <text x="680" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">),</text>
+  <text x="476" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.ReLU(),</text>
+  <text x="476" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.Linear(</text>
+  <text x="572" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">64, n_classes</text>
+  <text x="660" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">),</text>
+  <text x="476" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">    # CE에 Softmax 포함됨</text>
+  <text x="476" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="476" y="299" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">loss_fn = nn.CrossEntropyLoss()</text>
+  <text x="476" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 확률 얻기 (추론 시)</text>
+  <text x="476" y="335" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">proba = nn.Softmax(dim=</text>
+  <text x="636" y="335" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">-1</text>
+  <text x="660" y="335" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)(logits)</text>
+
+  <!-- Bottom metrics -->
+  <rect x="60" y="364" width="760" height="76" rx="8" fill="#0d1520" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="600">분류 평가 지표</text>
+  <text x="80" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">정확도(Accuracy): 전체 중 맞힌 비율  |  정밀도(Precision): TP/(TP+FP)  |  재현율(Recall): TP/(TP+FN)</text>
+  <text x="80" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">F1 Score: 2·Precision·Recall/(P+R) → 불균형 클래스에서 정확도보다 유용</text>
+  <text x="80" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">AUC-ROC: 분류 임계값 무관한 종합 성능  |  Log-Loss: 확률 예측의 정확도</text>
+
+  <!-- Footer -->
+  <text x="440" y="466" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

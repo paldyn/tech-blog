@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" style="background:#0a0a0a;border-radius:12px">
+  <!-- Header -->
+  <rect x="0" y="0" width="880" height="72" rx="12" fill="#0d1a2a"/>
+  <rect x="0" y="60" width="880" height="12" fill="#0d1a2a"/>
+  <text x="60" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff">경사 하강법 학습 루프 구현</text>
+  <text x="60" y="62" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">PyTorch로 직접 구현하는 미니배치 SGD</text>
+  <line x1="60" y1="82" x2="820" y2="82" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Steps flow -->
+  <text x="60" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">한 에폭(Epoch)의 학습 흐름</text>
+
+  <!-- Step boxes with arrows -->
+  <!-- Step 1 -->
+  <rect x="60" y="115" width="148" height="56" rx="8" fill="#0d1520" stroke="#7ec8e3"/>
+  <text x="134" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">① 순전파</text>
+  <text x="134" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ŷ = model(X)</text>
+
+  <!-- Arrow -->
+  <line x1="210" y1="143" x2="240" y2="143" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="240,137 252,143 240,149" fill="#7ec8e3"/>
+
+  <!-- Step 2 -->
+  <rect x="254" y="115" width="148" height="56" rx="8" fill="#0d1520" stroke="#7ec8e3"/>
+  <text x="328" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">② 손실 계산</text>
+  <text x="328" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">L = loss(ŷ, y)</text>
+
+  <!-- Arrow -->
+  <line x1="404" y1="143" x2="434" y2="143" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="434,137 446,143 434,149" fill="#7ec8e3"/>
+
+  <!-- Step 3 -->
+  <rect x="448" y="115" width="148" height="56" rx="8" fill="#0d1520" stroke="#7ec8e3"/>
+  <text x="522" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">③ 역전파</text>
+  <text x="522" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">L.backward()</text>
+
+  <!-- Arrow -->
+  <line x1="598" y1="143" x2="628" y2="143" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="628,137 640,143 628,149" fill="#7ec8e3"/>
+
+  <!-- Step 4 -->
+  <rect x="642" y="115" width="178" height="56" rx="8" fill="#0d1520" stroke="#55c555"/>
+  <text x="731" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">④ 파라미터 업데이트</text>
+  <text x="731" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">optimizer.step()</text>
+
+  <!-- Code -->
+  <text x="60" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">완전한 PyTorch 학습 루프</text>
+  <rect x="60" y="201" width="760" height="236" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="76" y="223" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">import</text>
+  <text x="124" y="223" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">torch, torch.nn as nn</text>
+
+  <text x="76" y="241" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 모델, 손실 함수, 옵티마이저 초기화</text>
+  <text x="76" y="259" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">model     = nn.Linear(</text>
+  <text x="256" y="259" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">10, 1</text>
+  <text x="296" y="259" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="76" y="277" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">criterion = nn.MSELoss()</text>
+  <text x="76" y="295" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">optimizer = torch.optim.SGD(model.parameters(), lr=</text>
+  <text x="508" y="295" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0.01</text>
+  <text x="532" y="295" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+
+  <text x="76" y="313" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">for</text>
+  <text x="100" y="313" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">epoch in range(</text>
+  <text x="228" y="313" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">100</text>
+  <text x="252" y="313" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">):</text>
+  <text x="76" y="331" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    for</text>
+  <text x="112" y="331" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">X_batch, y_batch in dataloader:</text>
+  <text x="92" y="349" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    optimizer.zero_grad()          </text>
+  <text x="400" y="349" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 그래디언트 초기화</text>
+  <text x="92" y="367" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    pred = model(X_batch)          </text>
+  <text x="400" y="367" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># ① 순전파</text>
+  <text x="92" y="385" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    loss = criterion(pred, y_batch)</text>
+  <text x="400" y="385" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># ② 손실 계산</text>
+  <text x="92" y="403" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    loss.backward()                </text>
+  <text x="400" y="403" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># ③ 역전파 (연쇄 법칙)</text>
+  <text x="92" y="421" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    optimizer.step()               </text>
+  <text x="400" y="421" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># ④ 파라미터 업데이트</text>
+
+  <!-- Footer -->
+  <text x="440" y="488" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" style="background:#0a0a0a;border-radius:12px">
+  <!-- Header -->
+  <rect x="0" y="0" width="880" height="72" rx="12" fill="#0d1a2a"/>
+  <rect x="0" y="60" width="880" height="12" fill="#0d1a2a"/>
+  <text x="60" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff">주요 손실 함수 PyTorch 구현</text>
+  <text x="60" y="62" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">직접 구현과 내장 함수 비교</text>
+  <line x1="60" y1="82" x2="820" y2="82" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Left code: regression -->
+  <text x="60" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">회귀 손실 함수</text>
+  <rect x="60" y="115" width="380" height="190" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">import</text>
+  <text x="124" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">torch, torch.nn as nn</text>
+  <text x="76" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">pred = torch.tensor([</text>
+  <text x="244" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">2.5, 0.0, 2.0</text>
+  <text x="364" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">])</text>
+  <text x="76" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">true = torch.tensor([</text>
+  <text x="244" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">3.0, -0.5, 2.0</text>
+  <text x="368" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">])</text>
+  <text x="76" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># MSE</text>
+  <text x="76" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">mse = nn.MSELoss()(pred, true)</text>
+  <text x="76" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># MAE</text>
+  <text x="76" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">mae = nn.L1Loss()(pred, true)</text>
+  <text x="76" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># Huber (delta=1.0)</text>
+  <text x="76" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">huber = nn.HuberLoss(delta=</text>
+  <text x="280" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1.0</text>
+  <text x="304" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)(pred, true)</text>
+  <text x="76" y="299" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">print(f</text>
+  <text x="120" y="299" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"MSE={mse:.3f} MAE={mae:.3f}"</text>
+  <text x="396" y="299" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+
+  <!-- Right code: classification -->
+  <text x="460" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">분류 손실 함수</text>
+  <rect x="460" y="115" width="360" height="190" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="476" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 이진 분류 BCE</text>
+  <text x="476" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">logits = torch.tensor([</text>
+  <text x="640" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">2.0, -1.0, 0.5</text>
+  <text x="762" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">])</text>
+  <text x="476" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">labels = torch.tensor([</text>
+  <text x="640" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1., 0., 1.</text>
+  <text x="730" y="173" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">])</text>
+  <text x="476" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">bce = nn.BCEWithLogitsLoss()</text>
+  <text x="476" y="209" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">loss = bce(logits, labels)</text>
+
+  <text x="476" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 다중 분류 CE</text>
+  <text x="476" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">logits_mc = torch.randn(</text>
+  <text x="660" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">4, 10</text>
+  <text x="696" y="245" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="476" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">targets  = torch.randint(</text>
+  <text x="660" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0, 10</text>
+  <text x="696" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, (</text>
+  <text x="716" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">4</text>
+  <text x="724" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,))</text>
+  <text x="476" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">ce = nn.CrossEntropyLoss()(logits_mc, targets)</text>
+  <text x="476" y="299" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 내부: softmax → log → NLL</text>
+
+  <!-- Bottom: LLM loss -->
+  <text x="60" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">LLM 언어 모델링 손실 (다음 토큰 예측)</text>
+  <rect x="60" y="333" width="760" height="116" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="355" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 입력: "The cat sat" → 예측: "cat sat on"</text>
+  <text x="76" y="373" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">B, T, V = </text>
+  <text x="148" y="373" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">2, 10, 50257</text>
+  <text x="256" y="373" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  # batch, seq_len, vocab</text>
+  <text x="76" y="391" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">logits  = model(input_ids)          </text>
+  <text x="424" y="391" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># [B, T, V]</text>
+  <text x="76" y="409" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">shift_logits = logits[:, :-</text>
+  <text x="268" y="409" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="276" y="409" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">].contiguous()</text>
+  <text x="424" y="409" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 마지막 토큰 제외</text>
+  <text x="76" y="427" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">shift_labels = input_ids[:, </text>
+  <text x="268" y="427" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="276" y="427" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">:].contiguous()</text>
+  <text x="424" y="427" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 다음 토큰이 정답</text>
+  <text x="76" y="445" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">loss = F.cross_entropy(shift_logits.view(-</text>
+  <text x="388" y="445" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="396" y="445" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, V), shift_labels.view(-</text>
+  <text x="560" y="445" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="568" y="445" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">))</text>
+
+  <!-- Footer -->
+  <text x="440" y="488" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · AI 완전 정복 시리즈</text>
+</svg>
