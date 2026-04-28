@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460" style="background:#0a0a0a;border-radius:12px">
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">MERGE / UPSERT DBMS별 문법</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">표준 MERGE, PostgreSQL ON CONFLICT, MySQL ON DUPLICATE KEY</text>
+
+  <!-- Code block -->
+  <rect x="60" y="96" width="760" height="324" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 표준 MERGE (Oracle, SQL Server, DB2)</text>
+  <text x="80" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">MERGE INTO</text>
+  <text x="163" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> inventory tgt</text>
+  <text x="80" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">USING</text>
+  <text x="124" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> incoming_stock src</text>
+  <text x="80" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ON</text>
+  <text x="104" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> (tgt.product_id = src.product_id)</text>
+  <text x="80" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">WHEN MATCHED THEN</text>
+  <text x="80" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">    UPDATE SET</text>
+  <text x="80" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">        tgt.stock = tgt.stock + src.qty</text>
+  <text x="80" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">WHEN NOT MATCHED THEN</text>
+  <text x="80" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">    INSERT</text>
+  <text x="143" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> (product_id, stock)</text>
+  <text x="80" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">    VALUES</text>
+  <text x="143" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> (src.product_id, src.qty);</text>
+
+  <text x="80" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- PostgreSQL: ON CONFLICT DO UPDATE</text>
+  <text x="80" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">INSERT INTO</text>
+  <text x="172" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> inventory (product_id, stock)</text>
+  <text x="80" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">VALUES</text>
+  <text x="131" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="147" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">101</text>
+  <text x="171" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, </text>
+  <text x="185" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">50</text>
+  <text x="199" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="80" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">ON CONFLICT (product_id) DO UPDATE</text>
+  <text x="80" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">    SET</text>
+  <text x="114" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> stock = inventory.stock + </text>
+  <text x="322" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">EXCLUDED</text>
+  <text x="400" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">.stock;</text>
+
+  <text x="440" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

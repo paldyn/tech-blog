@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="880" height="480" style="background:#0a0a0a;border-radius:12px">
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">DELETE 패턴과 안전한 삭제</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">조건부 삭제, DELETE JOIN, 배치 삭제</text>
+
+  <!-- Code block -->
+  <rect x="60" y="96" width="760" height="348" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 1. 기본 DELETE (WHERE 필수)</text>
+  <text x="80" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">DELETE FROM</text>
+  <text x="163" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> sessions</text>
+  <text x="80" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WHERE</text>
+  <text x="124" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> expires_at &lt; </text>
+  <text x="244" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">CURRENT_TIMESTAMP</text>
+  <text x="366" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <text x="80" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 2. DELETE JOIN (MySQL)</text>
+  <text x="80" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">DELETE</text>
+  <text x="127" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> o</text>
+  <text x="80" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="116" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">   orders o</text>
+  <text x="80" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">INNER JOIN</text>
+  <text x="163" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> customers c </text>
+  <text x="289" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ON</text>
+  <text x="313" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> o.customer_id = c.customer_id</text>
+  <text x="80" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WHERE</text>
+  <text x="124" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> c.status = </text>
+  <text x="226" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'DEACTIVATED'</text>
+  <text x="332" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <text x="80" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 3. DELETE USING (PostgreSQL)</text>
+  <text x="80" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">DELETE FROM</text>
+  <text x="163" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> orders o</text>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">USING</text>
+  <text x="124" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">  customers c</text>
+  <text x="80" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WHERE</text>
+  <text x="124" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">  o.customer_id = c.customer_id</text>
+  <text x="80" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">  </text>
+  <text x="94" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">AND</text>
+  <text x="126" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">  c.status = </text>
+  <text x="226" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'DEACTIVATED'</text>
+  <text x="332" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <text x="80" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 4. 배치 삭제 (대형 테이블)</text>
+  <text x="80" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">DELETE FROM</text>
+  <text x="163" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> event_log</text>
+  <text x="80" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WHERE</text>
+  <text x="124" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> created_at &lt; </text>
+  <text x="244" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'2024-01-01'</text>
+  <text x="80" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">LIMIT</text>
+  <text x="116" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve"> 10000</text>
+  <text x="170" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;  </text>
+  <text x="192" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 영향받은 행이 0이 될 때까지 반복</text>
+
+  <text x="440" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

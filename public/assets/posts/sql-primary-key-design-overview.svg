@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500" style="background:#0a0a0a;border-radius:12px">
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">PRIMARY KEY 설계 전략</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">자연 키 vs 대리 키 — 무엇을 기본 키로 선택할 것인가</text>
+
+  <!-- Natural Key -->
+  <rect x="60" y="100" width="360" height="170" rx="10" fill="#111827" stroke="#1e2433"/>
+  <text x="240" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">자연 키 (Natural Key)</text>
+  <line x1="80" y1="134" x2="400" y2="134" stroke="#1e2433"/>
+  <text x="240" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">비즈니스 의미를 가진 컬럼</text>
+  <text x="240" y="176" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">주민등록번호, 이메일, 사번 등</text>
+  <!-- pros/cons -->
+  <text x="90" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">+ 의미 있는 데이터</text>
+  <text x="90" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">+ 조인 없이 식별 가능</text>
+  <text x="90" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">− 변경 가능성 (UPDATE 연쇄)</text>
+  <text x="90" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">− 외부 의존성 (개인정보 노출)</text>
+
+  <!-- Surrogate Key -->
+  <rect x="460" y="100" width="360" height="170" rx="10" fill="#111827" stroke="#1e2433"/>
+  <text x="640" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">대리 키 (Surrogate Key)</text>
+  <line x1="480" y1="134" x2="800" y2="134" stroke="#1e2433"/>
+  <text x="640" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">DB가 생성하는 인공 식별자</text>
+  <text x="640" y="176" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">SERIAL, AUTO_INCREMENT, UUID 등</text>
+  <text x="490" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">+ 불변 (비즈니스 규칙 독립)</text>
+  <text x="490" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">+ 개인정보 미포함</text>
+  <text x="490" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">− 의미 없는 값</text>
+  <text x="490" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">− 추가 컬럼 필요</text>
+
+  <!-- Code block -->
+  <rect x="60" y="292" width="760" height="166" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 단일 컬럼 PK (대리 키)</text>
+  <text x="80" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">CREATE TABLE</text>
+  <text x="191" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> users (</text>
+  <text x="80" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">    user_id  </text>
+  <text x="172" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">BIGINT GENERATED ALWAYS AS IDENTITY</text>
+  <text x="80" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">                 </text>
+  <text x="232" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">PRIMARY KEY</text>
+  <text x="80" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">    email    VARCHAR(255) NOT NULL UNIQUE</text>
+  <text x="80" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="80" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 복합 PK (다대다 관계 테이블)</text>
+  <text x="80" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">    </text>
+  <text x="94" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">CONSTRAINT pk_order_items PRIMARY KEY (order_id, product_id)</text>
+
+  <text x="440" y="478" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

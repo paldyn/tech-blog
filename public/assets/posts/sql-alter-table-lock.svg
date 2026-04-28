@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" style="background:#0a0a0a;border-radius:12px">
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">ALTER TABLE과 테이블 락 — 운영 중 변경의 위험</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">대형 테이블 스키마 변경 전략</text>
+
+  <!-- Risk matrix -->
+  <rect x="60" y="96" width="760" height="120" rx="10" fill="#111827" stroke="#1e2433"/>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">연산별 락 수준 (PostgreSQL 기준)</text>
+  <line x1="80" y1="126" x2="800" y2="126" stroke="#1e2433"/>
+  <!-- headers -->
+  <text x="200" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">연산</text>
+  <text x="460" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">락 수준</text>
+  <text x="700" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">DML 차단 여부</text>
+  <!-- rows -->
+  <text x="80" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">ADD COLUMN (nullable)</text>
+  <text x="460" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">AccessExclusiveLock (짧음)</text>
+  <text x="700" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">메타데이터만, 빠름</text>
+  <text x="80" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">ADD NOT NULL COLUMN</text>
+  <text x="460" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">테이블 리라이트</text>
+  <text x="700" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">장시간 차단 위험</text>
+
+  <!-- Solution code block -->
+  <rect x="60" y="240" width="760" height="140" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 안전한 NOT NULL 컬럼 추가 3단계 패턴</text>
+  <text x="80" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 1. NULL 허용으로 추가</text>
+  <text x="80" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ALTER TABLE</text>
+  <text x="172" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> orders </text>
+  <text x="235" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">ADD COLUMN</text>
+  <text x="339" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> region VARCHAR(20);</text>
+  <text x="80" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 2. 기존 행 백필</text>
+  <text x="80" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">UPDATE</text>
+  <text x="131" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> orders </text>
+  <text x="194" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SET</text>
+  <text x="219" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> region = </text>
+  <text x="299" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'KR'</text>
+  <text x="327" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve"> WHERE</text>
+  <text x="382" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> region </text>
+  <text x="438" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7777cc" xml:space="preserve">IS NULL</text>
+  <text x="488" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+  <text x="80" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 3. NOT NULL 제약 추가</text>
+  <text x="80" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ALTER TABLE</text>
+  <text x="172" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> orders </text>
+  <text x="235" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ALTER COLUMN</text>
+  <text x="348" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> region </text>
+  <text x="407" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SET NOT NULL</text>
+  <text x="502" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <text x="440" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

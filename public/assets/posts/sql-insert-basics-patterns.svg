@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500" style="background:#0a0a0a;border-radius:12px">
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">INSERT 패턴 총정리</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">단일·복수·SELECT 삽입과 ON CONFLICT</text>
+
+  <!-- Code block -->
+  <rect x="60" y="96" width="760" height="364" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 1. 단일 행 삽입 (컬럼 명시 권장)</text>
+  <text x="80" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">INSERT INTO</text>
+  <text x="172" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> products (name, price, stock)</text>
+  <text x="80" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">VALUES</text>
+  <text x="131" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="147" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'노트북'</text>
+  <text x="215" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, </text>
+  <text x="229" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">1500000</text>
+  <text x="291" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, </text>
+  <text x="305" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">50</text>
+  <text x="321" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+
+  <text x="80" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 2. 복수 행 삽입 (배치 삽입)</text>
+  <text x="80" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">INSERT INTO</text>
+  <text x="172" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> products (name, price, stock)</text>
+  <text x="80" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">VALUES</text>
+  <text x="131" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">   (</text>
+  <text x="155" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'마우스'</text>
+  <text x="227" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">,   </text>
+  <text x="257" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">35000</text>
+  <text x="305" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, </text>
+  <text x="319" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">200</text>
+  <text x="341" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="80" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">         , (</text>
+  <text x="163" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'키보드'</text>
+  <text x="235" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">,  </text>
+  <text x="257" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">89000</text>
+  <text x="305" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, </text>
+  <text x="319" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">150</text>
+  <text x="341" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+
+  <text x="80" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 3. SELECT 결과 삽입 (INSERT INTO ... SELECT)</text>
+  <text x="80" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">INSERT INTO</text>
+  <text x="172" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> archive_orders (order_id, total)</text>
+  <text x="80" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="131" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> order_id, total</text>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="116" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">  orders</text>
+  <text x="80" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WHERE</text>
+  <text x="124" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> created_at &lt; </text>
+  <text x="234" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'2025-01-01'</text>
+  <text x="314" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <text x="80" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">-- 4. ON CONFLICT (UPSERT) - PostgreSQL</text>
+  <text x="80" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">INSERT INTO</text>
+  <text x="172" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> user_stats (user_id, login_count)</text>
+  <text x="80" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">VALUES</text>
+  <text x="131" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="147" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">101</text>
+  <text x="171" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, </text>
+  <text x="185" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="193" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="80" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">ON CONFLICT (user_id) DO UPDATE</text>
+  <text x="80" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">    </text>
+  <text x="94" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SET</text>
+  <text x="122" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> login_count = user_stats.login_count + </text>
+  <text x="474" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="482" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">;</text>
+
+  <text x="440" y="478" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>
