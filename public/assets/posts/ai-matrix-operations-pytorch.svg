@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <style>
+      text { font-family: 'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif; }
+      .mono { font-family: 'JetBrains Mono','Menlo','Consolas',monospace; }
+    </style>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">PyTorch 텐서 연산 실습</text>
+
+  <!-- Left: Basic ops -->
+  <rect x="60" y="64" width="364" height="30" rx="6" fill="#1a1a2e"/>
+  <text x="242" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">핵심 텐서 연산</text>
+
+  <rect x="60" y="100" width="364" height="260" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="76" y="122" class="mono" font-size="12" fill="#7ec8e3">import</text>
+  <text xml:space="preserve" x="124" y="122" class="mono" font-size="12" fill="#e8e8e8">torch</text>
+  <text xml:space="preserve" x="76" y="140" class="mono" font-size="12" fill="#6a8aa0"># 텐서 생성</text>
+  <text xml:space="preserve" x="76" y="158" class="mono" font-size="12" fill="#e8e8e8">A = torch.randn(</text>
+  <text xml:space="preserve" x="76" y="176" class="mono" font-size="12" fill="#b5cea8">    3, 4</text>
+  <text xml:space="preserve" x="76" y="176" class="mono" font-size="12" fill="#e8e8e8">        )</text>
+  <text xml:space="preserve" x="76" y="194" class="mono" font-size="12" fill="#e8e8e8">B = torch.randn(</text>
+  <text xml:space="preserve" x="76" y="212" class="mono" font-size="12" fill="#b5cea8">    4, 2</text>
+  <text xml:space="preserve" x="76" y="212" class="mono" font-size="12" fill="#e8e8e8">        )</text>
+  <text xml:space="preserve" x="76" y="230" class="mono" font-size="12" fill="#6a8aa0"># 행렬 곱셈 (3×4)@(4×2)=(3×2)</text>
+  <text xml:space="preserve" x="76" y="248" class="mono" font-size="12" fill="#e8e8e8">C = torch.matmul(A, B)</text>
+  <text xml:space="preserve" x="76" y="266" class="mono" font-size="12" fill="#e8e8e8">C = A @ B</text>
+  <text xml:space="preserve" x="76" y="284" class="mono" font-size="12" fill="#6a8aa0"># 전치 (Transpose)</text>
+  <text xml:space="preserve" x="76" y="302" class="mono" font-size="12" fill="#e8e8e8">A_T = A.T</text>
+  <text xml:space="preserve" x="76" y="320" class="mono" font-size="12" fill="#e8e8e8">A_T = A.transpose(</text>
+  <text xml:space="preserve" x="76" y="338" class="mono" font-size="12" fill="#b5cea8">    0, 1</text>
+  <text xml:space="preserve" x="76" y="338" class="mono" font-size="12" fill="#e8e8e8">        )</text>
+
+  <!-- Right: Attention implementation -->
+  <rect x="456" y="64" width="364" height="30" rx="6" fill="#0e2010"/>
+  <text x="638" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Self-Attention 행렬 연산</text>
+
+  <rect x="456" y="100" width="364" height="260" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="472" y="122" class="mono" font-size="12" fill="#7ec8e3">import</text>
+  <text xml:space="preserve" x="520" y="122" class="mono" font-size="12" fill="#e8e8e8">torch.nn.functional</text>
+  <text xml:space="preserve" x="472" y="140" class="mono" font-size="12" fill="#7ec8e3">    as</text>
+  <text xml:space="preserve" x="502" y="140" class="mono" font-size="12" fill="#e8e8e8">F</text>
+  <text xml:space="preserve" x="472" y="158" class="mono" font-size="12" fill="#7ec8e3">def</text>
+  <text xml:space="preserve" x="504" y="158" class="mono" font-size="12" fill="#e8e8e8">attention(Q, K, V):</text>
+  <text xml:space="preserve" x="472" y="176" class="mono" font-size="12" fill="#e8e8e8">    d_k = Q.size(-</text>
+  <text xml:space="preserve" x="472" y="194" class="mono" font-size="12" fill="#b5cea8">        1</text>
+  <text xml:space="preserve" x="496" y="194" class="mono" font-size="12" fill="#e8e8e8">)</text>
+  <text xml:space="preserve" x="472" y="212" class="mono" font-size="12" fill="#6a8aa0">    # Q·K^T / √d_k</text>
+  <text xml:space="preserve" x="472" y="230" class="mono" font-size="12" fill="#e8e8e8">    scores = Q @ K.transpose(</text>
+  <text xml:space="preserve" x="472" y="248" class="mono" font-size="12" fill="#b5cea8">        -2, -1</text>
+  <text xml:space="preserve" x="472" y="248" class="mono" font-size="12" fill="#e8e8e8">              )</text>
+  <text xml:space="preserve" x="472" y="266" class="mono" font-size="12" fill="#e8e8e8">    scores /= d_k**</text>
+  <text xml:space="preserve" x="472" y="284" class="mono" font-size="12" fill="#b5cea8">        0.5</text>
+  <text xml:space="preserve" x="472" y="302" class="mono" font-size="12" fill="#6a8aa0">    # Softmax → 확률 분포</text>
+  <text xml:space="preserve" x="472" y="320" class="mono" font-size="12" fill="#e8e8e8">    attn = F.softmax(</text>
+  <text xml:space="preserve" x="472" y="338" class="mono" font-size="12" fill="#e8e8e8">        scores, dim=-</text>
+  <text xml:space="preserve" x="472" y="338" class="mono" font-size="12" fill="#b5cea8">1</text>
+  <text xml:space="preserve" x="590" y="338" class="mono" font-size="12" fill="#e8e8e8">)</text>
+  <text xml:space="preserve" x="472" y="356" class="mono" font-size="12" fill="#7ec8e3">    return</text>
+  <text xml:space="preserve" x="524" y="356" class="mono" font-size="12" fill="#e8e8e8">attn @ V</text>
+
+  <!-- Footer note -->
+  <rect x="60" y="378" width="760" height="44" rx="6" fill="#111"/>
+  <text x="440" y="398" text-anchor="middle" font-size="12" fill="#aaa">PyTorch의 torch.matmul / @ 연산자는 NumPy의 np.dot/@와 동일한 행렬곱을 GPU에서 수행한다</text>
+  <text x="440" y="416" text-anchor="middle" font-size="11" fill="#555">배치 차원이 있을 때는 자동으로 배치 행렬곱(bmm)으로 처리됨: (B,m,k) @ (B,k,n) = (B,m,n)</text>
+
+  <!-- Footer -->
+  <text x="440" y="444" text-anchor="middle" font-size="11" fill="#444">PALDYN · AI 완전 정복 시리즈</text>
+</svg>
