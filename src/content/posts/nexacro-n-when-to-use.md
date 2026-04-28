@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-04-28"
 archiveOrder: 1
 type: "knowledge"
-category: "Nexacro N"
+category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "도입검토", "엔터프라이즈", "기술선택"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-04-28"
 archiveOrder: 2
 type: "knowledge"
-category: "Nexacro N"
+category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "html5", "런타임", "canvas", "렌더링"]
 featured: false
 draft: false
