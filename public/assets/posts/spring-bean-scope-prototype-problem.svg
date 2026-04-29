@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arrW" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e8e8e8" stroke="#444" stroke-width="0.5"/>
+    </marker>
+    <marker id="arrG" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#55c555" stroke="#1a4a1a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arrR" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e05555" stroke="#5a1a1a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Singleton에 Prototype 주입 — 함정과 해결</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888">Provider / scoped-proxy 패턴으로 매 호출마다 새 인스턴스 획득</text>
+
+  <!-- Left: Problem -->
+  <text x="200" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">문제 — Prototype이 재사용됨</text>
+
+  <rect x="40" y="114" width="320" height="112" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="56" y="135" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">@Singleton</text>
+  <text x="56" y="153" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">class SingletonSvc {</text>
+  <text x="56" y="171" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc" xml:space="preserve">  private final</text>
+  <text x="56" y="189" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    PrototypeBean p; <tspan fill="#e05555">// 고정!</tspan></text>
+  <text x="56" y="207" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">  // 같은 p가 계속 재사용</text>
+
+  <rect x="110" y="248" width="140" height="38" rx="6" fill="#1a0808" stroke="#e05555"/>
+  <text x="180" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">Prototype #1 고착</text>
+
+  <text x="200" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">new 인스턴스를 원해도 #1만 계속 사용</text>
+
+  <!-- Divider -->
+  <line x1="430" y1="90" x2="430" y2="420" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Right: Solution -->
+  <text x="660" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">해결 — ObjectProvider 사용</text>
+
+  <rect x="460" y="114" width="380" height="130" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="476" y="135" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">@Singleton</text>
+  <text x="476" y="153" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">class SingletonSvc {</text>
+  <text x="476" y="171" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc" xml:space="preserve">  private final</text>
+  <text x="476" y="189" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  ObjectProvider&lt;Prot&gt; pv;</text>
+  <text x="476" y="207" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc" xml:space="preserve">  void use() {</text>
+  <text x="476" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    Prot p = pv.getObject();<tspan fill="#55c555"> // NEW</tspan></text>
+  <text x="476" y="243" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  }</text>
+
+  <!-- New instances -->
+  <rect x="510" y="268" width="110" height="32" rx="5" fill="#071207" stroke="#55c555"/>
+  <text x="565" y="289" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Prototype #1</text>
+  <rect x="650" y="268" width="110" height="32" rx="5" fill="#071207" stroke="#55c555"/>
+  <text x="705" y="289" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Prototype #2</text>
+  <rect x="790" y="268" width="60" height="32" rx="5" fill="#071207" stroke="#55c555"/>
+  <text x="820" y="289" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">…</text>
+
+  <text x="660" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">getObject() 호출 시마다 새 인스턴스</text>
+
+  <!-- Scoped proxy note -->
+  <rect x="460" y="350" width="380" height="54" rx="6" fill="#0e1820" stroke="#1e2433"/>
+  <text x="650" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">대안: @Scope(proxyMode=INTERFACES)</text>
+  <text x="650" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">프록시가 호출 시점에 실제 빈을 조회</text>
+
+  <!-- Footer -->
+  <text x="440" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · Spring 완전 정복 시리즈</text>
+</svg>

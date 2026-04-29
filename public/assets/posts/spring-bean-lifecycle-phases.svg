@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="dn" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3" stroke="#2a4a5a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Spring Bean 생명주기 전체 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888">인스턴스화 → 의존성 주입 → 초기화 → 사용 → 소멸</text>
+
+  <!-- Phase boxes (vertical flow) -->
+
+  <!-- 1. Instantiation -->
+  <rect x="280" y="88" width="320" height="46" rx="8" fill="#0e1820" stroke="#1e3050"/>
+  <text x="440" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">① 인스턴스화</text>
+  <text x="440" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">생성자 호출 — new BeanClass()</text>
+
+  <line x1="440" y1="134" x2="440" y2="152" stroke="#2a4a5a" stroke-width="2" marker-end="url(#dn)"/>
+
+  <!-- 2. DI -->
+  <rect x="280" y="154" width="320" height="46" rx="8" fill="#0e1820" stroke="#1e3050"/>
+  <text x="440" y="174" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">② 의존성 주입</text>
+  <text x="440" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">@Autowired setter·필드·생성자</text>
+
+  <line x1="440" y1="200" x2="440" y2="218" stroke="#2a4a5a" stroke-width="2" marker-end="url(#dn)"/>
+
+  <!-- 3. BeanPostProcessor before -->
+  <rect x="280" y="220" width="320" height="46" rx="8" fill="#0f0e07" stroke="#2a2a1e"/>
+  <text x="440" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8c84a">③ BPP — postProcessBefore</text>
+  <text x="440" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">초기화 전 후처리기 호출</text>
+
+  <line x1="440" y1="266" x2="440" y2="284" stroke="#2a4a5a" stroke-width="2" marker-end="url(#dn)"/>
+
+  <!-- 4. Init callbacks -->
+  <rect x="280" y="286" width="320" height="64" rx="8" fill="#071207" stroke="#1e3a1e"/>
+  <text x="440" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">④ 초기화 콜백</text>
+  <text x="440" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">@PostConstruct → afterPropertiesSet()</text>
+  <text x="440" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ @Bean(initMethod="...")</text>
+
+  <line x1="440" y1="350" x2="440" y2="368" stroke="#2a4a5a" stroke-width="2" marker-end="url(#dn)"/>
+
+  <!-- 5. BeanPostProcessor after -->
+  <rect x="280" y="370" width="320" height="46" rx="8" fill="#0f0e07" stroke="#2a2a1e"/>
+  <text x="440" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8c84a">⑤ BPP — postProcessAfter</text>
+  <text x="440" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">AOP 프록시 적용 시점</text>
+
+  <line x1="440" y1="416" x2="440" y2="434" stroke="#2a4a5a" stroke-width="2" marker-end="url(#dn)"/>
+
+  <!-- 6. Use & Destroy -->
+  <rect x="180" y="436" width="200" height="46" rx="8" fill="#0a1a0a" stroke="#1e4a1e"/>
+  <text x="280" y="456" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">⑥ 사용 (Ready)</text>
+  <text x="280" y="474" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">비즈니스 로직 수행</text>
+
+  <rect x="500" y="436" width="200" height="46" rx="8" fill="#1a0808" stroke="#3a1e1e"/>
+  <text x="600" y="456" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">⑦ 소멸</text>
+  <text x="600" y="474" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">@PreDestroy → destroy()</text>
+
+  <line x1="380" y1="459" x2="500" y2="459" stroke="#2a2a2a" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="440" y="452" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">ctx.close()</text>
+
+  <!-- Side labels -->
+  <text x="65" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">Spring</text>
+  <text x="65" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">컨테이너</text>
+  <text x="65" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">관리</text>
+  <line x1="100" y1="280" x2="278" y2="280" stroke="#7777cc" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Footer -->
+  <text x="440" y="522" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · Spring 완전 정복 시리즈</text>
+</svg>
