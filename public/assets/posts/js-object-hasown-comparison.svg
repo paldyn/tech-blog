@@ -1,0 +1,56 @@
+<svg width="880" height="440" viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">hasOwn vs hasOwnProperty 비교</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">null 프로토타입 객체와의 차이</text>
+  <line x1="60" y1="92" x2="820" y2="92" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Left: hasOwnProperty problems -->
+  <text x="60" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">hasOwnProperty 문제점</text>
+  <rect x="60" y="126" width="360" height="190" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// null 프로토타입 객체에선 에러</text>
+  <text x="76" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> o = Object.create(</tspan><tspan fill="#7ec8e3">null</tspan><tspan fill="#e8e8e8">);</tspan>
+  </text>
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">o.x = </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">;</tspan>
+  </text>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">o.hasOwnProperty(</tspan><tspan fill="#ce9178">'x'</tspan><tspan fill="#e8e8e8">);</tspan>
+  </text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">// TypeError! 메서드 없음</text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 우회: 직접 호출</text>
+  <text x="76" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">Object.prototype.hasOwnProperty</tspan>
+  </text>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  .call(o, </tspan><tspan fill="#ce9178">'x'</tspan><tspan fill="#e8e8e8">); </tspan><tspan fill="#6a8aa0">// 장황함</tspan>
+  </text>
+  <text x="76" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ESLint: no-prototype-builtins</text>
+
+  <!-- Right: Object.hasOwn -->
+  <text x="460" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">Object.hasOwn — 단순하고 안전</text>
+  <rect x="460" y="126" width="360" height="190" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// null 프로토타입도 OK</text>
+  <text x="476" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> o = Object.create(</tspan><tspan fill="#7ec8e3">null</tspan><tspan fill="#e8e8e8">);</tspan>
+  </text>
+  <text x="476" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">o.x = </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">;</tspan>
+  </text>
+  <text x="476" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">Object.hasOwn(o, </tspan><tspan fill="#ce9178">'x'</tspan><tspan fill="#e8e8e8">); </tspan><tspan fill="#6a8aa0">// true ✓</tspan>
+  </text>
+  <text x="476" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 일반 객체도 동일</text>
+  <text x="476" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> user = { name: </tspan><tspan fill="#ce9178">'Bob'</tspan><tspan fill="#e8e8e8"> };</tspan>
+  </text>
+  <text x="476" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">Object.hasOwn(user, </tspan><tspan fill="#ce9178">'name'</tspan><tspan fill="#e8e8e8">); </tspan><tspan fill="#6a8aa0">// true</tspan>
+  </text>
+  <text x="476" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">Object.hasOwn(user, </tspan><tspan fill="#ce9178">'toString'</tspan><tspan fill="#e8e8e8">); </tspan><tspan fill="#6a8aa0">// false</tspan>
+  </text>
+  <text x="476" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 상속 속성은 false</text>
+
+  <text x="440" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

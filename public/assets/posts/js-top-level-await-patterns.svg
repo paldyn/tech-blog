@@ -1,0 +1,57 @@
+<svg width="880" height="460" viewBox="0 0 880 460" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">TLA 활용 패턴</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">ES 모듈 최상위 스코프에서 await 사용</text>
+  <line x1="60" y1="92" x2="820" y2="92" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Left panel: before TLA -->
+  <text x="60" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">기존 방식 (IIFE 래퍼 필요)</text>
+  <rect x="60" y="126" width="360" height="208" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#6a8aa0">// ❌ 최상위에서 await 불가</tspan>
+  </text>
+  <text x="76" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> data = </tspan><tspan fill="#7ec8e3">await</tspan><tspan fill="#e8e8e8"> fetch(url);</tspan>
+  </text>
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// → SyntaxError</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// IIFE로 우회</text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">(</tspan><tspan fill="#7ec8e3">async</tspan><tspan fill="#e8e8e8"> () =&gt; {</tspan>
+  </text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  </tspan><tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> data = </tspan><tspan fill="#7ec8e3">await</tspan><tspan fill="#e8e8e8"> fetch(url);</tspan>
+  </text>
+  <text x="76" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  init(data);</tspan>
+  </text>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">})();</tspan>
+  </text>
+  <text x="76" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// export 시점 보장 어려움</text>
+
+  <!-- Right panel: TLA -->
+  <text x="460" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">TLA 방식 (간결하고 안전)</text>
+  <rect x="460" y="126" width="360" height="208" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ✓ ES Module 최상위에서 OK</text>
+  <text x="476" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> data = </tspan><tspan fill="#7ec8e3">await</tspan><tspan fill="#e8e8e8"> fetch(url);</tspan>
+  </text>
+  <text x="476" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">init(data);</tspan>
+  </text>
+  <text x="476" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 폴리필 선택적 로딩</text>
+  <text x="476" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">if</tspan><tspan fill="#e8e8e8"> (!globalThis.fetch) {</tspan>
+  </text>
+  <text x="476" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  </tspan><tspan fill="#7ec8e3">await</tspan><tspan fill="#e8e8e8"> </tspan><tspan fill="#7ec8e3">import</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">'node-fetch'</tspan><tspan fill="#e8e8e8">);</tspan>
+  </text>
+  <text x="476" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">}</tspan>
+  </text>
+  <text x="476" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">export</tspan><tspan fill="#e8e8e8"> { data };</tspan>
+  </text>
+
+  <text x="440" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

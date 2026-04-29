@@ -1,0 +1,33 @@
+<svg width="880" height="480" viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">최상위 await — 모듈 실행 순서</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">부모 모듈은 자식이 완료될 때까지 대기</text>
+  <line x1="60" y1="92" x2="820" y2="92" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Module A (child, has TLA) -->
+  <rect x="270" y="120" width="340" height="80" fill="#070b14" rx="8" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">config.js (자식 모듈)</text>
+  <text x="440" y="170" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">export const db = await connect();</text>
+  <text x="440" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">← TLA 포함: 비동기 완료 대기</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="200" x2="440" y2="250" stroke="#1e2433" stroke-width="2"/>
+  <polygon points="440,260 433,248 447,248" fill="#7777cc"/>
+
+  <!-- Module B (parent) -->
+  <rect x="270" y="260" width="340" height="80" fill="#070b14" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">main.js (부모 모듈)</text>
+  <text x="440" y="308" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">import { db } from './config.js';</text>
+  <text x="440" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">← config.js 완료 후 실행</text>
+
+  <!-- Timeline label -->
+  <text x="640" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">await connect()</text>
+  <text x="640" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">비동기 I/O 완료 대기</text>
+  <line x1="610" y1="160" x2="617" y2="160" stroke="#55c555" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <text x="60" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">실행 흐름</text>
+  <rect x="60" y="400" width="760" height="38" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">config.js 파싱 → await 진입 → I/O 완료 → main.js 실행</text>
+
+  <text x="440" y="460" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

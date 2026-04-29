@@ -1,0 +1,55 @@
+<svg width="880" height="460" viewBox="0 0 880 460" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Object.hasOwn() vs hasOwnProperty()</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">ES2022 — 안전한 자체 속성 확인</text>
+  <line x1="60" y1="92" x2="820" y2="92" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Prototype chain diagram -->
+  <text x="60" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">프로토타입 체인</text>
+
+  <!-- obj -->
+  <rect x="60" y="126" width="200" height="80" fill="#1a1a2e" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="160" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">obj</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">name: 'Alice' ✓</text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">age: 30       ✓</text>
+  <text x="76" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">자체 속성 (own properties)</text>
+
+  <!-- Arrow to prototype -->
+  <line x1="260" y1="166" x2="320" y2="166" stroke="#6a8aa0" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="322,166 312,160 312,172" fill="#6a8aa0"/>
+  <text x="290" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#6a8aa0">[[Prototype]]</text>
+
+  <!-- Object.prototype -->
+  <rect x="322" y="126" width="220" height="80" fill="#1a1a2e" rx="8" stroke="#6a8aa0" stroke-width="1"/>
+  <text x="432" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#6a8aa0">Object.prototype</text>
+  <text x="338" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">toString()</text>
+  <text x="338" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">hasOwnProperty()</text>
+  <text x="338" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">상속된 속성</text>
+
+  <!-- Danger zone -->
+  <rect x="590" y="126" width="230" height="80" fill="#1a0e0e" rx="8" stroke="#e05555" stroke-width="2"/>
+  <text x="705" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">위험한 경우</text>
+  <text x="606" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555">hasOwnProperty:</text>
+  <text x="606" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555">  () =&gt; true  // 재정의!</text>
+
+  <!-- Code block -->
+  <text x="60" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Object.hasOwn() 안전성</text>
+  <rect x="60" y="250" width="760" height="154" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ❌ hasOwnProperty 재정의 공격</text>
+  <text x="76" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> obj = { hasOwnProperty: () =&gt; </tspan><tspan fill="#7ec8e3">true</tspan><tspan fill="#e8e8e8"> };</tspan>
+  </text>
+  <text x="76" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">obj.hasOwnProperty(</tspan><tspan fill="#ce9178">'x'</tspan><tspan fill="#e8e8e8">);</tspan><tspan fill="#6a8aa0"> // 항상 true (잘못됨)</tspan>
+  </text>
+  <text x="76" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ✓ Object.hasOwn — 재정의 불가</text>
+  <text x="76" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">Object.hasOwn(obj, </tspan><tspan fill="#ce9178">'x'</tspan><tspan fill="#e8e8e8">); </tspan><tspan fill="#6a8aa0">// false (정확)</tspan>
+  </text>
+  <text x="76" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">Object.hasOwn(obj, </tspan><tspan fill="#ce9178">'hasOwnProperty'</tspan><tspan fill="#e8e8e8">); </tspan><tspan fill="#6a8aa0">// true</tspan>
+  </text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// → hasOwnProperty 자체가 자체 속성임</text>
+
+  <text x="440" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>

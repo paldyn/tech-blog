@@ -1,0 +1,62 @@
+<svg width="880" height="480" viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">WeakRef — 강한 참조 vs 약한 참조</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">약한 참조는 GC를 막지 않는다</text>
+  <line x1="60" y1="92" x2="820" y2="92" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Strong reference scenario -->
+  <text x="60" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">강한 참조 — GC 불가</text>
+
+  <!-- Variable box -->
+  <rect x="60" y="130" width="160" height="50" fill="#1a1a2e" rx="6" stroke="#7777cc" stroke-width="2"/>
+  <text x="140" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">cache</text>
+  <text x="140" y="170" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">변수</text>
+
+  <!-- Object box -->
+  <rect x="300" y="130" width="160" height="50" fill="#1a1a2e" rx="6" stroke="#e05555" stroke-width="2"/>
+  <text x="380" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">{ data }</text>
+  <text x="380" y="170" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">힙 객체</text>
+
+  <!-- Strong arrow -->
+  <line x1="220" y1="155" x2="298" y2="155" stroke="#e05555" stroke-width="2"/>
+  <polygon points="300,155 290,149 290,161" fill="#e05555"/>
+  <text x="258" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">강한 참조</text>
+
+  <rect x="510" y="130" width="130" height="50" fill="#0e1a0e" rx="6" stroke="#6a8aa0" stroke-width="1"/>
+  <text x="575" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#6a8aa0">GC 불가 ✗</text>
+
+  <!-- Weak reference scenario -->
+  <text x="60" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">약한 참조 (WeakRef) — GC 가능</text>
+
+  <rect x="60" y="240" width="160" height="50" fill="#1a1a2e" rx="6" stroke="#7777cc" stroke-width="2"/>
+  <text x="140" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">weakRef</text>
+  <text x="140" y="280" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">WeakRef 인스턴스</text>
+
+  <rect x="300" y="240" width="160" height="50" fill="#1a1a2e" rx="6" stroke="#55c555" stroke-width="2"/>
+  <text x="380" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">{ data }</text>
+  <text x="380" y="280" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">힙 객체</text>
+
+  <!-- Weak arrow (dashed) -->
+  <line x1="220" y1="265" x2="298" y2="265" stroke="#55c555" stroke-width="2" stroke-dasharray="6,4"/>
+  <polygon points="300,265 290,259 290,271" fill="#55c555"/>
+  <text x="258" y="255" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">약한 참조</text>
+
+  <rect x="510" y="240" width="130" height="50" fill="#0e1a0e" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="575" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">GC 가능 ✓</text>
+
+  <!-- Code block: deref usage -->
+  <text x="60" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">deref()로 접근 — GC 후엔 undefined</text>
+  <rect x="60" y="338" width="760" height="82" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> wr = </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> WeakRef(obj);</tspan>
+  </text>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> target = wr.deref();</tspan>
+  </text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">if</tspan><tspan fill="#e8e8e8"> (target) { use(target); } </tspan><tspan fill="#6a8aa0">// GC 전</tspan>
+  </text>
+  <text x="76" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// GC 후: deref() → undefined</text>
+
+  <text x="440" y="460" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · JavaScript 완전 정복</text>
+</svg>
