@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">DISTINCT 대안 패턴</text>
+
+  <!-- Left: DISTINCT vs GROUP BY -->
+  <text x="80" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" xml:space="preserve">DISTINCT (피해야 할 패턴)</text>
+  <rect x="60" y="94" width="370" height="130" rx="6" fill="#070b14" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- DISTINCT로 JOIN 중복 제거</text>
+  <text x="76" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT DISTINCT</text>
+  <text x="196" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> u.id, u.name</text>
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="124" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> users u</text>
+  <text x="76" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">JOIN</text>
+  <text x="112" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> orders o</text>
+  <text x="76" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">ON</text>
+  <text x="100" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> o.user_id = u.id</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">-- ✗ JOIN 후 전체 정렬 → 비효율</text>
+
+  <!-- Right: EXISTS / subquery -->
+  <text x="470" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" xml:space="preserve">EXISTS 대안 (효율적)</text>
+  <rect x="450" y="94" width="370" height="130" rx="6" fill="#070b14" stroke="#55c555" stroke-width="1"/>
+  <text x="466" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- EXISTS: 첫 매칭 발견 즉시 멈춤</text>
+  <text x="466" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="514" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> u.id, u.name</text>
+  <text x="466" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="514" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> users u</text>
+  <text x="466" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">WHERE EXISTS</text>
+  <text x="562" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="466" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    SELECT</text>
+  <text x="530" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve"> 1</text>
+  <text x="544" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve"> FROM</text>
+  <text x="588" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> orders o</text>
+  <text x="466" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    WHERE</text>
+  <text x="530" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> o.user_id = u.id );</text>
+
+  <!-- Bottom: GROUP BY vs COUNT DISTINCT -->
+  <rect x="60" y="244" width="760" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- COUNT DISTINCT: 집계 함수 내 중복 제거 (비용 있음)</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="124" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> dept, </text>
+  <text x="172" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">COUNT</text>
+  <text x="220" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">(</text>
+  <text x="228" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">DISTINCT</text>
+  <text x="300" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> job_title) AS unique_titles</text>
+  <text x="76" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="124" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> employees </text>
+  <text x="220" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">GROUP BY</text>
+  <text x="292" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> dept;</text>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- GROUP BY도 DISTINCT와 동일 비용 (내부적으로 같은 알고리즘)</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">-- DISTINCT를 써야 할 때: 단순 중복 제거, 진짜 필요한 경우만</text>
+
+  <!-- Footer -->
+  <text x="440" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444" text-anchor="middle" xml:space="preserve">PALDYN — SQL 완전 정복</text>
+</svg>

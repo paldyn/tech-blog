@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">NOT IN의 NULL 함정 — 가장 자주 만나는 버그</text>
+
+  <!-- Explanation -->
+  <rect x="60" y="66" width="760" height="44" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle" xml:space="preserve">NOT IN 목록에 NULL이 하나라도 있으면 전체 쿼리가 0행을 반환한다</text>
+  <text x="440" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">이유: 1 NOT IN (2, 3, NULL) → 1≠2 AND 1≠3 AND 1≠NULL → TRUE AND TRUE AND UNKNOWN → UNKNOWN</text>
+
+  <!-- Left: Problem code -->
+  <text x="80" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" xml:space="preserve">문제 상황</text>
+  <rect x="60" y="154" width="370" height="130" rx="6" fill="#070b14" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- subquery 결과에 NULL 포함 가능</text>
+  <text x="76" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="124" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> * </text>
+  <text x="148" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="184" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> orders</text>
+  <text x="76" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">WHERE</text>
+  <text x="124" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> user_id </text>
+  <text x="196" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">NOT IN</text>
+  <text x="250" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    SELECT</text>
+  <text x="140" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> user_id</text>
+  <text x="76" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    FROM</text>
+  <text x="132" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> blacklist </text>
+  <text x="220" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">-- blacklist.user_id에 NULL 있으면 0행!</text>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 실제 버그: 블랙리스트가 전혀 없는 것처럼</text>
+
+  <!-- Right: Solution code -->
+  <text x="470" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" xml:space="preserve">해결책</text>
+  <rect x="450" y="154" width="370" height="130" rx="6" fill="#070b14" stroke="#55c555" stroke-width="1"/>
+  <text x="466" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- NOT EXISTS 사용 (NULL 안전)</text>
+  <text x="466" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="514" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> * </text>
+  <text x="538" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="574" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> orders o</text>
+  <text x="466" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">WHERE NOT EXISTS</text>
+  <text x="602" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="466" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    SELECT</text>
+  <text x="530" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve"> 1</text>
+  <text x="544" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve"> FROM</text>
+  <text x="588" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> blacklist b</text>
+  <text x="466" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    WHERE</text>
+  <text x="524" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> b.user_id = o.user_id</text>
+  <text x="466" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="466" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">-- NULL에 안전 + 성능도 일반적으로 우수</text>
+
+  <!-- Footer -->
+  <text x="440" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444" text-anchor="middle" xml:space="preserve">PALDYN — SQL 완전 정복</text>
+</svg>
