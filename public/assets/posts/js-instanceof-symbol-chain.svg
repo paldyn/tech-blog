@@ -1,0 +1,57 @@
+<svg width="880" viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">instanceof 작동 원리</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">프로토타입 체인을 순회하며 Constructor.prototype 일치 검사</text>
+
+  <!-- Query expression -->
+  <rect x="60" y="106" width="320" height="44" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="220" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" fill="#e8e8e8" text-anchor="middle">obj instanceof Dog</text>
+
+  <!-- Arrow down -->
+  <line x1="220" y1="150" x2="220" y2="180" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="220,180 213,167 227,167" fill="#7777cc"/>
+  <text x="230" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">검사 시작</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="180" width="320" height="46" rx="6" fill="#0f0f15" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#888">obj.__proto__</text>
+  <text x="76" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">= Dog.prototype ? → true 반환</text>
+
+  <!-- Arrow -->
+  <line x1="220" y1="226" x2="220" y2="256" stroke="#555" stroke-width="1.5"/>
+  <polygon points="220,256 213,243 227,243" fill="#555"/>
+  <text x="234" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">아니면</text>
+
+  <!-- Step 2 -->
+  <rect x="60" y="256" width="320" height="46" rx="6" fill="#0f0f15" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#888">obj.__proto__.__proto__</text>
+  <text x="76" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">= Dog.prototype ? → true 반환</text>
+
+  <!-- Arrow -->
+  <line x1="220" y1="302" x2="220" y2="332" stroke="#555" stroke-width="1.5"/>
+  <polygon points="220,332 213,319 227,319" fill="#555"/>
+  <text x="234" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">아니면</text>
+
+  <!-- Step 3: null -->
+  <rect x="60" y="332" width="320" height="46" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#888">__proto__ === null</text>
+  <text x="76" y="370" font-family="'Went Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">→ false 반환 (체인 끝)</text>
+
+  <!-- Symbol.hasInstance override (right side) -->
+  <rect x="460" y="160" width="360" height="220" rx="8" fill="#0f0f15" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Symbol.hasInstance 오버라이드</text>
+  <line x1="460" y1="194" x2="820" y2="194" stroke="#7ec8e3" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="476" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8"><tspan fill="#7ec8e3">class</tspan><tspan> Range {</tspan></text>
+  <text x="476" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8">  <tspan fill="#7ec8e3">static</tspan><tspan> [Symbol.hasInstance](v){</tspan></text>
+  <text x="476" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8">    <tspan fill="#7ec8e3">return</tspan><tspan> v >= </tspan><tspan fill="#b5cea8">0</tspan><tspan> &amp;&amp; v &lt;= </tspan><tspan fill="#b5cea8">100</tspan><tspan>;</tspan></text>
+  <text x="476" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8">  }</text>
+  <text x="476" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8">}</text>
+  <text x="476" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8"><tspan fill="#b5cea8">50</tspan><tspan> </tspan><tspan fill="#7ec8e3">instanceof</tspan><tspan> Range; </tspan><tspan fill="#6a8aa0">// true</tspan></text>
+  <text x="476" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e8e8e8"><tspan fill="#b5cea8">150</tspan><tspan> </tspan><tspan fill="#7ec8e3">instanceof</tspan><tspan> Range; </tspan><tspan fill="#6a8aa0">// false</tspan></text>
+  <text x="640" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">프로토타입 체인 대신 커스텀 로직</text>
+
+  <!-- Footer -->
+  <text x="440" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444" text-anchor="middle">PALDYN · JavaScript 완전 정복</text>
+</svg>
