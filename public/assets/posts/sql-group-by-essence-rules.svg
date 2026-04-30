@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">GROUP BY SELECT 컬럼 규칙</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">집계 없는 컬럼은 GROUP BY에 있어야 한다</text>
+
+  <!-- Standard SQL rule -->
+  <rect x="60" y="90" width="370" height="290" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">표준 SQL 규칙</text>
+
+  <rect x="72" y="124" width="346" height="90" rx="6" fill="#070b14" stroke="#3a1e1e"/>
+  <text x="88" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ✗ 오류: name이 GROUP BY에 없음</text>
+  <text x="88" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">SELECT country, name,</text>
+  <text x="88" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">       SUM(amount)</text>
+  <text x="88" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">FROM orders GROUP BY country;</text>
+
+  <rect x="72" y="226" width="346" height="90" rx="6" fill="#070b14" stroke="#1e3a1e"/>
+  <text x="88" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ✓ 표준: GROUP BY 컬럼만 SELECT</text>
+  <text x="88" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">SELECT country,</text>
+  <text x="88" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">       SUM(amount) AS total</text>
+  <text x="88" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">FROM orders GROUP BY country;</text>
+
+  <text x="245" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">PostgreSQL, Oracle, SQLite,</text>
+  <text x="245" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SQL Server 모두 표준 준수</text>
+
+  <!-- MySQL ANY_VALUE -->
+  <rect x="450" y="90" width="370" height="290" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">MySQL의 확장 동작</text>
+
+  <rect x="462" y="124" width="346" height="108" rx="6" fill="#070b14" stroke="#2a2a10"/>
+  <text x="478" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- MySQL: 기본 허용 (ONLY_FULL_GROUP_BY)</text>
+  <text x="478" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8c87a" xml:space="preserve">-- 비결정적 값 반환 (그룹 내 임의 행)</text>
+  <text x="478" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT country, name,  -- 위험!</text>
+  <text x="478" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">       SUM(amount)</text>
+  <text x="478" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM orders GROUP BY country;</text>
+
+  <rect x="462" y="244" width="346" height="90" rx="6" fill="#070b14" stroke="#1e3a1e"/>
+  <text x="478" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ANY_VALUE로 의도 명시</text>
+  <text x="478" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">SELECT country,</text>
+  <text x="478" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">       ANY_VALUE(name) AS sample,</text>
+  <text x="478" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">       SUM(amount) AS total</text>
+
+  <text x="635" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">ANY_VALUE: 그룹 내 임의 값 명시적 허용</text>
+  <text x="635" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">ONLY_FULL_GROUP_BY 모드 권장</text>
+
+  <!-- Footer -->
+  <text x="440" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

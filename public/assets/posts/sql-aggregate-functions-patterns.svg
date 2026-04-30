@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">집계 함수 실무 패턴</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">COUNT DISTINCT · 조건부 집계 · 중첩 금지</text>
+
+  <!-- COUNT DISTINCT -->
+  <rect x="60" y="90" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">COUNT(DISTINCT col)</text>
+  <rect x="72" y="124" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="88" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 주문한 고유 사용자 수</text>
+  <text x="88" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="88" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    COUNT(*)            AS total_orders,</text>
+  <text x="88" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    COUNT(DISTINCT uid) AS unique_users</text>
+  <text x="88" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM orders;</text>
+
+  <!-- Conditional aggregation -->
+  <rect x="450" y="90" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">조건부 집계 (FILTER / CASE)</text>
+  <rect x="462" y="124" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="478" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 상태별 합계 한 번에</text>
+  <text x="478" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="478" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    SUM(amount) FILTER (</text>
+  <text x="478" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">      WHERE status=</text>
+  <text x="628" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'paid'</text>
+  <text x="668" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="478" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM orders;</text>
+
+  <!-- Nested aggregate forbidden -->
+  <rect x="60" y="258" width="370" height="150" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">집계 함수 중첩 금지</text>
+  <rect x="72" y="292" width="346" height="106" rx="6" fill="#070b14" stroke="#3a1e1e"/>
+  <text x="88" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ✗ 직접 중첩 불가 (문법 오류)</text>
+  <text x="88" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">SELECT MAX(SUM(amount))</text>
+  <text x="88" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">FROM orders GROUP BY country;</text>
+  <text x="88" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ✓ 서브쿼리로 우회</text>
+  <text x="88" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">SELECT MAX(total) FROM (...</text>
+
+  <!-- STRING_AGG -->
+  <rect x="450" y="258" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="635" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">STRING_AGG / GROUP_CONCAT</text>
+  <rect x="462" y="292" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="478" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 그룹 내 값을 문자열로 결합</text>
+  <text x="478" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- PostgreSQL / MSSQL</text>
+  <text x="478" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">STRING_AGG(tag, </text>
+  <text x="623" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">', '</text>
+  <text x="652" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">)</text>
+  <text x="478" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- MySQL</text>
+  <text x="478" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">GROUP_CONCAT(tag SEPARATOR </text>
+  <text x="718" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">','</text>
+  <text x="740" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">)</text>
+
+  <!-- Footer -->
+  <text x="440" y="444" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

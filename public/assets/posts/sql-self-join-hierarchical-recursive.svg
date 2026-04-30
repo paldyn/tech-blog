@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">재귀 CTE vs 셀프 조인 비교</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">1레벨 탐색 vs 임의 깊이 계층 순회</text>
+
+  <!-- Left: Self Join (1 level) -->
+  <rect x="60" y="90" width="370" height="340" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">셀프 조인 — 1단계 상하관계</text>
+  <rect x="72" y="124" width="346" height="234" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="88" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 직속 상관 1단계만 조회</text>
+  <text x="88" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="88" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    e.name   AS employee,</text>
+  <text x="88" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    m.name   AS manager</text>
+  <text x="88" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM employees e</text>
+  <text x="88" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">LEFT JOIN employees m</text>
+  <text x="88" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    ON m.id = e.manager_id;</text>
+  <line x1="72" y1="264" x2="418" y2="264" stroke="#1e2433" stroke-width="1"/>
+  <text x="88" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 결과</text>
+  <text x="88" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">employee  manager</text>
+  <text x="88" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Alice     NULL</text>
+  <text x="88" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Bob       Alice</text>
+  <text x="88" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Dave      Bob</text>
+
+  <text x="245" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">깊이 고정 — 추가 JOIN으로 2단계 가능</text>
+  <text x="245" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">그러나 계층이 깊어질수록 JOIN 반복 필요</text>
+
+  <!-- Right: Recursive CTE -->
+  <rect x="450" y="90" width="370" height="340" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">재귀 CTE — 임의 깊이 순회</text>
+  <rect x="462" y="124" width="346" height="234" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="478" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">WITH RECURSIVE org AS (</text>
+  <text x="478" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  -- 앵커: 최상위</text>
+  <text x="478" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  SELECT id, name,</text>
+  <text x="478" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">    0 AS depth</text>
+  <text x="478" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  FROM employees</text>
+  <text x="478" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  WHERE manager_id IS NULL</text>
+  <text x="478" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  UNION ALL</text>
+  <text x="478" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  -- 재귀: 자식 탐색</text>
+  <text x="478" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  SELECT e.id, e.name,</text>
+  <text x="478" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    o.depth + </text>
+  <text x="582" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="478" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  FROM employees e</text>
+  <text x="478" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  JOIN org o ON o.id = e.manager_id</text>
+  <text x="478" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+
+  <text x="635" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">깊이 무관 — 모든 계층 한 번에 조회</text>
+  <text x="635" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">depth 컬럼으로 들여쓰기 표현 가능</text>
+
+  <!-- Footer -->
+  <text x="440" y="464" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>
