@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Top-Level Await — 이전 vs 이후</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">모듈 최상위에서 직접 await 사용</text>
+
+  <!-- Left: Before TLA -->
+  <rect x="60" y="88" width="355" height="380" rx="10" fill="#1a1206" stroke="#4a3a0e" stroke-width="1.5"/>
+  <text x="237" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8c842">TLA 이전 — 래퍼 함수 필요</text>
+
+  <rect x="76" y="128" width="323" height="288" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 즉시 실행 async 함수</text>
+  <text x="92" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">(</text>
+  <text x="98" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">async </text>
+  <text x="130" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">() =&gt; {</text>
+  <text x="92" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const </text>
+  <text x="134" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">config = </text>
+  <text x="194" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">await</text>
+  <text x="92" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    fetch(</text>
+  <text x="136" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'/config.json'</text>
+  <text x="224" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="92" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    .then(r =&gt; r.json());</text>
+  <text x="92" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 여기서부터 사용 가능</text>
+  <text x="92" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  setup(config);</text>
+  <text x="92" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">})()</text>
+  <line x1="76" y1="290" x2="399" y2="290" stroke="#1e2433" stroke-width="1"/>
+  <text x="92" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 문제: export를 바깥에서 해야함</text>
+  <text x="92" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">let </text>
+  <text x="114" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">config;</text>
+  <text x="92" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// config는 undefined 위험</text>
+  <text x="92" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">export </text>
+  <text x="134" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">{ config };</text>
+  <text x="92" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// 경쟁 조건(race condition) 가능</text>
+
+  <!-- Arrow -->
+  <polygon points="466,284 450,274 450,294" fill="#7777cc"/>
+  <text x="471" y="287" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#7777cc">ES2022</text>
+
+  <!-- Right: After TLA -->
+  <rect x="465" y="88" width="355" height="380" rx="10" fill="#0d1a0d" stroke="#1e4a1e" stroke-width="1.5"/>
+  <text x="642" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">TLA — 최상위에서 직접</text>
+
+  <rect x="481" y="128" width="323" height="288" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="497" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// config.mjs</text>
+  <text x="497" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">const </text>
+  <text x="533" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">res = </text>
+  <text x="569" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">await </text>
+  <text x="607" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">fetch(</text>
+  <text x="497" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">  '/config.json'</text>
+  <text x="497" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="497" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">export const </text>
+  <text x="571" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">config = </text>
+  <text x="627" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">await</text>
+  <text x="497" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  res.json();</text>
+  <line x1="481" y1="254" x2="804" y2="254" stroke="#1e2433" stroke-width="1"/>
+  <text x="497" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 가져오는 쪽 — main.mjs</text>
+  <text x="497" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">import </text>
+  <text x="533" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">{ config } </text>
+  <text x="605" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">from</text>
+  <text x="497" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">  './config.mjs'</text>
+  <text x="497" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">;</text>
+  <text x="497" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// config가 반드시 완성된 후</text>
+  <text x="497" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 이 모듈이 초기화됨</text>
+  <text x="497" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// 경쟁 조건 없음!</text>
+  <text x="497" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">setup(config);</text>
+
+  <!-- Footer -->
+  <text x="440" y="482" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN — JavaScript 완전 정복</text>
+</svg>
