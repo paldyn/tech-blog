@@ -3,7 +3,7 @@ title: "IIFE — 즉시 실행 함수 표현식 완전 정복"
 description: "IIFE(Immediately Invoked Function Expression)의 문법·목적·역사적 배경, 클로저를 활용한 모듈 패턴, 비동기 IIFE, 그리고 ES 모듈 시대의 현재 역할을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 9
+archiveOrder: 19
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "IIFE", "즉시실행함수", "모듈패턴", "클로저", "스코프격리", "레거시패턴"]

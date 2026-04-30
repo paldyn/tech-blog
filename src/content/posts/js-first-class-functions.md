@@ -3,7 +3,7 @@ title: "일급 함수 완전 정복"
 description: "JavaScript에서 함수가 일급 객체(first-class citizen)인 이유와 그 의미, 변수 저장·인수 전달·반환값으로서의 활용, 함수 합성·전략 패턴·팩토리 등 핵심 패턴을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 6
+archiveOrder: 16
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "일급함수", "first-class-function", "고차함수", "함수합성", "전략패턴", "함수형프로그래밍"]

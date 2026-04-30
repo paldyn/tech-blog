@@ -3,7 +3,7 @@ title: "순수 함수와 부수 효과"
 description: "순수 함수의 정의와 특성, 부수 효과의 종류와 격리 전략을 이해하고 예측 가능한 코드를 작성하는 방법을 알아봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 1
+archiveOrder: 21
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "함수형 프로그래밍", "순수 함수", "부수 효과", "테스트"]

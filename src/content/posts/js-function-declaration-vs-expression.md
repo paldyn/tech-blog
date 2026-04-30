@@ -3,7 +3,7 @@ title: "함수 선언식 vs 함수 표현식"
 description: "JavaScript 함수 선언식과 함수 표현식의 호이스팅 차이, 스코프 동작, 기명 함수 표현식의 재귀 참조, 조건부 함수 정의 패턴을 깊이 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 4
+archiveOrder: 14
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "함수선언식", "함수표현식", "호이스팅", "function-declaration", "function-expression", "named-function"]

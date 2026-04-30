@@ -3,7 +3,7 @@ title: "함수 합성"
 description: "compose와 pipe를 구현하고, 순수 함수를 레고처럼 조립하는 함수 합성 패턴과 실전 데이터 파이프라인 구축법을 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 4
+archiveOrder: 24
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "함수 합성", "함수형 프로그래밍", "pipe", "compose"]

@@ -3,7 +3,7 @@ title: "정규화: 과적합을 막는 AI의 방패"
 description: "L1·L2 정규화, 드롭아웃, 배치 정규화, 레이어 정규화까지 주요 정규화 기법의 원리와 PyTorch 구현을 완전 정복한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 6
+archiveOrder: 13
 type: "knowledge"
 category: "AI"
 tags: ["정규화", "Regularization", "드롭아웃", "배치정규화", "과적합"]

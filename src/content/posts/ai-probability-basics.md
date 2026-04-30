@@ -3,7 +3,7 @@ title: "AI를 위한 확률론 기초: 불확실성을 다루는 수학"
 description: "결합·주변·조건부 확률, 주요 분포, 기대값, 엔트로피까지 AI 이해에 필요한 확률론 핵심을 코드와 함께 정리한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 9
+archiveOrder: 6
 type: "knowledge"
 category: "AI"
 tags: ["확률론", "수학", "통계", "엔트로피", "AI수학"]

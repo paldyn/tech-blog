@@ -3,7 +3,7 @@ title: "제너레이터 함수"
 description: "function* 문법과 yield로 실행을 일시 정지·재개하는 제너레이터 함수의 동작 원리, 무한 시퀀스, 지연 평가, yield* 위임까지 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 6
+archiveOrder: 26
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "제너레이터", "Generator", "이터러블", "지연 평가"]

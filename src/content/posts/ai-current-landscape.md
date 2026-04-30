@@ -3,7 +3,7 @@ title: "2025~2026 AI 생태계 전체 지도: 지금 무슨 일이 벌어지고 
 description: "파운데이션 모델 경쟁부터 에이전트, 멀티모달, 오픈소스까지 현재 AI 생태계의 전체 그림을 파악한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 6
+archiveOrder: 3
 type: "knowledge"
 category: "AI"
 tags: ["AI", "LLM", "생태계", "GPT", "Claude", "Gemini", "오픈소스"]

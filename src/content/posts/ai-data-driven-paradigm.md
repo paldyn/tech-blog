@@ -3,7 +3,7 @@ title: "데이터 중심 패러다임: 왜 데이터가 새로운 석유인가"
 description: "현대 AI가 데이터에서 출발하는 이유, 데이터 플라이휠 효과, 그리고 데이터 품질과 규모의 트레이드오프를 이해한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 5
+archiveOrder: 2
 type: "knowledge"
 category: "AI"
 tags: ["AI", "데이터", "머신러닝", "패러다임", "스케일링"]

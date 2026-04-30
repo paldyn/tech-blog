@@ -3,7 +3,7 @@ title: "커링과 부분 적용"
 description: "커링과 부분 적용의 개념 차이를 명확히 이해하고, 범용 curry 헬퍼 구현부터 배열 파이프라인, 설정 고정 패턴까지 실전 활용법을 알아봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 2
+archiveOrder: 22
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "커링", "부분 적용", "함수형 프로그래밍", "고차 함수"]

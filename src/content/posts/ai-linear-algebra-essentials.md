@@ -3,7 +3,7 @@ title: "AI를 위한 선형대수 핵심: 스칼라·벡터·행렬·텐서"
 description: "딥러닝과 LLM을 이해하는 데 반드시 필요한 선형대수 개념을 NumPy 코드와 함께 직관적으로 정리한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 7
+archiveOrder: 4
 type: "knowledge"
 category: "AI"
 tags: ["선형대수", "수학", "NumPy", "벡터", "행렬", "AI수학"]

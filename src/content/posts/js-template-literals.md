@@ -3,7 +3,7 @@ title: "템플릿 리터럴 완전 정복"
 description: "JavaScript 템플릿 리터럴의 보간·여러 줄 문자열부터 태그드 템플릿으로 XSS 방어·SQL 안전 쿼리·styled-components 원리까지 심층 해설합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 3
+archiveOrder: 13
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "템플릿리터럴", "template-literal", "tagged-template", "보간", "ES6", "XSS"]

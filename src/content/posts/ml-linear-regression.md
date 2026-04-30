@@ -3,7 +3,7 @@ title: "선형 회귀: 예측 모델의 출발점"
 description: "최소 제곱법, 경사 하강법, 다중 선형 회귀, Ridge/Lasso 정규화까지 선형 회귀의 수학적 원리를 scikit-learn과 PyTorch 코드로 완전 정복한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 8
+archiveOrder: 15
 type: "knowledge"
 category: "AI"
 tags: ["선형회귀", "LinearRegression", "최소제곱법", "Ridge", "Lasso", "ML기초"]

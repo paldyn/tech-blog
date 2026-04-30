@@ -3,7 +3,7 @@ title: "arguments 객체 완전 정복"
 description: "JavaScript arguments 객체의 구조·유사 배열 특성·비엄격 파라미터 연동·callee 프로퍼티와, 나머지 파라미터와의 차이점 및 현대 코드에서의 올바른 대체 전략을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 8
+archiveOrder: 18
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "arguments", "유사배열", "array-like", "rest-parameters", "callee", "레거시"]

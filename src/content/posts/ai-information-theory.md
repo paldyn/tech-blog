@@ -3,7 +3,7 @@ title: "정보 이론: AI가 불확실성을 측정하는 방법"
 description: "정보량, 엔트로피, KL 발산, 교차 엔트로피까지 정보 이론의 핵심을 이해하고 딥러닝 손실 함수와의 연결 고리를 코드로 확인한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 1
+archiveOrder: 8
 type: "knowledge"
 category: "AI"
 tags: ["정보이론", "엔트로피", "KL발산", "교차엔트로피", "AI수학"]

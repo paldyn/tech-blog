@@ -3,7 +3,7 @@ title: "K-최근접 이웃(KNN): 가장 직관적인 분류 알고리즘"
 description: "KNN의 원리, 거리 지표, 최적 K 선택법, 차원의 저주, KD-tree 가속까지 scikit-learn 코드와 함께 완전 정복한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 10
+archiveOrder: 17
 type: "knowledge"
 category: "AI"
 tags: ["KNN", "K최근접이웃", "거리지표", "차원의저주", "ML기초"]

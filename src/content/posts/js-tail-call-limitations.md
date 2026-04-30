@@ -3,7 +3,7 @@ title: "꼬리 호출 최적화의 한계"
 description: "ES2015에서 명세화된 꼬리 호출 최적화(TCO)가 왜 대부분의 JS 엔진에서 미구현 상태인지, 그리고 트램폴린과 반복문으로 어떻게 대응하는지 알아봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 5
+archiveOrder: 25
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "꼬리 호출", "재귀", "TCO", "트램폴린", "스택 오버플로우"]

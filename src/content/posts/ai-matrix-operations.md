@@ -3,7 +3,7 @@ title: "행렬 연산 완전 정복: AI에서 쓰이는 핵심 연산 5가지"
 description: "행렬 곱셈부터 전치, 역행렬, 브로드캐스팅까지 AI 실무에서 반드시 알아야 할 행렬 연산을 PyTorch와 함께 정리한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 8
+archiveOrder: 5
 type: "knowledge"
 category: "AI"
 tags: ["선형대수", "행렬", "PyTorch", "NumPy", "텐서", "AI수학"]

@@ -3,7 +3,7 @@ title: "고차 함수 완전 정복"
 description: "JavaScript 고차 함수(Higher-Order Function)의 정의와 map·filter·reduce 동작 원리, once·debounce·memoize 같은 데코레이터 패턴, flatMap과 배열 메서드 체이닝 기법을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 10
+archiveOrder: 20
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "고차함수", "higher-order-function", "map", "filter", "reduce", "debounce", "memoize", "함수형프로그래밍"]

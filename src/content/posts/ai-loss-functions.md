@@ -3,7 +3,7 @@ title: "손실 함수 완전 정복: 무엇을 최소화하는가"
 description: "MSE·MAE·Huber·CrossEntropy·Focal Loss·KL Divergence까지 주요 손실 함수의 원리와 용도를 수식과 PyTorch 코드로 완전 정리한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 5
+archiveOrder: 12
 type: "knowledge"
 category: "AI"
 tags: ["손실함수", "MSE", "CrossEntropy", "FocalLoss", "딥러닝기초"]

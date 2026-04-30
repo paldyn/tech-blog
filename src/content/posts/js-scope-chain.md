@@ -3,7 +3,7 @@ title: "스코프 체인"
 description: "JavaScript 엔진이 변수를 찾는 경로인 스코프 체인의 구조, 변수 섀도잉, 전역 오염, ReferenceError 발생 원리를 명확히 이해합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 8
+archiveOrder: 28
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "스코프", "스코프 체인", "변수", "클로저"]

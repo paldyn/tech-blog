@@ -3,7 +3,7 @@ title: "스프레드와 나머지 파라미터 완전 정복"
 description: "JavaScript ... 문법의 두 얼굴 — 스프레드 연산자로 배열·객체를 펼치고, 나머지 파라미터로 가변 인수를 수집하는 방법과 실전 불변 업데이트 패턴을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 1
+archiveOrder: 11
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "spread", "rest", "스프레드", "나머지파라미터", "불변업데이트", "ES6"]

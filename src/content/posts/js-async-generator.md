@@ -3,7 +3,7 @@ title: "비동기 제너레이터"
 description: "async function*와 for await...of로 비동기 데이터 스트림을 우아하게 처리하는 비동기 제너레이터의 동작 원리와 실전 패턴을 알아봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 7
+archiveOrder: 27
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "비동기 제너레이터", "async generator", "for await...of", "스트리밍"]

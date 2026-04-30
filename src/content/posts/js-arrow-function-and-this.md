@@ -3,7 +3,7 @@ title: "화살표 함수와 this"
 description: "ES2015 화살표 함수의 간결한 문법과 렉시컬 this 바인딩 원리, 일반 함수와의 차이, 메서드·생성자에서 주의할 함정과 클래스 필드 패턴을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 5
+archiveOrder: 15
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "화살표함수", "arrow-function", "this", "렉시컬this", "lexical-this", "클래스필드"]

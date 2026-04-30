@@ -3,7 +3,7 @@ title: "함수 스코프 vs 블록 스코프"
 description: "var의 함수 스코프와 let/const의 블록 스코프 차이를 이해하고, 루프 클로저 버그, 호이스팅, TDZ 동작까지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 10
+archiveOrder: 30
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "함수 스코프", "블록 스코프", "var", "let", "const", "호이스팅"]

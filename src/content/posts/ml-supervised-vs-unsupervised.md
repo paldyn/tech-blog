@@ -3,7 +3,7 @@ title: "지도학습 vs 비지도학습: 머신러닝의 두 패러다임"
 description: "지도·비지도·반지도·자기지도 학습의 차이와 대표 알고리즘, 실전 활용법을 한눈에 정리하고 scikit-learn 코드로 확인한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 7
+archiveOrder: 14
 type: "knowledge"
 category: "AI"
 tags: ["지도학습", "비지도학습", "자기지도학습", "머신러닝", "패러다임"]

@@ -3,7 +3,7 @@ title: "베이즈 정리: AI 학습과 추론의 철학적 기반"
 description: "베이즈 정리의 핵심을 이해하고, 나이브 베이즈 분류기, 베이즈 최적화, LLM과의 연관성까지 직접 코드로 확인한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 10
+archiveOrder: 7
 type: "knowledge"
 category: "AI"
 tags: ["베이즈", "확률론", "나이브베이즈", "수학", "AI수학"]

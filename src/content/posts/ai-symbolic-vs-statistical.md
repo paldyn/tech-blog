@@ -3,7 +3,7 @@ title: "기호주의 AI vs 통계적 AI: 두 패러다임의 70년 대결"
 description: "규칙을 직접 작성하는 기호주의와 데이터에서 패턴을 학습하는 통계적 AI의 차이를 실제 코드와 함께 이해한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 4
+archiveOrder: 1
 type: "knowledge"
 category: "AI"
 tags: ["AI", "기호주의AI", "머신러닝", "딥러닝", "패러다임"]

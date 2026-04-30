@@ -3,7 +3,7 @@ title: "구조 분해 할당 완전 정복"
 description: "JavaScript 배열·객체 구조 분해 할당의 문법부터 중첩 분해, 기본값, 이름 변경, 함수 파라미터 분해, 이터러블 활용까지 실전 패턴을 총망라합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 2
+archiveOrder: 12
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "구조분해", "destructuring", "배열분해", "객체분해", "ES6", "함수파라미터"]

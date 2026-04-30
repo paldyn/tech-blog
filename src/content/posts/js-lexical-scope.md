@@ -3,7 +3,7 @@ title: "렉시컬 스코프"
 description: "JavaScript의 렉시컬(정적) 스코프가 무엇인지, 동적 스코프와 어떻게 다른지, 렉시컬 환경이 클로저와 어떻게 연결되는지를 명확히 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 9
+archiveOrder: 29
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "렉시컬 스코프", "렉시컬 환경", "클로저", "스코프"]

@@ -3,7 +3,7 @@ title: "기본값 파라미터와 나머지 파라미터"
 description: "ES2015 기본값 파라미터(default parameters)와 나머지 파라미터(rest parameters)의 문법, 평가 시점, arguments와의 차이, 옵션 객체 패턴과 필수 파라미터 강제 기법을 다룹니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 7
+archiveOrder: 17
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "기본값파라미터", "default-parameters", "나머지파라미터", "rest-parameters", "ES6", "함수파라미터"]

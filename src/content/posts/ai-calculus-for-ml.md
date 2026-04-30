@@ -3,7 +3,7 @@ title: "미적분학: AI 학습을 가능하게 하는 수학"
 description: "도함수, 편미분, 연쇄 법칙, 야코비안까지 ML에 필요한 미적분학 핵심을 PyTorch 자동 미분 코드와 함께 완전 정복한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 2
+archiveOrder: 9
 type: "knowledge"
 category: "AI"
 tags: ["미적분학", "도함수", "편미분", "연쇄법칙", "역전파", "AI수학"]

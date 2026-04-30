@@ -3,7 +3,7 @@ title: "PALDYN 기술블로그를 시작합니다"
 description: "실무 기록과 테크 지식을 팀의 자산으로 남기기 위해 PALDYN 기술블로그를 시작합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-19"
-archiveOrder: 5
+archiveOrder: 1
 type: "record"
 category: "Team"
 tags: ["intro", "culture", "knowledge-sharing"]

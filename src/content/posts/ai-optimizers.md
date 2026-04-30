@@ -3,7 +3,7 @@ title: "옵티마이저 완전 정복: SGD에서 AdamW까지"
 description: "Momentum, AdaGrad, RMSProp, Adam, AdamW의 원리와 차이를 수식과 PyTorch 코드로 비교하고, 상황별 최적 옵티마이저 선택법을 정리한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 4
+archiveOrder: 11
 type: "knowledge"
 category: "AI"
 tags: ["옵티마이저", "Adam", "AdamW", "SGD", "Momentum", "학습률"]

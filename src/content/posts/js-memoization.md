@@ -3,7 +3,7 @@ title: "메모이제이션"
 description: "순수 함수의 결과를 캐싱하는 메모이제이션 기법을 구현하고, TTL 캐시·재귀 최적화·React useMemo까지 실전 패턴을 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 3
+archiveOrder: 23
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "메모이제이션", "캐싱", "성능 최적화", "순수 함수"]

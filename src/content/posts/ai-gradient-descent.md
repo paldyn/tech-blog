@@ -3,7 +3,7 @@ title: "경사 하강법: AI 학습의 엔진"
 description: "경사 하강법의 직관부터 배치 GD·SGD·미니배치 SGD의 차이, 학습률 선택, 실전 PyTorch 학습 루프까지 완전 정복한다."
 author: "PALDYN Team"
 pubDate: "2026-04-28"
-archiveOrder: 3
+archiveOrder: 10
 type: "knowledge"
 category: "AI"
 tags: ["경사하강법", "GradientDescent", "최적화", "학습률", "딥러닝기초"]
