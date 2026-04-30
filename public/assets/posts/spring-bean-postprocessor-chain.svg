@@ -1,0 +1,86 @@
+<svg width="880" height="480" viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg">
+<rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+<!-- Title -->
+<text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff">BeanPostProcessor 처리 흐름</text>
+<text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">여러 BPP가 체인으로 연결되어 순서대로 실행</text>
+
+<!-- ── LEFT PANEL: BPP chain flow (x=60, w=390) ── -->
+
+<!-- Original Bean -->
+<rect x="100" y="100" width="160" height="44" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+<text x="180" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">원본 빈 생성</text>
+<text x="180" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" opacity="0.7">new FooService()</text>
+
+<!-- Arrow down -->
+<line x1="180" y1="144" x2="180" y2="158" stroke="#444455" stroke-width="2"/>
+<polygon points="173,157 187,157 180,168" fill="#444455"/>
+
+<!-- BPP Before block -->
+<rect x="80" y="168" width="200" height="52" rx="8" fill="#0c1c2e" stroke="#7ec8e3" stroke-width="1.5"/>
+<text x="180" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">BPP Before ×N</text>
+<text x="180" y="205" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" opacity="0.75">@Order 순서대로 체인 실행</text>
+
+<!-- Small order indicators -->
+<rect x="290" y="172" width="28" height="20" rx="4" fill="#0c1c2e" stroke="#7ec8e3" stroke-width="1"/>
+<text x="304" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">BPP1</text>
+<rect x="290" y="197" width="28" height="20" rx="4" fill="#0c1c2e" stroke="#7ec8e3" stroke-width="1"/>
+<text x="304" y="211" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">BPP2</text>
+
+<!-- Arrow down -->
+<line x1="180" y1="220" x2="180" y2="234" stroke="#444455" stroke-width="2"/>
+<polygon points="173,233 187,233 180,244" fill="#444455"/>
+
+<!-- 초기화 콜백 block -->
+<rect x="80" y="244" width="200" height="44" rx="8" fill="#1a1a2e" stroke="#9999cc" stroke-width="1.5"/>
+<text x="180" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#bbbbee">초기화 콜백</text>
+<text x="180" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">@PostConstruct 등 실행</text>
+
+<!-- Arrow down -->
+<line x1="180" y1="288" x2="180" y2="302" stroke="#444455" stroke-width="2"/>
+<polygon points="173,301 187,301 180,312" fill="#444455"/>
+
+<!-- BPP After block -->
+<rect x="80" y="312" width="200" height="52" rx="8" fill="#0c1c2e" stroke="#7ec8e3" stroke-width="1.5"/>
+<text x="180" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">BPP After ×N</text>
+<text x="180" y="349" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" opacity="0.75">AOP 프록시 생성 시점</text>
+
+<!-- Arrow down -->
+<line x1="180" y1="364" x2="180" y2="378" stroke="#444455" stroke-width="2"/>
+<polygon points="173,377 187,377 180,388" fill="#444455"/>
+
+<!-- Final Bean -->
+<rect x="100" y="388" width="160" height="44" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+<text x="180" y="409" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">최종 빈 (등록)</text>
+<text x="180" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" opacity="0.75">원본 또는 프록시 객체</text>
+
+<!-- ── RIGHT PANEL: Implementation rules (x=460, w=360) ── -->
+<text x="460" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">BPP 구현 필수 규칙</text>
+
+<!-- Rule 1 -->
+<rect x="460" y="122" width="360" height="54" rx="6" fill="#1a1000" stroke="#e05555" stroke-width="1.5"/>
+<text x="476" y="141" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">null 반환 절대 금지</text>
+<text x="476" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">null 반환 시 해당 빈이 컨테이너에서 삭제됨</text>
+<text x="476" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">반드시 bean 또는 대체 객체를 반환할 것</text>
+
+<!-- Rule 2 -->
+<rect x="460" y="192" width="360" height="54" rx="6" fill="#101a10" stroke="#55c555" stroke-width="1.5"/>
+<text x="476" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">BPP 자신은 BPP의 적용 대상 아님</text>
+<text x="476" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">BPP 빈은 일찍 초기화 → AOP 적용 제외</text>
+<text x="476" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">@Transactional, @Async 효과 없음</text>
+
+<!-- Rule 3 -->
+<rect x="460" y="262" width="360" height="54" rx="6" fill="#0d0d20" stroke="#7777cc" stroke-width="1.5"/>
+<text x="476" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#9999ee">@Order / Ordered 로 순서 제어</text>
+<text x="476" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">낮은 값이 먼저 실행 (최솟값 = 최우선)</text>
+<text x="476" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Before 체인과 After 체인의 순서는 동일</text>
+
+<!-- Rule 4 -->
+<rect x="460" y="332" width="360" height="54" rx="6" fill="#0d1a20" stroke="#7ec8e3" stroke-width="1.5"/>
+<text x="476" y="351" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">After에서 프록시로 빈 교체 가능</text>
+<text x="476" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">반환 타입이 다를 수 있으므로 타입 검사 필요</text>
+<text x="476" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">AOP의 핵심 메커니즘이 이 방식으로 동작</text>
+
+<!-- Footer -->
+<text x="440" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN — Spring 완전 정복</text>
+</svg>
