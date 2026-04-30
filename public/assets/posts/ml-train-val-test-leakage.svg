@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">데이터 누수 방지: 올바른 전처리 순서</text>
+  <text x="440" y="66" text-anchor="middle" fill="#888" font-size="13">전처리 통계량은 반드시 훈련 세트에서만 계산해야 한다</text>
+
+  <!-- Left: Wrong -->
+  <text x="240" y="100" text-anchor="middle" fill="#e05555" font-size="16" font-weight="600">❌ 잘못된 방법 — 누수 발생</text>
+  <rect x="60" y="114" width="360" height="220" rx="6" fill="#070b14" stroke="#3a1010" stroke-width="1.5"/>
+  <!-- Code lines, x=76, y_start=114+14=128, step=18 -->
+  <text x="76" y="136" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 전체 데이터에 fit_transform</text>
+  <text x="76" y="154" xml:space="preserve" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">from</text>
+  <text x="110" y="154" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"> sklearn.preprocessing </text>
+  <text x="76" y="172" xml:space="preserve" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    import</text>
+  <text x="131" y="172" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"> StandardScaler</text>
+  <text x="76" y="190" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">scaler = StandardScaler()</text>
+  <text x="76" y="208" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">X_sc = scaler.fit_transform(X)</text>
+  <text x="76" y="226" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># ← 테스트 정보가 fit에 유출!</text>
+  <text x="76" y="244" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">X_tr, X_ts = train_test_split(</text>
+  <text x="76" y="262" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    X_sc, y, test_size=</text>
+  <text x="253" y="262" xml:space="preserve" fill="#b5cea8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">0.20</text>
+  <text x="280" y="262" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">)</text>
+  <text x="76" y="318" xml:space="preserve" fill="#e05555" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 테스트 통계량이 훈련에 섞임 →</text>
+  <text x="76" y="336" xml:space="preserve" fill="#e05555" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 성능 과대 추정 (낙관적 편향)</text>
+
+  <!-- Right: Correct -->
+  <text x="640" y="100" text-anchor="middle" fill="#55c555" font-size="16" font-weight="600">✅ 올바른 방법</text>
+  <rect x="460" y="114" width="360" height="220" rx="6" fill="#070b14" stroke="#0a2a15" stroke-width="1.5"/>
+  <!-- Code lines -->
+  <text x="476" y="136" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 분리 먼저, 전처리는 나중에</text>
+  <text x="476" y="154" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">X_tr, X_ts = train_test_split(</text>
+  <text x="476" y="172" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    X, y, test_size=</text>
+  <text x="648" y="172" xml:space="preserve" fill="#b5cea8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">0.20</text>
+  <text x="675" y="172" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">, stratify=y)</text>
+  <text x="476" y="190" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">scaler = StandardScaler()</text>
+  <text x="476" y="208" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># fit은 훈련 세트만!</text>
+  <text x="476" y="226" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">X_tr = scaler.fit_transform(X_tr)</text>
+  <text x="476" y="244" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">X_ts = scaler.transform(X_ts)</text>
+  <text x="476" y="262" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># transform만 적용</text>
+
+  <text x="476" y="318" xml:space="preserve" fill="#55c555" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 훈련 통계로만 정규화 →</text>
+  <text x="476" y="336" xml:space="preserve" fill="#55c555" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 공정한 성능 평가 보장</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="94" x2="440" y2="360" stroke="#333" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Bottom note -->
+  <rect x="60" y="374" width="760" height="64" rx="8" fill="#111827" stroke="#333" stroke-width="1"/>
+  <text x="440" y="398" text-anchor="middle" fill="#e8e8e8" font-size="13" font-weight="600">Pipeline을 사용하면 누수를 자동으로 방지할 수 있다</text>
+  <text x="440" y="420" text-anchor="middle" fill="#888" font-size="12">sklearn.pipeline.Pipeline — fit() 시 내부 단계를 훈련 데이터에만 적용</text>
+
+  <!-- Footer -->
+  <text x="440" y="468" text-anchor="middle" fill="#444" font-size="11">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

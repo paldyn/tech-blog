@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">ROC · AUC · PR-AUC 계산 코드</text>
+  <text x="440" y="66" text-anchor="middle" fill="#888" font-size="13">이진 분류에서 임계값 독립적 성능을 한 번에 계산한다</text>
+
+  <!-- Code block -->
+  <rect x="60" y="86" width="760" height="328" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1.5"/>
+
+  <text x="76" y="108" xml:space="preserve" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">from</text>
+  <text x="110" y="108" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"> sklearn.metrics </text>
+  <text x="228" y="108" xml:space="preserve" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">import</text>
+  <text x="270" y="108" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"> (roc_curve, roc_auc_score,</text>
+  <text x="76" y="126" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    average_precision_score,</text>
+  <text x="76" y="144" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    precision_recall_curve)</text>
+
+  <line x1="76" y1="158" x2="804" y2="158" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="176" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 확률 점수 필요 (predict_proba)</text>
+  <text x="76" y="194" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">y_score = model.predict_proba(X_ts)[:,</text>
+  <text x="398" y="194" xml:space="preserve" fill="#b5cea8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">1</text>
+  <text x="405" y="194" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">]</text>
+
+  <line x1="76" y1="208" x2="804" y2="208" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="226" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># ROC AUC (불균형에 강건)</text>
+  <text x="76" y="244" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">auc = roc_auc_score(y_ts, y_score)</text>
+  <text x="76" y="262" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># PR AUC (극심한 불균형)</text>
+  <text x="76" y="280" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">ap = average_precision_score(</text>
+  <text x="76" y="298" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    y_ts, y_score)</text>
+  <text x="76" y="316" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">print(f</text>
+  <text x="117" y="316" xml:space="preserve" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">"ROC-AUC={auc:.4f}"</text>
+  <text x="261" y="316" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">)</text>
+  <text x="76" y="334" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">print(f</text>
+  <text x="117" y="334" xml:space="preserve" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">"PR-AUC ={ap:.4f}"</text>
+  <text x="259" y="334" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">)</text>
+
+  <line x1="76" y1="348" x2="804" y2="348" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="366" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"># 다중 클래스 (OvR 방식)</text>
+  <text x="76" y="384" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">auc_multi = roc_auc_score(</text>
+  <text x="76" y="402" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">    y_ts, model.predict_proba(X_ts),</text>
+
+  <!-- Footer -->
+  <text x="440" y="448" text-anchor="middle" fill="#444" font-size="11">PALDYN · AI 완전 정복 시리즈</text>
+</svg>
