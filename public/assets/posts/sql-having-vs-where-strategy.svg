@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">조건 배치 전략 — 성능과 의미</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">WHERE에 넣을 수 있으면 WHERE에 넣어라</text>
+
+  <!-- Anti-pattern -->
+  <rect x="60" y="90" width="370" height="270" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">안티패턴 — HAVING 오용</text>
+  <rect x="72" y="124" width="346" height="126" rx="6" fill="#070b14" stroke="#3a1e1e"/>
+  <text x="88" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ✗ 집계 불필요한 조건을 HAVING에</text>
+  <text x="88" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT country, SUM(amount)</text>
+  <text x="88" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM orders</text>
+  <text x="88" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">GROUP BY country</text>
+  <text x="88" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">HAVING country = </text>
+  <text x="250" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'KR'</text>
+  <text x="88" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">  AND SUM(amount) >= </text>
+  <text x="288" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">5000</text>
+
+  <text x="245" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">모든 국가를 GROUP BY 후 KR만 남김</text>
+  <text x="245" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">불필요한 그룹 생성 비용 발생</text>
+  <text x="245" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인덱스도 활용 못 함</text>
+  <text x="245" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">느리고 비효율적</text>
+
+  <!-- Recommended pattern -->
+  <rect x="450" y="90" width="370" height="270" rx="8" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">권장 패턴 — WHERE + HAVING</text>
+  <rect x="462" y="124" width="346" height="144" rx="6" fill="#070b14" stroke="#1e3a1e"/>
+  <text x="478" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ✓ 행 조건은 WHERE, 집계 조건은 HAVING</text>
+  <text x="478" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT country, SUM(amount)</text>
+  <text x="478" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM orders</text>
+  <text x="478" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">WHERE country = </text>
+  <text x="634" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'KR'</text>
+  <text x="478" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">GROUP BY country</text>
+  <text x="478" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">HAVING SUM(amount) >= </text>
+  <text x="672" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">5000</text>
+  <text x="478" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- KR만 필터 후 집계</text>
+
+  <text x="635" y="294" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">WHERE로 먼저 KR만 필터링</text>
+  <text x="635" y="314" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인덱스 활용 가능</text>
+  <text x="635" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">집계 대상 행 수 줄어 GROUP BY 빠름</text>
+  <text x="635" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">효율적</text>
+
+  <!-- Footer -->
+  <text x="440" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

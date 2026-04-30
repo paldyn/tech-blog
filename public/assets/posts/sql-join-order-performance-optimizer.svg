@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">JOIN 순서와 비용 기반 옵티마이저</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">드라이빙 테이블 선택이 성능을 결정한다</text>
+
+  <!-- Three tables -->
+  <rect x="60" y="96" width="140" height="80" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="130" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">orders</text>
+  <text x="130" y="140" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1,000,000행</text>
+  <text x="130" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">대형 테이블</text>
+
+  <rect x="230" y="96" width="140" height="80" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="300" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">users</text>
+  <text x="300" y="140" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">50,000행</text>
+  <text x="300" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">중형 테이블</text>
+
+  <rect x="400" y="96" width="140" height="80" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="470" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">vip_users</text>
+  <text x="470" y="140" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">100행</text>
+  <text x="470" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">소형 (필터)</text>
+
+  <!-- Bad order -->
+  <rect x="60" y="200" width="370" height="240" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">나쁜 순서 — 큰 테이블 먼저</text>
+  <rect x="72" y="234" width="346" height="126" rx="6" fill="#070b14" stroke="#3a1e1e"/>
+  <text x="88" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM orders o              </text>
+  <text x="88" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">JOIN users u</text>
+  <text x="88" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    ON u.id = o.user_id</text>
+  <text x="88" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">JOIN vip_users v</text>
+  <text x="88" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    ON v.user_id = u.id</text>
+  <text x="88" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 1M행으로 시작</text>
+
+  <text x="245" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">중간 결과: 1M × 50K 스캔</text>
+  <text x="245" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">최종 100행을 위해 불필요한 작업</text>
+  <text x="245" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">느림</text>
+
+  <!-- Good order -->
+  <rect x="450" y="200" width="370" height="240" rx="8" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="635" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">좋은 순서 — 작은 집합 먼저</text>
+  <rect x="462" y="234" width="346" height="126" rx="6" fill="#070b14" stroke="#1e3a1e"/>
+  <text x="478" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM vip_users v           </text>
+  <text x="478" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">JOIN users u</text>
+  <text x="478" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    ON u.id = v.user_id</text>
+  <text x="478" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">JOIN orders o</text>
+  <text x="478" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    ON o.user_id = u.id</text>
+  <text x="478" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 100행으로 시작</text>
+
+  <text x="635" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">중간 결과: 100행 기준 탐색</text>
+  <text x="635" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">orders 인덱스 100번만 탐색</text>
+  <text x="635" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">빠름</text>
+
+  <!-- Footer -->
+  <text x="440" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>

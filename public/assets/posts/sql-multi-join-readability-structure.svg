@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">다중 JOIN 쿼리 가독성 — 구조화 원칙</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">읽기 쉬운 JOIN 쿼리를 작성하는 4가지 규칙</text>
+
+  <!-- Rule 1: Consistent aliases -->
+  <rect x="60" y="90" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">① 별칭 일관성</text>
+  <rect x="72" y="124" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="88" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">-- ✓ 테이블 이니셜 or 의미 있는 약자</text>
+  <text x="88" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">FROM orders     o</text>
+  <text x="88" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">JOIN users      u  ON u.id = o.user_id</text>
+  <text x="88" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">JOIN products   p  ON p.id = oi.product_id</text>
+  <text x="88" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">JOIN order_items oi ON oi.order_id = o.id</text>
+
+  <!-- Rule 2: One JOIN per line -->
+  <rect x="450" y="90" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">② JOIN 한 줄 + ON 정렬</text>
+  <rect x="462" y="124" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="478" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">-- ✓ JOIN 타입 + 테이블 + 별칭 한 줄</text>
+  <text x="478" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">FROM orders o</text>
+  <text x="478" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">    JOIN users u</text>
+  <text x="478" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" xml:space="preserve">        ON u.id = o.user_id</text>
+  <text x="478" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">    -- ON은 들여쓰기로 소속 명확히</text>
+
+  <!-- Rule 3: WHERE separate -->
+  <rect x="60" y="256" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">③ 조인 조건 vs 필터 분리</text>
+  <rect x="72" y="290" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="88" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">-- ON: 조인 조건만</text>
+  <text x="88" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">JOIN users u ON u.id = o.user_id</text>
+  <text x="88" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">-- WHERE: 결과 필터링만</text>
+  <text x="88" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">WHERE o.status = </text>
+  <text x="232" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">'paid'</text>
+  <text x="88" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">  AND u.country = </text>
+  <text x="232" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">'KR'</text>
+
+  <!-- Rule 4: SELECT last -->
+  <rect x="450" y="256" width="370" height="150" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="635" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">④ SELECT 컬럼 접두사 명시</text>
+  <rect x="462" y="290" width="346" height="106" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="478" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">-- ✗ 어느 테이블 컬럼인지 불분명</text>
+  <text x="478" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555" xml:space="preserve">SELECT id, name, amount</text>
+  <text x="478" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">-- ✓ 테이블 접두사 항상 명시</text>
+  <text x="478" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" xml:space="preserve">SELECT</text>
+  <text x="478" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" xml:space="preserve">    o.id, u.name, o.amount</text>
+
+  <!-- Footer -->
+  <text x="440" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · SQL 완전 정복</text>
+</svg>
