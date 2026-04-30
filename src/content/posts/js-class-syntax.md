@@ -3,7 +3,7 @@ title: "클래스 문법 입문 — ES6 class 키워드 완전 이해"
 description: "JavaScript ES6 클래스 문법의 전체 구조를 해부합니다. class가 실제로는 함수라는 사실, 클래스 필드, 선언/표현식 차이, TDZ까지 명확하게 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 2
+archiveOrder: 22
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "class", "es6", "class-syntax", "class-fields", "constructor", "TDZ"]

@@ -3,7 +3,7 @@ title: "Map과 Set"
 description: "ES2015에서 도입된 Map과 Set의 내부 동작, Object/Array와의 차이점, 그리고 빈도 카운팅·그룹핑·집합 연산 등 실용 패턴을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 7
+archiveOrder: 37
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "Map", "Set", "컬렉션", "ES2015", "집합 연산", "이터러블"]

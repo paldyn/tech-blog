@@ -3,7 +3,7 @@ title: "정적 멤버 — 클래스 레벨 프로퍼티와 메서드"
 description: "JavaScript static 키워드로 정의하는 정적 프로퍼티와 정적 메서드의 동작, 상속 관계, 팩토리 메서드와 유틸리티 메서드 패턴을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 4
+archiveOrder: 24
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "class", "static", "static-method", "static-property", "factory-method", "singleton"]

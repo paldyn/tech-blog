@@ -3,7 +3,7 @@ title: "Proxy와 Reflect"
 description: "JavaScript Proxy의 13가지 트랩으로 객체 동작을 가로채고 커스터마이징하는 방법과, 기본 동작을 안전하게 위임하는 Reflect API를 실용 패턴과 함께 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 10
+archiveOrder: 40
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "Proxy", "Reflect", "메타프로그래밍", "트랩", "유효성 검사", "옵저버"]

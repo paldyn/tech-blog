@@ -3,7 +3,7 @@ title: "객체 순회 완전 정복 — for...in부터 Reflect.ownKeys까지"
 description: "JavaScript 객체를 순회하는 6가지 방법(for...in, Object.keys/values/entries, for...of, Reflect.ownKeys)의 차이와 실무 선택 기준을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 1
+archiveOrder: 21
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "object", "for-in", "Object.keys", "Object.entries", "Reflect.ownKeys", "enumerable", "iteration"]

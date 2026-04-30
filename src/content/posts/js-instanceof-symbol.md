@@ -3,7 +3,7 @@ title: "instanceof와 Symbol.hasInstance — 타입 검사의 비밀"
 description: "JavaScript instanceof 연산자의 프로토타입 체인 탐색 메커니즘, 한계점, Symbol.hasInstance로 동작을 커스터마이즈하는 방법, typeof와의 차이까지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 8
+archiveOrder: 28
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "instanceof", "Symbol.hasInstance", "typeof", "type-checking", "prototype-chain"]

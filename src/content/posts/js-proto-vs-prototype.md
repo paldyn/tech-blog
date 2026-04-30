@@ -3,7 +3,7 @@ title: "__proto__ vs prototype — 두 이름의 혼동 완전 정리"
 description: "JavaScript에서 함수의 .prototype 프로퍼티와 인스턴스의 [[Prototype]] 내부 슬롯(__proto__)이 어떻게 다른지, new 연산자가 이 둘을 어떻게 연결하는지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 6
+archiveOrder: 16
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "prototype", "__proto__", "[[Prototype]]", "constructor", "new", "class"]

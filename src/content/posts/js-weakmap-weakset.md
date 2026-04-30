@@ -3,7 +3,7 @@ title: "WeakMap과 WeakSet"
 description: "약한 참조로 동작하는 WeakMap과 WeakSet의 GC 연동 메커니즘과 private 데이터 저장·순환 참조 감지·DOM 메타데이터 등 실용 패턴을 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 8
+archiveOrder: 38
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "WeakMap", "WeakSet", "약한 참조", "메모리", "GC", "private"]

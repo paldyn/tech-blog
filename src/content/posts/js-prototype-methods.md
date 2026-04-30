@@ -3,7 +3,7 @@ title: "프로토타입 메서드 총정리 — 객체 탐색과 복제 도구"
 description: "Object.keys/values/entries, getOwnPropertyNames, Reflect.ownKeys, Object.assign, structuredClone 등 객체를 탐색하고 복제하는 주요 메서드를 비교·정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 9
+archiveOrder: 19
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "Object.keys", "Object.entries", "Reflect.ownKeys", "Object.assign", "structuredClone", "prototype-methods"]

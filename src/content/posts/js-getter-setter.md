@@ -3,7 +3,7 @@ title: "getter와 setter — 프로퍼티 접근을 함수로 위장하기"
 description: "JavaScript의 getter와 setter 문법, 동작 원리, 그리고 지연 계산·유효성 검사·파생 값 등 실무에서 자주 쓰이는 패턴을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 2
+archiveOrder: 12
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "getter", "setter", "property", "accessor", "class", "lazy-evaluation"]

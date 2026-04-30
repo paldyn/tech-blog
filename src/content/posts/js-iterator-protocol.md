@@ -3,7 +3,7 @@ title: "이터레이터 프로토콜"
 description: "next()·return()·throw() 세 메서드로 구성된 이터레이터 프로토콜의 전체 명세와 지연 평가, 리소스 정리 패턴을 실습합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 3
+archiveOrder: 33
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "이터레이터", "iterator", "next", "return", "throw", "지연 평가"]

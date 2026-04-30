@@ -3,7 +3,7 @@ title: "Symbol.iterator 심화"
 description: "Symbol.iterator를 직접 재정의해 커스텀 이터러블을 만들고, 스프레드·구조 분해·for...of와 어떻게 통합되는지 심층적으로 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 5
+archiveOrder: 35
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "Symbol.iterator", "이터러블", "커스텀 이터러블", "스프레드", "구조 분해"]

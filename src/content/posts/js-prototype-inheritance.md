@@ -3,7 +3,7 @@ title: "프로토타입 상속 심화 — extends와 super의 내부 동작"
 description: "JavaScript class extends가 설정하는 두 개의 prototype 체인, super()와 super.method()의 동작 원리, 다중 레벨 상속의 구조를 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 8
+archiveOrder: 18
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "extends", "super", "prototype-inheritance", "class", "constructor-chain"]

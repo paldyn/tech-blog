@@ -3,7 +3,7 @@ title: "데코레이터 — @syntax로 클래스와 메서드 꾸미기"
 description: "JavaScript TC39 Stage 3 데코레이터 표준의 동작 원리, 메서드/클래스/필드 데코레이터 구현, TypeScript decorators와의 차이, 실무 활용 패턴(로깅, 메모이제이션, 검증)을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 10
+archiveOrder: 30
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "decorators", "TC39", "metaprogramming", "class", "method-decorator", "TypeScript"]

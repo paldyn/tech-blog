@@ -3,7 +3,7 @@ title: "JavaScript 반복문 완전 정리"
 description: "for, for...in, for...of, while, do...while의 동작 원리와 선택 기준, 그리고 break·continue·label로 흐름을 제어하는 방법을 살펴봅니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 1
+archiveOrder: 31
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "반복문", "for", "for...of", "for...in", "while", "break", "continue"]

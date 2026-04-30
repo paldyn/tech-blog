@@ -3,7 +3,7 @@ title: "Symbol 활용 패턴"
 description: "JavaScript Symbol의 고유 키 활용, Well-Known Symbols(toPrimitive·toStringTag·hasInstance 등) 재정의, 전역 레지스트리 Symbol.for/keyFor 패턴을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 9
+archiveOrder: 39
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "Symbol", "Well-Known Symbols", "toPrimitive", "toStringTag", "Symbol.for", "고유 키"]

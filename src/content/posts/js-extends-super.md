@@ -3,7 +3,7 @@ title: "extends와 super — JavaScript 상속의 실제 동작"
 description: "JavaScript 클래스 상속에서 extends와 super 키워드가 어떻게 동작하는지, 생성자에서의 super() 필수 규칙, 메서드 오버라이딩, 프로토타입 체인의 구조를 명확히 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 7
+archiveOrder: 27
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "class", "extends", "super", "inheritance", "prototype-chain", "method-override"]

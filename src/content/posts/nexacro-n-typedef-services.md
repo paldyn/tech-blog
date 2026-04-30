@@ -3,7 +3,7 @@ title: "[Nexacro N] TypeDef.xml과 Service.xml — 컴포넌트 등록과 서비
 description: "Nexacro N 프로젝트에서 TypeDefinition.xml로 컴포넌트 타입을 등록하고 Service.xml로 서버 서비스 URL을 체계적으로 관리하는 방법을 실전 예시와 함께 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 1
+archiveOrder: 7
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "TypeDefinition.xml", "Service.xml", "컴포넌트등록", "서비스URL", "transaction"]

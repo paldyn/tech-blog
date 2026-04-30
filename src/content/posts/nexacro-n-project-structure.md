@@ -3,7 +3,7 @@ title: "[Nexacro N] 프로젝트 구조 완전 해부 — 파일·폴더 역할 
 description: "Nexacro Studio N으로 생성된 프로젝트의 디렉터리 구조와 핵심 파일(Application.xadl, TypeDef.xadl, .xfdl, .xjs)의 역할을 상세히 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 1
+archiveOrder: 5
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "프로젝트구조", "xadl", "xfdl", "xjs", "Application"]

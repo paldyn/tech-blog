@@ -3,7 +3,7 @@ title: "제너레이터 응용 패턴"
 description: "제너레이터 함수를 활용해 지연 파이프라인, 상태 기계, 코루틴, yield* 위임 등 실용적인 패턴을 구현하는 방법을 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 4
+archiveOrder: 34
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "제너레이터", "generator", "yield", "yield*", "지연 평가", "상태 기계", "코루틴"]

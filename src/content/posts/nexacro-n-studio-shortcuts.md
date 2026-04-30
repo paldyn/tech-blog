@@ -3,7 +3,7 @@ title: "[Nexacro N] Nexacro Studio N 단축키 완전 정복"
 description: "Nexacro Studio N에서 생산성을 높이는 핵심 단축키를 파일·편집·디버그·Design 탭별로 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 2
+archiveOrder: 4
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "studio", "단축키", "생산성", "디버그"]

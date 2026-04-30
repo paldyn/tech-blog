@@ -3,7 +3,7 @@ title: "이터러블 프로토콜"
 description: "JavaScript 이터러블 프로토콜의 구조와 내장 이터러블 목록, 그리고 Symbol.iterator를 직접 구현해 커스텀 이터러블을 만드는 방법을 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 2
+archiveOrder: 32
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "이터러블", "iterable", "Symbol.iterator", "for...of", "프로토콜"]

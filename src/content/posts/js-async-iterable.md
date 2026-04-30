@@ -3,7 +3,7 @@ title: "비동기 이터러블과 for await...of"
 description: "Symbol.asyncIterator와 async generator를 사용해 비동기 데이터 스트림을 우아하게 순회하는 방법과 실용적인 패턴을 소개합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 6
+archiveOrder: 36
 type: "knowledge"
 category: "JavaScript"
 tags: ["JavaScript", "비동기 이터러블", "Symbol.asyncIterator", "for await...of", "async generator", "스트림"]

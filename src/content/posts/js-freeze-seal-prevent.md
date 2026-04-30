@@ -3,7 +3,7 @@ title: "freeze · seal · preventExtensions — 객체 불변성 3단계"
 description: "Object.freeze, Object.seal, Object.preventExtensions의 차이, 얕은 동결의 한계, deepFreeze 구현, 그리고 실무에서 언제 어느 것을 선택해야 하는지 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 4
+archiveOrder: 14
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "freeze", "seal", "preventExtensions", "immutability", "object", "deepFreeze"]

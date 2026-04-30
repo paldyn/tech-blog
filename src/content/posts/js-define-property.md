@@ -3,7 +3,7 @@ title: "Object.defineProperty 완전 해부 — 프로퍼티를 코드로 조각
 description: "Object.defineProperty와 Object.defineProperties를 사용해 프로퍼티 디스크립터를 직접 제어하는 방법, configurable 잠금 규칙, 반응형 시스템 구현 예시를 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 3
+archiveOrder: 13
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "defineProperty", "defineProperties", "property-descriptor", "reactive", "writable", "enumerable", "configurable"]

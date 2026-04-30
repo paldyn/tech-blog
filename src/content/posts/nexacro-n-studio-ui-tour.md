@@ -3,7 +3,7 @@ title: "[Nexacro N] Nexacro Studio N UI 완전 투어"
 description: "Nexacro Studio N의 주요 패널 구성과 역할, 폼 편집기·속성 창·출력 창·툴박스 사용법을 단계별로 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 1
+archiveOrder: 3
 type: "knowledge"
 category: "Nexacro"
 tags: ["nexacro", "nexacro-n", "studio", "IDE", "폼편집기", "속성창", "툴박스"]

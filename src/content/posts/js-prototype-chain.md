@@ -3,7 +3,7 @@ title: "프로토타입 체인 — 상속의 실제 동작 원리"
 description: "JavaScript 프로토타입 체인의 구조, 프로퍼티 탐색 순서, 프로퍼티 가림(Shadowing), in 연산자와 hasOwnProperty 비교를 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 5
+archiveOrder: 15
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "prototype", "prototype-chain", "inheritance", "hasOwnProperty", "Object.prototype", "shadowing"]

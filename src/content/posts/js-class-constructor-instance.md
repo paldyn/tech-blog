@@ -3,7 +3,7 @@ title: "생성자와 인스턴스 — new 연산자의 동작 원리"
 description: "JavaScript new 연산자가 내부에서 하는 4단계 작업, constructor의 반환값 규칙, 인스턴스와 프로토타입의 관계를 단계별로 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 3
+archiveOrder: 23
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "class", "constructor", "new", "instance", "prototype", "object-creation"]

@@ -3,7 +3,7 @@ title: "프라이빗 필드 — # 접두사로 구현하는 캡슐화"
 description: "JavaScript ES2022 프라이빗 클래스 필드(#)와 프라이빗 메서드의 동작, 기존 WeakMap 패턴과의 차이, 그리고 실무 캡슐화 설계 전략을 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 5
+archiveOrder: 25
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "class", "private-fields", "encapsulation", "hash-private", "WeakMap", "ES2022"]

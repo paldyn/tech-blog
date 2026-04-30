@@ -289,7 +289,7 @@ Narrow AI, AGI, ASI는 AI의 능력 범위에 따른 분류입니다.
 
 **지난 글:** [AI 역사 — 1956년 다트머스에서 LLM 시대까지](/posts/ai-history/)
 
-**다음 글:** [신경망(Neural Network)이란 무엇인가](/posts/neural-network-basics/)
+**다음 글:** [기호주의 AI vs 통계적 AI: 두 패러다임의 70년 대결](/posts/ai-symbolic-vs-statistical/)
 
 <br>
 읽어주셔서 감사합니다. 😊

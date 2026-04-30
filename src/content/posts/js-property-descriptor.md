@@ -3,7 +3,7 @@ title: "프로퍼티 디스크립터 — 객체 속성을 정밀하게 제어하
 description: "JavaScript 프로퍼티 디스크립터(value, writable, enumerable, configurable, get, set)의 개념과 getOwnPropertyDescriptor를 활용한 프로퍼티 분석 방법을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 1
+archiveOrder: 11
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "property-descriptor", "defineProperty", "writable", "enumerable", "configurable", "getter", "setter"]

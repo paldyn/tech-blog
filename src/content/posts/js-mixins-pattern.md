@@ -3,7 +3,7 @@ title: "믹스인 패턴 — 다중 상속 없이 기능 합성하기"
 description: "JavaScript에서 단일 상속 한계를 극복하는 믹스인(Mixin) 패턴을 함수형 믹스인, Symbol을 활용한 충돌 방지, 믹스인 팩토리, 실무 적용 사례까지 폭넓게 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 9
+archiveOrder: 29
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "mixins", "composition", "multiple-inheritance", "functional-mixin", "design-pattern"]

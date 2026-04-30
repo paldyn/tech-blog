@@ -3,7 +3,7 @@ title: "클래스 getter/setter — 계산된 프로퍼티 설계"
 description: "JavaScript 클래스에서 get/set 키워드로 구현하는 접근자 프로퍼티의 동작 원리, 프라이빗 필드와 함께 사용하는 패턴, 무한 재귀 피하기, 계산된 값 캐싱 전략을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-04-29"
-archiveOrder: 6
+archiveOrder: 26
 type: "knowledge"
 category: "JavaScript"
 tags: ["javascript", "class", "getter", "setter", "accessor-property", "computed-property", "encapsulation"]
