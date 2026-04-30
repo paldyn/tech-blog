@@ -97,6 +97,8 @@ A 는 보수적, C 는 위험. **B 를 골랐다**. 그리고 그 결정이 한 
 
 한 PR 로는 못 끝낸다. 단계별로 나눠 머지해야 한다.
 
+![멀티테넌시 도입 — 3단계 Phase 로드맵](/assets/posts/multi-tenant-phase-roadmap.svg)
+
 ```
 Phase 1 — auth-api 만:
   · project CRUD + 멤버 grant API
@@ -274,6 +276,8 @@ dbwb-api    → composite PK 구조 변경
 
 같은 문제 — 데이터 격리 — 에 4가지 답이 있다. 어느 쪽도 만능 아니고,
 원래 시스템의 모양이 답을 정한다.
+
+![같은 격리 문제, 4가지 답 — MyBatis / Hibernate @Filter / composite PK / JWT claim](/assets/posts/multi-tenant-isolation-patterns.svg)
 
 ### Phase 3 — frontend
 

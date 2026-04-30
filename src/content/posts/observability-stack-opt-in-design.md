@@ -45,6 +45,8 @@ docker-compose `profiles` + 트레이싱 별도 override + OTel java agent
 **A 채택**. 이유: 폐쇄망 호환 (B 탈락), 풀스택 가시성 필요 (C 탈락).
 디스크/메모리 부담은 운영자 opt-in 으로 흡수.
 
+![관측성 스택 — opt-in 아키텍처. 평소엔 안 뜨고 필요할 때만 +5 컨테이너](/assets/posts/observability-opt-in-architecture.svg)
+
 ---
 
 ## 결정 2 — `docker-compose profiles` 로 opt-in
@@ -165,6 +167,8 @@ agent 마운트 + JAVA_TOOL_OPTIONS 설정** 이 필요. 이건 docker-compose
 용도이지 service 안 필드를 조건부로 못 함).
 
 해법: **override 파일 분리**.
+
+![관측성 — 3단계 opt-in 사다리. 기본 / +로그메트릭 / +트레이싱](/assets/posts/observability-tracing-override.svg)
 
 ```yaml
 # observability/docker-compose.tracing.yml

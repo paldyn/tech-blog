@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <style>text { font-family: 'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif; }
+    .mono { font-family: 'JetBrains Mono','Menlo',monospace; }</style>
+  </defs>
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">트레이싱은 또 다른 opt-in — override 파일로 분리</text>
+  <text x="440" y="68" text-anchor="middle" font-size="13" fill="#888">profile 만으로는 service 의 environment 자체를 못 바꾼다</text>
+
+  <!-- 3 step ladder -->
+  <!-- Step 1: 기본 -->
+  <rect x="40" y="100" width="800" height="100" rx="8" fill="#0f0f0f" stroke="#444" stroke-width="1"/>
+  <text x="60" y="128" font-size="14" font-weight="700" fill="#888">기본 — 관측성 OFF</text>
+  <text x="800" y="128" text-anchor="end" font-size="11" fill="#666">RAM 베이스라인</text>
+  <line x1="60" y1="142" x2="820" y2="142" stroke="#222"/>
+
+  <text x="60" y="166" class="mono" font-size="11" fill="#aaa">docker compose up -d</text>
+  <text x="60" y="186" font-size="11" fill="#888">→ postgres / 4개 API / nginx / mb-client 만 기동</text>
+
+  <line x1="440" y1="200" x2="440" y2="220" stroke="#444" stroke-width="2"/>
+  <polygon points="435,216 445,216 440,228" fill="#444"/>
+
+  <!-- Step 2: 관측성 켜기 -->
+  <rect x="40" y="230" width="800" height="100" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="2"/>
+  <text x="60" y="258" font-size="14" font-weight="700" fill="#55c555">+ 관측성 (로그 / 메트릭)</text>
+  <text x="800" y="258" text-anchor="end" font-size="11" fill="#666">+ 약 700MB RAM</text>
+  <line x1="60" y1="272" x2="820" y2="272" stroke="#222"/>
+
+  <text x="60" y="294" class="mono" font-size="11" fill="#7ec8e3">COMPOSE_PROFILES=observability docker compose up -d</text>
+  <text x="60" y="314" font-size="11" fill="#888">→ Promtail / Loki / Prometheus / Tempo / Grafana 추가 기동</text>
+
+  <line x1="440" y1="330" x2="440" y2="350" stroke="#444" stroke-width="2"/>
+  <polygon points="435,346 445,346 440,358" fill="#444"/>
+
+  <!-- Step 3: 트레이싱 -->
+  <rect x="40" y="360" width="800" height="160" rx="8" fill="#1a0f1a" stroke="#cc77cc" stroke-width="2"/>
+  <text x="60" y="388" font-size="14" font-weight="700" fill="#cc77cc">+ 분산 트레이싱 (OTel java agent)</text>
+  <text x="800" y="388" text-anchor="end" font-size="11" fill="#666">+ override 파일 추가 + agent jar 마운트</text>
+  <line x1="60" y1="402" x2="820" y2="402" stroke="#222"/>
+
+  <rect x="60" y="416" width="760" height="50" rx="4" fill="#000" stroke="#222"/>
+  <text x="68" y="434" class="mono" font-size="11" fill="#7ec8e3">COMPOSE_FILE="docker-compose.yml:docker-compose.observability.yml:docker-compose.tracing.yml" \</text>
+  <text x="68" y="454" class="mono" font-size="11" fill="#7ec8e3">COMPOSE_PROFILES=observability docker compose up -d</text>
+
+  <text x="60" y="488" font-size="11" fill="#888">→ tracing override 가 4개 API 의 environment 에 JAVA_TOOL_OPTIONS 추가</text>
+  <text x="60" y="506" font-size="11" fill="#888">→ Spring / JDBC / HikariCP 자동 instrument · Java 코드 수정 0줄</text>
+
+  <text x="440" y="532" text-anchor="middle" font-size="11" fill="#444">PALDYN · 관측성 스택 opt-in 도입기</text>
+</svg>

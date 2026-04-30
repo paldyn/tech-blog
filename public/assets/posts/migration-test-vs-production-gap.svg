@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <style>text { font-family: 'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif; }
+    .mono { font-family: 'JetBrains Mono','Menlo',monospace; }</style>
+  </defs>
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">테스트는 깨끗한 DB 만 본다</text>
+  <text x="440" y="68" text-anchor="middle" font-size="13" fill="#888">통합 테스트가 잡지 못하는 영역 — 운영 schema 의 stale 한 상태</text>
+
+  <!-- LEFT: Integration Test -->
+  <rect x="50" y="100" width="370" height="380" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="2"/>
+  <text x="235" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#55c555">통합 테스트 (Testcontainers)</text>
+  <text x="235" y="148" text-anchor="middle" font-size="11" fill="#888">매번 깨끗한 PG 컨테이너에서 시작</text>
+  <line x1="70" y1="160" x2="400" y2="160" stroke="#222"/>
+
+  <text x="70" y="186" font-size="12" fill="#aaa">1. 빈 DB 컨테이너 부팅</text>
+  <text x="70" y="208" font-size="12" fill="#aaa">2. Flyway 가 V1 부터 V13 까지 순차 실행</text>
+  <text x="70" y="230" font-size="12" fill="#aaa">3. 각 마이그레이션 한 번만 실행</text>
+  <text x="70" y="252" font-size="12" fill="#aaa">4. 결과 검증 — 모든 시나리오 PASS</text>
+
+  <rect x="70" y="280" width="330" height="155" rx="4" fill="#000" stroke="#222"/>
+  <text x="78" y="300" class="mono" font-size="10" fill="#7ec8e3">@SpringBootTest @Testcontainers</text>
+  <text x="78" y="316" class="mono" font-size="10" fill="#aaa">class Test extends AbstractIntegrationTest {</text>
+  <text x="78" y="332" class="mono" font-size="10" fill="#aaa">  @Autowired ErdProjectRepository repo;</text>
+  <text x="78" y="348" class="mono" font-size="10" fill="#aaa"></text>
+  <text x="78" y="364" class="mono" font-size="10" fill="#aaa">  @Test void filter_isolates() {</text>
+  <text x="78" y="380" class="mono" font-size="10" fill="#aaa">    insertDirect("mebrix", ...);</text>
+  <text x="78" y="396" class="mono" font-size="10" fill="#aaa">    enableFilter("alpha");</text>
+  <text x="78" y="412" class="mono" font-size="10" fill="#55c555">    assertThat(repo.findAll()).isEmpty();</text>
+  <text x="78" y="428" class="mono" font-size="10" fill="#aaa">  }</text>
+
+  <rect x="70" y="450" width="330" height="22" rx="4" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="235" y="466" text-anchor="middle" font-size="11" fill="#55c555">✓ 모든 시나리오 PASS</text>
+
+  <!-- RIGHT: Production -->
+  <rect x="460" y="100" width="370" height="380" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="2"/>
+  <text x="645" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#e05555">운영 환경 (Real DB)</text>
+  <text x="645" y="148" text-anchor="middle" font-size="11" fill="#888">살아있는 schema 위로 다음 변경이 떨어진다</text>
+  <line x1="480" y1="160" x2="810" y2="160" stroke="#222"/>
+
+  <text x="480" y="186" font-size="12" fill="#aaa">1. 며칠/몇 달 운영된 DB 가 이미 있음</text>
+  <text x="480" y="208" font-size="12" fill="#aaa">2. V13 첫 시도가 어디선가 죽음</text>
+  <text x="480" y="230" font-size="12" fill="#aaa">3. 일부 ALTER 가 commit 된 채 남음</text>
+  <text x="480" y="252" font-size="12" fill="#aaa">4. 재시도 시 already exists ✗</text>
+
+  <rect x="480" y="280" width="330" height="155" rx="4" fill="#000" stroke="#222"/>
+  <text x="488" y="300" class="mono" font-size="10" fill="#888">-- production schema 상태</text>
+  <text x="488" y="316" class="mono" font-size="10" fill="#aaa">erd_project       (project_code 있음)</text>
+  <text x="488" y="332" class="mono" font-size="10" fill="#aaa">erd_business_unit (project_code 있음)</text>
+  <text x="488" y="348" class="mono" font-size="10" fill="#aaa">erd_diagram       (project_code 있음)</text>
+  <text x="488" y="364" class="mono" font-size="10" fill="#aaa">erd_table         (project_code 있음)</text>
+  <text x="488" y="380" class="mono" font-size="10" fill="#aaa">erd_column        (project_code 있음)</text>
+  <text x="488" y="396" class="mono" font-size="10" fill="#aaa">erd_relation      (project_code 있음)</text>
+  <text x="488" y="412" class="mono" font-size="10" fill="#e05555">erd_tag           (project_code 없음)</text>
+  <text x="488" y="428" class="mono" font-size="10" fill="#888">erd_proj_sys_col_default (없음)</text>
+
+  <rect x="480" y="450" width="330" height="22" rx="4" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="645" y="466" text-anchor="middle" font-size="11" fill="#e05555">✗ 무한 실패 — 재실행 불가</text>
+
+  <!-- Bottom message -->
+  <rect x="50" y="498" width="780" height="28" rx="4" fill="#111"/>
+  <text x="440" y="517" text-anchor="middle" font-size="12" fill="#aaa">⚠️ 갭을 메우는 건 idempotent 하게 쓰는 작은 습관 — IF NOT EXISTS / DO 블록</text>
+
+  <text x="440" y="535" text-anchor="middle" font-size="11" fill="#444" />
+</svg>

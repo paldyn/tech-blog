@@ -64,6 +64,8 @@ PostgreSQL 의 ALTER TABLE 은 트랜잭션 안에서 동작하니 한 트랜잭
 핵심은 root cause 가 아니다. **"한 번 실패한 마이그레이션을 재실행할 수
 있는가"** 가 문제였다.
 
+![V13 부분 적용 — 9개 ALTER 중 7개가 commit 된 채 멈춘 상태](/assets/posts/migration-partial-application.svg)
+
 ---
 
 ## 통합 테스트가 잡지 못한 이유
@@ -93,6 +95,8 @@ V1 부터 V13 까지 순서대로, 한 번씩만 도는 환경. **"이미 컬럼
 이미 적용된 ALTER 를 manual 로 복구하기는 위험하다.
 
 이게 통합 테스트가 잡지 못하는 영역이다.
+
+![통합 테스트 vs 운영 환경 — 깨끗한 DB 와 살아있는 schema 의 갭](/assets/posts/migration-test-vs-production-gap.svg)
 
 ---
 
