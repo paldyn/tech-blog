@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">TLA 모듈 초기화 순서</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">의존성 그래프 기반 — 하위 모듈 먼저 완료</text>
+
+  <!-- Module graph: db.mjs, auth.mjs → app.mjs -->
+  <!-- db.mjs box -->
+  <rect x="100" y="100" width="200" height="80" rx="8" fill="#0d1422" stroke="#1e3a5f" stroke-width="2"/>
+  <text x="200" y="130" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">db.mjs</text>
+  <text x="200" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">await connect()</text>
+  <text x="200" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">① 먼저 완료</text>
+
+  <!-- auth.mjs box -->
+  <rect x="580" y="100" width="200" height="80" rx="8" fill="#0d1422" stroke="#1e3a5f" stroke-width="2"/>
+  <text x="680" y="130" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">auth.mjs</text>
+  <text x="680" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">await loadCerts()</text>
+  <text x="680" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">① 먼저 완료 (병렬)</text>
+
+  <!-- app.mjs box -->
+  <rect x="290" y="280" width="300" height="80" rx="8" fill="#0d1a0d" stroke="#1e4a1e" stroke-width="2"/>
+  <text x="440" y="312" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">app.mjs</text>
+  <text x="440" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">import { db } · import { auth }</text>
+  <text x="440" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">② db · auth 완료 후 실행</text>
+
+  <!-- Arrows from db.mjs and auth.mjs to app.mjs -->
+  <line x1="200" y1="180" x2="360" y2="280" stroke="#55c555" stroke-width="2"/>
+  <polygon points="360,280 348,270 370,270" fill="#55c555"/>
+
+  <line x1="680" y1="180" x2="520" y2="280" stroke="#55c555" stroke-width="2"/>
+  <polygon points="520,280 510,270 532,270" fill="#55c555"/>
+
+  <!-- Label on arrows -->
+  <text x="258" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">TLA 완료</text>
+  <text x="558" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">TLA 완료</text>
+
+  <!-- Code example -->
+  <rect x="60" y="390" width="760" height="60" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// db.mjs — TLA 모듈</text>
+  <text x="76" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">export const </text>
+  <text x="162" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">db = </text>
+  <text x="190" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">await </text>
+  <text x="226" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">createConnection(</text>
+  <text x="382" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'postgres://...'</text>
+  <text x="488" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">); </text>
+  <text x="510" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// await를 함수 없이</text>
+
+  <!-- Warning box -->
+  <rect x="60" y="202" width="760" height="54" rx="6" fill="#1a1206" stroke="#4a3a0e" stroke-width="1"/>
+  <text x="440" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8c842">⚠ 주의: 직렬 의존성은 차단 효과</text>
+  <text x="440" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">TLA 모듈을 import하는 모든 상위 모듈은 해당 await가 완료될 때까지 초기화 지연</text>
+
+  <!-- Footer -->
+  <text x="440" y="466" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN — JavaScript 완전 정복</text>
+</svg>
