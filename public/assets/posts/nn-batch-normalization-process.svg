@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700" xml:space="preserve">배치 정규화 (Batch Normalization) 프로세스</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13" xml:space="preserve">배치 내 각 특성을 평균 0, 분산 1로 정규화한 뒤, 학습 가능한 γ·β로 스케일/이동</text>
+
+  <!-- Step 1: Batch input -->
+  <rect x="60" y="96" width="140" height="180" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="130" y="120" text-anchor="middle" fill="#7777cc" font-size="13" font-weight="600" xml:space="preserve">입력 배치</text>
+  <text x="130" y="140" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">x ∈ ℝ^(B×C)</text>
+  <line x1="80" y1="150" x2="188" y2="150" stroke="#1a1a2a"/>
+  <!-- Mini grid showing batch -->
+  <rect x="84" y="158" width="88" height="16" rx="2" fill="#1a2a3a" opacity="0.8"/>
+  <text x="128" y="170" text-anchor="middle" fill="#7ec8e3" font-size="10" xml:space="preserve">샘플 1</text>
+  <rect x="84" y="178" width="88" height="16" rx="2" fill="#1a2a3a" opacity="0.6"/>
+  <text x="128" y="190" text-anchor="middle" fill="#7ec8e3" font-size="10" xml:space="preserve">샘플 2</text>
+  <rect x="84" y="198" width="88" height="16" rx="2" fill="#1a2a3a" opacity="0.4"/>
+  <text x="128" y="210" text-anchor="middle" fill="#7ec8e3" font-size="10" xml:space="preserve">샘플 3</text>
+  <text x="128" y="230" text-anchor="middle" fill="#888" font-size="20" xml:space="preserve">⋮</text>
+  <text x="128" y="266" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">B개 샘플</text>
+
+  <!-- Arrow 1 -->
+  <polygon points="202,182 240,182 240,174 264,186 240,198 240,190 202,190" fill="#7777cc" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="233" y="166" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">Step 1</text>
+
+  <!-- Step 2: Compute mean/var -->
+  <rect x="264" y="96" width="160" height="180" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="344" y="120" text-anchor="middle" fill="#7777cc" font-size="13" font-weight="600" xml:space="preserve">통계 계산</text>
+  <line x1="284" y1="130" x2="404" y2="130" stroke="#1a1a2a"/>
+  <text x="344" y="155" text-anchor="middle" fill="#e8e8e8" font-size="13" xml:space="preserve">μ_B = (1/B)Σxᵢ</text>
+  <text x="344" y="178" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">배치 평균</text>
+  <line x1="284" y1="192" x2="404" y2="192" stroke="#1a1a2a" stroke-dasharray="3 2"/>
+  <text x="344" y="215" text-anchor="middle" fill="#e8e8e8" font-size="13" xml:space="preserve">σ²_B = (1/B)Σ(xᵢ−μ)²</text>
+  <text x="344" y="236" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">배치 분산</text>
+  <text x="344" y="260" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">특성 차원(C)별로 계산</text>
+
+  <!-- Arrow 2 -->
+  <polygon points="426,182 464,182 464,174 488,186 464,198 464,190 426,190" fill="#7777cc" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="457" y="166" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">Step 2</text>
+
+  <!-- Step 3: Normalize -->
+  <rect x="488" y="96" width="148" height="180" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="562" y="120" text-anchor="middle" fill="#7ec8e3" font-size="13" font-weight="600" xml:space="preserve">정규화</text>
+  <line x1="508" y1="130" x2="616" y2="130" stroke="#1a2a3a"/>
+  <text x="562" y="160" text-anchor="middle" fill="#e8e8e8" font-size="15" xml:space="preserve">x̂ᵢ = (xᵢ − μ_B)</text>
+  <text x="562" y="182" text-anchor="middle" fill="#e8e8e8" font-size="15" xml:space="preserve">     / √(σ²_B + ε)</text>
+  <text x="562" y="208" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">ε: 수치 안정 (1e-5)</text>
+  <text x="562" y="232" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">→ 평균 0, 분산 1</text>
+  <text x="562" y="256" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">정규화된 활성값</text>
+
+  <!-- Arrow 3 -->
+  <polygon points="638,182 672,182 672,174 696,186 672,198 672,190 638,190" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="667" y="166" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">Step 3</text>
+
+  <!-- Step 4: Scale/Shift -->
+  <rect x="696" y="96" width="124" height="180" rx="8" fill="#0c1a0c" stroke="#55c555" stroke-width="2"/>
+  <text x="758" y="120" text-anchor="middle" fill="#55c555" font-size="13" font-weight="600" xml:space="preserve">스케일/이동</text>
+  <line x1="716" y1="130" x2="800" y2="130" stroke="#1a3a1a"/>
+  <text x="758" y="158" text-anchor="middle" fill="#e8e8e8" font-size="14" xml:space="preserve">yᵢ = γ·x̂ᵢ + β</text>
+  <text x="758" y="182" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">γ: 스케일 (학습)</text>
+  <text x="758" y="200" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">β: 이동 (학습)</text>
+  <text x="758" y="224" text-anchor="middle" fill="#55c555" font-size="11" xml:space="preserve">초기: γ=1, β=0</text>
+  <text x="758" y="248" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">최종 출력</text>
+
+  <!-- Benefits section -->
+  <rect x="60" y="296" width="760" height="160" rx="8" fill="#0d0d0d" stroke="#1e1e1e"/>
+  <text x="440" y="320" text-anchor="middle" fill="#e8e8e8" font-size="14" font-weight="600" xml:space="preserve">배치 정규화의 효과</text>
+
+  <!-- Benefit 1 -->
+  <rect x="80" y="332" width="192" height="100" rx="6" fill="#0d1520" stroke="#7777cc"/>
+  <text x="176" y="354" text-anchor="middle" fill="#7777cc" font-size="12" font-weight="600" xml:space="preserve">학습 속도 향상</text>
+  <text x="176" y="372" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">더 큰 학습률 사용 가능</text>
+  <text x="176" y="390" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">내부 공변량 이동 감소</text>
+  <text x="176" y="410" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">3~10배 빠른 수렴</text>
+
+  <!-- Benefit 2 -->
+  <rect x="294" y="332" width="192" height="100" rx="6" fill="#0c1a0c" stroke="#55c555"/>
+  <text x="390" y="354" text-anchor="middle" fill="#55c555" font-size="12" font-weight="600" xml:space="preserve">정규화 효과</text>
+  <text x="390" y="372" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">드롭아웃 없어도 가능</text>
+  <text x="390" y="390" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">과적합 방지에 기여</text>
+  <text x="390" y="410" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">(배치 노이즈 효과)</text>
+
+  <!-- Benefit 3 -->
+  <rect x="508" y="332" width="192" height="100" rx="6" fill="#1a0d0a" stroke="#e05555"/>
+  <text x="604" y="354" text-anchor="middle" fill="#e05555" font-size="12" font-weight="600" xml:space="preserve">초기화 의존성 감소</text>
+  <text x="604" y="372" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">나쁜 초기화도 허용</text>
+  <text x="604" y="390" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">기울기 소실/폭발 완화</text>
+  <text x="604" y="410" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">깊은 네트워크 가능</text>
+
+  <!-- Footer -->
+  <text x="440" y="488" text-anchor="middle" fill="#444" font-size="11" xml:space="preserve">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

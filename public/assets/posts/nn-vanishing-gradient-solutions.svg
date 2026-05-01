@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700" xml:space="preserve">기울기 소실/폭발 해결책 코드</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13" xml:space="preserve">ReLU, 잔차 연결, Gradient Clipping, 기울기 모니터링</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="760" height="240" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="76" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">import</tspan> torch, torch.nn <tspan fill="#7ec8e3">as</tspan> nn</text>
+
+  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># 1. 잔차 연결 (ResNet 스타일)</tspan></text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">class</tspan> <tspan fill="#e8e8e8">ResBlock</tspan>(nn.Module):</text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">def</tspan> <tspan fill="#55c555">forward</tspan>(self, x):</text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    <tspan fill="#7ec8e3">return</tspan> x + self.layers(x)</text>
+  <text x="76" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    <tspan fill="#6a8aa0"># ↑ x가 기울기 고속도로</tspan></text>
+
+  <text x="76" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># 2. Gradient Clipping (RNN 필수)</tspan></text>
+  <text x="76" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">optimizer.zero_grad()</text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">loss.backward()</text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">nn.utils.clip_grad_norm_(</text>
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    model.parameters(), max_norm=<tspan fill="#b5cea8">1.0</tspan>)</text>
+
+  <!-- 3. Monitor gradient -->
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">optimizer.step()</text>
+
+  <!-- Info boxes -->
+  <rect x="60" y="345" width="350" height="58" rx="8" fill="#0c1a0c" stroke="#55c555" stroke-width="1.5"/>
+  <text x="235" y="364" text-anchor="middle" fill="#55c555" font-size="12" font-weight="600" xml:space="preserve">잔차 연결의 기울기 흐름</text>
+  <text x="235" y="382" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">∂L/∂x = ∂L/∂y · (1 + ∂f/∂x)</text>
+  <text x="235" y="398" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">항상 최소 1의 기울기 보장</text>
+
+  <rect x="470" y="345" width="350" height="58" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="645" y="364" text-anchor="middle" fill="#7777cc" font-size="12" font-weight="600" xml:space="preserve">기울기 모니터링</text>
+  <text x="645" y="382" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">grad_norm = p.grad.norm() for p in params</text>
+  <text x="645" y="398" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">비정상 크면 lr 낮추거나 clipping 조정</text>
+
+  <!-- Footer -->
+  <text x="440" y="428" text-anchor="middle" fill="#444" font-size="11" xml:space="preserve">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

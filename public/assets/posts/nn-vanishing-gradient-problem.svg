@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700" xml:space="preserve">기울기 소실 vs 기울기 폭발</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13" xml:space="preserve">역전파 시 기울기가 층을 거치며 0으로 수렴하거나 무한대로 발산하는 문제</text>
+
+  <!-- Layer flow diagram -->
+  <!-- Loss -->
+  <circle cx="820" cy="200" r="28" fill="#1a0d0d" stroke="#e05555" stroke-width="2.5"/>
+  <text x="820" y="196" text-anchor="middle" fill="#e05555" font-size="14" font-weight="700" xml:space="preserve">L</text>
+  <text x="820" y="214" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">손실</text>
+
+  <!-- Layer boxes right to left -->
+  <!-- Layer N -->
+  <rect x="676" y="175" width="100" height="50" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="726" y="200" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">층 N</text>
+  <text x="726" y="216" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">기울기: 0.8</text>
+
+  <!-- Layer N-1 -->
+  <rect x="528" y="175" width="100" height="50" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="578" y="200" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">층 N-1</text>
+  <text x="578" y="216" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">기울기: 0.32</text>
+
+  <!-- Layer N-2 -->
+  <rect x="380" y="175" width="100" height="50" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="430" y="200" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">층 N-2</text>
+  <text x="430" y="216" text-anchor="middle" fill="#7777cc" font-size="10" xml:space="preserve">기울기: 0.064</text>
+
+  <!-- Layer 2 -->
+  <rect x="232" y="175" width="100" height="50" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="282" y="200" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">층 2</text>
+  <text x="282" y="216" text-anchor="middle" fill="#e05555" font-size="10" xml:space="preserve">기울기: 0.0026</text>
+
+  <!-- Layer 1 (input side) -->
+  <rect x="80" y="175" width="100" height="50" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="130" y="200" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">층 1</text>
+  <text x="130" y="216" text-anchor="middle" fill="#e05555" font-size="10" font-weight="600" xml:space="preserve">기울기: ≈0</text>
+
+  <!-- Backward arrows with gradient magnitudes -->
+  <polygon points="778,197 742,197 742,189 720,200 742,211 742,203 778,203" fill="#7777cc" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="760" y="183" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">×0.4</text>
+
+  <polygon points="630,197 594,197 594,189 572,200 594,211 594,203 630,203" fill="#7777cc" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="612" y="183" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">×0.2</text>
+
+  <polygon points="482,197 446,197 446,189 424,200 446,211 446,203 482,203" fill="#e05555" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="464" y="183" text-anchor="middle" fill="#e05555" font-size="10" xml:space="preserve">×0.04</text>
+
+  <polygon points="334,197 298,197 298,189 276,200 298,211 298,203 334,203" fill="#e05555" stroke="#0a0a0a" stroke-width="0.5"/>
+  <text x="316" y="183" text-anchor="middle" fill="#e05555" font-size="10" xml:space="preserve">×0.04</text>
+
+  <!-- Annotation: why vanishing with sigmoid -->
+  <rect x="60" y="254" width="360" height="80" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="276" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600" xml:space="preserve">기울기 소실 원인 (Sigmoid)</text>
+  <text x="240" y="296" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">σ'(z) = σ(z)(1−σ(z)) ≤ 0.25</text>
+  <text x="240" y="314" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">N층 → 기울기 ≤ 0.25ᴺ → 지수적 소멸</text>
+  <text x="240" y="330" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">초기 층은 사실상 학습 안 됨</text>
+
+  <!-- Annotation: exploding gradient -->
+  <rect x="460" y="254" width="360" height="80" rx="8" fill="#1a1a0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="276" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600" xml:space="preserve">기울기 폭발 원인</text>
+  <text x="640" y="296" text-anchor="middle" fill="#e8e8e8" font-size="12" xml:space="preserve">‖W‖ > 1일 때 역전파 반복 곱</text>
+  <text x="640" y="314" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">→ 기울기 지수적 증가 → NaN</text>
+  <text x="640" y="330" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">주로 RNN에서 심각하게 발생</text>
+
+  <!-- Solutions bar -->
+  <rect x="60" y="356" width="760" height="100" rx="8" fill="#0d0d0d" stroke="#1e1e1e"/>
+  <text x="440" y="378" text-anchor="middle" fill="#e8e8e8" font-size="14" font-weight="600" xml:space="preserve">해결책</text>
+
+  <rect x="80" y="388" width="138" height="52" rx="6" fill="#0c1a0c" stroke="#55c555"/>
+  <text x="149" y="408" text-anchor="middle" fill="#55c555" font-size="11" font-weight="600" xml:space="preserve">ReLU 활성화</text>
+  <text x="149" y="428" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">양수 기울기 = 1</text>
+
+  <rect x="232" y="388" width="138" height="52" rx="6" fill="#0d1520" stroke="#7777cc"/>
+  <text x="301" y="408" text-anchor="middle" fill="#7777cc" font-size="11" font-weight="600" xml:space="preserve">배치/레이어 정규화</text>
+  <text x="301" y="428" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">분산 안정화</text>
+
+  <rect x="384" y="388" width="138" height="52" rx="6" fill="#0c1a0c" stroke="#55c555"/>
+  <text x="453" y="408" text-anchor="middle" fill="#55c555" font-size="11" font-weight="600" xml:space="preserve">잔차 연결</text>
+  <text x="453" y="428" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">기울기 지름길</text>
+
+  <rect x="536" y="388" width="138" height="52" rx="6" fill="#0d1520" stroke="#7777cc"/>
+  <text x="605" y="408" text-anchor="middle" fill="#7777cc" font-size="11" font-weight="600" xml:space="preserve">Gradient Clipping</text>
+  <text x="605" y="428" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">폭발 방지 (RNN)</text>
+
+  <rect x="688" y="388" width="112" height="52" rx="6" fill="#0c1a0c" stroke="#55c555"/>
+  <text x="744" y="408" text-anchor="middle" fill="#55c555" font-size="11" font-weight="600" xml:space="preserve">He 초기화</text>
+  <text x="744" y="428" text-anchor="middle" fill="#888" font-size="10" xml:space="preserve">분산 유지</text>
+
+  <!-- Footer -->
+  <text x="440" y="488" text-anchor="middle" fill="#444" font-size="11" xml:space="preserve">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700" xml:space="preserve">가중치 초기화 방법 비교</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13" xml:space="preserve">잘못된 초기화는 기울기 소실/폭발을 유발한다. 올바른 초기화가 수렴의 열쇠다.</text>
+
+  <!-- Problem with zero init -->
+  <rect x="60" y="88" width="240" height="130" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="180" y="110" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600" xml:space="preserve">제로 초기화 (금지)</text>
+  <text x="180" y="132" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">W = 0으로 초기화</text>
+  <line x1="80" y1="144" x2="280" y2="144" stroke="#2a1a1a"/>
+  <text x="180" y="162" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">모든 뉴런이 동일한 기울기</text>
+  <text x="180" y="178" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">→ 대칭성 깨짐 불가</text>
+  <text x="180" y="196" text-anchor="middle" fill="#e05555" font-size="11" font-weight="600" xml:space="preserve">학습이 전혀 일어나지 않음</text>
+
+  <!-- Random init (too large) -->
+  <rect x="320" y="88" width="240" height="130" rx="8" fill="#1a1a0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="110" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600" xml:space="preserve">큰 랜덤 초기화</text>
+  <text x="440" y="132" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">N(0, 1)로 초기화</text>
+  <line x1="340" y1="144" x2="540" y2="144" stroke="#2a2a1a"/>
+  <text x="440" y="162" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">깊어질수록 활성값 폭발</text>
+  <text x="440" y="178" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">→ NaN 발생 가능</text>
+  <text x="440" y="196" text-anchor="middle" fill="#e05555" font-size="11" font-weight="600" xml:space="preserve">기울기 폭발 (exploding)</text>
+
+  <!-- Small random init -->
+  <rect x="580" y="88" width="240" height="130" rx="8" fill="#0d1a0d" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="700" y="110" text-anchor="middle" fill="#7777cc" font-size="13" font-weight="600" xml:space="preserve">작은 랜덤 초기화</text>
+  <text x="700" y="132" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">N(0, 0.01)로 초기화</text>
+  <line x1="600" y1="144" x2="800" y2="144" stroke="#1a2a1a"/>
+  <text x="700" y="162" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">깊어질수록 활성값 소멸</text>
+  <text x="700" y="178" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">→ 기울기 소실 발생</text>
+  <text x="700" y="196" text-anchor="middle" fill="#7777cc" font-size="11" font-weight="600" xml:space="preserve">얕은 네트워크에서만 유효</text>
+
+  <!-- Good methods -->
+  <rect x="60" y="240" width="365" height="140" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="242" y="264" text-anchor="middle" fill="#7ec8e3" font-size="14" font-weight="600" xml:space="preserve">Xavier / Glorot 초기화 (2010)</text>
+  <text x="242" y="286" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">Sigmoid, Tanh 활성화 함수에 최적</text>
+  <line x1="80" y1="296" x2="405" y2="296" stroke="#1a2a3a"/>
+  <text x="242" y="316" text-anchor="middle" fill="#e8e8e8" font-size="14" xml:space="preserve">σ² = 2 / (n_in + n_out)</text>
+  <text x="242" y="336" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">Uniform: [-√(6/(n_in+n_out)), +√(6/(n_in+n_out))]</text>
+  <text x="242" y="356" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">분산이 층을 통과해도 유지되도록 설계</text>
+  <text x="242" y="372" text-anchor="middle" fill="#7ec8e3" font-size="11" xml:space="preserve">PyTorch: nn.init.xavier_uniform_(weight)</text>
+
+  <rect x="455" y="240" width="365" height="140" rx="8" fill="#0c1a0c" stroke="#55c555" stroke-width="2"/>
+  <text x="637" y="264" text-anchor="middle" fill="#55c555" font-size="14" font-weight="600" xml:space="preserve">He / Kaiming 초기화 (2015)</text>
+  <text x="637" y="286" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">ReLU, Leaky ReLU 활성화 함수에 최적</text>
+  <line x1="475" y1="296" x2="800" y2="296" stroke="#1a3a1a"/>
+  <text x="637" y="316" text-anchor="middle" fill="#e8e8e8" font-size="14" xml:space="preserve">σ² = 2 / n_in</text>
+  <text x="637" y="336" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">ReLU는 양수만 통과 → 분산 절반으로 감소</text>
+  <text x="637" y="356" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">→ 2/n_in으로 보정하여 분산 유지</text>
+  <text x="637" y="372" text-anchor="middle" fill="#55c555" font-size="11" xml:space="preserve">PyTorch: nn.init.kaiming_normal_(weight)</text>
+
+  <!-- Summary bar -->
+  <rect x="60" y="400" width="760" height="60" rx="8" fill="#111" stroke="#1e1e1e"/>
+  <text x="440" y="420" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">선택 기준</text>
+  <text x="220" y="444" text-anchor="middle" fill="#7ec8e3" font-size="12" xml:space="preserve">Sigmoid/Tanh 은닉층 → Xavier</text>
+  <text x="440" y="444" text-anchor="middle" fill="#55c555" font-size="12" xml:space="preserve">ReLU 계열 은닉층 → He (Kaiming)</text>
+  <text x="660" y="444" text-anchor="middle" fill="#888" font-size="12" xml:space="preserve">트랜스포머 → 작은 std (0.02) 또는 Xavier</text>
+
+  <!-- Footer -->
+  <text x="440" y="488" text-anchor="middle" fill="#444" font-size="11" xml:space="preserve">PALDYN · AI 완전 정복 시리즈</text>
+</svg>

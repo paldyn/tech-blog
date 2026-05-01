@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700" xml:space="preserve">배치 정규화 PyTorch 구현</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13" xml:space="preserve">훈련/추론 모드 차이, 위치 선택, 추론 시 running stats 사용</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="760" height="240" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="76" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">import</tspan> torch.nn <tspan fill="#7ec8e3">as</tspan> nn</text>
+
+  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># Post-BN 패턴 (전통적)</tspan></text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">model_postbn = nn.Sequential(</text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.Linear(<tspan fill="#b5cea8">256</tspan>, <tspan fill="#b5cea8">128</tspan>),</text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.BatchNorm1d(<tspan fill="#b5cea8">128</tspan>),  <tspan fill="#6a8aa0"># ← 선형 후</tspan></text>
+  <text x="76" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.ReLU(),</text>
+  <text x="76" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+
+  <text x="76" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># 훈련/추론 모드 전환 (필수!)</tspan></text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">model.train()  <tspan fill="#6a8aa0"># 배치 통계 사용</tspan></text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">model.eval()   <tspan fill="#6a8aa0"># running 통계 사용</tspan></text>
+
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># 추론 시 no_grad 필수</tspan></text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">with</tspan> torch.no_grad():</text>
+
+  <!-- Warning box -->
+  <rect x="60" y="342" width="350" height="60" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="235" y="362" text-anchor="middle" fill="#e05555" font-size="12" font-weight="600" xml:space="preserve">⚠ 흔한 실수</text>
+  <text x="235" y="380" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">추론 시 model.eval() 빠뜨리면</text>
+  <text x="235" y="396" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">배치 통계 사용 → 결과 불안정</text>
+
+  <!-- Info box -->
+  <rect x="470" y="342" width="350" height="60" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="645" y="362" text-anchor="middle" fill="#7777cc" font-size="12" font-weight="600" xml:space="preserve">Running Statistics</text>
+  <text x="645" y="380" text-anchor="middle" fill="#e8e8e8" font-size="11" xml:space="preserve">훈련 중 지수이동평균으로 누적</text>
+  <text x="645" y="396" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">μ_run ← (1-m)μ_run + m·μ_batch</text>
+
+  <!-- Footer -->
+  <text x="440" y="428" text-anchor="middle" fill="#444" font-size="11" xml:space="preserve">PALDYN · AI 완전 정복 시리즈</text>
+</svg>
