@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#55c555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Spring AOP 프록시 생성 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">ApplicationContext 초기화 시 BeanPostProcessor가 프록시를 자동 생성</text>
+
+  <!-- Step 1: ApplicationContext -->
+  <rect x="60" y="100" width="200" height="60" rx="8" fill="#0d1f35" stroke="#1e3a5f" stroke-width="1.5"/>
+  <text x="160" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">ApplicationContext</text>
+  <text x="160" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">빈 정의 로드 및 초기화</text>
+  <text x="84" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">① 시작</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="260" y1="130" x2="318" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Step 2: BeanFactory -->
+  <rect x="320" y="100" width="220" height="60" rx="8" fill="#0d1f35" stroke="#1e3a5f" stroke-width="1.5"/>
+  <text x="430" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">BeanFactory</text>
+  <text x="430" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">빈 인스턴스 생성 (new)</text>
+  <text x="324" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">② 인스턴스화</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="540" y1="130" x2="598" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Step 3: BeanPostProcessor -->
+  <rect x="600" y="100" width="220" height="60" rx="8" fill="#1a1228" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="710" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">BeanPostProcessor</text>
+  <text x="710" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">postProcessAfterInitialization()</text>
+  <text x="604" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">③ 후처리</text>
+
+  <!-- Arrow 3 down to AnnotationAwareAspectJAutoProxyCreator -->
+  <line x1="710" y1="160" x2="710" y2="218" stroke="#7777cc" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Step 4: AbstractAutoProxyCreator -->
+  <rect x="500" y="220" width="370" height="70" rx="8" fill="#1a1228" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="685" y="245" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">AnnotationAwareAspectJAutoProxyCreator</text>
+  <text x="685" y="265" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">extends AbstractAutoProxyCreator</text>
+  <text x="685" y="281" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666">@EnableAspectJAutoProxy 로 등록</text>
+  <text x="504" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">④ AOP 프록시 생성기</text>
+
+  <!-- Arrow left to decision -->
+  <line x1="500" y1="255" x2="420" y2="255" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- Decision diamond: has interface? -->
+  <polygon points="360,225 420,255 360,285 300,255" fill="#101820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="360" y="251" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">인터페이스</text>
+  <text x="360" y="265" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">있음?</text>
+
+  <!-- Yes → JDK Proxy -->
+  <line x1="300" y1="255" x2="222" y2="255" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="260" y="247" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Yes</text>
+
+  <rect x="60" y="225" width="160" height="60" rx="8" fill="#0a1f0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="140" y="250" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">JDK Dynamic</text>
+  <text x="140" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">Proxy</text>
+
+  <!-- No → CGLIB -->
+  <line x1="360" y1="285" x2="360" y2="338" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="374" y="315" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">No / proxyTargetClass=true</text>
+
+  <rect x="260" y="340" width="200" height="60" rx="8" fill="#1a0f0a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="360" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#ce9178">CGLIB Proxy</text>
+  <text x="360" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">서브클래스 바이트코드 생성</text>
+
+  <!-- Both point to: Proxy bean in context -->
+  <line x1="140" y1="285" x2="140" y2="430" stroke="#55c555" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <line x1="360" y1="400" x2="360" y2="430" stroke="#ce9178" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <line x1="140" y1="430" x2="360" y2="430" stroke="#e8e8e8" stroke-width="1.5"/>
+  <line x1="250" y1="430" x2="250" y2="458" stroke="#e8e8e8" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <!-- Final: Spring Context Bean -->
+  <rect x="130" y="460" width="240" height="52" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="250" y="483" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">프록시 빈 (ApplicationContext)</text>
+  <text x="250" y="501" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">원본 빈을 대체 — 호출자에게 투명</text>
+
+  <!-- Code box: proxyTargetClass -->
+  <rect x="540" y="340" width="280" height="90" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="556" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># application.properties</text>
+  <text x="556" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">spring.aop</text>
+  <text x="556" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  .proxy-target-class=</text>
+  <text x="556" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">true</text>
+  <text x="544" y="337" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">CGLIB 강제 설정</text>
+
+  <!-- footer -->
+  <text x="440" y="538" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">PALDYN · Spring 완전 정복 시리즈</text>
+</svg>
