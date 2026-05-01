@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">이벤트 루프 실행 순서</text>
+
+  <!-- Phase boxes in a flow -->
+  <!-- Step 1: Run current task -->
+  <rect x="50" y="72" width="220" height="72" rx="8" fill="#1a2540" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="160" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">① 현재 태스크 실행</text>
+  <text x="160" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Call Stack 완전히 비울 때까지</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="270" y1="108" x2="306" y2="108" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="306,102 318,108 306,114" fill="#7ec8e3"/>
+
+  <!-- Step 2: Drain microtask queue -->
+  <rect x="318" y="72" width="244" height="72" rx="8" fill="#1a2540" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">② 마이크로태스크 전부 소진</text>
+  <text x="440" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Promise·queueMicrotask·MutationObserver</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="562" y1="108" x2="598" y2="108" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="598,102 610,108 598,114" fill="#55c555"/>
+
+  <!-- Step 3: Render -->
+  <rect x="610" y="72" width="220" height="72" rx="8" fill="#1a2540" stroke="#7777cc" stroke-width="2"/>
+  <text x="720" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc">③ 렌더링 기회</text>
+  <text x="720" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">rAF · Layout · Paint (브라우저)</text>
+
+  <!-- Loop back arrow -->
+  <path d="M720,144 Q720,180 440,190 Q160,200 160,144" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="5,4"/>
+  <polygon points="160,144 154,156 166,156" fill="#888"/>
+  <text x="440" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">다음 매크로태스크 꺼내어 ① 반복</text>
+
+  <!-- Code example -->
+  <rect x="50" y="236" width="780" height="228" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="66" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">실행 순서 예제</text>
+
+  <text x="66" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">console.log(</text><text x="170" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'A'</text><text x="196" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="66" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">setTimeout(() </text><text x="172" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">=&gt;</text><text x="194" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> console.log(</text><text x="316" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'D'</text><text x="342" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">), </text><text x="366" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0</text><text x="378" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="66" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">Promise.resolve().then(() </text><text x="258" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">=&gt;</text><text x="280" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> console.log(</text><text x="402" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'B'</text><text x="428" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">))</text>
+  <text x="66" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">queueMicrotask(() </text><text x="210" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">=&gt;</text><text x="232" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> console.log(</text><text x="354" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'C'</text><text x="380" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">))</text>
+  <text x="66" y="354" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 출력: A → B → C → D</text>
+
+  <!-- Right side: explanation -->
+  <text x="500" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">① 동기: A</text>
+  <text x="500" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">setTimeout → Task Queue 예약</text>
+  <text x="500" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">② 마이크로태스크: B</text>
+  <text x="500" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">② 마이크로태스크: C</text>
+  <text x="500" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">③ 다음 매크로태스크: D</text>
+
+  <!-- Microtask starvation warning -->
+  <rect x="50" y="394" width="780" height="80" rx="6" fill="#1a1020" stroke="#e05555"/>
+  <text x="66" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">⚠ 마이크로태스크 기아(Starvation) 주의</text>
+  <text x="66" y="436" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">function infinite() { Promise.resolve().then(infinite) }</text>
+  <text x="66" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">마이크로태스크 큐가 영원히 채워지면 렌더링·매크로태스크 실행 불가</text>
+</svg>

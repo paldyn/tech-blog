@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Node.js 이벤트 루프 페이즈</text>
+
+  <!-- Phase 1: timers -->
+  <rect x="50" y="72" width="150" height="70" rx="6" fill="#1a2540" stroke="#7ec8e3"/>
+  <text x="125" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">timers</text>
+  <text x="125" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">setTimeout</text>
+  <text x="125" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">setInterval</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="200" y1="107" x2="224" y2="107" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="224,101 236,107 224,113" fill="#7ec8e3"/>
+
+  <!-- Phase 2: pending callbacks -->
+  <rect x="236" y="72" width="150" height="70" rx="6" fill="#1a2540" stroke="#7777cc"/>
+  <text x="311" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">pending cb</text>
+  <text x="311" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">이전 루프의</text>
+  <text x="311" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">I/O 에러 콜백</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="386" y1="107" x2="410" y2="107" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="410,101 422,107 410,113" fill="#7777cc"/>
+
+  <!-- Phase 3: poll -->
+  <rect x="422" y="72" width="150" height="70" rx="6" fill="#1a2540" stroke="#55c555" stroke-width="2"/>
+  <text x="497" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">poll ★</text>
+  <text x="497" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">I/O 이벤트 대기</text>
+  <text x="497" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">가장 오래 대기</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="572" y1="107" x2="596" y2="107" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="596,101 608,107 596,113" fill="#55c555"/>
+
+  <!-- Phase 4: check (setImmediate) -->
+  <rect x="608" y="72" width="150" height="70" rx="6" fill="#1a2540" stroke="#e05555"/>
+  <text x="683" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">check</text>
+  <text x="683" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">setImmediate</text>
+  <text x="683" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">콜백</text>
+
+  <!-- Loop back arrow under phases -->
+  <path d="M683,142 Q683,180 440,190 Q200,200 125,180 Q125,160 125,142" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="5,4"/>
+  <polygon points="125,142 119,154 131,154" fill="#888"/>
+
+  <!-- Microtask note between phases -->
+  <rect x="50" y="220" width="780" height="80" rx="6" fill="#111520" stroke="#55c555"/>
+  <text x="440" y="246" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">각 페이즈 전환 시 마이크로태스크 큐 전부 소진</text>
+  <text x="440" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">process.nextTick 콜백 → Promise microtask 순서로 처리</text>
+  <text x="440" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Node.js 11+ 부터 브라우저와 동일한 동작으로 정렬됨</text>
+
+  <!-- Code: setImmediate vs setTimeout -->
+  <rect x="50" y="322" width="780" height="72" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="66" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">setImmediate vs setTimeout(fn, 0) — I/O 콜백 내부에서는 setImmediate가 항상 먼저</text>
+  <text x="66" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">fs.readFile(</text><text x="152" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'f'</text><text x="170" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, () </text><text x="218" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">=&gt;</text><text x="240" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> { setImmediate(() </text><text x="384" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">=&gt;</text><text x="406" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> console.log(</text><text x="514" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'imm'</text><text x="550" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)) })</text>
+  <text x="66" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// I/O 콜백 → check 페이즈 → 'imm' (timers 페이즈보다 앞)</text>
+</svg>
