@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">EXISTS 단락 평가(Short-Circuit) 원리</text>
+
+  <!-- EXISTS flow -->
+  <rect x="50" y="72" width="780" height="80" fill="#131820" rx="8" stroke="#55c555"/>
+  <text x="70" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">EXISTS (SELECT 1 FROM orders WHERE customer_id = c.id)</text>
+  <text x="70" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서브쿼리가 한 행이라도 반환하면 즉시 TRUE → 나머지 행 스캔 중단 (Short-Circuit Evaluation)</text>
+  <text x="70" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SELECT 절에 무엇을 쓰든(1, *, NULL 등) 결과에 영향 없음 — SELECT 1이 관례</text>
+
+  <!-- Step visual -->
+  <!-- Step 1 -->
+  <rect x="50" y="176" width="160" height="60" fill="#131820" rx="6" stroke="#7ec8e3"/>
+  <text x="130" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">orders 인덱스 탐색</text>
+  <text x="130" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">customer_id = 42</text>
+
+  <polygon points="222,206 246,199 246,213" fill="#7ec8e3"/>
+  <line x1="210" y1="206" x2="244" y2="206" stroke="#7ec8e3" stroke-width="2"/>
+
+  <!-- Decision -->
+  <rect x="252" y="176" width="160" height="60" fill="#131820" rx="6" stroke="#7777cc"/>
+  <text x="332" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">행 존재?</text>
+  <text x="332" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">첫 행 발견 여부</text>
+
+  <!-- Yes path -->
+  <polygon points="424,206 448,199 448,213" fill="#55c555"/>
+  <line x1="412" y1="206" x2="446" y2="206" stroke="#55c555" stroke-width="2"/>
+  <text x="436" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">YES</text>
+
+  <rect x="454" y="176" width="160" height="60" fill="#0a180e" rx="6" stroke="#55c555"/>
+  <text x="534" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">즉시 TRUE 반환</text>
+  <text x="534" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">나머지 orders 스캔 중단</text>
+
+  <!-- No path -->
+  <line x1="332" y1="236" x2="332" y2="270" stroke="#e05555" stroke-width="2"/>
+  <polygon points="325,266 332,290 339,266" fill="#e05555"/>
+  <rect x="250" y="290" width="164" height="52" fill="#1a0e0e" rx="6" stroke="#e05555"/>
+  <text x="332" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">FALSE 반환</text>
+  <text x="332" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">해당 외부 행 제외</text>
+  <text x="332" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">NO</text>
+
+  <!-- Performance note -->
+  <rect x="650" y="176" width="180" height="174" fill="#131820" rx="6" stroke="#7777cc"/>
+  <text x="740" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">성능 포인트</text>
+  <text x="740" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">customer_id 인덱스 있으면</text>
+  <text x="740" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Index Scan 1건으로 종료</text>
+  <text x="740" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">EXISTS가 IN보다</text>
+  <text x="740" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">빠른 이유</text>
+  <text x="740" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">IN은 서브쿼리 전체를</text>
+  <text x="740" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">해시/정렬 후 체크</text>
+  <text x="740" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(DBMS마다 차이 있음)</text>
+</svg>

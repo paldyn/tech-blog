@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">스칼라 서브쿼리 — 단일 값 반환</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" text-anchor="middle">SELECT · WHERE · HAVING · ORDER BY 절에서 사용 가능</text>
+
+  <!-- Left: definition -->
+  <rect x="50" y="96" width="360" height="172" fill="#131820" rx="8" stroke="#7777cc"/>
+  <text x="230" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">스칼라 서브쿼리란</text>
+  <text x="66" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 정확히 1행 1열을 반환하는 서브쿼리</text>
+  <text x="66" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 스칼라 값 위치(표현식 자리) 어디에나 사용</text>
+  <text x="66" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 0행 반환 시 → NULL</text>
+  <text x="66" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">• 2행 이상 반환 시 → 런타임 에러</text>
+  <text x="66" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 외부 쿼리 컬럼 참조 가능 (상관 서브쿼리)</text>
+  <text x="66" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">  → 행마다 실행되어 비용 증가 주의</text>
+
+  <!-- Right: usage locations -->
+  <rect x="470" y="96" width="360" height="172" fill="#131820" rx="8" stroke="#7ec8e3"/>
+  <text x="650" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">사용 위치</text>
+
+  <text x="486" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="486" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       (subq) AS col   ← SELECT</text>
+  <text x="486" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="486" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">     t</text>
+  <text x="486" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text>
+  <text x="486" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      col = (subq)    ← WHERE</text>
+  <text x="486" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">HAVING</text>
+  <text x="486" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       f > (subq)    ← HAVING</text>
+  <text x="486" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ORDER BY</text>
+  <text x="486" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">         (subq)      ← ORDER BY</text>
+  <text x="486" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#6a8aa0">UPDATE SET col=(subq), INSERT VALUES((subq)) 등도 지원</text>
+
+  <!-- Example: non-correlated scalar subquery -->
+  <rect x="50" y="290" width="360" height="162" fill="#0d0d0d" rx="8" stroke="#55c555"/>
+  <text x="230" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">비상관 스칼라 서브쿼리</text>
+  <rect x="66" y="322" width="328" height="116" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="82" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 전체 평균과 비교</text>
+  <text x="82" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="82" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  name, salary,</text>
+  <text x="82" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  (<tspan fill="#7ec8e3">SELECT AVG</tspan>(salary) <tspan fill="#7ec8e3">FROM</tspan> emp) avg_all</text>
+  <text x="82" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="82" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">     emp;</text>
+  <text x="82" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 서브쿼리 1회 실행 후 캐시</text>
+
+  <!-- Example: correlated scalar subquery -->
+  <rect x="470" y="290" width="360" height="162" fill="#0d0d0d" rx="8" stroke="#e05555"/>
+  <text x="650" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">상관 스칼라 서브쿼리 (주의)</text>
+  <rect x="486" y="322" width="328" height="116" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="502" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 행마다 서브쿼리 실행 → 느림</text>
+  <text x="502" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="502" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  e.name, e.dept_id,</text>
+  <text x="502" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  (<tspan fill="#7ec8e3">SELECT</tspan> dname</text>
+  <text x="502" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">   <tspan fill="#7ec8e3">FROM</tspan> dept d</text>
+  <text x="502" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">   <tspan fill="#7ec8e3">WHERE</tspan> d.id=e.dept_id) dn</text>
+  <text x="502" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="502" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">     emp e;</text>
+</svg>

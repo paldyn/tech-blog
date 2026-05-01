@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">재귀 CTE 구조와 실행 흐름</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" text-anchor="middle">Anchor Member → Recursive Member 반복</text>
+
+  <!-- Code block -->
+  <rect x="50" y="96" width="440" height="400" fill="#070b14" rx="8" stroke="#7777cc"/>
+  <text x="82" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 조직도: 관리자 체인 조회</text>
+  <text x="82" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WITH RECURSIVE</text>
+  <text x="82" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">org_tree <tspan fill="#7ec8e3">AS</tspan> (</text>
+  <text x="82" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  -- Anchor: 루트(CEO)</text>
+  <text x="82" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  SELECT</text>
+  <text x="82" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    id, name, manager_id, <tspan fill="#b5cea8">1</tspan> AS lv</text>
+  <text x="82" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  FROM</text>
+  <text x="82" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       employees</text>
+  <text x="82" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  WHERE</text>
+  <text x="82" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        manager_id <tspan fill="#7ec8e3">IS NULL</tspan></text>
+  <text x="82" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">UNION ALL</tspan></text>
+  <text x="82" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  -- Recursive: 부하 직원</text>
+  <text x="82" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  SELECT</text>
+  <text x="82" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    e.id, e.name, e.manager_id, t.lv+<tspan fill="#b5cea8">1</tspan></text>
+  <text x="82" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  FROM</text>
+  <text x="82" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       employees e</text>
+  <text x="82" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  JOIN</text>
+  <text x="82" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">       org_tree</text>
+  <text x="82" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">               t</text>
+  <text x="82" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    ON</text>
+  <text x="82" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       e.manager_id = t.id</text>
+  <text x="82" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="82" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="82" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  lv, name, manager_id</text>
+  <text x="82" y="442" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="82" y="442" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">     org_tree</text>
+  <text x="82" y="460" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ORDER BY</text>
+  <text x="82" y="460" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">         lv, name;</text>
+
+  <!-- Right: iteration steps -->
+  <rect x="530" y="96" width="300" height="400" fill="#0d0d0d" rx="8" stroke="#7ec8e3"/>
+  <text x="680" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">반복 실행 과정</text>
+
+  <!-- Iteration 0: Anchor -->
+  <rect x="548" y="128" width="264" height="60" fill="#0a180e" rx="6" stroke="#55c555"/>
+  <text x="680" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">반복 0 — Anchor Member</text>
+  <text x="680" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">manager_id IS NULL → CEO (id=1)</text>
+
+  <!-- Arrow -->
+  <line x1="680" y1="188" x2="680" y2="208" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="673,204 680,220 687,204" fill="#7ec8e3"/>
+
+  <!-- Iteration 1 -->
+  <rect x="548" y="218" width="264" height="60" fill="#131820" rx="6" stroke="#7777cc"/>
+  <text x="680" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">반복 1 — Recursive</text>
+  <text x="680" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">org_tree JOIN: manager_id=1 → 2명</text>
+
+  <!-- Arrow -->
+  <line x1="680" y1="278" x2="680" y2="298" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="673,294 680,310 687,294" fill="#7ec8e3"/>
+
+  <!-- Iteration 2 -->
+  <rect x="548" y="308" width="264" height="60" fill="#131820" rx="6" stroke="#7777cc"/>
+  <text x="680" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">반복 2 — Recursive</text>
+  <text x="680" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">직전 결과 JOIN → 3명 추가</text>
+
+  <!-- Arrow -->
+  <line x1="680" y1="368" x2="680" y2="388" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="673,384 680,400 687,384" fill="#7ec8e3"/>
+
+  <!-- Termination -->
+  <rect x="548" y="398" width="264" height="60" fill="#1a0e0e" rx="6" stroke="#e05555"/>
+  <text x="680" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">종료 — Recursive 결과 0행</text>
+  <text x="680" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">더 이상 JOIN할 행 없음 → 중단</text>
+
+  <!-- Note: MAXRECURSION -->
+  <rect x="530" y="504" width="300" height="0" fill="none"/>
+</svg>

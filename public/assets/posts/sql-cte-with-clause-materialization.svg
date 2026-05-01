@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CTE 구체화(Materialization) vs 인라인 전개</text>
+
+  <!-- Left: Materialized -->
+  <rect x="50" y="72" width="360" height="260" fill="#0d0d0d" rx="8" stroke="#7777cc"/>
+  <text x="230" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">구체화 (Materialized CTE)</text>
+  <text x="230" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">PostgreSQL (기본), Oracle MATERIALIZE 힌트</text>
+
+  <rect x="66" y="126" width="328" height="100" fill="#131820" rx="6" stroke="#7777cc" stroke-dasharray="4,3"/>
+  <text x="230" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">임시 결과셋</text>
+  <text x="230" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">CTE를 한 번 실행해 결과를 메모리/디스크에 저장</text>
+  <text x="230" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">✓ CTE를 여러 번 참조해도 1회 계산</text>
+  <text x="230" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">✗ 옵티마이저가 외부 조건을 push down 못함</text>
+
+  <text x="230" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">-- PostgreSQL: 강제 구체화</text>
+  <text x="230" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">WITH t AS MATERIALIZED (...)</text>
+  <text x="230" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">PostgreSQL 12+: NOT MATERIALIZED로 인라인 강제</text>
+  <text x="230" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Oracle: /*+ INLINE */ 힌트로 인라인 전개</text>
+
+  <!-- Right: Inlined -->
+  <rect x="470" y="72" width="360" height="260" fill="#0d0d0d" rx="8" stroke="#55c555"/>
+  <text x="650" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">인라인 전개 (Inlined CTE)</text>
+  <text x="650" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Oracle (기본), SQL Server, MySQL 8.0+</text>
+
+  <rect x="486" y="126" width="328" height="100" fill="#131820" rx="6" stroke="#55c555" stroke-dasharray="4,3"/>
+  <text x="650" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">뷰 병합처럼 처리</text>
+  <text x="650" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">CTE를 인라인 뷰처럼 외부 쿼리와 합침</text>
+  <text x="650" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">✓ 외부 WHERE 조건을 CTE 안으로 push down</text>
+  <text x="650" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">✗ 여러 번 참조하면 CTE가 여러 번 실행될 수 있음</text>
+
+  <text x="650" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">-- PostgreSQL 12+: 인라인 강제</text>
+  <text x="650" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">WITH t AS NOT MATERIALIZED (...)</text>
+  <text x="650" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SQL Server: WITH (NOEXPAND) 힌트로 구체화</text>
+  <text x="650" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">단순 집계 없는 CTE → 인라인 전개가 더 유리</text>
+</svg>

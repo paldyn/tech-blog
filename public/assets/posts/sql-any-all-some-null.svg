@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="340" viewBox="0 0 880 340">
+  <rect width="880" height="340" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ANY / ALL NULL 동작 — 주의 사항</text>
+
+  <!-- ANY with NULL -->
+  <rect x="50" y="70" width="360" height="240" fill="#0d0d0d" rx="8" stroke="#7777cc"/>
+  <text x="230" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">= ANY + NULL 포함 집합</text>
+
+  <rect x="66" y="104" width="328" height="96" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="82" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 집합: {10, NULL, 30}</text>
+  <text x="82" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">20 = <tspan fill="#7ec8e3">ANY</tspan> ({10, <tspan fill="#7ec8e3">NULL</tspan>, 30})</text>
+  <text x="82" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">→ 20=10 (FALSE)</text>
+  <text x="82" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">   20=NULL (UNKNOWN)</text>
+  <text x="82" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">   20=30 (FALSE) → <tspan fill="#e05555">UNKNOWN</tspan></text>
+
+  <text x="230" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">값이 집합에 없고 NULL이 있으면</text>
+  <text x="230" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">FALSE가 아닌 UNKNOWN → 행 제외</text>
+  <text x="230" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">(IN 동작과 동일)</text>
+  <text x="230" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#6a8aa0" text-anchor="middle">값이 집합에 있으면(=30): TRUE → 행 포함</text>
+
+  <!-- ALL with NULL -->
+  <rect x="470" y="70" width="360" height="240" fill="#0d0d0d" rx="8" stroke="#e05555"/>
+  <text x="650" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">&gt; ALL + NULL 포함 집합</text>
+
+  <rect x="486" y="104" width="328" height="96" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="502" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 집합: {10, NULL, 30}</text>
+  <text x="502" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">50 > <tspan fill="#7ec8e3">ALL</tspan> ({10, <tspan fill="#7ec8e3">NULL</tspan>, 30})</text>
+  <text x="502" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">→ 50>10 (TRUE)</text>
+  <text x="502" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">   50>NULL (UNKNOWN)</text>
+  <text x="502" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">   50>30 (TRUE) → <tspan fill="#e05555">UNKNOWN</tspan></text>
+
+  <text x="650" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">집합에 NULL이 하나라도 있으면</text>
+  <text x="650" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">ALL은 항상 UNKNOWN → 공집합</text>
+  <text x="650" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">→ 서브쿼리에 WHERE col IS NOT NULL 추가</text>
+  <text x="650" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#6a8aa0" text-anchor="middle">또는 MAX()/MIN()으로 대체 권장</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">COUNT(DISTINCT col) 처리 과정</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" text-anchor="middle">중복 제거 비용과 대안 전략</text>
+
+  <!-- Step 1: Full scan -->
+  <rect x="50" y="100" width="180" height="72" fill="#131820" rx="8" stroke="#7ec8e3"/>
+  <text x="140" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">① 전체 행 읽기</text>
+  <text x="140" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">테이블 풀스캔</text>
+  <text x="140" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">N 행</text>
+
+  <!-- Arrow 1 -->
+  <polygon points="244,136 268,129 268,143" fill="#7ec8e3"/>
+  <line x1="230" y1="136" x2="266" y2="136" stroke="#7ec8e3" stroke-width="2"/>
+
+  <!-- Step 2: Sort/Hash for dedup -->
+  <rect x="274" y="100" width="180" height="72" fill="#131820" rx="8" stroke="#e05555"/>
+  <text x="364" y="125" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">② 중복 제거</text>
+  <text x="364" y="145" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Sort or Hash</text>
+  <text x="364" y="161" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">O(N log N) 또는 O(N)</text>
+
+  <!-- Arrow 2 -->
+  <polygon points="468,136 492,129 492,143" fill="#e05555"/>
+  <line x1="454" y1="136" x2="490" y2="136" stroke="#e05555" stroke-width="2"/>
+
+  <!-- Step 3: Count distinct values -->
+  <rect x="498" y="100" width="180" height="72" fill="#131820" rx="8" stroke="#55c555"/>
+  <text x="588" y="125" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">③ 고유값 계산</text>
+  <text x="588" y="145" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">유일 값 집계</text>
+  <text x="588" y="161" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">결과: 고유 수</text>
+
+  <!-- Warning: multiple DISTINCT -->
+  <rect x="50" y="200" width="630" height="68" fill="#1a0e0e" rx="8" stroke="#e05555"/>
+  <text x="365" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">⚠ COUNT(DISTINCT a), COUNT(DISTINCT b) 동시 사용 — 중복 소트 2회</text>
+  <text x="365" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" text-anchor="middle">SELECT COUNT(DISTINCT a), COUNT(DISTINCT b) FROM t;</text>
+  <text x="365" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">각 DISTINCT마다 독립적 정렬 또는 해시 발생 → 컬럼 수만큼 비용 선형 증가</text>
+
+  <!-- Alternatives -->
+  <rect x="50" y="292" width="780" height="180" fill="#0d0d0d" rx="8" stroke="#1e2433"/>
+  <text x="440" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">대안 전략</text>
+
+  <!-- Alt 1: Subquery dedup -->
+  <rect x="70" y="326" width="220" height="130" fill="#131820" rx="6" stroke="#7777cc"/>
+  <text x="180" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">서브쿼리로 사전 중복 제거</text>
+  <text x="86" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">SELECT</text>
+  <text x="86" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  dept, COUNT(*)</text>
+  <text x="86" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">FROM (SELECT DISTINCT</text>
+  <text x="86" y="420" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">        dept, user_id</text>
+  <text x="86" y="438" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">       FROM</text>
+  <text x="86" y="438" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">            t) d</text>
+  <text x="86" y="452" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">GROUP BY</text>
+  <text x="86" y="452" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">         dept;</text>
+
+  <!-- Alt 2: Approx -->
+  <rect x="310" y="326" width="220" height="130" fill="#131820" rx="6" stroke="#55c555"/>
+  <text x="420" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">근사 함수 (대규모)</text>
+  <text x="326" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- PostgreSQL</text>
+  <text x="326" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">approx_count_distinct</text>
+  <text x="326" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- BigQuery / Redshift</text>
+  <text x="326" y="420" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">APPROX_COUNT_DISTINCT</text>
+  <text x="326" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">HyperLogLog — 오차 ≤1%</text>
+
+  <!-- Alt 3: Pre-aggregate -->
+  <rect x="550" y="326" width="260" height="130" fill="#131820" rx="6" stroke="#7ec8e3"/>
+  <text x="680" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">사전 집계 테이블/MV 활용</text>
+  <text x="566" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- 일별 사전 집계</text>
+  <text x="566" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">CREATE MATERIALIZED VIEW</text>
+  <text x="566" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  daily_uniq_users AS</text>
+  <text x="566" y="420" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">SELECT</text>
+  <text x="566" y="420" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">       day, dept,</text>
+  <text x="566" y="438" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  COUNT(DISTINCT user_id)</text>
+  <text x="566" y="456" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">FROM</text>
+  <text x="566" y="456" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">     events GROUP BY 1,2;</text>
+</svg>

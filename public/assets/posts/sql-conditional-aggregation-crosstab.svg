@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">조건부 집계 실행 흐름</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">ELSE NULL vs ELSE 0 — 결과 차이</text>
+
+  <!-- Step boxes -->
+  <!-- Step 1 -->
+  <rect x="50" y="100" width="200" height="70" fill="#131820" rx="8" stroke="#7ec8e3"/>
+  <text x="150" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">① 전체 행 스캔</text>
+  <text x="150" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">employees 테이블</text>
+  <text x="150" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">GROUP BY dept</text>
+
+  <!-- Arrow -->
+  <polygon points="266,135 290,128 290,142" fill="#7ec8e3"/>
+  <line x1="250" y1="135" x2="288" y2="135" stroke="#7ec8e3" stroke-width="2"/>
+
+  <!-- Step 2 -->
+  <rect x="296" y="100" width="200" height="70" fill="#131820" rx="8" stroke="#7777cc"/>
+  <text x="396" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">② CASE 평가</text>
+  <text x="396" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">조건 → 값 or NULL/0</text>
+  <text x="396" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">행별 CASE 결과 생성</text>
+
+  <!-- Arrow -->
+  <polygon points="512,135 536,128 536,142" fill="#7777cc"/>
+  <line x1="496" y1="135" x2="534" y2="135" stroke="#7777cc" stroke-width="2"/>
+
+  <!-- Step 3 -->
+  <rect x="542" y="100" width="200" height="70" fill="#131820" rx="8" stroke="#55c555"/>
+  <text x="642" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">③ 집계함수 적용</text>
+  <text x="642" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">SUM/COUNT/AVG</text>
+  <text x="642" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">NULL은 집계에서 제외</text>
+
+  <!-- Comparison table: ELSE NULL vs ELSE 0 -->
+  <rect x="50" y="208" width="780" height="220" fill="#0d0d0d" rx="8" stroke="#1e2433"/>
+  <text x="440" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">ELSE NULL vs ELSE 0 비교</text>
+
+  <!-- Table header -->
+  <rect x="70" y="244" width="740" height="28" fill="#131820" rx="4"/>
+  <text x="200" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888" text-anchor="middle">표현식</text>
+  <text x="430" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888" text-anchor="middle">SUM() 결과</text>
+  <text x="660" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888" text-anchor="middle">COUNT() vs AVG()</text>
+
+  <!-- Row 1: ELSE NULL -->
+  <rect x="70" y="272" width="740" height="34" fill="#0a1218" rx="2"/>
+  <text x="200" y="293" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">CASE WHEN … THEN v ELSE NULL END</text>
+  <text x="430" y="293" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">NULL 무시 → 조건 행만 합산</text>
+  <text x="660" y="293" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">AVG도 조건 행 기준</text>
+
+  <!-- Row 2: ELSE 0 -->
+  <rect x="70" y="306" width="740" height="34" fill="#0d0f14" rx="2"/>
+  <text x="200" y="327" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" text-anchor="middle">CASE WHEN … THEN v ELSE 0 END</text>
+  <text x="430" y="327" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">0 포함 합산 (SUM은 동일)</text>
+  <text x="660" y="327" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">AVG 분모 = 전체 행 수 ⚠</text>
+
+  <!-- Row 3: FILTER -->
+  <rect x="70" y="340" width="740" height="34" fill="#0a1218" rx="2"/>
+  <text x="200" y="361" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">SUM(v) FILTER (WHERE …)</text>
+  <text x="430" y="361" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">가장 명시적 · 가독성 최고</text>
+  <text x="660" y="361" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">PG/DuckDB/SQLite만 지원</text>
+
+  <!-- Note -->
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">AVG에 ELSE 0을 쓰면 의도치 않게 전체 행 수로 나눠 평균이 왜곡된다 — 항상 ELSE NULL 또는 FILTER 사용 권장</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">상관 서브쿼리 주요 활용 패턴</text>
+
+  <!-- Pattern 1: EXISTS -->
+  <rect x="50" y="70" width="240" height="260" fill="#0d0d0d" rx="8" stroke="#7777cc"/>
+  <text x="170" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">EXISTS 패턴</text>
+  <rect x="66" y="104" width="208" height="142" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="82" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- 주문 있는 고객만</text>
+  <text x="82" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">SELECT</text>
+  <text x="82" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  c.name</text>
+  <text x="82" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">FROM</text>
+  <text x="82" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">     customers c</text>
+  <text x="82" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">WHERE EXISTS</text>
+  <text x="82" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  (<tspan fill="#7ec8e3">SELECT</tspan> <tspan fill="#b5cea8">1</tspan></text>
+  <text x="82" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">   <tspan fill="#7ec8e3">FROM</tspan> orders o</text>
+  <text x="82" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">   <tspan fill="#7ec8e3">WHERE</tspan> o.cid=c.id);</text>
+  <text x="170" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">행 존재 여부만 확인</text>
+  <text x="170" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">첫 행 발견 즉시 중단</text>
+  <text x="170" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">JOIN보다 효율적인 경우 多</text>
+
+  <!-- Pattern 2: UPDATE -->
+  <rect x="320" y="70" width="240" height="260" fill="#0d0d0d" rx="8" stroke="#7ec8e3"/>
+  <text x="440" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">UPDATE 패턴</text>
+  <rect x="336" y="104" width="208" height="142" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="352" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- 최신 주문 금액으로 갱신</text>
+  <text x="352" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">UPDATE</text>
+  <text x="352" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  customers c</text>
+  <text x="352" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">SET</text>
+  <text x="352" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">    last_amount = (</text>
+  <text x="352" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  <tspan fill="#7ec8e3">SELECT</tspan> amount</text>
+  <text x="352" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  <tspan fill="#7ec8e3">FROM</tspan> orders o</text>
+  <text x="352" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  <tspan fill="#7ec8e3">WHERE</tspan> o.cid=c.id</text>
+  <text x="352" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">  ORDER BY</text>
+  <text x="352" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">           dt DESC LIMIT 1);</text>
+  <text x="440" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SET 절의 스칼라 서브쿼리</text>
+  <text x="440" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">행별 스칼라 반환 필수</text>
+  <text x="440" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">대량 UPDATE는 JOIN-UPDATE 권장</text>
+
+  <!-- Pattern 3: DELETE -->
+  <rect x="590" y="70" width="240" height="260" fill="#0d0d0d" rx="8" stroke="#55c555"/>
+  <text x="710" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">DELETE 패턴</text>
+  <rect x="606" y="104" width="208" height="142" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="622" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- 주문 없는 고객 삭제</text>
+  <text x="622" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">DELETE FROM</text>
+  <text x="622" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  customers c</text>
+  <text x="622" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">WHERE NOT EXISTS</text>
+  <text x="622" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  (<tspan fill="#7ec8e3">SELECT</tspan> <tspan fill="#b5cea8">1</tspan></text>
+  <text x="622" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">   <tspan fill="#7ec8e3">FROM</tspan> orders o</text>
+  <text x="622" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">   <tspan fill="#7ec8e3">WHERE</tspan> o.cid</text>
+  <text x="622" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">         = c.id);</text>
+  <text x="710" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">NOT EXISTS로 고아 행 제거</text>
+  <text x="710" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">NOT IN보다 NULL 안전</text>
+  <text x="710" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">대량 삭제 전 트랜잭션 확인</text>
+</svg>
