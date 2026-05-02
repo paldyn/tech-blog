@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Global Average Pooling vs Flatten</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">분류 헤드 연결 방식 비교</text>
+
+  <!-- Feature maps (7x7x512 representation) -->
+  <text x="100" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#888">특징 맵 (7×7×512)</text>
+
+  <!-- Stacked maps visual -->
+  <g transform="translate(36, 120)">
+    <rect x="8"  y="8"  width="90" height="90" fill="#101828" stroke="#2a3550" stroke-width="1" rx="2"/>
+    <rect x="4"  y="4"  width="90" height="90" fill="#111a30" stroke="#2a3550" stroke-width="1" rx="2"/>
+    <rect x="0"  y="0"  width="90" height="90" fill="#1a2535" stroke="#3a4560" stroke-width="1.5" rx="2"/>
+    <text x="45" y="50" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">512 maps</text>
+    <text x="45" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">each 7×7</text>
+  </g>
+
+  <!-- Path 1: Flatten -->
+  <text x="100" y="255" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">Flatten 방식</text>
+  <polygon points="100,265 130,255 130,275" fill="#e05555" stroke="#6a1515" stroke-width="1"/>
+  <line x1="80" y1="265" x2="130" y2="265" stroke="#e05555" stroke-width="2.5"/>
+
+  <rect x="133" y="248" width="120" height="36" fill="#1a0d0d" rx="6" stroke="#6a1515" stroke-width="1.5"/>
+  <text x="193" y="271" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">7×7×512 = 25,088</text>
+
+  <polygon points="256,265 284,255 284,275" fill="#e05555" stroke="#6a1515" stroke-width="1"/>
+  <line x1="253" y1="265" x2="284" y2="265" stroke="#e05555" stroke-width="2.5"/>
+
+  <rect x="287" y="248" width="140" height="36" fill="#1a0d0d" rx="6" stroke="#6a1515" stroke-width="1.5"/>
+  <text x="357" y="263" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">FC(25088→4096)</text>
+  <text x="357" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">파라미터: 102M</text>
+
+  <!-- Path 2: GAP -->
+  <text x="100" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">GAP 방식</text>
+  <polygon points="100,352 130,342 130,362" fill="#55c555" stroke="#1a5a1a" stroke-width="1"/>
+  <line x1="80" y1="352" x2="130" y2="352" stroke="#55c555" stroke-width="2.5"/>
+
+  <rect x="133" y="335" width="155" height="36" fill="#0d1a0d" rx="6" stroke="#1e5533" stroke-width="1.5"/>
+  <text x="210" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Global Avg Pool</text>
+  <text x="210" y="366" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">7×7 → 1×1 per map</text>
+
+  <polygon points="291,352 319,342 319,362" fill="#55c555" stroke="#1a5a1a" stroke-width="1"/>
+  <line x1="288" y1="352" x2="319" y2="352" stroke="#55c555" stroke-width="2.5"/>
+
+  <rect x="322" y="335" width="120" height="36" fill="#0d1a0d" rx="6" stroke="#1e5533" stroke-width="1.5"/>
+  <text x="382" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">벡터 512</text>
+  <text x="382" y="366" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">파라미터: 0개</text>
+
+  <polygon points="445,352 473,342 473,362" fill="#55c555" stroke="#1a5a1a" stroke-width="1"/>
+  <line x1="442" y1="352" x2="473" y2="352" stroke="#55c555" stroke-width="2.5"/>
+
+  <rect x="476" y="335" width="120" height="36" fill="#0d1a0d" rx="6" stroke="#1e5533" stroke-width="1.5"/>
+  <text x="536" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">FC(512→1000)</text>
+  <text x="536" y="366" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">파라미터: 512K</text>
+
+  <!-- Right side comparison box -->
+  <rect x="650" y="110" width="194" height="260" fill="#070b14" rx="8" stroke="#1e2433"/>
+  <text x="747" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">파라미터 비교</text>
+  <line x1="670" y1="148" x2="824" y2="148" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="670" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">Flatten + FC</text>
+  <text x="670" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">~102M 파라미터</text>
+  <text x="670" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">과적합 위험 높음</text>
+  <text x="670" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">입력 크기 고정 필요</text>
+
+  <line x1="670" y1="238" x2="824" y2="238" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="670" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">GAP</text>
+  <text x="670" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">~512K 파라미터</text>
+  <text x="670" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">200× 절약</text>
+  <text x="670" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">입력 크기 무관</text>
+  <text x="670" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">정규화 효과</text>
+  <text x="670" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">GoogLeNet, ResNet 채용</text>
+
+  <!-- Bottom note -->
+  <rect x="36" y="390" width="580" height="20" fill="none"/>
+  <text x="36" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">* GAP는 각 채널별 7×7=49 값의 평균 → 채널당 스칼라 1개 출력</text>
+</svg>
