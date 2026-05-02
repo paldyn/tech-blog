@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arr-green" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#55c555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Servlet · Filter · Listener 아키텍처</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888">Jakarta EE 웹 컨테이너의 핵심 3요소</text>
+
+  <!-- Servlet Container boundary -->
+  <rect x="178" y="88" width="664" height="210" rx="8" fill="none" stroke="#2a2a2a" stroke-width="1.5" stroke-dasharray="7,4"/>
+  <text x="510" y="107" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#444">Servlet Container (Tomcat · Jetty · Undertow)</text>
+
+  <!-- Client -->
+  <rect x="32" y="138" width="106" height="72" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="85" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">Client</text>
+  <text x="85" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Browser / App</text>
+
+  <!-- Request arrow: Client → Filter Chain -->
+  <line x1="138" y1="174" x2="176" y2="174" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="157" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">Request</text>
+
+  <!-- Filter Chain area -->
+  <rect x="191" y="114" width="310" height="166" rx="8" fill="#090e1a" stroke="#1e3050" stroke-width="1.5"/>
+  <text x="346" y="135" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">Filter Chain</text>
+
+  <!-- Filter 1 -->
+  <rect x="204" y="148" width="76" height="52" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="242" y="169" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">Filter 1</text>
+  <text x="242" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">인증(Auth)</text>
+
+  <!-- F1 → F2 -->
+  <line x1="280" y1="174" x2="296" y2="174" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Filter 2 -->
+  <rect x="297" y="148" width="76" height="52" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="335" y="169" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">Filter 2</text>
+  <text x="335" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">로깅</text>
+
+  <!-- F2 → F3 -->
+  <line x1="373" y1="174" x2="389" y2="174" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Filter 3 -->
+  <rect x="390" y="148" width="76" height="52" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="428" y="169" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">Filter 3</text>
+  <text x="428" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">CORS</text>
+
+  <!-- chain.doFilter note -->
+  <text x="346" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">chain.doFilter(req, res) 로 다음 단계 위임</text>
+  <text x="346" y="261" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">역순으로 Response 처리 (AOP와 동일 원리)</text>
+
+  <!-- Filter Chain → Servlet -->
+  <line x1="501" y1="174" x2="549" y2="174" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Servlet box -->
+  <rect x="550" y="114" width="278" height="166" rx="8" fill="#0a1e0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="689" y="135" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Servlet</text>
+  <text x="689" y="159" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">service(req, res)</text>
+  <text x="689" y="179" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">  ├ doGet()</text>
+  <text x="689" y="197" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">  ├ doPost()</text>
+  <text x="689" y="215" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">  └ doPut() / doDelete()</text>
+  <text x="689" y="261" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">Spring: DispatcherServlet 구현체</text>
+
+  <!-- Response arrow (dashed) -->
+  <line x1="549" y1="196" x2="138" y2="196" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-gray)"/>
+  <text x="340" y="213" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">Response (역순 처리)</text>
+
+  <!-- Listeners section -->
+  <rect x="60" y="322" width="760" height="148" rx="8" fill="#120a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">Listener — 컨테이너 이벤트 수신 (요청 흐름 외부)</text>
+
+  <!-- Listener 1 -->
+  <rect x="76" y="358" width="210" height="96" rx="6" fill="#1a0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="181" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">ServletContextListener</text>
+  <text x="88" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">contextInitialized()</text>
+  <text x="88" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">  → 앱 시작 초기화</text>
+  <text x="88" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">contextDestroyed() → 종료</text>
+
+  <!-- Listener 2 -->
+  <rect x="311" y="358" width="210" height="96" rx="6" fill="#1a0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="416" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">HttpSessionListener</text>
+  <text x="323" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">sessionCreated()</text>
+  <text x="323" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">  → 동시 접속자 카운팅</text>
+  <text x="323" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">sessionDestroyed() → 정리</text>
+
+  <!-- Listener 3 -->
+  <rect x="546" y="358" width="258" height="96" rx="6" fill="#1a0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="675" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">ServletRequestListener</text>
+  <text x="558" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">requestInitialized()</text>
+  <text x="558" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">  → 요청 단위 자원 할당</text>
+  <text x="558" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">requestDestroyed() → 해제</text>
+</svg>
