@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">스택 트레이스 활용 — 로깅·직렬화·필터링</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">에러를 로그에 남길 때 구조화된 정보를 추출하는 패턴</text>
+
+  <!-- Left: serializeError -->
+  <rect x="50" y="90" width="370" height="232" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="235" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">에러 직렬화</text>
+
+  <text x="66" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">function</text>
+  <text x="118" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> serializeError(e) {</text>
+  <text x="66" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  return</text>
+  <text x="108" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> {</text>
+  <text x="66" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    name: e.name,</text>
+  <text x="66" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    message: e.message,</text>
+  <text x="66" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    stack: e.stack,</text>
+  <text x="66" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    cause: e.cause</text>
+  <text x="66" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      ? serializeError(e.cause)</text>
+  <text x="66" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      : </text>
+  <text x="94" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">undefined</text>
+  <text x="150" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="66" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    ts: Date.now()</text>
+  <text x="66" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  };</text>
+  <text x="66" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <!-- Right: Error.prepareStackTrace -->
+  <rect x="460" y="90" width="370" height="232" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="645" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">V8 스택 커스터마이징</text>
+
+  <text x="476" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 스택 형식 변경 (V8 전용)</text>
+  <text x="476" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">Error.prepareStackTrace =</text>
+  <text x="476" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  (err, frames) =&gt;</text>
+  <text x="476" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    frames.map(f =&gt; ({</text>
+  <text x="476" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      fn: f.getFunctionName(),</text>
+  <text x="476" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      file: f.getFileName(),</text>
+  <text x="476" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      line: f.getLineNumber()</text>
+  <text x="476" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    }));</text>
+  <text x="476" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 이후 err.stack은 배열</text>
+  <text x="476" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const</text>
+  <text x="512" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> e = </text>
+  <text x="534" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">new</text>
+  <text x="558" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> Error(</text>
+  <text x="604" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'test'</text>
+  <text x="640" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+
+  <!-- Bottom notes -->
+  <rect x="50" y="338" width="370" height="72" rx="6" fill="#0a1020" stroke="#7ec8e3"/>
+  <text x="235" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">JSON.stringify 주의</text>
+  <text x="66" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Error는 열거 가능 프로퍼티가 없어</text>
+  <text x="66" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">JSON.stringify(e) → "{}" 가 됩니다</text>
+
+  <rect x="460" y="338" width="370" height="72" rx="6" fill="#0a1020" stroke="#55c555"/>
+  <text x="645" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">안전한 에러 로깅</text>
+  <text x="476" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">logger.error(serializeError(e))</text>
+  <text x="476" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">또는 logger.error(e.message, e)</text>
+</svg>

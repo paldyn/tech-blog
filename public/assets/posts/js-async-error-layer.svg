@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">에러 처리 계층 설계</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">각 계층이 자신의 역할만 처리 — 나머지는 위로 전파</text>
+
+  <!-- UI Layer -->
+  <rect x="50" y="90" width="780" height="56" rx="6" fill="#071520" stroke="#7ec8e3"/>
+  <text x="160" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">UI 계층</text>
+  <text x="440" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">사용자에게 표시할 메시지 결정, 에러 경계, 폴백 UI</text>
+  <text x="790" y="114" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">✓ instanceof AppError → 알림</text>
+  <text x="790" y="132" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">기타 → 전파</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="146" x2="440" y2="164" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="433,158 440,166 447,158" fill="#555"/>
+
+  <!-- Service Layer -->
+  <rect x="50" y="166" width="780" height="56" rx="6" fill="#0a0a1a" stroke="#7777cc"/>
+  <text x="160" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">서비스 계층</text>
+  <text x="440" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">도메인 에러로 래핑 (cause 보존), 비즈니스 복구 로직</text>
+  <text x="790" y="190" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">✓ NetworkError → 재시도</text>
+  <text x="790" y="208" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">기타 → 래핑 후 전파</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="222" x2="440" y2="240" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="433,234 440,242 447,234" fill="#555"/>
+
+  <!-- API Layer -->
+  <rect x="50" y="242" width="780" height="56" rx="6" fill="#140a0a" stroke="#e05555"/>
+  <text x="160" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">API 계층</text>
+  <text x="440" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">HTTP 상태 코드 분류, 4xx vs 5xx, NetworkError 생성</text>
+  <text x="790" y="266" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">✓ 4xx → HttpError</text>
+  <text x="790" y="284" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">✓ 5xx → NetworkError</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="298" x2="440" y2="316" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="433,310 440,318 447,310" fill="#555"/>
+
+  <!-- Global Layer -->
+  <rect x="50" y="318" width="780" height="56" rx="6" fill="#0a1410" stroke="#55c555"/>
+  <text x="160" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">전역 핸들러</text>
+  <text x="440" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">미처리 rejection, 전역 에러 로깅, Sentry/Datadog 전송</text>
+  <text x="790" y="342" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">unhandledRejection</text>
+  <text x="790" y="360" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">window.onerror</text>
+
+  <!-- Bottom rule -->
+  <rect x="50" y="390" width="780" height="32" rx="6" fill="#0a0a0a" stroke="#333"/>
+  <text x="440" y="411" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">핵심 원칙: 처리할 수 있는 에러만 catch — 나머지는 반드시 throw e로 상위에 전파</text>
+</svg>

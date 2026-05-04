@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">비동기 에러 처리 4가지 패턴</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">상황에 맞는 패턴 선택이 견고한 코드의 핵심</text>
+
+  <!-- Pattern 1: Retry -->
+  <rect x="50" y="90" width="370" height="178" rx="6" fill="#071510" stroke="#55c555"/>
+  <text x="235" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">1. 재시도 (Retry)</text>
+  <text x="66" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">async function</text>
+  <text x="162" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> retry(fn, n = </text>
+  <text x="258" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">3</text>
+  <text x="264" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">) {</text>
+  <text x="66" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  for</text>
+  <text x="90" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (</text>
+  <text x="98" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">let</text>
+  <text x="116" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> i = </text>
+  <text x="140" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0</text>
+  <text x="146" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">; i &lt; n; i++) {</text>
+  <text x="66" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    try</text>
+  <text x="90" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> { </text>
+  <text x="102" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">return await</text>
+  <text x="174" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> fn(); }</text>
+  <text x="66" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    catch</text>
+  <text x="102" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (e) {</text>
+  <text x="66" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">      if</text>
+  <text x="90" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (i === n - </text>
+  <text x="152" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="158" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">) </text>
+  <text x="168" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">throw</text>
+  <text x="196" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> e;</text>
+  <text x="66" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      </text>
+  <text x="66" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    }</text>
+  <text x="66" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }</text>
+
+  <!-- Pattern 2: Circuit Breaker -->
+  <rect x="460" y="90" width="370" height="178" rx="6" fill="#1a0808" stroke="#e05555"/>
+  <text x="645" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">2. 서킷 브레이커</text>
+  <text x="476" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• CLOSED: 정상, 요청 통과</text>
+  <text x="476" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• OPEN: 차단, 즉시 에러 반환</text>
+  <text x="476" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• HALF-OPEN: 시험 요청 허용</text>
+  <text x="476" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">연속 n회 실패 → OPEN 전환</text>
+  <text x="476" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">cooldown 후 → HALF-OPEN 전환</text>
+  <text x="476" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서킷 열린 상태엔 바로 에러 반환,</text>
+  <text x="476" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서버에 요청 안 보내 장애 확산 방지</text>
+
+  <!-- Pattern 3: Fallback -->
+  <rect x="50" y="288" width="370" height="178" rx="6" fill="#0a1020" stroke="#7777cc"/>
+  <text x="235" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">3. Fallback (대체값)</text>
+  <text x="66" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">async function</text>
+  <text x="162" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> withFallback(fn, fb) {</text>
+  <text x="66" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  try</text>
+  <text x="90" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> {</text>
+  <text x="66" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    return await</text>
+  <text x="154" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> fn();</text>
+  <text x="66" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  } </text>
+  <text x="78" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">catch</text>
+  <text x="108" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (e) {</text>
+  <text x="66" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    logger.warn(</text>
+  <text x="154" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'fallback 사용'</text>
+  <text x="258" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, e);</text>
+  <text x="66" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    return</text>
+  <text x="108" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">typeof</text>
+  <text x="144" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> fb === </text>
+  <text x="188" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'function'</text>
+  <text x="258" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> ? </text>
+  <text x="268" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">fb(e) : fb;</text>
+  <text x="66" y="440" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }</text>
+  <text x="66" y="458" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <!-- Pattern 4: Error Boundary -->
+  <rect x="460" y="288" width="370" height="178" rx="6" fill="#0a1418" stroke="#7ec8e3"/>
+  <text x="645" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">4. 에러 경계 (Error Boundary)</text>
+  <text x="476" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 계층 최상단에서 모든 에러 포착</text>
+  <text x="476" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 복구 불가 에러 → 상태 초기화</text>
+  <text x="476" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 복구 가능 에러 → 에러 UI 표시</text>
+  <text x="476" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">프론트엔드: React ErrorBoundary</text>
+  <text x="476" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">백엔드: 글로벌 에러 미들웨어</text>
+  <text x="476" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">공통: process.on('unhandledRejection')</text>
+  <text x="476" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">       window.addEventListener('error')</text>
+</svg>

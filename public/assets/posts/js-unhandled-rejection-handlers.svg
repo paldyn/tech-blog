@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">전역 에러 핸들러 — 브라우저 vs Node.js</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">미처리 rejection과 동기 에러를 전역에서 포착하는 패턴</text>
+
+  <!-- Left: Browser -->
+  <rect x="50" y="90" width="370" height="232" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="235" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">브라우저 전역 핸들러</text>
+
+  <text x="66" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// Promise rejection</text>
+  <text x="66" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">window.addEventListener(</text>
+  <text x="66" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  'unhandledrejection'</text>
+  <text x="218" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, event =&gt; {</text>
+  <text x="66" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  logger.error(event.reason);</text>
+  <text x="66" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  event.preventDefault();</text>
+  <text x="66" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+  <text x="66" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 동기 에러</text>
+  <text x="66" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">window.addEventListener(</text>
+  <text x="66" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  'error'</text>
+  <text x="122" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, event =&gt; {</text>
+  <text x="66" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  logger.error(event.error);</text>
+  <text x="66" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+
+  <!-- Right: Node.js -->
+  <rect x="460" y="90" width="370" height="232" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="645" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">Node.js 전역 핸들러</text>
+
+  <text x="476" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// Promise rejection</text>
+  <text x="476" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">process.on(</text>
+  <text x="476" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  'unhandledRejection'</text>
+  <text x="620" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, (reason, p) =&gt; {</text>
+  <text x="476" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  logger.fatal({ reason });</text>
+  <text x="476" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  process.exit(</text>
+  <text x="578" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="584" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+  <text x="476" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+  <text x="476" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 동기 uncaught exception</text>
+  <text x="476" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">process.on(</text>
+  <text x="476" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  'uncaughtException'</text>
+  <text x="612" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, (err) =&gt; {</text>
+  <text x="476" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  logger.fatal(err);</text>
+  <text x="476" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  process.exit(</text>
+  <text x="578" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="584" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+  <text x="476" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+
+  <!-- Bottom warning -->
+  <rect x="50" y="338" width="370" height="72" rx="6" fill="#1a0808" stroke="#e05555"/>
+  <text x="235" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">주의: 리스너가 너무 늦게 등록</text>
+  <text x="66" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">import 최상단에 등록해야 합니다</text>
+  <text x="66" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">비동기 초기화 중 발생한 에러는 놓칠 수 있음</text>
+
+  <rect x="460" y="338" width="370" height="72" rx="6" fill="#0a1020" stroke="#7ec8e3"/>
+  <text x="645" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">권장 사항</text>
+  <text x="476" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Sentry/Datadog 연동으로 에러 모니터링</text>
+  <text x="476" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">프로세스 매니저(PM2)로 자동 재시작</text>
+</svg>

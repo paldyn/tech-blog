@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">fetch 취소와 타임아웃 패턴</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">AbortController로 fetch 취소 / AbortSignal.timeout() 내장 타임아웃</text>
+
+  <!-- Left: fetch with abort -->
+  <rect x="50" y="90" width="370" height="240" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="235" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">fetch 취소 — AbortController</text>
+
+  <text x="66" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const</text>
+  <text x="102" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> ctrl = </text>
+  <text x="144" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">new</text>
+  <text x="168" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> AbortController();</text>
+  <text x="66" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const</text>
+  <text x="102" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> { signal } = ctrl;</text>
+  <text x="66" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 5초 후 취소</text>
+  <text x="66" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const</text>
+  <text x="102" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> tid = setTimeout(() =&gt;</text>
+  <text x="66" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  ctrl.abort(</text>
+  <text x="132" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'timeout'</text>
+  <text x="192" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">), </text>
+  <text x="210" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">5000</text>
+  <text x="240" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+  <text x="66" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">try</text>
+  <text x="90" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> {</text>
+  <text x="66" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  const</text>
+  <text x="102" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> res = </text>
+  <text x="138" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">await</text>
+  <text x="172" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> fetch(url, { signal });</text>
+  <text x="66" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  clearTimeout(tid);</text>
+  <text x="66" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  return await</text>
+  <text x="138" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> res.json();</text>
+  <text x="66" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">} </text>
+  <text x="78" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">catch</text>
+  <text x="108" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (e) {</text>
+  <text x="66" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  if</text>
+  <text x="84" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (e.name === </text>
+  <text x="162" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'AbortError'</text>
+  <text x="228" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">) { ... }</text>
+
+  <!-- Right: AbortSignal.timeout -->
+  <rect x="460" y="90" width="370" height="240" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="645" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">AbortSignal.timeout() — ES2022+</text>
+
+  <text x="476" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 타임아웃 내장 — 더 간결</text>
+  <text x="476" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const</text>
+  <text x="512" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> res = </text>
+  <text x="548" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">await</text>
+  <text x="582" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> fetch(url, {</text>
+  <text x="476" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  signal: AbortSignal.timeout(</text>
+  <text x="688" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">5000</text>
+  <text x="716" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="476" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+
+  <text x="476" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 여러 신호 조합 — any</text>
+  <text x="476" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const</text>
+  <text x="512" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> combined =</text>
+  <text x="476" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  AbortSignal.any([</text>
+  <text x="476" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    ctrl.signal,</text>
+  <text x="476" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    AbortSignal.timeout(</text>
+  <text x="672" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">3000</text>
+  <text x="700" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="476" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  ]);</text>
+
+  <!-- Notes -->
+  <rect x="50" y="350" width="370" height="60" rx="6" fill="#0a100a" stroke="#55c555"/>
+  <text x="70" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">취소 에러 확인: e.name === 'AbortError'</text>
+  <text x="70" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">또는 signal.throwIfAborted() 사용</text>
+
+  <rect x="460" y="350" width="370" height="60" rx="6" fill="#0a0a18" stroke="#7777cc"/>
+  <text x="480" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">AbortSignal.any(): 하나라도 abort되면 취소</text>
+  <text x="480" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Node.js 20+ / 최신 브라우저 지원</text>
+</svg>
