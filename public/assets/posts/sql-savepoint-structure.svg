@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">SAVEPOINT와 부분 롤백</text>
+  <text x="440" y="64" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">트랜잭션 내 중간 복귀점 설정</text>
+
+  <!-- Timeline bar -->
+  <rect x="60" y="100" width="760" height="8" rx="4" fill="#1a2233"/>
+
+  <!-- BEGIN -->
+  <circle cx="60" cy="104" r="10" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="2"/>
+  <text x="60" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3">BEGIN</text>
+
+  <!-- Step 1: INSERT order -->
+  <circle cx="200" cy="104" r="8" fill="#55c555" stroke="#0a0a0a" stroke-width="2"/>
+  <text x="200" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">① INSERT</text>
+  <text x="200" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">주문 생성</text>
+
+  <!-- SAVEPOINT sp1 -->
+  <rect x="310" y="80" width="80" height="48" rx="6" fill="#1a2233" stroke="#7777cc" stroke-width="2"/>
+  <text x="350" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7777cc">SAVE</text>
+  <text x="350" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7777cc">POINT</text>
+  <line x1="350" y1="128" x2="350" y2="104" stroke="#7777cc" stroke-width="2"/>
+  <text x="350" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">sp1</text>
+
+  <!-- Step 2: UPDATE stock -->
+  <circle cx="480" cy="104" r="8" fill="#55c555" stroke="#0a0a0a" stroke-width="2"/>
+  <text x="480" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">② UPDATE</text>
+  <text x="480" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">재고 감소</text>
+
+  <!-- Step 3: INSERT payment (오류) -->
+  <circle cx="620" cy="104" r="8" fill="#e05555" stroke="#0a0a0a" stroke-width="2"/>
+  <text x="620" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">③ ERROR</text>
+  <text x="620" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">결제 실패</text>
+
+  <!-- ROLLBACK TO sp1 arrow -->
+  <path d="M 620 160 Q 485 200 350 165" fill="none" stroke="#e05555" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="354,161 346,169 358,170" fill="#e05555"/>
+  <text x="480" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555">ROLLBACK TO sp1</text>
+  <text x="480" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">② 재고 감소만 취소 → ① 주문은 유지</text>
+
+  <!-- COMMIT -->
+  <circle cx="820" cy="104" r="10" fill="#55c555" stroke="#0a0a0a" stroke-width="2"/>
+  <text x="820" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">COMMIT</text>
+
+  <!-- Horizontal comparison boxes -->
+  <rect x="60" y="256" width="360" height="130" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">SAVEPOINT 사용 시</text>
+  <text x="240" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">✓ 트랜잭션 전체 취소 없이</text>
+  <text x="240" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">  특정 지점으로만 롤백 가능</text>
+  <text x="240" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">✓ 복잡한 배치 작업에서</text>
+  <text x="240" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">  중간 오류 처리 유연하게 가능</text>
+  <text x="240" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">sp1 이전 작업(주문 INSERT)은 유지됨</text>
+
+  <rect x="460" y="256" width="360" height="130" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">주의사항</text>
+  <text x="640" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">✗ RELEASE 없으면 Undo 정보 계속 유지</text>
+  <text x="640" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">✗ 자동커밋 ON이면 사용 불가</text>
+  <text x="640" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">✗ DDL은 대부분 암묵 COMMIT 발생</text>
+  <text x="640" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">ROLLBACK TO sp1 후에도 sp1는 살아있음</text>
+  <text x="640" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">RELEASE SAVEPOINT sp1로 명시 제거 가능</text>
+
+  <text x="440" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">중첩 트랜잭션(Nested Transaction)처럼 동작하지만 실제 중첩은 아님 — 부분 롤백 복귀점일 뿐</text>
+</svg>

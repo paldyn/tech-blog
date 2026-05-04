@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">데드락: 순환 대기 사이클</text>
+  <text x="440" y="64" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">Tx1과 Tx2가 서로 상대방의 잠금을 기다림</text>
+
+  <!-- Tx1 box -->
+  <rect x="100" y="110" width="200" height="80" rx="10" fill="#1a2233" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="200" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#7ec8e3">Transaction 1</text>
+  <text x="200" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">보유: Row A 잠금</text>
+  <text x="200" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">대기: Row B 잠금</text>
+
+  <!-- Tx2 box -->
+  <rect x="580" y="110" width="200" height="80" rx="10" fill="#1a2233" stroke="#7777cc" stroke-width="2"/>
+  <text x="680" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#7777cc">Transaction 2</text>
+  <text x="680" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">보유: Row B 잠금</text>
+  <text x="680" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">대기: Row A 잠금</text>
+
+  <!-- Row A -->
+  <rect x="100" y="270" width="160" height="50" rx="8" fill="#111118" stroke="#55c555" stroke-width="2"/>
+  <text x="180" y="299" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Row A</text>
+
+  <!-- Row B -->
+  <rect x="620" y="270" width="160" height="50" rx="8" fill="#111118" stroke="#55c555" stroke-width="2"/>
+  <text x="700" y="299" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Row B</text>
+
+  <!-- Tx1 holds Row A -->
+  <line x1="180" y1="190" x2="180" y2="270" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="175,265 180,273 185,265" fill="#7ec8e3"/>
+  <text x="125" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">보유</text>
+
+  <!-- Tx2 holds Row B -->
+  <line x1="700" y1="190" x2="700" y2="270" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="695,265 700,273 705,265" fill="#7777cc"/>
+  <text x="715" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">보유</text>
+
+  <!-- Tx1 waits for Row B -->
+  <line x1="300" y1="150" x2="580" y2="150" stroke="#e05555" stroke-width="2" stroke-dasharray="8,4"/>
+  <polygon points="576,145 584,150 576,155" fill="#e05555"/>
+  <text x="440" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Tx1이 Row B 대기 →</text>
+
+  <!-- Tx2 waits for Row A -->
+  <line x1="580" y1="175" x2="300" y2="175" stroke="#e05555" stroke-width="2" stroke-dasharray="8,4"/>
+  <polygon points="304,170 296,175 304,180" fill="#e05555"/>
+  <text x="440" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">← Tx2이 Row A 대기</text>
+
+  <!-- Circular arrow annotation -->
+  <text x="440" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" fill="#e05555">⟲ 순환 대기 → 데드락!</text>
+
+  <!-- Victim marker -->
+  <rect x="50" y="350" width="380" height="66" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">데드락 감지 & 해소</text>
+  <text x="240" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">DB가 사이클 감지 → 비용 낮은 트랜잭션을</text>
+  <text x="240" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">"피해자(Victim)"로 롤백 → 다른 쪽 진행</text>
+
+  <!-- Prevention -->
+  <rect x="450" y="350" width="380" height="66" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">예방 전략</text>
+  <text x="640" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">① 잠금 순서 일관화 (항상 A→B 순서)</text>
+  <text x="640" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">② 짧은 트랜잭션 ③ SELECT FOR UPDATE 최소화</text>
+</svg>

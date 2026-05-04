@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">2PL vs MVCC 동시성 제어 비교</text>
+  <text x="440" y="64" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">잠금 기반 vs 스냅샷 기반</text>
+
+  <!-- 2PL Left panel -->
+  <rect x="50" y="82" width="370" height="296" rx="10" fill="#111118" stroke="#e05555" stroke-width="1.5"/>
+  <text x="235" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e05555">2PL (2-Phase Locking)</text>
+  <text x="235" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Growing Phase + Shrinking Phase</text>
+
+  <!-- 2PL timeline diagram -->
+  <!-- Time axis -->
+  <line x1="80" y1="230" x2="400" y2="230" stroke="#333" stroke-width="1"/>
+  <text x="400" y="244" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">시간 →</text>
+
+  <!-- Growing phase bar -->
+  <rect x="80" y="150" width="140" height="28" rx="4" fill="#2a1010" stroke="#e05555" stroke-width="1"/>
+  <text x="150" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Growing Phase</text>
+  <text x="150" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">잠금 획득만 가능</text>
+
+  <!-- Lock point -->
+  <line x1="220" y1="140" x2="220" y2="230" stroke="#55c555" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="220" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">Lock Point</text>
+
+  <!-- Shrinking phase bar -->
+  <rect x="220" y="150" width="140" height="28" rx="4" fill="#0f1a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="290" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Shrinking Phase</text>
+  <text x="290" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">잠금 해제만 가능</text>
+
+  <!-- Properties -->
+  <text x="235" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8e8e8">특성</text>
+  <text x="235" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">읽기가 쓰기를 차단 (or 반대)</text>
+  <text x="235" y="294" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">데드락 가능성 존재</text>
+  <text x="235" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Strict 2PL: COMMIT 시점에 전체 해제</text>
+  <text x="235" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">사용 DB: SQL Server, Oracle(옵션)</text>
+  <text x="235" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">직렬성(Serializability) 보장</text>
+
+  <!-- MVCC Right panel -->
+  <rect x="460" y="82" width="370" height="296" rx="10" fill="#111118" stroke="#55c555" stroke-width="1.5"/>
+  <text x="645" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#55c555">MVCC (Multi-Version Concurrency)</text>
+  <text x="645" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">스냅샷 기반 읽기 일관성</text>
+
+  <!-- MVCC version chain -->
+  <rect x="490" y="148" width="80" height="28" rx="4" fill="#1a2233" stroke="#7ec8e3"/>
+  <text x="530" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">Ver 1: 100</text>
+
+  <line x1="570" y1="162" x2="600" y2="162" stroke="#333" stroke-width="1.5"/>
+  <polygon points="598,158 606,162 598,166" fill="#333"/>
+
+  <rect x="606" y="148" width="80" height="28" rx="4" fill="#1a2233" stroke="#7ec8e3"/>
+  <text x="646" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">Ver 2: 120</text>
+
+  <line x1="686" y1="162" x2="716" y2="162" stroke="#333" stroke-width="1.5"/>
+  <polygon points="714,158 722,162 714,166" fill="#333"/>
+
+  <rect x="722" y="148" width="80" height="28" rx="4" fill="#1a2233" stroke="#55c555" stroke-width="2"/>
+  <text x="762" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Ver 3: 90</text>
+
+  <!-- Readers at different snapshots -->
+  <text x="520" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Tx1 스냅샷</text>
+  <line x1="530" y1="214" x2="530" y2="176" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <polygon points="526,176 530,168 534,176" fill="#7777cc"/>
+
+  <text x="650" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Tx2 스냅샷</text>
+  <line x1="646" y1="214" x2="646" y2="176" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <polygon points="642,176 646,168 650,176" fill="#7777cc"/>
+
+  <!-- Properties -->
+  <text x="645" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8e8e8">특성</text>
+  <text x="645" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">읽기가 쓰기를 차단하지 않음</text>
+  <text x="645" y="294" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">스냅샷 시점의 데이터 반환</text>
+  <text x="645" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">구버전 정리: VACUUM / Purge</text>
+  <text x="645" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">사용 DB: PostgreSQL, MySQL, Oracle</text>
+  <text x="645" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">Write-Write 충돌은 잠금으로 해결</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">대부분의 현대 RDBMS는 MVCC + 쓰기 잠금 혼합 방식 사용</text>
+</svg>

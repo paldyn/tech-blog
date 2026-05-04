@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">동시성 이상 현상 타임라인</text>
+  <text x="440" y="64" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">Dirty Read · Non-Repeatable Read · Phantom Read</text>
+
+  <!-- Column headers -->
+  <text x="130" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">시간</text>
+  <text x="320" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">Tx 1</text>
+  <text x="550" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">Tx 2</text>
+  <text x="760" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#888">이상 현상</text>
+
+  <!-- Dirty Read section -->
+  <rect x="50" y="100" width="780" height="24" rx="4" fill="#1a2233"/>
+  <text x="440" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555">① Dirty Read — 커밋 전 데이터를 읽음</text>
+
+  <text x="130" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t1</text>
+  <rect x="220" y="132" width="200" height="20" rx="3" fill="#0f1a0f"/>
+  <text x="320" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">BEGIN</text>
+
+  <text x="130" y="164" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t2</text>
+  <rect x="450" y="154" width="200" height="20" rx="3" fill="#12101a"/>
+  <text x="550" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">UPDATE bal=900 (미커밋)</text>
+
+  <text x="130" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t3</text>
+  <rect x="220" y="176" width="200" height="20" rx="3" fill="#0f1a0f"/>
+  <text x="320" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">SELECT → 900 읽음!</text>
+
+  <text x="130" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t4</text>
+  <rect x="450" y="198" width="200" height="20" rx="3" fill="#12101a"/>
+  <text x="550" y="212" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">ROLLBACK</text>
+
+  <rect x="700" y="132" width="120" height="88" rx="4" fill="#2a1010"/>
+  <text x="760" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">존재하지 않는</text>
+  <text x="760" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">데이터 읽음</text>
+  <text x="760" y="204" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Dirty Read</text>
+
+  <!-- Non-Repeatable Read -->
+  <rect x="50" y="232" width="780" height="24" rx="4" fill="#1a2233"/>
+  <text x="440" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e8a020">② Non-Repeatable Read — 같은 행이 달라짐</text>
+
+  <text x="130" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t1</text>
+  <rect x="220" y="262" width="200" height="20" rx="3" fill="#0f1a0f"/>
+  <text x="320" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">SELECT bal → 1000</text>
+
+  <text x="130" y="294" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t2</text>
+  <rect x="450" y="284" width="200" height="20" rx="3" fill="#12101a"/>
+  <text x="550" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">UPDATE bal=900; COMMIT</text>
+
+  <text x="130" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t3</text>
+  <rect x="220" y="306" width="200" height="20" rx="3" fill="#0f1a0f"/>
+  <text x="320" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8a020">SELECT bal → 900 ≠ 1000!</text>
+
+  <rect x="700" y="262" width="120" height="66" rx="4" fill="#2a1a00"/>
+  <text x="760" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8a020">같은 행 두 번</text>
+  <text x="760" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8a020">읽었는데 다름</text>
+
+  <!-- Phantom Read -->
+  <rect x="50" y="342" width="780" height="24" rx="4" fill="#1a2233"/>
+  <text x="440" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7777cc">③ Phantom Read — 행 집합이 달라짐</text>
+
+  <text x="130" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t1</text>
+  <rect x="220" y="372" width="200" height="20" rx="3" fill="#0f1a0f"/>
+  <text x="320" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">SELECT COUNT(*) → 5</text>
+
+  <text x="130" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t2</text>
+  <rect x="450" y="394" width="200" height="20" rx="3" fill="#12101a"/>
+  <text x="550" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">INSERT new row; COMMIT</text>
+
+  <text x="130" y="426" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">t3</text>
+  <rect x="220" y="416" width="200" height="20" rx="3" fill="#0f1a0f"/>
+  <text x="320" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">SELECT COUNT(*) → 6!</text>
+
+  <rect x="700" y="372" width="120" height="66" rx="4" fill="#12102a"/>
+  <text x="760" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">결과 집합 자체가</text>
+  <text x="760" y="418" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">달라짐 (유령 행)</text>
+
+  <text x="440" y="474" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">격리 수준을 높일수록 위 이상 현상을 방지 — 단 성능·동시성 하락</text>
+</svg>
