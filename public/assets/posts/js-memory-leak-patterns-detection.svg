@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">메모리 누수 탐지 워크플로</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="66" width="200" height="74" fill="#0f1a0f" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="160" y="90" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">① Heap Snapshot</text>
+  <text x="160" y="110" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">Memory 패널에서</text>
+  <text x="160" y="126" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">스냅샷 2회 촬영</text>
+
+  <!-- Arrow -->
+  <line x1="262" y1="103" x2="296" y2="103" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="294,97 310,103 294,109" fill="#7ec8e3"/>
+
+  <!-- Step 2 -->
+  <rect x="312" y="66" width="200" height="74" fill="#0f1a0f" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="412" y="90" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">② Comparison</text>
+  <text x="412" y="110" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">두 스냅샷 비교</text>
+  <text x="412" y="126" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">증가한 객체 확인</text>
+
+  <!-- Arrow -->
+  <line x1="514" y1="103" x2="548" y2="103" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="546,97 562,103 546,109" fill="#7ec8e3"/>
+
+  <!-- Step 3 -->
+  <rect x="564" y="66" width="200" height="74" fill="#0f1a0f" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="664" y="90" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">③ Retainer 추적</text>
+  <text x="664" y="110" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">누수 객체의</text>
+  <text x="664" y="126" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">참조 체인 확인</text>
+
+  <!-- Performance Monitor alternative -->
+  <rect x="60" y="170" width="760" height="70" fill="#0f0f1a" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="192" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#7777cc">Performance Monitor (빠른 확인)</text>
+  <text x="440" y="212" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">DevTools → ⋮ → More Tools → Performance Monitor</text>
+  <text x="440" y="228" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">JS Heap Size가 작업 후에도 계속 증가하면 누수 의심</text>
+
+  <!-- Code: Node.js heap monitoring -->
+  <rect x="60" y="258" width="370" height="160" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="278"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7ec8e3">Node.js 힙 모니터링</text>
+
+  <text x="76" y="300" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> { heapUsed } </tspan><tspan fill="#7ec8e3">=</tspan>
+  </text>
+  <text x="76" y="318" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  process.memoryUsage();</tspan>
+  </text>
+  <text x="76" y="336" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">console.log(</tspan>
+  </text>
+  <text x="76" y="354" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  (heapUsed/</tspan><tspan fill="#b5cea8">1024</tspan><tspan fill="#7ec8e3">/</tspan><tspan fill="#b5cea8">1024</tspan><tspan fill="#e8e8e8">).toFixed(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">)</tspan>
+  </text>
+  <text x="76" y="372" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  + </tspan><tspan fill="#ce9178">'MB used'</tspan>
+  </text>
+  <text x="76" y="390" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+
+  <!-- Right: checklist -->
+  <rect x="450" y="258" width="370" height="160" fill="#0f0f0f" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="635" y="278" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e8e8e8">누수 의심 체크리스트</text>
+  <text x="466" y="302"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">☐  전역 변수에 배열/객체를 계속 push</text>
+  <text x="466" y="322"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">☐  removeEventListener 호출 없음</text>
+  <text x="466" y="342"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">☐  clearInterval/clearTimeout 없음</text>
+  <text x="466" y="362"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">☐  클로저가 대형 객체를 캡처</text>
+  <text x="466" y="382"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">☐  DOM 제거 후 JS 변수 잔류</text>
+  <text x="466" y="402"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">☐  Promise가 영원히 pending 상태</text>
+
+  <!-- Bottom -->
+  <text x="440" y="438" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">탐지 도구: Chrome DevTools Memory 패널 | node --inspect + clinic.js | heapdump npm 패키지</text>
+</svg>

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">메모리 누수 4대 패턴</text>
+
+  <!-- Pattern 1: 전역 변수 누적 -->
+  <rect x="60" y="62" width="370" height="180" fill="#070b14" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="84"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#e05555">① 전역 변수 · 전역 캐시 누적</text>
+
+  <text x="76" y="106" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ❌ 삭제 없이 계속 쌓임</text>
+  <text x="76" y="124" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> cache </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> {};</tspan>
+  </text>
+  <text x="76" y="142" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">function</tspan><tspan fill="#e8e8e8"> save(key, val) {</tspan>
+  </text>
+  <text x="76" y="160" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  cache[key] </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> val;</tspan><tspan fill="#6a8aa0"> // 삭제 없음</tspan>
+  </text>
+  <text x="76" y="178" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="76" y="214"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">해결: LRU 캐시 + 최대 크기 제한 / WeakMap 사용</text>
+
+  <!-- Pattern 2: 이벤트 리스너 미제거 -->
+  <rect x="450" y="62" width="370" height="180" fill="#070b14" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="466" y="84"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#e05555">② 이벤트 리스너 미제거</text>
+
+  <text x="466" y="106" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ❌ 컴포넌트 해제 시 리스너 남음</text>
+  <text x="466" y="124" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">function</tspan><tspan fill="#e8e8e8"> init() {</tspan>
+  </text>
+  <text x="466" y="142" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  window.addEventListener(</tspan>
+  </text>
+  <text x="466" y="160" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ce9178">    'scroll'</tspan><tspan fill="#e8e8e8">, heavyHandler);</tspan>
+  </text>
+  <text x="466" y="178" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="466" y="214"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">해결: cleanup 시 removeEventListener / AbortController</text>
+
+  <!-- Pattern 3: setInterval 미해제 -->
+  <rect x="60" y="262" width="370" height="180" fill="#070b14" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="284"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#e05555">③ setInterval / Timer 미해제</text>
+
+  <text x="76" y="306" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ❌ 컴포넌트 언마운트 후도 실행</text>
+  <text x="76" y="324" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">function</tspan><tspan fill="#e8e8e8"> startPoll() {</tspan>
+  </text>
+  <text x="76" y="342" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  setInterval(() </tspan><tspan fill="#7ec8e3">=&gt;</tspan><tspan fill="#e8e8e8"> {</tspan>
+  </text>
+  <text x="76" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">    fetch(url);</tspan><tspan fill="#6a8aa0"> // id 저장 안 함</tspan>
+  </text>
+  <text x="76" y="378" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }, 1000);</tspan>
+  <text x="76" y="396" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="76" y="424"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">해결: clearInterval(id) + cleanup 함수 반환</text>
+
+  <!-- Pattern 4: DOM 참조 보관 -->
+  <rect x="450" y="262" width="370" height="180" fill="#070b14" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="466" y="284"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#e05555">④ 분리된 DOM 노드 참조 보관</text>
+
+  <text x="466" y="306" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// ❌ DOM 제거 후에도 JS가 참조</text>
+  <text x="466" y="324" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">let</tspan><tspan fill="#e8e8e8"> detached;</tspan>
+  </text>
+  <text x="466" y="342" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">function</tspan><tspan fill="#e8e8e8"> hold() {</tspan>
+  </text>
+  <text x="466" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  detached </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> document</tspan>
+  </text>
+  <text x="466" y="378" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">    .getElementById(</tspan><tspan fill="#ce9178">'btn'</tspan><tspan fill="#e8e8e8">);</tspan>
+  </text>
+  <text x="466" y="396" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="466" y="424"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">해결: detached = null; 또는 WeakRef 사용</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="468" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#7ec8e3">누수 공통점: GC Root에서 도달 가능한 참조가 의도치 않게 남아있음</text>
+  <text x="440" y="490" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">Chrome DevTools → Memory → Heap Snapshot으로 탐지 가능</text>
+</svg>
