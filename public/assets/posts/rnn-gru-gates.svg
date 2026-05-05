@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">GRU: 두 게이트로 단순화된 LSTM</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888">Reset Gate · Update Gate</text>
+
+  <!-- Reset Gate box -->
+  <rect x="60" y="100" width="360" height="150" rx="10" fill="#0d1117" stroke="#e05555" stroke-width="2"/>
+  <text x="240" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#e05555">Reset Gate (r_t)</text>
+  <text x="240" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">r_t = σ(W_r · [h_{t-1}, x_t])</text>
+  <text x="240" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• r_t ≈ 0 → 이전 은닉 상태 무시</text>
+  <text x="240" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• r_t ≈ 1 → 이전 은닉 상태 반영</text>
+  <text x="240" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">h̃_t = tanh(W · [r_t ⊙ h_{t-1}, x_t])</text>
+
+  <!-- Update Gate box -->
+  <rect x="460" y="100" width="360" height="150" rx="10" fill="#0d1117" stroke="#55c555" stroke-width="2"/>
+  <text x="640" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#55c555">Update Gate (z_t)</text>
+  <text x="640" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">z_t = σ(W_z · [h_{t-1}, x_t])</text>
+  <text x="640" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• z_t ≈ 0 → 새 정보 반영</text>
+  <text x="640" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• z_t ≈ 1 → 이전 상태 유지</text>
+  <text x="640" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">LSTM의 forget+input 게이트를 통합</text>
+
+  <!-- Final update formula -->
+  <rect x="200" y="280" width="480" height="60" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">최종 업데이트</text>
+  <text x="440" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#e8e8e8">h_t = (1 - z_t) ⊙ h̃_t  +  z_t ⊙ h_{t-1}</text>
+
+  <!-- Code block -->
+  <rect x="60" y="360" width="760" height="76" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># PyTorch GRU</text>
+  <text x="76" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">gru = nn.GRU(input_size=</text>
+  <text x="290" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">128</text>
+  <text x="308" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, hidden_size=</text>
+  <text x="422" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">256</text>
+  <text x="440" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, batch_first=</text>
+  <text x="554" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">True</text>
+  <text x="578" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="76" y="418" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">out, h_n = gru(x)    </text>
+  <text x="280" y="418" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 셀 상태 없음 — GRU의 핵심 단순화</text>
+</svg>
