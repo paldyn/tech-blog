@@ -7,46 +7,172 @@ interface Props {
   pubDate: Date;
   readingTime: string;
   url: string;
+  thumb?: string;
+  thumbVariant?: 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
+  logo?: string;
 }
-const { title, category, pubDate, readingTime, url } = Astro.props;
+const {
+  title, category, pubDate, readingTime, url,
+  thumb = '</>', thumbVariant = 'a', logo,
+} = Astro.props;
+
+const shouldFillLogo =
+  logo?.endsWith('/javascript.jpeg') ||
+  logo?.endsWith('/nexacro.png') ||
+  logo?.endsWith('/ai.png') ||
+  logo?.endsWith('/spring.png') ||
+  logo?.endsWith('/sql.png') ||
+  logo?.endsWith('/java.png');
+const fillClass = logo?.endsWith('/nexacro.png') ? 'nexacro-logo-fill' : undefined;
+const useThemeLogo = category === 'Team';
 ---
 
 <a href={url} class="side-item">
-  <div class="side-category">{category}</div>
-  <h3>{title}</h3>
-  <div class="date">
-    <FormattedDate date={pubDate} /> <span class="sep">·</span> {readingTime}
+  {useThemeLogo ? (
+    <div class="side-thumb logo-thumb team-logo-thumb">
+      <img class="team-logo team-logo-light-mode" src="/assets/logo-symbol-light.png" alt={`${category} 로고`} loading="lazy" />
+      <img class="team-logo team-logo-dark-mode" src="/assets/logo-symbol-dark.png" alt="" loading="lazy" aria-hidden="true" />
+    </div>
+  ) : logo ? (
+    <div class:list={['side-thumb', 'logo-thumb', fillClass, { 'logo-fill': shouldFillLogo }]}>
+      <img src={logo} alt={`${category} 로고`} loading="lazy" />
+    </div>
+  ) : (
+    <div class={`side-thumb ${thumbVariant}`}>
+      <span class="thumb-symbol">{thumb}</span>
+    </div>
+  )}
+
+  <div class="side-body">
+    <div class="side-category">{category}</div>
+    <h3>{title}</h3>
+    <div class="date">
+      <FormattedDate date={pubDate} /> <span class="sep">·</span> {readingTime}
+    </div>
   </div>
 </a>
 
 <style>
   .side-item {
-    padding: 20px 0 24px;
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 16px;
+    padding: 12px 8px;
     border-bottom: 1px solid var(--border);
-    display: block;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.25s;
+    transition: transform 0.25s ease, background 0.25s ease;
+    border-radius: 10px;
+    align-items: center;
   }
-  .side-item:hover { transform: translateX(4px); }
+  .side-item:hover {
+    transform: translateX(2px);
+    background: var(--bg-subtle);
+  }
   .side-item:hover h3 { color: var(--accent-bright); }
-  .side-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .side-item:last-child { border-bottom: none; }
+
+  .side-thumb {
+    width: 128px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-strong);
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: rgba(255,255,255,0.85);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .thumb-symbol {
+    background: var(--gradient-silver);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+  }
+
+  .side-thumb.a { background: linear-gradient(135deg, #0a0a0a, #2a2a2a); }
+  .side-thumb.b { background: linear-gradient(135deg, #1a1a1a, #353535); }
+  .side-thumb.c { background: linear-gradient(135deg, #111, #1e2028); }
+  .side-thumb.d { background: linear-gradient(135deg, #141414, #2a2a2a); }
+  .side-thumb.e { background: linear-gradient(135deg, #0f0f0f, #222); }
+  .side-thumb.f { background: linear-gradient(135deg, #1c1c1c, #3a3a3a); }
+
+  .side-thumb.logo-thumb {
+    background: #fafafa;
+    border-color: var(--border);
+    padding: 0;
+  }
+  .side-thumb.logo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .side-thumb.logo-thumb.logo-fill {
+    padding: 0;
+    background: #0a0a0a;
+  }
+  .side-thumb.logo-thumb.logo-fill.nexacro-logo-fill {
+    background: #00388b;
+    border-color: rgba(0, 56, 139, 0.5);
+  }
+  .side-thumb.logo-thumb.logo-fill img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+  .side-thumb.logo-thumb.team-logo-thumb {
+    background: #050505;
+    padding: 0;
+  }
+  .side-thumb.logo-thumb.team-logo-thumb .team-logo {
+    width: 32px; height: 32px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .side-thumb.logo-thumb.team-logo-thumb .team-logo-dark-mode { display: none !important; }
+  :global(html[data-theme="dark"]) .side-thumb.logo-thumb.team-logo-thumb {
+    background: #ffffff;
+    border-color: var(--border);
+  }
+  :global(html[data-theme="dark"]) .side-thumb.logo-thumb.team-logo-thumb .team-logo-light-mode { display: none !important; }
+  :global(html[data-theme="dark"]) .side-thumb.logo-thumb.team-logo-thumb .team-logo-dark-mode { display: block !important; }
+
+  .side-body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   .side-category {
     font-family: var(--font-mono);
     font-size: 10px;
     color: var(--text-dim);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .side-item h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 1.45;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     letter-spacing: 0.01em;
     color: var(--text);
     transition: color 0.25s;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .side-item .date {
     font-family: var(--font-mono);
