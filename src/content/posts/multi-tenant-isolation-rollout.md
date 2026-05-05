@@ -7,7 +7,7 @@ archiveOrder: 1
 type: "record"
 category: "Backend"
 tags: ["multi-tenancy", "spring-boot", "mybatis", "hibernate", "jwt", "migration"]
-featured: true
+featured: false
 draft: false
 ---
 
