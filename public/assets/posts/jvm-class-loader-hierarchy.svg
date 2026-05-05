@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arr-up" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#55c555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">클래스 로더 계층 구조</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">부모 위임 모델(Parent Delegation Model) — 위에서부터 탐색</text>
+
+  <!-- Left Column: Hierarchy boxes -->
+
+  <!-- 1. Bootstrap Class Loader -->
+  <rect x="60" y="96" width="380" height="88" fill="#0d1117" stroke="#e05555" stroke-width="1.5" rx="8"/>
+  <text x="250" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e05555" text-anchor="middle">Bootstrap Class Loader</text>
+  <text x="250" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">C++ 구현 · Java 객체 없음</text>
+  <text x="250" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">java.lang.* · java.util.* · rt.jar / java.base</text>
+  <text x="80" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">① 최상위</text>
+
+  <!-- Arrow down 1→2 -->
+  <line x1="250" y1="184" x2="250" y2="208" stroke="#555" stroke-width="1.5"/>
+  <polygon points="242,208 258,208 250,218" fill="#555"/>
+  <text x="266" y="201" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">위임 실패 시 하위로</text>
+
+  <!-- 2. Platform (Extension) Class Loader -->
+  <rect x="60" y="218" width="380" height="88" fill="#0d1117" stroke="#ce9178" stroke-width="1.5" rx="8"/>
+  <text x="250" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#ce9178" text-anchor="middle">Platform Class Loader</text>
+  <text x="250" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Java 9 이전: Extension ClassLoader</text>
+  <text x="250" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">java.se.* · java.xml.* · 확장 모듈</text>
+  <text x="80" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ce9178">② 중간</text>
+
+  <!-- Arrow down 2→3 -->
+  <line x1="250" y1="306" x2="250" y2="330" stroke="#555" stroke-width="1.5"/>
+  <polygon points="242,330 258,330 250,340" fill="#555"/>
+  <text x="266" y="323" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">위임 실패 시 하위로</text>
+
+  <!-- 3. Application Class Loader -->
+  <rect x="60" y="340" width="380" height="88" fill="#0d1117" stroke="#55c555" stroke-width="1.5" rx="8"/>
+  <text x="250" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#55c555" text-anchor="middle">Application Class Loader</text>
+  <text x="250" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">System ClassLoader · 사용자 코드</text>
+  <text x="250" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">-classpath · 모듈 경로의 앱 클래스</text>
+  <text x="80" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">③ 최하위</text>
+
+  <!-- Arrow down 3→Custom -->
+  <line x1="250" y1="428" x2="250" y2="452" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <polygon points="243,452 257,452 250,461" fill="#555"/>
+
+  <!-- 4. Custom Class Loader -->
+  <rect x="60" y="461" width="380" height="42" fill="#0d1117" stroke="#7777cc" stroke-width="1" rx="6" stroke-dasharray="5,3"/>
+  <text x="250" y="479" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" text-anchor="middle">Custom Class Loader (선택)</text>
+  <text x="250" y="496" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">URLClassLoader · 암호화 클래스 · 플러그인 시스템</text>
+
+  <!-- Right Column: Delegation Flow -->
+  <rect x="480" y="96" width="360" height="408" fill="#0d1117" stroke="#2a3a4a" stroke-width="1" rx="8"/>
+  <text x="660" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">위임 순서: loadClass("com.App")</text>
+
+  <!-- Step boxes -->
+  <rect x="500" y="134" width="320" height="32" fill="#0f1e2e" stroke="#7ec8e3" stroke-width="1" rx="4"/>
+  <text x="660" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">① Application CL 요청 수신</text>
+
+  <line x1="660" y1="166" x2="660" y2="178" stroke="#555" stroke-width="1.2"/>
+  <polygon points="653,178 667,178 660,186" fill="#555"/>
+
+  <rect x="500" y="186" width="320" height="32" fill="#1e1a0d" stroke="#ce9178" stroke-width="1" rx="4"/>
+  <text x="660" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ce9178" text-anchor="middle">② 부모(Platform CL)에게 위임</text>
+
+  <line x1="660" y1="218" x2="660" y2="230" stroke="#555" stroke-width="1.2"/>
+  <polygon points="653,230 667,230 660,238" fill="#555"/>
+
+  <rect x="500" y="238" width="320" height="32" fill="#1a0d0d" stroke="#e05555" stroke-width="1" rx="4"/>
+  <text x="660" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">③ 조부모(Bootstrap CL)에게 위임</text>
+
+  <line x1="660" y1="270" x2="660" y2="282" stroke="#555" stroke-width="1.2"/>
+  <polygon points="653,282 667,282 660,290" fill="#555"/>
+
+  <rect x="500" y="290" width="320" height="36" fill="#0a0e14" stroke="#444" stroke-width="1" rx="4"/>
+  <text x="660" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">④ Bootstrap: java.lang에 없음</text>
+  <text x="660" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">ClassNotFoundException 반환</text>
+
+  <line x1="660" y1="326" x2="660" y2="338" stroke="#55c555" stroke-width="1.2"/>
+  <polygon points="653,338 667,338 660,346" fill="#55c555"/>
+
+  <rect x="500" y="346" width="320" height="32" fill="#1a0d0d" stroke="#e05555" stroke-width="1" rx="4"/>
+  <text x="660" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ce9178" text-anchor="middle">⑤ Platform CL도 못 찾음</text>
+
+  <line x1="660" y1="378" x2="660" y2="390" stroke="#55c555" stroke-width="1.2"/>
+  <polygon points="653,390 667,390 660,398" fill="#55c555"/>
+
+  <rect x="500" y="398" width="320" height="36" fill="#0a1a0a" stroke="#55c555" stroke-width="1.2" rx="4"/>
+  <text x="660" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">⑥ Application CL이 직접 로드</text>
+  <text x="660" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">classpath에서 com/App.class 발견!</text>
+
+  <!-- Footer label -->
+  <text x="660" y="500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">보안상 상위 로더가 먼저 → 핵심 클래스 위조 불가</text>
+</svg>
