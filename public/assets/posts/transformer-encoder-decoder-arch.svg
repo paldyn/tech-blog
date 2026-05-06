@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Encoder-Decoder 전체 구조</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888" text-anchor="middle">소스 → Encoder → Cross-Attention → Decoder → 타깃 생성</text>
+
+  <!-- Encoder side -->
+  <rect x="50" y="96" width="310" height="370" fill="#0d1117" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="205" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">Encoder</text>
+
+  <!-- Source input -->
+  <rect x="70" y="132" width="270" height="32" fill="#111827" rx="5" stroke="#1e2433" stroke-width="1"/>
+  <text x="205" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Source: "I love transformers"</text>
+
+  <!-- Embedding + PE -->
+  <line x1="205" y1="164" x2="205" y2="180" stroke="#444" stroke-width="1.5"/>
+  <polygon points="199,180 205,190 211,180" fill="#444"/>
+  <rect x="100" y="190" width="210" height="26" fill="#1a1f35" rx="4" stroke="#7777cc" stroke-width="1"/>
+  <text x="205" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">Token Emb + PE</text>
+
+  <!-- Encoder layers (stacked) -->
+  <line x1="205" y1="216" x2="205" y2="230" stroke="#444" stroke-width="1.5"/>
+  <polygon points="199,230 205,240 211,230" fill="#444"/>
+  <rect x="70" y="240" width="270" height="40" fill="#111827" rx="5" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="205" y="265" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">Encoder Layer 1 (MHA + FFN)</text>
+
+  <line x1="205" y1="280" x2="205" y2="292" stroke="#444" stroke-width="1.5"/>
+  <polygon points="199,292 205,302 211,292" fill="#444"/>
+  <rect x="70" y="302" width="270" height="40" fill="#111827" rx="5" stroke="#7ec8e3" stroke-width="1" opacity="0.8"/>
+  <text x="205" y="327" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">Encoder Layer 2 (MHA + FFN)</text>
+
+  <text x="205" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" fill="#555" text-anchor="middle">· · ·  N layers  · · ·</text>
+
+  <!-- Encoder output -->
+  <rect x="70" y="388" width="270" height="36" fill="#0a1520" rx="5" stroke="#55c555" stroke-width="1.5"/>
+  <text x="205" y="411" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">문맥 표현  (seq × d_model)</text>
+  <text x="205" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">→ Decoder의 Cross-Attention에 K, V 제공</text>
+
+  <!-- Cross-attention arrow -->
+  <line x1="360" y1="406" x2="398" y2="406" stroke="#55c555" stroke-width="2.5"/>
+  <polygon points="398,400 414,406 398,412" fill="#55c555"/>
+  <text x="387" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">K, V</text>
+
+  <!-- Decoder side -->
+  <rect x="414" y="96" width="416" height="370" fill="#0d1117" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="622" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e05555" text-anchor="middle">Decoder</text>
+
+  <!-- Target input -->
+  <rect x="434" y="132" width="376" height="32" fill="#111827" rx="5" stroke="#1e2433" stroke-width="1"/>
+  <text x="622" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Target: &lt;BOS&gt; "나는" "트랜스포머를"  (shift right)</text>
+
+  <line x1="622" y1="164" x2="622" y2="180" stroke="#444" stroke-width="1.5"/>
+  <polygon points="616,180 622,190 628,180" fill="#444"/>
+  <rect x="512" y="190" width="220" height="26" fill="#1a1f35" rx="4" stroke="#7777cc" stroke-width="1"/>
+  <text x="622" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">Target Emb + PE</text>
+
+  <line x1="622" y1="216" x2="622" y2="230" stroke="#444" stroke-width="1.5"/>
+  <polygon points="616,230 622,240 628,230" fill="#444"/>
+
+  <!-- Decoder Layer 1 -->
+  <rect x="434" y="240" width="376" height="60" fill="#111827" rx="5" stroke="#e05555" stroke-width="1"/>
+  <text x="622" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">Decoder Layer 1</text>
+  <text x="622" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Masked MHA  →  Cross-Attn  →  FFN</text>
+
+  <line x1="622" y1="300" x2="622" y2="312" stroke="#444" stroke-width="1.5"/>
+  <polygon points="616,312 622,322 628,312" fill="#444"/>
+
+  <!-- Decoder Layer 2 -->
+  <rect x="434" y="322" width="376" height="40" fill="#111827" rx="5" stroke="#e05555" stroke-width="1" opacity="0.8"/>
+  <text x="622" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">Decoder Layer 2 (same structure)</text>
+
+  <text x="622" y="385" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" fill="#555" text-anchor="middle">· · ·  N layers  · · ·</text>
+
+  <!-- Linear + Softmax output -->
+  <rect x="434" y="400" width="376" height="50" fill="#1a150a" rx="5" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="622" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">Linear + Softmax</text>
+  <text x="622" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">→ vocab 크기의 확률 분포 → 다음 토큰 선택</text>
+</svg>

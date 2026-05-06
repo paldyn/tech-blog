@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Positional Encoding 공식</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888" text-anchor="middle">순서 정보를 주파수로 인코딩 — 학습 없이, 임의 길이에 대응</text>
+
+  <!-- Left column: Formula box -->
+  <rect x="50" y="96" width="370" height="200" fill="#111827" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="235" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">sin / cos 이중 채널</text>
+
+  <!-- Formula lines -->
+  <text x="70" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">짝수 차원 (2i)</text>
+  <rect x="70" y="163" width="330" height="42" fill="#0d1117" rx="5"/>
+  <text x="235" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#ce9178" text-anchor="middle">PE(pos, 2i) = sin( pos / 10000</text>
+  <text x="490" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#ce9178">2i/d</text>
+  <text x="502" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#ce9178">)</text>
+  <!-- fix: render full formula centered -->
+  <text x="235" y="189" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">pos: 토큰 위치,  i: 차원 인덱스,  d: 임베딩 크기</text>
+
+  <text x="70" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">홀수 차원 (2i+1)</text>
+  <rect x="70" y="236" width="330" height="42" fill="#0d1117" rx="5"/>
+  <text x="235" y="257" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#b5cea8" text-anchor="middle">PE(pos, 2i+1) = cos( pos / 10000</text>
+  <text x="235" y="271" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">주기: 2π ~ 10000·2π (차원마다 다른 주파수)</text>
+
+  <!-- Properties -->
+  <text x="70" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">핵심 속성</text>
+  <text x="70" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">✓  학습 파라미터 없음 (고정 함수)</text>
+  <text x="70" y="355" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">✓  훈련 길이 초과 위치에도 적용 가능</text>
+  <text x="70" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">✓  PE(a) · PE(b) 내적으로 상대 거리 표현</text>
+
+  <!-- Divider -->
+  <line x1="50" y1="394" x2="420" y2="394" stroke="#1e2433" stroke-width="1"/>
+  <text x="70" y="413" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">vs 학습형 PE: BERT 등은 파라미터로 학습, 최대 길이 제한 있음</text>
+  <text x="70" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">vs RoPE / ALiBi: 최신 모델은 상대 위치 인코딩 방식 사용 (후편 참고)</text>
+
+  <!-- Right column: Frequency visualization -->
+  <rect x="460" y="96" width="370" height="200" fill="#111827" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="645" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">차원별 주파수 비교</text>
+
+  <!-- Frequency bars visualization: 6 dimension pairs -->
+  <!-- Each bar represents a period length -->
+  <text x="470" y="145" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">차원 i=0 (최단 주기: 2π ≈ 6.3)</text>
+  <rect x="470" y="150" width="50" height="14" fill="#7ec8e3" rx="2"/>
+
+  <text x="470" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">차원 i=1 (주기 ≈ 39)</text>
+  <rect x="470" y="185" width="95" height="14" fill="#7ec8e3" rx="2" opacity="0.85"/>
+
+  <text x="470" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">차원 i=2 (주기 ≈ 244)</text>
+  <rect x="470" y="220" width="155" height="14" fill="#7777cc" rx="2" opacity="0.8"/>
+
+  <text x="470" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">차원 i=3 (주기 ≈ 1522)</text>
+  <rect x="470" y="255" width="220" height="14" fill="#7777cc" rx="2" opacity="0.7"/>
+
+  <text x="470" y="285" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">차원 i=4 (주기 ≈ 9500)</text>
+  <rect x="470" y="290" width="310" height="14" fill="#888" rx="2" opacity="0.55"/>
+
+  <text x="470" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">dim i=d/2-1 (최장 주기: 62832)</text>
+  <rect x="470" y="325" width="350" height="14" fill="#555" rx="2" opacity="0.45"/>
+
+  <!-- Annotation -->
+  <text x="645" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">낮은 차원 → 빠른 변화 (단기 위치 구분)</text>
+  <text x="645" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">높은 차원 → 느린 변화 (장기 위치 구분)</text>
+
+  <!-- Code block -->
+  <rect x="460" y="390" width="370" height="88" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 입력에 PE 더하기</text>
+  <text x="476" y="428" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">x = token_emb + pe[:seq_len, :]</text>
+  <text x="476" y="446" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># shape: (seq_len, d_model)</text>
+  <text x="476" y="464" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">x = dropout(x)  </text>
+</svg>
