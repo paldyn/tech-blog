@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">함수 기반 인덱스 (Functional Index)</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">표현식 결과를 인덱싱해 함수·변환 조건을 Index Scan으로 처리</text>
+
+  <!-- Problem box -->
+  <rect x="60" y="95" width="360" height="180" fill="#111" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">인덱스 미사용 (함수 래핑)</text>
+
+  <rect x="80" y="132" width="320" height="120" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="96" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 컬럼에 함수 적용 → 인덱스 무효</text>
+  <text x="96" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="143" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> * </text>
+  <text x="162" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="196" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> users</text>
+  <text x="96" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text>
+  <text x="141" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> LOWER(email)</text>
+  <text x="96" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  = </text>
+  <text x="120" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'alice@example.com'</text>
+  <text x="96" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">-- → Full Scan (idx_email 불사용)</text>
+
+  <!-- Solution box -->
+  <rect x="460" y="95" width="360" height="180" fill="#111" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">함수 기반 인덱스 생성 후</text>
+
+  <rect x="480" y="132" width="320" height="120" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="496" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 표현식 인덱스 생성</text>
+  <text x="496" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE INDEX</text>
+  <text x="585" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> idx_lower_email</text>
+  <text x="496" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ON</text>
+  <text x="514" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> users(LOWER(email));</text>
+  <text x="496" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 동일 쿼리 → Index Scan</text>
+  <text x="496" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">-- (LOWER(email) 값을 미리 저장)</text>
+
+  <!-- Arrow -->
+  <polygon points="448,185 430,175 430,195" fill="#7ec8e3"/>
+  <line x1="420" y1="185" x2="448" y2="185" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">인덱스</text>
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">추가</text>
+
+  <!-- Use cases grid -->
+  <text x="60" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">주요 활용 패턴</text>
+
+  <rect x="60" y="325" width="180" height="70" fill="#111" rx="6" stroke="#333" stroke-width="1"/>
+  <text x="150" y="347" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">대소문자 무시</text>
+  <text x="150" y="365" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">LOWER(col)</text>
+  <text x="150" y="383" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">UPPER(col)</text>
+
+  <rect x="255" y="325" width="180" height="70" fill="#111" rx="6" stroke="#333" stroke-width="1"/>
+  <text x="345" y="347" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">날짜 추출</text>
+  <text x="345" y="365" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">DATE_TRUNC('month',..)</text>
+  <text x="345" y="383" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">EXTRACT(year FROM..)</text>
+
+  <rect x="450" y="325" width="180" height="70" fill="#111" rx="6" stroke="#333" stroke-width="1"/>
+  <text x="540" y="347" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">JSON 필드</text>
+  <text x="540" y="365" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">(data->>'key')</text>
+  <text x="540" y="383" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">CAST 표현식</text>
+
+  <rect x="645" y="325" width="175" height="70" fill="#111" rx="6" stroke="#333" stroke-width="1"/>
+  <text x="732" y="347" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">해시·변환</text>
+  <text x="732" y="365" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">MD5(col)</text>
+  <text x="732" y="383" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">CONCAT(a,b)</text>
+
+  <!-- Note -->
+  <rect x="60" y="420" width="760" height="50" fill="#0d0d18" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="440" y="441" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">주의</text>
+  <text x="468" y="441" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">쿼리의 WHERE 조건이 인덱스 생성 시 사용한 표현식과 정확히 일치해야 Planner가 인식한다</text>
+  <text x="440" y="459" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">LOWER(email) 인덱스에 UPPER(email) 조건은 적용되지 않음</text>
+</svg>

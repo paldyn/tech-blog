@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">3가지 조인 알고리즘</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">Nested Loop · Hash Join · Sort-Merge Join</text>
+
+  <!-- ─── NL Join ─── -->
+  <rect x="60" y="95" width="230" height="300" fill="#111" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">Nested Loop</text>
+
+  <!-- Outer loop -->
+  <rect x="78" y="133" width="90" height="30" fill="#0d1520" rx="4" stroke="#7ec8e3"/>
+  <text x="123" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">Outer 테이블</text>
+  <text x="123" y="174" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">row 1</text>
+  <text x="123" y="192" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">row 2</text>
+  <text x="123" y="210" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">row 3</text>
+
+  <!-- Arrow to inner -->
+  <line x1="168" y1="168" x2="192" y2="168" stroke="#7ec8e3" stroke-dasharray="3,2" stroke-width="1.5"/>
+  <polygon points="212,168 196,161 196,175" fill="#7ec8e3"/>
+  <line x1="168" y1="186" x2="192" y2="186" stroke="#7ec8e3" stroke-dasharray="3,2" stroke-width="1.5"/>
+  <polygon points="212,186 196,179 196,193" fill="#7ec8e3"/>
+  <line x1="168" y1="204" x2="192" y2="204" stroke="#7ec8e3" stroke-dasharray="3,2" stroke-width="1.5"/>
+  <polygon points="212,204 196,197 196,211" fill="#7ec8e3"/>
+
+  <!-- Inner loop -->
+  <rect x="192" y="133" width="80" height="90" fill="#0d1520" rx="4" stroke="#555"/>
+  <text x="232" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Inner</text>
+  <text x="232" y="168" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">idx</text>
+  <text x="232" y="184" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">lookup</text>
+  <text x="232" y="200" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">× N</text>
+
+  <text x="175" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">복잡도: O(N × M)</text>
+  <text x="175" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Inner에 인덱스 필수</text>
+  <text x="175" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">소량 × 인덱스 룩업</text>
+  <text x="175" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">OLTP에 최적</text>
+  <text x="175" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">대용량 테이블 × 메모리 낭비</text>
+  <text x="175" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">인덱스 없으면 느림</text>
+
+  <!-- ─── Hash Join ─── -->
+  <rect x="325" y="95" width="230" height="300" fill="#111" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">Hash Join</text>
+
+  <!-- Build phase -->
+  <rect x="343" y="133" width="90" height="50" fill="#0d1520" rx="4" stroke="#7777cc"/>
+  <text x="388" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">Build Phase</text>
+  <text x="388" y="168" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">작은 테이블</text>
+  <text x="388" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888">→ 해시 테이블 구축</text>
+
+  <!-- Arrow build → probe -->
+  <line x1="435" y1="158" x2="463" y2="158" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="480,158 465,151 465,165" fill="#7777cc"/>
+
+  <!-- Probe phase -->
+  <rect x="463" y="133" width="72" height="50" fill="#0d1520" rx="4" stroke="#555"/>
+  <text x="499" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Probe</text>
+  <text x="499" y="168" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">큰 테이블</text>
+  <text x="499" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888">→ 해시 조회</text>
+
+  <text x="440" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">복잡도: O(N + M)</text>
+  <text x="440" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Build 테이블을 메모리에 적재</text>
+  <text x="440" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">대용량 등치 조인</text>
+  <text x="440" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">인덱스 불필요</text>
+  <text x="440" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">메모리 부족 시 디스크 Spill</text>
+  <text x="440" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">범위 조인 미지원</text>
+
+  <!-- ─── Sort-Merge Join ─── -->
+  <rect x="590" y="95" width="230" height="300" fill="#111" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="705" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Sort-Merge Join</text>
+
+  <!-- Sort phase -->
+  <rect x="608" y="133" width="90" height="50" fill="#0e1a0e" rx="4" stroke="#55c555"/>
+  <text x="653" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Sort Phase</text>
+  <text x="653" y="168" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">양쪽 테이블</text>
+  <text x="653" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888">조인 키로 정렬</text>
+
+  <!-- Arrow sort → merge -->
+  <line x1="700" y1="158" x2="718" y2="158" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="735,158 720,151 720,165" fill="#55c555"/>
+
+  <!-- Merge phase -->
+  <rect x="718" y="133" width="82" height="50" fill="#0e1a0e" rx="4" stroke="#555"/>
+  <text x="759" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Merge</text>
+  <text x="759" y="168" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">포인터로</text>
+  <text x="759" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888">순차 병합</text>
+
+  <text x="705" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">복잡도: O(N log N + M log M)</text>
+  <text x="705" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">이미 정렬된 데이터 최적</text>
+  <text x="705" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">범위 조인 지원</text>
+  <text x="705" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">이미 정렬 시 O(N+M)</text>
+  <text x="705" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">정렬 비용 초기 발생</text>
+  <text x="705" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">정렬 불가 컬럼엔 비적합</text>
+
+  <!-- Bottom: decision guide -->
+  <rect x="60" y="420" width="760" height="90" fill="#0d0d18" rx="6" stroke="#1e2433"/>
+  <text x="440" y="444" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">옵티마이저 선택 기준</text>
+  <text x="200" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">NL: 소량 + Inner 인덱스</text>
+  <text x="440" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">Hash: 대용량 등치, 인덱스 없음</text>
+  <text x="680" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Sort-Merge: 정렬 데이터·범위 조인</text>
+  <text x="440" y="492" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">힌트 없이 통계가 정확하면 CBO가 자동 선택 — EXPLAIN으로 확인</text>
+</svg>

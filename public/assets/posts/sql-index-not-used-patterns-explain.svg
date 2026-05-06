@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">EXPLAIN으로 인덱스 사용 여부 확인</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">Seq Scan vs Index Scan 구분 방법</text>
+
+  <!-- Left: No index used -->
+  <rect x="60" y="95" width="360" height="300" fill="#111" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">인덱스 미사용 (Seq Scan)</text>
+
+  <rect x="78" y="132" width="324" height="240" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="94" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 쿼리</text>
+  <text x="94" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">EXPLAIN</text>
+  <text x="148" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3"> SELECT</text>
+  <text x="204" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> *</text>
+  <text x="94" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="130" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> users</text>
+  <text x="94" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text>
+  <text x="139" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> LOWER(name)=</text>
+  <text x="244" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'alice'</text>
+  <text x="94" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- EXPLAIN 결과</text>
+  <text x="94" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">Seq Scan on users</text>
+  <text x="94" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  (cost=0.00..3245.00</text>
+  <text x="94" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">   rows=1 width=64)</text>
+  <text x="94" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  Filter: (lower(name)</text>
+  <text x="94" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">    = 'alice')</text>
+  <text x="94" y="354" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">← 전체 테이블 스캔!</text>
+
+  <!-- Right: Index used -->
+  <rect x="460" y="95" width="360" height="300" fill="#111" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">인덱스 사용 (Index Scan)</text>
+
+  <rect x="478" y="132" width="324" height="240" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="494" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 표현식 인덱스 생성 후</text>
+  <text x="494" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">EXPLAIN</text>
+  <text x="548" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3"> SELECT</text>
+  <text x="604" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> *</text>
+  <text x="494" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="530" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> users</text>
+  <text x="494" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text>
+  <text x="539" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> LOWER(name)=</text>
+  <text x="644" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'alice'</text>
+  <text x="494" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- EXPLAIN 결과</text>
+  <text x="494" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">Index Scan using</text>
+  <text x="494" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  idx_lower_name on users</text>
+  <text x="494" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  (cost=0.43..8.45</text>
+  <text x="494" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">   rows=1 width=64)</text>
+  <text x="494" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  Index Cond:</text>
+  <text x="494" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">   lower(name)='alice'</text>
+  <text x="494" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">← 인덱스 활용!</text>
+
+  <!-- Bottom tip -->
+  <rect x="60" y="415" width="760" height="15" fill="none"/>
+  <text x="440" y="427" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">EXPLAIN ANALYZE로 실제 실행 시간까지 확인 — cost는 추정, actual time은 실측</text>
+</svg>

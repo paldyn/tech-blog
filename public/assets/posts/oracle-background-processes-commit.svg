@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">COMMIT 시 백그라운드 프로세스 흐름</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">LGWR 완료 → COMMIT 반환, DBWR는 비동기</text>
+
+  <!-- Step 1: Server Process writes redo buffer -->
+  <rect x="60" y="95" width="150" height="55" fill="#0d1520" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="135" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">서버 프로세스</text>
+  <text x="135" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">COMMIT 발행</text>
+  <text x="135" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Redo 버퍼 기록</text>
+
+  <!-- Arrow 1 -->
+  <line x1="210" y1="122" x2="260" y2="122" stroke="#e8b84b" stroke-width="2"/>
+  <polygon points="272,122 258,115 258,129" fill="#e8b84b"/>
+  <text x="241" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8b84b">신호</text>
+
+  <!-- Step 2: LGWR -->
+  <rect x="272" y="95" width="150" height="55" fill="#1a1000" rx="8" stroke="#e8b84b" stroke-width="1.5"/>
+  <text x="347" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8b84b">LGWR</text>
+  <text x="347" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Redo Buffer</text>
+  <text x="347" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ Redo 파일</text>
+
+  <!-- Arrow 2 -->
+  <line x1="422" y1="122" x2="472" y2="122" stroke="#55c555" stroke-width="2"/>
+  <polygon points="484,122 470,115 470,129" fill="#55c555"/>
+  <text x="453" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">완료</text>
+
+  <!-- Step 3: COMMIT returned -->
+  <rect x="484" y="95" width="150" height="55" fill="#0e1a0e" rx="8" stroke="#55c555" stroke-width="2"/>
+  <text x="559" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">COMMIT 완료</text>
+  <text x="559" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">클라이언트에</text>
+  <text x="559" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">응답 반환</text>
+
+  <!-- DBWR async -->
+  <rect x="696" y="95" width="124" height="55" fill="#0d1520" rx="8" stroke="#555" stroke-width="1"/>
+  <text x="758" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#555">DBWR</text>
+  <text x="758" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">비동기 기록</text>
+  <text x="758" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">나중에 실행</text>
+
+  <line x1="634" y1="122" x2="694" y2="122" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="664" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">비동기</text>
+
+  <!-- WAL explanation -->
+  <rect x="60" y="175" width="760" height="100" fill="#111" rx="8" stroke="#333"/>
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">Write-Ahead Logging (WAL) 원칙</text>
+  <text x="440" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">Redo Log(디스크) 쓰기가 COMMIT 확인보다 반드시 먼저 완료</text>
+  <text x="440" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">데이터 파일(DBWR)은 나중에 써도 됨 — 크래시 시 Redo 로그로 복구 가능</text>
+  <text x="440" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">이것이 COMMIT이 빠른 이유 (순차 Redo 쓰기 한 번만 기다림)</text>
+
+  <!-- Instance recovery -->
+  <rect x="60" y="295" width="760" height="80" fill="#0d1520" rx="8" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">SMON 인스턴스 복구 (비정상 종료 후)</text>
+  <text x="240" y="348" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">① Roll Forward</text>
+  <text x="240" y="366" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Redo 로그 재적용으로 데이터 복원</text>
+  <text x="640" y="348" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">② Roll Back</text>
+  <text x="640" y="366" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">미완료 트랜잭션 Undo 롤백</text>
+</svg>
