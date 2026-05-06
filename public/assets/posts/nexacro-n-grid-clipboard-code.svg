@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Grid 클립보드 API 활용 코드</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">copyToClipboard / pasteFromClipboard</text>
+
+  <!-- Left: copy -->
+  <rect x="60" y="94" width="360" height="30" fill="#1a1a2e" rx="4"/>
+  <text x="240" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">버튼으로 선택 행 복사</text>
+
+  <rect x="60" y="129" width="360" height="252" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="153" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">// 전체 Grid를 TSV 문자열로</text>
+  <text x="76" y="171" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">function</text>
+  <text x="130" y="171" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> fn_copyAll() {</text>
+  <text x="76" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  var</text>
+  <text x="104" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> sTsv = <tspan fill="#ce9178">""</tspan>;</text>
+  <text x="76" y="207" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  for</text>
+  <text x="100" y="207" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (var r=<tspan fill="#b5cea8">0</tspan>; r&lt;ds.rowcount; r++) {</text>
+  <text x="76" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    var</text>
+  <text x="104" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> aRow = [];</text>
+  <text x="76" y="243" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    for</text>
+  <text x="104" y="243" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (var c=<tspan fill="#b5cea8">0</tspan>; c&lt;ds.colcount; c++) {</text>
+  <text x="76" y="261" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      aRow.push(ds.getColumn(r,c));</text>
+  <text x="76" y="279" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    }</text>
+  <text x="76" y="297" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    sTsv += aRow.join(<tspan fill="#ce9178">"\t"</tspan>) + <tspan fill="#ce9178">"\n"</tspan>;</text>
+  <text x="76" y="315" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }</text>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  // 브라우저 클립보드에 쓰기</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  grd.copyToClipboard();</text>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <!-- Right: paste -->
+  <rect x="460" y="94" width="360" height="30" fill="#1a1a2e" rx="4"/>
+  <text x="640" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">붙여넣기 후 처리</text>
+
+  <rect x="460" y="129" width="360" height="252" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="476" y="153" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">// Ctrl+V onpaste 이벤트 후</text>
+  <text x="476" y="171" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">function</text>
+  <text x="530" y="171" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> grd_onpaste(obj, e) {</text>
+  <text x="476" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  // 붙여넣기 후 유효성 재검사</text>
+  <text x="476" y="207" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  var</text>
+  <text x="504" y="207" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> nFrom = e.startrow;</text>
+  <text x="476" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  var</text>
+  <text x="504" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> nTo   = e.endrow;</text>
+  <text x="476" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  for</text>
+  <text x="500" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (var r=nFrom; r&lt;=nTo; r++) {</text>
+  <text x="476" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    fn_validateRow(obj, r);</text>
+  <text x="476" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }</text>
+  <text x="476" y="315" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  // 붙여넣기 방지 (특정 조건)</text>
+  <text x="476" y="333" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">  // e.cancel = true;</text>
+  <text x="476" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+</svg>
