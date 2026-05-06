@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="880" height="540">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">HttpMessageConverter 처리 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">요청·응답 직렬화/역직렬화 파이프라인</text>
+
+  <!-- === 요청 흐름 (위) === -->
+  <!-- Client -->
+  <rect x="60" y="110" width="120" height="52" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="120" y="131" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">HTTP 클라이언트</text>
+  <text x="120" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">Content-Type: JSON</text>
+
+  <!-- Arrow 1 -->
+  <line x1="180" y1="136" x2="240" y2="136" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="210" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">POST body</text>
+
+  <!-- DispatcherServlet -->
+  <rect x="240" y="110" width="140" height="52" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="310" y="131" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">DispatcherServlet</text>
+  <text x="310" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">HandlerAdapter 위임</text>
+
+  <!-- Arrow 2 -->
+  <line x1="380" y1="136" x2="440" y2="136" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- HandlerAdapter -->
+  <rect x="440" y="110" width="155" height="52" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="517" y="131" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">RequestMapping</text>
+  <text x="517" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">HandlerAdapter</text>
+
+  <!-- Arrow 3 -->
+  <line x1="595" y1="136" x2="660" y2="136" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="628" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">canRead()?</text>
+
+  <!-- MessageConverter box -->
+  <rect x="660" y="96" width="160" height="80" rx="8" fill="#0d1a2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="740" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">HttpMessage</text>
+  <text x="740" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">Converter</text>
+  <text x="740" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">read() → 역직렬화</text>
+  <text x="740" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">write() → 직렬화</text>
+
+  <!-- === 컨버터 목록 (중앙) === -->
+  <text x="440" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8e8e8">등록된 Converter 체인 (우선순위 순)</text>
+
+  <!-- Converter list items -->
+  <!-- ByteArrayHttpMessageConverter -->
+  <rect x="60" y="238" width="220" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="80" y="257" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">ByteArrayHttpMessageConverter</text>
+  <text x="80" y="273" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">application/octet-stream, */*</text>
+
+  <!-- StringHttpMessageConverter -->
+  <rect x="300" y="238" width="200" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="320" y="257" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">StringHttpMessageConverter</text>
+  <text x="320" y="273" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">text/plain, text/*, */*</text>
+
+  <!-- MappingJackson2 -->
+  <rect x="520" y="238" width="220" height="44" rx="6" fill="#0d1a2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="540" y="257" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">MappingJackson2Http</text>
+  <text x="540" y="271" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">MessageConverter ✓</text>
+  <text x="540" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">application/json, application/*+json</text>
+
+  <!-- === 응답 흐름 (하단) === -->
+  <line x1="440" y1="310" x2="440" y2="340" stroke="#555" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="440" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">응답 경로</text>
+
+  <!-- @RequestBody / @ResponseBody -->
+  <rect x="60" y="356" width="360" height="56" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="240" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">@RequestBody / @ResponseBody</text>
+  <text x="240" y="395" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">canRead() / canWrite() → read() / write() 호출</text>
+
+  <!-- Accept / Content-Type -->
+  <rect x="460" y="356" width="360" height="56" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="640" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">Content Negotiation</text>
+  <text x="640" y="395" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Accept 헤더 → produces 매칭 → Converter 선택</text>
+
+  <!-- 결과 화살표 -->
+  <line x1="240" y1="412" x2="240" y2="450" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <line x1="640" y1="412" x2="640" y2="450" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- 결과 박스 -->
+  <rect x="110" y="450" width="260" height="44" rx="6" fill="#0d1d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="470" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">Java 객체 ↔ HTTP Body</text>
+  <text x="240" y="487" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Jackson이 JSON 자동 변환</text>
+
+  <rect x="510" y="450" width="260" height="44" rx="6" fill="#0d1d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="470" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">406 Not Acceptable 방지</text>
+  <text x="640" y="487" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">produces/consumes 명시로 명확화</text>
+</svg>
