@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JVM 스택 프레임 구조와 Operand Stack 동작</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">메서드 호출 시 프레임이 쌓이고, 바이트코드 명령이 스택을 조작합니다</text>
+
+  <!-- ── Left: JVM Stack with frames ── -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">JVM Stack (스레드 전용)</text>
+
+  <!-- Frame 3 (top, current) -->
+  <rect x="60" y="112" width="310" height="100" rx="6" fill="#0d1117" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="80" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">Frame: calculate(int, int)</text>
+  <text x="80" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">지역변수 배열: [a=5, b=3, result=0]</text>
+  <text x="80" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">피연산자 스택: [5, 3]  ← 현재</text>
+  <text x="80" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Constant Pool 참조, 반환 주소</text>
+  <text x="306" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">← 현재 실행 중</text>
+
+  <!-- Frame 2 -->
+  <rect x="60" y="222" width="310" height="80" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="80" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">Frame: processData(String)</text>
+  <text x="80" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">지역변수 배열: [this, data="hello"]</text>
+  <text x="80" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">피연산자 스택: [] (비어 있음)</text>
+
+  <!-- Frame 1 (bottom) -->
+  <rect x="60" y="312" width="310" height="80" rx="6" fill="#0d1117" stroke="#555" stroke-width="1"/>
+  <text x="80" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#888">Frame: main(String[])</text>
+  <text x="80" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#666">지역변수 배열: [args]</text>
+  <text x="80" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#666">피연산자 스택: []</text>
+
+  <!-- Stack direction label -->
+  <text x="180" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">↑ push (메서드 호출) / pop (메서드 반환) ↓</text>
+
+  <!-- ── Right: Operand Stack bytecode example ── -->
+  <text x="420" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8c84a">피연산자 스택 동작: a + b</text>
+
+  <!-- Code block -->
+  <rect x="420" y="112" width="400" height="180" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="436" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// Java 코드</text>
+  <text x="436" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text><text x="466" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> result = a + b;</text>
+  <text x="436" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 컴파일된 바이트코드</text>
+  <text x="436" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">iload_1</text><text x="508" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  // 지역변수[1]=a 스택에 push</text>
+  <text x="436" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">iload_2</text><text x="508" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  // 지역변수[2]=b 스택에 push</text>
+  <text x="436" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">iadd  </text><text x="484" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  // pop 두 값, 덧셈, push 결과</text>
+  <text x="436" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">istore_3</text><text x="508" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"> // pop→지역변수[3]=result</text>
+  <text x="436" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">ireturn </text><text x="508" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 스택 맨 위 값 반환</text>
+
+  <!-- Operand Stack visual steps -->
+  <text x="420" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">단계별 피연산자 스택 상태</text>
+
+  <!-- Step boxes -->
+  <!-- iload_1 -->
+  <rect x="420" y="330" width="90" height="80" rx="6" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="465" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">iload_1</text>
+  <rect x="432" y="360" width="66" height="20" rx="3" fill="#1a2636" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="465" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" text-anchor="middle">5</text>
+  <text x="465" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle">[a=5]</text>
+
+  <!-- iload_2 -->
+  <rect x="524" y="330" width="90" height="80" rx="6" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="569" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">iload_2</text>
+  <rect x="536" y="342" width="66" height="20" rx="3" fill="#1a2636" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="569" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" text-anchor="middle">3</text>
+  <rect x="536" y="364" width="66" height="20" rx="3" fill="#1a2636" stroke="#7ec8e3" stroke-width="0.5"/>
+  <text x="569" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" text-anchor="middle">5</text>
+  <text x="569" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle">[b=3, a=5]</text>
+
+  <!-- iadd -->
+  <rect x="628" y="330" width="90" height="80" rx="6" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="673" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">iadd</text>
+  <rect x="640" y="360" width="66" height="20" rx="3" fill="#1a2636" stroke="#55c555" stroke-width="1"/>
+  <text x="673" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">8</text>
+  <text x="673" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle">[5+3=8]</text>
+
+  <!-- istore_3 -->
+  <rect x="732" y="330" width="88" height="80" rx="6" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="776" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">istore_3</text>
+  <text x="776" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">스택 비워짐</text>
+  <text x="776" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555" text-anchor="middle">result=8 저장</text>
+
+  <!-- Arrows between step boxes -->
+  <line x1="512" y1="370" x2="522" y2="370" stroke="#444" stroke-width="1"/>
+  <line x1="616" y1="370" x2="626" y2="370" stroke="#444" stroke-width="1"/>
+  <line x1="720" y1="370" x2="730" y2="370" stroke="#444" stroke-width="1"/>
+
+  <!-- Bottom note -->
+  <text x="440" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">피연산자 스택은 레지스터 없는 스택 기반 VM의 핵심 — 모든 연산이 push/pop으로 표현됩니다.</text>
+  <text x="440" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">javap -c MyClass.class 로 바이트코드와 스택 깊이(max_stack)를 직접 확인할 수 있습니다.</text>
+</svg>

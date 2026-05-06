@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arw" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arw-y" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e8c84a"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">컨텍스트 클래스 로더와 SPI 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">위임 역전(Delegation Inversion)이 필요한 이유와 해결책</text>
+
+  <!-- ── Problem section (left) ── -->
+  <text x="60" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">문제: SPI 역전 딜레마</text>
+
+  <!-- Bootstrap zone -->
+  <rect x="60" y="124" width="340" height="100" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Bootstrap ClassLoader</text>
+  <text x="230" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">java.sql.Driver (인터페이스 정의)</text>
+  <text x="230" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">↳ 구현체를 자신은 알 수 없음</text>
+  <text x="230" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">(mysql-connector는 classpath에 있음)</text>
+
+  <!-- App zone -->
+  <rect x="60" y="244" width="340" height="70" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="230" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Application ClassLoader</text>
+  <text x="230" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">com.mysql.cj.jdbc.Driver (구현체)</text>
+
+  <!-- Problem arrow: Bootstrap cannot delegate DOWN -->
+  <line x1="230" y1="224" x2="230" y2="242" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="244" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">부모 위임으로 접근 불가 ✗</text>
+
+  <!-- ── Solution section (right) ── -->
+  <text x="480" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">해결: Thread Context ClassLoader</text>
+
+  <!-- Code block -->
+  <rect x="480" y="124" width="360" height="200" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="496" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// SPI 로딩 시 컨텍스트 로더 사용</text>
+  <text x="496" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ClassLoader</text><text x="592" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> tccl =</text>
+  <text x="496" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    Thread.currentThread()</text>
+  <text x="496" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        .getContextClassLoader();</text>
+  <text x="496" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// Bootstrap이 App CL 빌려 씀</text>
+  <text x="496" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ServiceLoader</text><text x="604" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">&lt;</text><text x="613" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">Driver</text><text x="647" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">&gt;</text>
+  <text x="496" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    .load(Driver.class, tccl);</text>
+  <text x="496" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// → mysql 드라이버 발견 ✓</text>
+  <text x="496" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">// getContextClassLoader() default</text>
+  <text x="496" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// = Application CL (메인 스레드)</text>
+
+  <!-- ── Bottom: OSGi / Module isolation note ── -->
+  <text x="60" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">모듈 시스템과 클래스 로더 (Java 9+)</text>
+
+  <rect x="60" y="374" width="760" height="80" rx="8" fill="#0d0d1a" stroke="#7777cc" stroke-width="1"/>
+
+  <rect x="80" y="390" width="170" height="46" rx="6" fill="#111827" stroke="#7777cc" stroke-width="1"/>
+  <text x="165" y="411" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">module java.base</text>
+  <text x="165" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Bootstrap CL 담당</text>
+
+  <rect x="270" y="390" width="170" height="46" rx="6" fill="#111827" stroke="#7777cc" stroke-width="1"/>
+  <text x="355" y="411" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">module java.xml</text>
+  <text x="355" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Platform CL 담당</text>
+
+  <rect x="460" y="390" width="200" height="46" rx="6" fill="#111827" stroke="#7777cc" stroke-width="1"/>
+  <text x="560" y="411" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">module com.example.app</text>
+  <text x="560" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Application CL 담당</text>
+
+  <text x="690" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">exports 없이</text>
+  <text x="690" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">패키지 접근 차단</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="490" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">Java 9+ 에서는 ClassLoader 계층과 Module 경계가 함께 접근 제어를 수행합니다.</text>
+  <text x="440" y="510" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">module-info.java의 exports / opens 없이는 강력한 캡슐화가 적용됩니다.</text>
+</svg>

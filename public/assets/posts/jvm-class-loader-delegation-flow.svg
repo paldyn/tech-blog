@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">부모 위임 모델 (Parent Delegation Model)</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">loadClass() 요청이 전달되는 순서와 위임 흐름</text>
+
+  <!-- ── Left column: ClassLoader boxes ── -->
+  <!-- Application CL -->
+  <rect x="60" y="110" width="240" height="80" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="180" y="145" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">Application ClassLoader</text>
+  <text x="180" y="167" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">classpath / module-path</text>
+
+  <!-- Platform CL -->
+  <rect x="60" y="240" width="240" height="80" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="180" y="275" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">Platform ClassLoader</text>
+  <text x="180" y="297" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">java.se 플랫폼 모듈</text>
+
+  <!-- Bootstrap CL -->
+  <rect x="60" y="370" width="240" height="80" rx="8" fill="#111827" stroke="#55c555" stroke-width="1.5"/>
+  <text x="180" y="405" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Bootstrap ClassLoader</text>
+  <text x="180" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">java.base (JVM 내장, C++)</text>
+
+  <!-- Delegation arrows (down = delegate to parent) -->
+  <!-- App → Platform -->
+  <line x1="180" y1="190" x2="180" y2="238" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="194" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">① 위임</text>
+
+  <!-- Platform → Bootstrap -->
+  <line x1="180" y1="320" x2="180" y2="368" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="194" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">② 위임</text>
+
+  <!-- ── Right column: decision boxes ── -->
+  <!-- Step 1 -->
+  <rect x="520" y="100" width="300" height="60" rx="8" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="670" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">loadClass("com.example.Foo") 요청</text>
+  <text x="670" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Application CL 수신</text>
+
+  <!-- Step 2 -->
+  <rect x="520" y="210" width="300" height="60" rx="8" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="670" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">Platform CL에 재위임</text>
+  <text x="670" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">App CL: 직접 로드 시도 ✗</text>
+
+  <!-- Step 3 -->
+  <rect x="520" y="320" width="300" height="60" rx="8" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="670" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">Bootstrap CL에 재위임</text>
+  <text x="670" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Platform CL: 직접 로드 시도 ✗</text>
+
+  <!-- Step 4 bootstrap not found -->
+  <rect x="520" y="430" width="300" height="60" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1"/>
+  <text x="670" y="457" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">Bootstrap: java.base에 없음</text>
+  <text x="670" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">ClassNotFoundException 반환 ↑</text>
+
+  <!-- Result: App CL loads -->
+  <rect x="520" y="500" width="300" height="44" rx="8" fill="#0a1f0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="527" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">App CL → classpath에서 직접 로드 ✓</text>
+
+  <!-- Connector lines: left boxes to right boxes -->
+  <line x1="300" y1="150" x2="520" y2="130" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="300" y1="280" x2="520" y2="240" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="300" y1="410" x2="520" y2="350" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Right column arrows -->
+  <line x1="670" y1="160" x2="670" y2="208" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="670" y1="270" x2="670" y2="318" stroke="#7777cc" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="670" y1="380" x2="670" y2="428" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <line x1="670" y1="490" x2="670" y2="500" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- Return arrow label -->
+  <text x="686" y="488" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">③ 예외 버블링 후 App이 로드</text>
+</svg>
