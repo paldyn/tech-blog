@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">HandlerInterceptor 구현 및 등록</text>
+  <text x="440" y="64" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">preHandle · postHandle · afterCompletion 구현 + WebMvcConfigurer 등록</text>
+
+  <!-- Left panel: HandlerInterceptor impl -->
+  <rect x="50" y="84" width="380" height="390" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="74" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">인터셉터 구현</text>
+
+  <!-- Code block left -->
+  <rect x="66" y="118" width="348" height="340" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="82" y="140" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan x="82" dy="0"><tspan fill="#7ec8e3">@Component</tspan></tspan>
+    <tspan x="82" dy="18"><tspan fill="#7ec8e3">public class</tspan> <tspan fill="#e8e8e8">AuthInterceptor</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">implements</tspan> <tspan fill="#e8e8e8">HandlerInterceptor</tspan> {</tspan>
+    <tspan x="82" dy="18"></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">@Override</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">public boolean</tspan> <tspan fill="#e8e8e8">preHandle(</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#e8e8e8">HttpServletRequest req,</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#e8e8e8">HttpServletResponse res,</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#e8e8e8">Object handler)</tspan> {</tspan>
+    <tspan x="82" dy="18">        <tspan fill="#ce9178">String</tspan> <tspan fill="#e8e8e8">token = req.getHeader(</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#ce9178">"Authorization"</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#7ec8e3">if</tspan> <tspan fill="#e8e8e8">(token == </tspan><tspan fill="#7ec8e3">null</tspan><tspan fill="#e8e8e8">) {</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#e8e8e8">res.setStatus(</tspan><tspan fill="#b5cea8">401</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#7ec8e3">return false</tspan><tspan fill="#e8e8e8">;</tspan></tspan>
+    <tspan x="82" dy="18">        }</tspan>
+    <tspan x="82" dy="18">        <tspan fill="#7ec8e3">return true</tspan><tspan fill="#e8e8e8">;</tspan></tspan>
+    <tspan x="82" dy="18">    }</tspan>
+    <tspan x="82" dy="18">}</tspan>
+  </text>
+
+  <!-- Right panel: WebMvcConfigurer registration -->
+  <rect x="450" y="84" width="380" height="390" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="474" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">인터셉터 등록</text>
+
+  <!-- Code block right -->
+  <rect x="466" y="118" width="348" height="340" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="482" y="140" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan x="482" dy="0"><tspan fill="#7ec8e3">@Configuration</tspan></tspan>
+    <tspan x="482" dy="18"><tspan fill="#7ec8e3">public class</tspan> <tspan fill="#e8e8e8">WebConfig</tspan></tspan>
+    <tspan x="482" dy="18">    <tspan fill="#7ec8e3">implements</tspan> <tspan fill="#e8e8e8">WebMvcConfigurer</tspan> {</tspan>
+    <tspan x="482" dy="18"></tspan>
+    <tspan x="482" dy="18">    <tspan fill="#7ec8e3">@Autowired</tspan></tspan>
+    <tspan x="482" dy="18">    <tspan fill="#7ec8e3">private</tspan> <tspan fill="#e8e8e8">AuthInterceptor authInterceptor;</tspan></tspan>
+    <tspan x="482" dy="18"></tspan>
+    <tspan x="482" dy="18">    <tspan fill="#7ec8e3">@Override</tspan></tspan>
+    <tspan x="482" dy="18">    <tspan fill="#7ec8e3">public void</tspan> <tspan fill="#e8e8e8">addInterceptors(</tspan></tspan>
+    <tspan x="482" dy="18">            <tspan fill="#e8e8e8">InterceptorRegistry reg) {</tspan></tspan>
+    <tspan x="482" dy="18">        <tspan fill="#e8e8e8">reg.addInterceptor(authInterceptor)</tspan></tspan>
+    <tspan x="482" dy="18">           <tspan fill="#e8e8e8">.addPathPatterns(</tspan><tspan fill="#ce9178">"/api/**"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="482" dy="18">           <tspan fill="#e8e8e8">.excludePathPatterns(</tspan></tspan>
+    <tspan x="482" dy="18">               <tspan fill="#ce9178">"/api/auth/**"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="482" dy="18">           <tspan fill="#e8e8e8">.order(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="482" dy="18">    }</tspan>
+    <tspan x="482" dy="18">}</tspan>
+  </text>
+</svg>

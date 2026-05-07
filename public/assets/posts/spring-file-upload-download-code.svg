@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">파일 업로드 · 다운로드 컨트롤러 패턴</text>
+  <text x="440" y="64" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">MultipartFile 저장 · ResponseEntity&lt;Resource&gt; 다운로드</text>
+
+  <!-- Left panel: Upload -->
+  <rect x="50" y="84" width="376" height="390" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="74" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">업로드 처리</text>
+
+  <rect x="66" y="118" width="344" height="340" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="82" y="140"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan x="82" dy="0"><tspan fill="#7ec8e3">@PostMapping</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">"/upload"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="82" dy="18"><tspan fill="#7ec8e3">public</tspan> <tspan fill="#e8e8e8">ResponseEntity&lt;FileDto&gt;</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#e8e8e8">upload(</tspan><tspan fill="#7ec8e3">@RequestParam</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#e8e8e8">MultipartFile file) {</tspan></tspan>
+    <tspan x="82" dy="18"></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#6a8aa0">// 파일 검증</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">if</tspan> <tspan fill="#e8e8e8">(file.isEmpty())</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#7ec8e3">throw new</tspan> <tspan fill="#e8e8e8">BadRequestException(</tspan></tspan>
+    <tspan x="82" dy="18">            <tspan fill="#ce9178">"파일이 비어 있습니다"</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="82" dy="18"></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#6a8aa0">// UUID 파일명으로 저장</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#ce9178">String</tspan> <tspan fill="#e8e8e8">saved = fileService.store(file);</tspan></tspan>
+    <tspan x="82" dy="18"></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">ResponseEntity</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#e8e8e8">.status(</tspan><tspan fill="#b5cea8">201</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#e8e8e8">.body(FileDto.of(saved));</tspan></tspan>
+    <tspan x="82" dy="18">}</tspan>
+  </text>
+
+  <!-- Right panel: Download -->
+  <rect x="454" y="84" width="376" height="390" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="478" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">다운로드 처리</text>
+
+  <rect x="470" y="118" width="344" height="340" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="486" y="140"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan x="486" dy="0"><tspan fill="#7ec8e3">@GetMapping</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">"/files/{id}"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="486" dy="18"><tspan fill="#7ec8e3">public</tspan> <tspan fill="#e8e8e8">ResponseEntity&lt;Resource&gt;</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">download(</tspan><tspan fill="#7ec8e3">@PathVariable</tspan> <tspan fill="#e8e8e8">Long id)</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#7ec8e3">throws</tspan> <tspan fill="#e8e8e8">IOException {</tspan></tspan>
+    <tspan x="486" dy="18"></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">FileMeta meta = fileRepo.findById(id)</tspan></tspan>
+    <tspan x="486" dy="18">        <tspan fill="#e8e8e8">.orElseThrow(NotFoundException::</tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="486" dy="18"></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">Resource res = </tspan><tspan fill="#7ec8e3">new</tspan></tspan>
+    <tspan x="486" dy="18">        <tspan fill="#e8e8e8">FileSystemResource(meta.getPath());</tspan></tspan>
+    <tspan x="486" dy="18"></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">ResponseEntity.ok()</tspan></tspan>
+    <tspan x="486" dy="18">        <tspan fill="#e8e8e8">.header(</tspan><tspan fill="#ce9178">"Content-Disposition"</tspan><tspan fill="#e8e8e8">,</tspan></tspan>
+    <tspan x="486" dy="18">            <tspan fill="#ce9178">"attachment; filename=\""</tspan></tspan>
+    <tspan x="486" dy="18">            <tspan fill="#e8e8e8">+ meta.getOriginalName() + </tspan><tspan fill="#ce9178">"\""</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="486" dy="18">        <tspan fill="#e8e8e8">.body(res);</tspan></tspan>
+    <tspan x="486" dy="18">}</tspan>
+  </text>
+</svg>

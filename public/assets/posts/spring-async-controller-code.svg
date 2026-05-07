@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">비동기 컨트롤러 구현 패턴</text>
+  <text x="440" y="64" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Callable · DeferredResult · SseEmitter 예제</text>
+
+  <!-- Left panel: Callable -->
+  <rect x="50" y="84" width="376" height="390" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="74" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Callable&lt;T&gt; 비동기 처리</text>
+
+  <rect x="66" y="118" width="344" height="340" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="82" y="140"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan x="82" dy="0"><tspan fill="#7ec8e3">@GetMapping</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">"/report"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="82" dy="18"><tspan fill="#7ec8e3">public</tspan> <tspan fill="#e8e8e8">Callable&lt;ReportDto&gt; report() {</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#6a8aa0">// HTTP 스레드에서 즉시 반환</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">() -&gt; {</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#6a8aa0">// 워커 스레드에서 실행</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">reportService.generate();</tspan></tspan>
+    <tspan x="82" dy="18">    };</tspan>
+    <tspan x="82" dy="18">}</tspan>
+    <tspan x="82" dy="18"></tspan>
+    <tspan x="82" dy="18"><tspan fill="#6a8aa0">// 타임아웃 설정: WebAsyncTask 사용</tspan></tspan>
+    <tspan x="82" dy="18"><tspan fill="#7ec8e3">@GetMapping</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">"/report/v2"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="82" dy="18"><tspan fill="#7ec8e3">public</tspan> <tspan fill="#e8e8e8">WebAsyncTask&lt;ReportDto&gt; v2() {</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#e8e8e8">Callable&lt;ReportDto&gt; task =</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#e8e8e8">() -&gt; reportService.generate();</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#e8e8e8">WebAsyncTask&lt;ReportDto&gt; wat =</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#7ec8e3">new</tspan> <tspan fill="#e8e8e8">WebAsyncTask&lt;&gt;(</tspan><tspan fill="#b5cea8">5000L</tspan><tspan fill="#e8e8e8">, task);</tspan></tspan>
+    <tspan x="82" dy="18">    <tspan fill="#e8e8e8">wat.onTimeout(() -&gt; {</tspan></tspan>
+    <tspan x="82" dy="18">        <tspan fill="#7ec8e3">throw new</tspan> <tspan fill="#e8e8e8">TimeoutException();</tspan></tspan>
+    <tspan x="82" dy="18">    });</tspan>
+    <tspan x="82" dy="18">    <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">wat;</tspan></tspan>
+    <tspan x="82" dy="18">}</tspan>
+  </text>
+
+  <!-- Right panel: DeferredResult + SseEmitter -->
+  <rect x="454" y="84" width="376" height="390" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="478" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">DeferredResult · SseEmitter</text>
+
+  <rect x="470" y="118" width="344" height="340" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="486" y="140"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan x="486" dy="0"><tspan fill="#6a8aa0">// 외부 이벤트로 결과 설정</tspan></tspan>
+    <tspan x="486" dy="18"><tspan fill="#7ec8e3">@GetMapping</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">"/poll/{id}"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="486" dy="18"><tspan fill="#7ec8e3">public</tspan> <tspan fill="#e8e8e8">DeferredResult&lt;JobDto&gt; poll(</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#7ec8e3">@PathVariable</tspan> <tspan fill="#e8e8e8">String id) {</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#6a8aa0">// 타임아웃 5초, 기본 응답</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">DeferredResult&lt;JobDto&gt; dr =</tspan></tspan>
+    <tspan x="486" dy="18">        <tspan fill="#7ec8e3">new</tspan> <tspan fill="#e8e8e8">DeferredResult&lt;&gt;(</tspan><tspan fill="#b5cea8">5000L</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">jobRegistry.register(id, dr);</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">dr;</tspan></tspan>
+    <tspan x="486" dy="18">}</tspan>
+    <tspan x="486" dy="18"></tspan>
+    <tspan x="486" dy="18"><tspan fill="#6a8aa0">// Server-Sent Events 스트리밍</tspan></tspan>
+    <tspan x="486" dy="18"><tspan fill="#7ec8e3">@GetMapping</tspan><tspan fill="#e8e8e8">(</tspan><tspan fill="#ce9178">"/events"</tspan><tspan fill="#e8e8e8">,</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">produces = </tspan><tspan fill="#ce9178">"text/event-stream"</tspan><tspan fill="#e8e8e8">)</tspan></tspan>
+    <tspan x="486" dy="18"><tspan fill="#7ec8e3">public</tspan> <tspan fill="#e8e8e8">SseEmitter stream() {</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">SseEmitter emitter = </tspan><tspan fill="#7ec8e3">new</tspan></tspan>
+    <tspan x="486" dy="18">        <tspan fill="#e8e8e8">SseEmitter(</tspan><tspan fill="#b5cea8">60_000L</tspan><tspan fill="#e8e8e8">);</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#e8e8e8">eventService.subscribe(emitter);</tspan></tspan>
+    <tspan x="486" dy="18">    <tspan fill="#7ec8e3">return</tspan> <tspan fill="#e8e8e8">emitter;</tspan></tspan>
+    <tspan x="486" dy="18">}</tspan>
+  </text>
+</svg>
