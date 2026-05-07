@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">tiktoken 실전 활용 패턴</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">토큰 수 계산 · 컨텍스트 초과 검사 · 배치 인코딩</text>
+
+  <rect x="60" y="90" width="760" height="300" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="76" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">import</text>
+  <text x="124" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> tiktoken</text>
+
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 모델 이름으로 자동 인코딩 선택</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">enc = tiktoken.encoding_for_model(</text>
+  <text x="310" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"gpt-4o"</text>
+  <text x="374" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 1. 토큰 수 계산 (API 비용 추정)</text>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</text>
+  <text x="106" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> count_tokens(text: str) -&gt; int:</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    return</text>
+  <text x="130" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> len(enc.encode(text))</text>
+
+  <text x="76" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 2. 컨텍스트 윈도우 초과 시 잘라내기</text>
+  <text x="76" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</text>
+  <text x="106" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> truncate(text: str, max_tokens: int) -&gt; str:</text>
+  <text x="76" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    ids = enc.encode(text)[:max_tokens]</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    return</text>
+  <text x="130" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> enc.decode(ids)</text>
+
+  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 3. 배치 병렬 인코딩 (멀티스레드)</text>
+  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">texts = [</text>
+  <text x="130" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"문장1"</text>
+  <text x="178" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, </text>
+  <text x="192" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"문장2"</text>
+  <text x="240" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, </text>
+  <text x="254" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"문장3"</text>
+  <text x="302" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">]</text>
+  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">all_ids = enc.encode_batch(texts, num_threads=</text>
+  <text x="390" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">4</text>
+  <text x="398" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+
+  <text x="76" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 특수 토큰 허용 (채팅 템플릿 파싱 등)</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">KV Cache 메모리 계산</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">LLaMA 3 70B 기준: GQA로 KV Cache를 8× 절감</text>
+
+  <!-- Formula box -->
+  <rect x="60" y="90" width="760" height="70" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="440" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">KV Cache 크기 = 2 × num_kv_heads × head_dim × seq_len × num_layers × dtype_bytes</text>
+  <text x="440" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">2 = K + V,  dtype_bytes = 2 (fp16/bf16)</text>
+
+  <!-- LLaMA 3 70B example -->
+  <rect x="60" y="176" width="350" height="250" rx="10" fill="#111" stroke="#222"/>
+  <text x="235" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">LLaMA 3 70B 파라미터</text>
+
+  <text x="80" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">num_heads (Q)</text>
+  <text x="330" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="end">64</text>
+
+  <text x="80" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">num_kv_heads (GQA)</text>
+  <text x="330" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="end">8</text>
+
+  <text x="80" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">head_dim</text>
+  <text x="330" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="end">128</text>
+
+  <text x="80" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">num_layers</text>
+  <text x="330" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="end">80</text>
+
+  <text x="80" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">seq_len</text>
+  <text x="330" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="end">8,192</text>
+
+  <line x1="80" y1="336" x2="340" y2="336" stroke="#333" stroke-width="1"/>
+  <text x="80" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">GQA KV Cache</text>
+  <text x="330" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="end">~20 GB</text>
+
+  <text x="80" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">MHA라면 (64 KV heads)</text>
+  <text x="330" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="end">~160 GB</text>
+  <text x="80" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">절감 비율</text>
+  <text x="330" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="end">8× 절약</text>
+
+  <!-- Batch throughput -->
+  <rect x="460" y="176" width="360" height="250" rx="10" fill="#111" stroke="#222"/>
+  <text x="640" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">배치 처리량 영향</text>
+
+  <rect x="480" y="214" width="320" height="52" rx="6" fill="#0a1a0a" stroke="#1a3a1a"/>
+  <text x="640" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">KV Cache 절감 = 더 큰 배치</text>
+  <text x="640" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">같은 GPU 메모리에 더 많은 요청을 동시 처리</text>
+
+  <rect x="480" y="278" width="320" height="52" rx="6" fill="#0a0a1a" stroke="#1a1a3a"/>
+  <text x="640" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">디코딩 속도 향상</text>
+  <text x="640" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">KV 읽기 IO 감소 → 토큰/초 증가</text>
+
+  <rect x="480" y="342" width="320" height="52" rx="6" fill="#111820" stroke="#1e2433"/>
+  <text x="640" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">GQA 그룹 수 G 권장값</text>
+  <text x="640" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">H/G = 4~8 (품질-효율 균형)</text>
+</svg>
