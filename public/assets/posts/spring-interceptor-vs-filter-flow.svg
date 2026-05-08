@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="570" viewBox="0 0 880 570">
+  <rect width="880" height="570" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Servlet Filter vs Spring Interceptor 처리 흐름</text>
+  <text x="440" y="64" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">요청이 통과하는 레이어와 각 레이어의 책임 범위</text>
+
+  <!-- Servlet Container region 1 -->
+  <rect x="60" y="134" width="760" height="52" rx="6" fill="#050d14" stroke="#1e3040" stroke-width="1"/>
+  <text x="82" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" opacity="0.85">Servlet Container</text>
+
+  <!-- Spring MVC region -->
+  <rect x="60" y="202" width="760" height="268" rx="6" fill="#0b0914" stroke="#1e1a2e" stroke-width="1"/>
+  <text x="82" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9988dd" opacity="0.85">Spring MVC</text>
+
+  <!-- Servlet Container region 2 -->
+  <rect x="60" y="486" width="760" height="52" rx="6" fill="#050d14" stroke="#1e3040" stroke-width="1"/>
+  <text x="82" y="505" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" opacity="0.85">Servlet Container</text>
+
+  <!-- Box 1: HTTP 요청 -->
+  <rect x="240" y="80" width="400" height="38" rx="6" fill="#1a1a1a" stroke="#555"/>
+  <text x="440" y="104" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">HTTP 요청 (Client)</text>
+
+  <!-- Arrow 1 -->
+  <line x1="440" y1="118" x2="440" y2="130" stroke="#555" stroke-width="2"/>
+  <polygon points="428,130 452,130 440,142" fill="#555"/>
+
+  <!-- Box 2: Filter.doFilter() 진입 -->
+  <rect x="240" y="142" width="400" height="38" rx="6" fill="#051828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="166" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Filter.doFilter() — 진입부</text>
+  <text x="652" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" opacity="0.6">@WebFilter · OncePerRequestFilter</text>
+
+  <!-- Arrow 2 (cross-boundary, larger) -->
+  <line x1="440" y1="180" x2="440" y2="196" stroke="#555" stroke-width="2"/>
+  <polygon points="427,196 453,196 440,210" fill="#666"/>
+
+  <!-- Box 3: DispatcherServlet -->
+  <rect x="240" y="210" width="400" height="38" rx="6" fill="#130f28" stroke="#9988dd" stroke-width="1.5"/>
+  <text x="440" y="234" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#c4b8f0">DispatcherServlet</text>
+  <text x="652" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9988dd" opacity="0.7">HandlerMapping · HandlerAdapter</text>
+
+  <!-- Arrow 3 -->
+  <line x1="440" y1="248" x2="440" y2="262" stroke="#555" stroke-width="2"/>
+  <polygon points="428,262 452,262 440,274" fill="#555"/>
+
+  <!-- Box 4: Interceptor.preHandle -->
+  <rect x="240" y="274" width="400" height="38" rx="6" fill="#100c22" stroke="#9988dd" stroke-width="1.5"/>
+  <text x="440" y="298" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#c4b8f0">Interceptor.preHandle()</text>
+  <text x="652" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9988dd" opacity="0.7">false 반환 시 이하 실행 중단</text>
+
+  <!-- Arrow 4 -->
+  <line x1="440" y1="312" x2="440" y2="326" stroke="#555" stroke-width="2"/>
+  <polygon points="428,326 452,326 440,338" fill="#555"/>
+
+  <!-- Box 5: Controller/Handler -->
+  <rect x="240" y="338" width="400" height="38" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="362" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#80dd80">Handler (Controller)</text>
+  <text x="652" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" opacity="0.7">비즈니스 로직 실행</text>
+
+  <!-- Arrow 5 -->
+  <line x1="440" y1="376" x2="440" y2="390" stroke="#555" stroke-width="2"/>
+  <polygon points="428,390 452,390 440,402" fill="#555"/>
+
+  <!-- Box 6: postHandle + afterCompletion -->
+  <rect x="240" y="402" width="400" height="38" rx="6" fill="#100c22" stroke="#9988dd" stroke-width="1.5"/>
+  <text x="440" y="426" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#c4b8f0">postHandle() · afterCompletion()</text>
+  <text x="652" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9988dd" opacity="0.7">응답 후처리 및 리소스 정리</text>
+
+  <!-- Arrow 6 (cross-boundary, larger) -->
+  <line x1="440" y1="440" x2="440" y2="478" stroke="#555" stroke-width="2"/>
+  <polygon points="427,478 453,478 440,494" fill="#666"/>
+
+  <!-- Box 7: Filter.doFilter() 반환 -->
+  <rect x="240" y="494" width="400" height="38" rx="6" fill="#051828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="518" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Filter.doFilter() — 반환부 → HTTP 응답</text>
+</svg>

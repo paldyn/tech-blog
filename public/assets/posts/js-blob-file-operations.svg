@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" text-anchor="middle">FileReader vs Blob 메서드 · Object URL</text>
+
+  <!-- FileReader 방식 -->
+  <rect x="60" y="72" width="360" height="160" fill="#111827" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="240" y="97" fill="#7777cc" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" text-anchor="middle">FileReader (레거시, 이벤트 기반)</text>
+  <text x="80" y="118" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">readAsText(blob)</text>
+  <text x="230" y="118" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ onload에서 result 사용</text>
+  <text x="80" y="136" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">readAsArrayBuffer(blob)</text>
+  <text x="230" y="136" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ ArrayBuffer</text>
+  <text x="80" y="154" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">readAsDataURL(blob)</text>
+  <text x="230" y="154" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ data:... Base64 문자열</text>
+  <text x="80" y="172" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">readAsBinaryString(blob)</text>
+  <text x="230" y="172" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ deprecated</text>
+  <text x="80" y="202" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">단점: 콜백 기반, Promise 체이닝 불편</text>
+  <text x="80" y="220" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">동시에 하나의 읽기 작업만 진행 가능</text>
+
+  <!-- Blob 메서드 방식 -->
+  <rect x="460" y="72" width="360" height="160" fill="#111827" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="97" fill="#55c555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" text-anchor="middle">Blob 메서드 (권장, async)</text>
+  <text x="480" y="118" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">blob.text()</text>
+  <text x="600" y="118" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ Promise&lt;string&gt;</text>
+  <text x="480" y="136" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">blob.arrayBuffer()</text>
+  <text x="600" y="136" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ Promise&lt;ArrayBuffer&gt;</text>
+  <text x="480" y="154" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">blob.stream()</text>
+  <text x="600" y="154" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ ReadableStream</text>
+  <text x="480" y="172" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">blob.slice(start, end)</text>
+  <text x="600" y="172" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">→ 새 Blob (청크)</text>
+  <text x="480" y="202" fill="#55c555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">장점: async/await 친화적</text>
+  <text x="480" y="220" fill="#55c555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12">병렬 읽기 가능, 스트리밍 지원</text>
+
+  <!-- 코드 블록 -->
+  <rect x="60" y="256" width="760" height="160" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="80" y="282" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">// Object URL — Blob을 &lt;a&gt;, &lt;img&gt; src로 사용</text>
+  <text x="80" y="300" xml:space="preserve" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">const</text>
+  <text x="124" y="300" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"> url = URL.createObjectURL(blob);</text>
+  <text x="80" y="318" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">// 'blob:https://example.com/uuid'</text>
+  <text x="80" y="336" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">link.href = url; link.download = </text>
+  <text x="330" y="336" xml:space="preserve" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">'file.txt'</text>
+  <text x="392" y="336" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">; link.click();</text>
+  <text x="80" y="366" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">// ⚠ 사용 후 반드시 해제! (메모리 누수 방지)</text>
+  <text x="80" y="384" xml:space="preserve" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">URL.revokeObjectURL(url);</text>
+  <text x="80" y="402" xml:space="preserve" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">// img.onload 또는 다운로드 완료 후 revoke</text>
+</svg>

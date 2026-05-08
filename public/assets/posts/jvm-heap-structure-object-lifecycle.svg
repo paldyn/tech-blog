@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arrr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e05555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arrp" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7777cc" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Heap 객체 생명주기</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">생성 → Minor GC → Promotion → Full GC</text>
+
+  <!-- Step boxes -->
+  <!-- 1. new 객체 생성 -->
+  <rect x="60" y="100" width="148" height="100" rx="8" fill="#0b1a0b" stroke="#55c555" stroke-width="1.5"/>
+  <text x="134" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">① Eden 할당</text>
+  <text x="134" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">new Object()</text>
+  <text x="134" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">TLAB 통해 빠른</text>
+  <text x="134" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">lock-free 할당</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="208" y1="150" x2="248" y2="150" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="228" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle">Eden</text>
+  <text x="228" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle">꽉 참</text>
+
+  <!-- 2. Minor GC -->
+  <rect x="248" y="100" width="148" height="100" rx="8" fill="#101828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="322" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">② Minor GC</text>
+  <text x="322" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">살아있는 객체만</text>
+  <text x="322" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Survivor로 복사</text>
+  <text x="322" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">age +1 증가</text>
+
+  <!-- Arrow 2→3 (survive) -->
+  <line x1="396" y1="150" x2="436" y2="150" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="416" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle">생존</text>
+
+  <!-- 3. Survivor 반복 -->
+  <rect x="436" y="100" width="148" height="100" rx="8" fill="#101828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="510" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">③ Survivor</text>
+  <text x="510" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">반복 생존</text>
+  <text x="510" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">S0 ↔ S1 교대 복사</text>
+  <text x="510" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">age 15 (기본값)</text>
+  <text x="510" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">까지 살아남으면</text>
+
+  <!-- Arrow 3→4 (promotion) -->
+  <line x1="584" y1="150" x2="624" y2="150" stroke="#7777cc" stroke-width="2" marker-end="url(#arrp)"/>
+  <text x="604" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">Promotion</text>
+
+  <!-- 4. Old Gen -->
+  <rect x="624" y="100" width="196" height="100" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="722" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">④ Old Generation</text>
+  <text x="722" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">장수 객체 보관</text>
+  <text x="722" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">꽉 차면 Major/Full GC</text>
+  <text x="722" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">Stop-the-World 발생</text>
+
+  <!-- Dead path from Minor GC (죽은 객체) -->
+  <line x1="322" y1="200" x2="322" y2="240" stroke="#e05555" stroke-width="1.5" marker-end="url(#arrr)"/>
+  <rect x="248" y="240" width="148" height="60" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="322" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">GC 회수</text>
+  <text x="322" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">참조 없는 객체 제거</text>
+
+  <!-- Dead path from Old Gen -->
+  <line x1="722" y1="200" x2="722" y2="240" stroke="#e05555" stroke-width="1.5" marker-end="url(#arrr)"/>
+  <rect x="624" y="240" width="196" height="60" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="722" y="265" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">Major / Full GC 회수</text>
+  <text x="722" y="283" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">긴 STW · 응답 지연</text>
+
+  <!-- TLAB 설명 코드 블록 -->
+  <rect x="60" y="336" width="370" height="124" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="84" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">TLAB (Thread-Local Allocation Buffer)</text>
+  <text x="84" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">// 각 스레드가 Eden의 일부를</text>
+  <text x="84" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">// 독점 버퍼로 미리 확보</text>
+  <text x="84" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">-XX:+UseTLAB           </text>
+  <text x="84" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">-XX:TLABSize=512k      </text>
+  <text x="84" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">// 기본 ON, lock 없이 할당 가능</text>
+
+  <!-- 객체 수명 분포 설명 -->
+  <rect x="450" y="336" width="370" height="124" rx="8" fill="#0d1117" stroke="#333" stroke-width="1"/>
+  <text x="474" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">세대별 가설 (Generational Hypothesis)</text>
+  <text x="474" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">대부분의 객체는 짧게 살다 죽는다.</text>
+  <text x="474" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ Young Gen을 자주 소규모로 수집</text>
+  <text x="474" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ Old Gen 수집 빈도를 낮춰 STW 감소</text>
+  <text x="474" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Young : Old ≈ 1 : 2  (-XX:NewRatio=2)</text>
+</svg>

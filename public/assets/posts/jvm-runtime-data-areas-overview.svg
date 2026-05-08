@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="580" viewBox="0 0 880 580">
+  <defs>
+    <marker id="a1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="580" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JVM 런타임 데이터 영역 구조</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">스레드 공유 영역 vs. 스레드 전용 영역</text>
+
+  <!-- ── SHARED area label ── -->
+  <rect x="60" y="90" width="760" height="24" rx="4" fill="#131820"/>
+  <text x="440" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">모든 스레드가 공유하는 영역</text>
+
+  <!-- Heap -->
+  <rect x="60" y="122" width="370" height="140" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="90" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">Heap</text>
+  <text x="90" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">-Xms / -Xmx 로 크기 제어</text>
+
+  <!-- Heap sub-regions -->
+  <rect x="80" y="178" width="100" height="34" rx="4" fill="#1a2636" stroke="#55c555" stroke-width="1"/>
+  <text x="130" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">Young Gen</text>
+
+  <rect x="192" y="178" width="80" height="34" rx="4" fill="#1a2636" stroke="#7777cc" stroke-width="1"/>
+  <text x="232" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">Old Gen</text>
+
+  <rect x="284" y="178" width="130" height="34" rx="4" fill="#1a2636" stroke="#e8c84a" stroke-width="1"/>
+  <text x="349" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8c84a" text-anchor="middle">Humongous (G1)</text>
+
+  <text x="90" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">new 로 생성된 객체, 배열</text>
+  <text x="90" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">GC 관리 대상 · OOM 발생 가능</text>
+
+  <!-- Metaspace (Method Area) -->
+  <rect x="450" y="122" width="370" height="140" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="480" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">Metaspace (Method Area)</text>
+  <text x="480" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">-XX:MaxMetaspaceSize 로 제한</text>
+
+  <rect x="470" y="178" width="100" height="34" rx="4" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="520" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">클래스 메타데이터</text>
+
+  <rect x="582" y="178" width="90" height="34" rx="4" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="627" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">런타임 CP</text>
+
+  <rect x="684" y="178" width="120" height="34" rx="4" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="744" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">static 변수</text>
+
+  <text x="480" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">클래스 구조·메서드 바이트코드·상수 풀</text>
+  <text x="480" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Native Memory · Java 8 PermGen 대체</text>
+
+  <!-- Code Cache -->
+  <rect x="60" y="276" width="760" height="60" rx="8" fill="#0d1117" stroke="#e8c84a" stroke-width="1"/>
+  <text x="90" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8c84a">Code Cache</text>
+  <text x="240" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">JIT 컴파일된 네이티브 코드 저장   -XX:ReservedCodeCacheSize (기본 240 MB)</text>
+  <text x="90" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">CodeCache가 가득 차면 JIT 컴파일 중단 → 인터프리터 모드로 폴백 → 성능 저하</text>
+
+  <!-- ── THREAD-LOCAL label ── -->
+  <rect x="60" y="352" width="760" height="24" rx="4" fill="#131820"/>
+  <text x="440" y="369" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">스레드마다 독립적으로 존재하는 영역</text>
+
+  <!-- PC Register -->
+  <rect x="60" y="384" width="220" height="120" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">PC Register</text>
+  <text x="170" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">현재 실행 중인</text>
+  <text x="170" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">바이트코드 주소</text>
+  <text x="170" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Native 메서드 실행 중</text>
+  <text x="170" y="488" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">에는 undefined</text>
+
+  <!-- JVM Stack -->
+  <rect x="300" y="384" width="240" height="120" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="420" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">JVM Stack</text>
+  <text x="420" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">메서드 호출마다 Frame 추가</text>
+
+  <rect x="316" y="444" width="208" height="22" rx="4" fill="#1a2636" stroke="#7ec8e3" stroke-width="0.5"/>
+  <text x="420" y="459" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">Frame: 지역변수 + 피연산자 스택 + CP 참조</text>
+
+  <text x="420" y="490" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">-Xss 로 스택 크기 설정</text>
+  <text x="420" y="506" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">StackOverflowError 발생 가능</text>
+
+  <!-- Native Method Stack -->
+  <rect x="560" y="384" width="260" height="120" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="690" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">Native Method Stack</text>
+  <text x="690" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">C/C++ native 메서드 호출 스택</text>
+  <text x="690" y="454" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">JNI(Java Native Interface) 사용 시</text>
+  <text x="690" y="476" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">HotSpot: JVM Stack과 통합 구현</text>
+
+  <!-- Bottom legend -->
+  <rect x="60" y="522" width="14" height="14" rx="2" fill="#7ec8e3"/>
+  <text x="82" y="534" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">스레드 공유</text>
+  <rect x="200" y="522" width="14" height="14" rx="2" fill="#55c555"/>
+  <text x="222" y="534" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">스레드 전용 (GC 대상 아님)</text>
+  <rect x="430" y="522" width="14" height="14" rx="2" fill="#e8c84a"/>
+  <text x="452" y="534" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">JIT 전용</text>
+  <text x="560" y="534" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">OOM은 Heap·Metaspace·CodeCache에서만 발생 (PC·Stack은 SOE)</text>
+</svg>

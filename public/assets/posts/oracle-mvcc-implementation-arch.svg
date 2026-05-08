@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Oracle MVCC 동작 구조</text>
+
+  <!-- Buffer Cache Current Block -->
+  <rect x="60" y="70" width="230" height="120" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">Current Block</text>
+  <text x="175" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">블록 SCN: 1080</text>
+  <text x="175" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">status = 'SHIPPED'</text>
+  <text x="175" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">(세션 A가 이미 커밋)</text>
+  <text x="175" y="175" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">Buffer Cache</text>
+
+  <!-- Arrow to ITL -->
+  <line x1="290" y1="130" x2="330" y2="130" stroke="#555" stroke-width="1.5"/>
+  <polygon points="328,124 340,130 328,136" fill="#555"/>
+
+  <!-- ITL (Interest Transaction List) -->
+  <rect x="340" y="70" width="200" height="120" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">ITL 엔트리</text>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">TXN ID: 0x00043a</text>
+  <text x="440" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">UBA: 3.45.2</text>
+  <text x="440" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">FLAG: C-- (커밋됨)</text>
+  <text x="440" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">Interest Transaction List</text>
+
+  <!-- Arrow to Undo Segment -->
+  <line x1="540" y1="130" x2="580" y2="130" stroke="#555" stroke-width="1.5"/>
+  <polygon points="578,124 590,130 578,136" fill="#555"/>
+
+  <!-- Undo Segment -->
+  <rect x="590" y="70" width="230" height="120" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="705" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">Undo 세그먼트</text>
+  <text x="705" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">UBA 3.45.2</text>
+  <text x="705" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">status = 'PENDING'</text>
+  <text x="705" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">(변경 전 이미지)</text>
+  <text x="705" y="175" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">UNDO Tablespace</text>
+
+  <!-- Session B reads -->
+  <rect x="60" y="230" width="760" height="60" rx="8" fill="#111" stroke="#333"/>
+  <text x="440" y="255" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">세션 B: SELECT (쿼리 SCN=1050, 블록 SCN=1080 감지)</text>
+  <text x="440" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">블록 SCN &gt; 쿼리 SCN → ITL 확인 → UBA로 Undo 세그먼트 접근 → CR 블록 생성</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="290" x2="440" y2="320" stroke="#555" stroke-width="1.5"/>
+  <polygon points="433,320 447,320 440,332" fill="#555"/>
+
+  <!-- CR Block -->
+  <rect x="290" y="332" width="300" height="80" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">CR 블록 (메모리 생성)</text>
+  <text x="440" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">블록 SCN: 1050 (복원됨)</text>
+  <text x="440" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">status = 'PENDING' (Undo 적용 결과)</text>
+
+  <!-- Key points -->
+  <rect x="60" y="435" width="360" height="66" rx="6" fill="#0d1828" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="240" y="455" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">Oracle MVCC 특징</text>
+  <text x="240" y="475" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">읽기가 쓰기를 차단하지 않음</text>
+  <text x="240" y="493" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쓰기가 읽기를 차단하지 않음</text>
+
+  <rect x="460" y="435" width="360" height="66" rx="6" fill="#1a100a" stroke="#e05555" stroke-width="1"/>
+  <text x="640" y="455" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">한계</text>
+  <text x="640" y="475" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Undo 재사용 시 ORA-01555</text>
+  <text x="640" y="493" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">CR 블록 생성 오버헤드 (consistent gets)</text>
+</svg>

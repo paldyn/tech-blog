@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Spring MVC 비동기 요청 처리 모델</text>
+  <text x="440" y="64" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">HTTP 스레드 반환 → 워커 스레드 처리 → 응답 완성</text>
+
+  <!-- Sync baseline (top) -->
+  <text x="80" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666">동기 방식 (비교)</text>
+  <rect x="80" y="108" width="720" height="28" rx="4" fill="#1a1a1a" stroke="#333"/>
+  <text x="440" y="127" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">HTTP 스레드가 요청 처리 완료까지 점유됨 → 처리량 제한</text>
+
+  <!-- HTTP Thread row -->
+  <text x="80" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">HTTP 스레드</text>
+
+  <!-- HTTP thread timeline -->
+  <rect x="80" y="170" width="180" height="28" rx="4" fill="#051828" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="170" y="189" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">요청 수신 · 파싱</text>
+
+  <!-- Arrow: release thread -->
+  <line x1="260" y1="184" x2="290" y2="184" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="290,178 290,190 302,184" fill="#e05555"/>
+  <text x="280" y="172" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">반환</text>
+
+  <rect x="302" y="170" width="100" height="28" rx="4" fill="#1a1a1a" stroke="#444" stroke-dasharray="4,2"/>
+  <text x="352" y="189" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">대기 (유휴)</text>
+
+  <!-- Arrow: reclaim thread -->
+  <line x1="402" y1="184" x2="432" y2="184" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="432,178 432,190 444,184" fill="#55c555"/>
+  <text x="420" y="172" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">재사용</text>
+
+  <rect x="444" y="170" width="160" height="28" rx="4" fill="#051828" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="524" y="189" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">응답 직렬화 · 전송</text>
+
+  <!-- Worker Thread row -->
+  <text x="80" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9988dd">워커 스레드</text>
+
+  <rect x="302" y="234" width="250" height="28" rx="4" fill="#100c22" stroke="#9988dd" stroke-width="1.2"/>
+  <text x="427" y="253" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#c4b8f0">비즈니스 로직 · DB / 외부 API 호출</text>
+
+  <!-- Vertical connection arrows -->
+  <line x1="302" y1="184" x2="302" y2="234" stroke="#555" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="552" y1="262" x2="552" y2="184" stroke="#555" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Arrow: result to HTTP thread -->
+  <line x1="552" y1="248" x2="600" y2="248" stroke="#555" stroke-width="1.5"/>
+  <polygon points="600,242 600,254 612,248" fill="#555"/>
+  <text x="580" y="238" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">결과 전달</text>
+
+  <!-- DeferredResult / Callable comparison -->
+  <rect x="60" y="284" width="360" height="180" rx="8" fill="#0b0914" stroke="#1e1a2e"/>
+  <text x="80" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#9988dd">Callable&lt;T&gt;</text>
+  <text x="80" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Spring 관리 스레드 풀에서 실행</text>
+  <text x="80" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">반환값 = 최종 응답</text>
+  <text x="80" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">단순한 비동기 처리에 적합</text>
+  <text x="80" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" font-style="italic">예: CPU 집약 작업, 순차 처리</text>
+  <text x="80" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" font-style="italic">TaskExecutor로 스레드 풀 제어</text>
+  <text x="80" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#444">timeout 설정: WebAsyncTask 래핑 필요</text>
+
+  <rect x="460" y="284" width="360" height="180" rx="8" fill="#0b1208" stroke="#1e2a18"/>
+  <text x="480" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">DeferredResult&lt;T&gt;</text>
+  <text x="480" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">임의의 스레드에서 결과 설정</text>
+  <text x="480" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">setResult() / setErrorResult()</text>
+  <text x="480" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이벤트 · 메시지 기반에 적합</text>
+  <text x="480" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" font-style="italic">예: 롱폴링, 외부 이벤트 대기</text>
+  <text x="480" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" font-style="italic">타임아웃 값을 생성자에서 설정</text>
+  <text x="480" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#444">new DeferredResult&lt;&gt;(5000L, fallback)</text>
+</svg>

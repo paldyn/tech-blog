@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">격리 수준 설정 및 Serialization Failure 처리</text>
+
+  <!-- Code block left: Setting isolation -->
+  <rect x="60" y="66" width="360" height="284" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="90" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 세션 레벨 격리 수준 설정</text>
+  <text x="76" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">ALTER SESSION SET</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    ISOLATION_LEVEL = SERIALIZABLE;</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 트랜잭션 레벨 설정</text>
+  <text x="76" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SET TRANSACTION</text>
+  <text x="76" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    ISOLATION LEVEL SERIALIZABLE;</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- READ ONLY 트랜잭션</text>
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SET TRANSACTION READ ONLY;</text>
+  <text x="76" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 현재 격리 수준 확인</text>
+  <text x="76" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    s.sid, s.isolation_level</text>
+  <text x="76" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM v$transaction t</text>
+  <text x="76" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">JOIN v$session s ON t.ses_addr = s.saddr;</text>
+
+  <!-- Code block right: Error handling -->
+  <rect x="450" y="66" width="370" height="284" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="466" y="90" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- ORA-08177 처리 예시 (PL/SQL)</text>
+  <text x="466" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">DECLARE</text>
+  <text x="466" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    serial_fail EXCEPTION;</text>
+  <text x="466" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    PRAGMA EXCEPTION_INIT(</text>
+  <text x="466" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        serial_fail, -8177);</text>
+  <text x="466" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">BEGIN</text>
+  <text x="466" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    SET TRANSACTION</text>
+  <text x="466" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">        ISOLATION LEVEL SERIALIZABLE;</text>
+  <text x="466" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">    -- 비즈니스 로직 ...</text>
+  <text x="466" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    COMMIT;</text>
+  <text x="466" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">EXCEPTION</text>
+  <text x="466" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    WHEN serial_fail THEN</text>
+  <text x="466" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        ROLLBACK;</text>
+  <text x="466" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">        -- 재시도 또는 오류 반환</text>
+  <text x="466" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">END;</text>
+</svg>

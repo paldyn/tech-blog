@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">INCLUDE 컬럼 vs 인덱스 키 컬럼</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">PostgreSQL 11+ / SQL Server INCLUDE 절</text>
+
+  <!-- Left: Key columns only -->
+  <rect x="60" y="86" width="360" height="240" rx="8" fill="#0d0d0d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">키 컬럼 방식</text>
+  <text x="240" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">모든 컬럼이 정렬 키가 됨</text>
+
+  <rect x="76" y="140" width="328" height="50" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE INDEX</text><text x="187" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> idx1</text>
+  <text x="92" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ON</text><text x="112" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> orders (status, name, total);</text>
+
+  <text x="80" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">장점: name·total로도 필터·정렬 가능</text>
+  <text x="80" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">단점: 불필요한 컬럼도 모두 정렬 키</text>
+  <text x="80" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">      인덱스 크기 증가</text>
+  <text x="80" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">      갱신 시 모든 컬럼 재정렬</text>
+  <text x="80" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">      name 변경이 인덱스 재구성 유발</text>
+
+  <!-- Right: INCLUDE -->
+  <rect x="460" y="86" width="360" height="240" rx="8" fill="#0d0d0d" stroke="#55c555" stroke-width="2"/>
+  <text x="640" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">INCLUDE 방식 (권장)</text>
+  <text x="640" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">리프에만 저장, 정렬 키 아님</text>
+
+  <rect x="476" y="140" width="328" height="50" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="492" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE INDEX</text><text x="587" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> idx2</text>
+  <text x="492" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ON</text><text x="512" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> orders (status) </text><text x="638" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">INCLUDE</text><text x="699" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> (name, total);</text>
+
+  <text x="480" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">장점: 인덱스 크기 작음</text>
+  <text x="480" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">      name 변경이 재정렬 없음</text>
+  <text x="480" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">      DML 오버헤드 최소화</text>
+  <text x="480" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">단점: name·total로 필터·정렬 불가</text>
+  <text x="480" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">      SELECT 목적으로만 활용</text>
+
+  <!-- Bottom -->
+  <rect x="60" y="338" width="760" height="14" rx="4" fill="none"/>
+  <text x="440" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">INCLUDE: SELECT에 필요하지만 WHERE/ORDER BY엔 없는 컬럼 · 힙 접근만 없애는 목적</text>
+</svg>

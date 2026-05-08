@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#55c555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JVM Heap 세대 구조</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">Young Generation · Old Generation · Metaspace</text>
+
+  <!-- ── Young Generation box ── -->
+  <rect x="60" y="96" width="540" height="188" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="330" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Young Generation  (Minor GC 대상)</text>
+
+  <!-- Eden -->
+  <rect x="80" y="130" width="240" height="120" rx="6" fill="#0b1a0b" stroke="#55c555" stroke-width="1.2"/>
+  <text x="200" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">Eden Space</text>
+  <text x="200" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">새 객체 최초 할당</text>
+  <rect x="96" y="184" width="60" height="24" rx="4" fill="#1e3a1e"/>
+  <text x="126" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">obj A</text>
+  <rect x="164" y="184" width="60" height="24" rx="4" fill="#1e3a1e"/>
+  <text x="194" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">obj B</text>
+  <rect x="232" y="184" width="60" height="24" rx="4" fill="#1e3a1e"/>
+  <text x="262" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">obj C</text>
+  <text x="200" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">가득 차면 Minor GC 발생</text>
+
+  <!-- Survivor 0 -->
+  <rect x="338" y="130" width="122" height="120" rx="6" fill="#101828" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="399" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">Survivor 0</text>
+  <text x="399" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(from)</text>
+  <rect x="352" y="180" width="94" height="22" rx="4" fill="#1a2636"/>
+  <text x="399" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">age=1 obj</text>
+  <text x="399" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">age 카운터 증가</text>
+
+  <!-- Survivor 1 -->
+  <rect x="470" y="130" width="112" height="120" rx="6" fill="#101828" stroke="#7ec8e3" stroke-width="1.2"/>
+  <text x="526" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">Survivor 1</text>
+  <text x="526" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(to)</text>
+  <text x="526" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">비어 있음</text>
+  <text x="526" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">항상 1개는 빔</text>
+
+  <!-- Arrow Eden → S0 -->
+  <line x1="320" y1="190" x2="336" y2="190" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+  <!-- Arrow S0 → S1 -->
+  <line x1="460" y1="190" x2="468" y2="190" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── Old Generation box ── -->
+  <rect x="620" y="96" width="200" height="188" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="720" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">Old Generation</text>
+  <text x="720" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(Tenured)</text>
+  <rect x="636" y="150" width="168" height="28" rx="4" fill="#1a1a2e"/>
+  <text x="720" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">장수 객체 (age ≥ threshold)</text>
+  <rect x="636" y="186" width="168" height="28" rx="4" fill="#1a1a2e"/>
+  <text x="720" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">대형 객체 (Humongous)</text>
+  <text x="720" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Full GC / Mixed GC 대상</text>
+  <text x="720" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">-XX:MaxTenuringThreshold</text>
+
+  <!-- Arrow Young → Old (Promotion) -->
+  <line x1="600" y1="160" x2="618" y2="160" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="609" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Promotion</text>
+
+  <!-- ── Metaspace row ── -->
+  <rect x="60" y="300" width="760" height="68" rx="8" fill="#0d1117" stroke="#e8c84a" stroke-width="1.2"/>
+  <text x="90" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8c84a">Metaspace</text>
+  <text x="90" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">클래스 메타데이터 · 메서드 바이트코드 · 상수 풀 · static 변수</text>
+  <text x="90" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Native Memory 사용 · -XX:MaxMetaspaceSize 로 상한 설정 · Java 8 이전 PermGen 대체</text>
+
+  <!-- ── GC 종류 설명 ── -->
+  <rect x="60" y="384" width="370" height="112" rx="8" fill="#0d1117" stroke="#333" stroke-width="1"/>
+  <text x="84" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">GC 종류</text>
+  <rect x="80" y="416" width="8" height="8" rx="2" fill="#55c555"/>
+  <text x="96" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Minor GC — Eden 꽉 참 → Young Gen 정리</text>
+  <rect x="80" y="436" width="8" height="8" rx="2" fill="#7777cc"/>
+  <text x="96" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Major GC — Old Gen 정리 (Full GC 수반 가능)</text>
+  <rect x="80" y="456" width="8" height="8" rx="2" fill="#e8c84a"/>
+  <text x="96" y="464" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Full GC — Heap 전체 + Metaspace 정리</text>
+  <text x="84" y="486" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Full GC는 Stop-the-World 시간이 가장 길어 지연 최소화가 핵심 목표</text>
+
+  <!-- ── 주요 JVM 옵션 ── -->
+  <rect x="450" y="384" width="370" height="112" rx="8" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="474" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">주요 JVM 옵션</text>
+  <text x="474" y="428" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">-Xms512m  -Xmx2g</text>
+  <text x="474" y="446" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">-XX:NewRatio=2</text>
+  <text x="474" y="464" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">-XX:SurvivorRatio=8</text>
+  <text x="474" y="482" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">-XX:MaxTenuringThreshold=15</text>
+
+  <!-- Legend -->
+  <text x="60" y="530" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">* G1GC는 Region 기반이라 Eden/Old 경계가 고정되지 않음. ZGC·Shenandoah는 세대 경계 없이 전체 Heap 관리</text>
+</svg>

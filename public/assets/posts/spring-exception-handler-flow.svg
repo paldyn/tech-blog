@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560">
+  <defs>
+    <marker id="arrb" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e05555"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#55c555"/>
+    </marker>
+    <marker id="arry" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Spring MVC 예외 처리 파이프라인</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">HandlerExceptionResolver 체인 → @ControllerAdvice</text>
+
+  <!-- Request flow -->
+  <rect x="60" y="100" width="110" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="115" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">클라이언트</text>
+  <text x="115" y="135" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">요청</text>
+
+  <line x1="170" y1="122" x2="220" y2="122" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrb)"/>
+
+  <rect x="220" y="100" width="140" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="290" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Controller</text>
+  <text x="290" y="135" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">예외 발생</text>
+
+  <line x1="360" y1="122" x2="420" y2="122" stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+
+  <rect x="420" y="100" width="160" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="500" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Dispatcher</text>
+  <text x="500" y="135" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Servlet (예외 위임)</text>
+
+  <line x1="580" y1="122" x2="640" y2="122" stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+
+  <rect x="640" y="90" width="180" height="64" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="113" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">HandlerException</text>
+  <text x="730" y="131" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">Resolver 체인</text>
+  <text x="730" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">순서대로 처리 시도</text>
+
+  <!-- Resolver chain -->
+  <line x1="730" y1="154" x2="730" y2="194" stroke="#e05555" stroke-width="2"/>
+
+  <!-- ExceptionHandlerExceptionResolver -->
+  <rect x="460" y="194" width="540" height="52" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="480" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">① ExceptionHandlerExceptionResolver</text>
+  <text x="480" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">@ExceptionHandler 메서드 탐색 (컨트롤러 → @ControllerAdvice)</text>
+
+  <line x1="730" y1="246" x2="730" y2="270" stroke="#1e2433" stroke-width="1.5"/>
+
+  <!-- ResponseStatusExceptionResolver -->
+  <rect x="460" y="270" width="540" height="52" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="480" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">② ResponseStatusExceptionResolver</text>
+  <text x="480" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">@ResponseStatus 어노테이션이 붙은 예외 처리</text>
+
+  <line x1="730" y1="322" x2="730" y2="346" stroke="#1e2433" stroke-width="1.5"/>
+
+  <!-- DefaultHandlerExceptionResolver -->
+  <rect x="460" y="346" width="540" height="52" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="480" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">③ DefaultHandlerExceptionResolver</text>
+  <text x="480" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">MVC 내장 예외 처리 (405, 406, 400 등)</text>
+
+  <!-- @ControllerAdvice box -->
+  <rect x="60" y="194" width="370" height="204" rx="8" fill="#0d1a2d" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="245" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">@RestControllerAdvice</text>
+  <text x="245" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">(= @ControllerAdvice + @ResponseBody)</text>
+
+  <rect x="80" y="250" width="330" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">@ExceptionHandler(XxxException.class)</text>
+  <text x="245" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예외 타입 매핑 → ResponseEntity 반환</text>
+
+  <rect x="80" y="304" width="330" height="44" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="324" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">@InitBinder / @ModelAttribute</text>
+  <text x="245" y="341" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">전역 바인더·모델 속성 설정</text>
+
+  <rect x="80" y="358" width="330" height="32" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="245" y="379" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">basePackages / assignableTypes로 범위 제한 가능</text>
+
+  <!-- Outcome -->
+  <line x1="245" y1="398" x2="245" y2="440" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <rect x="80" y="440" width="330" height="44" rx="6" fill="#0d1d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="245" y="460" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">구조화된 에러 응답 (RFC 7807)</text>
+  <text x="245" y="477" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">type, title, status, detail, instance</text>
+
+  <!-- Right outcome -->
+  <line x1="730" y1="398" x2="730" y2="440" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <rect x="580" y="440" width="300" height="44" rx="6" fill="#0d1d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="730" y="460" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">적절한 HTTP 상태 + 오류 메시지</text>
+  <text x="730" y="477" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">클라이언트가 파싱 가능한 형태</text>
+
+  <!-- Priority note -->
+  <rect x="60" y="500" width="760" height="36" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="440" y="523" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">우선순위: 컨트롤러 자체 @ExceptionHandler &gt; @ControllerAdvice의 @ExceptionHandler &gt; ResponseStatus &gt; Default</text>
+</svg>

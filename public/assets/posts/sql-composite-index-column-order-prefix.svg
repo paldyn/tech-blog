@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">복합 인덱스 — Leftmost Prefix 규칙</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">INDEX (A, B, C) → A, A+B, A+B+C 순서로만 앞부분 사용 가능</text>
+
+  <!-- Index definition box -->
+  <rect x="60" y="86" width="760" height="48" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">CREATE INDEX</text><text x="176" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8"> idx_orders_abc </text><text x="330" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">ON</text><text x="353" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8"> orders (</text><text x="419" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">status</text><text x="460" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">, </text><text x="472" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">region</text><text x="519" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">, </text><text x="531" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">created_at</text><text x="622" y="105" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">);</text>
+  <text x="76" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">--         A=status          B=region        C=created_at</text>
+
+  <!-- Query rows -->
+  <!-- Row 1: A only - YES -->
+  <rect x="60" y="150" width="760" height="42" rx="4" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">WHERE status = 'pending'</text>
+  <text x="80" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">A만 사용</text>
+  <rect x="570" y="157" width="220" height="28" rx="4" fill="#0f2a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="680" y="176" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">✓ 인덱스 사용 가능</text>
+
+  <!-- Row 2: A+B - YES -->
+  <rect x="60" y="200" width="760" height="42" rx="4" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">WHERE status = 'pending' AND region = 'KR'</text>
+  <text x="80" y="235" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">A+B 사용</text>
+  <rect x="570" y="207" width="220" height="28" rx="4" fill="#0f2a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="680" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">✓ 인덱스 사용 가능</text>
+
+  <!-- Row 3: A+B+C - YES -->
+  <rect x="60" y="250" width="760" height="42" rx="4" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">WHERE status = 'pending' AND region = 'KR' AND created_at > '2026-01-01'</text>
+  <text x="80" y="285" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">A+B+C 모두 사용</text>
+  <rect x="570" y="257" width="220" height="28" rx="4" fill="#0f2a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="680" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">✓ 최적 사용</text>
+
+  <!-- Row 4: B only - NO -->
+  <rect x="60" y="300" width="760" height="42" rx="4" fill="#1f0f0f" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">WHERE region = 'KR'</text>
+  <text x="80" y="335" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">A 없이 B만</text>
+  <rect x="570" y="307" width="220" height="28" rx="4" fill="#2a0f0f" stroke="#e05555" stroke-width="1"/>
+  <text x="680" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555">✗ 인덱스 미사용</text>
+
+  <!-- Row 5: A+C skip B - partial -->
+  <rect x="60" y="350" width="760" height="42" rx="4" fill="#1a140a" stroke="#ce9178" stroke-width="1"/>
+  <text x="80" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">WHERE status = 'pending' AND created_at > '2026-01-01'</text>
+  <text x="80" y="385" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">A+C (B 스킵)</text>
+  <rect x="570" y="357" width="220" height="28" rx="4" fill="#1a110a" stroke="#ce9178" stroke-width="1"/>
+  <text x="680" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#ce9178">△ A만 인덱스 사용</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="406" width="760" height="34" rx="6" fill="#0d1520" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#b0b0b0">= (등호) 조건은 계속 다음 컬럼 사용 가능 · 범위(&gt;, &lt;, LIKE 'x%')는 해당 컬럼까지만 인덱스 사용</text>
+</svg>

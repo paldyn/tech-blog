@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">WeakRef + FinalizationRegistry — 캐시 패턴</text>
+
+  <!-- Code block -->
+  <rect x="60" y="62" width="500" height="350" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="84" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// WeakRef 기반 캐시 + FinalizationRegistry 정리</tspan>
+  </text>
+  <text x="76" y="102" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> cache </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> Map();</tspan>
+  </text>
+  <text x="76" y="120" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> registry </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> FinalizationRegistry(key </tspan><tspan fill="#7ec8e3">=&gt;</tspan><tspan fill="#e8e8e8"> {</tspan>
+  </text>
+  <text x="76" y="138" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  cache.</tspan><tspan fill="#55c555">delete</tspan><tspan fill="#e8e8e8">(key);</tspan><tspan fill="#6a8aa0"> // GC 후 자동 삭제</tspan>
+  </text>
+  <text x="76" y="156" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+
+  <text x="76" y="192" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">function</tspan><tspan fill="#e8e8e8"> cacheSet(key, value) {</tspan>
+  </text>
+  <text x="76" y="210" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">  const</tspan><tspan fill="#e8e8e8"> ref </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> WeakRef(value);</tspan>
+  </text>
+  <text x="76" y="228" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  cache.</tspan><tspan fill="#55c555">set</tspan><tspan fill="#e8e8e8">(key, ref);</tspan>
+  </text>
+  <text x="76" y="246" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#e8e8e8">  registry.</tspan><tspan fill="#55c555">register</tspan><tspan fill="#e8e8e8">(value, key);</tspan>
+  </text>
+  <text x="76" y="264" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <text x="76" y="300" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">function</tspan><tspan fill="#e8e8e8"> cacheGet(key) {</tspan>
+  </text>
+  <text x="76" y="318" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">  const</tspan><tspan fill="#e8e8e8"> ref </tspan><tspan fill="#7ec8e3">=</tspan><tspan fill="#e8e8e8"> cache.</tspan><tspan fill="#55c555">get</tspan><tspan fill="#e8e8e8">(key);</tspan>
+  </text>
+  <text x="76" y="336" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">  return</tspan><tspan fill="#e8e8e8"> ref?.</tspan><tspan fill="#55c555">deref</tspan><tspan fill="#e8e8e8">();</tspan>
+  </text>
+  <text x="76" y="354" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  // undefined면 이미 수거됨 → 재계산 필요</tspan>
+  </text>
+  <text x="76" y="372" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <!-- Right: flow diagram -->
+  <text x="710" y="90" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e8e8e8">동작 흐름</text>
+
+  <!-- cacheSet -->
+  <rect x="590" y="104" width="240" height="40" fill="#0f1a1a" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="710" y="129" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#7ec8e3">cacheSet(key, value)</text>
+
+  <line x1="710" y1="146" x2="710" y2="168" stroke="#888" stroke-width="1.5"/>
+  <polygon points="706,165 710,178 714,165" fill="#888"/>
+
+  <!-- WeakRef created -->
+  <rect x="590" y="180" width="240" height="40" fill="#141f2e" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="710" y="205" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#7777cc">WeakRef(value) 생성</text>
+
+  <line x1="710" y1="222" x2="710" y2="244" stroke="#888" stroke-width="1.5"/>
+  <polygon points="706,241 710,254 714,241" fill="#888"/>
+
+  <!-- Map store -->
+  <rect x="590" y="256" width="240" height="40" fill="#141f2e" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="710" y="281" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#7777cc">Map에 WeakRef 저장</text>
+
+  <line x1="710" y1="298" x2="710" y2="320" stroke="#888" stroke-width="1.5"/>
+  <polygon points="706,317 710,330 714,317" fill="#888"/>
+
+  <!-- GC happens -->
+  <rect x="590" y="332" width="240" height="40" fill="#1a0d0d" rx="6" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="710" y="357" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#e05555">GC: value 수거</text>
+
+  <line x1="710" y1="374" x2="710" y2="396" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="706,393 710,406 714,393" fill="#55c555"/>
+
+  <!-- Registry callback -->
+  <rect x="590" y="408" width="240" height="40" fill="#0d1f0d" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="710" y="433" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#55c555">Registry: cache 정리</text>
+
+  <!-- Bottom note -->
+  <text x="310" y="426" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">⚠ FinalizationRegistry 콜백 타이밍은 보장되지 않음</text>
+  <text x="310" y="444" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">GC 이후 언제든지 실행될 수 있음 (동기 흐름 보장 X)</text>
+</svg>

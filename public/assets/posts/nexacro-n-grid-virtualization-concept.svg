@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Grid 가상화(Virtual Scrolling) 원리</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">전체 DOM 생성 vs. 화면 범위 DOM만 재사용</text>
+
+  <!-- Without virtualization (left) -->
+  <rect x="60" y="96" width="340" height="360" fill="#111" rx="10"/>
+  <text x="230" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">가상화 미사용 (기본)</text>
+  <text x="230" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">10,000행 → 10,000개 DOM</text>
+
+  <!-- Rows visualization without virtualization -->
+  <rect x="80" y="150" width="300" height="20" fill="#1a1a2e" rx="3"/>
+  <text x="230" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">행 1 (DOM 생성)</text>
+  <rect x="80" y="174" width="300" height="20" fill="#1a1a2e" rx="3"/>
+  <text x="230" y="189" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">행 2 (DOM 생성)</text>
+  <rect x="80" y="198" width="300" height="20" fill="#1a1a2e" rx="3"/>
+  <text x="230" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">행 3 (DOM 생성)</text>
+
+  <!-- Dots indicating many rows -->
+  <text x="230" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" fill="#888" text-anchor="middle">···</text>
+  <text x="230" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">(9,994행 더...)</text>
+  <text x="230" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" fill="#888" text-anchor="middle">···</text>
+
+  <rect x="80" y="316" width="300" height="20" fill="#1a1a2e" rx="3"/>
+  <text x="230" y="331" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">행 9,999 (DOM 생성)</text>
+  <rect x="80" y="340" width="300" height="20" fill="#1a1a2e" rx="3"/>
+  <text x="230" y="355" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">행 10,000 (DOM 생성)</text>
+
+  <!-- Result -->
+  <rect x="80" y="376" width="300" height="60" fill="#2e0d0d" rx="6"/>
+  <text x="230" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">메모리 폭발 · 초기 렌더링 느림</text>
+  <text x="230" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">스크롤 시 레이아웃 재계산 폭증</text>
+  <text x="230" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">5,000+ 행에서 체감 저하</text>
+
+  <!-- With virtualization (right) -->
+  <rect x="480" y="96" width="340" height="360" fill="#111" rx="10"/>
+  <text x="650" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">가상화 사용</text>
+  <text x="650" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">10,000행 → 50개 DOM만 생성·재사용</text>
+
+  <!-- Viewport area -->
+  <rect x="500" y="150" width="300" height="200" fill="#0d2e0d" rx="6" stroke="#55c555" stroke-width="2"/>
+  <text x="650" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555" text-anchor="middle">뷰포트 (화면에 보이는 영역)</text>
+
+  <rect x="510" y="176" width="280" height="18" fill="#1a2e1a" rx="3"/>
+  <text x="650" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8" text-anchor="middle">행 N   ← DOM 재사용</text>
+  <rect x="510" y="198" width="280" height="18" fill="#1a2e1a" rx="3"/>
+  <text x="650" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8" text-anchor="middle">행 N+1 ← DOM 재사용</text>
+  <rect x="510" y="220" width="280" height="18" fill="#1a2e1a" rx="3"/>
+  <text x="650" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8" text-anchor="middle">행 N+2 ← DOM 재사용</text>
+  <text x="650" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" fill="#888" text-anchor="middle">···</text>
+  <rect x="510" y="278" width="280" height="18" fill="#1a2e1a" rx="3"/>
+  <text x="650" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8" text-anchor="middle">행 N+49 ← DOM 재사용</text>
+
+  <!-- Scroll indicator -->
+  <text x="650" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">스크롤 시 DOM 위치만 이동 +</text>
+  <text x="650" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">데이터만 교체</text>
+
+  <!-- Result -->
+  <rect x="500" y="376" width="300" height="60" fill="#0d2e0d" rx="6"/>
+  <text x="650" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">메모리 일정 · 초기 렌더링 빠름</text>
+  <text x="650" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">스크롤 시 데이터만 교체</text>
+  <text x="650" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">100,000행도 유려하게</text>
+</svg>

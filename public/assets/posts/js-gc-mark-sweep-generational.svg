@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">세대별(Generational) GC — V8 힙 구조</text>
+
+  <!-- Young Generation Box -->
+  <rect x="60" y="68" width="480" height="210" fill="#0f0f0f" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="300" y="92" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="15" font-weight="600" fill="#7ec8e3">Young Generation (새로운 객체)</text>
+
+  <!-- Eden Space -->
+  <rect x="80" y="104" width="180" height="80" fill="#0a141f" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="170" y="128" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7ec8e3">Eden Space</text>
+  <text x="170" y="148" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">새 객체 최초 할당</text>
+  <text x="170" y="166" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">꽉 차면 Minor GC</text>
+
+  <!-- Survivor 1 -->
+  <rect x="280" y="104" width="120" height="80" fill="#0a141f" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="340" y="128" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7777cc">Survivor 1</text>
+  <text x="340" y="150" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">생존 객체</text>
+  <text x="340" y="168" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">(1회 생존)</text>
+
+  <!-- Survivor 2 -->
+  <rect x="420" y="104" width="100" height="80" fill="#0a141f" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="470" y="128" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7777cc">Survivor 2</text>
+  <text x="470" y="150" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">생존 객체</text>
+  <text x="470" y="168" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">(2회 생존)</text>
+
+  <!-- Minor GC label -->
+  <text x="300" y="228" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#7ec8e3">Minor GC: 빠름 (~1ms), 자주 발생, 대부분 객체 수거</text>
+  <text x="300" y="248" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">약 1~8MB 크기 / "세대 가설": 대부분 객체는 일찍 죽는다</text>
+
+  <!-- Old Generation Box -->
+  <rect x="60" y="302" width="480" height="120" fill="#0f0f0f" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="300" y="326" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="15" font-weight="600" fill="#e05555">Old Generation (오래된 객체)</text>
+  <text x="300" y="350" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">여러 번 Minor GC에서 살아남은 객체가 승격(Promotion)</text>
+  <text x="300" y="370" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">Major GC: 느림 (~10~100ms), 드물게 발생</text>
+  <text x="300" y="390" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">클로저·전역변수·캐시 객체가 여기 쌓임 → 메모리 누수 주의</text>
+  <text x="300" y="408" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">수백 MB까지 커질 수 있음</text>
+
+  <!-- Promotion arrow -->
+  <line x1="300" y1="284" x2="300" y2="300" stroke="#55c555" stroke-width="2"/>
+  <polygon points="296,297 300,312 304,297" fill="#55c555"/>
+  <text x="370" y="295"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">Promotion (임계 횟수 생존 시)</text>
+
+  <!-- Right panel: Large Object Space + Code Space -->
+  <rect x="580" y="68" width="260" height="130" fill="#0f0f0f" rx="8" stroke="#555" stroke-width="1"/>
+  <text x="710" y="90" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#888">Large Object Space</text>
+  <text x="710" y="112" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">512KB 초과 객체</text>
+  <text x="710" y="130" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">별도 관리, 이동 안 함</text>
+  <text x="710" y="148" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">(예: 큰 ArrayBuffer)</text>
+  <text x="710" y="166" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">GC 비용 높음</text>
+
+  <rect x="580" y="214" width="260" height="110" fill="#0f0f0f" rx="8" stroke="#555" stroke-width="1"/>
+  <text x="710" y="236" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#888">Code Space</text>
+  <text x="710" y="256" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">JIT 컴파일된 코드 저장</text>
+  <text x="710" y="274" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">실행 권한 있는 메모리</text>
+  <text x="710" y="292" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">W^X 정책으로 보호</text>
+  <text x="710" y="310" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">GC 대상 아님</text>
+
+  <!-- V8 optimization note -->
+  <rect x="580" y="340" width="260" height="82" fill="#0f0f1a" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="710" y="360" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7777cc">V8 GC 최적화</text>
+  <text x="710" y="380" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">증분 마킹 (Incremental)</text>
+  <text x="710" y="398" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">병렬 수거 (Parallel)</text>
+  <text x="710" y="416" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">→ STW 시간 최소화</text>
+
+  <!-- Bottom -->
+  <text x="440" y="452" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#666">세대 가설: 새 객체는 금방 죽고, 오래된 객체는 계속 살아있다 → 세대를 분리해 GC 효율 극대화</text>
+</svg>

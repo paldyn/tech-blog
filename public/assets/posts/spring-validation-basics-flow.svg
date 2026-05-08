@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="880" height="540">
+  <defs>
+    <marker id="arrb" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e05555"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Bean Validation 처리 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">@Valid / @Validated → MethodValidationInterceptor → BindingResult</text>
+
+  <!-- Step 1: Client Request -->
+  <rect x="60" y="100" width="130" height="52" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="125" y="121" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">클라이언트</text>
+  <text x="125" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">POST /users + body</text>
+
+  <line x1="190" y1="126" x2="250" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrb)"/>
+
+  <!-- Step 2: DispatcherServlet -->
+  <rect x="250" y="100" width="140" height="52" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="320" y="121" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">Dispatcher</text>
+  <text x="320" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Servlet</text>
+
+  <line x1="390" y1="126" x2="450" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrb)"/>
+
+  <!-- Step 3: HandlerAdapter + @Valid -->
+  <rect x="450" y="90" width="175" height="72" rx="8" fill="#0d1a2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="537" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">HandlerAdapter</text>
+  <text x="537" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">ArgumentResolver</text>
+  <text x="537" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">@Valid 감지 → 검증 실행</text>
+
+  <line x1="625" y1="126" x2="685" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrb)"/>
+
+  <!-- Step 4: Validator -->
+  <rect x="685" y="100" width="140" height="52" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="755" y="121" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">Validator</text>
+  <text x="755" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Hibernate Validator</text>
+
+  <!-- Decision diamond -->
+  <polygon points="440,210 520,248 440,286 360,248" fill="#111827" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="440" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">검증</text>
+  <text x="440" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">통과?</text>
+
+  <!-- Arrow down from Validator to diamond -->
+  <line x1="755" y1="152" x2="755" y2="210" stroke="#7ec8e3" stroke-width="2"/>
+  <line x1="755" y1="210" x2="520" y2="248" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrb)"/>
+
+  <!-- Success path: right -->
+  <line x1="520" y1="248" x2="640" y2="248" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <text x="580" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">통과</text>
+  <rect x="640" y="222" width="170" height="52" rx="6" fill="#0d1d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="725" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">컨트롤러 메서드</text>
+  <text x="725" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정상 처리</text>
+
+  <!-- Fail path: left -->
+  <line x1="360" y1="248" x2="240" y2="248" stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+  <text x="300" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">실패</text>
+
+  <!-- BindingResult / Exception -->
+  <rect x="60" y="222" width="180" height="52" rx="6" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="150" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">MethodArgumentNot</text>
+  <text x="150" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">ValidException 발생</text>
+
+  <line x1="150" y1="274" x2="150" y2="320" stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+
+  <rect x="60" y="320" width="180" height="44" rx="6" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="150" y="341" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">@ExceptionHandler</text>
+  <text x="150" y="357" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">400 Bad Request 반환</text>
+
+  <!-- BindingResult alternative -->
+  <rect x="300" y="310" width="240" height="56" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="420" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">BindingResult 사용 시</text>
+  <text x="420" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예외 대신 직접 오류 처리 (폼 화면)</text>
+  <text x="420" y="366" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">bindingResult.hasErrors() → 재렌더링</text>
+
+  <!-- Bottom: @Valid vs @Validated -->
+  <text x="440" y="416" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">@Valid vs @Validated 비교</text>
+
+  <rect x="60" y="430" width="360" height="72" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="240" y="452" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">@Valid (javax / jakarta)</text>
+  <text x="80" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• Bean Validation 표준 어노테이션</text>
+  <text x="80" y="490" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 그룹 지정 불가 / 중첩 검증 @Valid 필요</text>
+
+  <rect x="460" y="430" width="360" height="72" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="640" y="452" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">@Validated (Spring)</text>
+  <text x="480" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 검증 그룹(Group) 지정 가능</text>
+  <text x="480" y="490" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 메서드 레벨 검증(AOP)에도 사용</text>
+</svg>
