@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">@Transactional 자기 호출(Self-Invocation) 문제</text>
+
+  <!-- ── Left: 문제 시나리오 ── -->
+  <text x="70" y="76"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e05555">문제: 같은 클래스 내부 호출 → @Transactional 무시</text>
+
+  <rect x="70" y="88" width="360" height="222" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="86" y="116" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">@Service</text>
+  <text x="86" y="134" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">public class </tspan><tspan fill="#e8e8e8">OrderService {</tspan></text>
+  <text x="86" y="152" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#6a8aa0">  // 트랜잭션 없는 퍼블릭 메서드</tspan></text>
+  <text x="86" y="170" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">  public void </tspan><tspan fill="#e8e8e8">createOrder(Order o) {</tspan></text>
+  <text x="86" y="188" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#6a8aa0">    // this.save() → 프록시 우회!</tspan></text>
+  <text x="86" y="206" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    save(o);  </tspan><tspan fill="#e05555">// TX 적용 안 됨</tspan></text>
+  <text x="86" y="224" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  }</tspan></text>
+  <text x="86" y="260" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">  @Transactional</text>
+  <text x="86" y="278" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">  public void </tspan><tspan fill="#e8e8e8">save(Order o) { ... }</tspan></text>
+  <text x="86" y="296" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">}</tspan></text>
+
+  <!-- ── Proxy diagram ── -->
+  <!-- External caller -->
+  <rect x="70" y="328" width="100" height="44" rx="6" fill="#111827" stroke="#888" stroke-width="1"/>
+  <text x="120" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888" text-anchor="middle">외부 호출자</text>
+  <text x="120" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#555" text-anchor="middle">Controller</text>
+
+  <!-- Arrow to proxy -->
+  <line x1="170" y1="350" x2="194" y2="350" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="200,350 192,345 192,355" fill="#7777cc"/>
+
+  <!-- Proxy box -->
+  <rect x="200" y="320" width="110" height="60" rx="6" fill="#1a1a3a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="255" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7777cc" text-anchor="middle">AOP 프록시</text>
+  <text x="255" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#888" text-anchor="middle">TX begin</text>
+  <text x="255" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#888" text-anchor="middle">→ target</text>
+
+  <!-- Arrow to real object -->
+  <line x1="310" y1="350" x2="334" y2="350" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="340,350 332,345 332,355" fill="#55c555"/>
+
+  <!-- Real object -->
+  <rect x="340" y="320" width="120" height="60" rx="6" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="400" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555" text-anchor="middle">실제 객체</text>
+  <text x="400" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#888" text-anchor="middle">createOrder()</text>
+  <text x="400" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#888" text-anchor="middle">this.save()</text>
+
+  <!-- Self call arrow (bypasses proxy) -->
+  <path d="M 460 350 Q 480 310 440 295 Q 400 280 400 320" stroke="#e05555" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <polygon points="400,320 394,310 406,310" fill="#e05555"/>
+  <text x="490" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e05555">프록시 우회!</text>
+  <text x="490" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e05555">@Transactional 무시</text>
+
+  <!-- ── Right: 해결책 ── -->
+  <text x="460" y="76"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">해결책: 클래스 분리 (가장 권장)</text>
+
+  <rect x="460" y="88" width="350" height="222" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="476" y="116" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#6a8aa0">// 호출 클래스</tspan></text>
+  <text x="476" y="134" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">@Service</text>
+  <text x="476" y="152" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">public class </tspan><tspan fill="#e8e8e8">OrderFacade {</tspan></text>
+  <text x="476" y="170" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  private final OrderSaveService svc;</tspan></text>
+  <text x="476" y="188" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">  public void </tspan><tspan fill="#e8e8e8">createOrder(Order o) {</tspan></text>
+  <text x="476" y="206" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    svc.save(o); </tspan><tspan fill="#55c555">// 프록시 경유 ✓</tspan></text>
+  <text x="476" y="224" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  }</tspan></text>
+  <text x="476" y="242" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">}</tspan></text>
+  <text x="476" y="260" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">@Service</tspan></text>
+  <text x="476" y="278" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">public class </tspan><tspan fill="#e8e8e8">OrderSaveService {</tspan></text>
+  <text x="476" y="296" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#7ec8e3">  @Transactional</tspan></text>
+
+  <!-- Bottom label -->
+  <text x="440" y="440"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#555" text-anchor="middle">Spring AOP는 JDK 동적 프록시 또는 CGLIB 서브클래스 프록시 방식 — 동일 인스턴스 내부 호출은 프록시를 경유하지 않음</text>
+</svg>
