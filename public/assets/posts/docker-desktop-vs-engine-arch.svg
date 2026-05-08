@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Docker Desktop 내부 아키텍처 (macOS/Windows)</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Linux 커널이 없는 호스트에서 컨테이너를 실행하는 방법</text>
+
+  <!-- macOS Host -->
+  <rect x="60" y="86" width="760" height="300" fill="#0c0c10" stroke="#333" stroke-width="1.5" rx="10"/>
+  <text x="84" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555">macOS / Windows Host</text>
+
+  <!-- Docker Desktop App -->
+  <rect x="80" y="116" width="200" height="240" fill="#0d1020" stroke="#7ec8e3" stroke-width="1.5" rx="8"/>
+  <text x="180" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">Docker Desktop App</text>
+  <text x="96" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa">• GUI 대시보드</text>
+  <text x="96" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa">• Docker CLI (host)</text>
+  <text x="96" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa">• 설정 UI</text>
+  <text x="96" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa">• 확장 기능(Extensions)</text>
+  <text x="96" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa">• Local Kubernetes</text>
+  <text x="96" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">docker.sock을 통해</text>
+  <text x="96" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">VM 내부 dockerd와 연결</text>
+  <text x="96" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">→ 호스트 CLI에서 투명하게</text>
+  <text x="96" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">  사용 가능</text>
+
+  <!-- Arrow -->
+  <line x1="290" y1="236" x2="330" y2="236" stroke="#555" stroke-width="2"/>
+  <polygon points="334,236 322,230 322,242" fill="#555"/>
+  <text x="310" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">socket</text>
+
+  <!-- Linux VM -->
+  <rect x="334" y="116" width="460" height="240" fill="#0a1408" stroke="#55c555" stroke-width="1.5" rx="8"/>
+  <text x="564" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">경량 Linux VM (HyperKit / WSL 2)</text>
+
+  <!-- dockerd inside VM -->
+  <rect x="354" y="156" width="200" height="80" fill="#0f1f0f" stroke="#336633" rx="6"/>
+  <text x="454" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#88bb66">dockerd</text>
+  <text x="454" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">containerd + runc</text>
+  <text x="454" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">OCI 런타임</text>
+
+  <!-- Containers inside VM -->
+  <rect x="570" y="156" width="200" height="80" fill="#071208" stroke="#1e3a1e" rx="6"/>
+  <rect x="582" y="168" width="80" height="54" fill="#0f2010" stroke="#2a4a2a" rx="4"/>
+  <text x="622" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#aaa">Container A</text>
+
+  <rect x="672" y="168" width="80" height="54" fill="#0f2010" stroke="#2a4a2a" rx="4"/>
+  <text x="712" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#aaa">Container B</text>
+
+  <!-- Linux Kernel label -->
+  <rect x="354" y="252" width="416" height="36" fill="#111" stroke="#333" rx="6"/>
+  <text x="562" y="275" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#aaa">Linux Kernel (VM 내부)</text>
+
+  <!-- File sharing note -->
+  <text x="440" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">macOS ↔ VM 파일 공유: VirtioFS (빠름) 또는 gRPC FUSE</text>
+  <text x="440" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">bind mount 시 파일 동기화 레이턴시가 Docker Engine 대비 높을 수 있음</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#666">Docker Desktop은 Linux VM을 투명하게 관리해 개발자가 VM 존재를 신경 쓰지 않아도 됩니다</text>
+  <text x="440" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#666">성능이 중요한 I/O 집약 작업에서는 macOS 네이티브 볼륨 성능과 차이가 날 수 있습니다</text>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">docker run nginx 실행 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">CLI 입력부터 컨테이너 프로세스 시작까지</text>
+
+  <!-- Step boxes vertical flow -->
+  <!-- Step 1 -->
+  <rect x="240" y="88" width="400" height="44" fill="#0d1020" stroke="#7ec8e3" stroke-width="1.5" rx="8"/>
+  <text x="300" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3">① </text>
+  <text x="316" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">사용자: docker run nginx 입력</text>
+  <text x="316" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Docker CLI가 명령을 파싱</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="440" y1="136" x2="440" y2="156" stroke="#444" stroke-width="1.5"/>
+  <polygon points="440,160 434,150 446,150" fill="#444"/>
+
+  <!-- Step 2 -->
+  <rect x="240" y="160" width="400" height="44" fill="#0d1020" stroke="#7ec8e3" rx="8"/>
+  <text x="300" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3">② </text>
+  <text x="316" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">CLI → dockerd REST API 요청</text>
+  <text x="316" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">POST /containers/create (unix socket)</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="440" y1="208" x2="440" y2="228" stroke="#444" stroke-width="1.5"/>
+  <polygon points="440,232 434,222 446,222" fill="#444"/>
+
+  <!-- Step 3 -->
+  <rect x="240" y="232" width="400" height="44" fill="#0a1a0a" stroke="#55c555" rx="8"/>
+  <text x="300" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">③ </text>
+  <text x="316" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">dockerd: 로컬 이미지 확인 → 없으면 pull</text>
+  <text x="316" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Docker Hub에서 nginx:latest 레이어 다운로드</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="440" y1="280" x2="440" y2="300" stroke="#444" stroke-width="1.5"/>
+  <polygon points="440,304 434,294 446,294" fill="#444"/>
+
+  <!-- Step 4 -->
+  <rect x="240" y="304" width="400" height="44" fill="#120f08" stroke="#e0a030" rx="8"/>
+  <text x="300" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e0a030">④ </text>
+  <text x="316" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">dockerd → containerd → runc</text>
+  <text x="316" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">namespace/cgroup 설정 후 nginx 프로세스 시작</text>
+
+  <!-- Right side: code block showing the command -->
+  <rect x="66" y="88" width="156" height="260" fill="#070b14" stroke="#1e2433" rx="6"/>
+  <text x="80" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 사용자 입력</text>
+  <text x="80" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">docker</text>
+  <text x="116" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> run</text>
+  <text x="80" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  nginx</text>
+
+  <text x="80" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># API 호출</text>
+  <text x="80" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">POST</text>
+  <text x="80" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888"> /containers</text>
+  <text x="80" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888"> /create</text>
+
+  <text x="80" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 결과</text>
+  <text x="80" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">PID 1</text>
+  <text x="80" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888"> nginx 실행</text>
+  <text x="80" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888"> 중...</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#666">전체 과정은 수백 ms 내에 완료됩니다</text>
+  <text x="440" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#666">이미지가 이미 로컬에 있으면 pull 단계를 건너뛰어 더욱 빠릅니다</text>
+</svg>
