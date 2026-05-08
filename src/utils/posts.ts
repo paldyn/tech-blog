@@ -118,6 +118,8 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Spring: '/assets/logos/spring.png',
   SQL: '/assets/logos/sql.png',
   Java: '/assets/logos/java.png',
+  Git: '/assets/logos/git.png',
+  Linux: '/assets/logos/linux.png',
   Team: '/assets/logo-symbol-dark.png',
 };
 
