@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">CBO 통계 수집 및 옵티마이저 모드</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">DBMS_STATS와 OPTIMIZER_MODE 파라미터 활용</text>
+
+  <!-- Section 1: Statistics gathering -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">통계 수집 방법</text>
+  <rect x="60" y="108" width="380" height="206" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 테이블 통계 수집</text>
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">DBMS_STATS.GATHER_TABLE_STATS(</text>
+  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  ownname    =&gt; </text><text x="196" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'HR'</text><text x="220" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="76" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  tabname    =&gt; </text><text x="196" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'EMPLOYEES'</text><text x="280" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  estimate_percent =&gt; </text><text x="228" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">30</text><text x="240" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text x="76" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  method_opt =&gt; </text>
+  <text x="76" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">    'FOR ALL COLUMNS SIZE AUTO'</text>
+  <text x="76" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 스키마 전체 수집</text>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">DBMS_STATS.GATHER_SCHEMA_STATS(</text>
+  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  ownname =&gt; </text><text x="172" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'HR'</text>
+  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+
+  <!-- Section 2: Optimizer mode -->
+  <text x="460" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">OPTIMIZER_MODE 파라미터</text>
+  <rect x="460" y="108" width="360" height="206" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 현재 설정 확인</text>
+  <text x="476" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text><text x="524" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> name, value</text>
+  <text x="476" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text><text x="512" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">   v$parameter</text>
+  <text x="476" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text><text x="520" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  name = </text><text x="580" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'optimizer_mode'</text><text x="712" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+  <text x="476" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 세션 수준 변경</text>
+  <text x="476" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ALTER</text><text x="512" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> SESSION </text><text x="572" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SET</text>
+  <text x="476" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  optimizer_mode = </text><text x="640" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">ALL_ROWS</text><text x="720" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+  <text x="476" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- ALL_ROWS: 전체 처리량 최적 (기본)</text>
+  <text x="476" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- FIRST_ROWS_n: 첫 n행 반환 최적</text>
+  <text x="476" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- CHOOSE: 통계 있으면 CBO (deprecated)</text>
+  <text x="476" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- RULE:  RBO 강제 (10g 이후 미지원)</text>
+
+  <!-- Bottom: statistics items table -->
+  <text x="60" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">CBO가 활용하는 통계 항목</text>
+  <rect x="60" y="342" width="760" height="140" fill="#111620" rx="8" stroke="#2a3a50" stroke-width="1"/>
+
+  <!-- Header -->
+  <text x="180" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">통계 항목</text>
+  <text x="440" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">의미</text>
+  <text x="700" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">플랜 영향</text>
+  <line x1="70" y1="368" x2="810" y2="368" stroke="#2a3a50" stroke-width="1"/>
+
+  <text x="180" y="386" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">NUM_ROWS</text>
+  <text x="440" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">테이블 총 행 수</text>
+  <text x="700" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">조인 순서·Full Scan 비용</text>
+
+  <text x="180" y="406" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">NUM_DISTINCT (NDV)</text>
+  <text x="440" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">컬럼 고유값 수</text>
+  <text x="700" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">선택도 계산</text>
+
+  <text x="180" y="426" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">HISTOGRAM</text>
+  <text x="440" y="426" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">값 분포 정보</text>
+  <text x="700" y="426" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">편향 분포 감지</text>
+
+  <text x="180" y="446" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">CLUSTERING_FACTOR</text>
+  <text x="440" y="446" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인덱스-테이블 정렬 일치도</text>
+  <text x="700" y="446" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Index Scan 실제 비용</text>
+
+  <text x="180" y="466" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">BLOCKS</text>
+  <text x="440" y="466" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">테이블 블록 수</text>
+  <text x="700" y="466" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Full Scan I/O 비용</text>
+</svg>
