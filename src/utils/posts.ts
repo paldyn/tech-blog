@@ -120,6 +120,9 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Java: '/assets/logos/java.png',
   Git: '/assets/logos/git.png',
   Linux: '/assets/logos/linux.png',
+  Docker: '/assets/logos/docker.png',
+  Kubernetes: '/assets/logos/kubernetes.png',
+  Python: '/assets/logos/python.png',
   Team: '/assets/logo-symbol-dark.png',
 };
 
