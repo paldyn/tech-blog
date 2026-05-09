@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="880" height="480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Non-Repeatable Read 발생 시나리오</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">READ_COMMITTED 격리 수준에서의 동시 트랜잭션 타임라인</text>
+
+  <!-- Column headers -->
+  <text x="210" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">TX-A (주문 서비스)</text>
+  <text x="670" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8a855" text-anchor="middle">TX-B (재고 업데이트)</text>
+
+  <!-- Timeline axis -->
+  <line x1="440" y1="100" x2="440" y2="440" stroke="#333" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="440" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">시간 →</text>
+
+  <!-- Step 1: TX-A reads -->
+  <rect x="60" y="110" width="300" height="48" fill="#0d1a2e" rx="6" stroke="#1e2e4a" stroke-width="1"/>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T1: SELECT stock FROM product</text>
+  <text x="80" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">WHERE id=1  →  stock = 100</text>
+
+  <!-- Step 2: TX-B begins and updates -->
+  <rect x="520" y="178" width="300" height="48" fill="#1a0e00" rx="6" stroke="#2e2200" stroke-width="1"/>
+  <text x="540" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T2: UPDATE product SET stock=50</text>
+  <text x="540" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8a855">WHERE id=1  →  재고 감소</text>
+
+  <!-- Step 3: TX-B commits -->
+  <rect x="520" y="246" width="300" height="36" fill="#1a0a0a" rx="6" stroke="#2e1a1a" stroke-width="1"/>
+  <text x="540" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">T3: COMMIT  →  변경 확정</text>
+
+  <!-- Step 4: TX-A reads again -->
+  <rect x="60" y="302" width="300" height="48" fill="#1a0a0a" rx="6" stroke="#2e1a1a" stroke-width="1.5"/>
+  <text x="80" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T4: SELECT stock FROM product</text>
+  <text x="80" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">WHERE id=1  →  stock = 50  ⚠</text>
+
+  <!-- Problem annotation -->
+  <rect x="60" y="368" width="300" height="50" fill="#1a0808" rx="6" stroke="#3a1010" stroke-width="1.5"/>
+  <text x="80" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">Non-Repeatable Read 발생!</text>
+  <text x="80" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">같은 TX 안에서 같은 쿼리가 다른 결과</text>
+  <text x="80" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">100 → 50 (TX-A 기준 불일치)</text>
+
+  <!-- Solution box -->
+  <rect x="520" y="302" width="300" height="64" fill="#0a1a0a" rx="6" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="540" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">해결: REPEATABLE_READ</text>
+  <text x="540" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">T4 조회 시 스냅샷(T1 시점) 사용</text>
+  <text x="540" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">→ stock = 100 (일관된 읽기)</text>
+
+  <!-- Time arrows -->
+  <line x1="210" y1="158" x2="210" y2="302" stroke="#1e2e4a" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="210,308 205,294 215,294" fill="#1e2e4a"/>
+  <line x1="670" y1="226" x2="670" y2="290" stroke="#2e2200" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="670,296 665,282 675,282" fill="#2e2200"/>
+
+  <!-- Code hint -->
+  <rect x="60" y="440" width="760" height="26" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="458" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">@Transactional(isolation = Isolation.REPEATABLE_READ)  <tspan fill="#6a8aa0">// 같은 TX 내 일관된 읽기 보장</tspan></text>
+</svg>
