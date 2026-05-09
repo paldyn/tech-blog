@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">docker exec 실전 활용 패턴</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#aaaaaa">쉘 진입 · 명령 실행 · 환경 변수 조회</text>
+
+  <!-- Use case boxes (3 columns) -->
+  <!-- 1. Shell access -->
+  <rect x="60" y="100" width="230" height="120" rx="8" fill="#0d1f2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">쉘 진입</text>
+  <text x="80" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">bash / sh / zsh</text>
+  <text x="80" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">-it web bash</text>
+  <text x="80" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666">Alpine: sh (bash 없음)</text>
+  <text x="80" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">-it web sh</text>
+
+  <!-- 2. One-off command -->
+  <rect x="325" y="100" width="230" height="120" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">단건 명령 실행</text>
+  <text x="345" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쉘 연결 없이 결과 반환</text>
+  <text x="345" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">web nginx -t</text>
+  <text x="345" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">web cat /etc/hosts</text>
+  <text x="345" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">db mysqldump ...</text>
+
+  <!-- 3. Env/debug -->
+  <rect x="590" y="100" width="230" height="120" rx="8" fill="#1a1a30" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="705" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">디버깅 / 환경 조회</text>
+  <text x="610" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">환경변수·프로세스 확인</text>
+  <text x="610" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">web env</text>
+  <text x="610" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">web ps aux</text>
+  <text x="610" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">web ls -la /app</text>
+
+  <!-- -e option note -->
+  <rect x="60" y="244" width="760" height="50" rx="6" fill="#111827" stroke="#1e2433"/>
+  <text x="80" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">-e 옵션으로 환경변수 추가:</text>
+  <text x="80" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">docker exec -e DEBUG=1 web python debug.py</text>
+
+  <!-- Code block -->
+  <rect x="60" y="316" width="760" height="68" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># DB 컨테이너에서 psql 접속</text>
+  <text x="76" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker exec</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-it</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">db</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7ec8e3">psql</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-U</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">postgres</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-d</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">mydb</tspan>
+  </text>
+  <text x="76" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker exec</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">web</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7ec8e3">nginx</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-s</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">reload</tspan>
+    <tspan fill="#6a8aa0">    # 설정 무중단 리로드</tspan>
+  </text>
+</svg>

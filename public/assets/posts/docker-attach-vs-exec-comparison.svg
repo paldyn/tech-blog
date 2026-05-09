@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">docker attach vs docker exec</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#aaaaaa">stdin/stdout 연결 방식의 근본적 차이</text>
+
+  <!-- docker attach diagram -->
+  <rect x="60" y="104" width="360" height="220" rx="10" fill="#0d0d0d" stroke="#e8a030" stroke-width="2"/>
+  <text x="240" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e8a030">docker attach</text>
+
+  <!-- Terminal box inside attach -->
+  <rect x="80" y="146" width="120" height="44" rx="6" fill="#111827" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="140" y="165" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">터미널</text>
+  <text x="140" y="181" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">(stdin/stdout)</text>
+
+  <!-- Arrow: terminal → PID 1 -->
+  <polygon points="207,168 221,162 221,174" fill="#e8a030"/>
+  <line x1="200" y1="168" x2="221" y2="168" stroke="#e8a030" stroke-width="2"/>
+
+  <!-- Container PID 1 inside attach -->
+  <rect x="228" y="146" width="170" height="44" rx="6" fill="#2d1a00" stroke="#e8a030" stroke-width="1.5"/>
+  <text x="313" y="165" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e8a030">PID 1</text>
+  <text x="313" y="181" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">메인 프로세스</text>
+
+  <!-- Warning: ctrl-c kills PID 1 -->
+  <rect x="80" y="208" width="320" height="50" rx="6" fill="#3d1000" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555">⚠ Ctrl+C → PID 1 종료 → 컨테이너 종료!</text>
+  <text x="240" y="245" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">분리: Ctrl+P, Ctrl+Q (detach sequence)</text>
+
+  <text x="80" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">· PID 1의 stdin/stdout 직접 연결</text>
+  <text x="80" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">· 새 프로세스 생성 없음</text>
+  <text x="80" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">· 여러 터미널에서 동시 attach 가능</text>
+
+  <!-- docker exec diagram -->
+  <rect x="460" y="104" width="360" height="220" rx="10" fill="#0d0d0d" stroke="#55c555" stroke-width="2"/>
+  <text x="640" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#55c555">docker exec -it</text>
+
+  <!-- Terminal box inside exec -->
+  <rect x="480" y="146" width="120" height="44" rx="6" fill="#111827" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="540" y="165" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">터미널</text>
+  <text x="540" y="181" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">(stdin/stdout)</text>
+
+  <!-- Arrow: terminal → New process -->
+  <polygon points="607,168 621,162 621,174" fill="#55c555"/>
+  <line x1="600" y1="168" x2="621" y2="168" stroke="#55c555" stroke-width="2"/>
+
+  <!-- New process (bash) -->
+  <rect x="628" y="146" width="170" height="44" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="713" y="165" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">PID N (bash)</text>
+  <text x="713" y="181" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">새 프로세스</text>
+
+  <!-- Safe exit note -->
+  <rect x="480" y="208" width="320" height="50" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">exit / Ctrl+D → bash만 종료</text>
+  <text x="640" y="245" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">컨테이너(PID 1)는 계속 실행</text>
+
+  <text x="480" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">· 새 프로세스를 실행해서 연결</text>
+  <text x="480" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">· 종료해도 컨테이너에 영향 없음</text>
+  <text x="480" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">· 독립적인 세션 유지 가능</text>
+
+  <!-- Summary comparison row -->
+  <rect x="60" y="346" width="760" height="116" rx="8" fill="#0d0d0d" stroke="#1e2433"/>
+  <text x="80" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">언제 어떤 걸 쓸까?</text>
+  <text x="80" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">attach 적합 — 컨테이너 자체가 인터랙티브 앱일 때 (예: 대화형 CLI 프로세스 직접 관찰)</text>
+  <text x="80" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">exec 적합  — 실행 중인 서버 컨테이너에서 디버깅, 파일 확인, 명령 실행 (99%의 경우)</text>
+  <text x="80" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">* attach는 Ctrl+C로 컨테이너가 종료될 수 있으므로 프로덕션 환경에서 주의 필요</text>
+</svg>

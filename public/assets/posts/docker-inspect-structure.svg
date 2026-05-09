@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">docker inspect 출력 구조</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#aaaaaa">컨테이너 JSON 최상위 섹션</text>
+
+  <!-- JSON structure tree -->
+  <!-- Root -->
+  <rect x="60" y="104" width="100" height="36" rx="6" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="110" y="126" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">{ container }</text>
+
+  <!-- Branch lines -->
+  <line x1="110" y1="140" x2="110" y2="180" stroke="#333" stroke-width="1"/>
+  <line x1="110" y1="180" x2="770" y2="180" stroke="#333" stroke-width="1"/>
+
+  <!-- Section boxes -->
+  <!-- Id -->
+  <line x1="150" y1="180" x2="150" y2="210" stroke="#333" stroke-width="1"/>
+  <rect x="120" y="210" width="80" height="34" rx="5" fill="#0d1f2d" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="160" y="231" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">Id</text>
+
+  <!-- State -->
+  <line x1="260" y1="180" x2="260" y2="210" stroke="#333" stroke-width="1"/>
+  <rect x="220" y="210" width="80" height="34" rx="5" fill="#0d2010" stroke="#55c555" stroke-width="1"/>
+  <text x="260" y="231" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">State</text>
+  <text x="260" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">Status, Pid, ExitCode</text>
+
+  <!-- Config -->
+  <line x1="380" y1="180" x2="380" y2="210" stroke="#333" stroke-width="1"/>
+  <rect x="330" y="210" width="100" height="34" rx="5" fill="#1a1a30" stroke="#7777cc" stroke-width="1"/>
+  <text x="380" y="231" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">Config</text>
+  <text x="380" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">Env, Cmd, Image, Labels</text>
+
+  <!-- HostConfig -->
+  <line x1="510" y1="180" x2="510" y2="210" stroke="#333" stroke-width="1"/>
+  <rect x="450" y="210" width="120" height="34" rx="5" fill="#1f1400" stroke="#e8a030" stroke-width="1"/>
+  <text x="510" y="231" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8a030">HostConfig</text>
+  <text x="510" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">Binds, PortBindings, Limits</text>
+
+  <!-- NetworkSettings -->
+  <line x1="660" y1="180" x2="660" y2="210" stroke="#333" stroke-width="1"/>
+  <rect x="585" y="210" width="150" height="34" rx="5" fill="#2d0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="660" y="231" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555">NetworkSettings</text>
+  <text x="660" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">IPAddress, Ports, Networks</text>
+
+  <!-- Mounts -->
+  <line x1="770" y1="180" x2="770" y2="210" stroke="#333" stroke-width="1"/>
+  <rect x="730" y="210" width="90" height="34" rx="5" fill="#111827" stroke="#888" stroke-width="1"/>
+  <text x="775" y="231" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">Mounts</text>
+  <text x="775" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555">볼륨 마운트 목록</text>
+
+  <!-- Code block: --format examples -->
+  <rect x="60" y="284" width="760" height="178" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># IP 주소 추출</text>
+  <text x="76" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker inspect</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-f</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">'{{.NetworkSettings.IPAddress}}'</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">web</tspan>
+  </text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 컨테이너 PID (nsenter에 활용)</text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker inspect</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-f</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">'{{.State.Pid}}'</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">web</tspan>
+  </text>
+  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 환경변수 목록</text>
+  <text x="76" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker inspect</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-f</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">'{{range .Config.Env}}{{.}}</tspan>
+    <tspan fill="#b5cea8">\n</tspan>
+    <tspan fill="#ce9178">{{end}}'</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">web</tspan>
+  </text>
+  <text x="76" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 마운트 정보</text>
+  <text x="76" y="440" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker inspect</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-f</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">'{{json .Mounts}}'</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">web</tspan>
+    <tspan fill="#e8e8e8"> | </tspan>
+    <tspan fill="#7ec8e3">jq</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">.</tspan>
+  </text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">컨테이너 일괄 정리 패턴</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#aaaaaa">rm + prune + xargs 활용법</text>
+
+  <!-- Pattern 1: docker container prune -->
+  <rect x="60" y="100" width="360" height="100" rx="8" fill="#0d0d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">docker container prune</text>
+  <text x="80" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">중지된 컨테이너 전체 삭제</text>
+  <text x="80" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">-f: 확인 프롬프트 생략</text>
+  <text x="80" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">--filter until=24h: 24시간 이전 것만</text>
+
+  <!-- Pattern 2: docker rm $(docker ps -aq) -->
+  <rect x="460" y="100" width="360" height="100" rx="8" fill="#0d0d0d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="480" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">$(...) 패턴</text>
+  <text x="480" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">조건부 ID 목록 → rm 전달</text>
+  <text x="480" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">docker rm $(docker ps -aq)</text>
+  <text x="480" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">필터 조합 가능</text>
+
+  <!-- Code block -->
+  <rect x="60" y="222" width="760" height="136" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 1. 중지된 컨테이너 전체 삭제 (권장)</text>
+  <text x="76" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker container prune</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-f</tspan>
+  </text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 2. 종료코드 0 아닌 것만 삭제</text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker rm</tspan>
+    <tspan fill="#e8e8e8"> $(</tspan>
+    <tspan fill="#7ec8e3">docker ps</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-aqf</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">status=exited</tspan>
+    <tspan fill="#e8e8e8">)</tspan>
+  </text>
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 3. 24시간 이전에 종료된 것만</text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3">docker container prune</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">--filter</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#ce9178">until=24h</tspan>
+    <tspan fill="#e8e8e8"> </tspan>
+    <tspan fill="#7777cc">-f</tspan>
+  </text>
+</svg>
