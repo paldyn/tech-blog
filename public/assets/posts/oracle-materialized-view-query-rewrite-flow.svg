@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">MV 생성 &amp; Query Rewrite DDL</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">MV Log 설정 → MV 생성 → Query Rewrite 활성화</text>
+
+  <!-- Left: MV Log + MV creation -->
+  <text x="230" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">MV Log &amp; MV 생성</text>
+  <rect x="50" y="108" width="360" height="276" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="66" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- FAST Refresh를 위한 MV Log</text>
+  <text x="66" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE MATERIALIZED VIEW LOG</text>
+  <text x="66" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  ON</text>
+  <text x="66" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  orders (cust_id, amount)</text>
+  <text x="66" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  INCLUDING NEW VALUES</text>
+  <text x="66" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  ;</text>
+
+  <text x="66" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- MV 생성 (FAST ON COMMIT)</text>
+  <text x="66" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE MATERIALIZED VIEW</text>
+  <text x="66" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  mv_sales_by_cust</text>
+  <text x="66" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">REFRESH FAST ON COMMIT</text>
+  <text x="66" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ENABLE QUERY REWRITE</text>
+  <text x="66" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">AS</text>
+  <text x="66" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  SELECT</text>
+  <text x="66" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    cust_id, <tspan fill="#55c555">SUM</tspan>(amount) total</text>
+  <text x="66" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  FROM</text>
+
+  <!-- Right: Query Rewrite verify -->
+  <text x="650" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Query Rewrite 확인</text>
+  <rect x="470" y="108" width="360" height="276" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="486" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 세션 레벨 활성화</text>
+  <text x="486" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ALTER SESSION</text>
+  <text x="486" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  SET</text>
+  <text x="486" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  query_rewrite_enabled=<tspan fill="#ce9178">TRUE</tspan>;</text>
+
+  <text x="486" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 이 쿼리가 MV로 리라이트되는지</text>
+  <text x="486" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">EXPLAIN PLAN FOR</text>
+  <text x="486" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  SELECT</text>
+  <text x="486" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    cust_id,</text>
+  <text x="486" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">    SUM</text>
+  <text x="486" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      (amount) <tspan fill="#7ec8e3">FROM</tspan> orders</text>
+  <text x="486" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  GROUP BY</text>
+  <text x="486" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    cust_id;</text>
+
+  <text x="486" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 결과: MAT_VIEW REWRITE ACCESS</text>
+  <text x="486" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">--   mv_sales_by_cust 스캔</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">DBMS_MVIEW.EXPLAIN_MVIEW() — MV Rewrite 가능 여부 상세 분석 도구</text>
+</svg>

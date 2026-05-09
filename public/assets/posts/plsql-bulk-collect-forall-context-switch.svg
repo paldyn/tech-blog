@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e05555"/>
+    </marker>
+    <marker id="arr2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Context Switch: Row-by-Row vs BULK COLLECT</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="400" fill="#888">PL/SQL 엔진과 SQL 엔진 간 전환 횟수 비교</text>
+
+  <!-- Left Panel: Row-by-Row -->
+  <rect x="50" y="92" width="360" height="360" rx="10" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e05555">Row-by-Row (비효율)</text>
+
+  <!-- PL/SQL Engine box left -->
+  <rect x="70" y="132" width="140" height="44" rx="6" fill="#1a1020" stroke="#7777cc" stroke-width="1"/>
+  <text x="140" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">PL/SQL Engine</text>
+  <text x="140" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">LOOP 처리</text>
+
+  <!-- SQL Engine box left -->
+  <rect x="240" y="132" width="140" height="44" rx="6" fill="#0f1a10" stroke="#55c555" stroke-width="1"/>
+  <text x="310" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">SQL Engine</text>
+  <text x="310" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">1행 반환</text>
+
+  <!-- Arrows left - multiple round trips -->
+  <line x1="210" y1="148" x2="238" y2="148" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr1)"/>
+  <line x1="240" y1="160" x2="212" y2="160" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+  <!-- Round trip indicators -->
+  <text x="230" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">N번 반복 (N = 행 수)</text>
+
+  <!-- arrows repeated -->
+  <line x1="110" y1="220" x2="310" y2="220" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="308,216 318,220 308,224" fill="#e05555"/>
+  <line x1="310" y1="234" x2="110" y2="234" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="112,230 102,234 112,238" fill="#e05555"/>
+
+  <line x1="110" y1="252" x2="310" y2="252" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="308,248 318,252 308,256" fill="#e05555"/>
+  <line x1="310" y1="266" x2="110" y2="266" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="112,262 102,266 112,270" fill="#e05555"/>
+
+  <line x1="110" y1="284" x2="310" y2="284" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="308,280 318,284 308,288" fill="#e05555"/>
+  <line x1="310" y1="298" x2="110" y2="298" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <polygon points="112,294 102,298 112,302" fill="#e05555"/>
+
+  <text x="230" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">... (계속)</text>
+
+  <!-- Cost indicator left -->
+  <rect x="70" y="352" width="320" height="84" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="230" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">Context Switch: N회</text>
+  <text x="230" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">10,000행 → 10,000회 전환</text>
+  <text x="230" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">CPU 오버헤드 높음</text>
+  <text x="230" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">성능: ★☆☆☆☆</text>
+
+  <!-- Right Panel: BULK COLLECT -->
+  <rect x="470" y="92" width="360" height="360" rx="10" fill="#111" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555">BULK COLLECT (효율)</text>
+
+  <!-- PL/SQL Engine box right -->
+  <rect x="490" y="132" width="140" height="44" rx="6" fill="#1a1020" stroke="#7777cc" stroke-width="1"/>
+  <text x="560" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">PL/SQL Engine</text>
+  <text x="560" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">컬렉션 처리</text>
+
+  <!-- SQL Engine box right -->
+  <rect x="660" y="132" width="140" height="44" rx="6" fill="#0f1a10" stroke="#55c555" stroke-width="1"/>
+  <text x="730" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">SQL Engine</text>
+  <text x="730" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">전체 결과 반환</text>
+
+  <!-- Single arrow right -->
+  <line x1="630" y1="148" x2="658" y2="148" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <line x1="660" y1="162" x2="632" y2="162" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- Collection buffer -->
+  <rect x="530" y="220" width="240" height="100" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">컬렉션 버퍼</text>
+  <rect x="546" y="254" width="48" height="24" rx="3" fill="#1a3020"/>
+  <rect x="600" y="254" width="48" height="24" rx="3" fill="#1a3020"/>
+  <rect x="654" y="254" width="48" height="24" rx="3" fill="#1a3020"/>
+  <rect x="708" y="254" width="48" height="24" rx="3" fill="#1a3020"/>
+  <text x="570" y="271" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">행1</text>
+  <text x="624" y="271" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">행2</text>
+  <text x="678" y="271" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">행3</text>
+  <text x="732" y="271" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">…N</text>
+  <text x="650" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">LIMIT절로 배치 크기 제어</text>
+
+  <!-- Cost indicator right -->
+  <rect x="490" y="352" width="320" height="84" rx="6" fill="#081a08" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Context Switch: 1회 (또는 ceil(N/LIMIT))</text>
+  <text x="650" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">10,000행 → LIMIT 100 → 100회 전환</text>
+  <text x="650" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ccc">CPU 오버헤드 최소화</text>
+  <text x="650" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">성능: ★★★★★</text>
+</svg>

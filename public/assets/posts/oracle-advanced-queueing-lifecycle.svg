@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arrd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arre" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">AQ 메시지 라이프사이클 &amp; 코드</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">큐 생성 → 메시지 삽입 → 소비 → 만료 흐름</text>
+
+  <!-- States flow -->
+  <rect x="50" y="92" width="110" height="40" rx="6" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="105" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">WAITING</text>
+
+  <line x1="162" y1="112" x2="202" y2="112" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arrd)"/>
+  <text x="182" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">DELAY 경과</text>
+
+  <rect x="206" y="92" width="110" height="40" rx="6" fill="#1a1510" stroke="#e8a855" stroke-width="1.5"/>
+  <text x="261" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8a855">READY</text>
+
+  <line x1="318" y1="112" x2="358" y2="112" stroke="#e8a855" stroke-width="1.5" marker-end="url(#arrd)"/>
+  <text x="338" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">DEQUEUE</text>
+
+  <rect x="362" y="92" width="110" height="40" rx="6" fill="#12101a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="417" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">PROCESSED</text>
+
+  <line x1="474" y1="112" x2="514" y2="112" stroke="#7777cc" stroke-width="1.5" marker-end="url(#arrd)"/>
+  <text x="494" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">COMMIT</text>
+
+  <rect x="518" y="92" width="110" height="40" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="573" y="117" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">EXPIRED/DEL</text>
+
+  <!-- Expiration branch -->
+  <line x1="261" y1="132" x2="261" y2="156" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="261" y1="156" x2="720" y2="156" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arre)"/>
+  <text x="490" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#e05555">EXPIRATION 초과</text>
+
+  <rect x="672" y="92" width="160" height="40" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="752" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">EXCEPTION QUEUE</text>
+  <text x="752" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">만료/오류 메시지 보관</text>
+
+  <!-- Code section -->
+  <text x="230" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">큐 생성 &amp; ENQUEUE</text>
+  <rect x="50" y="198" width="360" height="200" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="66" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 큐 테이블 생성</text>
+  <text x="66" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">BEGIN</text>
+  <text x="66" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  DBMS_AQADM.CREATE_QUEUE_TABLE</text>
+  <text x="66" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    (queue_table =&gt; <tspan fill="#ce9178">'order_qtab'</tspan>,</text>
+  <text x="66" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">     queue_payload_type=&gt;<tspan fill="#ce9178">'RAW'</tspan>);</text>
+  <text x="66" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  DBMS_AQADM.CREATE_QUEUE</text>
+  <text x="66" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    (queue_name  =&gt; <tspan fill="#ce9178">'order_queue'</tspan>,</text>
+  <text x="66" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">     queue_table =&gt; <tspan fill="#ce9178">'order_qtab'</tspan>);</text>
+  <text x="66" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  DBMS_AQADM.START_QUEUE</text>
+  <text x="66" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    (queue_name  =&gt; <tspan fill="#ce9178">'order_queue'</tspan>);</text>
+
+  <!-- Right: DEQUEUE code -->
+  <text x="650" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">DEQUEUE 패턴</text>
+  <rect x="470" y="198" width="360" height="200" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="486" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 메시지 소비</text>
+  <text x="486" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">DECLARE</text>
+  <text x="486" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  v_msg  <tspan fill="#7ec8e3">RAW</tspan>(<tspan fill="#b5cea8">4000</tspan>);</text>
+  <text x="486" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  v_dopt <tspan fill="#55c555">DBMS_AQ.DEQUEUE_OPTIONS_T</tspan>;</text>
+  <text x="486" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  v_mprop <tspan fill="#55c555">DBMS_AQ.MESSAGE_PROPERTIES_T</tspan>;</text>
+  <text x="486" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  v_msgid <tspan fill="#7ec8e3">RAW</tspan>(<tspan fill="#b5cea8">16</tspan>);</text>
+  <text x="486" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">BEGIN</text>
+  <text x="486" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  DBMS_AQ.DEQUEUE</text>
+  <text x="486" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    (<tspan fill="#ce9178">'order_queue'</tspan>, v_dopt,</text>
+  <text x="486" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">     v_mprop, v_msg, v_msgid);</text>
+</svg>
