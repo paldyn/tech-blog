@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">프로세스 · 메모리 모니터링 SQL</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">pg_stat_activity · pg_backend_pid · 메모리 파라미터</text>
+
+  <!-- Left: process monitoring -->
+  <rect x="60" y="92" width="370" height="300" rx="12" fill="#0e1623" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="245" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">프로세스 모니터링</text>
+  <rect x="76" y="124" width="338" height="252" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="92" y="148" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 현재 세션의 PID</text>
+  <text x="92" y="166" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> pg_backend_pid();</text>
+
+  <text x="92" y="194" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 활성 쿼리와 대기 정보</text>
+  <text x="92" y="212" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> pid, state,</text>
+  <text x="92" y="230" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       wait_event_type,</text>
+  <text x="92" y="248" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       wait_event,</text>
+  <text x="92" y="266" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       left(query, <tspan fill="#b5cea8">60</tspan>) AS q</text>
+  <text x="92" y="284" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  pg_stat_activity</text>
+  <text x="92" y="302" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> state != <tspan fill="#ce9178">'idle'</tspan>;</text>
+
+  <text x="92" y="330" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 오래된 쿼리 강제 종료</text>
+  <text x="92" y="348" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> pg_terminate_backend(pid)</text>
+  <text x="92" y="366" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  pg_stat_activity</text>
+  <text x="92" y="384" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> query_start &lt; now()-<tspan fill="#ce9178">'5m'</tspan>;</text>
+
+  <!-- Right: memory params -->
+  <rect x="450" y="92" width="370" height="300" rx="12" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="635" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">메모리 파라미터 확인 &amp; 설정</text>
+  <rect x="466" y="124" width="338" height="252" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="482" y="148" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 주요 메모리 설정 조회</text>
+  <text x="482" y="166" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> name, setting, unit</text>
+  <text x="482" y="184" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  pg_settings</text>
+  <text x="482" y="202" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> name <tspan fill="#7ec8e3">IN</tspan> (</text>
+  <text x="482" y="220" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'shared_buffers',</text>
+  <text x="482" y="238" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'work_mem',</text>
+  <text x="482" y="256" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'maintenance_work_mem',</text>
+  <text x="482" y="274" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'effective_cache_size');</text>
+
+  <text x="482" y="302" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 세션별 work_mem 조정</text>
+  <text x="482" y="320" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SET</tspan> work_mem = <tspan fill="#ce9178">'256MB'</tspan>;</text>
+  <text x="482" y="338" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 복잡한 정렬 쿼리 직전 설정</text>
+  <text x="482" y="356" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- (병렬 실행 시 N배 곱해짐)</text>
+  <text x="482" y="384" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">RESET</tspan> work_mem; <tspan fill="#6a8aa0">-- 기본값 복원</tspan></text>
+</svg>

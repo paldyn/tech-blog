@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">Checkpointer &amp; BGWriter — 더티 페이지 플러시</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">역할 분담과 체크포인트 I/O 폭풍 완화</text>
+
+  <!-- Shared Buffers -->
+  <rect x="60" y="96" width="340" height="280" rx="12" fill="#1a0e1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="230" y="120" text-anchor="middle" font-size="14" font-weight="700" fill="#7777cc">Shared Buffers</text>
+
+  <!-- Clean pages -->
+  <rect x="80" y="132" width="140" height="50" rx="8" fill="#0e1623" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="155" text-anchor="middle" font-size="12" font-weight="600" fill="#7ec8e3">Clean Page</text>
+  <text x="150" y="173" text-anchor="middle" font-size="11" fill="#888">디스크와 동일</text>
+
+  <rect x="240" y="132" width="140" height="50" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="310" y="155" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">Dirty Page</text>
+  <text x="310" y="173" text-anchor="middle" font-size="11" fill="#888">미기록 수정본</text>
+
+  <rect x="80" y="196" width="300" height="40" rx="8" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="230" y="221" text-anchor="middle" font-size="12" fill="#555">Free Buffer Pool (교체 대상)</text>
+
+  <!-- BGWriter box -->
+  <rect x="80" y="254" width="300" height="100" rx="8" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="280" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">BGWriter 역할</text>
+  <text x="230" y="300" text-anchor="middle" font-size="11" fill="#aaaaaa">bgwriter_lru_maxpages 만큼</text>
+  <text x="230" y="316" text-anchor="middle" font-size="11" fill="#aaaaaa">Dirty Page를 주기적으로 기록</text>
+  <text x="230" y="332" text-anchor="middle" font-size="11" fill="#888">Free Buffer 확보가 목적</text>
+
+  <!-- Disk -->
+  <rect x="540" y="136" width="300" height="120" rx="12" fill="#0e1a0e" stroke="#55c555" stroke-width="2"/>
+  <text x="690" y="160" text-anchor="middle" font-size="14" font-weight="700" fill="#55c555">데이터 파일 (디스크)</text>
+  <text x="690" y="182" text-anchor="middle" font-size="12" fill="#aaaaaa">$PGDATA/base/{db}/{table}</text>
+  <text x="690" y="202" text-anchor="middle" font-size="12" fill="#aaaaaa">최종 영구 저장소</text>
+  <text x="690" y="222" text-anchor="middle" font-size="11" fill="#888">Clean Page와 항상 일치해야 함</text>
+  <text x="690" y="240" text-anchor="middle" font-size="11" fill="#888">(체크포인트 이후)</text>
+
+  <!-- BGWriter arrow -->
+  <line x1="380" y1="300" x2="540" y2="220" stroke="#55c555" stroke-width="2"/>
+  <polygon points="534,215 548,224 538,228" fill="#55c555"/>
+  <text x="468" y="260" text-anchor="middle" font-size="11" fill="#55c555">비동기 기록</text>
+  <text x="468" y="274" text-anchor="middle" font-size="11" fill="#55c555">(I/O 분산)</text>
+
+  <!-- Checkpointer box -->
+  <rect x="540" y="290" width="300" height="170" rx="12" fill="#112236" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="690" y="314" text-anchor="middle" font-size="14" font-weight="700" fill="#7ec8e3">Checkpointer</text>
+
+  <rect x="560" y="324" width="260" height="50" rx="6" fill="#0e1623" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="690" y="348" text-anchor="middle" font-size="12" fill="#7ec8e3">체크포인트 레코드 WAL 기록</text>
+  <text x="690" y="364" text-anchor="middle" font-size="11" fill="#aaaaaa">이 LSN 이전은 모두 디스크에 기록됨</text>
+
+  <rect x="560" y="384" width="260" height="60" rx="6" fill="#1a0e08" stroke="#e0a833" stroke-width="1"/>
+  <text x="690" y="406" text-anchor="middle" font-size="12" fill="#e0a833">모든 Dirty Page → 디스크 강제 기록</text>
+  <text x="690" y="424" text-anchor="middle" font-size="11" fill="#aaaaaa">checkpoint_completion_target으로</text>
+  <text x="690" y="440" text-anchor="middle" font-size="11" fill="#888">I/O를 체크포인트 간격의 N%에 분산</text>
+
+  <!-- Checkpoint arrow from Shared Buffers -->
+  <line x1="380" y1="200" x2="540" y2="380" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="534,375 547,387 537,390" fill="#7ec8e3"/>
+  <text x="448" y="340" text-anchor="middle" font-size="11" fill="#7ec8e3">체크포인트 시</text>
+  <text x="448" y="354" text-anchor="middle" font-size="11" fill="#7ec8e3">전체 기록</text>
+
+  <!-- WAL note -->
+  <rect x="60" y="396" width="460" height="96" rx="10" fill="#0e1623" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="290" y="418" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">충돌 복구 범위 최소화 원리</text>
+  <text x="290" y="440" text-anchor="middle" font-size="12" fill="#aaaaaa">체크포인트 이전 WAL은 복구 불필요 → pg_wal 정리 가능</text>
+  <text x="290" y="460" text-anchor="middle" font-size="12" fill="#aaaaaa">체크포인트 이후 WAL만 Redo 대상</text>
+  <text x="290" y="480" text-anchor="middle" font-size="11" fill="#888">checkpoint_timeout(기본 5분) / max_wal_size(기본 1GB)</text>
+</svg>

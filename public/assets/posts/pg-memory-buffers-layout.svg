@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">PostgreSQL 메모리 레이아웃</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">Shared Buffers · Kernel Page Cache · Local Memory</text>
+
+  <!-- OS RAM wrapper -->
+  <rect x="60" y="90" width="760" height="400" rx="14" fill="#0a0f18" stroke="#334" stroke-width="1.5"/>
+  <text x="100" y="112" font-size="13" fill="#555">OS Physical RAM</text>
+
+  <!-- Shared Buffers -->
+  <rect x="80" y="120" width="340" height="160" rx="10" fill="#1a0e1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="250" y="144" text-anchor="middle" font-size="14" font-weight="700" fill="#7777cc">Shared Buffers</text>
+  <text x="250" y="162" text-anchor="middle" font-size="12" fill="#888">shared_buffers (권장: RAM 25%)</text>
+
+  <!-- Buffer slots -->
+  <rect x="100" y="172" width="140" height="40" rx="6" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="170" y="191" text-anchor="middle" font-size="11" fill="#7777cc">Clean Page</text>
+  <text x="170" y="207" text-anchor="middle" font-size="10" fill="#888">디스크와 동일</text>
+
+  <rect x="260" y="172" width="140" height="40" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="330" y="191" text-anchor="middle" font-size="11" fill="#e05555">Dirty Page</text>
+  <text x="330" y="207" text-anchor="middle" font-size="10" fill="#888">수정됨, 미기록</text>
+
+  <rect x="100" y="222" width="300" height="40" rx="6" fill="#0e1623" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="250" y="241" text-anchor="middle" font-size="11" fill="#7ec8e3">Clock-Sweep 교체 알고리즘</text>
+  <text x="250" y="257" text-anchor="middle" font-size="10" fill="#888">usage_count 기반 LRU 근사</text>
+
+  <!-- Kernel Page Cache -->
+  <rect x="460" y="120" width="340" height="160" rx="10" fill="#0e1a0e" stroke="#55c555" stroke-width="2"/>
+  <text x="630" y="144" text-anchor="middle" font-size="14" font-weight="700" fill="#55c555">OS Kernel Page Cache</text>
+  <text x="630" y="162" text-anchor="middle" font-size="12" fill="#888">effective_cache_size 참고값</text>
+
+  <rect x="480" y="172" width="300" height="90" rx="6" fill="#0a1008" stroke="#55c555" stroke-width="1"/>
+  <text x="630" y="200" text-anchor="middle" font-size="12" fill="#55c555">PostgreSQL이 직접 관리하지 않음</text>
+  <text x="630" y="220" text-anchor="middle" font-size="11" fill="#aaaaaa">OS가 블록 장치 읽기를 캐싱</text>
+  <text x="630" y="238" text-anchor="middle" font-size="11" fill="#aaaaaa">double buffering 발생 가능</text>
+  <text x="630" y="256" text-anchor="middle" font-size="11" fill="#888">effective_cache_size로 플래너에 힌트</text>
+
+  <!-- Local Memory block -->
+  <rect x="80" y="300" width="720" height="170" rx="10" fill="#1a1208" stroke="#e0a833" stroke-width="1.5"/>
+  <text x="440" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#e0a833">Backend Local Memory (연결당 독립 할당)</text>
+
+  <rect x="100" y="334" width="200" height="80" rx="8" fill="#221a08" stroke="#e0a833" stroke-width="1"/>
+  <text x="200" y="360" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">work_mem</text>
+  <text x="200" y="378" text-anchor="middle" font-size="11" fill="#aaaaaa">정렬, 해시 조인</text>
+  <text x="200" y="394" text-anchor="middle" font-size="11" fill="#aaaaaa">Bitmap Index Scan</text>
+  <text x="200" y="408" text-anchor="middle" font-size="11" fill="#888">기본 4MB</text>
+
+  <rect x="320" y="334" width="200" height="80" rx="8" fill="#221a08" stroke="#e0a833" stroke-width="1"/>
+  <text x="420" y="360" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">maintenance_work_mem</text>
+  <text x="420" y="378" text-anchor="middle" font-size="11" fill="#aaaaaa">VACUUM, ANALYZE</text>
+  <text x="420" y="394" text-anchor="middle" font-size="11" fill="#aaaaaa">CREATE INDEX</text>
+  <text x="420" y="408" text-anchor="middle" font-size="11" fill="#888">기본 64MB</text>
+
+  <rect x="540" y="334" width="240" height="80" rx="8" fill="#221a08" stroke="#e0a833" stroke-width="1"/>
+  <text x="660" y="360" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">temp_buffers</text>
+  <text x="660" y="378" text-anchor="middle" font-size="11" fill="#aaaaaa">임시 테이블 캐시</text>
+  <text x="660" y="394" text-anchor="middle" font-size="11" fill="#aaaaaa">(세션 시작 후 첫 사용 전 SET)</text>
+  <text x="660" y="408" text-anchor="middle" font-size="11" fill="#888">기본 8MB</text>
+
+  <!-- Arrow Shared Buffer -> Disk -->
+  <line x1="250" y1="280" x2="250" y2="300" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="270" y="294" font-size="11" fill="#e05555">Dirty: BGWriter / Checkpoint 기록</text>
+</svg>
