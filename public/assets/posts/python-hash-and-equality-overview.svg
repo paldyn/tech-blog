@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">해시와 동등성 — __hash__ · __eq__</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">해시 계약(Hash Contract) · dict/set 동작 원리</text>
+
+  <!-- hash contract visual -->
+  <rect x="60" y="96" width="760" height="72" rx="8" fill="#111520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">해시 계약(Hash Contract)</text>
+  <text x="440" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#e8e8e8" text-anchor="middle">a == b  →  hash(a) == hash(b)  (필수)</text>
+  <text x="440" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">역은 성립 안 함: hash(a) == hash(b) 이어도 a != b 가능 (해시 충돌)</text>
+
+  <!-- Code left -->
+  <rect x="60" y="188" width="380" height="280" rx="10" fill="#111520" stroke="#1e2433"/>
+  <text x="250" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">올바른 __hash__ / __eq__ 구현</text>
+  <rect x="80" y="228" width="340" height="222" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="96" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">class</tspan><tspan fill="#e8e8e8"> Point:</tspan></text>
+  <text x="96" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    </tspan><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> __init__(self, x, y):</tspan></text>
+  <text x="96" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">        self.x = x; self.y = y</tspan></text>
+  <text x="96" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    </tspan><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> __eq__(self, other):</tspan></text>
+  <text x="96" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">        </tspan><tspan fill="#7ec8e3">if not</tspan><tspan fill="#e8e8e8"> isinstance(other, Point):</tspan></text>
+  <text x="96" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">            </tspan><tspan fill="#7ec8e3">return</tspan><tspan fill="#e8e8e8"> NotImplemented</tspan></text>
+  <text x="96" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">        </tspan><tspan fill="#7ec8e3">return</tspan><tspan fill="#e8e8e8"> (self.x, self.y) == (other.x, other.y)</tspan></text>
+  <text x="96" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    </tspan><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> __hash__(self):</tspan></text>
+  <text x="96" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">        </tspan><tspan fill="#7ec8e3">return</tspan><tspan fill="#e8e8e8"> hash((self.x, self.y))</tspan></text>
+  <text x="96" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">p1 = Point(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">, </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#e8e8e8">); p2 = Point(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">, </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#e8e8e8">)</tspan></text>
+  <text x="96" y="448" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">p1 == p2  </tspan><tspan fill="#55c555"># True</tspan><tspan fill="#e8e8e8">  {p1, p2}  </tspan><tspan fill="#6a8aa0"># set 크기 1</tspan></text>
+
+  <!-- Code right: hashable rules -->
+  <rect x="460" y="188" width="360" height="280" rx="10" fill="#111520" stroke="#1e2433"/>
+  <text x="640" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">__eq__ 재정의 시 주의사항</text>
+  <rect x="480" y="228" width="320" height="222" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="496" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># __eq__ 만 재정의하면</tspan></text>
+  <text x="496" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># __hash__는 None 이 됨!</tspan></text>
+  <text x="496" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">class</tspan><tspan fill="#e8e8e8"> Bad:</tspan></text>
+  <text x="496" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    </tspan><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> __eq__(self, other):</tspan></text>
+  <text x="496" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">        </tspan><tspan fill="#7ec8e3">return</tspan><tspan fill="#e8e8e8"> </tspan><tspan fill="#7ec8e3">True</tspan></text>
+  <text x="496" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"></tspan></text>
+  <text x="496" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">hash(Bad())  </tspan><tspan fill="#e05555"># TypeError!</tspan></text>
+  <text x="496" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># 해시 불변성 위반 예시</tspan></text>
+  <text x="496" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">d = {}</tspan></text>
+  <text x="496" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">p = Point(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">, </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#e8e8e8">)</tspan></text>
+  <text x="496" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">d[p] = </tspan><tspan fill="#ce9178">"ok"</tspan></text>
+  <text x="496" y="448" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># p.x 바꾸면 d[p] 못 찾음!</tspan></text>
+</svg>
