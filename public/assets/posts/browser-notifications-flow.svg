@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Notifications API 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">권한 요청 → 알림 생성 → 이벤트 처리</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="100" width="220" height="70" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="170" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">① 권한 요청</text>
+  <text x="170" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Notification.requestPermission()</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="135" x2="335" y2="135" stroke="#444" stroke-width="1.5"/>
+  <polygon points="335,129 347,135 335,141" fill="#444"/>
+
+  <!-- Step 2: result branch -->
+  <rect x="347" y="100" width="186" height="70" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">② 결과</text>
+  <text x="440" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">"granted" | "denied"</text>
+
+  <!-- Arrow granted -->
+  <line x1="533" y1="125" x2="588" y2="105" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="583,99 595,103 585,111" fill="#55c555"/>
+  <text x="558" y="105" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">granted</text>
+
+  <!-- Arrow denied -->
+  <line x1="533" y1="150" x2="588" y2="165" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="583,160 595,165 585,172" fill="#e05555"/>
+  <text x="555" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">denied → 중단</text>
+
+  <!-- Step 3: New Notification -->
+  <rect x="600" y="84" width="220" height="44" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="710" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">③ new Notification()</text>
+  <text x="710" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">title + options 객체</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="220" x2="820" y2="220" stroke="#222" stroke-width="1"/>
+
+  <!-- Notification options -->
+  <text x="440" y="245" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e8e8e8">NotificationOptions 주요 필드</text>
+
+  <!-- Left options -->
+  <rect x="60" y="262" width="360" height="162" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">new</text><text x="116" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> Notification(<text fill="#ce9178">'알림 제목'</text>, {</text>
+  <text x="80" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  body: <text fill="#ce9178">'내용 텍스트'</text>,</text>
+  <text x="80" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  icon: <text fill="#ce9178">'/icon-192.png'</text>,</text>
+  <text x="80" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  badge: <text fill="#ce9178">'/badge.png'</text>,</text>
+  <text x="80" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  tag: <text fill="#ce9178">'msg-1'</text>,</text>
+  <text x="80" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  requireInteraction: <text fill="#b5cea8">true</text></text>
+  <text x="80" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">});</text>
+
+  <!-- Right: events -->
+  <rect x="460" y="262" width="360" height="162" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="480" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 이벤트 핸들러</text>
+  <text x="480" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">n.onclick = () => {</text>
+  <text x="480" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  window.focus();</text>
+  <text x="480" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  n.close();</text>
+  <text x="480" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">};</text>
+  <text x="480" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">n.onclose = () => { ... };</text>
+  <text x="480" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">n.onerror = () => { ... };</text>
+
+  <!-- Bottom -->
+  <text x="440" y="444" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Service Worker에서 showNotification() 사용 시 Push API와 연동 가능</text>
+</svg>

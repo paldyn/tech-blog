@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">IndexedDB 트랜잭션 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">open → transaction → objectStore → request → 결과</text>
+
+  <!-- Code block left -->
+  <rect x="60" y="95" width="360" height="336" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// DB 열기</text>
+  <text x="80" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">const</text><text x="128" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> req = indexedDB</text>
+  <text x="80" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  .open(<text fill="#ce9178">'myApp-db'</text>, <text fill="#b5cea8">3</text>);</text>
+  <text x="80" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 스키마 마이그레이션</text>
+  <text x="80" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">req.onupgradeneeded = e => {</text>
+  <text x="80" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text><text x="128" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> db = e.target.result;</text>
+  <text x="80" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  db.createObjectStore(</text>
+  <text x="80" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    <text fill="#ce9178">'users'</text>, {keyPath: <text fill="#ce9178">'id'</text>}</text>
+  <text x="80" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  );</text>
+  <text x="80" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">};</text>
+  <text x="80" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 쓰기 트랜잭션</text>
+  <text x="80" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">req.onsuccess = e => {</text>
+  <text x="80" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text><text x="128" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> db = e.target.result;</text>
+  <text x="80" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  const</text><text x="128" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> tx = db.transaction(</text>
+  <text x="80" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    <text fill="#ce9178">'users'</text>, <text fill="#ce9178">'readwrite'</text>);</text>
+  <text x="80" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  tx.objectStore(<text fill="#ce9178">'users'</text>)</text>
+  <text x="80" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    .add({id:<text fill="#b5cea8">1</text>,name:<text fill="#ce9178">'Bob'</text>});</text>
+  <text x="80" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">};</text>
+
+  <!-- Right: flow steps -->
+  <rect x="480" y="95" width="340" height="336" rx="8" fill="#111" stroke="#222" stroke-width="1"/>
+
+  <!-- Step 1 -->
+  <rect x="500" y="115" width="300" height="44" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="650" y="133" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">① indexedDB.open(name, version)</text>
+  <text x="650" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">IDBOpenDBRequest 반환</text>
+
+  <!-- Arrow -->
+  <line x1="650" y1="159" x2="650" y2="177" stroke="#444" stroke-width="1.5"/>
+  <polygon points="644,177 650,189 656,177" fill="#444"/>
+
+  <!-- Step 2 -->
+  <rect x="500" y="189" width="300" height="44" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="207" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">② onupgradeneeded (버전↑ 시)</text>
+  <text x="650" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">createObjectStore / createIndex</text>
+
+  <!-- Arrow -->
+  <line x1="650" y1="233" x2="650" y2="251" stroke="#444" stroke-width="1.5"/>
+  <polygon points="644,251 650,263 656,251" fill="#444"/>
+
+  <!-- Step 3 -->
+  <rect x="500" y="263" width="300" height="44" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="650" y="281" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">③ onsuccess — DB 핸들 획득</text>
+  <text x="650" y="299" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">IDBDatabase 객체</text>
+
+  <!-- Arrow -->
+  <line x1="650" y1="307" x2="650" y2="325" stroke="#444" stroke-width="1.5"/>
+  <polygon points="644,325 650,337 656,325" fill="#444"/>
+
+  <!-- Step 4 -->
+  <rect x="500" y="337" width="300" height="44" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="355" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">④ db.transaction → objectStore</text>
+  <text x="650" y="373" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">add / put / get / delete / getAll</text>
+
+  <!-- Arrow -->
+  <line x1="650" y1="381" x2="650" y2="399" stroke="#444" stroke-width="1.5"/>
+  <polygon points="644,399 650,411 656,399" fill="#444"/>
+
+  <!-- Step 5 -->
+  <rect x="500" y="411" width="300" height="44" rx="6" fill="#1f1400" stroke="#e8b84b" stroke-width="1"/>
+  <text x="650" y="429" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8b84b">⑤ request.onsuccess / onerror</text>
+  <text x="650" y="447" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">결과: request.result</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="478" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">트랜잭션은 자동 커밋 — 모든 요청이 완료되면 닫힘</text>
+</svg>
