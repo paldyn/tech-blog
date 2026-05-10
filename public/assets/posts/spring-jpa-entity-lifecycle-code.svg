@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">엔티티 생명주기 — 상태 전이 코드</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13">각 메서드 호출에 따른 엔티티 상태 변화</text>
+
+  <!-- Left code block -->
+  <rect x="60" y="88" width="370" height="360" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="112" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 비영속 (New)</text>
+  <text x="80" y="130" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">Member m = </text><text x="162" y="130" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">new</text><text x="188" y="130" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> Member(</text><text x="250" y="130" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"Alice"</text><text x="304" y="130" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">);</text>
+  <text x="80" y="148" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// m.getId() == null, JPA 모름</text>
+
+  <text x="80" y="178" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 영속 전이</text>
+  <text x="80" y="196" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">em.persist(m);</text>
+  <text x="80" y="214" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 1차 캐시 등록, 쓰기 지연 큐</text>
+
+  <text x="80" y="244" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 준영속 전이</text>
+  <text x="80" y="262" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">em.detach(m);</text>
+  <text x="80" y="280" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 컨텍스트에서 분리</text>
+  <text x="80" y="298" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">m.setName(</text><text x="152" y="298" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"Bob"</text><text x="188" y="298" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">);</text>
+  <text x="80" y="316" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 변경해도 UPDATE 안 됨</text>
+
+  <text x="80" y="346" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// merge로 재영속화</text>
+  <text x="80" y="364" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">Member managed = em.merge(m);</text>
+  <text x="80" y="382" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// managed: 영속, m: 여전히 준영속</text>
+
+  <text x="80" y="412" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 삭제</text>
+  <text x="80" y="430" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">em.remove(managed);</text>
+
+  <!-- Right: state indicator panels -->
+  <!-- State label column -->
+  <text x="480" y="108" fill="#888" font-size="13" font-weight="600">상태</text>
+  <text x="600" y="108" fill="#888" font-size="13" font-weight="600">1차 캐시</text>
+  <text x="720" y="108" fill="#888" font-size="13" font-weight="600">DB 동기화</text>
+
+  <!-- Row 1: 비영속 -->
+  <rect x="460" y="118" width="360" height="46" rx="6" fill="#1a1510" stroke="#2a2010"/>
+  <text x="480" y="146" fill="#e8b84b" font-size="13">비영속 (new)</text>
+  <text x="600" y="146" fill="#e05555" font-size="13">✗ 없음</text>
+  <text x="720" y="146" fill="#e05555" font-size="13">✗ 없음</text>
+
+  <!-- Row 2: 영속 -->
+  <rect x="460" y="170" width="360" height="46" rx="6" fill="#0d1a10" stroke="#1a3020"/>
+  <text x="480" y="198" fill="#55c555" font-size="13">영속 (persist)</text>
+  <text x="600" y="198" fill="#55c555" font-size="13">✓ 있음</text>
+  <text x="720" y="198" fill="#55c555" font-size="13">✓ 자동</text>
+
+  <!-- Row 3: 준영속 -->
+  <rect x="460" y="222" width="360" height="46" rx="6" fill="#0f1520" stroke="#1a2030"/>
+  <text x="480" y="250" fill="#7777cc" font-size="13">준영속 (detach)</text>
+  <text x="600" y="250" fill="#e05555" font-size="13">✗ 분리됨</text>
+  <text x="720" y="250" fill="#e05555" font-size="13">✗ 중단</text>
+
+  <!-- Row 4: 재영속 -->
+  <rect x="460" y="274" width="360" height="46" rx="6" fill="#0d1a10" stroke="#1a3020"/>
+  <text x="480" y="302" fill="#7ec8e3" font-size="13">재영속 (merge)</text>
+  <text x="600" y="302" fill="#55c555" font-size="13">✓ 복사본</text>
+  <text x="720" y="302" fill="#55c555" font-size="13">✓ 재개</text>
+
+  <!-- Row 5: 삭제 -->
+  <rect x="460" y="326" width="360" height="46" rx="6" fill="#1a0d0d" stroke="#2a1010"/>
+  <text x="480" y="354" fill="#e05555" font-size="13">삭제 (remove)</text>
+  <text x="600" y="354" fill="#e8b84b" font-size="13">△ 삭제예약</text>
+  <text x="720" y="354" fill="#e05555" font-size="13">DELETE 예약</text>
+
+  <!-- Key note -->
+  <rect x="460" y="388" width="360" height="60" rx="6" fill="#0f0f1a" stroke="#2a2a3a"/>
+  <text x="480" y="410" fill="#7ec8e3" font-size="12">⚡ 핵심: 영속 상태만 Dirty Checking 대상</text>
+  <text x="480" y="430" fill="#888" font-size="11">준영속·비영속 상태 변경은 UPDATE 미발생</text>
+  <text x="480" y="446" fill="#888" font-size="11">em.clear() → 컨텍스트 내 모든 엔티티 준영속화</text>
+</svg>

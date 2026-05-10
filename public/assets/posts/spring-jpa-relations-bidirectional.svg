@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">양방향 연관 관계 — 주의사항과 연관 편의 메서드</text>
+  <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13">양쪽 모두 세팅하지 않으면 1차 캐시에서 불일치 발생</text>
+
+  <!-- Wrong pattern (left) -->
+  <text x="200" y="98" text-anchor="middle" fill="#e05555" font-size="14" font-weight="700">❌ 잘못된 패턴</text>
+  <rect x="60" y="110" width="280" height="208" rx="6" fill="#070b14" stroke="#e05555" stroke-width="1.5"/>
+
+  <text x="76" y="132" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">Member member = em.find(</text>
+  <text x="76" y="150" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    Member.</text><text x="128" y="150" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">class</text><text x="156" y="150" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">, 1L);</text>
+  <text x="76" y="178" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">Order order = </text><text x="178" y="178" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">new</text><text x="204" y="178" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> Order();</text>
+  <text x="76" y="196" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// FK 주인만 세팅</text>
+  <text x="76" y="214" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">order.setMember(member);</text>
+  <text x="76" y="232" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// member.getOrders()에 추가 안 함!</text>
+  <text x="76" y="260" fill="#e05555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// member.getOrders().size() == 0</text>
+  <text x="76" y="278" fill="#e05555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// (1차 캐시 불일치!)</text>
+  <text x="76" y="302" fill="#888" font-size="11">DB 커밋 후엔 정상이지만</text>
+  <text x="76" y="318" fill="#888" font-size="11">같은 TX 내 컬렉션 조회 오류</text>
+
+  <!-- Right: correct pattern -->
+  <text x="630" y="98" text-anchor="middle" fill="#55c555" font-size="14" font-weight="700">✅ 올바른 패턴 — 연관 편의 메서드</text>
+  <rect x="460" y="110" width="360" height="280" rx="6" fill="#070b14" stroke="#55c555" stroke-width="1.5"/>
+
+  <text x="476" y="132" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// Order 엔티티에 편의 메서드</text>
+  <text x="476" y="150" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">public void</text><text x="556" y="150" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> assignMember(Member m) {</text>
+  <text x="476" y="168" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    // 기존 관계 해제</text>
+  <text x="476" y="186" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    if</text><text x="500" y="186" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> (this.member != </text><text x="616" y="186" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">null</text><text x="644" y="186" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">) {</text>
+  <text x="476" y="204" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        this.member.getOrders()</text>
+  <text x="476" y="222" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">             .remove(this);</text>
+  <text x="476" y="240" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    }</text>
+  <text x="476" y="258" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    // 양쪽 동시 세팅</text>
+  <text x="476" y="276" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    this.member = m;</text>
+  <text x="476" y="294" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    if</text><text x="500" y="294" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> (m != </text><text x="552" y="294" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">null</text><text x="580" y="294" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">) {</text>
+  <text x="476" y="312" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        m.getOrders().add(this);</text>
+  <text x="476" y="330" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    }</text>
+  <text x="476" y="348" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">}</text>
+  <text x="476" y="376" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// 사용: order.assignMember(member);</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="408" width="760" height="36" rx="6" fill="#0f0f1a" stroke="#2a2a3a"/>
+  <text x="80" y="428" fill="#7ec8e3" font-size="12">💡 연관 편의 메서드는 FK 주인 엔티티에 두는 것이 일반적</text>
+  <text x="450" y="428" fill="#888" font-size="12">· 무한 루프 방지: toString/equals/hashCode에서 양방향 참조 주의</text>
+</svg>
