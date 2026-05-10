@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">docker image pull — 동작 흐름</text>
+
+  <!-- Registry -->
+  <rect x="60" y="76" width="180" height="320" rx="10" fill="#0d1020" stroke="#7777cc" stroke-width="2"/>
+  <text x="150" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">Registry</text>
+  <text x="150" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">docker.io</text>
+
+  <rect x="78" y="136" width="144" height="36" rx="5" fill="#1a1a2a" stroke="#7777cc" stroke-width="1"/>
+  <text x="150" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">Manifest</text>
+
+  <rect x="78" y="184" width="144" height="36" rx="5" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="150" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">Layer blob 1</text>
+
+  <rect x="78" y="232" width="144" height="36" rx="5" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="150" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">Layer blob 2</text>
+
+  <rect x="78" y="280" width="144" height="36" rx="5" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="150" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">Layer blob 3</text>
+
+  <rect x="78" y="328" width="144" height="36" rx="5" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="150" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">Config JSON</text>
+
+  <!-- Step 1: Pull manifest -->
+  <text x="340" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888">① Manifest 요청</text>
+  <line x1="240" y1="154" x2="300" y2="154" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="288,148 302,154 288,160" fill="#7777cc"/>
+  <text x="340" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">GET /v2/library/nginx/manifests/latest</text>
+  <text x="340" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">레이어 digest 목록 수신</text>
+
+  <!-- Step 2: Check cache -->
+  <text x="340" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888">② 로컬 캐시 확인</text>
+  <text x="340" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">이미 있는 레이어 → 건너뜀 (Already exists)</text>
+  <text x="340" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">없는 레이어만 다운로드 (Pull complete)</text>
+
+  <!-- Step 3: Layer download (parallel) -->
+  <text x="340" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888">③ 레이어 병렬 다운로드</text>
+  <line x1="240" y1="202" x2="300" y2="270" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="292,264 304,272 290,276" fill="#7ec8e3"/>
+  <line x1="240" y1="250" x2="300" y2="278" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="292,272 304,280 290,284" fill="#7ec8e3"/>
+  <line x1="240" y1="298" x2="300" y2="286" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="302,280 302,292 296,286" fill="#7ec8e3"/>
+  <text x="340" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">GET /v2/library/nginx/blobs/sha256:...</text>
+  <text x="340" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">tar.gz 스트림 수신 → 압축 해제 → 저장</text>
+
+  <!-- Step 4: Layer verification -->
+  <text x="340" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888">④ Config 다운로드 & 검증</text>
+  <line x1="240" y1="346" x2="300" y2="346" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="288,340 302,346 288,352" fill="#55c555"/>
+  <text x="340" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">이미지 메타데이터 저장</text>
+  <text x="340" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">digest 검증 완료 → 로컬 사용 가능</text>
+
+  <!-- Local storage -->
+  <rect x="640" y="76" width="200" height="280" rx="10" fill="#0d1a0d" stroke="#55c555" stroke-width="2"/>
+  <text x="740" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">로컬 스토리지</text>
+  <text x="740" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">/var/lib/docker/</text>
+
+  <rect x="658" y="136" width="164" height="30" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="740" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">overlay2/ (레이어 파일)</text>
+
+  <rect x="658" y="178" width="164" height="30" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="740" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">image/ (메타데이터)</text>
+
+  <rect x="658" y="220" width="164" height="30" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="740" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">imagedb/ (digest 인덱스)</text>
+
+  <!-- Horizontal arrow to local storage -->
+  <line x1="620" y1="280" x2="638" y2="280" stroke="#55c555" stroke-width="2"/>
+  <polygon points="626,274 640,280 626,286" fill="#55c555"/>
+
+  <!-- Progress bar example -->
+  <rect x="60" y="416" width="760" height="24" rx="4" fill="#111"/>
+  <rect x="60" y="416" width="580" height="24" rx="4" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">Already exists | Pulling | Downloading | Pull complete | Digest: sha256:...</text>
+</svg>

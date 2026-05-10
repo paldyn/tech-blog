@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Docker 이미지 — 레이어 스택과 유니온 마운트</text>
+
+  <!-- Left: Image Layers Stack -->
+  <text x="200" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">이미지 레이어 (읽기 전용)</text>
+
+  <!-- Layer 5: App layer (top) -->
+  <rect x="80" y="92" width="240" height="46" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="200" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Layer 4: COPY ./app /app</text>
+  <text x="200" y="129" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">sha256:d4e5f6... (12 MB)</text>
+
+  <!-- Layer 4 -->
+  <rect x="80" y="144" width="240" height="46" rx="6" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="200" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Layer 3: RUN pip install</text>
+  <text x="200" y="181" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">sha256:a1b2c3... (85 MB)</text>
+
+  <!-- Layer 3 -->
+  <rect x="80" y="196" width="240" height="46" rx="6" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="200" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Layer 2: RUN apt-get install</text>
+  <text x="200" y="233" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">sha256:7e8f9a... (45 MB)</text>
+
+  <!-- Layer 2 -->
+  <rect x="80" y="248" width="240" height="46" rx="6" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="267" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Layer 1: python:3.11-slim</text>
+  <text x="200" y="285" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">sha256:2b3c4d... (130 MB)</text>
+
+  <!-- Layer 1: Scratch -->
+  <rect x="80" y="300" width="240" height="46" rx="6" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="200" y="319" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555" text-anchor="middle">Layer 0: scratch (empty)</text>
+  <text x="200" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#444" text-anchor="middle">sha256:000000...</text>
+
+  <!-- Container writable layer -->
+  <rect x="80" y="360" width="240" height="46" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="200" y="379" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Container Layer (쓰기 가능)</text>
+  <text x="200" y="397" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">OverlayFS upperdir — 휘발성</text>
+
+  <text x="200" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">이미지 레이어는 공유·재사용</text>
+
+  <!-- Right: Union Mount (OverlayFS) -->
+  <text x="640" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">OverlayFS 유니온 마운트</text>
+
+  <rect x="460" y="92" width="360" height="320" rx="10" fill="#0d1020" stroke="#333" stroke-width="1.5"/>
+
+  <!-- upperdir -->
+  <rect x="480" y="110" width="320" height="50" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="133" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">upperdir (쓰기 레이어)</text>
+  <text x="640" y="151" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">/var/lib/docker/overlay2/{id}/diff</text>
+
+  <!-- workdir -->
+  <rect x="480" y="172" width="320" height="36" rx="6" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="640" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">workdir (OverlayFS 내부 사용)</text>
+
+  <!-- lowerdir -->
+  <rect x="480" y="220" width="320" height="50" rx="6" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="243" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">lowerdir (읽기 전용 레이어들)</text>
+  <text x="640" y="261" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">이미지 레이어 스택 (공유 가능)</text>
+
+  <!-- merged -->
+  <rect x="480" y="282" width="320" height="50" rx="6" fill="#111827" stroke="#55c555" stroke-width="2"/>
+  <text x="640" y="305" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">merged (컨테이너가 보는 뷰)</text>
+  <text x="640" y="323" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">단일 파일시스템처럼 노출</text>
+
+  <!-- Arrows -->
+  <line x1="640" y1="160" x2="640" y2="170" stroke="#555" stroke-width="1"/>
+  <polygon points="636,170 644,170 640,178" fill="#555"/>
+
+  <line x1="640" y1="208" x2="640" y2="218" stroke="#555" stroke-width="1"/>
+  <polygon points="636,218 644,218 640,226" fill="#555"/>
+
+  <line x1="640" y1="270" x2="640" y2="280" stroke="#555" stroke-width="1"/>
+  <polygon points="636,280 644,280 640,288" fill="#555"/>
+
+  <!-- CoW explanation -->
+  <rect x="460" y="430" width="360" height="50" rx="6" fill="#111320" stroke="#7777cc" stroke-width="1"/>
+  <text x="640" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Copy-on-Write (CoW)</text>
+  <text x="640" y="470" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">lowerdir 파일 수정 시 upperdir로 복사 후 수정</text>
+
+  <text x="200" y="468" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">레이어 = 파일시스템 변경 스냅샷 (tarball)</text>
+</svg>
