@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">동기 트랜잭션과 비동기 순차 처리 비교</text>
+
+  <!-- Sync code block -->
+  <rect x="60" y="68" width="360" height="270" fill="#070b14" rx="6" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">동기 방식 (비권장)</text>
+  <line x1="60" y1="98" x2="420" y2="98" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">// async=false로 동기 설정</text>
+  <text x="76" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">this.transaction(</text>
+  <text x="76" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">    "SVC_INIT"</text>
+  <text x="148" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">    "SVC_CODE::getCode"</text>
+  <text x="212" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="76" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">    ""</text>
+  <text x="98" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="76" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">    "dsCombo=dsCombo"</text>
+  <text x="205" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">    ""</text>
+  <text x="98" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="76" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">    ""</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">// 여기가 즉시 실행됨 — UI 블록 중</text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">var cnt = this.dsCombo.rowcount;</text>
+
+  <!-- Async sequential code block -->
+  <rect x="460" y="68" width="360" height="270" fill="#070b14" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">비동기 순차 처리 (권장)</text>
+  <line x1="460" y1="98" x2="820" y2="98" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="476" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">// 1단계: 공통코드 로딩</text>
+  <text x="476" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="533" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve"> fn_initCode() {</text>
+  <text x="476" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">    this.transaction(</text>
+  <text x="476" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" xml:space="preserve">      "SVC_INIT", ..., "fn_initCb"</text>
+  <text x="476" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">    );</text>
+  <text x="476" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">}</text>
+
+  <text x="476" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0" xml:space="preserve">// 2단계: 코드 로딩 완료 후 목록 조회</text>
+  <text x="476" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="533" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve"> fn_initCb(s, e, m) {</text>
+  <text x="476" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">    if</text>
+  <text x="499" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve"> (e !== </text>
+  <text x="545" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8" xml:space="preserve">0</text>
+  <text x="552" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">) { </text>
+  <text x="575" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">return</text>
+  <text x="611" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">; }</text>
+  <text x="476" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" xml:space="preserve">    this.fn_search(); </text>
+  <text x="476" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">}</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">콜백 체이닝으로 순서 보장 — 동기 방식보다 안전하고 UX도 우수</text>
+</svg>
