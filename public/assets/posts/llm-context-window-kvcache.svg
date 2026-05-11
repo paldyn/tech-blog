@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">KV 캐시 메모리 계산</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">컨텍스트 길이에 따른 메모리 사용량 — 선형 증가</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="460" height="338" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+
+  <text xml:space="preserve" x="84" y="112" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#6a8aa0"># 컨텍스트 길이별 KV 캐시 메모리 계산</text>
+  <text xml:space="preserve" x="84" y="130" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">def</text>
+  <text xml:space="preserve" x="116" y="130" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">kv_cache_memory_gb(</text>
+  <text xml:space="preserve" x="84" y="148" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    seq_len: </text>
+  <text xml:space="preserve" x="184" y="148" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text>
+  <text xml:space="preserve" x="202" y="148" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text xml:space="preserve" x="84" y="166" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    num_layers: </text>
+  <text xml:space="preserve" x="184" y="166" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text>
+  <text xml:space="preserve" x="202" y="166" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> = </text>
+  <text xml:space="preserve" x="220" y="166" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">32</text>
+  <text xml:space="preserve" x="232" y="166" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text xml:space="preserve" x="84" y="184" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    num_heads: </text>
+  <text xml:space="preserve" x="184" y="184" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text>
+  <text xml:space="preserve" x="202" y="184" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> = </text>
+  <text xml:space="preserve" x="220" y="184" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">32</text>
+  <text xml:space="preserve" x="232" y="184" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text xml:space="preserve" x="84" y="202" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    head_dim: </text>
+  <text xml:space="preserve" x="180" y="202" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text>
+  <text xml:space="preserve" x="198" y="202" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> = </text>
+  <text xml:space="preserve" x="216" y="202" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">128</text>
+  <text xml:space="preserve" x="236" y="202" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text xml:space="preserve" x="84" y="220" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    batch_size: </text>
+  <text xml:space="preserve" x="185" y="220" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text>
+  <text xml:space="preserve" x="203" y="220" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> = </text>
+  <text xml:space="preserve" x="221" y="220" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text xml:space="preserve" x="228" y="220" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text xml:space="preserve" x="84" y="238" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    dtype_bytes: </text>
+  <text xml:space="preserve" x="188" y="238" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">int</text>
+  <text xml:space="preserve" x="206" y="238" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> = </text>
+  <text xml:space="preserve" x="222" y="238" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">2</text>
+  <text xml:space="preserve" x="229" y="238" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">,</text>
+  <text xml:space="preserve" x="84" y="256" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">) -> </text>
+  <text xml:space="preserve" x="112" y="256" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">float</text>
+  <text xml:space="preserve" x="140" y="256" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">:</text>
+  <text xml:space="preserve" x="84" y="274" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#6a8aa0">    # K + V 각각 (layer × head × dim)</text>
+  <text xml:space="preserve" x="84" y="292" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    kv_elements = </text>
+  <text xml:space="preserve" x="192" y="292" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">2</text>
+  <text xml:space="preserve" x="199" y="292" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> * num_layers * num_heads</text>
+  <text xml:space="preserve" x="84" y="310" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">               * head_dim</text>
+  <text xml:space="preserve" x="84" y="328" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">    total_bytes = kv_elements * seq_len</text>
+  <text xml:space="preserve" x="84" y="346" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">                 * batch_size * dtype_bytes</text>
+  <text xml:space="preserve" x="84" y="364" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">    return</text>
+  <text xml:space="preserve" x="130" y="364" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> total_bytes / (</text>
+  <text xml:space="preserve" x="224" y="364" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">1024</text>
+  <text xml:space="preserve" x="248" y="364" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8"> ** </text>
+  <text xml:space="preserve" x="268" y="364" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#b5cea8">3</text>
+  <text xml:space="preserve" x="275" y="364" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text xml:space="preserve" x="84" y="390" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">print</text>
+  <text xml:space="preserve" x="114" y="390" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">(</text>
+  <text xml:space="preserve" x="121" y="390" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#ce9178">f"4K  토큰: {kv_cache_memory_gb(4_096):.2f} GB"</text>
+  <text xml:space="preserve" x="84" y="408" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#7ec8e3">print</text>
+  <text xml:space="preserve" x="114" y="408" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#e8e8e8">(</text>
+  <text xml:space="preserve" x="121" y="408" font-family="'JetBrains Mono','Consolas',monospace" font-size="12" fill="#ce9178">f"32K 토큰: {kv_cache_memory_gb(32_768):.2f} GB"</text>
+
+  <!-- Memory growth chart -->
+  <rect x="548" y="88" width="272" height="338" fill="#111827" rx="8" stroke="#1e2433" stroke-width="1"/>
+  <text x="684" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">메모리 사용량 (GB)</text>
+  <text x="684" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">LLaMA-2 70B 기준 (fp16)</text>
+
+  <!-- Chart axes -->
+  <line x1="596" y1="310" x2="796" y2="310" stroke="#333" stroke-width="1"/>
+  <line x1="596" y1="152" x2="596" y2="310" stroke="#333" stroke-width="1"/>
+
+  <!-- Y axis labels -->
+  <text x="590" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="end">0</text>
+  <text x="590" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="end">2</text>
+  <text x="590" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="end">4</text>
+  <text x="590" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="end">6</text>
+  <text x="590" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="end">8</text>
+  <text x="572" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90, 572, 234)">GB</text>
+
+  <!-- Bars -->
+  <!-- 4K: ~0.5GB → height ~12px -->
+  <rect x="614" y="298" width="32" height="12" fill="#7777cc" rx="2"/>
+  <text x="630" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">4K</text>
+  <text x="630" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">0.5</text>
+
+  <!-- 32K: ~4GB → height ~80px -->
+  <rect x="666" y="230" width="32" height="80" fill="#7ec8e3" rx="2"/>
+  <text x="682" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">32K</text>
+  <text x="682" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3" text-anchor="middle">4.0</text>
+
+  <!-- 128K: ~16GB → height ~158px, capped + indicator -->
+  <rect x="718" y="152" width="32" height="158" fill="#e05555" rx="2"/>
+  <text x="734" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">128K</text>
+  <text x="750" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555" text-anchor="start">16 GB</text>
+
+  <!-- X axis label -->
+  <text x="684" y="345" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="middle">컨텍스트 길이 (토큰 수)</text>
+
+  <!-- Note -->
+  <text x="684" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">선형 증가: 2배 길이 → 2배 메모리</text>
+  <text x="684" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">128K는 단일 A100(80GB)의 20%</text>
+  <text x="684" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Attention은 O(n²) — 연산 병목</text>
+</svg>
