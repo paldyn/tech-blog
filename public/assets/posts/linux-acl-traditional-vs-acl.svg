@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="360" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">전통 권한 vs ACL — 표현력 비교</text>
+  <text x="440" y="68" text-anchor="middle" font-size="14" fill="#888">ACL은 3계층(소유자·그룹·기타) 제한을 넘어 개별 사용자/그룹에 권한 부여</text>
+
+  <!-- Traditional section -->
+  <rect x="60" y="84" width="350" height="240" rx="8" fill="#0e1018" stroke="#1e2433"/>
+  <rect x="60" y="84" width="350" height="34" rx="8" fill="#2a1010"/>
+  <text x="235" y="106" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">전통 권한 (chmod만)</text>
+
+  <text x="80" y="140" font-size="13" fill="#888">요구사항:</text>
+  <text x="80" y="160" font-size="12" fill="#e8e8e8">- alice: 읽기/쓰기</text>
+  <text x="80" y="178" font-size="12" fill="#e8e8e8">- bob: 읽기만</text>
+  <text x="80" y="196" font-size="12" fill="#e8e8e8">- charlie: 접근 불가</text>
+  <text x="80" y="214" font-size="12" fill="#e8e8e8">- www-data: 읽기만</text>
+
+  <line x1="80" y1="225" x2="390" y2="225" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="80" y="248" font-size="12" fill="#e05555">✗ 해결 불가능</text>
+  <text x="80" y="268" font-size="12" fill="#888">3계층으로는 bob, charlie,</text>
+  <text x="80" y="286" font-size="12" fill="#888">www-data를 각각 제어 불가</text>
+  <text x="80" y="304" font-size="12" fill="#888">→ 그룹 남용, 소유권 이동 등</text>
+  <text x="80" y="322" font-size="12" fill="#888">   복잡한 우회책 필요</text>
+
+  <!-- ACL section -->
+  <rect x="470" y="84" width="350" height="240" rx="8" fill="#0e1018" stroke="#1e2433"/>
+  <rect x="470" y="84" width="350" height="34" rx="8" fill="#1a2a1a"/>
+  <text x="645" y="106" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">ACL (setfacl)</text>
+
+  <text x="490" y="140" font-size="13" fill="#888">동일 요구사항 해결:</text>
+
+  <rect x="490" y="150" width="310" height="114" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="506" y="169" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">setfacl </text>
+  <text x="558" y="169" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve">-m u:alice:rw report.txt</text>
+  <text x="506" y="187" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">setfacl </text>
+  <text x="558" y="187" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve">-m u:bob:r  report.txt</text>
+  <text x="506" y="205" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">setfacl </text>
+  <text x="558" y="205" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve">-m u:charlie:- report.txt</text>
+  <text x="506" y="223" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">setfacl </text>
+  <text x="558" y="223" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve">-m u:www-data:r report.txt</text>
+  <text x="506" y="252" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve"># 각 사용자별 정밀 제어 완료</text>
+
+  <text x="490" y="278" font-size="12" fill="#55c555">✓ 개별 사용자/그룹 정밀 제어</text>
+  <text x="490" y="296" font-size="12" fill="#55c555">✓ 기존 소유권 변경 불필요</text>
+  <text x="490" y="314" font-size="12" fill="#55c555">✓ 직관적이고 감사하기 쉬움</text>
+
+  <!-- Note: + indicator -->
+  <rect x="60" y="338" width="760" height="14" rx="4" fill="none"/>
+  <text x="440" y="350" text-anchor="middle" font-size="12" fill="#555">ACL 활성화 시 ls -l 출력에 파일 권한 뒤 + 기호가 붙음: -rw-r--r--+</text>
+</svg>

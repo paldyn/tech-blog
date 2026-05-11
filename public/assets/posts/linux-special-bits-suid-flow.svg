@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="320" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="20" font-weight="700" fill="#e8e8e8">SUID 동작 흐름 — passwd 예시</text>
+
+  <!-- Step 1: User -->
+  <rect x="60" y="72" width="160" height="60" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="140" y="99" text-anchor="middle" font-size="14" font-weight="600" fill="#7777cc">일반 사용자</text>
+  <text x="140" y="118" text-anchor="middle" font-size="12" fill="#888">alice (UID=1000)</text>
+
+  <!-- Arrow 1 -->
+  <line x1="220" y1="102" x2="270" y2="102" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="270,97 280,102 270,107" fill="#7ec8e3"/>
+  <text x="248" y="94" text-anchor="middle" font-size="10" fill="#888">실행</text>
+
+  <!-- Step 2: passwd binary -->
+  <rect x="280" y="72" width="200" height="60" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="380" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">/usr/bin/passwd</text>
+  <text x="380" y="110" text-anchor="middle" font-size="11" fill="#888">소유자: root</text>
+  <text x="380" y="126" text-anchor="middle" font-size="11" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e05555">-rws r-x r-x</text>
+
+  <!-- Arrow 2 -->
+  <line x1="480" y1="102" x2="530" y2="102" stroke="#e05555" stroke-width="2"/>
+  <polygon points="530,97 540,102 530,107" fill="#e05555"/>
+  <text x="508" y="94" text-anchor="middle" font-size="10" fill="#888">SUID 적용</text>
+
+  <!-- Step 3: Process -->
+  <rect x="540" y="72" width="200" height="60" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="2"/>
+  <text x="640" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">프로세스 실행</text>
+  <text x="640" y="110" text-anchor="middle" font-size="11" fill="#e05555">EUID = 0 (root)</text>
+  <text x="640" y="126" text-anchor="middle" font-size="11" fill="#888">RUID = 1000 (alice)</text>
+
+  <!-- Arrow 3 -->
+  <line x1="740" y1="102" x2="790" y2="102" stroke="#55c555" stroke-width="2"/>
+  <polygon points="790,97 800,102 790,107" fill="#55c555"/>
+
+  <!-- Step 4: shadow -->
+  <rect x="800" y="72" width="20" height="60" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="812" y="108" text-anchor="middle" font-size="9" fill="#55c555" transform="rotate(90 812 108)">shadow</text>
+
+  <!-- /etc/shadow label -->
+  <text x="810" y="148" text-anchor="middle" font-size="9" fill="#555">/etc/shadow</text>
+
+  <!-- Explanation box -->
+  <rect x="60" y="160" width="760" height="60" rx="8" fill="#0e1018" stroke="#1e2433"/>
+  <text x="440" y="185" text-anchor="middle" font-size="13" fill="#e8e8e8">SUID 비트가 없다면: alice(1000)가 passwd를 실행해도 /etc/shadow(root 소유, 640)에 접근 불가</text>
+  <text x="440" y="208" text-anchor="middle" font-size="13" fill="#55c555">SUID 비트가 있으면: 실행 중 유효 UID(EUID)가 파일 소유자(root=0)로 상승 → 쓰기 가능</text>
+
+  <!-- Security warning -->
+  <rect x="60" y="238" width="760" height="60" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="262" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">⚠ 보안 주의</text>
+  <text x="440" y="282" text-anchor="middle" font-size="12" fill="#888">SUID 바이너리에서 취약점 발견 시 로컬 권한 상승(LPE) 공격 벡터가 됩니다</text>
+  <text x="440" y="300" text-anchor="middle" font-size="12" fill="#888">find / -perm -4000 -type f  명령으로 시스템의 SUID 파일을 정기 감사하세요</text>
+</svg>
