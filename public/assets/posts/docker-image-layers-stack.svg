@@ -1,0 +1,52 @@
+<svg width="880" height="520" viewBox="0 0 880 520" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Docker 이미지 레이어 스택</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">읽기 전용 레이어 + 컨테이너 쓰기 레이어</text>
+
+  <!-- Container layer (read-write) -->
+  <rect x="200" y="104" width="480" height="56" fill="#1a1a0e" rx="8" stroke="#e8c84a" stroke-width="2"/>
+  <text x="440" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8c84a" text-anchor="middle">Container Layer (Read-Write)</text>
+  <text x="440" y="147" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">실행 시 생성 / 컨테이너 삭제 시 소멸</text>
+
+  <!-- UnionFS label -->
+  <text x="720" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">OverlayFS</text>
+  <text x="720" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">(Union Mount)</text>
+
+  <!-- Image layers (read-only) -->
+  <!-- Layer 4: COPY -->
+  <rect x="200" y="178" width="480" height="52" fill="#0d1117" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">Layer 4 — COPY app/ /app/</text>
+  <text x="440" y="219" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">애플리케이션 파일 · 2.1MB · Read-Only</text>
+
+  <!-- Layer 3: RUN pip -->
+  <rect x="200" y="242" width="480" height="52" fill="#0d1117" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="263" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">Layer 3 — RUN pip install</text>
+  <text x="440" y="283" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">패키지 설치 · 128MB · Read-Only</text>
+
+  <!-- Layer 2: RUN apt -->
+  <rect x="200" y="306" width="480" height="52" fill="#0d1117" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="327" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">Layer 2 — RUN apt-get install</text>
+  <text x="440" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">시스템 패키지 · 74MB · Read-Only</text>
+
+  <!-- Layer 1: FROM -->
+  <rect x="200" y="370" width="480" height="52" fill="#0d1117" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="391" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Layer 1 — FROM python:3.12-slim</text>
+  <text x="440" y="411" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">베이스 이미지 · 151MB · Read-Only</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">이미지 레이어 (변경 불가)</text>
+
+  <!-- Legend -->
+  <rect x="60" y="460" width="220" height="44" fill="#1a1a0e" rx="6" stroke="#e8c84a" stroke-width="1"/>
+  <text x="170" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8c84a" text-anchor="middle">쓰기 가능 레이어</text>
+  <text x="170" y="496" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">컨테이너별 독립 생성</text>
+
+  <rect x="310" y="460" width="220" height="44" fill="#0d1117" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="420" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">읽기 전용 레이어</text>
+  <text x="420" y="496" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">이미지 → 모든 컨테이너 공유</text>
+
+  <rect x="560" y="460" width="260" height="44" fill="#0d1117" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="690" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">베이스 레이어</text>
+  <text x="690" y="496" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">다른 이미지와 공유 가능</text>
+</svg>

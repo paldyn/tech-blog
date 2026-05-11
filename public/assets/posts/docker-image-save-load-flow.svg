@@ -1,0 +1,61 @@
+<svg width="880" height="480" viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">docker save / load — 이미지 전송 흐름</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">오프라인·에어갭 환경의 표준 방법</text>
+
+  <!-- Host A -->
+  <rect x="60" y="104" width="300" height="340" fill="#0d1117" rx="10" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="210" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">Host A (인터넷 가능)</text>
+
+  <rect x="84" y="148" width="252" height="56" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="210" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" text-anchor="middle">myapp:v1.2</text>
+  <text x="210" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">레이어: L1 + L2 + L3</text>
+
+  <!-- Save command -->
+  <rect x="84" y="228" width="252" height="50" fill="#111820" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="210" y="247" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">docker image save \</text>
+  <text x="210" y="265" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">-o myapp.tar myapp:v1.2</text>
+
+  <rect x="84" y="300" width="252" height="44" fill="#070b14" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="210" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">myapp.tar</text>
+  <text x="210" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">모든 레이어 + 메타데이터</text>
+
+  <!-- Compress tip -->
+  <rect x="84" y="362" width="252" height="60" fill="#0d1117" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="210" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">압축 (gzip)</text>
+  <text x="210" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">docker save myapp:v1.2 \</text>
+  <text x="210" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">| gzip &gt; myapp.tar.gz</text>
+
+  <!-- Transport arrow -->
+  <line x1="360" y1="290" x2="420" y2="290" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="428,290 414,283 414,297" fill="#7777cc"/>
+  <text x="394" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">USB / SCP</text>
+  <text x="394" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">파일 전송</text>
+
+  <!-- Tar file in middle -->
+  <rect x="300" y="268" width="60" height="44" fill="#0d1117" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="330" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#55c555" text-anchor="middle">.tar</text>
+  <text x="330" y="305" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="9" fill="#888" text-anchor="middle">file</text>
+
+  <!-- Host B -->
+  <rect x="520" y="104" width="300" height="340" fill="#0d1117" rx="10" stroke="#7777cc" stroke-width="1"/>
+  <text x="670" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">Host B (에어갭 환경)</text>
+
+  <rect x="544" y="148" width="252" height="44" fill="#070b14" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="670" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">myapp.tar 수신</text>
+
+  <!-- Load command -->
+  <rect x="544" y="212" width="252" height="50" fill="#111820" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="670" y="231" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc" text-anchor="middle">docker image load \</text>
+  <text x="670" y="249" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">-i myapp.tar</text>
+
+  <rect x="544" y="282" width="252" height="56" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="670" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" text-anchor="middle">myapp:v1.2</text>
+  <text x="670" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">태그·레이어·히스토리 완전 보존</text>
+
+  <rect x="544" y="360" width="252" height="60" fill="#111820" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="670" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">보존되는 것</text>
+  <text x="670" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">모든 레이어 / 태그 / 히스토리</text>
+  <text x="670" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">멀티 태그 이미지도 한 파일로</text>
+</svg>
