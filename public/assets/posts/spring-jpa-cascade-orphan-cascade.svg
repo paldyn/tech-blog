@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">JPA CascadeType — 부모에서 자식으로 전파</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">부모 엔티티의 연산이 cascade 설정에 따라 자식 엔티티에 전파됨</text>
+
+  <!-- Parent Entity Box -->
+  <rect x="60" y="86" width="220" height="160" rx="8" fill="#0f1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="170" y="110" text-anchor="middle" fill="#7ec8e3" font-size="15" font-weight="700">Post (부모)</text>
+  <line x1="80" y1="120" x2="260" y2="120" stroke="#1e2433"/>
+  <text x="80" y="140" fill="#888" font-size="12">id: Long</text>
+  <text x="80" y="158" fill="#888" font-size="12">title: String</text>
+  <text x="80" y="176" fill="#55c555" font-size="12">comments:</text>
+  <text x="80" y="194" fill="#55c555" font-size="11">  @OneToMany</text>
+  <text x="80" y="210" fill="#55c555" font-size="11">  cascade = ALL</text>
+  <text x="80" y="228" fill="#e05555" font-size="11">  orphanRemoval</text>
+
+  <!-- Cascade Arrow (big, solid) -->
+  <line x1="280" y1="166" x2="400" y2="166" stroke="#e8b84b" stroke-width="3"/>
+  <polygon points="400,155 420,166 400,177" fill="#e8b84b"/>
+  <text x="340" y="152" text-anchor="middle" fill="#e8b84b" font-size="12" font-weight="600">cascade</text>
+  <text x="340" y="188" text-anchor="middle" fill="#888" font-size="11">전파</text>
+
+  <!-- Child Entity Box -->
+  <rect x="420" y="86" width="220" height="160" rx="8" fill="#0f1520" stroke="#55c555" stroke-width="1.5"/>
+  <text x="530" y="110" text-anchor="middle" fill="#55c555" font-size="15" font-weight="700">Comment (자식)</text>
+  <line x1="440" y1="120" x2="620" y2="120" stroke="#1e2433"/>
+  <text x="440" y="140" fill="#888" font-size="12">id: Long</text>
+  <text x="440" y="158" fill="#888" font-size="12">content: String</text>
+  <text x="440" y="176" fill="#7ec8e3" font-size="12">post: Post (FK)</text>
+  <text x="440" y="194" fill="#888" font-size="11">@ManyToOne(LAZY)</text>
+  <text x="440" y="218" fill="#888" font-size="12">부모와 생명주기 공유</text>
+
+  <!-- orphanRemoval box -->
+  <rect x="680" y="86" width="160" height="160" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="760" y="110" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600">orphanRemoval</text>
+  <line x1="700" y1="120" x2="820" y2="120" stroke="#2a1010"/>
+  <text x="700" y="142" fill="#e8e8e8" font-size="11">컬렉션에서</text>
+  <text x="700" y="158" fill="#e8e8e8" font-size="11">제거된 자식을</text>
+  <text x="700" y="174" fill="#e8e8e8" font-size="11">자동으로 DELETE</text>
+  <text x="700" y="200" fill="#55c555" font-size="11">post.getComments()</text>
+  <text x="700" y="216" fill="#55c555" font-size="11">  .remove(comment);</text>
+  <text x="700" y="232" fill="#888" font-size="11">→ DELETE 자동</text>
+
+  <!-- CascadeType Reference Table -->
+  <text x="440" y="274" text-anchor="middle" fill="#888" font-size="12" font-weight="600">CascadeType 참조표</text>
+  <line x1="60" y1="282" x2="820" y2="282" stroke="#222"/>
+
+  <!-- Table header -->
+  <rect x="60" y="288" width="760" height="28" rx="4" fill="#111"/>
+  <text x="160" y="307" text-anchor="middle" fill="#888" font-size="12" font-weight="600">타입</text>
+  <text x="380" y="307" text-anchor="middle" fill="#888" font-size="12" font-weight="600">트리거 연산</text>
+  <text x="640" y="307" text-anchor="middle" fill="#888" font-size="12" font-weight="600">자식 엔티티 효과</text>
+
+  <!-- Row PERSIST -->
+  <rect x="60" y="318" width="760" height="26" fill="#0c0c0c"/>
+  <text x="160" y="336" text-anchor="middle" fill="#7ec8e3" font-size="12">PERSIST</text>
+  <text x="380" y="336" text-anchor="middle" fill="#e8e8e8" font-size="12">em.persist(parent)</text>
+  <text x="640" y="336" text-anchor="middle" fill="#55c555" font-size="12">자식도 함께 INSERT</text>
+
+  <!-- Row MERGE -->
+  <rect x="60" y="346" width="760" height="26" fill="#0a0a0a"/>
+  <text x="160" y="364" text-anchor="middle" fill="#7ec8e3" font-size="12">MERGE</text>
+  <text x="380" y="364" text-anchor="middle" fill="#e8e8e8" font-size="12">em.merge(parent)</text>
+  <text x="640" y="364" text-anchor="middle" fill="#55c555" font-size="12">자식도 함께 병합(UPDATE)</text>
+
+  <!-- Row REMOVE -->
+  <rect x="60" y="374" width="760" height="26" fill="#0c0c0c"/>
+  <text x="160" y="392" text-anchor="middle" fill="#e05555" font-size="12">REMOVE</text>
+  <text x="380" y="392" text-anchor="middle" fill="#e8e8e8" font-size="12">em.remove(parent)</text>
+  <text x="640" y="392" text-anchor="middle" fill="#e05555" font-size="12">자식도 함께 DELETE</text>
+
+  <!-- Row REFRESH -->
+  <rect x="60" y="402" width="760" height="26" fill="#0a0a0a"/>
+  <text x="160" y="420" text-anchor="middle" fill="#7ec8e3" font-size="12">REFRESH</text>
+  <text x="380" y="420" text-anchor="middle" fill="#e8e8e8" font-size="12">em.refresh(parent)</text>
+  <text x="640" y="420" text-anchor="middle" fill="#55c555" font-size="12">자식도 DB에서 재로딩</text>
+
+  <!-- Row DETACH -->
+  <rect x="60" y="430" width="760" height="26" fill="#0c0c0c"/>
+  <text x="160" y="448" text-anchor="middle" fill="#7777cc" font-size="12">DETACH</text>
+  <text x="380" y="448" text-anchor="middle" fill="#e8e8e8" font-size="12">em.detach(parent)</text>
+  <text x="640" y="448" text-anchor="middle" fill="#7777cc" font-size="12">자식도 함께 준영속 전환</text>
+
+  <!-- Row ALL -->
+  <rect x="60" y="458" width="760" height="26" rx="4" fill="#0a0a0a"/>
+  <text x="160" y="476" text-anchor="middle" fill="#e8b84b" font-size="12" font-weight="600">ALL</text>
+  <text x="380" y="476" text-anchor="middle" fill="#e8e8e8" font-size="12">위 5개 연산 모두</text>
+  <text x="640" y="476" text-anchor="middle" fill="#e8b84b" font-size="12">위 5개 효과 모두 적용</text>
+
+  <!-- Table border -->
+  <rect x="60" y="288" width="760" height="196" rx="4" fill="none" stroke="#222"/>
+
+  <!-- Bottom note -->
+  <text x="440" y="508" text-anchor="middle" fill="#e05555" font-size="12">주의: 공유 자원(Tag, Category 등)에 cascade 사용 금지 — 의도치 않은 삭제·변경 위험</text>
+</svg>

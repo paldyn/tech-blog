@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">페치 전략 설정 — 코드 패턴</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">엔티티 정의와 Fetch 조인 사용 패턴</text>
+
+  <!-- Left: Entity definition code block -->
+  <rect x="60" y="86" width="380" height="382" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="106" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// Order 엔티티 — 페치 전략 명시</text>
+  <text x="80" y="124" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@Entity</text>
+  <text x="80" y="142" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">public class</text><text x="172" y="142" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> Order {</text>
+  <text x="80" y="160" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  @Id @GeneratedValue</text>
+  <text x="80" y="178" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  private</text><text x="136" y="178" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> Long id;</text>
+
+  <text x="80" y="208" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  // 기본 EAGER → 반드시 LAZY 명시</text>
+  <text x="80" y="226" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  @ManyToOne(fetch = FetchType.</text><text x="316" y="226" fill="#55c555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">LAZY</text><text x="344" y="226" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="80" y="244" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  @JoinColumn(name = </text><text x="218" y="244" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"member_id"</text><text x="308" y="244" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="80" y="262" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  private</text><text x="136" y="262" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> Member member;</text>
+
+  <text x="80" y="292" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  // @OneToMany 기본값 LAZY (유지)</text>
+  <text x="80" y="310" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  @OneToMany(mappedBy = </text><text x="224" y="310" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"order"</text><text x="272" y="310" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">,</text>
+  <text x="80" y="328" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    cascade = CascadeType.ALL,</text>
+  <text x="80" y="346" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    orphanRemoval = </text><text x="200" y="346" fill="#b5cea8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">true</text><text x="228" y="346" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="80" y="364" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  private</text><text x="136" y="364" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> List&lt;OrderItem&gt; items</text>
+  <text x="80" y="382" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">      = </text><text x="116" y="382" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">new</text><text x="142" y="382" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> ArrayList&lt;&gt;();</text>
+  <text x="80" y="400" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">}</text>
+
+  <!-- Right: Fetch join code block -->
+  <rect x="460" y="86" width="360" height="382" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="480" y="106" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// JPQL fetch join — N+1 해결</text>
+  <text x="480" y="124" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@Query(</text><text x="522" y="124" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"SELECT o FROM Order o "</text>
+  <text x="480" y="142" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  + "JOIN FETCH o.member"</text><text x="668" y="142" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="480" y="160" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">List&lt;Order&gt; findAllWithMember();</text>
+
+  <text x="480" y="196" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// @EntityGraph — 어노테이션 방식</text>
+  <text x="480" y="214" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@EntityGraph(</text>
+  <text x="480" y="232" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  attributePaths = {</text><text x="606" y="232" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"member"</text><text x="660" y="232" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">})</text>
+  <text x="480" y="250" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">List&lt;Order&gt; findAll();</text>
+
+  <text x="480" y="286" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// @BatchSize — 컬렉션 최적화</text>
+  <text x="480" y="304" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@BatchSize(size = </text><text x="600" y="304" fill="#b5cea8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">100</text><text x="624" y="304" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="480" y="322" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@OneToMany(mappedBy = </text><text x="624" y="322" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"order"</text><text x="672" y="322" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="480" y="340" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">private</text><text x="536" y="340" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> List&lt;OrderItem&gt; items;</text>
+
+  <text x="480" y="376" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// LazyInitializationException 방지</text>
+  <text x="480" y="394" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@Transactional</text><text x="596" y="394" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  // 트랜잭션 내 접근</text>
+  <text x="480" y="412" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">public</text><text x="520" y="412" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> OrderDto getOrder(Long id) { … }</text>
+
+  <!-- Bottom tip -->
+  <rect x="60" y="484" width="760" height="0" rx="4" fill="none"/>
+  <text x="440" y="494" text-anchor="middle" fill="#7777cc" font-size="12">LAZY + fetch join: 필요한 연관만, 필요할 때, 한 번의 쿼리로</text>
+</svg>
