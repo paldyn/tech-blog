@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="880" height="420" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="60" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">nonlocal — 외부 변수 수정</text>
+  <text x="60" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">클로저 내에서 enclosing 스코프 변수를 변경하려면</text>
+
+  <!-- Left: counter factory -->
+  <rect x="60" y="90" width="380" height="284" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888"># 카운터 팩토리 패턴</text>
+  <text x="76" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> make_counter(start=</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#e8e8e8">):</tspan></text>
+  <text x="76" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">    count = start</tspan></text>
+  <text x="76" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">    def</tspan><tspan fill="#e8e8e8"> inc():</tspan></text>
+  <text x="76" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">        nonlocal</tspan><tspan fill="#e8e8e8"> count</tspan></text>
+  <text x="76" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">        count += </tspan><tspan fill="#b5cea8">1</tspan></text>
+  <text x="76" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">        return</tspan><tspan fill="#e8e8e8"> count</tspan></text>
+  <text x="76" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">    return</tspan><tspan fill="#e8e8e8"> inc</tspan></text>
+
+  <text x="76" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">c = make_counter()</tspan></text>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">c()  </tspan><tspan fill="#888"># 1</tspan></text>
+  <text x="76" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">c()  </tspan><tspan fill="#888"># 2</tspan></text>
+  <text x="76" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">c()  </tspan><tspan fill="#888"># 3</tspan></text>
+  <text x="76" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">nonlocal 없이 count+=1 → UnboundLocalError</text>
+
+  <!-- Right: without nonlocal error + explanation -->
+  <rect x="480" y="90" width="340" height="284" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="496" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888"># nonlocal 없으면 오류</text>
+  <text x="496" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> broken():</tspan></text>
+  <text x="496" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e8e8e8">    x = </tspan><tspan fill="#b5cea8">0</tspan></text>
+  <text x="496" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">    def</tspan><tspan fill="#e8e8e8"> inner():</tspan></text>
+  <text x="496" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#e05555">        x += 1</tspan><tspan fill="#888">  # 오류!</tspan></text>
+  <text x="496" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">    return</tspan><tspan fill="#e8e8e8"> inner</tspan></text>
+
+  <text x="496" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">할당 연산자(x += 1)가 있으면</text>
+  <text x="496" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Python은 x를 지역 변수로 간주</text>
+  <text x="496" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 값 읽기 전에 할당 → UnboundLocalError</text>
+
+  <rect x="496" y="294" width="308" height="50" fill="#1a0a0a" rx="4" stroke="#e05555"/>
+  <text x="650" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">해결: nonlocal x 선언 추가</text>
+  <text x="650" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">enclosing 스코프 변수임을 명시</text>
+  <text x="496" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">global 은 전역 변수에 사용</text>
+</svg>
