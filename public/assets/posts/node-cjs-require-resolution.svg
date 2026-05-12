@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+    <marker id="arr-g" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#55c555" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">require() 모듈 해석 순서</text>
+
+  <!-- Start: require('X') -->
+  <rect x="330" y="66" width="220" height="44" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="88" text-anchor="middle"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" fill="#7ec8e3">require('X')</text>
+  <text x="440" y="103" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">호출 발생</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="118" x2="440" y2="140" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 1: cache check -->
+  <rect x="290" y="148" width="300" height="44" rx="6" fill="#0d1117" stroke="#e0a030" stroke-width="1.5"/>
+  <text x="440" y="170" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e0a030">① 캐시 확인 (require.cache)</text>
+  <text x="440" y="186" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">이미 로드된 경우 즉시 반환</text>
+
+  <!-- Cache hit arrow (right) -->
+  <line x1="590" y1="170" x2="660" y2="170" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+  <text x="625" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">캐시 히트</text>
+  <rect x="668" y="154" width="152" height="32" rx="6" fill="#0d1117" stroke="#55c555" stroke-width="1"/>
+  <text x="744" y="175" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">module.exports 반환</text>
+
+  <!-- Arrow down (cache miss) -->
+  <line x1="440" y1="200" x2="440" y2="222" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="462" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">캐시 미스</text>
+
+  <!-- Step 2: is core module? -->
+  <rect x="290" y="230" width="300" height="44" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="252" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">② 코어 모듈 확인</text>
+  <text x="440" y="268" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">fs, http, path … Node 내장 모듈</text>
+
+  <!-- Core module hit -->
+  <line x1="590" y1="252" x2="660" y2="252" stroke="#7777cc" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="625" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">내장 모듈</text>
+  <rect x="668" y="236" width="152" height="32" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1"/>
+  <text x="744" y="257" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">즉시 반환</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="282" x2="440" y2="304" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 3: starts with ./ or ../ or /? -->
+  <rect x="255" y="312" width="370" height="44" rx="6" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="334" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">③ 상대/절대 경로 여부</text>
+  <text x="440" y="350" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">'./' '../' '/'로 시작하는가?</text>
+
+  <!-- Left: file path -->
+  <line x1="255" y1="334" x2="192" y2="334" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="223" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">예</text>
+  <rect x="62" y="314" width="122" height="40" rx="6" fill="#0d1117" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="123" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">파일/디렉토리</text>
+  <text x="123" y="347" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">직접 경로 탐색</text>
+
+  <!-- Right: node_modules -->
+  <line x1="625" y1="334" x2="660" y2="334" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="643" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">아니오</text>
+
+  <!-- Arrow down from step 3 -->
+  <line x1="440" y1="364" x2="440" y2="386" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 4: node_modules lookup -->
+  <rect x="230" y="394" width="420" height="52" rx="6" fill="#160808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="418" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">④ node_modules 탐색 (상위 순환)</text>
+  <text x="440" y="436" text-anchor="middle"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">./node_modules/ → ../node_modules/ → ../../node_modules/ → …</text>
+
+  <!-- bottom note -->
+  <rect x="60" y="460" width="760" height="0" rx="0"/>
+
+  <!-- File extension note -->
+  <text x="440" y="462" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#6a8aa0">파일 탐색 순서: X → X.js → X.json → X.node → X/index.js → X/package.json main 필드</text>
+</svg>

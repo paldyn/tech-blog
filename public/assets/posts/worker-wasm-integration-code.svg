@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Worker 내 Wasm 로딩 패턴</text>
+
+  <!-- Code block -->
+  <rect x="60" y="62" width="760" height="336" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">wasm-worker.js</text>
+
+  <!-- line 1: comment -->
+  <text x="76" y="108" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// Wasm 모듈을 Worker에서 초기화 — Main Thread 블로킹 없음</text>
+  <!-- line 2 -->
+  <text x="76" y="126" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">let </text>
+  <text x="109" y="126" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">wasmExports = </text>
+  <text x="218" y="126" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">null</text>
+  <text x="239" y="126" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+  <!-- line 3 -->
+  <text x="76" y="144" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">let </text>
+  <text x="109" y="144" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">wasmMemory = </text>
+  <text x="218" y="144" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">null</text>
+  <text x="239" y="144" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+  <!-- blank -->
+  <!-- line 4: async init -->
+  <text x="76" y="180" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">async function </text>
+  <text x="199" y="180" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">initWasm() {</text>
+  <!-- line 5 -->
+  <text x="76" y="198" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  // instantiateStreaming = fetch + compile + instantiate 한 번에</text>
+  <!-- line 6 -->
+  <text x="76" y="216" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  const </text>
+  <text x="124" y="216" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">{ instance } = </text>
+  <text x="232" y="216" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">await </text>
+  <text x="271" y="216" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">WebAssembly.instantiateStreaming(</text>
+  <!-- line 7 -->
+  <text x="76" y="234" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    fetch(</text>
+  <text x="131" y="234" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'/wasm/math.wasm'</text>
+  <text x="281" y="234" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">), { env: { memory:</text>
+  <!-- line 8 -->
+  <text x="76" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      </text>
+  <text x="76" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">new </text>
+  <text x="109" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      WebAssembly.Memory({ initial: </text>
+  <text x="349" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">16</text>
+  <text x="363" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, shared: </text>
+  <text x="430" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">true </text>
+  <text x="462" y="252" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}) }});</text>
+  <!-- line 9 -->
+  <text x="76" y="270" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  wasmExports = instance.exports;</text>
+  <!-- line 10 -->
+  <text x="76" y="288" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  wasmMemory = </text>
+  <text x="190" y="288" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">new </text>
+  <text x="223" y="288" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">Uint8Array(instance.exports.memory.buffer);</text>
+  <!-- line 11 -->
+  <text x="76" y="306" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <!-- blank -->
+  <!-- line 12: message handler -->
+  <text x="76" y="342" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">self.onmessage = </text>
+  <text x="193" y="342" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">async </text>
+  <text x="231" y="342" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">({ data }) => {</text>
+  <!-- line 13 -->
+  <text x="76" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  if </text>
+  <text x="103" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">(!wasmExports) </text>
+  <text x="214" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">await </text>
+  <text x="253" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">initWasm();</text>
+  <!-- line 14 -->
+  <text x="76" y="378" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  const </text>
+  <text x="124" y="378" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">result = wasmExports.fib(data.n);</text>
+  <!-- close -->
+  <text x="76" y="396" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  self.postMessage({ result });</text>
+  <text x="76" y="414" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">};</text>
+</svg>

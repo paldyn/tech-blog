@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="loop-arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3" stroke="#0a0a0a" stroke-width="0.5"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Node.js 이벤트 루프 · 6단계</text>
+
+  <!-- Phase boxes in circular order left→right, top row 3, bottom row 3 -->
+  <!-- Phase 1: timers -->
+  <rect x="60" y="70" width="220" height="100" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="96" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">① timers</text>
+  <text x="170" y="116" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">setTimeout / setInterval</text>
+  <text x="170" y="136" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">만료된 타이머 콜백 실행</text>
+  <text x="170" y="156" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">최소 지연 보장 (정확 시각 ×)</text>
+
+  <!-- Arrow 1 → 2 -->
+  <line x1="288" y1="120" x2="328" y2="120"
+    stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#loop-arr)"/>
+
+  <!-- Phase 2: pending callbacks -->
+  <rect x="336" y="70" width="220" height="100" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="446" y="96" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#7ec8e3">② pending callbacks</text>
+  <text x="446" y="116" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">이전 루프 지연된 I/O</text>
+  <text x="446" y="136" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">TCP 에러 같은 시스템 콜백</text>
+  <text x="446" y="156" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">드물게 실행됨</text>
+
+  <!-- Arrow 2 → 3 -->
+  <line x1="564" y1="120" x2="604" y2="120"
+    stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#loop-arr)"/>
+
+  <!-- Phase 3: idle/prepare -->
+  <rect x="612" y="70" width="210" height="100" rx="8" fill="#0d1117" stroke="#888" stroke-width="1.5"/>
+  <text x="717" y="96" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#888">③ idle / prepare</text>
+  <text x="717" y="116" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">내부 전용 (libuv)</text>
+  <text x="717" y="136" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">Node 내부에서만 사용</text>
+  <text x="717" y="156" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">JS에서 접근 불가</text>
+
+  <!-- Vertical arrow 3 → 4 (right side down) -->
+  <line x1="717" y1="178" x2="717" y2="218"
+    stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#loop-arr)"/>
+
+  <!-- Phase 4: poll -->
+  <rect x="612" y="226" width="210" height="110" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="2"/>
+  <text x="717" y="252" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e05555">④ poll (핵심)</text>
+  <text x="717" y="272" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">I/O 이벤트 수신 대기</text>
+  <text x="717" y="292" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">fs.readFile, net.connect 등</text>
+  <text x="717" y="312" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">타이머 없으면 여기서 블로킹 대기</text>
+
+  <!-- Arrow 4 → 5 (left) -->
+  <line x1="604" y1="280" x2="564" y2="280"
+    stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#loop-arr)"/>
+
+  <!-- Phase 5: check -->
+  <rect x="336" y="226" width="220" height="110" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="446" y="252" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#7777cc">⑤ check</text>
+  <text x="446" y="272" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">setImmediate() 콜백</text>
+  <text x="446" y="292" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">poll 직후 즉시 실행</text>
+  <text x="446" y="312" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">I/O 콜백 안에서 setTimeout보다 먼저</text>
+
+  <!-- Arrow 5 → 6 -->
+  <line x1="328" y1="280" x2="288" y2="280"
+    stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#loop-arr)"/>
+
+  <!-- Phase 6: close callbacks -->
+  <rect x="60" y="226" width="220" height="110" rx="8" fill="#0d1117" stroke="#e0a030" stroke-width="1.5"/>
+  <text x="170" y="252" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e0a030">⑥ close callbacks</text>
+  <text x="170" y="272" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">소켓/스트림 close 이벤트</text>
+  <text x="170" y="292" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">socket.on('close', cb)</text>
+  <text x="170" y="312" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">루프 종료 정리</text>
+
+  <!-- Loop back arrow 6 → 1 -->
+  <line x1="170" y1="226" x2="170" y2="178"
+    stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#loop-arr)"/>
+
+  <!-- Microtask note -->
+  <rect x="60" y="362" width="760" height="66" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="386" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#7ec8e3">마이크로태스크 (각 단계 전후 우선 실행)</text>
+  <text x="440" y="408" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">process.nextTick (최우선) → Promise .then/.catch → queueMicrotask</text>
+  <text x="440" y="424" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#6a8aa0">각 단계 전에 큐가 빌 때까지 소진됨</text>
+</svg>
