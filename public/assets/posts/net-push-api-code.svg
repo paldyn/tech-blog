@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450">
+  <rect width="880" height="450" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Push API 코드 패턴</text>
+  <text x="440" y="70" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="16" font-weight="600" fill="#888">클라이언트 구독 · SW push 핸들러</text>
+
+  <!-- Left: Client subscription -->
+  <text x="60" y="100"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7ec8e3">클라이언트 — 구독</text>
+  <rect x="60" y="110" width="370" height="310" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">async function</tspan> subscribe(vapidKey) {</text>
+  <text x="76" y="156" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">const</tspan> perm =</text>
+  <text x="76" y="174" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    <tspan fill="#7ec8e3">await</tspan> Notification</text>
+  <text x="76" y="192" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">      .requestPermission();</text>
+  <text x="76" y="210" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">if</tspan> (perm !== <tspan fill="#ce9178">'granted'</tspan>) <tspan fill="#7ec8e3">return</tspan>;</text>
+  <text x="76" y="228" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">const</tspan> reg =</text>
+  <text x="76" y="246" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    <tspan fill="#7ec8e3">await</tspan> navigator.serviceWorker.ready;</text>
+  <text x="76" y="264" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">const</tspan> sub =</text>
+  <text x="76" y="282" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    <tspan fill="#7ec8e3">await</tspan> reg.pushManager.subscribe({</text>
+  <text x="76" y="300" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">      userVisibleOnly: <tspan fill="#7ec8e3">true</tspan>,</text>
+  <text x="76" y="318" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">      applicationServerKey: vapidKey</text>
+  <text x="76" y="336" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    });</text>
+  <text x="76" y="354" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">await</tspan> fetch(<tspan fill="#ce9178">'/api/push'</tspan>, {</text>
+  <text x="76" y="372" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    method: <tspan fill="#ce9178">'POST'</tspan>,</text>
+  <text x="76" y="390" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    body: JSON.stringify(sub)</text>
+  <text x="76" y="408" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  });</text>
+
+  <!-- Right: SW push handler -->
+  <text x="460" y="100"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#55c555">SW — push 이벤트 처리</text>
+  <rect x="460" y="110" width="370" height="310" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="138" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">self.addEventListener(<tspan fill="#ce9178">'push'</tspan>, e => {</text>
+  <text x="476" y="156" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">const</tspan> d = e.data?.json() ?? {};</text>
+  <text x="476" y="174" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  e.waitUntil(</text>
+  <text x="476" y="192" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    self.registration.showNotification(</text>
+  <text x="476" y="210" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">      d.title ?? <tspan fill="#ce9178">'알림'</tspan>, {</text>
+  <text x="476" y="228" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">        body: d.body,</text>
+  <text x="476" y="246" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">        icon: d.icon,</text>
+  <text x="476" y="264" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">        data: { url: d.url }</text>
+  <text x="476" y="282" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">      }</text>
+  <text x="476" y="300" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    )</text>
+  <text x="476" y="318" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  );</text>
+  <text x="476" y="336" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">});</text>
+  <text x="476" y="360" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">self.addEventListener(<tspan fill="#ce9178">'notificationclick'</tspan>,e=>{</text>
+  <text x="476" y="378" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  e.notification.close();</text>
+  <text x="476" y="396" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">  clients.openWindow(e.notification</text>
+  <text x="476" y="414" xml:space="preserve"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="12" fill="#e8e8e8">    .data.url);</text>
+</svg>

@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Web Worker 아키텍처</text>
+  <text x="440" y="70" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="16" font-weight="600" fill="#888">메인 스레드 ↔ Worker 스레드 분리 실행</text>
+
+  <!-- Main Thread box -->
+  <rect x="50" y="96" width="340" height="310" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="2"/>
+  <rect x="50" y="96" width="340" height="36" rx="8" fill="#0f2530"/>
+  <rect x="50" y="118" width="340" height="14" fill="#0f2530"/>
+  <text x="220" y="118" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="700" fill="#7ec8e3">Main Thread (UI Thread)</text>
+
+  <!-- Call Stack label -->
+  <text x="70" y="155"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">Call Stack</text>
+  <rect x="70" y="162" width="100" height="80" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="120" y="190" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">DOM API</text>
+  <text x="120" y="208" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">window</text>
+  <text x="120" y="226" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">document</text>
+
+  <!-- Event Loop label -->
+  <text x="190" y="155"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">Event Loop</text>
+  <rect x="190" y="162" width="100" height="80" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="240" y="187" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e8e8e8">Task Queue</text>
+  <text x="240" y="205" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e8e8e8">Microtask</text>
+  <text x="240" y="223" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e8e8e8">Render</text>
+
+  <!-- Warning: blocking UI -->
+  <rect x="70" y="262" width="300" height="60" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="220" y="282" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">⚠ CPU 집중 작업 실행 시</text>
+  <text x="220" y="300" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">렌더링·이벤트 처리 차단(블로킹)</text>
+  <text x="220" y="318" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">→ UI 프리즈 발생</text>
+
+  <!-- postMessage -->
+  <text x="220" y="370" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">worker.postMessage(data)</text>
+  <text x="220" y="390" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">worker.onmessage = (e) => …</text>
+
+  <!-- Arrows between threads -->
+  <!-- Main → Worker (right) -->
+  <rect x="390" y="188" width="100" height="6" fill="#7777cc"/>
+  <polygon points="490,180 510,191 490,202" fill="#7777cc"/>
+  <text x="440" y="175" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#7777cc">postMessage()</text>
+
+  <!-- Worker → Main (left) -->
+  <rect x="390" y="228" width="100" height="6" fill="#55c555"/>
+  <polygon points="390,220 370,231 390,242" fill="#55c555"/>
+  <text x="440" y="250" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">postMessage(result)</text>
+
+  <!-- Transfer label -->
+  <text x="440" y="275" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">구조화 복제 (copy)</text>
+  <text x="440" y="291" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">또는 Transfer (zero-copy)</text>
+
+  <!-- Worker Thread box -->
+  <rect x="510" y="96" width="320" height="310" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="2"/>
+  <rect x="510" y="96" width="320" height="36" rx="8" fill="#1a1f35"/>
+  <rect x="510" y="118" width="320" height="14" fill="#1a1f35"/>
+  <text x="670" y="118" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="700" fill="#7777cc">Worker Thread</text>
+
+  <!-- Worker features -->
+  <rect x="530" y="148" width="275" height="90" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="667" y="168" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" font-weight="600" fill="#888">사용 가능 API</text>
+  <text x="547" y="188"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">✅ fetch, XHR, WebSocket</text>
+  <text x="547" y="206"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">✅ IndexedDB, Cache API</text>
+  <text x="547" y="224"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">✅ setTimeout, Crypto, WASM</text>
+
+  <rect x="530" y="252" width="275" height="80" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="667" y="272" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" font-weight="600" fill="#888">사용 불가 API</text>
+  <text x="547" y="292"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">❌ DOM, document, window</text>
+  <text x="547" y="310"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">❌ alert, confirm, localStorage</text>
+
+  <!-- CPU work benefit -->
+  <rect x="530" y="348" width="275" height="46" rx="6" fill="#1a2b1a" stroke="#55c555" stroke-width="1"/>
+  <text x="667" y="368" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">CPU 집중 작업을 여기서 실행</text>
+  <text x="667" y="385" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">→ 메인 스레드 블로킹 방지</text>
+</svg>
