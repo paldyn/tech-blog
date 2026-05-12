@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 380" width="880" height="380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">xmin·xmax·ctid 직접 조회</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">시스템 컬럼으로 MVCC 상태 분석</text>
+
+  <!-- Left: query -->
+  <text x="60" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">시스템 컬럼 조회</text>
+  <rect x="60" y="118" width="380" height="232" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 튜플 헤더 메타데이터 조회</text>
+  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="118" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> xmin,</text>
+  <text x="76" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       xmax,</text>
+  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       ctid,</text>
+  <text x="76" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       name, age</text>
+  <text x="76" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="110" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> person</text>
+  <text x="76" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text>
+  <text x="114" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> id = </text>
+  <text x="144" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">1</text>
+  <text x="152" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+
+  <text x="76" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 스냅샷 조회</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="118" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> pg_current_snapshot();</text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- xmin:xmax:xip_list</text>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">-- 100:103:101,102</text>
+
+  <!-- Right: visibility rules -->
+  <text x="466" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">가시성 판단 흐름</text>
+  <rect x="466" y="118" width="354" height="232" rx="6" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+
+  <!-- Step 1 -->
+  <rect x="482" y="134" width="320" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="642" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">① xmin 커밋되었는가?</text>
+
+  <line x1="642" y1="166" x2="642" y2="186" stroke="#888" stroke-width="1.5"/>
+  <polygon points="636,182 642,194 648,182" fill="#888"/>
+
+  <rect x="482" y="194" width="320" height="32" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="642" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">② xmax = 0 이거나 미커밋인가?</text>
+
+  <line x1="642" y1="226" x2="642" y2="246" stroke="#888" stroke-width="1.5"/>
+  <polygon points="636,242 642,254 648,242" fill="#888"/>
+
+  <rect x="482" y="254" width="320" height="32" rx="4" fill="#1a1a3a" stroke="#7777cc" stroke-width="1"/>
+  <text x="642" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">③ xmin ≥ xmax_snapshot 이거나 xip에?</text>
+
+  <line x1="642" y1="286" x2="642" y2="306" stroke="#888" stroke-width="1.5"/>
+  <polygon points="636,302 642,314 648,302" fill="#888"/>
+
+  <rect x="482" y="314" width="140" height="28" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="552" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">✓ 보임 (Visible)</text>
+
+  <rect x="642" y="314" width="160" height="28" rx="4" fill="#3a1a1a" stroke="#e05555" stroke-width="1"/>
+  <text x="722" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">✗ 안 보임</text>
+</svg>
