@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SP-GiST vs BRIN — 특수 목적 인덱스</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">불균형 분할 공간 트리 vs 블록 범위 최소/최대 요약</text>
+
+  <!-- SP-GiST section -->
+  <rect x="60" y="96" width="370" height="240" rx="8" fill="#111" stroke="#7777cc"/>
+  <text x="245" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#7777cc" text-anchor="middle">SP-GiST (Space-Partitioned GiST)</text>
+
+  <!-- Quadtree visual (simplified) -->
+  <rect x="80" y="136" width="100" height="100" rx="2" fill="#0d1117" stroke="#7777cc" stroke-opacity="0.5"/>
+  <!-- 4 quadrants -->
+  <line x1="130" y1="136" x2="130" y2="236" stroke="#7777cc" stroke-opacity="0.3" stroke-width="1"/>
+  <line x1="80" y1="186" x2="180" y2="186" stroke="#7777cc" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="97" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">NW</text>
+  <text x="147" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">NE</text>
+  <text x="97" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">SW</text>
+  <text x="147" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">SE</text>
+  <!-- data points -->
+  <circle cx="100" cy="150" r="4" fill="#55c555"/>
+  <circle cx="162" cy="158" r="4" fill="#55c555"/>
+  <circle cx="95" cy="210" r="4" fill="#55c555"/>
+  <circle cx="155" cy="200" r="4" fill="#e05555"/>
+  <text x="155" y="197" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="8" fill="#e05555">← 검색</text>
+
+  <text x="200" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 불균일 공간 분할</text>
+  <text x="200" y="175" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 쿼드트리, kd-트리, 레이디안</text>
+  <text x="200" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 트리 접두어 등 구현 가능</text>
+  <text x="200" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">• point: spgist_quadtree_point</text>
+  <text x="200" y="235" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">• text: spgist_text_ops</text>
+
+  <text x="80" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">CREATE INDEX ON points</text>
+  <text x="80" y="289" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">  USING spgist (loc);</text>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">CREATE INDEX ON routes</text>
+  <text x="80" y="331" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">  USING spgist (url text_ops);</text>
+
+  <!-- BRIN section -->
+  <rect x="450" y="96" width="370" height="240" rx="8" fill="#111" stroke="#55c555"/>
+  <text x="635" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555" text-anchor="middle">BRIN (Block Range Index)</text>
+
+  <!-- BRIN visual: heap pages with min/max -->
+  <text x="470" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">힙 페이지 블록</text>
+  <text x="700" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="end">BRIN 요약</text>
+
+  <rect x="470" y="156" width="140" height="24" rx="3" fill="#0d1117" stroke="#1e2433"/>
+  <text x="540" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#e8e8e8" text-anchor="middle">Page 0~127: {1..1000}</text>
+  <text x="780" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#55c555" text-anchor="end">min=1, max=1000</text>
+
+  <rect x="470" y="186" width="140" height="24" rx="3" fill="#0d1117" stroke="#1e2433"/>
+  <text x="540" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#e8e8e8" text-anchor="middle">Page 128~255</text>
+  <text x="780" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#55c555" text-anchor="end">min=1001, max=2000</text>
+
+  <rect x="470" y="216" width="140" height="24" rx="3" fill="#0d1117" stroke="#1e2433"/>
+  <text x="540" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#e8e8e8" text-anchor="middle">Page 256~383</text>
+  <text x="780" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#55c555" text-anchor="end">min=2001, max=3000</text>
+
+  <text x="470" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">CREATE INDEX ON logs</text>
+  <text x="470" y="289" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">  USING brin (created_at)</text>
+  <text x="470" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">  WITH (pages_per_range=128);</text>
+  <text x="470" y="325" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">인덱스 크기: 수 KB~수십 KB</text>
+
+  <!-- Bottom comparison -->
+  <rect x="60" y="354" width="760" height="82" rx="8" fill="#0d1117" stroke="#1e2433"/>
+  <text x="440" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">BRIN이 효과적인 조건 — 물리적 순서와 논리적 순서의 상관관계</text>
+  <text x="80" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">✓ INSERT 순서로 정렬되는 시계열(created_at, log_id, order_id)</text>
+  <text x="80" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">✗ 랜덤 ORDER로 삽입되는 데이터 (min/max 범위가 넓어져 효과 없음)</text>
+</svg>

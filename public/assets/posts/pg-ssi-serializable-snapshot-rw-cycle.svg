@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SSI — rw-anti-dependency 사이클 탐지</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">Write Skew: 두 트랜잭션이 서로의 읽기 결과에 의존해 쓰는 이상 현상</text>
+
+  <!-- Transactions -->
+  <!-- T1 box -->
+  <rect x="60" y="100" width="300" height="180" rx="8" fill="#111" stroke="#7777cc"/>
+  <text x="210" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">트랜잭션 T1</text>
+  <text x="80" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 의사: on_call 확인</text>
+  <text x="80" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="80" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  count(*) FROM doctors</text>
+  <text x="80" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  WHERE on_call=TRUE;</text>
+  <text x="80" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 결과 2 → 한 명 빼도 됨</text>
+  <text x="80" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">UPDATE doctors SET on_call=F</text>
+  <text x="80" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">  WHERE name='Alice';</text>
+
+  <!-- T2 box -->
+  <rect x="520" y="100" width="300" height="180" rx="8" fill="#111" stroke="#55c555"/>
+  <text x="670" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">트랜잭션 T2</text>
+  <text x="540" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 의사: on_call 확인</text>
+  <text x="540" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="540" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  count(*) FROM doctors</text>
+  <text x="540" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  WHERE on_call=TRUE;</text>
+  <text x="540" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 결과 2 → 한 명 빼도 됨</text>
+  <text x="540" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">UPDATE doctors SET on_call=F</text>
+  <text x="540" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">  WHERE name='Bob';</text>
+
+  <!-- Cycle arrows -->
+  <!-- T1 reads → T2 writes (rw anti-dep T1→T2) -->
+  <path d="M360 170 Q440 140 520 170" fill="none" stroke="#e05555" stroke-width="2.5"/>
+  <polygon points="518,162 520,174 530,167" fill="#e05555"/>
+  <text x="440" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">T1 읽음 → T2 씀</text>
+  <text x="440" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(rw anti-dep)</text>
+
+  <!-- T2 reads → T1 writes (rw anti-dep T2→T1) -->
+  <path d="M520 250 Q440 290 360 250" fill="none" stroke="#e05555" stroke-width="2.5"/>
+  <polygon points="362,242 360,254 370,248" fill="#e05555"/>
+  <text x="440" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">T2 읽음 → T1 씀</text>
+  <text x="440" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(rw anti-dep)</text>
+
+  <!-- Result -->
+  <rect x="240" y="340" width="400" height="52" rx="6" fill="#1a0a0a" stroke="#e05555"/>
+  <text x="440" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">Write Skew: 결과적으로 on_call=0 명</text>
+  <text x="440" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">직렬 실행 불가능 — SSI가 사이클 탐지 후 롤백</text>
+
+  <!-- SSI detection -->
+  <rect x="60" y="408" width="760" height="48" rx="6" fill="#0d1117" stroke="#1e2433"/>
+  <text x="440" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle" font-weight="600">SSI 감지: T1·T2 커밋 시 rw-anti-dependency 사이클 확인 → 늦게 커밋하는 쪽 롤백</text>
+  <text x="440" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">오류: ERROR: could not serialize access due to read/write dependencies among transactions</text>
+</svg>

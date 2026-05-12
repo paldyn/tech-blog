@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">GIN 인덱스 역인덱스 구조</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">토큰 → 포스팅 리스트(Heap TID 목록) 매핑</text>
+
+  <!-- Documents side -->
+  <rect x="60" y="96" width="280" height="220" rx="8" fill="#111" stroke="#1e2433"/>
+  <text x="200" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">원본 행 (tsvector)</text>
+  <text x="80" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">id=1: 'postg' 'index'</text>
+  <text x="80" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">         'btree' 'gin'</text>
+  <text x="80" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">id=2: 'postg' 'query'</text>
+  <text x="80" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">         'optim'</text>
+  <text x="80" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">id=3: 'index' 'gin'</text>
+  <text x="80" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">         'cover'</text>
+  <text x="80" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">id=4: 'btree' 'cover'</text>
+  <text x="80" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">         'index'</text>
+
+  <!-- Arrow -->
+  <line x1="340" y1="206" x2="376" y2="206" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="376,200 388,206 376,212" fill="#7777cc"/>
+  <text x="364" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">역색인</text>
+
+  <!-- GIN B-Tree (entry tree) -->
+  <rect x="400" y="96" width="420" height="220" rx="8" fill="#0d1117" stroke="#55c555"/>
+  <text x="610" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">GIN Entry B-Tree + Posting List</text>
+
+  <!-- Entry rows -->
+  <text x="420" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">토큰</text>
+  <text x="580" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">Posting List (TID)</text>
+  <line x1="420" y1="154" x2="800" y2="154" stroke="#1e2433"/>
+  <text x="420" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">'btree'</text>
+  <text x="580" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8">{(1,1), (4,1)}</text>
+  <text x="420" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">'cover'</text>
+  <text x="580" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8">{(3,1), (4,1)}</text>
+  <text x="420" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">'gin'  ←검색</text>
+  <text x="580" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">{(1,1), (3,2)}</text>
+  <text x="420" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">'index'</text>
+  <text x="580" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8">{(1,2),(3,1),(4,2)}</text>
+  <text x="420" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">'optim'</text>
+  <text x="580" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8">{(2,1)}</text>
+  <text x="420" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">'postg'</text>
+  <text x="580" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8">{(1,3),(2,3)}</text>
+  <text x="420" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">'query'</text>
+  <text x="580" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#b5cea8">{(2,2)}</text>
+
+  <!-- Pending list -->
+  <rect x="60" y="336" width="280" height="80" rx="6" fill="#111" stroke="#e05555" stroke-dasharray="4,2"/>
+  <text x="200" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">Pending List (삽입 버퍼)</text>
+  <text x="80" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">INSERT 시 즉시 Entry Tree 갱신 대신</text>
+  <text x="80" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">pending list에 모았다가 일괄 merge</text>
+  <text x="80" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc">gin_pending_list_limit = 4MB</text>
+
+  <!-- fastupdate note -->
+  <rect x="400" y="336" width="420" height="80" rx="6" fill="#111" stroke="#1e2433"/>
+  <text x="610" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">fastupdate 옵션</text>
+  <text x="420" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">ON(기본): 삽입 빠름, 검색 시 flush 오버헤드 가능</text>
+  <text x="420" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">OFF: 삽입 느림, 검색 일관성 향상 (배치 로드 후 ON 권장)</text>
+  <text x="420" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE INDEX ... WITH (fastupdate=off)</text>
+</svg>
