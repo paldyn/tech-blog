@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450">
+  <rect width="880" height="450" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Service Worker 라이프사이클</text>
+  <text x="440" y="70" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="16" font-weight="600" fill="#888">등록 → 설치 → 활성화 → 제어 → 소멸</text>
+
+  <!-- Stage 1: Register -->
+  <rect x="50" y="100" width="135" height="80" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="2"/>
+  <text x="117" y="130" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#7777cc">Register</text>
+  <text x="117" y="150" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">navigator.serviceWorker</text>
+  <text x="117" y="167" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">.register('/sw.js')</text>
+
+  <!-- Arrow: Register → Parsed/Installing -->
+  <rect x="185" y="137" width="46" height="6" fill="#7777cc"/>
+  <polygon points="231,129 249,140 231,151" fill="#7777cc"/>
+
+  <!-- Stage 2: Installing -->
+  <rect x="249" y="100" width="135" height="80" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="316" y="125" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#7ec8e3">Installing</text>
+  <text x="316" y="145" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">install 이벤트</text>
+  <text x="316" y="162" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">캐시 사전 로딩</text>
+
+  <!-- Arrow: Installing → Waiting -->
+  <rect x="384" y="137" width="46" height="6" fill="#7ec8e3"/>
+  <polygon points="430,129 448,140 430,151" fill="#7ec8e3"/>
+
+  <!-- Stage 3: Waiting (Installed) -->
+  <rect x="448" y="100" width="135" height="80" rx="8" fill="#0d1117" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="515" y="125" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#888">Waiting</text>
+  <text x="515" y="145" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">구 SW 제어 중</text>
+  <text x="515" y="162" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">skipWaiting() 가능</text>
+
+  <!-- Arrow: Waiting → Activating -->
+  <rect x="583" y="137" width="46" height="6" fill="#55c555"/>
+  <polygon points="629,129 647,140 629,151" fill="#55c555"/>
+  <text x="606" y="124" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#888">탭 닫힘 or</text>
+  <text x="606" y="134" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="10" fill="#888">skipWaiting</text>
+
+  <!-- Stage 4: Activating -->
+  <rect x="647" y="100" width="140" height="80" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="2"/>
+  <text x="717" y="125" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#55c555">Activating</text>
+  <text x="717" y="145" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">activate 이벤트</text>
+  <text x="717" y="162" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">구 캐시 정리</text>
+
+  <!-- Arrow down: Activating → Active -->
+  <line x1="717" y1="180" x2="717" y2="228" stroke="#55c555" stroke-width="2"/>
+  <polygon points="709,228 717,246 725,228" fill="#55c555"/>
+
+  <!-- Stage 5: Active (controlling) -->
+  <rect x="585" y="246" width="264" height="80" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="2"/>
+  <text x="717" y="272" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="700" fill="#55c555">Active (제어 중)</text>
+  <text x="717" y="293" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">fetch 이벤트 가로채기</text>
+  <text x="717" y="313" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">clients.claim()으로 즉시 제어</text>
+
+  <!-- Install fail -->
+  <line x1="316" y1="180" x2="316" y2="248" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="308,248 316,266 324,248" fill="#e05555"/>
+  <rect x="220" y="266" width="170" height="60" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="305" y="290" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">설치 실패</text>
+  <text x="305" y="310" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">event.waitUntil() rejected</text>
+
+  <!-- Fetch intercept (bottom) -->
+  <rect x="50" y="360" width="820" height="60" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="440" y="385" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#7ec8e3">fetch 이벤트 — 모든 네트워크 요청 가로채기</text>
+  <text x="440" y="406" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">event.respondWith(cacheOrNetwork) — Cache-First / Network-First / StaleWhileRevalidate</text>
+</svg>

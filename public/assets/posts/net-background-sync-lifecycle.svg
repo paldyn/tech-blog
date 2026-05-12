@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Background Sync 라이프사이클</text>
+  <text x="440" y="70" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="16" font-weight="600" fill="#888">오프라인 요청 큐 → 온라인 복구 시 자동 재전송</text>
+
+  <!-- Phase 1: Online - user action -->
+  <rect x="50" y="96" width="175" height="110" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <rect x="50" y="96" width="175" height="32" rx="8" fill="#1a2b1a"/>
+  <rect x="50" y="115" width="175" height="13" fill="#1a2b1a"/>
+  <text x="137" y="115" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#55c555">온라인 상태</text>
+  <text x="137" y="146" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">사용자 폼 제출</text>
+  <text x="137" y="165" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">직접 fetch 전송</text>
+  <text x="137" y="185" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">즉시 성공 ✓</text>
+
+  <!-- Phase 2: Offline - user action -->
+  <rect x="50" y="230" width="175" height="130" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <rect x="50" y="230" width="175" height="32" rx="8" fill="#2a1010"/>
+  <rect x="50" y="249" width="175" height="13" fill="#2a1010"/>
+  <text x="137" y="249" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#e05555">오프라인 상태</text>
+  <text x="137" y="280" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">사용자 폼 제출</text>
+  <text x="137" y="300" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">fetch 실패 → IndexedDB</text>
+  <text x="137" y="318" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">에 요청 저장</text>
+  <text x="137" y="340" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7777cc">SyncManager.register('tag')</text>
+
+  <!-- Arrow: Offline → SW Queue -->
+  <rect x="225" y="288" width="65" height="6" fill="#e05555"/>
+  <polygon points="290,280 310,291 290,302" fill="#e05555"/>
+  <text x="257" y="275" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e05555">큐 등록</text>
+
+  <!-- SW / SyncManager box (center) -->
+  <rect x="310" y="200" width="220" height="170" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="2"/>
+  <rect x="310" y="200" width="220" height="34" rx="8" fill="#1a1f35"/>
+  <rect x="310" y="220" width="220" height="14" fill="#1a1f35"/>
+  <text x="420" y="220" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#7777cc">Service Worker</text>
+  <text x="420" y="252" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#7ec8e3">sync 이벤트 수신</text>
+  <text x="420" y="272" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">event.tag === 'send-form'</text>
+  <text x="420" y="292" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">IndexedDB에서 데이터</text>
+  <text x="420" y="312" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">읽어 fetch 재시도</text>
+  <text x="420" y="340" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">실패 시 브라우저가 재시도</text>
+  <text x="420" y="358" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">성공 시 큐에서 제거</text>
+
+  <!-- Network recovery box (top right) -->
+  <rect x="580" y="96" width="250" height="110" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <rect x="580" y="96" width="250" height="32" rx="8" fill="#0f2530"/>
+  <rect x="580" y="115" width="250" height="13" fill="#0f2530"/>
+  <text x="705" y="115" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#7ec8e3">온라인 복구</text>
+  <text x="705" y="147" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">브라우저가 sync 이벤트 발행</text>
+  <text x="705" y="167" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">배터리·연결 상태 고려</text>
+  <text x="705" y="185" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">페이지 닫혀도 동작</text>
+
+  <!-- Arrow: Network recovery → SW -->
+  <line x1="580" y1="150" x2="530" y2="260" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="525,252 530,272 538,256" fill="#7ec8e3"/>
+  <text x="565" y="210" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">트리거</text>
+
+  <!-- App Server (right) -->
+  <rect x="580" y="240" width="250" height="130" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <rect x="580" y="240" width="250" height="32" rx="8" fill="#1a1f35"/>
+  <rect x="580" y="258" width="250" height="13" fill="#1a1f35"/>
+  <text x="705" y="258" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="700" fill="#e8e8e8">App Server</text>
+  <text x="705" y="290" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">요청 수신 · 처리 성공</text>
+  <text x="705" y="310" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">200 OK 응답</text>
+  <text x="705" y="340" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">SW: IndexedDB 정리</text>
+  <text x="705" y="358" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">clients에 성공 메시지 전달</text>
+
+  <!-- Arrow: SW → Server -->
+  <rect x="530" y="278" width="48" height="6" fill="#55c555"/>
+  <polygon points="578,270 598,281 578,292" fill="#55c555"/>
+  <text x="554" y="265" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">fetch 재시도</text>
+</svg>
