@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#ffffff">
+    QueryDSL 동적 쿼리와 DTO Projection
+  </text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" fill="#e8e8e8">
+    BooleanExpression 조합으로 null-safe 동적 쿼리, Projections.constructor로 DTO 직접 조회
+  </text>
+
+  <!-- Left: Dynamic Query -->
+  <text x="60" y="96"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    동적 쿼리 (BooleanExpression)
+  </text>
+  <rect x="50" y="104" width="380" height="352" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="66" y="130"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">QUser</tspan><tspan> u = </tspan><tspan fill="#7ec8e3">QUser</tspan><tspan>.user;</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="166"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // null 반환 → where에서 무시됨
+  </text>
+  <text xml:space="preserve" x="66" y="184"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">private</tspan><tspan> BooleanExpression</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="202"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  nameEq(</tspan><tspan fill="#7ec8e3">String</tspan><tspan> name) {</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  </tspan><tspan fill="#7ec8e3">return</tspan><tspan> name == </tspan><tspan fill="#7ec8e3">null</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="238"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    ? </tspan><tspan fill="#7ec8e3">null</tspan><tspan> : u.name.eq(name);</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="256"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>}</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="292"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 실제 쿼리 — null 조건 자동 제외
+  </text>
+  <text xml:space="preserve" x="66" y="310"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>queryFactory</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="328"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .selectFrom(u)</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="346"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .where(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="364"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    nameEq(name),</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="382"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    ageGoe(minAge))</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="400"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .fetch();</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="436"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // where에 null 전달 → 해당 조건 무시
+  </text>
+
+  <!-- Right: DTO Projection + fetchJoin -->
+  <text x="460" y="96"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    DTO Projection / fetchJoin / 페이징
+  </text>
+  <rect x="450" y="104" width="380" height="352" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="466" y="130"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // DTO 직접 조회
+  </text>
+  <text xml:space="preserve" x="466" y="148"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>queryFactory</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="166"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .select(Projections</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="184"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    .constructor(</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="202"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>      UserDto.</tspan><tspan fill="#7ec8e3">class</tspan><tspan>,</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>      u.id, u.name, u.email))</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="238"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .from(u)</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="256"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .fetch();</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="292"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // fetchJoin + 페이징
+  </text>
+  <text xml:space="preserve" x="466" y="310"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">long</tspan><tspan> total = queryFactory</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="328"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .selectFrom(u).where(cond)</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="346"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .fetchCount();</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="364"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>List&lt;User&gt; list = queryFactory</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="382"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .selectFrom(u)</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="400"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .offset(pageable.getOffset())</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="418"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .limit(pageable.getPageSize())</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="436"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  .fetch();</tspan>
+  </text>
+</svg>
