@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">시그널 전달 — Shell 폼의 함정</text>
+
+  <!-- Left: Shell form signal flow -->
+  <text x="240" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" text-anchor="middle" xml:space="preserve">Shell 폼 (문제 있음)</text>
+
+  <!-- Docker stop -->
+  <rect x="80" y="104" width="140" height="52" fill="#1e2433" rx="8" stroke="#7ec8e3"/>
+  <text x="150" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">docker stop</text>
+  <text x="150" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">SIGTERM 발송</text>
+
+  <!-- Arrow to sh -->
+  <line x1="220" y1="130" x2="270" y2="130" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="270,124 282,130 270,136" fill="#7ec8e3"/>
+
+  <!-- sh process -->
+  <rect x="282" y="104" width="120" height="52" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="2"/>
+  <text x="342" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle" xml:space="preserve">PID 1: sh</text>
+  <text x="342" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">SIGTERM 수신</text>
+
+  <!-- sh ignores signal -->
+  <line x1="342" y1="156" x2="342" y2="186" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="342" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle" xml:space="preserve">무시!</text>
+
+  <!-- app process -->
+  <rect x="282" y="196" width="120" height="52" fill="#111827" rx="8" stroke="#888"/>
+  <text x="342" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle" xml:space="preserve">PID N: app</text>
+  <text x="342" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">신호 못 받음</text>
+
+  <!-- SIGKILL after timeout -->
+  <rect x="80" y="276" width="340" height="44" fill="#2a0d0d" rx="6" stroke="#e05555"/>
+  <text x="250" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle" xml:space="preserve">10초 후 → SIGKILL (강제 종료)</text>
+  <text x="250" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">graceful shutdown 불가능</text>
+
+  <!-- Right: Exec form signal flow -->
+  <text x="650" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle" xml:space="preserve">Exec 폼 (올바름)</text>
+
+  <!-- Docker stop -->
+  <rect x="490" y="104" width="140" height="52" fill="#1e2433" rx="8" stroke="#7ec8e3"/>
+  <text x="560" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">docker stop</text>
+  <text x="560" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">SIGTERM 발송</text>
+
+  <!-- Arrow to app directly -->
+  <line x1="630" y1="130" x2="680" y2="130" stroke="#55c555" stroke-width="2"/>
+  <polygon points="680,124 692,130 680,136" fill="#55c555"/>
+
+  <!-- app process as PID 1 -->
+  <rect x="692" y="104" width="140" height="52" fill="#0d2818" rx="8" stroke="#55c555" stroke-width="2"/>
+  <text x="762" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle" xml:space="preserve">PID 1: app</text>
+  <text x="762" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">SIGTERM 직접 수신</text>
+  <text x="762" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">→ graceful 종료</text>
+
+  <!-- Graceful -->
+  <rect x="490" y="276" width="340" height="44" fill="#0d2818" rx="6" stroke="#55c555"/>
+  <text x="660" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle" xml:space="preserve">정상적인 Graceful Shutdown</text>
+  <text x="660" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle" xml:space="preserve">커넥션 정리, 파일 flush 완료</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="348" x2="820" y2="348" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Tip: exec env var -->
+  <text x="60" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" xml:space="preserve">Exec 폼에서 환경변수 사용하려면</text>
+
+  <rect x="60" y="392" width="760" height="32" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="413" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">CMD</text>
+  <text x="112" y="413" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> ["sh","-c","node server.js --port $PORT"]</text>
+  <text x="520" y="413" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">  # 명시적 sh 호출</text>
+</svg>

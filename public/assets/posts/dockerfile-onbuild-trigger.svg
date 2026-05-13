@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">ONBUILD 트리거 동작 원리</text>
+
+  <!-- Base image (left) -->
+  <rect x="60" y="80" width="280" height="200" fill="#111827" rx="10" stroke="#7777cc" stroke-width="2"/>
+  <text x="200" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle" xml:space="preserve">베이스 이미지 Dockerfile</text>
+  <rect x="80" y="122" width="240" height="144" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="96" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="138" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> node:20-alpine</text>
+  <text x="96" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">WORKDIR</text>
+  <text x="162" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve"> /app</text>
+  <text x="96" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 자식에서 실행될 명령</text>
+  <text x="96" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">ONBUILD</text>
+  <text x="162" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> COPY . .</text>
+  <text x="96" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">ONBUILD</text>
+  <text x="162" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> RUN npm install</text>
+  <text x="96" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">CMD</text>
+  <text x="126" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> ["node", "server.js"]</text>
+  <!-- Label: stored in metadata -->
+  <text x="200" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle" xml:space="preserve">트리거가 이미지 메타데이터에 저장됨</text>
+
+  <!-- Arrow center -->
+  <line x1="340" y1="180" x2="430" y2="180" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="430,174 442,180 430,186" fill="#7ec8e3"/>
+  <text x="386" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">FROM으로 상속</text>
+
+  <!-- Child image (right) -->
+  <rect x="442" y="80" width="380" height="200" fill="#111827" rx="10" stroke="#55c555" stroke-width="2"/>
+  <text x="632" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle" xml:space="preserve">자식 Dockerfile</text>
+  <rect x="462" y="122" width="340" height="144" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="478" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="520" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve"> my-node-base:latest</text>
+  <text x="478" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 이게 전부 — 단 한 줄!</text>
+  <text x="478" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 빌드 시 자동 실행됨:</text>
+  <text x="478" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve"># → COPY . .</text>
+  <text x="478" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve"># → RUN npm install</text>
+  <text x="632" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle" xml:space="preserve">빌드 시 트리거가 자동으로 주입·실행됨</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="330" x2="820" y2="330" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Bottom: Rules -->
+  <text x="60" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" xml:space="preserve">ONBUILD 규칙</text>
+
+  <!-- Rule boxes -->
+  <rect x="60" y="372" width="230" height="72" fill="#1a1a2e" rx="8" stroke="#7777cc"/>
+  <text x="175" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle" xml:space="preserve">현재 빌드에서 무시</text>
+  <text x="175" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">정의된 이미지를 빌드할 때는</text>
+  <text x="175" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">실행되지 않음</text>
+
+  <rect x="325" y="372" width="230" height="72" fill="#0d2818" rx="8" stroke="#55c555"/>
+  <text x="440" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle" xml:space="preserve">자식 빌드에서 실행</text>
+  <text x="440" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">FROM으로 상속받은 이미지를</text>
+  <text x="440" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">빌드할 때 자동 주입</text>
+
+  <rect x="590" y="372" width="230" height="72" fill="#2a0d0d" rx="8" stroke="#e05555"/>
+  <text x="705" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle" xml:space="preserve">손자에게는 전달 안 됨</text>
+  <text x="705" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">ONBUILD는 한 단계만</text>
+  <text x="705" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">내려감 (연쇄 불가)</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">레이어 캐시 무효화 원리</text>
+
+  <!-- Bad order (left) -->
+  <text x="200" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" text-anchor="middle" xml:space="preserve">잘못된 순서 (느림)</text>
+
+  <!-- Layers stacked -->
+  <!-- Layer 1: FROM -->
+  <rect x="60" y="100" width="280" height="44" fill="#1a1a2e" rx="6" stroke="#7777cc"/>
+  <text x="100" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="140" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> node:20-alpine</text>
+  <text x="100" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" xml:space="preserve">✓ 캐시 히트</text>
+
+  <!-- Layer 2: COPY -->
+  <rect x="60" y="150" width="280" height="44" fill="#2a0d0d" rx="6" stroke="#e05555" stroke-width="2"/>
+  <text x="100" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="140" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> . .  </text>
+  <text x="100" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" xml:space="preserve">✗ 파일 변경 → 캐시 무효화!</text>
+
+  <!-- Layer 3: RUN npm (after COPY) -->
+  <rect x="60" y="200" width="280" height="44" fill="#2a0d0d" rx="6" stroke="#e05555" stroke-width="2"/>
+  <text x="100" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">RUN</text>
+  <text x="136" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> npm ci</text>
+  <text x="100" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" xml:space="preserve">✗ 항상 재실행 (의존성 전체)</text>
+
+  <!-- Bad outcome -->
+  <rect x="60" y="254" width="280" height="36" fill="#2a0d0d" rx="6" stroke="#e05555"/>
+  <text x="200" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle" xml:space="preserve">코드 한 줄 수정 → npm ci 재실행</text>
+
+  <!-- Right: Good order -->
+  <text x="640" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle" xml:space="preserve">올바른 순서 (빠름)</text>
+
+  <!-- Layer 1: FROM -->
+  <rect x="480" y="100" width="320" height="44" fill="#1a1a2e" rx="6" stroke="#7777cc"/>
+  <text x="520" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="562" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> node:20-alpine</text>
+  <text x="520" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" xml:space="preserve">✓ 캐시 히트</text>
+
+  <!-- Layer 2: COPY package.json only -->
+  <rect x="480" y="150" width="320" height="44" fill="#0d2818" rx="6" stroke="#55c555"/>
+  <text x="520" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="562" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> package*.json ./</text>
+  <text x="520" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" xml:space="preserve">✓ package.json 변경시만 무효화</text>
+
+  <!-- Layer 3: RUN npm -->
+  <rect x="480" y="200" width="320" height="44" fill="#0d2818" rx="6" stroke="#55c555"/>
+  <text x="520" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">RUN</text>
+  <text x="556" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> npm ci</text>
+  <text x="520" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" xml:space="preserve">✓ 의존성 변경시만 재실행</text>
+
+  <!-- Layer 4: COPY rest -->
+  <rect x="480" y="250" width="320" height="44" fill="#2a0d0d" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="520" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="562" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> . .</text>
+  <text x="520" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" xml:space="preserve">✗ 코드 변경 → 이 레이어만 재빌드</text>
+
+  <!-- Good outcome -->
+  <rect x="480" y="304" width="320" height="36" fill="#0d2818" rx="6" stroke="#55c555"/>
+  <text x="640" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle" xml:space="preserve">코드 변경 → npm ci 캐시 히트 유지!</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="368" x2="820" y2="368" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Rule -->
+  <text x="440" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">캐시 황금률 — 변경 빈도 낮은 레이어를 위로</text>
+
+  <rect x="60" y="408" width="760" height="44" fill="#111827" rx="6" stroke="#1e2433"/>
+  <text x="80" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" xml:space="preserve">FROM</text>
+  <text x="130" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">→</text>
+  <text x="155" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" xml:space="preserve">RUN (시스템 패키지)</text>
+  <text x="320" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">→</text>
+  <text x="345" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY (의존성 파일)</text>
+  <text x="510" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">→</text>
+  <text x="535" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" xml:space="preserve">RUN install</text>
+  <text x="640" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">→</text>
+  <text x="665" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" xml:space="preserve">COPY (소스코드)</text>
+  <text x="80" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" xml:space="preserve">거의 안 변함 ←──────────────────────────────────── 자주 변함</text>
+</svg>

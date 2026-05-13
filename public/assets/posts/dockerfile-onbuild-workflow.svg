@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">ONBUILD 실전 워크플로</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle" xml:space="preserve">팀 표준 베이스 이미지 → 각 앱이 FROM 한 줄로 빌드</text>
+
+  <!-- Step 1: Base Image Dockerfile -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">① 베이스 이미지 빌드 (팀 플랫폼 팀이 한 번만)</text>
+  <rect x="60" y="114" width="340" height="148" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># my-python-base/Dockerfile</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="118" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> python:3.12-slim</text>
+  <text x="76" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WORKDIR</text>
+  <text x="150" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve"> /app</text>
+  <text x="76" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ONBUILD</text>
+  <text x="150" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> COPY requirements.txt .</text>
+  <text x="76" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ONBUILD</text>
+  <text x="150" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> RUN pip install -r req*.txt</text>
+  <text x="76" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ONBUILD</text>
+  <text x="150" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> COPY . .</text>
+  <text x="76" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">CMD</text>
+  <text x="112" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> ["python", "app.py"]</text>
+
+  <!-- Arrow -->
+  <line x1="400" y1="188" x2="470" y2="188" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="470,182 482,188 470,194" fill="#7777cc"/>
+  <text x="436" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle" xml:space="preserve">push</text>
+  <text x="436" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle" xml:space="preserve">registry</text>
+
+  <!-- Step 2: App Dockerfile -->
+  <text x="482" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">② 앱 개발자가 작성하는 Dockerfile</text>
+  <rect x="482" y="114" width="338" height="148" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="498" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># my-service/Dockerfile</text>
+  <text x="498" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="540" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve"> mycompany/py-base:1.0</text>
+  <text x="498" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># 이게 전부!</text>
+  <text x="498" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve"># 빌드 시 자동 주입:</text>
+  <text x="498" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve"># COPY requirements.txt .</text>
+  <text x="498" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve"># RUN pip install ...</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="295" x2="820" y2="295" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Bottom: inspect -->
+  <text x="60" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" xml:space="preserve">트리거 확인 — docker inspect</text>
+
+  <rect x="60" y="338" width="360" height="72" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">$ docker inspect mycompany/py-base:1.0 \</text>
+  <text x="76" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  --format '{{.Config.OnBuild}}'</text>
+  <text x="76" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">[COPY requirements.txt . RUN ...]</text>
+
+  <!-- Limitations box -->
+  <rect x="460" y="338" width="360" height="72" fill="#2a1a0a" rx="6" stroke="#e05555"/>
+  <text x="480" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" xml:space="preserve">사용하면 안 되는 인스트럭션</text>
+  <text x="480" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">ONBUILD FROM  (재귀 상속 금지)</text>
+  <text x="480" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">ONBUILD MAINTAINER  (deprecated)</text>
+</svg>

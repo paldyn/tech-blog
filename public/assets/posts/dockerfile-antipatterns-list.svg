@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">Dockerfile 주요 안티 패턴</text>
+
+  <!-- Anti-pattern 1 -->
+  <rect x="60" y="68" width="370" height="90" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">① latest 태그 사용</text>
+  <text x="80" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">FROM python:latest</text>
+  <text x="80" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ 빌드 시점마다 다른 이미지 → 재현 불가</text>
+
+  <!-- Anti-pattern 2 -->
+  <rect x="450" y="68" width="370" height="90" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="470" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">② 레이어 분산 RUN</text>
+  <text x="470" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">RUN apt update / RUN apt install / RUN rm</text>
+  <text x="470" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ 불필요한 레이어 + rm 효과 없음</text>
+
+  <!-- Anti-pattern 3 -->
+  <rect x="60" y="178" width="370" height="90" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">③ 소스 먼저 COPY</text>
+  <text x="80" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">COPY . . / RUN npm install</text>
+  <text x="80" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ 코드 1줄 변경 시 전체 재설치</text>
+
+  <!-- Anti-pattern 4 -->
+  <rect x="450" y="178" width="370" height="90" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="470" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">④ root로 실행</text>
+  <text x="470" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">USER 인스트럭션 없음</text>
+  <text x="470" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ 컨테이너 탈출 시 호스트 root 권한</text>
+
+  <!-- Anti-pattern 5 -->
+  <rect x="60" y="288" width="370" height="90" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">⑤ ARG로 비밀 전달</text>
+  <text x="80" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">--build-arg API_TOKEN=secret</text>
+  <text x="80" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ docker history로 노출됨</text>
+
+  <!-- Anti-pattern 6 -->
+  <rect x="450" y="288" width="370" height="90" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="470" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">⑥ Shell 폼 CMD</text>
+  <text x="470" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">CMD node server.js</text>
+  <text x="470" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ SIGTERM 미전달, 강제 종료</text>
+
+  <!-- Anti-pattern 7 -->
+  <rect x="60" y="398" width="370" height="80" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">⑦ .dockerignore 없음</text>
+  <text x="80" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ node_modules, .git이 컨텍스트에 포함</text>
+  <text x="80" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ 빌드 느리고 캐시 무효화 빈번</text>
+
+  <!-- Anti-pattern 8 -->
+  <rect x="450" y="398" width="370" height="80" fill="#2a0d0d" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="470" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">⑧ ADD로 단순 복사</text>
+  <text x="470" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">ADD . /app</text>
+  <text x="470" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">→ COPY로 충분. ADD는 URL/tar에만 사용</text>
+</svg>
