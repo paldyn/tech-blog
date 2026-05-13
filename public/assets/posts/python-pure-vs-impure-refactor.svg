@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">부수 효과 격리 패턴</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">로직(순수) + 효과(경계)로 분리</text>
+
+  <!-- Before -->
+  <rect x="60" y="100" width="360" height="190" rx="8" fill="#1f0f0f" stroke="#e05555"/>
+  <text x="240" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">리팩터링 전 — 혼재</text>
+  <rect x="76" y="136" width="328" height="138" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</tspan> process_order(order_id):</text>
+  <text x="92" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    order = db.get(order_id)  <tspan fill="#6a8aa0"># I/O</tspan></text>
+  <text x="92" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    <tspan fill="#7ec8e3">if</tspan> order.total > <tspan fill="#b5cea8">100</tspan>:      <tspan fill="#6a8aa0"># 로직</tspan></text>
+  <text x="92" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        discount = <tspan fill="#b5cea8">0.1</tspan>       <tspan fill="#6a8aa0"># 로직</tspan></text>
+  <text x="92" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    order.final = order.total * (<tspan fill="#b5cea8">1</tspan>-discount)</text>
+  <text x="92" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    db.save(order)            <tspan fill="#6a8aa0"># I/O</tspan></text>
+  <text x="92" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    send_email(order)         <tspan fill="#6a8aa0"># I/O</tspan></text>
+
+  <!-- Arrow -->
+  <polygon points="430,195 420,185 420,205" fill="#7777cc"/>
+  <line x1="420" y1="195" x2="450" y2="195" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="215" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">분리</text>
+
+  <!-- After -->
+  <rect x="460" y="100" width="360" height="190" rx="8" fill="#0f1f0f" stroke="#55c555"/>
+  <text x="640" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">리팩터링 후 — 분리</text>
+  <rect x="476" y="136" width="328" height="138" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="492" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># ① 순수 로직</tspan></text>
+  <text x="492" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</tspan> calc_discount(total: float) -> float:</text>
+  <text x="492" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    return</tspan> <tspan fill="#b5cea8">0.1</tspan> <tspan fill="#7ec8e3">if</tspan> total > <tspan fill="#b5cea8">100</tspan> <tspan fill="#7ec8e3">else</tspan> <tspan fill="#b5cea8">0</tspan></text>
+  <text x="492" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># ② 부수 효과 — 경계에만</tspan></text>
+  <text x="492" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</tspan> process_order(order_id):</text>
+  <text x="492" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    order = db.get(order_id)</text>
+  <text x="492" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    d = calc_discount(order.total)</text>
+
+  <!-- lru_cache benefit -->
+  <rect x="60" y="310" width="760" height="120" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="440" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">순수 함수 + lru_cache — 자동 메모이제이션</text>
+  <rect x="76" y="346" width="728" height="68" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">from</tspan> functools <tspan fill="#7ec8e3">import</tspan> lru_cache</text>
+  <text x="92" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">@lru_cache(maxsize=<tspan fill="#b5cea8">128</tspan>)</text>
+  <text x="92" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</tspan> fib(n: int) -> int:</text>
+  <text x="400" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">return</tspan> n <tspan fill="#7ec8e3">if</tspan> n < <tspan fill="#b5cea8">2</tspan> <tspan fill="#7ec8e3">else</tspan> fib(n-<tspan fill="#b5cea8">1</tspan>) + fib(n-<tspan fill="#b5cea8">2</tspan>)</text>
+
+  <text x="440" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">순수 함수만 안전하게 캐시 가능 — 부수 효과 함수는 캐시 금지</text>
+</svg>

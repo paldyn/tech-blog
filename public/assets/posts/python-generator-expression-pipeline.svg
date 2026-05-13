@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">제너레이터 표현식 파이프라인</text>
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">단계별 지연 처리 — 메모리 효율적</text>
+
+  <!-- Pipeline code -->
+  <rect x="60" y="100" width="760" height="200" rx="8" fill="#111827" stroke="#1e2433"/>
+  <text x="440" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">대용량 로그 처리 파이프라인</text>
+  <rect x="76" y="136" width="728" height="148" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">def</tspan> read_lines(filename):</text>
+  <text x="92" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    with</tspan> open(filename) <tspan fill="#7ec8e3">as</tspan> f:</text>
+  <text x="92" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">        yield from</tspan> f  <tspan fill="#6a8aa0"># 한 줄씩</tspan></text>
+  <text x="92" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"></text>
+  <text x="92" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 단계별 제너레이터 체인 — 메모리에 전체 파일 적재 불필요</tspan></text>
+  <text x="92" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">lines   = read_lines(<tspan fill="#ce9178">"app.log"</tspan>)</text>
+  <text x="92" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">errors  = (l <tspan fill="#7ec8e3">for</tspan> l <tspan fill="#7ec8e3">in</tspan> lines <tspan fill="#7ec8e3">if</tspan> <tspan fill="#ce9178">"ERROR"</tspan> <tspan fill="#7ec8e3">in</tspan> l)</text>
+  <text x="92" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">cleaned = (l.strip() <tspan fill="#7ec8e3">for</tspan> l <tspan fill="#7ec8e3">in</tspan> errors)</text>
+
+  <!-- Flow diagram -->
+  <rect x="60" y="320" width="140" height="48" rx="6" fill="#111827" stroke="#7ec8e3"/>
+  <text x="130" y="349" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">파일 한 줄</text>
+
+  <polygon points="220,344 205,337 205,351" fill="#7ec8e3"/>
+  <line x1="200" y1="344" x2="245" y2="344" stroke="#7ec8e3" stroke-width="2"/>
+
+  <rect x="245" y="320" width="160" height="48" rx="6" fill="#111827" stroke="#55c555"/>
+  <text x="325" y="349" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">ERROR 필터</text>
+
+  <polygon points="435,344 420,337 420,351" fill="#55c555"/>
+  <line x1="405" y1="344" x2="450" y2="344" stroke="#55c555" stroke-width="2"/>
+
+  <rect x="450" y="320" width="160" height="48" rx="6" fill="#111827" stroke="#ce9178"/>
+  <text x="530" y="349" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#ce9178">strip() 변환</text>
+
+  <polygon points="640,344 625,337 625,351" fill="#ce9178"/>
+  <line x1="610" y1="344" x2="655" y2="344" stroke="#ce9178" stroke-width="2"/>
+
+  <rect x="655" y="320" width="165" height="48" rx="6" fill="#111827" stroke="#7777cc"/>
+  <text x="737" y="349" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">소비 (sum/list/for)</text>
+
+  <text x="440" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">각 단계는 지연 — 실제 계산은 소비자가 요청할 때만 발생</text>
+
+  <text x="440" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#6a8aa0">100GB 파일도 상수 메모리로 처리 가능</text>
+</svg>
