@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">fork/exec/wait 코드 패턴</text>
+
+  <!-- Left: fork pattern -->
+  <rect x="60" y="68" width="360" height="340" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">기본 fork 패턴 (C)</text>
+  <!-- code lines -->
+  <text x="80" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">pid_t</text>
+  <text x="122" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> pid = </text>
+  <text x="168" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">fork();</text>
+  <text x="80" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">if </text>
+  <text x="101" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">(pid == </text>
+  <text x="148" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">-1</text>
+  <text x="162" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">) { </text>
+  <text x="194" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">/* 에러 */</text>
+  <text x="80" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">} </text>
+  <text x="92" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">else if </text>
+  <text x="141" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">(pid == </text>
+  <text x="188" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0</text>
+  <text x="196" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">) {</text>
+  <text x="80" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">    /* 자식 프로세스 */</text>
+  <text x="80" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    execlp(</text>
+  <text x="139" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"ls"</text>
+  <text x="166" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, </text>
+  <text x="178" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"ls"</text>
+  <text x="205" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, NULL);</text>
+  <text x="80" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">} </text>
+  <text x="92" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">else </text>
+  <text x="122" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">{</text>
+  <text x="80" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">    /* 부모 프로세스 */</text>
+  <text x="80" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    int </text>
+  <text x="112" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">status;</text>
+  <text x="80" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    waitpid(pid, &amp;status, </text>
+  <text x="248" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0</text>
+  <text x="256" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+  <text x="80" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <!-- Return value legend -->
+  <rect x="80" y="302" width="320" height="88" rx="6" fill="#111" stroke="#333"/>
+  <text x="96" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">fork() 반환값</text>
+  <text x="96" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">-1  </text>
+  <text x="122" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">fork 실패 (EAGAIN, ENOMEM)</text>
+  <text x="96" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3"> 0  </text>
+  <text x="122" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">자식 프로세스에서 실행 중</text>
+  <text x="96" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">>0  </text>
+  <text x="122" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">부모에서 실행, 값 = 자식 PID</text>
+
+  <!-- Right: exec family -->
+  <rect x="460" y="68" width="360" height="340" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="480" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">exec 계열 함수</text>
+
+  <text x="480" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">/* 경로 지정 버전 */</text>
+  <text x="480" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">execve(path, argv, envp);</text>
+  <text x="480" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">execv(path, argv);</text>
+  <text x="480" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">/* PATH 검색 버전 */</text>
+  <text x="480" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">execlp(file, arg0, ...);</text>
+  <text x="480" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">execvp(file, argv);</text>
+  <text x="480" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">/* shell 호출 */</text>
+  <text x="480" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">system(</text>
+  <text x="532" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">"ls -l"</text>
+  <text x="578" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">);</text>
+  <text x="480" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">/* shell 없이 직접 */</text>
+  <text x="480" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">posix_spawn(...);</text>
+
+  <!-- exec note -->
+  <rect x="480" y="302" width="320" height="88" rx="6" fill="#111" stroke="#333"/>
+  <text x="496" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">exec 성공 시</text>
+  <text x="496" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">• 이전 프로그램 이미지 완전 교체</text>
+  <text x="496" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">• PID·PPID·열린 FD(O_CLOEXEC 제외)</text>
+  <text x="496" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">• 실패 시에만 반환 (-1)</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555" text-anchor="middle">vfork()는 exec 전까지 부모 주소 공간을 공유 — 현대 코드에서는 posix_spawn 권장</text>
+</svg>
