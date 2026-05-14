@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">공유 변수 스코프 구조</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">전역 변수(gv_) vs Application 객체 변수 vs 폼 변수</text>
+
+  <!-- Global scope box (outermost) -->
+  <rect x="40" y="92" width="800" height="330" rx="10" fill="#0d1117" stroke="#555" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="60" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555">전역 스코프 (TypeDefinition에서 로드된 .xjs)</text>
+
+  <!-- gv_ variables box -->
+  <rect x="60" y="122" width="340" height="140" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="230" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">CommonVariables.xjs (gv_ 변수)</text>
+  <text x="76" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">var gv_userId   = "";</text>
+  <text x="76" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">var gv_userNm   = "";</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">var gv_deptCd   = "";</text>
+  <text x="76" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">var gv_langCd   = "ko";</text>
+  <text x="76" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">로그인 시 한 번 설정 → 전 폼에서 읽기 전용</text>
+
+  <!-- application object box -->
+  <rect x="480" y="122" width="340" height="140" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">application 객체 변수</text>
+  <text x="496" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">application.gds_code</text>
+  <text x="496" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">  (공통 코드 Dataset)</text>
+  <text x="496" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">application.gds_menu</text>
+  <text x="496" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">  (메뉴 Dataset)</text>
+  <text x="496" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Dataset을 전역으로 공유할 때 사용</text>
+
+  <!-- Form scope -->
+  <rect x="60" y="292" width="760" height="110" rx="8" fill="#161210" stroke="#e8a840" stroke-width="1.5"/>
+  <text x="440" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8a840" text-anchor="middle">폼 스코프 — this (SCR001.xfdl)</text>
+
+  <!-- Form scope items -->
+  <rect x="76" y="328" width="200" height="60" rx="6" fill="#1a1108"/>
+  <text x="176" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8a840" text-anchor="middle">this.ds_input</text>
+  <text x="176" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">폼 전용 Dataset</text>
+
+  <rect x="296" y="328" width="200" height="60" rx="6" fill="#1a1108"/>
+  <text x="396" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8a840" text-anchor="middle">this.edt_nm</text>
+  <text x="396" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">폼 전용 Edit 컴포넌트</text>
+
+  <rect x="516" y="328" width="288" height="60" rx="6" fill="#1a1108"/>
+  <text x="660" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8a840" text-anchor="middle">var m_pageSize = 20;</text>
+  <text x="660" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">폼 레벨 지역 변수</text>
+
+  <!-- Arrow: global -> form scope (read) -->
+  <line x1="230" y1="262" x2="230" y2="290" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="230,292 224,280 236,280" fill="#7777cc"/>
+  <text x="240" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">읽기</text>
+
+  <line x1="650" y1="262" x2="650" y2="290" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="650,292 644,280 656,280" fill="#55c555"/>
+  <text x="660" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">공유</text>
+
+  <text x="440" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555" text-anchor="middle">폼 간 공유 데이터는 전역 변수/application 객체 사용, 폼 고유 데이터는 this에 보관</text>
+</svg>
