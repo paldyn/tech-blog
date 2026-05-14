@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Docker 볼륨 주요 함정 7가지</text>
+
+  <!-- Pitfall 1 -->
+  <rect x="60" y="62" width="760" height="48" fill="#1a0f0f" rx="6" stroke="#e05555" stroke-width="1"/>
+  <rect x="60" y="62" width="4" height="48" fill="#e05555" rx="2"/>
+  <text x="90" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">① DB 이미지 VOLUME 선언 무시 → 익명 볼륨 누적</text>
+  <text x="90" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">docker run mysql:8  →  매 실행마다 새 익명 볼륨. -v mydb:/var/lib/mysql 필수</text>
+
+  <!-- Pitfall 2 -->
+  <rect x="60" y="122" width="760" height="48" fill="#1a1500" rx="6" stroke="#e8c53a" stroke-width="1"/>
+  <rect x="60" y="122" width="4" height="48" fill="#e8c53a" rx="2"/>
+  <text x="90" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8c53a">② docker rm으로 볼륨이 삭제된다는 착각</text>
+  <text x="90" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Named Volume은 docker rm으로 삭제되지 않음. docker rm -v 또는 volume prune 필요</text>
+
+  <!-- Pitfall 3 -->
+  <rect x="60" y="182" width="760" height="48" fill="#1a0f0f" rx="6" stroke="#e05555" stroke-width="1"/>
+  <rect x="60" y="182" width="4" height="48" fill="#e05555" rx="2"/>
+  <text x="90" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">③ Bind Mount로 컨테이너 내 파일 덮어쓰기</text>
+  <text x="90" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">-v ./empty:/app → /app 이미지 파일 모두 가려짐. node_modules 등 이미지 내 파일 손실</text>
+
+  <!-- Pitfall 4 -->
+  <rect x="60" y="242" width="760" height="48" fill="#1a1500" rx="6" stroke="#e8c53a" stroke-width="1"/>
+  <rect x="60" y="242" width="4" height="48" fill="#e8c53a" rx="2"/>
+  <text x="90" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8c53a">④ Permission denied: UID 불일치</text>
+  <text x="90" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">볼륨 파일 소유자 UID와 컨테이너 프로세스 UID가 다름. entrypoint chown 또는 --user로 해결</text>
+
+  <!-- Pitfall 5 -->
+  <rect x="60" y="302" width="760" height="48" fill="#1a0f0f" rx="6" stroke="#e05555" stroke-width="1"/>
+  <rect x="60" y="302" width="4" height="48" fill="#e05555" rx="2"/>
+  <text x="90" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">⑤ DB 볼륨 파일 레벨 백업 (실행 중)</text>
+  <text x="90" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">DB 실행 중 tar로 데이터 디렉터리 복사 → 불일치 백업. pg_dump/mysqldump 사용 필수</text>
+
+  <!-- Pitfall 6 -->
+  <rect x="60" y="362" width="760" height="48" fill="#1a1500" rx="6" stroke="#e8c53a" stroke-width="1"/>
+  <rect x="60" y="362" width="4" height="48" fill="#e8c53a" rx="2"/>
+  <text x="90" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8c53a">⑥ tmpfs를 프로덕션 영속 데이터에 사용</text>
+  <text x="90" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">컨테이너 재시작 시 tmpfs 데이터는 소멸. 영속 데이터에는 Named Volume 사용</text>
+
+  <!-- Pitfall 7 -->
+  <rect x="60" y="422" width="760" height="28" fill="#1a0f0f" rx="6" stroke="#e05555" stroke-width="1"/>
+  <rect x="60" y="422" width="4" height="28" fill="#e05555" rx="2"/>
+  <text x="90" y="441" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">⑦ 볼륨 이름 충돌: 다른 프로젝트의 같은 이름 볼륨 덮어쓰기</text>
+</svg>

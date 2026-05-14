@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">볼륨 권한: UID/GID 매핑</text>
+
+  <!-- Problem side -->
+  <rect x="60" y="68" width="360" height="280" fill="#111318" rx="10" stroke="#1e2433" stroke-width="1"/>
+  <text x="240" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">권한 문제 발생 상황</text>
+
+  <!-- Host -->
+  <rect x="80" y="110" width="320" height="56" fill="#1a0f0f" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">호스트 파일</text>
+  <text x="240" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">owner: root (UID 0)</text>
+
+  <!-- Arrow down -->
+  <line x1="240" y1="166" x2="240" y2="194" stroke="#e05555" stroke-width="2"/>
+  <polygon points="240,202 233,188 247,188" fill="#e05555"/>
+
+  <!-- Container -->
+  <rect x="80" y="202" width="320" height="56" fill="#1a1a2e" rx="6" stroke="#3a3a5e" stroke-width="1"/>
+  <text x="240" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">컨테이너 프로세스</text>
+  <text x="240" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">user: app (UID 1000)</text>
+
+  <!-- Error -->
+  <rect x="80" y="278" width="320" height="44" fill="#1a0f0f" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="297" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">Permission denied!</text>
+  <text x="240" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">UID 1000은 UID 0 소유 파일 쓰기 불가</text>
+
+  <!-- Solution side -->
+  <rect x="460" y="68" width="360" height="280" fill="#111318" rx="10" stroke="#1e2433" stroke-width="1"/>
+  <text x="640" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">해결 방법</text>
+
+  <!-- Solution 1: chown -->
+  <rect x="480" y="110" width="320" height="64" fill="#0f1a0f" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">① entrypoint에서 chown</text>
+  <text x="640" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">chown -R 1000:1000 /data</text>
+  <text x="640" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">컨테이너 시작 시 소유권 변경</text>
+
+  <!-- Solution 2: USER directive -->
+  <rect x="480" y="186" width="320" height="64" fill="#0f1f2e" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="640" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">② 호스트 파일 미리 소유권 설정</text>
+  <text x="640" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">sudo chown 1000:1000 ./data</text>
+  <text x="640" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Bind Mount 전 호스트에서 미리 설정</text>
+
+  <!-- Solution 3: run as root -->
+  <rect x="480" y="262" width="320" height="64" fill="#1a1500" rx="6" stroke="#e8c53a" stroke-width="1"/>
+  <text x="640" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8c53a" text-anchor="middle">③ --user 플래그로 UID 일치</text>
+  <text x="640" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">docker run --user 1000:1000 ...</text>
+  <text x="640" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">컨테이너 프로세스 UID를 지정</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">Docker는 UID/GID 숫자만 비교 — 컨테이너와 호스트의 사용자 이름은 무관</text>
+</svg>
