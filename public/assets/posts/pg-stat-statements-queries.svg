@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">pg_stat_statements 실전 분석 쿼리</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">슬로우 쿼리·I/O 핫스팟·캐시 미스 한 번에 파악</text>
+
+  <!-- Query 1: top slow queries -->
+  <text x="75" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">① 평균 실행 시간 기준 상위 10 쿼리</text>
+  <rect x="60" y="108" width="760" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="76" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  left(query, 80)                                 AS q,</text>
+  <text x="76" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  calls, round(mean_exec_time::numeric, 2)         AS avg_ms,</text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  round(total_exec_time::numeric, 0)               AS total_ms</text>
+  <text x="76" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 10;</text>
+
+  <!-- Query 2: I/O heavy -->
+  <text x="75" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#ce9178">② 디스크 I/O 발생량 기준 상위 쿼리</text>
+  <rect x="60" y="240" width="760" height="82" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT left(query, 80) AS q, calls,</text>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  shared_blks_read, shared_blks_hit,</text>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  round(100.0*shared_blks_hit/(shared_blks_hit+shared_blks_read+1),1) AS hit_pct</text>
+  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM pg_stat_statements WHERE shared_blks_read &gt; 0 ORDER BY shared_blks_read DESC LIMIT 10;</text>
+
+  <!-- Query 3: reset -->
+  <text x="75" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">③ 통계 리셋 (배포 전후 비교)</text>
+  <rect x="60" y="354" width="760" height="64" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="372" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 전체 통계 초기화 (슈퍼유저 또는 pg_monitor 역할)</text>
+  <text x="76" y="390" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT pg_stat_statements_reset();</text>
+  <text x="76" y="408" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 특정 쿼리만 초기화 (PG14+): queryid 지정 가능</text>
+</svg>

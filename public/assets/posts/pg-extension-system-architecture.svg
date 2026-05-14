@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PostgreSQL 확장 시스템 구조</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">확장의 구성 파일과 CREATE EXTENSION 설치 흐름</text>
+
+  <!-- Extension package files -->
+  <text x="75" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">확장 패키지 파일 구성</text>
+
+  <!-- Control file -->
+  <rect x="60" y="110" width="200" height="72" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">myext.control</text>
+  <text x="160" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">default_version = '1.0'</text>
+  <text x="160" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">relocatable = true</text>
+
+  <!-- SQL file -->
+  <rect x="280" y="110" width="200" height="72" rx="8" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="380" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">myext--1.0.sql</text>
+  <text x="380" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">CREATE FUNCTION ...</text>
+  <text x="380" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">CREATE TYPE ...</text>
+
+  <!-- Shared Library -->
+  <rect x="500" y="110" width="200" height="72" rx="8" fill="#2e1a00" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="600" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">myext.so</text>
+  <text x="600" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">C 함수 구현 (선택)</text>
+  <text x="600" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">$libdir에 배치</text>
+
+  <!-- Upgrade script -->
+  <rect x="720" y="110" width="140" height="72" rx="8" fill="#1a1a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="790" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">업그레이드 스크립트</text>
+  <text x="790" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">myext--1.0--1.1.sql</text>
+  <text x="790" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">ALTER EXTENSION ...</text>
+
+  <!-- Arrow: install flow -->
+  <line x1="440" y1="220" x2="440" y2="258" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="452" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">CREATE EXTENSION myext;</text>
+
+  <!-- Database box -->
+  <rect x="100" y="268" width="680" height="160" rx="10" fill="#111" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="440" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8e8e8" text-anchor="middle">데이터베이스 카탈로그에 등록</text>
+
+  <!-- pg_extension -->
+  <rect x="130" y="305" width="180" height="60" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="220" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">pg_extension</text>
+  <text x="220" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">확장 메타데이터</text>
+  <text x="220" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">이름·버전·스키마</text>
+
+  <!-- pg_depend -->
+  <rect x="350" y="305" width="180" height="60" rx="6" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">pg_depend</text>
+  <text x="440" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">오브젝트 의존성</text>
+  <text x="440" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">CASCADE DROP 제어</text>
+
+  <!-- 함수·타입·인덱스 -->
+  <rect x="570" y="305" width="180" height="60" rx="6" fill="#2e1a00" stroke="#ce9178" stroke-width="1"/>
+  <text x="660" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ce9178" text-anchor="middle">함수·타입·연산자</text>
+  <text x="660" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SQL 스크립트로</text>
+  <text x="660" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">일괄 생성·등록</text>
+
+  <!-- Bottom hints -->
+  <rect x="60" y="448" width="760" height="36" rx="6" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
+  <text x="440" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">DROP EXTENSION myext CASCADE — 확장 및 의존 오브젝트 전체 제거</text>
+  <text x="440" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">ALTER EXTENSION myext UPDATE TO '1.1' — 버전 업그레이드 (업그레이드 스크립트 실행)</text>
+</svg>

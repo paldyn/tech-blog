@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PostgreSQL 선언적 파티셔닝 타입</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">RANGE · LIST · HASH — 파티션 키 기준으로 데이터 분산</text>
+
+  <!-- Parent table -->
+  <rect x="310" y="88" width="260" height="52" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">파티션 부모 테이블</text>
+  <text x="440" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">PARTITION BY RANGE(created_at)</text>
+
+  <!-- Lines -->
+  <line x1="440" y1="140" x2="440" y2="165" stroke="#7ec8e3" stroke-width="1.5"/>
+  <line x1="160" y1="165" x2="720" y2="165" stroke="#7ec8e3" stroke-width="1.5"/>
+  <line x1="160" y1="165" x2="160" y2="185" stroke="#7ec8e3" stroke-width="1.5"/>
+  <line x1="440" y1="165" x2="440" y2="185" stroke="#7ec8e3" stroke-width="1.5"/>
+  <line x1="720" y1="165" x2="720" y2="185" stroke="#7ec8e3" stroke-width="1.5"/>
+
+  <!-- RANGE partitions -->
+  <text x="75" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">RANGE 파티션</text>
+  <rect x="60" y="188" width="196" height="52" rx="6" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="158" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">p_2025</text>
+  <text x="158" y="227" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">2025-01-01 ~ 2025-12-31</text>
+
+  <!-- LIST partitions -->
+  <text x="355" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#ce9178">LIST 파티션</text>
+  <rect x="340" y="188" width="196" height="52" rx="6" fill="#2e1a00" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="438" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">p_kr</text>
+  <text x="438" y="227" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">IN ('KR', 'JP', 'CN')</text>
+
+  <!-- HASH partitions -->
+  <text x="635" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">HASH 파티션</text>
+  <rect x="620" y="188" width="196" height="52" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="718" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">p_0</text>
+  <text x="718" y="227" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">MODULUS 4 REMAINDER 0</text>
+
+  <!-- DDL examples -->
+  <text x="75" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">각 타입 DDL 예시</text>
+
+  <!-- RANGE DDL -->
+  <rect x="60" y="288" width="240" height="130" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- RANGE: 날짜·숫자 범위</text>
+  <text x="76" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">CREATE TABLE logs (</text>
+  <text x="76" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  id   BIGINT,</text>
+  <text x="76" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  ts   TIMESTAMP</text>
+  <text x="76" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">) PARTITION BY</text>
+  <text x="76" y="398" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">  RANGE (ts);</text>
+
+  <!-- LIST DDL -->
+  <rect x="320" y="288" width="240" height="130" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="336" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- LIST: 이산 값</text>
+  <text x="336" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">CREATE TABLE orders (</text>
+  <text x="336" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  id      BIGINT,</text>
+  <text x="336" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  country TEXT</text>
+  <text x="336" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">) PARTITION BY</text>
+  <text x="336" y="398" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">  LIST (country);</text>
+
+  <!-- HASH DDL -->
+  <rect x="580" y="288" width="240" height="130" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="596" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- HASH: 고른 분산</text>
+  <text x="596" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">CREATE TABLE events (</text>
+  <text x="596" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  id      BIGINT,</text>
+  <text x="596" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">  user_id INT</text>
+  <text x="596" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">) PARTITION BY</text>
+  <text x="596" y="398" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">  HASH (user_id);</text>
+
+  <!-- Use case summary -->
+  <rect x="60" y="438" width="760" height="60" rx="8" fill="#111" stroke="#888" stroke-width="1"/>
+  <text x="80" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">RANGE:</text>
+  <text x="140" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">시계열 로그·이벤트 (월별·분기별 파티션, 오래된 파티션 DROP)</text>
+  <text x="80" y="476" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#ce9178">LIST:</text>
+  <text x="126" y="476" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">국가·지역·카테고리 등 이산 값으로 격리할 때</text>
+  <text x="80" y="488" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">HASH:</text>
+  <text x="132" y="488" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">  균등 분산 필요, RANGE/LIST로 나눌 자연스러운 기준이 없을 때</text>
+</svg>
