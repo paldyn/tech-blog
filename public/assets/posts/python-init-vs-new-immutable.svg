@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">불변 타입 서브클래스와 __new__</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">str, int 같은 불변 타입 커스터마이징은 __new__에서 처리</text>
+
+  <!-- Left code: int subclass -->
+  <rect x="60" y="90" width="380" height="240" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="80" y="116" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">class </text>
+  <text x="124" y="116" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">PositiveInt(int):</text>
+  <text x="80" y="136" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">    """항상 양수인 정수"""</text>
+  <text x="80" y="156" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">    def </text>
+  <text x="120" y="156" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">__new__(cls, value):</text>
+  <text x="80" y="174" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">        if </text>
+  <text x="110" y="174" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">value &lt;= </text>
+  <text x="158" y="174" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">0</text>
+  <text x="166" y="174" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">:</text>
+  <text x="80" y="192" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">            raise </text>
+  <text x="148" y="192" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">ValueError(</text>
+  <text x="80" y="210" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#ce9178" xml:space="preserve">                "must be positive"</text>
+  <text x="80" y="228" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">            )</text>
+  <text x="80" y="246" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">        return </text>
+  <text x="144" y="246" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">super().__new__(cls, value)</text>
+  <text x="80" y="266" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># __init__은 불필요</text>
+  <text x="80" y="284" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">x = PositiveInt(</text>
+  <text x="180" y="284" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">5</text>
+  <text x="188" y="284" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="80" y="302" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">print(x + </text>
+  <text x="140" y="302" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">3</text>
+  <text x="148" y="302" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">)  </text>
+  <text x="148" y="302" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">          # 8</text>
+
+  <!-- Right explanation -->
+  <rect x="470" y="90" width="350" height="240" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="490" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">왜 __init__이 아닌 __new__인가</text>
+  <text x="490" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">int는 불변(immutable) 타입이라</text>
+  <text x="490" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__init__에서는 이미 생성된 값을</text>
+  <text x="490" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">변경할 수 없습니다.</text>
+  <text x="490" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">값을 결정하는 시점은 __new__이므로</text>
+  <text x="490" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">검증도 __new__에서 해야 합니다.</text>
+
+  <rect x="490" y="236" width="310" height="60" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="506" y="256" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">PositiveInt(-1)</text>
+  <text x="506" y="274" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e05555" xml:space="preserve"># ValueError: must be positive</text>
+
+  <text x="490" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">super().__new__(cls, value) 호출 필수</text>
+  <text x="490" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">object.__new__가 실제 메모리 할당 담당</text>
+</svg>

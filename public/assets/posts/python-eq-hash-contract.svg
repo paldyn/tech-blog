@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">__eq__와 __hash__ 계약</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">같은 객체는 같은 해시값을 가져야 한다</text>
+
+  <!-- Contract rule -->
+  <rect x="60" y="88" width="760" height="60" rx="8" fill="#1a2332" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e8e8e8" text-anchor="middle">핵심 계약: a == b 이면 반드시 hash(a) == hash(b)</text>
+  <text x="440" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">역은 성립할 필요 없음 (해시 충돌 가능). 이 계약을 어기면 dict/set 동작이 망가짐</text>
+
+  <!-- Python default behavior -->
+  <rect x="60" y="168" width="360" height="130" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="80" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">Python 기본 동작</text>
+  <text x="80" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__eq__ 정의 안 함:</text>
+  <text x="260" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">동일성(is) 비교</text>
+  <text x="80" y="229" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__eq__ 정의함:</text>
+  <text x="245" y="229" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">__hash__ = None (unhashable)</text>
+  <text x="80" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">따라서 __eq__ 정의 시</text>
+  <text x="80" y="273" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">dict 키/set 원소로 쓰려면 __hash__도 정의</text>
+
+  <!-- Arrow -->
+  <line x1="428" y1="233" x2="468" y2="233" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="468,227 482,233 468,239" fill="#7777cc"/>
+
+  <!-- Implementation guide -->
+  <rect x="490" y="168" width="330" height="130" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="2"/>
+  <text x="510" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">올바른 구현</text>
+  <rect x="510" y="198" width="290" height="88" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="526" y="216" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">def </text>
+  <text x="550" y="216" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">__eq__(self, other):</text>
+  <text x="526" y="234" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    if not </text>
+  <text x="584" y="234" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">isinstance(other, </text>
+  <text x="700" y="234" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">type</text>
+  <text x="724" y="234" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">(self)):</text>
+  <text x="526" y="252" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">        return </text>
+  <text x="594" y="252" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">NotImplemented</text>
+  <text x="526" y="270" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">def </text>
+  <text x="550" y="270" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">__hash__(self):</text>
+  <text x="526" y="288" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    return </text>
+  <text x="578" y="288" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">hash((self.x, self.y))</text>
+
+  <!-- Three cases -->
+  <rect x="60" y="318" width="230" height="100" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">값 객체 (Value Object)</text>
+  <text x="80" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__eq__, __hash__ 모두</text>
+  <text x="80" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">구현. dict 키/set 원소</text>
+  <text x="80" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">사용 가능. 불변 권장</text>
+  <text x="80" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">예: Point, Money, Date</text>
+
+  <rect x="325" y="318" width="230" height="100" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="345" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">가변 컨테이너</text>
+  <text x="345" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__eq__만 구현.</text>
+  <text x="345" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__hash__ = None으로</text>
+  <text x="345" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">unhashable 명시</text>
+  <text x="345" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">예: list, dict</text>
+
+  <rect x="590" y="318" width="230" height="100" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="610" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">엔티티 (Entity)</text>
+  <text x="610" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">기본 동일성 사용.</text>
+  <text x="610" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__eq__ 오버라이드 없이</text>
+  <text x="610" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">is 비교로 충분</text>
+  <text x="610" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">예: DB 레코드, 세션</text>
+</svg>

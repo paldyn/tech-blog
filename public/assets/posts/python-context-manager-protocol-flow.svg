@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">with 문 실행 흐름</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">__enter__ → 블록 실행 → __exit__ (예외 여부 무관)</text>
+
+  <!-- Step boxes -->
+  <rect x="60" y="90" width="200" height="80" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="160" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">① __enter__</text>
+  <text x="80" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">리소스 획득</text>
+  <text x="80" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">반환값 → as 변수</text>
+
+  <!-- Arrow 1 -->
+  <line x1="268" y1="130" x2="308" y2="130" stroke="#7777cc" stroke-width="2.5"/>
+  <polygon points="308,124 322,130 308,136" fill="#7777cc"/>
+
+  <!-- Step 2 -->
+  <rect x="330" y="90" width="220" height="80" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">② with 블록 실행</text>
+  <text x="350" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">정상 완료 또는</text>
+  <text x="350" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">예외 발생 가능</text>
+
+  <!-- Arrow 2 -->
+  <line x1="558" y1="130" x2="598" y2="130" stroke="#7777cc" stroke-width="2.5"/>
+  <polygon points="598,124 612,130 598,136" fill="#7777cc"/>
+
+  <!-- Step 3 -->
+  <rect x="620" y="90" width="200" height="80" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="2"/>
+  <text x="720" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">③ __exit__</text>
+  <text x="640" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">리소스 해제</text>
+  <text x="640" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">예외 정보 전달됨</text>
+
+  <!-- __exit__ signature -->
+  <rect x="60" y="192" width="760" height="80" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="80" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">__exit__(self, exc_type, exc_val, exc_tb) 시그니처</text>
+  <text x="80" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">exc_type: 예외 타입 (예외 없으면 None), exc_val: 예외 인스턴스, exc_tb: 트레이스백</text>
+  <text x="80" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">True 반환 시 예외 억제, False/None 반환 시 예외 전파. 일반적으로 None 반환(예외 전파)</text>
+
+  <!-- Code example -->
+  <rect x="60" y="290" width="380" height="148" rx="8" fill="#070b14" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">class </text>
+  <text x="120" y="314" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Timer:</text>
+  <text x="80" y="332" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    def </text>
+  <text x="116" y="332" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">__enter__(self):</text>
+  <text x="80" y="350" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">        import </text>
+  <text x="148" y="350" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">time</text>
+  <text x="80" y="368" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        self.start = time.perf_counter()</text>
+  <text x="80" y="386" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">        return </text>
+  <text x="148" y="386" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">self</text>
+  <text x="80" y="404" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    def </text>
+  <text x="116" y="404" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">__exit__(self, *args):</text>
+  <text x="80" y="422" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">        import </text>
+  <text x="148" y="422" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">time</text>
+  <text x="80" y="440" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        elapsed = time.perf_counter() - self.start</text>
+
+  <!-- Right annotation -->
+  <rect x="470" y="290" width="370" height="148" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="490" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">with 문 사용</text>
+  <rect x="490" y="322" width="330" height="70" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="506" y="342" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">with </text>
+  <text x="534" y="342" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Timer() </text>
+  <text x="584" y="342" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">as </text>
+  <text x="606" y="342" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">t:</text>
+  <text x="506" y="360" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">    # 타이머 실행 중</text>
+  <text x="506" y="378" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    sum(range(</text>
+  <text x="580" y="378" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1_000_000</text>
+  <text x="644" y="378" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">))</text>
+  <text x="490" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">예외 발생해도 __exit__는</text>
+  <text x="490" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">반드시 호출 → 리소스 보장</text>
+</svg>

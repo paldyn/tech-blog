@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">가변 클래스 속성 함정</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">리스트·딕셔너리를 클래스 속성으로 두면 모든 인스턴스가 공유</text>
+
+  <!-- Bad pattern -->
+  <rect x="60" y="90" width="370" height="270" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="2"/>
+  <rect x="60" y="90" width="370" height="32" rx="8" fill="#2a1010"/>
+  <text x="245" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">위험한 패턴</text>
+  <rect x="76" y="132" width="338" height="130" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="152" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">class </text>
+  <text x="136" y="152" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Kennel:</text>
+  <text x="92" y="170" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    dogs = []  </text>
+  <text x="92" y="170" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">               # 클래스 속성!</text>
+  <text x="92" y="188" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    def </text>
+  <text x="128" y="188" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">add(self, dog):</text>
+  <text x="92" y="206" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        self.dogs.append(dog)</text>
+  <text x="92" y="224" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">k1 = Kennel(); k2 = Kennel()</text>
+  <text x="92" y="242" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">k1.add(</text>
+  <text x="142" y="242" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#ce9178" xml:space="preserve">"Rex"</text>
+  <text x="178" y="242" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="92" y="260" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">print(k2.dogs)  </text>
+  <text x="92" y="260" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">                # ['Rex']</text>
+
+  <text x="76" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">k2는 추가 안 했는데 Rex가 있음!</text>
+  <text x="76" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">self.dogs.append는 재할당이 아니라</text>
+  <text x="76" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">in-place 변경 → 클래스 속성이 직접 변경됨</text>
+  <text x="76" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">k1과 k2가 같은 리스트 객체를 가리킴</text>
+
+  <!-- Good pattern -->
+  <rect x="470" y="90" width="370" height="270" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="2"/>
+  <rect x="470" y="90" width="370" height="32" rx="8" fill="#0a2010"/>
+  <text x="655" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">올바른 패턴</text>
+  <rect x="486" y="132" width="338" height="130" rx="4" fill="#070b14" stroke="#1e2433"/>
+  <text x="502" y="152" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">class </text>
+  <text x="546" y="152" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Kennel:</text>
+  <text x="502" y="170" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    def </text>
+  <text x="538" y="170" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">__init__(self):</text>
+  <text x="502" y="188" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        self.dogs = []</text>
+  <text x="502" y="188" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">                       # 인스턴스 속성</text>
+  <text x="502" y="206" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    def </text>
+  <text x="538" y="206" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">add(self, dog):</text>
+  <text x="502" y="224" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">        self.dogs.append(dog)</text>
+  <text x="502" y="242" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">k1 = Kennel(); k2 = Kennel()</text>
+  <text x="502" y="260" font-family="'JetBrains Mono','Menlo',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">k1.add("Rex"); print(k2.dogs)</text>
+
+  <text x="486" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">k2.dogs == []  (분리된 상태 유지)</text>
+  <text x="486" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">__init__에서 self.dogs = []로 초기화</text>
+  <text x="486" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">→ 각 인스턴스마다 새 리스트 할당</text>
+  <text x="486" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">가변 객체는 반드시 인스턴스 속성으로</text>
+</svg>
