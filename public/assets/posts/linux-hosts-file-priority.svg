@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380" style="background:#0a0a0a;border-radius:12px;">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#4a5a6a" stroke="none"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" xml:space="preserve">/etc/hosts — 이름 해석 우선순위</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" xml:space="preserve">DNS보다 먼저 조회되는 정적 호스트 매핑 파일</text>
+  <line x1="60" y1="86" x2="820" y2="86" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Priority ladder (3 steps) -->
+  <!-- Step 1 (highest priority) -->
+  <rect x="200" y="106" width="480" height="56" rx="10" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="300" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" xml:space="preserve">① /etc/hosts</text>
+  <text x="440" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" xml:space="preserve">정적 매핑 (최우선)</text>
+  <text x="580" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">127.0.0.1 localhost</text>
+  <text x="440" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">nsswitch.conf의 files 항목이 담당. DNS 전에 항상 확인.</text>
+
+  <line x1="440" y1="162" x2="440" y2="182" stroke="#4a5a6a" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="468" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" xml:space="preserve">미발견 시</text>
+
+  <!-- Step 2: mDNS -->
+  <rect x="220" y="184" width="440" height="56" rx="10" fill="#12192a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" xml:space="preserve">② mDNS (.local 도메인)</text>
+  <text x="440" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">Avahi / systemd-resolved의 multicast DNS 처리</text>
+
+  <line x1="440" y1="240" x2="440" y2="260" stroke="#4a5a6a" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="468" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" xml:space="preserve">미발견 시</text>
+
+  <!-- Step 3: DNS -->
+  <rect x="240" y="262" width="400" height="56" rx="10" fill="#12192a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" xml:space="preserve">③ DNS 서버 (인터넷)</text>
+  <text x="440" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">resolv.conf의 nameserver로 UDP/TCP 53 질의</text>
+
+  <!-- Left label -->
+  <text x="100" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">우선</text>
+  <text x="100" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">순위</text>
+  <line x1="100" y1="115" x2="100" y2="310" stroke="#1e2433" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <text x="60" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">※ 순서 조정: /etc/nsswitch.conf  →  hosts: files mdns4_minimal [NOTFOUND=return] dns</text>
+</svg>
