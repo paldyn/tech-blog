@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">슬로우 쿼리 진단 워크플로우</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">pg_stat_statements → EXPLAIN ANALYZE → 인덱스/쿼리 개선</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="100" width="240" height="90" fill="#111827" rx="8" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="180" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">① 슬로우 쿼리 발견</text>
+  <text x="180" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">pg_stat_statements</text>
+  <text x="180" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">log_min_duration_statement</text>
+  <text x="180" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">pg_activity / pgBadger</text>
+
+  <line x1="300" y1="145" x2="340" y2="145" stroke="#888" stroke-width="2"/>
+  <polygon points="340,145 328,139 328,151" fill="#888"/>
+
+  <!-- Step 2 -->
+  <rect x="340" y="100" width="200" height="90" fill="#111827" rx="8" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">② 실행 계획 분석</text>
+  <text x="440" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">EXPLAIN ANALYZE</text>
+  <text x="440" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">BUFFERS 옵션</text>
+  <text x="440" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">노드 타입 확인</text>
+
+  <line x1="540" y1="145" x2="580" y2="145" stroke="#888" stroke-width="2"/>
+  <polygon points="580,145 568,139 568,151" fill="#888"/>
+
+  <!-- Step 3 -->
+  <rect x="580" y="100" width="240" height="90" fill="#111827" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="700" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">③ 원인 특정 & 개선</text>
+  <text x="700" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인덱스 추가/수정</text>
+  <text x="700" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쿼리 재작성</text>
+  <text x="700" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">통계 갱신 (ANALYZE)</text>
+
+  <!-- EXPLAIN ANALYZE output sample -->
+  <rect x="60" y="218" width="760" height="230" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)</text>
+  <text x="76" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">SELECT</text>
+  <text x="76" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">    c.name, SUM(o.amount)</text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">FROM</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">    customers c JOIN orders o ON c.id = o.cust_id</text>
+  <text x="76" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3">GROUP BY</text>
+  <text x="76" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">    c.name;</text>
+  <text x="76" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- 결과 예시 (비용 높은 노드에 집중)</text>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555">Seq Scan on orders</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555">  (cost=0..85234 rows=5M actual time=0.1..12340ms)</text>
+  <text x="76" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">  Buffers: shared hit=120 read=41000</text>
+  <text x="76" y="426" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- read가 많으면 인덱스 추가 또는 캐시 부족</text>
+  <text x="76" y="442" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">-- Seq Scan이 보이면 인덱스 스캔 유도 검토</text>
+</svg>

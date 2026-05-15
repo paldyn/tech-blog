@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">PostgreSQL 메모리 파라미터</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">shared_buffers · work_mem · effective_cache_size 관계</text>
+
+  <!-- Server total memory bar -->
+  <text x="440" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">서버 총 메모리 예시: 32GB</text>
+  <rect x="60" y="120" width="760" height="40" fill="#1e2433" rx="6"/>
+
+  <!-- shared_buffers segment -->
+  <rect x="60" y="120" width="190" height="40" fill="#7ec8e3" rx="6"/>
+  <text x="155" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0a0a0a">shared_buffers 8GB</text>
+
+  <!-- work_mem -->
+  <rect x="250" y="120" width="80" height="40" fill="#55c555" rx="0"/>
+  <text x="290" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#0a0a0a">work_</text>
+  <text x="290" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#0a0a0a">mem×N</text>
+
+  <!-- OS cache -->
+  <rect x="330" y="120" width="200" height="40" fill="#7777cc" rx="0" opacity="0.7"/>
+  <text x="430" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#fff">OS 페이지 캐시 (약 12GB)</text>
+
+  <!-- other -->
+  <rect x="530" y="120" width="290" height="40" fill="#333" rx="6"/>
+  <text x="675" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">기타 (OS, 프로세스, ...)</text>
+
+  <!-- Arrows and labels -->
+  <line x1="155" y1="160" x2="155" y2="200" stroke="#7ec8e3" stroke-width="1.5"/>
+  <rect x="60" y="200" width="200" height="80" fill="#111827" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="160" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">shared_buffers</text>
+  <text x="160" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">공유 버퍼 캐시</text>
+  <text x="160" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">총 RAM의 25% 권장</text>
+  <text x="160" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">초과하면 OS캐시 잠식</text>
+
+  <line x1="290" y1="160" x2="290" y2="200" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="260" y="200" width="180" height="80" fill="#111827" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="350" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">work_mem</text>
+  <text x="350" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정렬·해시 작업 메모리</text>
+  <text x="350" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">연결×노드 수만큼 곱해짐</text>
+  <text x="350" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">과도 설정 시 OOM 위험</text>
+
+  <line x1="430" y1="160" x2="430" y2="200" stroke="#7777cc" stroke-width="1.5"/>
+  <rect x="460" y="200" width="200" height="80" fill="#111827" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="560" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">effective_cache_size</text>
+  <text x="560" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">플래너 힌트 전용</text>
+  <text x="560" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">실제 메모리 할당 없음</text>
+  <text x="560" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">shared_buf + OS캐시</text>
+
+  <!-- Typical values table -->
+  <rect x="60" y="306" width="760" height="130" fill="#111827" rx="8" stroke="#1e2433"/>
+  <text x="440" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">서버 RAM별 권장 설정값</text>
+
+  <text x="170" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888">서버 RAM</text>
+  <text x="340" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">shared_buffers</text>
+  <text x="510" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">work_mem</text>
+  <text x="700" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">effective_cache_size</text>
+
+  <line x1="60" y1="358" x2="820" y2="358" stroke="#1e2433" stroke-width="1"/>
+  <text x="170" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">8 GB</text>
+  <text x="340" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">2GB</text>
+  <text x="510" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">4MB~16MB</text>
+  <text x="700" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">6GB</text>
+  <line x1="60" y1="384" x2="820" y2="384" stroke="#1e2433" stroke-width="1"/>
+  <text x="170" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">32 GB</text>
+  <text x="340" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">8GB</text>
+  <text x="510" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">16MB~64MB</text>
+  <text x="700" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">24GB</text>
+  <line x1="60" y1="410" x2="820" y2="410" stroke="#1e2433" stroke-width="1"/>
+  <text x="170" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">128 GB</text>
+  <text x="340" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">32GB</text>
+  <text x="510" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">32MB~128MB</text>
+  <text x="700" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">96GB</text>
+</svg>

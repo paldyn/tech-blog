@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">구체화 뷰 생성과 REFRESH 패턴</text>
+  <text x="440" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">CONCURRENTLY 옵션과 WITH NO DATA 초기화</text>
+
+  <!-- Code block -->
+  <rect x="60" y="100" width="760" height="264" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="122" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 구체화 뷰 생성</text>
+  <text x="76" y="140" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE MATERIALIZED VIEW</text>
+  <text x="76" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    mv_daily_sales</text>
+  <text x="76" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">AS</text>
+  <text x="76" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    SELECT</text>
+  <text x="76" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        DATE(created_at)    AS sale_date,</text>
+  <text x="76" y="230" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        SUM(amount)         AS daily_total,</text>
+  <text x="76" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        COUNT(*)            AS order_cnt</text>
+  <text x="76" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    FROM</text>
+  <text x="76" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        orders</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">    GROUP BY</text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">        DATE(created_at)</text>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WITH NO DATA</text>
+  <text x="280" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 구조만 생성, 데이터 없음</text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- CONCURRENTLY: 조회 차단 없이 갱신 (UNIQUE 인덱스 필요)</text>
+
+  <!-- Refresh pattern legend -->
+  <rect x="60" y="378" width="360" height="30" fill="#111827" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="240" y="397" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">REFRESH MATERIALIZED VIEW CONCURRENTLY mv_daily_sales</text>
+
+  <rect x="460" y="378" width="360" height="30" fill="#111827" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="640" y="397" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">REFRESH MATERIALIZED VIEW mv_daily_sales  ← 테이블 락 발생</text>
+</svg>
