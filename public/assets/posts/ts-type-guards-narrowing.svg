@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">제어 흐름 분석 — 컴파일러의 자동 좁히기</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle" xml:space="preserve">분기마다 타입이 자동으로 좁혀지는 흐름</text>
+
+  <!-- Code block: control flow narrowing -->
+  <rect x="60" y="96" width="760" height="204" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function process(x: string | number | null) {</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 이 시점: x = string | number | null</text>
+  <text x="76" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  if (x === null) return;</text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // null 제거: x = string | number</text>
+  <text x="76" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  if (typeof x === "string") {</text>
+  <text x="76" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">    // 이 분기: x = string</text>
+  <text x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    return x.toUpperCase();</text>
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  }</text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  // 여기서: x = number</text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  return x.toFixed(2);</text>
+  <text x="76" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">}</text>
+
+  <!-- Bottom three info boxes -->
+  <rect x="60" y="322" width="230" height="112" rx="8" fill="#0f1a0f" stroke="#1a3a1a" stroke-width="1.5"/>
+  <text x="175" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle" xml:space="preserve">Early Return</text>
+  <text x="175" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">조기 반환으로 타입을</text>
+  <text x="175" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">좁혀 이후 코드를</text>
+  <text x="175" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">깔끔하게 유지</text>
+
+  <rect x="325" y="322" width="230" height="112" rx="8" fill="#0d0f1a" stroke="#1a1e3a" stroke-width="1.5"/>
+  <text x="440" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle" xml:space="preserve">discriminant</text>
+  <text x="440" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">리터럴 타입 필드(kind 등)로</text>
+  <text x="440" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">switch 분기에서</text>
+  <text x="440" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">자동 좁히기</text>
+
+  <rect x="590" y="322" width="230" height="112" rx="8" fill="#1a0f0a" stroke="#3a1e0f" stroke-width="1.5"/>
+  <text x="705" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">Array.isArray</text>
+  <text x="705" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">배열/단일값 유니언을</text>
+  <text x="705" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">안전하게 분기</text>
+  <text x="705" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">처리하는 패턴</text>
+</svg>

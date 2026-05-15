@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">infer — 조건부 타입 내에서 타입 추론</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle" xml:space="preserve">패턴 매칭으로 중첩 타입을 꺼내는 핵심 키워드</text>
+
+  <!-- Code: Basic infer -->
+  <rect x="60" y="96" width="760" height="148" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="440" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">기본 사용법 — 함수 반환 타입 추출</text>
+  <text x="76" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// T가 함수면 반환 타입을 R로 추론</text>
+  <text x="76" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">type ReturnType&lt;T&gt; = T extends (...args: any) =&gt; infer R</text>
+  <text x="76" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  ? R</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  : never;</text>
+  <text x="76" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// ReturnType&lt;() =&gt; number&gt; → number</text>
+  <text x="76" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// ReturnType&lt;(s: string) =&gt; boolean&gt; → boolean</text>
+
+  <!-- Code: Parameters + Awaited -->
+  <rect x="60" y="262" width="760" height="130" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="440" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle" xml:space="preserve">매개변수·Promise 내부 타입 추출</text>
+  <text x="76" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">type Parameters&lt;T&gt; = T extends (...args: infer P) =&gt; any ? P : never;</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// Parameters&lt;(a: string, b: number) =&gt; void&gt; → [string, number]</text>
+  <text x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">type Awaited&lt;T&gt; = T extends Promise&lt;infer U&gt; ? Awaited&lt;U&gt; : T;</text>
+  <text x="76" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// Awaited&lt;Promise&lt;Promise&lt;string&gt;&gt;&gt; → string</text>
+
+  <!-- Bottom labels -->
+  <rect x="60" y="412" width="220" height="50" rx="6" fill="#0d0f1a" stroke="#1a1e3a" stroke-width="1.5"/>
+  <text x="170" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle" xml:space="preserve">extends 절에서만 사용 가능</text>
+  <text x="170" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">else 분기에서는 참조 불가</text>
+
+  <rect x="330" y="412" width="220" height="50" rx="6" fill="#0f1a0f" stroke="#1a3a1a" stroke-width="1.5"/>
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle" xml:space="preserve">여러 infer 동시 사용</text>
+  <text x="440" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">infer A ... infer B 패턴</text>
+
+  <rect x="600" y="412" width="220" height="50" rx="6" fill="#1a0f0a" stroke="#3a1e0f" stroke-width="1.5"/>
+  <text x="710" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">재귀 결합</text>
+  <text x="710" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">중첩 Promise·배열 언랩</text>
+</svg>

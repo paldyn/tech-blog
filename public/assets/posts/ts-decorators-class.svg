@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">실전 데코레이터 패턴</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle" xml:space="preserve">로깅 · 캐시 · 의존성 주입</text>
+  <rect x="60" y="96" width="360" height="148" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="240" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle" xml:space="preserve">메서드 로깅 데코레이터</text>
+  <text x="76" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function log(t: any, key: string,</text>
+  <text x="76" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    desc: PropertyDescriptor) {</text>
+  <text x="76" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  const orig = desc.value;</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  desc.value = function(...a: unknown[]) {</text>
+  <text x="76" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    console.log(`${key} called`);</text>
+  <text x="76" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    return orig.apply(this, a); }</text>
+  <text x="76" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">}</text>
+  <rect x="460" y="96" width="360" height="148" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="640" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle" xml:space="preserve">캐시(메모이제이션) 데코레이터</text>
+  <text x="476" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">function memo(t: any, key: string,</text>
+  <text x="476" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    desc: PropertyDescriptor) {</text>
+  <text x="476" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  const cache = new Map();</text>
+  <text x="476" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  const orig = desc.value;</text>
+  <text x="476" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  desc.value = function(k: string) {</text>
+  <text x="476" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    if (!cache.has(k))</text>
+  <text x="476" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">      cache.set(k, orig.call(this, k));</text>
+  <rect x="60" y="266" width="760" height="124" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="440" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle" xml:space="preserve">사용 예시</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">@sealed</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">class UserService {</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  @log</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  @memo</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  getUser(id: string) { return fetchUser(id); }</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">}</text>
+  <rect x="60" y="410" width="760" height="32" rx="4" fill="#111" stroke="#222" stroke-width="1"/>
+  <text x="440" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle" xml:space="preserve">여러 데코레이터: 아래에서 위로 적용 (memo 먼저, log 나중)</text>
+</svg>
