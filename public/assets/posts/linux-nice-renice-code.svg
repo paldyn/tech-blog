@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 380" width="880">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">nice · renice · ionice 사용법</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">실행 시 nice 지정, 실행 중 renice, I/O 우선순위 ionice</text>
+
+  <!-- Left: nice + renice -->
+  <rect x="50" y="86" width="380" height="270" rx="8" fill="#070b14" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="66" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">nice / renice</text>
+  <line x1="66" y1="118" x2="414" y2="118" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="66" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># nice: 시작 시 우선순위 지정</text>
+  <text x="66" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">nice -n 10 ./heavy_job.sh</text>
+  <text x="66" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">nice -n -5 ./critical.sh  # root</text>
+
+  <text x="66" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># renice: 실행 중 nice 변경</text>
+  <text x="66" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">renice -n 15 -p 1234</text>
+  <text x="66" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">renice -n 5 -u user1</text>
+
+  <text x="66" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 현재 프로세스 nice 값 확인</text>
+  <text x="66" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">ps -o pid,ni,cmd -p 1234</text>
+  <text x="66" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">cat /proc/1234/stat | cut -d' ' -f19</text>
+
+  <text x="66" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># systemd unit에서 설정</text>
+  <text x="66" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">Nice=-5   # [Service] 섹션</text>
+
+  <!-- Right: ionice -->
+  <rect x="460" y="86" width="370" height="270" rx="8" fill="#070b14" stroke="#1e2433" stroke-width="1.5"/>
+  <text x="476" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">ionice — I/O 스케줄링 우선순위</text>
+  <line x1="476" y1="118" x2="814" y2="118" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="476" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 클래스 3 (idle) - 가장 낮음</text>
+  <text x="476" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">ionice -c3 ./backup.sh</text>
+
+  <text x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 클래스 2 best-effort (기본)</text>
+  <text x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">ionice -c2 -n4 ./job.sh</text>
+
+  <text x="476" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 실행 중 프로세스 변경</text>
+  <text x="476" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">ionice -c3 -p $(pgrep rsync)</text>
+
+  <!-- ionice class table -->
+  <rect x="476" y="270" width="358" height="76" rx="6" fill="#111827" stroke="#1e2d45" stroke-width="1"/>
+  <text x="492" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">ionice 클래스</text>
+  <text x="492" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">1 RT</text>
+  <text x="535" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">실시간 (root, 위험)</text>
+  <text x="492" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#b5cea8">2 BE</text>
+  <text x="535" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Best-Effort (기본, 레벨 0~7)</text>
+  <text x="492" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">3 Idle</text>
+  <text x="540" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">다른 I/O 없을 때만 실행</text>
+</svg>

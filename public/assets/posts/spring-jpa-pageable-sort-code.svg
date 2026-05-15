@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#ffffff">
+    Pageable REST API 설계 패턴
+  </text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" fill="#e8e8e8">
+    Controller에서 Pageable 파라미터 수신 → Repository → Page 응답 반환
+  </text>
+
+  <!-- Left: Controller + Repository -->
+  <text x="60" y="96"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    Controller / Repository
+  </text>
+  <rect x="50" y="104" width="380" height="330" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="66" y="130"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555">
+    @GetMapping<tspan fill="#e8e8e8">("/users")</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="148"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">public</tspan><tspan> ResponseEntity&lt;</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="166"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    Page&lt;UserDto&gt;&gt; getUsers(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="184"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    Pageable pageable) {</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="202"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  </tspan><tspan fill="#7ec8e3">return</tspan><tspan> ok(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    userService.getPage(pageable));</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="238"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>}</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="274"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // Repository: 반환 타입만 바꾸면 됨
+  </text>
+  <text xml:space="preserve" x="66" y="292"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#6a8aa0">// Page&lt;User&gt; — count 포함</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="310"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>Page&lt;</tspan><tspan fill="#7ec8e3">User</tspan><tspan>&gt; findByStatus(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="328"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    </tspan><tspan fill="#7ec8e3">String</tspan><tspan> s, Pageable p);</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="346"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#6a8aa0">// Slice&lt;User&gt; — count 없음</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="364"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>Slice&lt;</tspan><tspan fill="#7ec8e3">User</tspan><tspan>&gt; findByStatus(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="382"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    </tspan><tspan fill="#7ec8e3">String</tspan><tspan> s, Pageable p);</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="400"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // List&lt;User&gt; — 페이징 없이 정렬만
+  </text>
+  <text xml:space="preserve" x="66" y="418"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>List&lt;</tspan><tspan fill="#7ec8e3">User</tspan><tspan>&gt; findAll(Sort sort);</tspan>
+  </text>
+
+  <!-- Right: Sort + Config + Pitfalls -->
+  <text x="460" y="96"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    Sort 지정 / 기본값 설정 / 주의사항
+  </text>
+  <rect x="450" y="104" width="380" height="330" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="466" y="130"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // Sort 여러 필드 지정
+  </text>
+  <text xml:space="preserve" x="466" y="148"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>Sort sort = Sort.by(</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="166"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  Sort.Order.desc(</tspan><tspan fill="#ce9178">"createdAt"</tspan><tspan>),</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="184"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  Sort.Order.asc(</tspan><tspan fill="#ce9178">"name"</tspan><tspan>));</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 기본값 설정 (어노테이션)
+  </text>
+  <text xml:space="preserve" x="466" y="238"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555">
+    @PageableDefault<tspan fill="#e8e8e8">(size=</tspan><tspan fill="#b5cea8">20</tspan><tspan fill="#e8e8e8">,</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="256"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  sort=</tspan><tspan fill="#ce9178">"createdAt"</tspan><tspan>,</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="274"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  direction=DESC)</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="292"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>Pageable pageable</tspan>
+  </text>
+
+  <!-- Warning box -->
+  <rect x="462" y="308" width="356" height="106" rx="6" fill="#1e0808" stroke="#e05555" stroke-width="1"/>
+  <text x="478" y="328"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">
+    ⚠ 실무 주의사항
+  </text>
+  <text x="478" y="348"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    컬렉션 JOIN FETCH + 페이징 금지
+  </text>
+  <text x="478" y="366"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    → HibernateJpaDialect 경고 + 전체 메모리 로딩
+  </text>
+  <text x="478" y="386"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    해결: 2-step (ID 페이징 후 IN절 조회)
+  </text>
+  <text x="478" y="404"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    또는 @BatchSize로 N+1 완화
+  </text>
+</svg>

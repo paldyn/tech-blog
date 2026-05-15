@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#55c555"/>
+    </marker>
+    <marker id="arro" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e8a855"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Oracle Data Guard 아키텍처</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Primary → Standby Redo 전송 · 적용 · 역할 전환</text>
+
+  <!-- Primary DB -->
+  <rect x="50" y="92" width="320" height="260" rx="10" fill="#111" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="210" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">Primary Database</text>
+  <text x="210" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">읽기/쓰기 모두 가능</text>
+
+  <!-- User writes -->
+  <rect x="66" y="148" width="140" height="36" rx="5" fill="#0d1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="136" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">사용자 DML/DDL</text>
+  <text x="136" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">트랜잭션 처리</text>
+
+  <!-- Redo generation -->
+  <rect x="66" y="200" width="289" height="36" rx="5" fill="#1a1520" stroke="#7777cc" stroke-width="1"/>
+  <text x="210" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">Redo 생성 (Online Redo Log)</text>
+  <text x="210" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">모든 변경사항 기록</text>
+
+  <!-- LGWR / ARCH -->
+  <rect x="66" y="252" width="130" height="40" rx="5" fill="#0a1218"/>
+  <text x="131" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ccc">LGWR / ARCH</text>
+  <text x="131" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">Redo 전송 담당</text>
+
+  <!-- FAL Server -->
+  <rect x="210" y="252" width="145" height="40" rx="5" fill="#0a1218"/>
+  <text x="282" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ccc">FAL Server</text>
+  <text x="282" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">Redo Gap 재전송</text>
+
+  <!-- Protection mode label -->
+  <rect x="66" y="308" width="289" height="32" rx="5" fill="#0a1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="210" y="329" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">ARCH/LGWR ASYNC/SYNC 전송</text>
+
+  <!-- Redo transport arrow -->
+  <line x1="372" y1="228" x2="490" y2="228" stroke="#e8a855" stroke-width="2.5" marker-end="url(#arro)"/>
+  <text x="431" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8a855">Redo 전송</text>
+  <text x="431" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">SQL*Net / Oracle Net</text>
+
+  <!-- Standby DB -->
+  <rect x="494" y="92" width="336" height="260" rx="10" fill="#111" stroke="#55c555" stroke-width="2"/>
+  <text x="662" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">Standby Database</text>
+  <text x="662" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Physical 또는 Logical</text>
+
+  <!-- Standby Redo Logs -->
+  <rect x="510" y="148" width="305" height="36" rx="5" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="662" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Standby Redo Log 수신</text>
+  <text x="662" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">RFS (Remote File Server) 프로세스</text>
+
+  <!-- MRP / LSP -->
+  <rect x="510" y="200" width="305" height="36" rx="5" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="662" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Redo Apply (MRP / LSP)</text>
+  <text x="662" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">Media Recovery Process — 블록 적용</text>
+
+  <!-- Active Data Guard (read-only) -->
+  <rect x="510" y="252" width="305" height="40" rx="5" fill="#12202a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="662" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">Active Data Guard (읽기 전용)</text>
+  <text x="662" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="9" fill="#888">Redo Apply 중에도 SELECT 가능</text>
+
+  <!-- FAL Client -->
+  <rect x="510" y="308" width="305" height="32" rx="5" fill="#081208" stroke="#55c555" stroke-width="1"/>
+  <text x="662" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">FAL Client — Gap 감지 시 재요청</text>
+
+  <!-- Role switch arrows at bottom -->
+  <line x1="370" y1="380" x2="492" y2="380" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <line x1="492" y1="396" x2="370" y2="396" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrd)"/>
+  <text x="430" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">Switchover / Failover</text>
+  <text x="430" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">Switchback</text>
+
+  <!-- Role labels -->
+  <rect x="50" y="365" width="150" height="46" rx="6" fill="#0d1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="125" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">현재: Primary</text>
+  <text x="125" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">역할 전환 후: Standby</text>
+
+  <rect x="680" y="365" width="150" height="46" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="755" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">현재: Standby</text>
+  <text x="755" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">역할 전환 후: Primary</text>
+
+  <!-- Bottom: Protection modes -->
+  <rect x="50" y="428" width="780" height="56" rx="6" fill="#111" stroke="#333"/>
+  <text x="200" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">Maximum Protection</text>
+  <text x="200" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">SYNC + NOAFFIRM → 0 데이터 손실 보장</text>
+  <text x="440" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8a855">Maximum Availability</text>
+  <text x="440" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">SYNC → 네트워크 단절 시 ASYNC 전환</text>
+  <text x="700" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">Maximum Performance</text>
+  <text x="700" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">ASYNC → 성능 우선, 최소 데이터 손실</text>
+</svg>

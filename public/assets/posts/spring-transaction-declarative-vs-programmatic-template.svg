@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">TransactionTemplate 내부 동작 흐름</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">execute() 호출 시 트랜잭션 생명주기</text>
+
+  <!-- Step boxes -->
+  <!-- Step 1 -->
+  <rect x="60" y="88" width="200" height="52" fill="#0d1a2e" rx="8" stroke="#1e2e4a" stroke-width="1.5"/>
+  <text x="160" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">1. execute() 진입</text>
+  <text x="160" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">TransactionCallback 수신</text>
+
+  <!-- Arrow 1 -->
+  <line x1="260" y1="114" x2="318" y2="114" stroke="#555" stroke-width="1.5"/>
+  <polygon points="326,114 310,108 310,120" fill="#555"/>
+
+  <!-- Step 2 -->
+  <rect x="326" y="88" width="200" height="52" fill="#0d1a2e" rx="8" stroke="#1e2e4a" stroke-width="1.5"/>
+  <text x="426" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">2. getTransaction()</text>
+  <text x="426" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">TX 시작 또는 참여</text>
+
+  <!-- Arrow 2 -->
+  <line x1="526" y1="114" x2="584" y2="114" stroke="#555" stroke-width="1.5"/>
+  <polygon points="592,114 576,108 576,120" fill="#555"/>
+
+  <!-- Step 3 -->
+  <rect x="592" y="88" width="228" height="52" fill="#0d1a2e" rx="8" stroke="#1e2e4a" stroke-width="1.5"/>
+  <text x="706" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">3. doInTransaction()</text>
+  <text x="706" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">사용자 비즈니스 로직 실행</text>
+
+  <!-- Arrows down from Step 3 -->
+  <line x1="706" y1="140" x2="706" y2="180" stroke="#555" stroke-width="1.5"/>
+  <!-- Fork: success left, exception right -->
+  <line x1="706" y1="180" x2="426" y2="180" stroke="#1e3a1e" stroke-width="1.5"/>
+  <polygon points="418,180 434,174 434,186" fill="#1e3a1e"/>
+  <line x1="706" y1="180" x2="706" y2="220" stroke="#3a1e1e" stroke-width="1.5"/>
+  <polygon points="706,228 700,212 712,212" fill="#3a1e1e"/>
+
+  <text x="570" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">정상 반환</text>
+  <text x="718" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">예외 발생</text>
+
+  <!-- Step 4a: commit -->
+  <rect x="326" y="196" width="200" height="52" fill="#0a1a0a" rx="8" stroke="#1a2e1a" stroke-width="1.5"/>
+  <text x="426" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">4a. commit(status)</text>
+  <text x="426" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">TX 커밋 후 정리</text>
+
+  <!-- Step 4b: rollback -->
+  <rect x="592" y="236" width="228" height="52" fill="#1a0a0a" rx="8" stroke="#2e1a1a" stroke-width="1.5"/>
+  <text x="706" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">4b. rollback(status)</text>
+  <text x="706" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">예외 종류로 롤백 결정</text>
+
+  <!-- Code block: TransactionTemplate usage -->
+  <rect x="60" y="318" width="760" height="100" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 조건부 트랜잭션 — 선언적으로는 표현 불가</text>
+  <text x="76" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">if </text><text x="102" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">(needsTransaction) {</text>
+  <text x="76" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  txTemplate.execute(status -> { repo.save(entity); </text><text x="534" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">return</text><text x="572" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> null; });</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">} </text><text x="90" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">else</text><text x="116" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> { repo.save(entity); </text><text x="290" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// TX 없이</text><text x="380" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> }</text>
+  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 람다 내부에서 status.setRollbackOnly() 로 수동 롤백도 가능</text>
+</svg>

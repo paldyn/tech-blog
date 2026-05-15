@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">resize2fs — ext 파일시스템 크기 조정</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">파티션 확장 후 파일시스템도 함께 늘려야 공간이 인식된다</text>
+
+  <!-- Extend workflow -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">파일시스템 확장 흐름 (온라인 가능)</text>
+  <rect x="60" y="114" width="760" height="148" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 1. 파티션 먼저 확장 (fdisk/parted/lvresize)</text>
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">lvresize</text>
+  <text x="140" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> -L +10G /dev/vg0/lv_data</text>
+  <text x="76" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 2. ext4 파일시스템 확장 (마운트 상태에서 가능)</text>
+  <text x="76" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">resize2fs</text>
+  <text x="148" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> /dev/vg0/lv_data</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 또는 크기 명시</text>
+  <text x="76" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">resize2fs</text>
+  <text x="148" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> /dev/sdb1 50G</text>
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 확인</text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">df -h</text>
+  <text x="120" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> /mnt/data</text>
+
+  <!-- Shrink warning -->
+  <text x="60" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">축소 시 주의 (오프라인 필수)</text>
+  <rect x="60" y="300" width="760" height="44" fill="#1a0000" rx="6" stroke="#e05555" stroke-width="1.5"/>
+  <text x="76" y="319" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 반드시 언마운트 후 fsck 먼저</text>
+  <text x="76" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">umount /dev/sdb1  &amp;&amp;  fsck -f /dev/sdb1  &amp;&amp;  resize2fs /dev/sdb1 20G</text>
+</svg>

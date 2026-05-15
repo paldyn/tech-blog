@@ -1,0 +1,70 @@
+<svg width="880" height="500" viewBox="0 0 880 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Dockerfile 명령 → 레이어 매핑</text>
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">history 출력이 역순인 이유</text>
+
+  <!-- Left: Dockerfile -->
+  <text x="120" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">Dockerfile</text>
+  <rect x="60" y="120" width="240" height="308" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="116" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> debian:bookworm</text>
+  <text x="76" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">RUN</text>
+  <text x="106" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> apt-get update</text>
+  <text x="76" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    &amp;&amp; apt-get install</text>
+  <text x="76" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    -y nginx</text>
+  <text x="76" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">COPY</text>
+  <text x="112" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> nginx.conf /etc/</text>
+  <text x="76" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">EXPOSE</text>
+  <text x="124" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8"> 80</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CMD</text>
+  <text x="106" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178"> ["nginx","-g",</text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">      "daemon off;"]</text>
+  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># 5줄 명령 → 5개 레이어</text>
+  <text x="76" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># (history는 역순 출력)</text>
+
+  <!-- Arrows from Dockerfile to layers -->
+  <!-- FROM arrow -->
+  <line x1="300" y1="146" x2="370" y2="390" stroke="#1e2433" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- RUN arrow -->
+  <line x1="300" y1="194" x2="370" y2="344" stroke="#1e2433" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- COPY arrow -->
+  <line x1="300" y1="242" x2="370" y2="300" stroke="#1e2433" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- EXPOSE arrow -->
+  <line x1="300" y1="272" x2="370" y2="256" stroke="#1e2433" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- CMD arrow -->
+  <line x1="300" y1="302" x2="370" y2="214" stroke="#1e2433" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Right: history output (역순) -->
+  <text x="620" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">docker history (역순)</text>
+
+  <!-- Layer 1 (CMD - 최신) -->
+  <rect x="380" y="192" width="440" height="44" fill="#0d1117" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="400" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7777cc">Layer 5 (최신)</text>
+  <text x="400" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">/bin/sh -c #(nop) CMD nginx…   0B</text>
+
+  <!-- Layer 2 (EXPOSE) -->
+  <rect x="380" y="244" width="440" height="44" fill="#0d1117" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="400" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#888">Layer 4</text>
+  <text x="400" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">/bin/sh -c #(nop) EXPOSE 80   0B</text>
+
+  <!-- Layer 3 (COPY) -->
+  <rect x="380" y="296" width="440" height="44" fill="#0d1117" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="400" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#888">Layer 3</text>
+  <text x="400" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">/bin/sh -c #(nop) COPY…       2KB</text>
+
+  <!-- Layer 4 (RUN) -->
+  <rect x="380" y="348" width="440" height="44" fill="#0d1117" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="400" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7ec8e3">Layer 2 (가장 큰 레이어)</text>
+  <text x="400" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">/bin/sh -c apt-get install…  45MB</text>
+
+  <!-- Layer 5 (FROM - 기반) -->
+  <rect x="380" y="400" width="440" height="44" fill="#0d1117" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="400" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#888">Layer 1 (FROM 베이스)</text>
+  <text x="400" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">&lt;missing&gt; debian:bookworm  74MB</text>
+
+  <!-- 순서 화살표 -->
+  <text x="356" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">↑ 최신</text>
+  <text x="356" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">↓ 오래됨</text>
+  <line x1="356" y1="182" x2="356" y2="440" stroke="#1e2433" stroke-width="1"/>
+</svg>

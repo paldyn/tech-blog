@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">RAG 리랭킹 파이프라인</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888">1차 검색(Bi-Encoder) → 리랭킹(Cross-Encoder) → 생성</text>
+
+  <!-- Step boxes -->
+  <!-- Query -->
+  <rect x="60" y="100" width="130" height="64" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="125" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">사용자 쿼리</text>
+  <text x="125" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">질문 입력</text>
+
+  <!-- Arrow -->
+  <line x1="190" y1="132" x2="222" y2="132" stroke="#444" stroke-width="2"/>
+  <polygon points="218,127 228,132 218,137" fill="#444"/>
+
+  <!-- Retriever -->
+  <rect x="228" y="100" width="150" height="64" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="303" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">1차 검색기</text>
+  <text x="303" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Bi-Encoder + ANN</text>
+  <text x="303" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Top-K=50~100개 반환</text>
+
+  <!-- Arrow -->
+  <line x1="378" y1="132" x2="410" y2="132" stroke="#444" stroke-width="2"/>
+  <polygon points="406,127 416,132 406,137" fill="#444"/>
+
+  <!-- Reranker (highlighted) -->
+  <rect x="416" y="90" width="168" height="84" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="500" y="115" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">리랭커</text>
+  <text x="500" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#aaddaa">Cross-Encoder</text>
+  <text x="500" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">쿼리-문서 쌍 정밀 평가</text>
+  <text x="500" y="167" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Top-5 선별</text>
+
+  <!-- Arrow -->
+  <line x1="584" y1="132" x2="616" y2="132" stroke="#444" stroke-width="2"/>
+  <polygon points="612,127 622,132 612,137" fill="#444"/>
+
+  <!-- LLM -->
+  <rect x="622" y="100" width="136" height="64" rx="8" fill="#1a1a2e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="690" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">LLM 생성</text>
+  <text x="690" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정제된 컨텍스트로</text>
+  <text x="690" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">최종 답변 생성</text>
+
+  <!-- Bi-Encoder vs Cross-Encoder comparison -->
+  <rect x="60" y="200" width="360" height="110" rx="8" fill="#111" stroke="#333"/>
+  <text x="240" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">Bi-Encoder (1차 검색)</text>
+  <text x="240" y="243" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쿼리/문서 독립 인코딩 → 코사인 유사도</text>
+  <text x="240" y="261" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">문서 임베딩 사전 계산 가능</text>
+  <text x="240" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">속도 빠름 · 대규모 검색 적합</text>
+  <text x="240" y="297" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">세밀한 관련성 판단 부족</text>
+
+  <rect x="460" y="200" width="360" height="110" rx="8" fill="#111" stroke="#333"/>
+  <text x="640" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">Cross-Encoder (리랭커)</text>
+  <text x="640" y="243" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쿼리+문서 함께 인코딩 → 관련도 점수</text>
+  <text x="640" y="261" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">상호작용 어텐션으로 정밀 판단</text>
+  <text x="640" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">정확도 높음 · 관련성 품질 우수</text>
+  <text x="640" y="297" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">속도 느림 · 소수 후보에만 적용</text>
+
+  <!-- Code block -->
+  <rect x="60" y="328" width="760" height="92" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># Cross-Encoder 리랭킹 구현</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">from</text>
+  <text x="108" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> sentence_transformers </text>
+  <text x="108" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">                      import</text>
+  <text x="108" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">                             CrossEncoder</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">reranker = CrossEncoder(</text>
+  <text x="268" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'cross-encoder/ms-marco-MiniLM-L-6-v2'</text>
+  <text x="700" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">scores  = reranker.predict([(query, doc) </text>
+  <text x="484" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">for</text>
+  <text x="508" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> doc </text>
+  <text x="540" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">in</text>
+  <text x="556" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> candidates])</text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">top5    = sorted(zip(candidates, scores), key=</text>
+  <text x="460" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">lambda</text>
+  <text x="504" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> x: -x[</text>
+  <text x="548" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="556" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">])[:5]</text>
+</svg>

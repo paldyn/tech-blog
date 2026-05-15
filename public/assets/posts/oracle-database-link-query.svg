@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Database Link 생성 &amp; 분산 쿼리</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Private · Public DB Link 생성과 분산 조인 패턴</text>
+
+  <!-- Left: Create DB Link -->
+  <text x="230" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">DB Link 생성</text>
+  <rect x="50" y="108" width="360" height="258" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="66" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- Private: 생성자만 사용</text>
+  <text x="66" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE DATABASE LINK</text>
+  <text x="66" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  branch_db</text>
+  <text x="66" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CONNECT TO</text>
+  <text x="66" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  app_user <tspan fill="#7ec8e3">IDENTIFIED BY</tspan></text>
+  <text x="66" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  "s3cur3pw"</text>
+  <text x="66" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">USING</text>
+  <text x="66" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  '10.0.0.5:1521/branchdb'</text>
+  <text x="66" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+
+  <text x="66" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- Public: 모든 사용자 공유</text>
+  <text x="66" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE PUBLIC DATABASE LINK</text>
+  <text x="66" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  branch_public_db</text>
+  <text x="66" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">USING</text>
+  <text x="66" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  'branch_tns_alias'</text>
+
+  <!-- Right: Distributed queries -->
+  <text x="650" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">분산 쿼리 패턴</text>
+  <rect x="470" y="108" width="360" height="258" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="486" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 단순 원격 조회</text>
+  <text x="486" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="486" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  sale_id, amount</text>
+  <text x="486" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="486" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  branch_sales@branch_db</text>
+  <text x="486" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">WHERE</text>
+  <text x="486" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  sale_dt &gt; SYSDATE - <tspan fill="#b5cea8">7</tspan>;</text>
+
+  <text x="486" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 로컬·원격 조인</text>
+  <text x="486" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="486" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  e.emp_name, s.amount</text>
+  <text x="486" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="486" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  hq_employees e</text>
+  <text x="486" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">JOIN</text>
+  <text x="486" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  sales@branch_db s</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">SYNONYM 생성으로 @link 숨기기 가능: CREATE SYNONYM branch_sales FOR branch_sales@branch_db;</text>
+  <text x="440" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">링크 테스트: SELECT * FROM dual@branch_db;</text>
+</svg>

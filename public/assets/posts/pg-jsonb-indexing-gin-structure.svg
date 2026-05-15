@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">GIN 인덱스 구조 — JSONB 문서 검색</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">역인덱스: 키·값 → 포함 문서 목록</text>
+
+  <!-- Input documents -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">jsonb 컬럼 (3개 행)</text>
+
+  <rect x="60" y="114" width="240" height="60" rx="6" fill="#111" stroke="#2a2a2a"/>
+  <text x="75" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">행 1 (id=1)</text>
+  <text x="75" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">{"plan":"pro","tier":2}</text>
+  <text x="75" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">  active:true</text>
+
+  <rect x="60" y="184" width="240" height="60" rx="6" fill="#111" stroke="#2a2a2a"/>
+  <text x="75" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">행 2 (id=2)</text>
+  <text x="75" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">{"plan":"free","tier":1}</text>
+  <text x="75" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">  active:false</text>
+
+  <rect x="60" y="254" width="240" height="60" rx="6" fill="#111" stroke="#2a2a2a"/>
+  <text x="75" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">행 3 (id=3)</text>
+  <text x="75" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">{"plan":"pro","tier":3}</text>
+  <text x="75" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#6a8aa0">  active:true</text>
+
+  <!-- Arrow: GIN Build -->
+  <line x1="320" y1="210" x2="360" y2="210" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="360,204 374,210 360,216" fill="#7ec8e3"/>
+  <text x="340" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">GIN</text>
+  <text x="340" y="225" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">빌드</text>
+
+  <!-- GIN Index (inverted index) -->
+  <text x="390" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">GIN 역인덱스 (키·값 → 행 ID 목록)</text>
+  <rect x="390" y="114" width="430" height="260" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+
+  <!-- Entry rows -->
+  <rect x="406" y="130" width="170" height="28" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="491" y="149" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">"plan" = "pro"</text>
+  <line x1="580" y1="144" x2="614" y2="144" stroke="#444" stroke-width="1"/>
+  <rect x="616" y="130" width="188" height="28" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="710" y="149" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">→ {1, 3}</text>
+
+  <rect x="406" y="168" width="170" height="28" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="491" y="187" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">"plan" = "free"</text>
+  <line x1="580" y1="182" x2="614" y2="182" stroke="#444" stroke-width="1"/>
+  <rect x="616" y="168" width="188" height="28" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="710" y="187" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">→ {2}</text>
+
+  <rect x="406" y="206" width="170" height="28" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="491" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">"tier" = 1</text>
+  <line x1="580" y1="220" x2="614" y2="220" stroke="#444" stroke-width="1"/>
+  <rect x="616" y="206" width="188" height="28" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="710" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">→ {2}</text>
+
+  <rect x="406" y="244" width="170" height="28" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="491" y="263" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">"tier" = 2</text>
+  <line x1="580" y1="258" x2="614" y2="258" stroke="#444" stroke-width="1"/>
+  <rect x="616" y="244" width="188" height="28" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="710" y="263" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">→ {1}</text>
+
+  <rect x="406" y="282" width="170" height="28" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="491" y="301" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">"active" = true</text>
+  <line x1="580" y1="296" x2="614" y2="296" stroke="#444" stroke-width="1"/>
+  <rect x="616" y="282" width="188" height="28" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="710" y="301" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">→ {1, 3}</text>
+
+  <rect x="406" y="320" width="170" height="28" rx="4" fill="#1a2e3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="491" y="339" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">"active" = false</text>
+  <line x1="580" y1="334" x2="614" y2="334" stroke="#444" stroke-width="1"/>
+  <rect x="616" y="320" width="188" height="28" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="710" y="339" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">→ {2}</text>
+
+  <!-- Query box -->
+  <rect x="60" y="360" width="760" height="60" rx="8" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="440" y="381" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">@> 조건: WHERE payload @&gt; '{"plan":"pro"}'</text>
+  <text x="440" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">GIN: "plan"="pro" 엔트리 → {1,3} 즉시 반환 → 힙에서 행 1,3만 조회 → Seq Scan 없음</text>
+
+  <!-- Note -->
+  <rect x="60" y="438" width="760" height="58" rx="8" fill="#0d1520" stroke="#1e2433" stroke-width="1"/>
+  <text x="440" y="461" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">jsonb_ops vs jsonb_path_ops</text>
+  <text x="440" y="481" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">기본(jsonb_ops): ?, ?|, ?&amp;, @&gt; 모두 지원 | jsonb_path_ops: @&gt; 전용, 인덱스 크기 20~40% 작음</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">AWR 스냅샷 관리 &amp; ASH 쿼리</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">실무 SQL 패턴</text>
+
+  <!-- Left: AWR SQL -->
+  <rect x="60" y="96" width="370" height="380" rx="12" fill="#0e1623" stroke="#1e3050" stroke-width="1.5"/>
+  <text x="245" y="118" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">AWR Snapshot 관리</text>
+
+  <rect x="76" y="128" width="338" height="332" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="92" y="152" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 최근 스냅샷 목록</text>
+  <text x="92" y="170" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> snap_id, begin_interval_time,</text>
+  <text x="92" y="188" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       end_interval_time</text>
+  <text x="92" y="206" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  dba_hist_snapshot</text>
+  <text x="92" y="224" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> begin_interval_time</text>
+  <text x="92" y="242" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        &gt; SYSDATE - 1</text>
+  <text x="92" y="260" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">ORDER BY</tspan> snap_id <tspan fill="#7ec8e3">DESC</tspan>;</text>
+
+  <text x="92" y="288" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 수동 스냅샷 생성</text>
+  <text x="92" y="306" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">EXEC</tspan> DBMS_WORKLOAD_REPOSITORY</text>
+  <text x="92" y="324" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">     .create_snapshot();</text>
+
+  <text x="92" y="352" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 보존 기간·간격 변경</text>
+  <text x="92" y="370" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">EXEC</tspan> DBMS_WORKLOAD_REPOSITORY</text>
+  <text x="92" y="388" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  .modify_snapshot_settings(</text>
+  <text x="92" y="406" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    retention =&gt; <tspan fill="#b5cea8">20160</tspan>, <tspan fill="#6a8aa0">-- 14일(분)</tspan></text>
+  <text x="92" y="424" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    interval  =&gt; <tspan fill="#b5cea8">30</tspan>);   <tspan fill="#6a8aa0">-- 30분</tspan></text>
+
+  <!-- Right: ASH SQL -->
+  <rect x="450" y="96" width="370" height="380" rx="12" fill="#0e1a0e" stroke="#1e4020" stroke-width="1.5"/>
+  <text x="635" y="118" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">ASH — 상위 Wait 분석</text>
+
+  <rect x="466" y="128" width="338" height="332" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="482" y="152" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 최근 1시간 상위 Wait Event</text>
+  <text x="482" y="170" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> event,</text>
+  <text x="482" y="188" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       <tspan fill="#7ec8e3">COUNT</tspan>(*) AS samples,</text>
+  <text x="482" y="206" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       wait_class</text>
+  <text x="482" y="224" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  v$active_session_history</text>
+  <text x="482" y="242" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> sample_time &gt; SYSDATE - 1/24</text>
+  <text x="482" y="260" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  <tspan fill="#7ec8e3">AND</tspan>   session_state = <tspan fill="#ce9178">'WAITING'</tspan></text>
+  <text x="482" y="278" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">GROUP BY</tspan> event, wait_class</text>
+  <text x="482" y="296" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">ORDER BY</tspan> samples <tspan fill="#7ec8e3">DESC</tspan></text>
+  <text x="482" y="314" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FETCH FIRST</tspan> <tspan fill="#b5cea8">10</tspan> <tspan fill="#7ec8e3">ROWS ONLY</tspan>;</text>
+
+  <text x="482" y="344" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 특정 SQL_ID CPU 소비 추적</text>
+  <text x="482" y="362" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> sql_id,</text>
+  <text x="482" y="380" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       <tspan fill="#7ec8e3">COUNT</tspan>(*) * <tspan fill="#b5cea8">10</tspan> AS cpu_ms</text>
+  <text x="482" y="398" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  dba_hist_active_sess_history</text>
+  <text x="482" y="416" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> session_state = <tspan fill="#ce9178">'ON CPU'</tspan></text>
+  <text x="482" y="434" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">GROUP BY</tspan> sql_id</text>
+  <text x="482" y="452" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">ORDER BY</tspan> cpu_ms <tspan fill="#7ec8e3">DESC</tspan>;</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">RC vs RR — 동시 UPDATE 시 동작 비교</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">같은 행을 두 트랜잭션이 수정할 때 스냅샷 갱신 여부 차이</text>
+
+  <!-- Timeline columns -->
+  <!-- T1 header -->
+  <rect x="60" y="96" width="240" height="36" rx="6" fill="#1a1a2e" stroke="#7777cc"/>
+  <text x="180" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">트랜잭션 A</text>
+
+  <!-- T2 header -->
+  <rect x="580" y="96" width="240" height="36" rx="6" fill="#1a2a1a" stroke="#55c555"/>
+  <text x="700" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">트랜잭션 B</text>
+
+  <!-- Time axis -->
+  <line x1="440" y1="96" x2="440" y2="420" stroke="#333" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="440" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">시간 ↓</text>
+
+  <!-- Steps -->
+  <!-- Step 1 -->
+  <rect x="80" y="148" width="200" height="32" rx="4" fill="#0d1117" stroke="#1e2433"/>
+  <text x="180" y="169" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">BEGIN; -- snap: xmax=100</text>
+
+  <!-- Step 2 -->
+  <rect x="600" y="196" width="200" height="32" rx="4" fill="#0d1117" stroke="#1e2433"/>
+  <text x="700" y="217" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">BEGIN;</text>
+
+  <!-- Step 3 -->
+  <rect x="600" y="244" width="200" height="32" rx="4" fill="#0d1117" stroke="#1e2433"/>
+  <text x="700" y="265" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">UPDATE t SET v=99 WHERE id=1;</text>
+
+  <!-- Step 4 -->
+  <rect x="600" y="292" width="200" height="32" rx="4" fill="#0d1117" stroke="#1e2433"/>
+  <text x="700" y="313" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">COMMIT; -- XID 101</text>
+
+  <!-- Step 5 A reads -->
+  <rect x="80" y="340" width="200" height="32" rx="4" fill="#0d1117" stroke="#1e2433"/>
+  <text x="180" y="361" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" text-anchor="middle">SELECT v FROM t WHERE id=1;</text>
+
+  <!-- RC result -->
+  <rect x="80" y="388" width="200" height="32" rx="4" fill="#1a2a1a" stroke="#55c555"/>
+  <text x="180" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">RC: v=99 (새 스냅샷 취득)</text>
+  <text x="180" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">RR: v=원래값 (스냅샷 고정)</text>
+
+  <!-- Arrows connecting steps -->
+  <line x1="600" y1="260" x2="450" y2="260" stroke="#55c555" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="600" y1="308" x2="450" y2="308" stroke="#55c555" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Labels -->
+  <text x="455" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">B writes</text>
+  <text x="455" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">B commits</text>
+
+  <!-- Annotation RC vs RR -->
+  <rect x="320" y="380" width="240" height="52" rx="6" fill="#111" stroke="#1e2433"/>
+  <text x="440" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle" font-weight="600">RC: Non-Repeatable Read 발생</text>
+  <text x="440" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">RR: 쿼리 실행 때마다 동일 결과 보장</text>
+</svg>

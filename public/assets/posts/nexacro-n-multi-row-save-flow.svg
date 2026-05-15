@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">멀티 행 저장 흐름</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="400" fill="#888" text-anchor="middle">Dataset rowStatus → 서버 일괄 전송 → savePoint() 초기화</text>
+
+  <!-- Dataset 상태 박스 -->
+  <rect x="60" y="100" width="220" height="160" fill="#111827" rx="8" stroke="#1e2d45" stroke-width="1.5"/>
+  <text x="170" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Dataset (변경 전)</text>
+  <!-- rows -->
+  <rect x="76" y="132" width="188" height="24" fill="#0d2137" rx="4"/>
+  <text x="86" y="149" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">ROW 0 — INSERT</text>
+  <rect x="76" y="160" width="188" height="24" fill="#1a1a0d" rx="4"/>
+  <text x="86" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8c44a">ROW 1 — UPDATE</text>
+  <rect x="76" y="188" width="188" height="24" fill="#1a0d0d" rx="4"/>
+  <text x="86" y="205" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">ROW 2 — DELETE</text>
+  <rect x="76" y="216" width="188" height="24" fill="#111" rx="4"/>
+  <text x="86" y="233" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">ROW 3 — NORMAL</text>
+
+  <!-- 화살표: Dataset → transaction -->
+  <line x1="280" y1="180" x2="340" y2="180" stroke="#555" stroke-width="1.5"/>
+  <polygon points="340,174 356,180 340,186" fill="#7ec8e3"/>
+  <text x="318" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">전송</text>
+
+  <!-- transaction() 박스 -->
+  <rect x="356" y="140" width="180" height="80" fill="#0e1a2a" rx="8" stroke="#2a4a7a" stroke-width="1.5"/>
+  <text x="446" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">transaction()</text>
+  <text x="446" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Dataset 통째로</text>
+  <text x="446" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">서버로 전송</text>
+
+  <!-- 화살표: transaction → 서버 -->
+  <line x1="536" y1="180" x2="596" y2="180" stroke="#555" stroke-width="1.5"/>
+  <polygon points="596,174 612,180 596,186" fill="#7777cc"/>
+  <text x="566" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">HTTP</text>
+
+  <!-- 서버 박스 -->
+  <rect x="612" y="140" width="200" height="80" fill="#160f28" rx="8" stroke="#3a2a6a" stroke-width="1.5"/>
+  <text x="712" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">서버 Adapter</text>
+  <text x="712" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">rowStatus별 INSERT/</text>
+  <text x="712" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">UPDATE/DELETE 처리</text>
+
+  <!-- 콜백 흐름 -->
+  <!-- 성공 경로 -->
+  <line x1="712" y1="220" x2="712" y2="310" stroke="#555" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="712" y1="310" x2="536" y2="310" stroke="#555" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <polygon points="536,304 520,310 536,316" fill="#55c555"/>
+  <text x="624" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">성공 콜백</text>
+
+  <!-- 콜백 처리 박스 -->
+  <rect x="356" y="278" width="164" height="64" fill="#0d1e0d" rx="8" stroke="#1e4a1e" stroke-width="1.5"/>
+  <text x="438" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">콜백 처리</text>
+  <text x="438" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">errCode 확인 → 분기</text>
+  <text x="438" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">savePoint() 초기화</text>
+
+  <!-- 에러 경로 -->
+  <line x1="712" y1="220" x2="712" y2="400" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="712" y1="400" x2="620" y2="400" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <polygon points="620,394 604,400 620,406" fill="#e05555"/>
+  <text x="666" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">에러 콜백</text>
+
+  <!-- 에러 박스 -->
+  <rect x="440" y="372" width="160" height="56" fill="#1e0d0d" rx="8" stroke="#4a1e1e" stroke-width="1.5"/>
+  <text x="520" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">에러 처리</text>
+  <text x="520" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">alert + return</text>
+
+  <!-- savePoint 후 재조회 -->
+  <line x1="356" y1="310" x2="240" y2="310" stroke="#555" stroke-width="1.5"/>
+  <polygon points="240,304 224,310 240,316" fill="#7ec8e3"/>
+  <text x="298" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">초기화</text>
+
+  <!-- 재조회 박스 -->
+  <rect x="60" y="278" width="164" height="64" fill="#0e1a2a" rx="8" stroke="#1e3a5a" stroke-width="1.5"/>
+  <text x="142" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">savePoint() 후</text>
+  <text x="142" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">rowStatus 전부 NORMAL</text>
+  <text x="142" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">fn_search() 재조회</text>
+
+  <!-- 하단 범례 -->
+  <rect x="60" y="440" width="16" height="12" fill="#55c555" rx="2"/>
+  <text x="82" y="451" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">INSERT</text>
+  <rect x="160" y="440" width="16" height="12" fill="#e8c44a" rx="2"/>
+  <text x="182" y="451" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">UPDATE</text>
+  <rect x="260" y="440" width="16" height="12" fill="#e05555" rx="2"/>
+  <text x="282" y="451" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">DELETE</text>
+  <rect x="360" y="440" width="16" height="12" fill="#555" rx="2"/>
+  <text x="382" y="451" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">NORMAL (제외)</text>
+  <text x="560" y="451" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">rowStatus 기반 자동 분기 — 서버 Adapter가 처리</text>
+</svg>

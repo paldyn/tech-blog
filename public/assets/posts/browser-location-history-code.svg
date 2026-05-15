@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SPA 라우터 핵심 구현</text>
+
+  <!-- Left: pushState navigation -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">pushState 네비게이션</text>
+
+  <rect x="60" y="94" width="370" height="162" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">function <text fill="#e8e8e8">navigate(url, state = {}) {</text></text>
+  <text x="76" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  history.<text fill="#7ec8e3">pushState</text><text fill="#e8e8e8">(state, </text><text fill="#ce9178">''</text><text fill="#e8e8e8">, url);</text></text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <text fill="#7ec8e3">renderPage</text><text fill="#e8e8e8">(url);</text></text>
+  <text x="76" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+  <text x="76" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// 뒤로/앞으로 버튼 처리</text>
+  <text x="76" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">window.<text fill="#7ec8e3">addEventListener</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'popstate'</text><text fill="#e8e8e8">, e =&gt; {</text></text>
+  <text x="76" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <text fill="#7ec8e3">renderPage</text><text fill="#e8e8e8">(location.pathname);</text></text>
+  <text x="76" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+
+  <!-- Right: URLSearchParams -->
+  <text x="450" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">URLSearchParams 활용</text>
+
+  <rect x="450" y="94" width="370" height="162" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="466" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// URL 쿼리 파라미터 다루기</text>
+  <text x="466" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">const <text fill="#e8e8e8">params = </text><text fill="#7ec8e3">new </text><text fill="#e8e8e8">URLSearchParams(location.search);</text></text>
+  <text x="466" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">params.<text fill="#7ec8e3">get</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'q'</text><text fill="#e8e8e8">);         </text><text fill="#6a8aa0">// 'hello'</text></text>
+  <text x="466" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">params.<text fill="#7ec8e3">set</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'q'</text><text fill="#e8e8e8">, </text><text fill="#ce9178">'world'</text><text fill="#e8e8e8">);</text></text>
+  <text x="466" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// URL 갱신 (뒤로가기 스택 유지)</text>
+  <text x="466" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">history.<text fill="#7ec8e3">replaceState</text><text fill="#e8e8e8">({}, </text><text fill="#ce9178">''</text><text fill="#e8e8e8">,</text></text>
+  <text x="466" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <text fill="#ce9178">`?${params}`</text><text fill="#e8e8e8">);</text></text>
+  <text x="466" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">// URL: ?q=world&amp;lang=ko</text>
+
+  <!-- Bottom: link intercept -->
+  <text x="60" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8a84c">링크 클릭 가로채기 (SPA 패턴)</text>
+
+  <rect x="60" y="296" width="760" height="88" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">document.<text fill="#7ec8e3">addEventListener</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'click'</text><text fill="#e8e8e8">, e =&gt; {</text></text>
+  <text x="76" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  const <text fill="#e8e8e8">a = e.target.<text fill="#7ec8e3">closest</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'a[href]'</text><text fill="#e8e8e8">);</text></text>
+  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  if <text fill="#e8e8e8">(!a || a.origin !== location.origin) </text><text fill="#7ec8e3">return</text><text fill="#e8e8e8">;</text></text>
+  <text x="76" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  e.<text fill="#7ec8e3">preventDefault</text><text fill="#e8e8e8">();</text></text>
+  <text x="76" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <text fill="#7ec8e3">navigate</text><text fill="#e8e8e8">(a.pathname + a.search + a.hash);</text></text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">});</text>
+</svg>

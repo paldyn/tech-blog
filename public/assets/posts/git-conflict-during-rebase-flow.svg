@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Rebase 중 충돌 처리 흐름</text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#888">커밋 하나씩 재적용 — 충돌은 각 커밋마다 발생 가능</text>
+
+  <!-- Branch diagram -->
+  <rect x="60" y="90" width="760" height="56" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="113" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" xml:space="preserve">main:    A ── B ── C ── D</text>
+  <text x="76" y="131" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7777cc" xml:space="preserve">feature:      └── X1 ── X2 ── X3   (git rebase main)</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="146" x2="440" y2="172" stroke="#555" stroke-width="1.5"/>
+  <polygon points="440,180 433,170 447,170" fill="#555"/>
+
+  <!-- Commit processing loop -->
+  <rect x="60" y="180" width="760" height="240" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1"/>
+  <text x="100" y="203"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">커밋별 반복 처리 (X1, X2, X3 순서)</text>
+
+  <!-- X1 row -->
+  <rect x="80" y="212" width="116" height="34" rx="6" fill="#0a0a1a" stroke="#7777cc"/>
+  <text x="138" y="234" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7777cc" xml:space="preserve">X1 적용</text>
+  <line x1="196" y1="229" x2="230" y2="229" stroke="#555" stroke-width="1.5"/>
+  <polygon points="238,229 228,223 228,235" fill="#555"/>
+  <rect x="238" y="212" width="130" height="34" rx="6" fill="#0a1a0a" stroke="#55c555"/>
+  <text x="303" y="234" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">충돌 없음</text>
+  <line x1="368" y1="229" x2="402" y2="229" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="410,229 400,223 400,235" fill="#55c555"/>
+  <text x="440" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">다음 커밋으로</text>
+
+  <!-- X2 row (with conflict) -->
+  <rect x="80" y="264" width="116" height="34" rx="6" fill="#0a0a1a" stroke="#7777cc"/>
+  <text x="138" y="286" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7777cc" xml:space="preserve">X2 적용</text>
+  <line x1="196" y1="281" x2="230" y2="281" stroke="#555" stroke-width="1.5"/>
+  <polygon points="238,281 228,275 228,287" fill="#555"/>
+  <rect x="238" y="264" width="130" height="34" rx="6" fill="#1a0808" stroke="#e05555"/>
+  <text x="303" y="286" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">CONFLICT</text>
+  <line x1="368" y1="281" x2="402" y2="281" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="410,281 400,275 400,287" fill="#e05555"/>
+  <!-- Conflict resolution steps -->
+  <text x="420" y="272"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8">1. 파일 수정</text>
+  <text x="420" y="288"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8">2. git add</text>
+  <text x="560" y="272"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555">git rebase</text>
+  <text x="560" y="288"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555">  --continue</text>
+
+  <!-- X3 row -->
+  <rect x="80" y="316" width="116" height="34" rx="6" fill="#0a0a1a" stroke="#7777cc"/>
+  <text x="138" y="338" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7777cc" xml:space="preserve">X3 적용</text>
+  <line x1="196" y1="333" x2="230" y2="333" stroke="#555" stroke-width="1.5"/>
+  <polygon points="238,333 228,327 228,339" fill="#555"/>
+  <rect x="238" y="316" width="130" height="34" rx="6" fill="#0a1a0a" stroke="#55c555"/>
+  <text x="303" y="338" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">충돌 없음</text>
+  <line x1="368" y1="333" x2="402" y2="333" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="410,333 400,327 400,339" fill="#55c555"/>
+  <text x="420" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">rebase 완료</text>
+
+  <!-- abort option in box -->
+  <rect x="600" y="350" width="200" height="52" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="700" y="370" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">전체 중단하려면</text>
+  <text x="700" y="390" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555">git rebase --abort</text>
+
+  <!-- After rebase result -->
+  <line x1="440" y1="420" x2="440" y2="446" stroke="#555" stroke-width="1.5"/>
+  <polygon points="440,454 433,444 447,444" fill="#555"/>
+
+  <rect x="60" y="454" width="760" height="30" rx="6" fill="#070b14" stroke="#55c555"/>
+  <text x="440" y="474" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" xml:space="preserve">main:    A ── B ── C ── D ── X1&#39; ── X2&#39; ── X3&#39;</text>
+</svg>

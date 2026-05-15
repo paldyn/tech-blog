@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">AbortController 구조와 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">controller.abort() → signal.aborted → fetch reject</text>
+
+  <!-- AbortController box -->
+  <rect x="60" y="100" width="280" height="100" rx="10" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="200" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#7777cc">AbortController</text>
+  <text x="200" y="155" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">controller.signal</text>
+  <text x="200" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">controller.abort(reason)</text>
+
+  <!-- Arrow controller → signal -->
+  <line x1="340" y1="150" x2="398" y2="150" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="398,144 410,150 398,156" fill="#7777cc"/>
+
+  <!-- AbortSignal box -->
+  <rect x="410" y="100" width="280" height="100" rx="10" fill="#1f0d0d" stroke="#e05555" stroke-width="2"/>
+  <text x="550" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e05555">AbortSignal</text>
+  <text x="550" y="155" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">signal.aborted  <text fill="#888">// bool</text></text>
+  <text x="550" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888">signal.reason</text>
+
+  <!-- Arrow signal → fetch -->
+  <line x1="550" y1="200" x2="550" y2="248" stroke="#e05555" stroke-width="2"/>
+  <polygon points="544,248 550,260 556,248" fill="#e05555"/>
+
+  <!-- fetch box -->
+  <rect x="360" y="260" width="380" height="60" rx="8" fill="#0d1a1f" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="550" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">fetch(url, { signal })</text>
+  <text x="550" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">abort() 호출 시 → AbortError로 reject</text>
+
+  <!-- Arrow fetch → DOMException -->
+  <line x1="550" y1="320" x2="550" y2="368" stroke="#e05555" stroke-width="2"/>
+  <polygon points="544,368 550,380 556,368" fill="#e05555"/>
+
+  <!-- Error box -->
+  <rect x="360" y="380" width="380" height="50" rx="8" fill="#1f0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="550" y="400" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">DOMException: AbortError</text>
+  <text x="550" y="418" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">err.name === 'AbortError'로 구분</text>
+
+  <!-- Static methods -->
+  <rect x="60" y="250" width="280" height="140" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="200" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">정적 팩토리 메서드</text>
+  <text x="80" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">AbortSignal.timeout(ms)</text>
+  <text x="80" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">ms 후 자동으로 중단되는 signal</text>
+  <text x="80" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">AbortSignal.any([s1, s2])</text>
+  <text x="80" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">어느 signal이라도 abort 시 발동</text>
+  <text x="80" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">AbortSignal.abort(reason)</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="444" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">fetch 외에도 addEventListener, IndexedDB, EventSource 등 signal 전달 가능</text>
+</svg>

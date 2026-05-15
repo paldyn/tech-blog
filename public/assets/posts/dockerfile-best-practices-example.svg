@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">모범 사례 종합 예시 — Node.js</text>
+
+  <!-- Code block -->
+  <rect x="60" y="68" width="760" height="360" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="92" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># syntax=docker/dockerfile:1</text>
+  <text x="76" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ① 버전 고정된 최소 베이스</text>
+  <text x="76" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="112" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> node:20.11.1-alpine3.19 AS deps</text>
+  <text x="76" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WORKDIR</text>
+  <text x="148" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve"> /app</text>
+  <text x="76" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ② 의존성 먼저 (캐시 최적화)</text>
+  <text x="76" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="112" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> package*.json ./</text>
+  <text x="76" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ③ BuildKit 캐시 마운트</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">RUN</text>
+  <text x="108" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> --mount=type=cache,target=/root/.npm \</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">    npm ci --prefer-offline</text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ④ 빌드 스테이지 분리</text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="112" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> node:20.11.1-alpine3.19 AS production</text>
+  <text x="76" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WORKDIR</text>
+  <text x="148" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve"> /app</text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="112" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> --from=deps /app/node_modules ./node_modules</text>
+  <text x="76" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="112" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> . .</text>
+  <text x="76" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ⑤ 비루트 사용자</text>
+  <text x="76" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">USER</text>
+  <text x="112" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> node</text>
+  <text x="76" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ⑥ HEALTHCHECK + Exec 폼 CMD</text>
+  <text x="76" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">HEALTHCHECK</text>
+  <text x="184" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> --interval=15s CMD wget -qO- http://localhost:3000/</text>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">CMD</text>
+  <text x="112" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> ["node", "server.js"]</text>
+</svg>

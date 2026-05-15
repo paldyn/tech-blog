@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">rowStatus 활용 코드 패턴</text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">변경 감지 · 원본값 비교 · 저장 전 카운트 확인</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="760" height="264" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="115" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#6a8aa0">// 저장 전 변경 여부 확인</text>
+
+  <text x="76" y="133" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">function</tspan><tspan> fn_hasChanges() {</tspan>
+  </text>
+
+  <text x="76" y="151" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  </tspan><tspan fill="#7ec8e3">var</tspan><tspan> ds = </tspan><tspan fill="#7ec8e3">this</tspan><tspan>.ds_list;</tspan>
+  </text>
+
+  <text x="76" y="169" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  </tspan><tspan fill="#7ec8e3">return</tspan><tspan> ds.getInsertRowCount()</tspan>
+  </text>
+
+  <text x="76" y="187" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>       + ds.getUpdateRowCount()</tspan>
+  </text>
+
+  <text x="76" y="205" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>       + ds.getDeleteRowCount() > </tspan><tspan fill="#b5cea8">0</tspan><tspan>;</tspan>
+  </text>
+
+  <text x="76" y="223" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">}</text>
+
+  <text x="76" y="241" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#6a8aa0">// 특정 행 rowStatus 확인</text>
+
+  <text x="76" y="259" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">var</tspan><tspan> st = ds_list.getRowStatus(row);</tspan>
+  </text>
+
+  <text x="76" y="277" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#6a8aa0">// 원본값 vs 현재값 비교</text>
+
+  <text x="76" y="295" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">var</tspan><tspan> org = ds_list.getOrgColumn(row,</tspan>
+  </text>
+
+  <text x="76" y="313" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>               </tspan><tspan fill="#ce9178">"AMOUNT"</tspan><tspan>);</tspan>
+  </text>
+
+  <text x="76" y="331" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">var</tspan><tspan> cur = ds_list.getColumn(row,</tspan>
+  </text>
+
+  <text x="76" y="349" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>               </tspan><tspan fill="#ce9178">"AMOUNT"</tspan><tspan>);</tspan>
+  </text>
+
+  <text x="440" y="382"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">getOrgColumn()은 마지막 savePoint() 또는 서버 조회 직후 값을 반환</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">PostgreSQL Heap 페이지 구조</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">8KB 페이지 레이아웃 · Dead Tuple · TOAST</text>
+
+  <!-- 8KB Page -->
+  <rect x="60" y="90" width="440" height="400" rx="12" fill="#0e1623" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="280" y="114" text-anchor="middle" font-size="15" font-weight="700" fill="#7ec8e3">8KB Heap Page</text>
+
+  <!-- Page Header -->
+  <rect x="80" y="124" width="400" height="50" rx="6" fill="#112236" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="280" y="148" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">Page Header (24 bytes)</text>
+  <text x="280" y="166" text-anchor="middle" font-size="11" fill="#888">pd_lsn, pd_checksum, pd_flags, pd_lower, pd_upper, pd_special</text>
+
+  <!-- Item pointers -->
+  <rect x="80" y="184" width="400" height="50" rx="6" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="280" y="208" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Item Pointers (Line Pointer Array) ↓ 증가</text>
+  <text x="280" y="226" text-anchor="middle" font-size="11" fill="#888">각 4 bytes: offset + flags + length (MVCC dead tuple 포함)</text>
+
+  <!-- Free space -->
+  <rect x="80" y="244" width="400" height="80" rx="6" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="280" y="280" text-anchor="middle" font-size="14" fill="#555">Free Space</text>
+  <text x="280" y="298" text-anchor="middle" font-size="11" fill="#444">pd_lower ~ pd_upper 사이</text>
+
+  <!-- Tuple 2 (dead) -->
+  <rect x="80" y="334" width="400" height="50" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="280" y="356" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">Dead Tuple (MVCC 구버전)</text>
+  <text x="280" y="374" text-anchor="middle" font-size="11" fill="#888">xmax 설정됨 · VACUUM이 회수 대상</text>
+
+  <!-- Tuple 1 (live) -->
+  <rect x="80" y="394" width="400" height="50" rx="6" fill="#0a1208" stroke="#55c555" stroke-width="1.5"/>
+  <text x="280" y="416" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Live Tuple</text>
+  <text x="280" y="434" text-anchor="middle" font-size="11" fill="#888">xmin 설정 · ctid=(page,offset) · 실제 데이터</text>
+
+  <!-- Special area -->
+  <rect x="80" y="454" width="400" height="26" rx="6" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="280" y="472" text-anchor="middle" font-size="12" fill="#7777cc">Special Area (인덱스 타입별 사용)</text>
+
+  <!-- Arrow down growth -->
+  <text x="50" y="245" font-size="18" fill="#7ec8e3">↓</text>
+  <text x="50" y="354" font-size="18" fill="#55c555">↑</text>
+
+  <!-- TOAST box (right) -->
+  <rect x="540" y="90" width="300" height="400" rx="12" fill="#1a1208" stroke="#e0a833" stroke-width="2"/>
+  <text x="690" y="114" text-anchor="middle" font-size="15" font-weight="700" fill="#e0a833">TOAST 메커니즘</text>
+  <text x="690" y="132" text-anchor="middle" font-size="11" fill="#888">컬럼 값 &gt; 2KB일 때 자동 처리</text>
+
+  <rect x="560" y="148" width="260" height="60" rx="8" fill="#221a08" stroke="#e0a833" stroke-width="1.5"/>
+  <text x="690" y="170" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">압축 (PGLZ / LZ4)</text>
+  <text x="690" y="188" text-anchor="middle" font-size="11" fill="#aaaaaa">압축 후 2KB 이하이면 인라인 저장</text>
+  <text x="690" y="204" text-anchor="middle" font-size="11" fill="#888">toast_compression 파라미터</text>
+
+  <line x1="690" y1="208" x2="690" y2="236" stroke="#e0a833" stroke-width="1.5"/>
+  <polygon points="685,236 690,252 695,236" fill="#e0a833"/>
+  <text x="730" y="228" font-size="11" fill="#888">여전히 크면</text>
+
+  <rect x="560" y="252" width="260" height="60" rx="8" fill="#221a08" stroke="#e0a833" stroke-width="1.5"/>
+  <text x="690" y="274" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">별도 TOAST 테이블 저장</text>
+  <text x="690" y="292" text-anchor="middle" font-size="11" fill="#aaaaaa">원본 페이지에는 포인터만 남음</text>
+  <text x="690" y="308" text-anchor="middle" font-size="11" fill="#888">pg_toast.pg_toast_NNNN</text>
+
+  <!-- TOAST strategy -->
+  <rect x="560" y="330" width="260" height="140" rx="8" fill="#12080a" stroke="#e0a833" stroke-width="1"/>
+  <text x="690" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">TOAST 전략 (컬럼별 설정)</text>
+  <text x="575" y="374" font-size="12" fill="#7ec8e3">PLAIN</text>
+  <text x="635" y="374" font-size="12" fill="#aaaaaa">: 압축·외부화 없음</text>
+  <text x="575" y="394" font-size="12" fill="#55c555">MAIN</text>
+  <text x="635" y="394" font-size="12" fill="#aaaaaa">: 압축, 외부화 최소</text>
+  <text x="575" y="414" font-size="12" fill="#e0a833">EXTERNAL</text>
+  <text x="660" y="414" font-size="12" fill="#aaaaaa">: 압축 없이 외부화</text>
+  <text x="575" y="434" font-size="12" fill="#7777cc">EXTENDED</text>
+  <text x="660" y="434" font-size="12" fill="#aaaaaa">: 기본, 압축+외부화</text>
+  <text x="575" y="454" font-size="11" fill="#888">text/bytea/jsonb 기본: EXTENDED</text>
+  <text x="575" y="468" font-size="11" fill="#888">int/float 기본: PLAIN (해당 없음)</text>
+</svg>

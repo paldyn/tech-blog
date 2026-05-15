@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#ffffff">
+    QueryDSL 동작 원리 — Q타입 생성에서 쿼리 실행까지
+  </text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" fill="#e8e8e8">
+    APT가 엔티티를 분석해 Q타입 클래스를 생성하고, JPAQueryFactory가 이를 사용합니다
+  </text>
+
+  <!-- Step 1: Entity -->
+  <rect x="50" y="94" width="180" height="80" rx="8" fill="#0f1e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="120" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">
+    @Entity 클래스
+  </text>
+  <text x="140" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    User.java
+  </text>
+  <text x="140" y="158" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">
+    id, name, age, status
+  </text>
+
+  <!-- Arrow 1: Entity → APT -->
+  <line x1="234" y1="134" x2="278" y2="134" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="284,134 274,128 274,140" fill="#7ec8e3"/>
+  <text x="259" y="124"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">
+    APT
+  </text>
+
+  <!-- Step 2: APT / Annotation Processor -->
+  <rect x="288" y="94" width="180" height="80" rx="8" fill="#1a160e" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="378" y="120" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e0a055">
+    APT 처리
+  </text>
+  <text x="378" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    Annotation Processing
+  </text>
+  <text x="378" y="158" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">
+    gradle compileJava
+  </text>
+
+  <!-- Arrow 2: APT → QType -->
+  <line x1="472" y1="134" x2="516" y2="134" stroke="#e0a055" stroke-width="1.5"/>
+  <polygon points="522,134 512,128 512,140" fill="#e0a055"/>
+  <text x="497" y="124"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">
+    생성
+  </text>
+
+  <!-- Step 3: Q-Type -->
+  <rect x="526" y="94" width="180" height="80" rx="8" fill="#16162a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="616" y="120" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#c4b5fd">
+    Q타입 클래스
+  </text>
+  <text x="616" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    QUser.java (자동 생성)
+  </text>
+  <text x="616" y="158" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">
+    QUser.user (static 인스턴스)
+  </text>
+
+  <!-- Arrow 3: QType → JPAQueryFactory (downward) -->
+  <line x1="616" y1="178" x2="616" y2="214" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="616,220 610,210 622,210" fill="#7777cc"/>
+
+  <!-- Step 4: JPAQueryFactory -->
+  <rect x="288" y="224" width="556" height="72" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="566" y="252" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">
+    JPAQueryFactory
+  </text>
+  <text x="566" y="274" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    .select(QUser.user) .from(QUser.user) .where(...) .fetch()
+  </text>
+
+  <!-- Arrow from JPAQueryFactory to result -->
+  <line x1="566" y1="300" x2="566" y2="332" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="566,338 560,328 572,328" fill="#55c555"/>
+
+  <!-- Result box -->
+  <rect x="380" y="342" width="368" height="44" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1"/>
+  <text x="564" y="368" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">
+    타입 안전한 쿼리 결과 List&lt;User&gt;
+  </text>
+
+  <!-- Benefits panel on left -->
+  <rect x="50" y="224" width="218" height="162" rx="6" fill="#111" stroke="#222"/>
+  <text x="159" y="248" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">
+    QueryDSL 장점
+  </text>
+  <text x="66" y="272"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    ✓
+  </text>
+  <text x="82" y="272"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    컴파일 타임 오류 검출
+  </text>
+  <text x="66" y="294"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    ✓
+  </text>
+  <text x="82" y="294"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    IDE 자동완성 지원
+  </text>
+  <text x="66" y="316"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    ✓
+  </text>
+  <text x="82" y="316"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    동적 쿼리 간결 작성
+  </text>
+  <text x="66" y="338"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    ✓
+  </text>
+  <text x="82" y="338"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    리팩터링 안전성
+  </text>
+  <text x="66" y="360"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    ✓
+  </text>
+  <text x="82" y="360"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    복잡한 JOIN·서브쿼리
+  </text>
+
+  <!-- Bottom: Gradle config hint -->
+  <rect x="50" y="402" width="780" height="68" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="66" y="424"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // build.gradle (Spring Boot 3.x + Jakarta)
+  </text>
+  <text xml:space="preserve" x="66" y="442"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#55c555">implementation</tspan><tspan> </tspan><tspan fill="#ce9178">'com.querydsl:querydsl-jpa:5.1.0:jakarta'</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="460"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#55c555">annotationProcessor</tspan><tspan> </tspan><tspan fill="#ce9178">'com.querydsl:querydsl-apt:5.1.0:jakarta'</tspan>
+  </text>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">WAL 설정 &amp; 모니터링 SQL</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">wal_level · synchronous_commit · pg_wal_lsn_diff</text>
+
+  <!-- Left -->
+  <rect x="60" y="92" width="370" height="300" rx="12" fill="#0e1623" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="245" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">WAL 설정 확인</text>
+  <rect x="76" y="124" width="338" height="252" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="92" y="148" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- WAL 관련 주요 파라미터</text>
+  <text x="92" y="166" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> name, setting, unit</text>
+  <text x="92" y="184" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  pg_settings</text>
+  <text x="92" y="202" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">WHERE</tspan> name <tspan fill="#7ec8e3">IN</tspan> (</text>
+  <text x="92" y="220" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'wal_level',</text>
+  <text x="92" y="238" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'synchronous_commit',</text>
+  <text x="92" y="256" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'wal_compression',</text>
+  <text x="92" y="274" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'checkpoint_completion_target',</text>
+  <text x="92" y="292" font-size="12" fill="#ce9178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  'max_wal_size');</text>
+
+  <text x="92" y="320" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 현재 WAL 위치 (LSN)</text>
+  <text x="92" y="338" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> pg_current_wal_lsn(),</text>
+  <text x="92" y="356" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       pg_walfile_name(</text>
+  <text x="92" y="374" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">         pg_current_wal_lsn());</text>
+
+  <!-- Right -->
+  <rect x="450" y="92" width="370" height="300" rx="12" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="635" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">WAL 생성량 &amp; 복제 지연 모니터링</text>
+  <rect x="466" y="124" width="338" height="252" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="482" y="148" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 1초간 WAL 생성량 측정</text>
+  <text x="482" y="166" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan></text>
+  <text x="482" y="184" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  pg_size_pretty(</text>
+  <text x="482" y="202" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    pg_wal_lsn_diff(</text>
+  <text x="482" y="220" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">      pg_current_wal_lsn(),</text>
+  <text x="482" y="238" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">      lsn_before)) AS wal_rate</text>
+  <text x="482" y="256" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan> (</text>
+  <text x="482" y="274" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  <tspan fill="#7ec8e3">SELECT</tspan> pg_current_wal_lsn() AS lsn_before,</text>
+  <text x="482" y="292" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">         pg_sleep(<tspan fill="#b5cea8">1</tspan>)) t;</text>
+
+  <text x="482" y="320" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 스트리밍 복제 지연</text>
+  <text x="482" y="338" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> client_addr,</text>
+  <text x="482" y="356" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       write_lag, flush_lag,</text>
+  <text x="482" y="374" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       replay_lag</text>
+  <text x="482" y="392" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  pg_stat_replication;</text>
+</svg>

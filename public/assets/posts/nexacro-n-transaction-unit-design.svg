@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">트랜잭션 단위 설계 패턴</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="400" fill="#888" text-anchor="middle">단건 저장 vs 멀티 Dataset vs 배치 — 언제 끊을 것인가</text>
+
+  <!-- 패턴 A: 단건 저장 -->
+  <rect x="60" y="96" width="234" height="170" fill="#111827" rx="8" stroke="#2a4a7a" stroke-width="1.5"/>
+  <text x="177" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">패턴 A: 단건 저장</text>
+  <text x="177" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">행 1개 변경 즉시 전송</text>
+  <rect x="76" y="146" width="202" height="28" fill="#0d2137" rx="4"/>
+  <text x="87" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">사용자가 행 수정</text>
+  <line x1="177" y1="174" x2="177" y2="190" stroke="#555" stroke-width="1.5"/>
+  <polygon points="171,190 177,202 183,190" fill="#7ec8e3"/>
+  <rect x="76" y="202" width="202" height="28" fill="#0d2137" rx="4"/>
+  <text x="87" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">transaction() 즉시 호출</text>
+  <text x="87" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">적합: 인라인 편집, 즉시 반영</text>
+  <text x="87" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">단점: 빈번한 요청</text>
+
+  <!-- 패턴 B: 멀티 행 일괄 -->
+  <rect x="324" y="96" width="234" height="170" fill="#111827" rx="8" stroke="#3a5a2a" stroke-width="1.5"/>
+  <text x="441" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">패턴 B: 멀티 행 일괄</text>
+  <text x="441" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">여러 행 변경 후 저장 버튼</text>
+  <rect x="340" y="146" width="202" height="28" fill="#0d1e0d" rx="4"/>
+  <text x="351" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">N행 INSERT/UPDATE/DELETE</text>
+  <line x1="441" y1="174" x2="441" y2="190" stroke="#555" stroke-width="1.5"/>
+  <polygon points="435,190 441,202 447,190" fill="#55c555"/>
+  <rect x="340" y="202" width="202" height="28" fill="#0d1e0d" rx="4"/>
+  <text x="351" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">저장 버튼 → transaction()</text>
+  <text x="351" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">적합: 그리드 일괄 편집</text>
+  <text x="351" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">장점: 서버 요청 최소화</text>
+
+  <!-- 패턴 C: 멀티 Dataset -->
+  <rect x="588" y="96" width="234" height="170" fill="#111827" rx="8" stroke="#5a3a7a" stroke-width="1.5"/>
+  <text x="705" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">패턴 C: 멀티 Dataset</text>
+  <text x="705" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">헤더 + 아이템 동시 전송</text>
+  <rect x="604" y="146" width="202" height="28" fill="#160f28" rx="4"/>
+  <text x="615" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">ds_header + ds_item 변경</text>
+  <line x1="705" y1="174" x2="705" y2="190" stroke="#555" stroke-width="1.5"/>
+  <polygon points="699,190 705,202 711,190" fill="#7777cc"/>
+  <rect x="604" y="202" width="202" height="28" fill="#160f28" rx="4"/>
+  <text x="615" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">in:ds_a=ds_a in:ds_b=ds_b</text>
+  <text x="615" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">적합: 주문 헤더/아이템</text>
+  <text x="615" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">서버 트랜잭션으로 묶기</text>
+
+  <!-- 의사결정 트리 -->
+  <rect x="60" y="300" width="760" height="160" fill="#0e0e14" rx="8" stroke="#2a2a4a" stroke-width="1"/>
+  <text x="440" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">트랜잭션 단위 의사결정</text>
+
+  <!-- 결정 노드 -->
+  <rect x="340" y="334" width="200" height="34" fill="#111" rx="6" stroke="#555" stroke-width="1"/>
+  <text x="440" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">여러 행을 한꺼번에 변경?</text>
+
+  <!-- Yes 분기 -->
+  <line x1="340" y1="351" x2="220" y2="380" stroke="#555" stroke-width="1"/>
+  <rect x="80" y="380" width="200" height="34" fill="#0d2137" rx="6" stroke="#2a4a7a" stroke-width="1"/>
+  <text x="180" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">→ 멀티 행 일괄 (패턴 B)</text>
+  <text x="120" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Yes</text>
+
+  <!-- No 분기 -->
+  <line x1="540" y1="351" x2="660" y2="380" stroke="#555" stroke-width="1"/>
+  <rect x="600" y="380" width="200" height="34" fill="#0d1e0d" rx="6" stroke="#2a4a7a" stroke-width="1"/>
+  <text x="700" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">→ 즉시 단건 (패턴 A)</text>
+  <text x="660" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">No</text>
+
+  <!-- 멀티 Dataset 분기 -->
+  <line x1="440" y1="368" x2="440" y2="380" stroke="#555" stroke-width="1"/>
+  <rect x="340" y="380" width="200" height="34" fill="#160f28" rx="6" stroke="#3a2a6a" stroke-width="1"/>
+  <text x="440" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">연관 DS 동시 변경?→ 패턴 C</text>
+</svg>

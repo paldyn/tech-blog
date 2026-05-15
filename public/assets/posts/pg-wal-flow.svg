@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">PostgreSQL WAL 쓰기 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">Write-Ahead Log — 영속성 보장 메커니즘</text>
+
+  <!-- Transaction step 1 -->
+  <rect x="60" y="96" width="200" height="70" rx="10" fill="#1a1208" stroke="#e0a833" stroke-width="1.5"/>
+  <text x="160" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#e0a833">트랜잭션 변경</text>
+  <text x="160" y="142" text-anchor="middle" font-size="12" fill="#aaaaaa">UPDATE / INSERT</text>
+  <text x="160" y="158" text-anchor="middle" font-size="11" fill="#888">Shared Buffers에 Dirty Page</text>
+
+  <!-- Arrow 1 -->
+  <line x1="260" y1="131" x2="340" y2="131" stroke="#e0a833" stroke-width="2"/>
+  <polygon points="340,126 356,131 340,136" fill="#e0a833"/>
+
+  <!-- WAL Buffer -->
+  <rect x="356" y="96" width="200" height="70" rx="10" fill="#1a0e1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="456" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">WAL Buffer</text>
+  <text x="456" y="142" text-anchor="middle" font-size="12" fill="#aaaaaa">WAL 레코드 임시 저장</text>
+  <text x="456" y="158" text-anchor="middle" font-size="11" fill="#888">wal_buffers (Shared Memory)</text>
+
+  <!-- Arrow 2 (on COMMIT) -->
+  <line x1="556" y1="131" x2="636" y2="131" stroke="#55c555" stroke-width="2"/>
+  <polygon points="636,126 652,131 636,136" fill="#55c555"/>
+  <text x="596" y="118" text-anchor="middle" font-size="11" fill="#55c555">COMMIT 시</text>
+  <text x="596" y="148" text-anchor="middle" font-size="11" fill="#55c555">fsync</text>
+
+  <!-- pg_wal on disk -->
+  <rect x="652" y="96" width="180" height="70" rx="10" fill="#0e1a0e" stroke="#55c555" stroke-width="2"/>
+  <text x="742" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">pg_wal/</text>
+  <text x="742" y="142" text-anchor="middle" font-size="12" fill="#aaaaaa">WAL 세그먼트 파일</text>
+  <text x="742" y="158" text-anchor="middle" font-size="11" fill="#888">기본 16MB씩, 순환 재사용</text>
+
+  <!-- WAL Writer -->
+  <rect x="356" y="220" width="200" height="60" rx="10" fill="#0e1623" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="456" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">WAL Writer</text>
+  <text x="456" y="264" text-anchor="middle" font-size="11" fill="#aaaaaa">주기적으로 WAL Buffer → pg_wal 기록</text>
+
+  <line x1="456" y1="166" x2="456" y2="220" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="490" y="198" font-size="11" fill="#888">주기 기록 (wal_writer_delay)</text>
+
+  <!-- Crash Recovery -->
+  <rect x="60" y="320" width="760" height="170" rx="12" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="344" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">충돌 복구 (Crash Recovery) 흐름</text>
+
+  <rect x="80" y="358" width="180" height="60" rx="8" fill="#220808" stroke="#e05555" stroke-width="1"/>
+  <text x="170" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">1. DB 비정상 종료</text>
+  <text x="170" y="403" text-anchor="middle" font-size="11" fill="#aaaaaa">Shared Buffers 소실</text>
+
+  <line x1="260" y1="388" x2="310" y2="388" stroke="#e05555" stroke-width="2"/>
+  <polygon points="310,383 326,388 310,393" fill="#e05555"/>
+
+  <rect x="326" y="358" width="180" height="60" rx="8" fill="#220808" stroke="#e05555" stroke-width="1"/>
+  <text x="416" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">2. 기동 시 WAL Redo</text>
+  <text x="416" y="403" text-anchor="middle" font-size="11" fill="#aaaaaa">마지막 체크포인트부터</text>
+
+  <line x1="506" y1="388" x2="556" y2="388" stroke="#e05555" stroke-width="2"/>
+  <polygon points="556,383 572,388 556,393" fill="#e05555"/>
+
+  <rect x="572" y="358" width="220" height="60" rx="8" fill="#220808" stroke="#55c555" stroke-width="1"/>
+  <text x="682" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#55c555">3. 복구 완료</text>
+  <text x="682" y="403" text-anchor="middle" font-size="11" fill="#aaaaaa">WAL 레코드로 DB 일관성 회복</text>
+
+  <!-- Archive note -->
+  <rect x="80" y="428" width="720" height="44" rx="8" fill="#1a1208" stroke="#e0a833" stroke-width="1"/>
+  <text x="440" y="452" text-anchor="middle" font-size="12" fill="#e0a833">PITR: Archiver가 pg_wal/ → 아카이브 경로 복사 → base backup + WAL 아카이브로 특정 시점 복구</text>
+  <text x="440" y="468" text-anchor="middle" font-size="11" fill="#888">archive_mode = on · archive_command = 'cp %p /archive/%f'</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" role="img" aria-label="EXPOSE 동작과 실제 포트 바인딩의 차이">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">EXPOSE — 문서화 vs 실제 바인딩</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">EXPOSE는 포트를 열지 않는다</text>
+
+  <!-- Left: EXPOSE only -->
+  <rect x="60" y="95" width="340" height="260" rx="8" fill="#1a0808" stroke="#3d1e1e" stroke-width="1.5"/>
+  <text x="230" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">EXPOSE 3000 (문서화만)</text>
+
+  <rect x="76" y="134" width="308" height="60" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="92" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">EXPOSE</text>
+  <text x="152" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve"> 3000</text>
+  <text x="92" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># docker run img (포트 옵션 없음)</text>
+
+  <!-- Container box -->
+  <rect x="80" y="210" width="300" height="120" rx="6" fill="#111318" stroke="#2a2d3a" stroke-width="1"/>
+  <text x="230" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">컨테이너</text>
+  <rect x="160" y="250" width="140" height="30" rx="4" fill="#1a0808" stroke="#3d1e1e" stroke-width="1"/>
+  <text x="230" y="270" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">앱 :3000</text>
+  <text x="230" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">호스트에서 접근 불가</text>
+  <text x="230" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">(같은 네트워크 컨테이너끼리는 가능)</text>
+
+  <!-- Right: -p flag -->
+  <rect x="480" y="95" width="340" height="260" rx="8" fill="#081808" stroke="#1e3d1e" stroke-width="1.5"/>
+  <text x="650" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">-p 8080:3000 (실제 바인딩)</text>
+
+  <rect x="496" y="134" width="308" height="60" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1"/>
+  <text x="512" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">EXPOSE</text>
+  <text x="572" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve"> 3000</text>
+  <text x="512" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># docker run -p 8080:3000 img</text>
+
+  <!-- Host box -->
+  <rect x="494" y="210" width="130" height="60" rx="6" fill="#0d1520" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="559" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">호스트</text>
+  <text x="559" y="258" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">:8080</text>
+
+  <!-- Arrow host → container -->
+  <line x1="630" y1="240" x2="665" y2="240" stroke="#55c555" stroke-width="2"/>
+  <polygon points="665,234 678,240 665,246" fill="#55c555"/>
+
+  <!-- Container box right -->
+  <rect x="680" y="210" width="120" height="60" rx="6" fill="#0d180d" stroke="#1e3d1e" stroke-width="1"/>
+  <text x="740" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">컨테이너</text>
+  <text x="740" y="258" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">:3000</text>
+
+  <text x="650" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">localhost:8080 으로 접근 가능</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="375" width="760" height="30" rx="6" fill="#111318" stroke="#2a2d3a" stroke-width="1"/>
+  <text x="440" y="395" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">EXPOSE는 메타데이터일 뿐 — 실제 포트 개방은 -p / -P 또는 Compose ports: 에서 결정</text>
+</svg>

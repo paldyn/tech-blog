@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PostgreSQL B-Tree 인덱스 내부 구조</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">Meta page → Root → Branch → Leaf → Heap TID</text>
+
+  <!-- Meta page -->
+  <rect x="380" y="96" width="120" height="36" rx="6" fill="#1a1a2e" stroke="#7777cc"/>
+  <text x="440" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Meta Page</text>
+
+  <!-- Arrow meta → root -->
+  <line x1="440" y1="132" x2="440" y2="152" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="434,152 440,164 446,152" fill="#7777cc"/>
+
+  <!-- Root node -->
+  <rect x="340" y="164" width="200" height="40" rx="6" fill="#111" stroke="#7ec8e3"/>
+  <text x="440" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">Root  [50 | 150 | 300]</text>
+  <text x="440" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">Internal Node (High Key 포함)</text>
+
+  <!-- Arrow root → branch nodes -->
+  <line x1="390" y1="204" x2="200" y2="250" stroke="#555" stroke-width="1.5"/>
+  <polygon points="196,244 200,256 206,246" fill="#555"/>
+  <line x1="440" y1="204" x2="440" y2="250" stroke="#555" stroke-width="1.5"/>
+  <polygon points="434,250 440,262 446,250" fill="#555"/>
+  <line x1="490" y1="204" x2="680" y2="250" stroke="#555" stroke-width="1.5"/>
+  <polygon points="674,244 680,256 686,246" fill="#555"/>
+
+  <!-- Branch nodes -->
+  <rect x="100" y="262" width="200" height="38" rx="6" fill="#111" stroke="#7ec8e3" stroke-opacity="0.6"/>
+  <text x="200" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">Branch [10|30|50]</text>
+  <text x="200" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">Internal Node</text>
+
+  <rect x="340" y="262" width="200" height="38" rx="6" fill="#111" stroke="#7ec8e3" stroke-opacity="0.6"/>
+  <text x="440" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">Branch [60|100|150]</text>
+  <text x="440" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">Internal Node</text>
+
+  <rect x="580" y="262" width="200" height="38" rx="6" fill="#111" stroke="#7ec8e3" stroke-opacity="0.6"/>
+  <text x="680" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">Branch [160|220|300]</text>
+  <text x="680" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">Internal Node</text>
+
+  <!-- Arrows branch → leaves -->
+  <line x1="200" y1="300" x2="160" y2="348" stroke="#555" stroke-width="1"/>
+  <polygon points="156,342 160,354 166,344" fill="#555"/>
+  <line x1="200" y1="300" x2="240" y2="348" stroke="#555" stroke-width="1"/>
+  <polygon points="234,342 240,354 246,344" fill="#555"/>
+  <line x1="680" y1="300" x2="640" y2="348" stroke="#555" stroke-width="1"/>
+  <polygon points="636,342 640,354 646,344" fill="#555"/>
+  <line x1="680" y1="300" x2="720" y2="348" stroke="#555" stroke-width="1"/>
+  <polygon points="714,342 720,354 726,344" fill="#555"/>
+
+  <!-- Leaf nodes -->
+  <rect x="80" y="360" width="140" height="52" rx="6" fill="#0d1117" stroke="#55c555"/>
+  <text x="150" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">Leaf [5|10|20]</text>
+  <text x="150" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">(key, TID) 쌍</text>
+  <text x="150" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">← 좌우 연결 →</text>
+
+  <rect x="220" y="360" width="140" height="52" rx="6" fill="#0d1117" stroke="#55c555"/>
+  <text x="290" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">Leaf [21|30|49]</text>
+  <text x="290" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">(key, TID) 쌍</text>
+  <text x="290" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">← 좌우 연결 →</text>
+
+  <text x="420" y="395" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555" text-anchor="middle">... 생략 ...</text>
+
+  <rect x="560" y="360" width="140" height="52" rx="6" fill="#0d1117" stroke="#55c555"/>
+  <text x="630" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">Leaf [280|290|300]</text>
+  <text x="630" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">(key, TID) 쌍</text>
+  <text x="630" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">← 좌우 연결 →</text>
+
+  <rect x="700" y="360" width="140" height="52" rx="6" fill="#0d1117" stroke="#55c555"/>
+  <text x="770" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">Leaf [301|350|...]</text>
+  <text x="770" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apache-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">(key, TID) 쌍</text>
+  <text x="770" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">← 좌우 연결 →</text>
+
+  <!-- Leaf horizontal links -->
+  <line x1="220" y1="386" x2="220" y2="386" stroke="#7777cc" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="220" y1="386" x2="560" y2="386" stroke="#7777cc" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="700" y1="386" x2="840" y2="386" stroke="#7777cc" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Heap arrows -->
+  <line x1="150" y1="412" x2="150" y2="444" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="150" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Heap Page</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="468" width="760" height="36" rx="6" fill="#0d1117" stroke="#1e2433"/>
+  <text x="440" y="484" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">리프 페이지 순방향 연결(linked list) → Range Scan이 효율적 / 높이 O(log N) → Point Lookup</text>
+  <text x="440" y="499" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">PageSize=8KB, fill_factor=90%일 때 리프 페이지 당 약 200~400 엔트리</text>
+</svg>

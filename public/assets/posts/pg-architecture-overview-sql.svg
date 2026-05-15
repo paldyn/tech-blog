@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">PostgreSQL 기본 관리 SQL</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">데이터베이스 · 역할 · 연결 확인</text>
+
+  <!-- Left panel -->
+  <rect x="60" y="92" width="370" height="300" rx="12" fill="#0e1623" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="245" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">데이터베이스 &amp; 역할 관리</text>
+  <rect x="76" y="124" width="338" height="252" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="92" y="148" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 데이터베이스 목록</text>
+  <text x="92" y="166" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">\l</text>
+  <text x="92" y="184" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> datname, encoding,</text>
+  <text x="92" y="202" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       datcollate, datctype</text>
+  <text x="92" y="220" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan> pg_database;</text>
+
+  <text x="92" y="248" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 역할(사용자) 생성</text>
+  <text x="92" y="266" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">CREATE ROLE</tspan> appuser</text>
+  <text x="92" y="284" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  <tspan fill="#7ec8e3">LOGIN PASSWORD</tspan> <tspan fill="#ce9178">'pass'</tspan></text>
+  <text x="92" y="302" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  <tspan fill="#7ec8e3">VALID UNTIL</tspan> <tspan fill="#ce9178">'2027-01-01'</tspan>;</text>
+
+  <text x="92" y="330" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 스키마 권한 부여</text>
+  <text x="92" y="348" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">GRANT USAGE ON SCHEMA</tspan> app</text>
+  <text x="92" y="366" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  <tspan fill="#7ec8e3">TO</tspan> appuser;</text>
+
+  <!-- Right panel -->
+  <rect x="450" y="92" width="370" height="300" rx="12" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="635" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">버전 &amp; 연결 모니터링</text>
+  <rect x="466" y="124" width="338" height="252" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="482" y="148" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- PostgreSQL 버전</text>
+  <text x="482" y="166" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> version();</text>
+  <text x="482" y="184" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SHOW</tspan> server_version;</text>
+
+  <text x="482" y="212" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- 활성 연결 수</text>
+  <text x="482" y="230" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> count(*),</text>
+  <text x="482" y="248" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       state, wait_event_type</text>
+  <text x="482" y="266" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan>  pg_stat_activity</text>
+  <text x="482" y="284" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">GROUP BY</tspan> state, wait_event_type;</text>
+
+  <text x="482" y="312" font-size="12" fill="#6a8aa0" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">-- DB 크기</text>
+  <text x="482" y="330" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">SELECT</tspan> datname,</text>
+  <text x="482" y="348" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  pg_size_pretty(</text>
+  <text x="482" y="366" font-size="12" fill="#e8e8e8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    pg_database_size(datname))</text>
+  <text x="482" y="384" font-size="12" fill="#7ec8e3" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3">FROM</tspan> pg_database;</text>
+</svg>

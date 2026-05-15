@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arrd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arro" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e8a855"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Cache Fusion — 인터커넥트 블록 전송</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Node 2가 Node 1의 캐시 블록을 디스크 없이 직접 가져오는 과정</text>
+
+  <!-- Step boxes -->
+  <!-- Node 1 buffer -->
+  <rect x="50" y="100" width="240" height="80" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="170" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">Node 1 Buffer Cache</text>
+  <text x="170" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ccc">Block #1234 (Exclusive 보유)</text>
+  <text x="170" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">변경됨 (Dirty)</text>
+
+  <!-- Node 2 request -->
+  <rect x="590" y="100" width="240" height="80" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="710" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Node 2 Buffer Cache</text>
+  <text x="710" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ccc">Block #1234 요청</text>
+  <text x="710" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">(아직 없음)</text>
+
+  <!-- GCS Master -->
+  <rect x="330" y="100" width="220" height="80" rx="8" fill="#12101a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">GCS Master</text>
+  <text x="440" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ccc">블록 #1234 소유자 = Node 1</text>
+  <text x="440" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">버퍼 캐시 디렉토리 관리</text>
+
+  <!-- Step 1: Node 2 → GCS -->
+  <line x1="590" y1="148" x2="552" y2="148" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+  <text x="570" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">① 블록 요청</text>
+
+  <!-- Step 2: GCS → Node 1 -->
+  <line x1="330" y1="136" x2="292" y2="136" stroke="#7777cc" stroke-width="1.5" marker-end="url(#arrd)"/>
+  <text x="311" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">② 전송 요청</text>
+
+  <!-- Step 3: Node 1 → Node 2 (direct) -->
+  <line x1="292" y1="162" x2="588" y2="162" stroke="#e8a855" stroke-width="2" marker-end="url(#arro)"/>
+  <text x="440" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8a855">③ 인터커넥트로 블록 직접 전송 (Cache Fusion)</text>
+
+  <!-- Disk (not used) -->
+  <rect x="310" y="230" width="260" height="56" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="440" y="254" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">Shared Disk (사용 안 함)</text>
+  <text x="440" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Cache Fusion 덕분에 디스크 I/O 없이 처리</text>
+
+  <!-- Cross mark -->
+  <line x1="400" y1="194" x2="370" y2="228" stroke="#e05555" stroke-width="2"/>
+  <line x1="370" y1="194" x2="400" y2="228" stroke="#e05555" stroke-width="2"/>
+  <line x1="480" y1="194" x2="510" y2="228" stroke="#e05555" stroke-width="2"/>
+  <line x1="510" y1="194" x2="480" y2="228" stroke="#e05555" stroke-width="2"/>
+
+  <!-- Result -->
+  <rect x="590" y="220" width="240" height="66" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="710" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">Node 2 수신 완료</text>
+  <text x="710" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ccc">Block #1234 Shared 모드 보유</text>
+  <text x="710" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">READ 가능</text>
+
+  <!-- Bottom explanation -->
+  <rect x="50" y="316" width="780" height="120" rx="8" fill="#111" stroke="#333"/>
+  <text x="440" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">블록 모드 (GCS Mode)</text>
+
+  <rect x="66" y="350" width="220" height="70" rx="6" fill="#0d1520"/>
+  <text x="176" y="370" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">Null (NL)</text>
+  <text x="176" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">블록 없음 / 캐시 없음</text>
+  <text x="176" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">초기 상태</text>
+
+  <rect x="330" y="350" width="220" height="70" rx="6" fill="#0d1a20"/>
+  <text x="440" y="370" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">Shared (S)</text>
+  <text x="440" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">여러 노드 동시 읽기 가능</text>
+  <text x="440" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Clean 블록</text>
+
+  <rect x="594" y="350" width="220" height="70" rx="6" fill="#12101a"/>
+  <text x="704" y="370" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">Exclusive (X)</text>
+  <text x="704" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">단일 노드만 쓰기 가능</text>
+  <text x="704" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Dirty 블록 보유 노드</text>
+</svg>

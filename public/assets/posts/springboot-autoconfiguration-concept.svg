@@ -1,0 +1,68 @@
+<svg width="880" viewBox="0 0 880 540" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Spring Boot Auto-Configuration 동작 원리</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">클래스패스 감지 → 조건 평가 → 빈 자동 등록 — 세 단계로 이해하기</text>
+
+  <!-- Step 1: Classpath detection -->
+  <rect x="60" y="96" width="220" height="130" fill="#0d0f1a" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <rect x="60" y="96" width="220" height="32" fill="#7777cc" rx="8"/>
+  <rect x="60" y="112" width="220" height="16" fill="#7777cc"/>
+  <text x="170" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#fff">1 클래스패스 스캔</text>
+  <text x="80" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">spring-boot-starter-web</text>
+  <text x="80" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ Tomcat, DispatcherServlet</text>
+  <text x="80" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">spring-boot-starter-data-jpa</text>
+  <text x="80" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ Hibernate, DataSource</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="280" y1="161" x2="316" y2="161" stroke="#555" stroke-width="1.5"/>
+  <polygon points="326,161 314,156 314,166" fill="#555"/>
+
+  <!-- Step 2: Condition evaluation -->
+  <rect x="328" y="96" width="224" height="130" fill="#0a1510" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="328" y="96" width="224" height="32" fill="#55c555" rx="8"/>
+  <rect x="328" y="112" width="224" height="16" fill="#55c555"/>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#0a0a0a">2 조건(@Conditional) 평가</text>
+  <text x="346" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">@ConditionalOnClass</text>
+  <text x="346" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 클래스 존재 여부 확인</text>
+  <text x="346" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">@ConditionalOnMissingBean</text>
+  <text x="346" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 이미 등록된 빈 확인</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="552" y1="161" x2="588" y2="161" stroke="#555" stroke-width="1.5"/>
+  <polygon points="598,161 586,156 586,166" fill="#555"/>
+
+  <!-- Step 3: Bean registration -->
+  <rect x="600" y="96" width="220" height="130" fill="#15100a" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <rect x="600" y="96" width="220" height="32" fill="#7ec8e3" rx="8"/>
+  <rect x="600" y="112" width="220" height="16" fill="#7ec8e3"/>
+  <text x="710" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#0a0a0a">3 빈 자동 등록</text>
+  <text x="620" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">TomcatServletWebServerFactory</text>
+  <text x="620" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">DispatcherServlet</text>
+  <text x="620" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">JpaRepositoriesAutoConfiguration</text>
+  <text x="620" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">DataSourceAutoConfiguration</text>
+
+  <!-- Discovery mechanism -->
+  <text x="440" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8e8e8">Auto-Configuration 후보 발견 경로</text>
+
+  <!-- Boot 2 -->
+  <rect x="60" y="290" width="360" height="100" fill="#111" rx="8" stroke="#555" stroke-width="1"/>
+  <text x="80" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">Spring Boot 2.x</text>
+  <text x="80" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">META-INF/spring.factories</text>
+  <text x="80" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">EnableAutoConfiguration 키로 후보 목록 등록</text>
+  <text x="80" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SpringFactoriesLoader가 모든 JAR에서 수집</text>
+
+  <!-- Boot 3 -->
+  <rect x="460" y="290" width="360" height="100" fill="#111" rx="8" stroke="#555" stroke-width="1"/>
+  <text x="480" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Spring Boot 3.x</text>
+  <text x="480" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">META-INF/spring/AutoConfiguration.imports</text>
+  <text x="480" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">한 줄에 하나씩 구성 클래스 FQCN 나열</text>
+  <text x="480" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">ImportCandidates.load()로 로딩</text>
+
+  <!-- User override -->
+  <rect x="60" y="416" width="760" height="94" fill="#0d1215" rx="8" stroke="#e05555" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="440" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">사용자 빈이 항상 Auto-Configuration보다 우선</text>
+  <text x="440" y="464" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">@ConditionalOnMissingBean 조건으로 인해, 사용자가 같은 타입의 빈을 먼저 등록하면</text>
+  <text x="440" y="488" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Auto-Configuration의 빈 등록이 건너뜁니다 — 커스터마이징 포인트</text>
+</svg>

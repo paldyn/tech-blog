@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Index-Only Scan 성립 조건 체크리스트</text>
+
+  <!-- 5 condition boxes -->
+  <!-- Condition 1 -->
+  <rect x="60" y="70" width="360" height="64" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="93" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">① SELECT 컬럼 ⊆ 인덱스 컬럼</text>
+  <text x="80" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">키 컬럼 + INCLUDE 컬럼이 SELECT 목록 전체를 커버해야 함</text>
+  <text x="80" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SELECT * 는 불가 (힙에만 있는 컬럼 포함)</text>
+
+  <!-- Condition 2 -->
+  <rect x="460" y="70" width="360" height="64" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="480" y="93" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">② WHERE 조건 컬럼도 인덱스 내</text>
+  <text x="480" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">필터링에 사용되는 컬럼도 인덱스에 있어야 함</text>
+  <text x="480" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인덱스 외 컬럼 필터는 Recheck 필요</text>
+
+  <!-- Condition 3 -->
+  <rect x="60" y="154" width="360" height="64" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="80" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">③ Visibility Map all-visible</text>
+  <text x="80" y="197" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">대상 힙 페이지가 all-visible이어야 힙 접근 생략</text>
+  <text x="80" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">dirty 페이지는 힙 접근 후 MVCC 검사 수행</text>
+
+  <!-- Condition 4 -->
+  <rect x="460" y="154" width="360" height="64" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="480" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">④ enable_indexonlyscan = on</text>
+  <text x="480" y="197" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">플래너가 IOS를 선택할 수 있도록 설정</text>
+  <text x="480" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">기본값 on — 비활성화 시 Bitmap Scan으로 fallback</text>
+
+  <!-- Condition 5 -->
+  <rect x="260" y="238" width="360" height="64" rx="8" fill="#1a1000" stroke="#e8a800" stroke-width="1.5"/>
+  <text x="280" y="261" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8a800">⑤ 통계 추정 행 수 적음</text>
+  <text x="280" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">대량 행 반환 시 Seq Scan 또는 Bitmap이 유리</text>
+  <text x="280" y="295" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">선택도(selectivity)가 낮아야 IOS 선택</text>
+
+  <!-- Code block -->
+  <rect x="60" y="324" width="760" height="72" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- IOS 통계 확인 (heap_fetches가 0에 가까울수록 효과적)</text>
+  <text x="76" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
+  <text x="118" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> relname, indexrelname, idx_scan,</text>
+  <text x="76" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">       idx_tup_read - idx_tup_fetch </text>
+  <text x="340" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">AS</text>
+  <text x="358" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> heap_fetches_avoided </text>
+  <text x="518" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM</text>
+  <text x="548" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> pg_stat_user_indexes;</text>
+</svg>

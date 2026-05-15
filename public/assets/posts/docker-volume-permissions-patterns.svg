@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="880" height="340">
+  <rect width="880" height="340" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">권한 설정 패턴 예시</text>
+
+  <!-- Pattern 1: Dockerfile entrypoint chown -->
+  <text x="80" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">패턴 1: entrypoint.sh에서 chown</text>
+  <rect x="80" y="88" width="340" height="170" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="96" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0">#!/bin/sh</tspan></text>
+  <text x="96" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># entrypoint.sh</tspan></text>
+  <text x="96" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># root로 먼저 chown, 이후 비루트로 전환</tspan></text>
+  <text x="96" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">chown</tspan><tspan fill="#e8e8e8"> -R app:app /app/data</tspan></text>
+  <text x="96" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">exec su-exec</tspan><tspan fill="#e8e8e8"> app </tspan><tspan fill="#ce9178">"$@"</tspan></text>
+  <text x="96" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># su-exec: alpine에서 gosu 대체제</tspan></text>
+  <text x="96" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># gosu: Ubuntu/Debian 기반</tspan></text>
+  <text x="96" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># exec gosu app "$@"</tspan></text>
+
+  <!-- Pattern 2: --user flag -->
+  <text x="460" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">패턴 2: docker run --user</text>
+  <rect x="460" y="88" width="360" height="170" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># 호스트 파일 소유자와 UID 일치</tspan></text>
+  <text x="476" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># 먼저 디렉터리 소유자 확인</tspan></text>
+  <text x="476" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">$ stat -c "%u:%g" ./data</tspan></text>
+  <text x="476" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#b5cea8">1000</tspan><tspan fill="#e8e8e8">:</tspan><tspan fill="#b5cea8">1000</tspan></text>
+  <text x="476" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#6a8aa0"># 동일 UID로 컨테이너 실행</tspan></text>
+  <text x="476" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">docker run</tspan><tspan fill="#e8e8e8"> --user </tspan><tspan fill="#b5cea8">1000</tspan><tspan fill="#e8e8e8">:</tspan><tspan fill="#b5cea8">1000</tspan><tspan fill="#e8e8e8"> \</tspan></text>
+  <text x="476" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">  -v $(pwd)/data:/app/data \</tspan></text>
+  <text x="476" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">  my-app</tspan></text>
+
+  <!-- Bottom tip -->
+  <rect x="80" y="282" width="740" height="40" fill="#0f1a0f" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="307" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">현재 사용자 UID 자동 주입: --user $(id -u):$(id -g)  — CI 환경에서 유용</text>
+</svg>

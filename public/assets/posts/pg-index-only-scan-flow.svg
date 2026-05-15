@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Index-Only Scan vs Index Scan 실행 흐름</text>
+
+  <!-- Index Scan flow (left) -->
+  <text x="210" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">Index Scan</text>
+
+  <!-- Step 1 -->
+  <rect x="80" y="100" width="260" height="44" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="210" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">① B-Tree 탐색 (루트 → 리프)</text>
+  <text x="210" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">키 조건 매칭 → TID 획득</text>
+
+  <line x1="210" y1="144" x2="210" y2="168" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="210,172 204,160 216,160" fill="#7ec8e3"/>
+
+  <!-- Step 2 -->
+  <rect x="80" y="174" width="260" height="44" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="210" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">② 힙 Fetch (TID → 힙 페이지)</text>
+  <text x="210" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">랜덤 I/O — 힙 블록 읽기</text>
+
+  <line x1="210" y1="218" x2="210" y2="242" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="210,246 204,234 216,234" fill="#e05555"/>
+
+  <!-- Step 3 -->
+  <rect x="80" y="248" width="260" height="44" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="210" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">③ MVCC 가시성 검사</text>
+  <text x="210" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">힙 튜플의 xmin/xmax 확인</text>
+
+  <line x1="210" y1="292" x2="210" y2="316" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="210,320 204,308 216,308" fill="#e05555"/>
+
+  <!-- Result -->
+  <rect x="80" y="322" width="260" height="44" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="210" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">④ 결과 반환</text>
+  <text x="210" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SELECT 컬럼 프로젝션</text>
+
+  <!-- Heap I/O cost note -->
+  <rect x="80" y="384" width="260" height="36" rx="6" fill="#2a0a0a" stroke="#e05555"/>
+  <text x="210" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">힙 랜덤 I/O: N회 (튜플 수만큼)</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="80" x2="440" y2="490" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Index-Only Scan flow (right) -->
+  <text x="660" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">Index-Only Scan</text>
+
+  <!-- Step 1 -->
+  <rect x="530" y="100" width="260" height="44" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="660" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">① B-Tree 탐색 (루트 → 리프)</text>
+  <text x="660" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">키 + INCLUDE 컬럼 읽기</text>
+
+  <line x1="660" y1="144" x2="660" y2="168" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="660,172 654,160 666,160" fill="#7ec8e3"/>
+
+  <!-- Step 2 -->
+  <rect x="530" y="174" width="260" height="44" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="660" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">② Visibility Map 확인</text>
+  <text x="660" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">순차 I/O — _vm 파일 비트 체크</text>
+
+  <line x1="660" y1="218" x2="660" y2="242" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="660,246 654,234 666,234" fill="#7ec8e3"/>
+
+  <!-- Step 3 branch -->
+  <rect x="530" y="248" width="260" height="60" rx="8" fill="#0a1020" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="660" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">③ all-visible?</text>
+  <text x="660" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">YES → 힙 접근 없이 반환</text>
+  <text x="660" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">NO  → 힙 접근 후 MVCC 검사</text>
+
+  <line x1="660" y1="308" x2="660" y2="332" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="660,336 654,324 666,324" fill="#55c555"/>
+
+  <!-- Result -->
+  <rect x="530" y="338" width="260" height="44" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">④ 결과 반환 (인덱스 데이터)</text>
+  <text x="660" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">힙 접근 없거나 최소</text>
+
+  <!-- IO cost note -->
+  <rect x="530" y="398" width="260" height="36" rx="6" fill="#0a2010" stroke="#55c555"/>
+  <text x="660" y="418" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">힙 랜덤 I/O: 0~소수회 (VM 의존)</text>
+
+  <!-- Bottom code -->
+  <rect x="60" y="448" width="760" height="48" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="467" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- EXPLAIN으로 스캔 타입 확인</text>
+  <text x="76" y="485" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">EXPLAIN</text>
+  <text x="124" y="485" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> SELECT name FROM users WHERE email = </text>
+  <text x="424" y="485" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'a@b.com'</text>
+  <text x="485" y="485" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">;</text>
+</svg>

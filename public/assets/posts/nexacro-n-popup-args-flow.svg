@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">팝업 파라미터 전달 흐름</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">부모 → 팝업 (인자 전달) ↔ 팝업 → 부모 (returnValue 반환)</text>
+
+  <!-- Parent form box -->
+  <rect x="40" y="96" width="340" height="320" rx="8" fill="#1a2233" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="210" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">부모 폼 (SCR001)</text>
+
+  <!-- Args preparation -->
+  <rect x="56" y="132" width="308" height="80" rx="6" fill="#0d1520" stroke="#555"/>
+  <text x="210" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">팝업 인자 준비</text>
+  <text x="68" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">var args = {</text>
+  <text x="68" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">  orderNo: "ORD-2026-001", mode: "E" };</text>
+
+  <!-- openPopup call -->
+  <rect x="56" y="224" width="308" height="48" rx="6" fill="#0d1520" stroke="#555"/>
+  <text x="210" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">this.openPopup("POP", path, "cb", ...)</text>
+  <text x="210" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" text-anchor="middle">extraData: args 로 전달</text>
+
+  <!-- Callback / returnValue processing -->
+  <rect x="56" y="284" width="308" height="80" rx="6" fill="#0d1520" stroke="#555"/>
+  <text x="210" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">콜백에서 returnValue 처리</text>
+  <text x="68" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">var rv = obj.returnValue;</text>
+  <text x="68" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">if (rv) apply(rv.selected);</text>
+
+  <!-- Popup form box -->
+  <rect x="500" y="96" width="340" height="320" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">팝업 폼 (POP001)</text>
+
+  <!-- Receive args -->
+  <rect x="516" y="132" width="308" height="80" rx="6" fill="#0d1520" stroke="#555"/>
+  <text x="670" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">인자 수신 (Form_onload)</text>
+  <text x="528" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">var args = this.opener</text>
+  <text x="528" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">  .POP.getArgs().extraData;</text>
+
+  <!-- Process and display -->
+  <rect x="516" y="224" width="308" height="48" rx="6" fill="#0d1520" stroke="#555"/>
+  <text x="670" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">인자에 따라 UI 조정</text>
+  <text x="670" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" text-anchor="middle">mode=="E" → 수정 모드</text>
+
+  <!-- Set returnValue and close -->
+  <rect x="516" y="284" width="308" height="80" rx="6" fill="#0d1520" stroke="#555"/>
+  <text x="670" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">결과 반환 후 닫기</text>
+  <text x="528" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">this.returnValue = {</text>
+  <text x="528" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">  selected: row_data }; this.close();</text>
+
+  <!-- Arrows between parent and popup -->
+  <!-- Args arrow: parent → popup -->
+  <line x1="380" y1="172" x2="498" y2="172" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="500,172 488,166 488,178" fill="#7ec8e3"/>
+  <text x="440" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">인자 전달</text>
+
+  <!-- returnValue arrow: popup → parent -->
+  <line x1="498" y1="324" x2="380" y2="324" stroke="#55c555" stroke-width="2"/>
+  <polygon points="378,324 390,318 390,330" fill="#55c555"/>
+  <text x="440" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">returnValue 반환</text>
+
+  <!-- methods info -->
+  <text x="440" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555" text-anchor="middle">인자 전달 3가지: extraData 객체 / application 전역 변수 / Dataset 공유</text>
+</svg>

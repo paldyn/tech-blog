@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PostgreSQL 스냅샷 기반 격리 구현</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">트랜잭션 시작 시점의 활성 XID 목록으로 가시성 결정</text>
+
+  <!-- Snapshot box -->
+  <rect x="60" y="96" width="340" height="200" rx="8" fill="#111" stroke="#1e2433"/>
+  <text x="230" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">스냅샷 구조 (GetSnapshotData)</text>
+  <text x="80" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">xmin</text>
+  <text x="380" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" text-anchor="end">가장 오래된 활성 XID</text>
+  <text x="80" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">xmax</text>
+  <text x="380" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" text-anchor="end">스냅샷 생성 시 다음 XID</text>
+  <text x="80" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">xip[]</text>
+  <text x="380" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" text-anchor="end">진행 중인 XID 목록</text>
+  <line x1="80" y1="204" x2="380" y2="204" stroke="#1e2433"/>
+  <text x="80" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">튜플의 xmin &lt; snap.xmin</text>
+  <text x="230" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">→ 확정 커밋 → 가시적</text>
+  <text x="80" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">xmin in xip[]</text>
+  <text x="230" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">→ 아직 진행 중 → 불가시</text>
+
+  <!-- Arrow -->
+  <line x1="420" y1="196" x2="456" y2="196" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="456,190 468,196 456,202" fill="#7777cc"/>
+
+  <!-- Visibility check -->
+  <rect x="480" y="96" width="340" height="200" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="490" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">-- 가시성 판단 의사코드</text>
+  <text x="490" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">IF</text>
+  <text x="504" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  xmin &lt; snap.xmin</text>
+  <text x="504" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  AND xmin NOT IN xip</text>
+  <text x="490" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">THEN</text>
+  <text x="504" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">  tuple is VISIBLE  -- 삽입자 커밋</text>
+  <text x="490" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">ELSIF</text>
+  <text x="504" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  xmax IS NULL</text>
+  <text x="504" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">  OR xmax &gt;= snap.xmax</text>
+  <text x="490" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">THEN VISIBLE  -- 삭제 미확정</text>
+
+  <!-- Isolation level table -->
+  <rect x="60" y="316" width="760" height="152" rx="8" fill="#111" stroke="#1e2433"/>
+  <text x="440" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">격리 수준별 스냅샷 획득 시점</text>
+  <!-- header -->
+  <text x="100" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">격리 수준</text>
+  <text x="380" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">스냅샷 획득</text>
+  <text x="700" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">Non-Repeatable Read</text>
+  <line x1="80" y1="376" x2="800" y2="376" stroke="#1e2433"/>
+  <!-- RC -->
+  <text x="100" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">READ COMMITTED</text>
+  <text x="380" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">쿼리 실행 때마다 새 스냅샷</text>
+  <text x="700" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">발생 가능</text>
+  <!-- RR -->
+  <text x="100" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">REPEATABLE READ</text>
+  <text x="380" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">트랜잭션 첫 쿼리 때 고정</text>
+  <text x="700" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">방지</text>
+  <!-- SER -->
+  <text x="100" y="446" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8">SERIALIZABLE</text>
+  <text x="380" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">RR + SSI 충돌 감지</text>
+  <text x="700" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">방지 + 직렬화 보장</text>
+</svg>

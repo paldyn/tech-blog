@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" style="background:#0a0a0a;" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">PostgreSQL 프로세스 모델 — 메모리 구조</text>
+  <text x="440" y="68" text-anchor="middle" font-size="16" font-weight="600" fill="#aaaaaa">Local Memory (per-backend) vs Shared Memory</text>
+
+  <!-- Postmaster -->
+  <rect x="330" y="90" width="220" height="60" rx="10" fill="#112236" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="116" text-anchor="middle" font-size="14" font-weight="700" fill="#7ec8e3">Postmaster (PID 1)</text>
+  <text x="440" y="136" text-anchor="middle" font-size="12" fill="#aaaaaa">fork → Backend 생성 감독</text>
+
+  <!-- Fork arrows to backends -->
+  <line x1="350" y1="150" x2="180" y2="214" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="176,209 175,224 188,216" fill="#7ec8e3"/>
+  <line x1="440" y1="150" x2="440" y2="214" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="435,214 440,230 445,214" fill="#7ec8e3"/>
+  <line x1="530" y1="150" x2="700" y2="214" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="692,209 705,216 704,224" fill="#7ec8e3"/>
+
+  <!-- Backend 1 -->
+  <rect x="80" y="224" width="200" height="130" rx="10" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="180" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Backend Process</text>
+  <text x="180" y="264" text-anchor="middle" font-size="11" fill="#888">세션 A</text>
+
+  <rect x="96" y="272" width="168" height="72" rx="6" fill="#0a1008" stroke="#55c555" stroke-width="1"/>
+  <text x="180" y="290" text-anchor="middle" font-size="12" font-weight="600" fill="#55c555">Local Memory</text>
+  <text x="180" y="308" text-anchor="middle" font-size="11" fill="#aaaaaa">work_mem (정렬/해시)</text>
+  <text x="180" y="322" text-anchor="middle" font-size="11" fill="#aaaaaa">maintenance_work_mem</text>
+  <text x="180" y="336" text-anchor="middle" font-size="11" fill="#aaaaaa">temp_buffers</text>
+
+  <!-- Backend 2 -->
+  <rect x="340" y="224" width="200" height="130" rx="10" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Backend Process</text>
+  <text x="440" y="264" text-anchor="middle" font-size="11" fill="#888">세션 B</text>
+  <rect x="356" y="272" width="168" height="72" rx="6" fill="#0a1008" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="290" text-anchor="middle" font-size="12" font-weight="600" fill="#55c555">Local Memory</text>
+  <text x="440" y="308" text-anchor="middle" font-size="11" fill="#aaaaaa">work_mem (정렬/해시)</text>
+  <text x="440" y="322" text-anchor="middle" font-size="11" fill="#aaaaaa">maintenance_work_mem</text>
+  <text x="440" y="336" text-anchor="middle" font-size="11" fill="#aaaaaa">temp_buffers</text>
+
+  <!-- Backend N -->
+  <rect x="600" y="224" width="200" height="130" rx="10" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="700" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Backend Process</text>
+  <text x="700" y="264" text-anchor="middle" font-size="11" fill="#888">세션 N</text>
+  <rect x="616" y="272" width="168" height="72" rx="6" fill="#0a1008" stroke="#55c555" stroke-width="1"/>
+  <text x="700" y="290" text-anchor="middle" font-size="12" font-weight="600" fill="#55c555">Local Memory</text>
+  <text x="700" y="308" text-anchor="middle" font-size="11" fill="#aaaaaa">work_mem (정렬/해시)</text>
+  <text x="700" y="322" text-anchor="middle" font-size="11" fill="#aaaaaa">maintenance_work_mem</text>
+  <text x="700" y="336" text-anchor="middle" font-size="11" fill="#aaaaaa">temp_buffers</text>
+
+  <!-- Shared Memory box -->
+  <rect x="60" y="390" width="760" height="110" rx="12" fill="#1a0e1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="414" text-anchor="middle" font-size="14" font-weight="600" fill="#7777cc">Shared Memory (모든 Backend 공유)</text>
+
+  <rect x="80" y="424" width="160" height="60" rx="8" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="160" y="450" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">Shared Buffers</text>
+  <text x="160" y="468" text-anchor="middle" font-size="11" fill="#aaaaaa">페이지 캐시</text>
+  <text x="160" y="482" text-anchor="middle" font-size="11" fill="#888">shared_buffers</text>
+
+  <rect x="260" y="424" width="160" height="60" rx="8" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="340" y="450" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">WAL Buffers</text>
+  <text x="340" y="468" text-anchor="middle" font-size="11" fill="#aaaaaa">WAL 레코드 버퍼</text>
+  <text x="340" y="482" text-anchor="middle" font-size="11" fill="#888">wal_buffers</text>
+
+  <rect x="440" y="424" width="160" height="60" rx="8" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="520" y="450" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">Lock Table</text>
+  <text x="520" y="468" text-anchor="middle" font-size="11" fill="#aaaaaa">잠금 관리 구조</text>
+  <text x="520" y="482" text-anchor="middle" font-size="11" fill="#888">max_locks_per_transaction</text>
+
+  <rect x="620" y="424" width="180" height="60" rx="8" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="710" y="450" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">Proc Array / CLOG</text>
+  <text x="710" y="468" text-anchor="middle" font-size="11" fill="#aaaaaa">트랜잭션 상태</text>
+  <text x="710" y="482" text-anchor="middle" font-size="11" fill="#888">활성 XID 추적</text>
+
+  <!-- Arrows from backends to shared memory -->
+  <line x1="180" y1="354" x2="200" y2="424" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="440" y1="354" x2="440" y2="424" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="700" y1="354" x2="680" y2="424" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+</svg>

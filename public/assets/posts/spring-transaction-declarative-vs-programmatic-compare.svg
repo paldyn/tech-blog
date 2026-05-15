@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">선언적 vs 프로그래밍 방식 트랜잭션 비교</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">@Transactional (AOP) vs TransactionTemplate / PlatformTransactionManager</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="80" x2="440" y2="510" stroke="#222" stroke-width="1.5" stroke-dasharray="8,4"/>
+
+  <!-- Left header: Declarative -->
+  <rect x="60" y="84" width="360" height="38" fill="#0d1a2e" rx="6" stroke="#1e2e4a" stroke-width="1"/>
+  <text x="240" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">선언적 @Transactional</text>
+
+  <!-- Right header: Programmatic -->
+  <rect x="460" y="84" width="360" height="38" fill="#1a0e00" rx="6" stroke="#3a2200" stroke-width="1"/>
+  <text x="640" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#e8a855" text-anchor="middle">프로그래밍 방식</text>
+
+  <!-- Left code block -->
+  <rect x="60" y="132" width="360" height="176" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">@Service</text>
+  <text x="76" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">public class OrderService {</text>
+  <text x="76" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  </text>
+  <text x="76" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  @Transactional</text>
+  <text x="76" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  public void create(</text>
+  <text x="76" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      Order order) {</text>
+  <text x="76" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    repo.save(order); <tspan fill="#6a8aa0">// 자동</tspan></text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }</text>
+  <text x="76" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">}</text>
+
+  <!-- Right code block -->
+  <rect x="460" y="132" width="360" height="176" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="476" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">@Service</text>
+  <text x="476" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">public class OrderService {</text>
+  <text x="476" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">@Autowired</tspan> TxTemplate tmpl;</text>
+  <text x="476" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  public void create(Order o) {</text>
+  <text x="476" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    tmpl.execute(status -> {</text>
+  <text x="476" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      repo.save(o);</text>
+  <text x="476" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">      return null;</text>
+  <text x="476" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    }); <tspan fill="#6a8aa0">// 명시적 경계</tspan></text>
+  <text x="476" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  }</text>
+
+  <!-- Comparison table -->
+  <!-- Headers -->
+  <rect x="60" y="322" width="180" height="32" fill="#111" rx="6" stroke="#222" stroke-width="1"/>
+  <text x="150" y="343" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#888" text-anchor="middle">항목</text>
+
+  <rect x="248" y="322" width="172" height="32" fill="#0d1a2e" rx="6" stroke="#1e2e4a" stroke-width="1"/>
+  <text x="334" y="343" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">@Transactional</text>
+
+  <rect x="428" y="322" width="392" height="32" fill="#1a0e00" rx="6" stroke="#3a2200" stroke-width="1"/>
+  <text x="624" y="343" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8a855" text-anchor="middle">TransactionTemplate / PTM</text>
+
+  <!-- Rows -->
+  <text x="80" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">코드 가독성</text>
+  <text x="334" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">★★★★★ (간결)</text>
+  <text x="624" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">★★★ (장황)</text>
+
+  <text x="80" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">TX 경계 유연성</text>
+  <text x="334" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">메서드 단위</text>
+  <text x="624" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">코드 블록 단위 (세밀)</text>
+
+  <text x="80" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">자기 호출 함정</text>
+  <text x="334" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">있음 (프록시 우회)</text>
+  <text x="624" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">없음</text>
+
+  <text x="80" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">테스트 용이성</text>
+  <text x="334" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">@Transactional 테스트 지원</text>
+  <text x="624" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">직접 Mock 필요</text>
+
+  <text x="80" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">주요 사용 사례</text>
+  <text x="334" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">대부분의 서비스 레이어</text>
+  <text x="624" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8a855" text-anchor="middle">람다·조건부·루프 TX</text>
+
+  <!-- Separator lines -->
+  <line x1="60" y1="360" x2="820" y2="360" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="60" y1="386" x2="820" y2="386" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="60" y1="412" x2="820" y2="412" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="60" y1="438" x2="820" y2="438" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="60" y1="464" x2="820" y2="464" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="248" y1="354" x2="248" y2="500" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="428" y1="354" x2="428" y2="500" stroke="#1a1a1a" stroke-width="1"/>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">N+1 문제 — 발생 원인</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">LAZY 로딩 + 컬렉션 순회 시 N번의 추가 쿼리 발생</text>
+
+  <!-- Left: Code block causing N+1 -->
+  <rect x="60" y="86" width="360" height="322" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="108" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// N+1 문제가 발생하는 코드</text>
+  <text x="80" y="126" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// Member.orders → LAZY 설정 가정</text>
+
+  <text x="80" y="156" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">@Transactional</text>
+  <text x="80" y="174" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">public void</text><text x="148" y="174" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> printAllOrders() {</text>
+  <text x="80" y="192" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  List&lt;Member&gt; members =</text>
+  <text x="80" y="210" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    memberRepo.findAll();</text>
+  <text x="80" y="228" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  // ① SQL 1번: SELECT * FROM member</text>
+
+  <text x="80" y="258" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  for</text><text x="104" y="258" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> (Member m : members) {</text>
+  <text x="80" y="276" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    int cnt = m.getOrders().size();</text>
+  <text x="80" y="294" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    // ② 멤버마다 SQL 1번 추가</text>
+  <text x="80" y="312" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    // SELECT * FROM orders</text>
+  <text x="80" y="330" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    //   WHERE member_id = ?</text>
+  <text x="80" y="348" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">  }</text>
+  <text x="80" y="366" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">}</text>
+  <text x="80" y="390" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">// member 100명 → SQL 101번 실행!</text>
+
+  <!-- Arrow between panels -->
+  <polygon points="432,247 452,237 452,257" fill="#e05555"/>
+  <line x1="420" y1="247" x2="452" y2="247" stroke="#e05555" stroke-width="2"/>
+
+  <!-- Right: SQL trace panel -->
+  <rect x="460" y="86" width="360" height="322" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <rect x="461" y="87" width="358" height="30" rx="5" fill="#2a1010"/>
+  <rect x="461" y="105" width="358" height="12" fill="#2a1010"/>
+  <text x="640" y="107" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600">실제 실행되는 SQL (101번)</text>
+
+  <text x="480" y="136" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[  1]</text><text x="524" y="136" fill="#55c555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> SELECT * FROM member</text>
+  <line x1="480" y1="148" x2="800" y2="148" stroke="#2a1a1a" stroke-width="1"/>
+
+  <text x="480" y="164" fill="#e05555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[  2]</text><text x="524" y="164" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> SELECT * FROM orders</text>
+  <text x="524" y="182" fill="#888" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       WHERE member_id = 1</text>
+  <text x="480" y="200" fill="#e05555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[  3]</text><text x="524" y="200" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> SELECT * FROM orders</text>
+  <text x="524" y="218" fill="#888" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       WHERE member_id = 2</text>
+  <text x="480" y="236" fill="#e05555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[  4]</text><text x="524" y="236" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> SELECT * FROM orders</text>
+  <text x="524" y="254" fill="#888" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       WHERE member_id = 3</text>
+
+  <text x="640" y="278" text-anchor="middle" fill="#666" font-size="20">⋮</text>
+  <text x="640" y="296" text-anchor="middle" fill="#666" font-size="20">⋮</text>
+
+  <text x="480" y="320" fill="#e05555" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[101]</text><text x="524" y="320" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"> SELECT * FROM orders</text>
+  <text x="524" y="338" fill="#888" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">       WHERE member_id = 100</text>
+  <line x1="460" y1="354" x2="820" y2="354" stroke="#2a1a1a" stroke-width="1"/>
+  <text x="640" y="374" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600">1 + 100 = 101번 쿼리 발생!</text>
+  <text x="640" y="394" text-anchor="middle" fill="#888" font-size="12">member N명 조회 → N+1번 SQL</text>
+
+  <!-- Bottom: formula -->
+  <rect x="60" y="426" width="760" height="68" rx="8" fill="#0f0f1a" stroke="#2a2a3a"/>
+  <text x="440" y="450" text-anchor="middle" fill="#e8e8e8" font-size="14" font-weight="600">N+1 발생 조건</text>
+  <text x="180" y="476" text-anchor="middle" fill="#7ec8e3" font-size="13">LAZY 연관 관계</text>
+  <text x="340" y="476" text-anchor="middle" fill="#888" font-size="16">+</text>
+  <text x="500" y="476" text-anchor="middle" fill="#7ec8e3" font-size="13">컬렉션 순회 중 접근</text>
+  <text x="660" y="476" text-anchor="middle" fill="#888" font-size="16">+</text>
+  <text x="800" y="476" text-anchor="middle" fill="#e05555" font-size="13">fetch join 없음</text>
+</svg>

@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#ffffff">
+    Pageable 처리 흐름 — HTTP 요청에서 SQL까지
+  </text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" fill="#e8e8e8">
+    PageableHandlerMethodArgumentResolver가 쿼리 파라미터를 Pageable 객체로 자동 변환합니다
+  </text>
+
+  <!-- Step 1: HTTP Request -->
+  <rect x="50" y="92" width="170" height="68" rx="8" fill="#0f1e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="135" y="118" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">
+    HTTP 요청
+  </text>
+  <text x="135" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    GET /users?page=0
+  </text>
+  <text x="135" y="152" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    &amp;size=10&amp;sort=name,desc
+  </text>
+
+  <!-- Arrow 1 -->
+  <line x1="224" y1="126" x2="268" y2="126" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="274,126 264,120 264,132" fill="#7ec8e3"/>
+
+  <!-- Step 2: Argument Resolver -->
+  <rect x="278" y="92" width="184" height="68" rx="8" fill="#16162a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="370" y="114" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#c4b5fd">
+    HandlerMethod
+  </text>
+  <text x="370" y="130" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#c4b5fd">
+    ArgumentResolver
+  </text>
+  <text x="370" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    page/size/sort → Pageable
+  </text>
+
+  <!-- Arrow 2 -->
+  <line x1="466" y1="126" x2="510" y2="126" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="516,126 506,120 506,132" fill="#7777cc"/>
+
+  <!-- Step 3: Controller -->
+  <rect x="520" y="92" width="144" height="68" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="592" y="118" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">
+    Controller
+  </text>
+  <text x="592" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    findAll(Pageable)
+  </text>
+  <text x="592" y="152" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    → Page&lt;User&gt;
+  </text>
+
+  <!-- Arrow 3 -->
+  <line x1="668" y1="126" x2="712" y2="126" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="718,126 708,120 708,132" fill="#55c555"/>
+
+  <!-- Step 4: SQL -->
+  <rect x="722" y="92" width="132" height="68" rx="8" fill="#1e1a0e" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="788" y="118" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e0a055">
+    SQL 생성
+  </text>
+  <text x="788" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    LIMIT 10 OFFSET 0
+  </text>
+  <text x="788" y="152" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">
+    ORDER BY name DESC
+  </text>
+
+  <!-- PageRequest code block -->
+  <text x="60" y="186"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    PageRequest 생성 방법
+  </text>
+  <rect x="50" y="194" width="380" height="200" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="66" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 0-based 페이지, 크기, 정렬
+  </text>
+  <text xml:space="preserve" x="66" y="238"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>Pageable p = PageRequest.of(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="256"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    </tspan><tspan fill="#b5cea8">0</tspan><tspan>,  </tspan><tspan fill="#6a8aa0">// page (0부터)</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="274"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    </tspan><tspan fill="#b5cea8">10</tspan><tspan>, </tspan><tspan fill="#6a8aa0">// size</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="292"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    Sort.by(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="310"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>      Sort.Direction.DESC,</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="328"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>      </tspan><tspan fill="#ce9178">"name"</tspan><tspan>));</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="364"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>Page&lt;User&gt; page =</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="382"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    userRepo.findAll(p);</tspan>
+  </text>
+
+  <!-- Page vs Slice table -->
+  <text x="460" y="186"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    Page vs Slice
+  </text>
+  <rect x="450" y="194" width="380" height="200" rx="6" fill="#111" stroke="#222"/>
+
+  <!-- Headers -->
+  <text x="466" y="218"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#888">
+    항목
+  </text>
+  <text x="590" y="218"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">
+    Page&lt;T&gt;
+  </text>
+  <text x="716" y="218"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">
+    Slice&lt;T&gt;
+  </text>
+  <line x1="466" y1="224" x2="814" y2="224" stroke="#222" stroke-width="1"/>
+
+  <text x="466" y="244"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    count 쿼리
+  </text>
+  <text x="590" y="244"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    실행 (전체 수)
+  </text>
+  <text x="716" y="244"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    미실행
+  </text>
+
+  <text x="466" y="268"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    totalPages
+  </text>
+  <text x="590" y="268"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    제공
+  </text>
+  <text x="716" y="268"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">
+    미제공
+  </text>
+
+  <text x="466" y="292"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    hasNext()
+  </text>
+  <text x="590" y="292"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    제공
+  </text>
+  <text x="716" y="292"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    제공 (size+1 조회)
+  </text>
+
+  <text x="466" y="316"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    성능
+  </text>
+  <text x="590" y="316"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    count 비용 있음
+  </text>
+  <text x="716" y="316"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">
+    더 빠름
+  </text>
+
+  <text x="466" y="340"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    사용처
+  </text>
+  <text x="590" y="340"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    전통적 번호 페이징
+  </text>
+  <text x="716" y="340"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">
+    무한 스크롤
+  </text>
+
+  <text x="466" y="364"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    반환 타입
+  </text>
+  <text x="590" y="364"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">
+    Page&lt;T&gt;
+  </text>
+  <text x="716" y="364"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">
+    Slice&lt;T&gt;
+  </text>
+
+  <line x1="582" y1="228" x2="582" y2="388" stroke="#222" stroke-width="1"/>
+  <line x1="708" y1="228" x2="708" y2="388" stroke="#222" stroke-width="1"/>
+
+  <!-- Bottom: Response JSON example -->
+  <rect x="50" y="410" width="780" height="70" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text xml:space="preserve" x="66" y="432"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // Page&lt;T&gt; 응답 예시 (JSON)
+  </text>
+  <text xml:space="preserve" x="66" y="450"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>{</tspan><tspan fill="#ce9178">"content"</tspan><tspan>:[...], </tspan><tspan fill="#ce9178">"totalElements"</tspan><tspan>:</tspan><tspan fill="#b5cea8">100</tspan><tspan>, </tspan><tspan fill="#ce9178">"totalPages"</tspan><tspan>:</tspan><tspan fill="#b5cea8">10</tspan><tspan>, </tspan><tspan fill="#ce9178">"number"</tspan><tspan>:</tspan><tspan fill="#b5cea8">0</tspan><tspan>, </tspan><tspan fill="#ce9178">"size"</tspan><tspan>:</tspan><tspan fill="#b5cea8">10</tspan><tspan>}</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="468"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // REST API: GET /users?page=0&amp;size=10&amp;sort=name,asc
+  </text>
+</svg>

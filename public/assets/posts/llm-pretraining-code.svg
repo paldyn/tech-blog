@@ -1,0 +1,83 @@
+<svg width="880" height="380" viewBox="0 0 880 380"
+  xmlns="http://www.w3.org/2000/svg"
+  font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">LLM 사전학습: 데이터 처리 파이프라인</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">원시 텍스트 → 품질 필터링 → 토큰화 → 학습 배치</text>
+
+  <!-- Left: data processing -->
+  <text x="220" y="96" text-anchor="middle" fill="#e8e8e8" font-size="15" font-weight="600">① 데이터 전처리</text>
+  <rect x="40" y="108" width="360" height="234" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="56" y="129" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">import </text>
+  <text x="96" y="129" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">re</text>
+  <text x="56" y="147" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">from </text>
+  <text x="96" y="147" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">datasets </text>
+  <text x="168" y="147" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">import </text>
+  <text x="216" y="147" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">load_dataset</text>
+
+  <text x="56" y="171" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">def </text>
+  <text x="80" y="171" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">quality_filter(doc: str) -> bool:</text>
+
+  <text x="56" y="189" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    # 너무 짧은 문서 제거</text>
+  <text x="56" y="207" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    if </text>
+  <text x="80" y="207" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">len(doc.split()) </text>
+  <text x="184" y="207" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">&lt; </text>
+  <text x="200" y="207" fill="#b5cea8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">100</text>
+  <text x="56" y="225" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        return </text>
+  <text x="128" y="225" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">False</text>
+
+  <text x="56" y="243" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    # 알파벳 비율 체크</text>
+  <text x="56" y="261" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    alpha_ratio </text>
+  <text x="140" y="261" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="156" y="261" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">sum(c.isalpha()</text>
+  <text x="56" y="279" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        for c in doc) / len(doc)</text>
+  <text x="56" y="297" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    if </text>
+  <text x="80" y="297" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">alpha_ratio </text>
+  <text x="152" y="297" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">&lt; </text>
+  <text x="168" y="297" fill="#b5cea8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">0.5</text>
+  <text x="56" y="315" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        return </text>
+  <text x="128" y="315" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">False</text>
+  <text x="56" y="333" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    return </text>
+  <text x="112" y="333" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">True</text>
+
+  <!-- Right: tokenization + batching -->
+  <text x="660" y="96" text-anchor="middle" fill="#e8e8e8" font-size="15" font-weight="600">② 토큰화 + 배치 구성</text>
+  <rect x="480" y="108" width="360" height="234" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="496" y="129" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">from </text>
+  <text x="536" y="129" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">transformers </text>
+  <text x="656" y="129" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">import</text>
+  <text x="496" y="147" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    AutoTokenizer</text>
+
+  <text x="496" y="171" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">tok </text>
+  <text x="520" y="171" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="536" y="171" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">AutoTokenizer.from_pretrained(</text>
+  <text x="496" y="189" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    "meta-llama/Llama-3.1-8B"</text>
+  <text x="496" y="207" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+
+  <text x="496" y="231" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">def </text>
+  <text x="520" y="231" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">pack_sequences(texts, ctx_len=</text>
+  <text x="724" y="231" fill="#b5cea8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">4096</text>
+  <text x="752" y="231" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">):</text>
+  <text x="496" y="249" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    # 여러 문서를 이어붙여</text>
+  <text x="496" y="267" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    # ctx_len 길이 청크로 분할</text>
+  <text x="496" y="285" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    all_ids </text>
+  <text x="552" y="285" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="568" y="285" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[]</text>
+  <text x="496" y="303" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    for </text>
+  <text x="524" y="303" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">text </text>
+  <text x="556" y="303" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">in </text>
+  <text x="572" y="303" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">texts:</text>
+  <text x="496" y="321" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        all_ids </text>
+  <text x="576" y="321" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">+= </text>
+  <text x="596" y="321" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">tok.encode(text)</text>
+  <text x="496" y="339" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    return </text>
+  <text x="556" y="339" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">[all_ids[i:i+ctx_len]</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="362" text-anchor="middle" fill="#888" font-size="12">Document Packing: 패딩 없이 여러 문서를 이어붙여 GPU 효율 극대화 (GPT-3 방식)</text>
+</svg>

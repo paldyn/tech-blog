@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" role="img" aria-label="멀티 스테이지 빌드에서의 FROM">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">멀티 스테이지 빌드와 FROM</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">빌드 환경과 실행 환경을 분리해 최소 이미지 생성</text>
+
+  <!-- Stage 1 box -->
+  <rect x="60" y="100" width="340" height="220" rx="8" fill="#0d1520" stroke="#1e3a5f" stroke-width="1.5"/>
+  <rect x="60" y="100" width="340" height="36" rx="8" fill="#1a2d42"/>
+  <rect x="60" y="124" width="340" height="12" rx="0" fill="#1a2d42"/>
+  <text x="230" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">스테이지 1 — 빌드</text>
+
+  <text x="80" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="116" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> golang:1.22 </text>
+  <text x="218" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">AS</text>
+  <text x="240" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve"> builder</text>
+
+  <text x="80" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">WORKDIR</text>
+  <text x="148" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> /src</text>
+  <text x="80" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="116" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> . .</text>
+  <text x="80" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">RUN</text>
+  <text x="112" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> go build -o app .</text>
+
+  <text x="80" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Go 컴파일러 + 소스 + 의존성</text>
+  <text x="80" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 이미지 크기 수백 MB</text>
+  <text x="80" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">프로덕션에 올리지 않음</text>
+
+  <!-- Arrow in between -->
+  <line x1="408" y1="210" x2="458" y2="210" stroke="#55c555" stroke-width="2.5"/>
+  <polygon points="458,203 474,210 458,217" fill="#55c555"/>
+  <text x="441" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">COPY</text>
+  <text x="441" y="212" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">--from</text>
+  <text x="441" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">=builder</text>
+
+  <!-- Stage 2 box -->
+  <rect x="480" y="100" width="340" height="220" rx="8" fill="#0d180d" stroke="#1e3d1e" stroke-width="1.5"/>
+  <rect x="480" y="100" width="340" height="36" rx="8" fill="#162a16"/>
+  <rect x="480" y="124" width="340" height="12" rx="0" fill="#162a16"/>
+  <text x="650" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">스테이지 2 — 실행</text>
+
+  <text x="500" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="536" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> gcr.io/distroless/base</text>
+
+  <text x="500" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">COPY</text>
+  <text x="536" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> --from=builder \</text>
+  <text x="500" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">     /src/app /app</text>
+  <text x="500" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">CMD</text>
+  <text x="532" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> ["/app"]</text>
+
+  <text x="500" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">바이너리만 복사</text>
+  <text x="500" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 이미지 크기 수 MB</text>
+  <text x="500" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">프로덕션 배포 이미지</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" font-weight="600">FROM이 여러 번 등장할수록 스테이지가 늘어난다 — docker build --target으로 특정 스테이지만 빌드 가능</text>
+</svg>

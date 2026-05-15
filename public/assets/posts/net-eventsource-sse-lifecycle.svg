@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Server-Sent Events 연결 흐름</text>
+  <text x="440" y="70" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="16" font-weight="600" fill="#888">단방향 HTTP 스트림 · 자동 재연결</text>
+
+  <!-- ═══ Client Box ═══ -->
+  <rect x="50" y="94" width="185" height="290" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <rect x="50" y="94" width="185" height="34" rx="8" fill="#1a1f35"/>
+  <rect x="50" y="115" width="185" height="13" fill="#1a1f35"/>
+  <text x="142" y="115" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="700" fill="#7ec8e3">Client (Browser)</text>
+  <text x="142" y="145" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">new EventSource(url)</text>
+  <text x="142" y="165" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">readyState: CONNECTING</text>
+  <text x="142" y="195" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">.onopen</text>
+  <text x="142" y="215" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#7ec8e3">.onmessage</text>
+  <text x="142" y="235" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">.onerror</text>
+  <text x="142" y="265" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#7ec8e3">addEventListener(</text>
+  <text x="142" y="283" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#ce9178">'custom-event', …)</text>
+  <text x="142" y="310" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">OPEN(1) / CLOSED(2)</text>
+  <text x="142" y="366" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">retry: 3000ms (기본)</text>
+
+  <!-- ═══ Server Box ═══ -->
+  <rect x="645" y="94" width="185" height="290" rx="8" fill="#0d1117" stroke="#1e2433" stroke-width="1.5"/>
+  <rect x="645" y="94" width="185" height="34" rx="8" fill="#1a1f35"/>
+  <rect x="645" y="115" width="185" height="13" fill="#1a1f35"/>
+  <text x="737" y="115" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="700" fill="#e05555">Server</text>
+  <text x="737" y="145" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">Content-Type:</text>
+  <text x="737" y="162" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#ce9178">text/event-stream</text>
+  <text x="737" y="180" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">Cache-Control: no-cache</text>
+  <text x="737" y="198" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">Connection: keep-alive</text>
+  <text x="737" y="228" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#55c555">data: {JSON 페이로드}</text>
+  <text x="737" y="248" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">event: custom-name</text>
+  <text x="737" y="268" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">id: 42 (Last-Event-ID)</text>
+  <text x="737" y="288" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">retry: 5000</text>
+  <text x="737" y="310" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">(빈 줄 = 이벤트 구분자)</text>
+
+  <!-- ═══ Connection flow in center ═══ -->
+
+  <!-- 1. Initial HTTP GET (client → server) -->
+  <rect x="235" y="132" width="375" height="6" fill="#7777cc"/>
+  <polygon points="610,124 630,135 610,146" fill="#7777cc"/>
+  <text x="420" y="122" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">GET /stream  Accept: text/event-stream</text>
+
+  <!-- 2. 200 OK response header (server → client) -->
+  <rect x="235" y="164" width="375" height="6" fill="#55c555"/>
+  <polygon points="235,156 217,167 235,178" fill="#55c555"/>
+  <text x="420" y="185" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">200 OK — text/event-stream</text>
+
+  <!-- 3. Event 1 (server → client) -->
+  <rect x="235" y="218" width="375" height="5" fill="#55c555"/>
+  <polygon points="235,212 219,220 235,228" fill="#55c555"/>
+  <text x="420" y="210" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">data: {"type":"update","val":1}</text>
+
+  <!-- 4. Event 2 -->
+  <rect x="235" y="252" width="375" height="5" fill="#55c555"/>
+  <polygon points="235,246 219,254 235,262" fill="#55c555"/>
+  <text x="420" y="244" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">data: {"type":"update","val":2}</text>
+
+  <!-- 5. Event 3 -->
+  <rect x="235" y="286" width="375" height="5" fill="#55c555"/>
+  <polygon points="235,280 219,288 235,296" fill="#55c555"/>
+  <text x="420" y="278" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">data: {"type":"done"}</text>
+
+  <!-- 6. Disconnect + auto reconnect (dashed) -->
+  <line x1="235" y1="340" x2="610" y2="340" stroke="#e05555" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <polygon points="610,332 628,340 610,348" fill="#e05555"/>
+  <text x="420" y="360" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">연결 끊김 → 자동 재연결 (retry ms 후)</text>
+  <text x="420" y="378" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">Last-Event-ID 헤더로 이어받기</text>
+</svg>

@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#ffffff">
+    JPQL 주요 문법 패턴
+  </text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" fill="#e8e8e8">
+    Projection · JOIN · 집계 · DTO 생성자 표현식
+  </text>
+
+  <!-- Left section: Projection + JOIN -->
+  <text x="60" y="96"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    Projection / JOIN FETCH
+  </text>
+  <rect x="50" y="104" width="380" height="274" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="66" y="130"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 1. 스칼라 프로젝션
+  </text>
+  <text xml:space="preserve" x="66" y="148"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">SELECT</tspan><tspan> u.name, u.email</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="166"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">FROM</tspan><tspan> User u</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="202"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 2. DTO 생성자 표현식
+  </text>
+  <text xml:space="preserve" x="66" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">SELECT</tspan><tspan> </tspan><tspan fill="#7ec8e3">new</tspan><tspan> </tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="238"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan> com.example.UserDto(</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="256"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>   u.name, u.email)</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="274"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">FROM</tspan><tspan> User u</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="310"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 3. JOIN FETCH (N+1 해결)
+  </text>
+  <text xml:space="preserve" x="66" y="328"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">SELECT</tspan><tspan> u </tspan><tspan fill="#7ec8e3">FROM</tspan><tspan> User u</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="346"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">JOIN FETCH</tspan><tspan> u.orders</tspan>
+  </text>
+  <text xml:space="preserve" x="66" y="364"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">WHERE</tspan><tspan> u.id = </tspan><tspan fill="#b5cea8">:id</tspan>
+  </text>
+
+  <!-- Right section: 집계 + 페이징 -->
+  <text x="460" y="96"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">
+    집계 / TypedQuery / 페이징
+  </text>
+  <rect x="450" y="104" width="380" height="274" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text xml:space="preserve" x="466" y="130"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 4. 집계 함수
+  </text>
+  <text xml:space="preserve" x="466" y="148"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">SELECT</tspan><tspan> u.status,</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="166"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>       COUNT(u), AVG(u.age)</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="184"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">FROM</tspan><tspan> User u</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="202"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">GROUP BY</tspan><tspan> u.status</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="220"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">HAVING</tspan><tspan> COUNT(u) &gt; </tspan><tspan fill="#b5cea8">10</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="256"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#6a8aa0">
+    // 5. TypedQuery + 페이징
+  </text>
+  <text xml:space="preserve" x="466" y="274"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">TypedQuery</tspan><tspan>&lt;User&gt; q =</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="292"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>  em.createQuery(jpql, User.</tspan><tspan fill="#7ec8e3">class</tspan><tspan>);</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="310"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>q.setFirstResult(</tspan><tspan fill="#b5cea8">0</tspan><tspan>);</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="328"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>q.setMaxResults(</tspan><tspan fill="#b5cea8">10</tspan><tspan>);</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="346"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>List&lt;User&gt; result =</tspan>
+  </text>
+  <text xml:space="preserve" x="466" y="364"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e8e8e8">
+    <tspan>    q.getResultList();</tspan>
+  </text>
+
+  <!-- Bottom note -->
+  <rect x="50" y="394" width="780" height="74" rx="6" fill="#111" stroke="#1e2433"/>
+  <text x="66" y="416"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">
+    실무 선택 기준
+  </text>
+  <text x="66" y="438"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    일반 CRUD · 비즈니스 로직
+  </text>
+  <text x="66" y="456"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    복잡한 동적 쿼리
+  </text>
+  <text x="350" y="438"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">
+    → JPQL (@Query 또는 쿼리 메서드)
+  </text>
+  <text x="350" y="456"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">
+    → QueryDSL (다음 글에서 상세)
+  </text>
+  <text x="620" y="438"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">
+    DB 특화 기능 · 성능 튜닝
+  </text>
+  <text x="620" y="456"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0a055">
+    → Native SQL (nativeQuery=true)
+  </text>
+</svg>

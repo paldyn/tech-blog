@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">LoRA 작동 원리</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888">가중치 행렬을 저랭크 행렬의 곱으로 근사</text>
+
+  <!-- Full Finetuning (left) -->
+  <rect x="60" y="90" width="340" height="200" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">Full Fine-tuning</text>
+
+  <!-- Weight matrix visualization -->
+  <rect x="100" y="130" width="200" height="120" rx="4" fill="#0a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="200" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">W (d×d)</text>
+  <text x="200" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">4096×4096 행렬</text>
+  <text x="200" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">= 16,777,216 파라미터</text>
+  <text x="200" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">모두 업데이트</text>
+
+  <text x="230" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">7B 모델 전체: ~28GB 그래디언트</text>
+  <text x="230" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">고성능 GPU 다수 필요</text>
+
+  <!-- LoRA (right) -->
+  <rect x="480" y="90" width="340" height="200" rx="8" fill="#0d1a10" stroke="#55c555" stroke-width="2"/>
+  <text x="650" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">LoRA</text>
+
+  <!-- W frozen -->
+  <rect x="500" y="130" width="130" height="120" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1"/>
+  <text x="565" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">W (d×d)</text>
+  <text x="565" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">동결 (학습 안 함)</text>
+
+  <!-- Plus sign -->
+  <text x="648" y="195" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" fill="#55c555">+</text>
+
+  <!-- Low rank matrices -->
+  <rect x="660" y="130" width="40" height="120" rx="4" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="680" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">B</text>
+  <text x="680" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#aaddaa">d×r</text>
+
+  <text x="720" y="195" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#55c555">×</text>
+
+  <rect x="730" y="170" width="80" height="40" rx="4" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="770" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">A (r×d)</text>
+
+  <text x="650" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#aaddaa">r=16: 4096×16 + 16×4096</text>
+  <text x="650" y="285" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">= 131,072 파라미터 (0.78%)</text>
+
+  <!-- Formula -->
+  <rect x="60" y="310" width="760" height="50" rx="8" fill="#111" stroke="#333"/>
+  <text x="440" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">W' = W + ΔW = W + B·A</text>
+  <text x="440" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">랭크 r이 작을수록(8~64) 파라미터 적고 빠름 · 클수록 성능 높음</text>
+
+  <!-- Code block -->
+  <rect x="60" y="375" width="760" height="34" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="395" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">LoraConfig(r=</text>
+  <text x="188" y="395" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">16</text>
+  <text x="204" y="395" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, lora_alpha=</text>
+  <text x="308" y="395" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">32</text>
+  <text x="324" y="395" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="340" y="395" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">  # lora_alpha/r = 스케일링 계수, 보통 alpha = 2×r</text>
+</svg>

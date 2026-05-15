@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 530" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="530" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">JPA 상속 매핑 전략 — 3가지 비교</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">클래스 계층을 관계형 테이블에 매핑하는 세 가지 방법</text>
+
+  <!-- ─────────────────── COLUMN 1: SINGLE_TABLE ─────────────────── -->
+  <rect x="60" y="86" width="240" height="400" rx="8" fill="#0a110a" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="61" y="87" width="238" height="32" rx="7" fill="#122012"/>
+  <rect x="61" y="107" width="238" height="12" fill="#122012"/>
+  <text x="180" y="109" text-anchor="middle" fill="#55c555" font-size="13" font-weight="600">SINGLE_TABLE</text>
+
+  <text x="80" y="134" fill="#e8e8e8" font-size="12">모든 클래스를 단일 테이블로 매핑</text>
+  <text x="80" y="150" fill="#888" font-size="11">DTYPE 컬럼으로 자식 구분</text>
+
+  <!-- DB Table visual -->
+  <text x="80" y="172" fill="#888" font-size="11" font-weight="600">DB 구조:</text>
+  <rect x="80" y="178" width="200" height="130" rx="4" fill="#0c1a0c" stroke="#1e3020"/>
+  <rect x="80" y="178" width="200" height="22" rx="3" fill="#163018"/>
+  <text x="180" y="194" text-anchor="middle" fill="#55c555" font-size="11" font-weight="600">animal</text>
+  <line x1="80" y1="200" x2="280" y2="200" stroke="#1e3020"/>
+  <text x="90" y="214" fill="#888" font-size="11">DTYPE</text><text x="190" y="214" fill="#e05555" font-size="11">VARCHAR</text>
+  <text x="90" y="230" fill="#888" font-size="11">id</text><text x="190" y="230" fill="#7ec8e3" font-size="11">PK</text>
+  <text x="90" y="246" fill="#888" font-size="11">name</text><text x="190" y="246" fill="#e8e8e8" font-size="11">NOT NULL</text>
+  <text x="90" y="262" fill="#888" font-size="11">breed</text><text x="190" y="262" fill="#e05555" font-size="11">NULL ← Dog</text>
+  <text x="90" y="278" fill="#888" font-size="11">meow_type</text><text x="190" y="278" fill="#e05555" font-size="11">NULL ← Cat</text>
+  <text x="90" y="296" fill="#888" font-size="10">* Dog/Cat 없는 컬럼은 null</text>
+
+  <!-- Pros -->
+  <line x1="80" y1="322" x2="280" y2="322" stroke="#1a2a1a"/>
+  <text x="80" y="340" fill="#55c555" font-size="12">✓ JOIN 없이 빠른 조회</text>
+  <text x="80" y="356" fill="#55c555" font-size="12">✓ 구현 및 쿼리 단순</text>
+  <!-- Cons -->
+  <text x="80" y="376" fill="#e05555" font-size="12">✗ NULL 컬럼 다수 발생</text>
+  <text x="80" y="392" fill="#e05555" font-size="12">✗ 테이블 비대해짐</text>
+  <!-- Usage -->
+  <text x="80" y="414" fill="#888" font-size="11">권장: 계층 단순, 성능 우선</text>
+  <text x="80" y="430" fill="#7777cc" font-size="11">기본 전략 (default)</text>
+  <text x="80" y="462" fill="#888" font-size="11" font-weight="600">@Inheritance(</text>
+  <text x="80" y="476" fill="#7ec8e3" font-size="11" font-weight="600">  strategy=SINGLE_TABLE</text>
+  <text x="80" y="490" fill="#888" font-size="11" font-weight="600">)</text>
+
+  <!-- ─────────────────── COLUMN 2: JOINED ─────────────────── -->
+  <rect x="320" y="86" width="240" height="400" rx="8" fill="#0a0a11" stroke="#7ec8e3" stroke-width="1.5"/>
+  <rect x="321" y="87" width="238" height="32" rx="7" fill="#121230"/>
+  <rect x="321" y="107" width="238" height="12" fill="#121230"/>
+  <text x="440" y="109" text-anchor="middle" fill="#7ec8e3" font-size="13" font-weight="600">JOINED</text>
+
+  <text x="340" y="134" fill="#e8e8e8" font-size="12">각 클래스마다 테이블, FK로 조인</text>
+  <text x="340" y="150" fill="#888" font-size="11">부모 테이블 + 자식 테이블 분리</text>
+
+  <!-- DB Table visual -->
+  <text x="340" y="172" fill="#888" font-size="11" font-weight="600">DB 구조:</text>
+  <!-- Parent table -->
+  <rect x="370" y="178" width="140" height="52" rx="4" fill="#0c0c1a" stroke="#1e1e30"/>
+  <rect x="370" y="178" width="140" height="22" rx="3" fill="#161630"/>
+  <text x="440" y="194" text-anchor="middle" fill="#7ec8e3" font-size="11" font-weight="600">animal</text>
+  <text x="380" y="212" fill="#888" font-size="11">id, name, DTYPE</text>
+  <text x="380" y="226" fill="#888" font-size="10">PK + 공통 컬럼</text>
+  <!-- FK arrow down-left -->
+  <line x1="400" y1="230" x2="380" y2="256" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <!-- FK arrow down-right -->
+  <line x1="460" y1="230" x2="480" y2="256" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <!-- Dog table -->
+  <rect x="340" y="258" width="110" height="52" rx="4" fill="#0c0c1a" stroke="#1e1e30"/>
+  <rect x="340" y="258" width="110" height="20" rx="3" fill="#161630"/>
+  <text x="395" y="272" text-anchor="middle" fill="#55c555" font-size="11" font-weight="600">dog</text>
+  <text x="350" y="290" fill="#888" font-size="11">id (FK→animal)</text>
+  <text x="350" y="304" fill="#888" font-size="11">breed</text>
+  <!-- Cat table -->
+  <rect x="466" y="258" width="110" height="52" rx="4" fill="#0c0c1a" stroke="#1e1e30"/>
+  <rect x="466" y="258" width="110" height="20" rx="3" fill="#161630"/>
+  <text x="521" y="272" text-anchor="middle" fill="#55c555" font-size="11" font-weight="600">cat</text>
+  <text x="476" y="290" fill="#888" font-size="11">id (FK→animal)</text>
+  <text x="476" y="304" fill="#888" font-size="11">meow_type</text>
+
+  <!-- Pros -->
+  <line x1="340" y1="322" x2="540" y2="322" stroke="#1a1a2a"/>
+  <text x="340" y="340" fill="#55c555" font-size="12">✓ 정규화, NULL 없음</text>
+  <text x="340" y="356" fill="#55c555" font-size="12">✓ FK 제약조건 명확</text>
+  <!-- Cons -->
+  <text x="340" y="376" fill="#e05555" font-size="12">✗ 조인으로 성능 저하</text>
+  <text x="340" y="392" fill="#e05555" font-size="12">✗ 쿼리 복잡도 증가</text>
+  <!-- Usage -->
+  <text x="340" y="414" fill="#888" font-size="11">권장: 표준적인 상속 매핑</text>
+  <text x="340" y="430" fill="#7777cc" font-size="11">복잡한 계층 구조에 적합</text>
+  <text x="340" y="462" fill="#888" font-size="11" font-weight="600">@Inheritance(</text>
+  <text x="340" y="476" fill="#7ec8e3" font-size="11" font-weight="600">  strategy=JOINED</text>
+  <text x="340" y="490" fill="#888" font-size="11" font-weight="600">)</text>
+
+  <!-- ─────────────────── COLUMN 3: TABLE_PER_CLASS ─────────────────── -->
+  <rect x="580" y="86" width="240" height="400" rx="8" fill="#100a10" stroke="#7777cc" stroke-width="1.5"/>
+  <rect x="581" y="87" width="238" height="32" rx="7" fill="#201020"/>
+  <rect x="581" y="107" width="238" height="12" fill="#201020"/>
+  <text x="700" y="109" text-anchor="middle" fill="#7777cc" font-size="13" font-weight="600">TABLE_PER_CLASS</text>
+
+  <text x="600" y="134" fill="#e8e8e8" font-size="12">구체 클래스마다 독립 테이블</text>
+  <text x="600" y="150" fill="#888" font-size="11">부모 테이블 없음, 컬럼 중복</text>
+
+  <!-- DB Table visual -->
+  <text x="600" y="172" fill="#888" font-size="11" font-weight="600">DB 구조:</text>
+  <!-- Dog table -->
+  <rect x="590" y="178" width="110" height="70" rx="4" fill="#100a10" stroke="#2a1a2a"/>
+  <rect x="590" y="178" width="110" height="20" rx="3" fill="#201020"/>
+  <text x="645" y="192" text-anchor="middle" fill="#7777cc" font-size="11" font-weight="600">dog</text>
+  <text x="600" y="210" fill="#888" font-size="11">id (PK)</text>
+  <text x="600" y="226" fill="#888" font-size="11">name (중복)</text>
+  <text x="600" y="242" fill="#888" font-size="11">breed</text>
+  <!-- Cat table -->
+  <rect x="716" y="178" width="110" height="70" rx="4" fill="#100a10" stroke="#2a1a2a"/>
+  <rect x="716" y="178" width="110" height="20" rx="3" fill="#201020"/>
+  <text x="771" y="192" text-anchor="middle" fill="#7777cc" font-size="11" font-weight="600">cat</text>
+  <text x="726" y="210" fill="#888" font-size="11">id (PK)</text>
+  <text x="726" y="226" fill="#888" font-size="11">name (중복)</text>
+  <text x="726" y="242" fill="#888" font-size="11">meow_type</text>
+  <!-- No parent label -->
+  <text x="700" y="268" text-anchor="middle" fill="#e05555" font-size="11">부모 테이블 없음</text>
+  <text x="700" y="282" text-anchor="middle" fill="#e05555" font-size="11">공통 컬럼 각 테이블 중복</text>
+  <text x="700" y="300" text-anchor="middle" fill="#888" font-size="11">UNION ALL로 조회</text>
+
+  <!-- Pros -->
+  <line x1="600" y1="322" x2="800" y2="322" stroke="#2a1a2a"/>
+  <text x="600" y="340" fill="#55c555" font-size="12">✓ 테이블 독립적</text>
+  <text x="600" y="356" fill="#55c555" font-size="12">✓ 자식 테이블 null 없음</text>
+  <!-- Cons -->
+  <text x="600" y="376" fill="#e05555" font-size="12">✗ UNION 쿼리 — 성능 불리</text>
+  <text x="600" y="392" fill="#e05555" font-size="12">✗ 컬럼 중복, 관리 어려움</text>
+  <!-- Usage -->
+  <text x="600" y="414" fill="#888" font-size="11">비권장 (JPA 공식 비권장)</text>
+  <text x="600" y="430" fill="#e05555" font-size="11">특수한 경우 외 사용 자제</text>
+  <text x="600" y="462" fill="#888" font-size="11" font-weight="600">@Inheritance(</text>
+  <text x="600" y="476" fill="#7ec8e3" font-size="11" font-weight="600">  strategy=TABLE_PER_CLASS</text>
+  <text x="600" y="490" fill="#888" font-size="11" font-weight="600">)</text>
+
+  <!-- Bottom tip -->
+  <text x="440" y="518" text-anchor="middle" fill="#7777cc" font-size="12">실무 권장 순서: SINGLE_TABLE (단순) → JOINED (복잡·정규화) → TABLE_PER_CLASS (비권장)</text>
+</svg>

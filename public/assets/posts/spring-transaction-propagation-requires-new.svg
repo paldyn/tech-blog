@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">REQUIRED vs REQUIRES_NEW 실행 흐름</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">내부 롤백이 외부 TX에 미치는 영향 비교</text>
+
+  <!-- ── Left: REQUIRED ── -->
+  <text x="210" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">REQUIRED (기본값)</text>
+
+  <!-- Outer TX box -->
+  <rect x="60" y="116" width="300" height="300" fill="#0a1a0a" rx="8" stroke="#1e3a1e" stroke-width="1.5"/>
+  <text x="90" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">외부 TX (orderService.create)</text>
+
+  <!-- Inner TX - participates -->
+  <rect x="90" y="150" width="240" height="100" fill="#0d2a0d" rx="6" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="110" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">내부: notify() — 같은 TX 참여</text>
+  <text x="110" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">RuntimeException 발생!</text>
+  <text x="110" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">→ TX를 rollback-only 마킹</text>
+  <text x="110" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">→ 외부에서 catch해도 소용없음</text>
+
+  <!-- Arrow down -->
+  <line x1="210" y1="258" x2="210" y2="292" stroke="#555" stroke-width="1.5"/>
+  <polygon points="210,300 204,284 216,284" fill="#555"/>
+
+  <!-- Result: rollback -->
+  <rect x="90" y="308" width="240" height="70" fill="#1a0a0a" rx="6" stroke="#2e1a1a" stroke-width="1"/>
+  <text x="210" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">전체 롤백</text>
+  <text x="210" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">외부 TX도 함께 롤백됨</text>
+  <text x="210" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">UnexpectedRollbackException 가능</text>
+
+  <!-- Label -->
+  <text x="210" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">내부 예외 → 외부 TX도 취소</text>
+
+  <!-- ── Right: REQUIRES_NEW ── -->
+  <text x="670" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">REQUIRES_NEW</text>
+
+  <!-- Outer TX box -->
+  <rect x="520" y="116" width="300" height="300" fill="#0a1a0a" rx="8" stroke="#1e3a1e" stroke-width="1.5"/>
+  <text x="550" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">외부 TX (orderService.create)</text>
+
+  <!-- Suspend label -->
+  <text x="550" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8a855">⏸ 외부 TX 일시 중단</text>
+
+  <!-- New Inner TX box -->
+  <rect x="550" y="172" width="240" height="110" fill="#1a0e00" rx="6" stroke="#3a2200" stroke-width="1.5"/>
+  <text x="570" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8a855">새 TX: notify() — 독립 실행</text>
+  <text x="570" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">RuntimeException 발생!</text>
+  <text x="570" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">→ 내부 TX만 롤백</text>
+  <text x="570" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">→ 외부 TX에 영향 없음</text>
+  <text x="570" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">→ 외부 TX 재개</text>
+
+  <!-- Arrow down -->
+  <line x1="670" y1="290" x2="670" y2="316" stroke="#555" stroke-width="1.5"/>
+  <polygon points="670,324 664,308 676,308" fill="#555"/>
+
+  <!-- Result: partial commit -->
+  <rect x="550" y="330" width="240" height="56" fill="#0a1a0a" rx="6" stroke="#1a2e1a" stroke-width="1"/>
+  <text x="670" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">외부 TX 정상 커밋</text>
+  <text x="670" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">notify 실패해도 주문은 저장됨</text>
+
+  <!-- Label -->
+  <text x="670" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">내부 예외 → 외부 TX 독립 유지</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="90" x2="440" y2="460" stroke="#222" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Code block -->
+  <rect x="60" y="452" width="760" height="36" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="472" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">@Transactional(propagation = Propagation.REQUIRES_NEW)  <tspan fill="#6a8aa0">// 알림 서비스에 적용</tspan></text>
+</svg>

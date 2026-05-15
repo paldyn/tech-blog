@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SSE EventSource 구현 패턴</text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">EventSource → onmessage → Dataset addRow 연동</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="760" height="264" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+
+  <text x="76" y="115" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">var</tspan><tspan> evtSrc = </tspan><tspan fill="#7ec8e3">null</tspan><tspan>;</tspan>
+  </text>
+
+  <text x="76" y="133" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan fill="#7ec8e3">function</tspan><tspan> fn_sseConnect() {</tspan>
+  </text>
+
+  <text x="76" y="151" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  evtSrc = </tspan><tspan fill="#7ec8e3">new</tspan><tspan> EventSource(</tspan><tspan fill="#ce9178">"/sse/alerts"</tspan><tspan>);</tspan>
+  </text>
+
+  <text x="76" y="169" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#6a8aa0">  // 기본 메시지 수신</text>
+
+  <text x="76" y="187" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  evtSrc.onmessage = </tspan><tspan fill="#7ec8e3">function</tspan><tspan>(e){</tspan>
+  </text>
+
+  <text x="76" y="205" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>    </tspan><tspan fill="#7ec8e3">var</tspan><tspan> r = ds_notify.addRow();</tspan>
+  </text>
+
+  <text x="76" y="223" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>    ds_notify.setColumn(r,</tspan><tspan fill="#ce9178">"MSG"</tspan><tspan>,e.data);</tspan>
+  </text>
+
+  <text x="76" y="241" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  }.bind(</tspan><tspan fill="#7ec8e3">this</tspan><tspan>);</tspan>
+  </text>
+
+  <text x="76" y="259" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#6a8aa0">  // 커스텀 이벤트 구독</text>
+
+  <text x="76" y="277" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  evtSrc.addEventListener(</tspan><tspan fill="#ce9178">"PRICE"</tspan><tspan>,</tspan>
+  </text>
+
+  <text x="76" y="295" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>    fn_onPrice.bind(</tspan><tspan fill="#7ec8e3">this</tspan><tspan>));</tspan>
+  </text>
+
+  <text x="76" y="313" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#6a8aa0">  // 오류 처리</text>
+
+  <text x="76" y="331" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>  evtSrc.onerror = </tspan><tspan fill="#7ec8e3">function</tspan><tspan>() {</tspan>
+  </text>
+
+  <text x="76" y="349" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e8e8e8">
+    <tspan>    evtSrc.close(); }; }</tspan>
+  </text>
+
+  <!-- Bottom annotation -->
+  <text x="440" y="382"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">서버 응답: Content-Type: text/event-stream · "data: {payload}\n\n" 포맷</text>
+</svg>

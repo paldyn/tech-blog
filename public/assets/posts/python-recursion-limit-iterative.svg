@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="880" height="400" viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="60" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">재귀 → 반복 전환 패턴</text>
+  <text x="60" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">깊은 재귀는 명시적 스택 or 반복문으로 대체</text>
+
+  <!-- Left: recursive DFS -->
+  <rect x="60" y="90" width="360" height="270" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888"># 재귀 DFS (깊은 그래프 위험)</text>
+  <text x="76" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> dfs_recursive(graph, node, visited):</tspan></text>
+  <text x="76" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    visited.add(node)</tspan></text>
+  <text x="76" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">    for</tspan><tspan fill="#e8e8e8"> neighbor </tspan><tspan fill="#7ec8e3">in</tspan><tspan fill="#e8e8e8"> graph[node]:</tspan></text>
+  <text x="76" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">        if</tspan><tspan fill="#e8e8e8"> neighbor </tspan><tspan fill="#7ec8e3">not in</tspan><tspan fill="#e8e8e8"> visited:</tspan></text>
+  <text x="76" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">            dfs_recursive(</tspan></text>
+  <text x="76" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">                graph, neighbor, visited)</tspan></text>
+  <text x="76" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">노드 수 &gt; 1000이면 RecursionError</text>
+  <text x="76" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">깊이 제한에 취약</text>
+
+  <!-- Right: iterative with explicit stack -->
+  <rect x="460" y="90" width="360" height="270" fill="#070b14" rx="6" stroke="#55c555"/>
+  <text x="476" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888"># 반복 DFS (명시적 스택)</text>
+  <text x="476" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3">def</tspan><tspan fill="#e8e8e8"> dfs_iter(graph, start):</tspan></text>
+  <text x="476" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    visited = set()</tspan></text>
+  <text x="476" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    stack = [start]</tspan></text>
+  <text x="476" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">    while</tspan><tspan fill="#e8e8e8"> stack:</tspan></text>
+  <text x="476" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">        node = stack.pop()</tspan></text>
+  <text x="476" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">        if</tspan><tspan fill="#e8e8e8"> node </tspan><tspan fill="#7ec8e3">not in</tspan><tspan fill="#e8e8e8"> visited:</tspan></text>
+  <text x="476" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">            visited.add(node)</tspan></text>
+  <text x="476" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">            stack.extend(graph[node])</tspan></text>
+  <text x="476" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">    return</tspan><tspan fill="#e8e8e8"> visited</tspan></text>
+  <text x="476" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">깊이 무관 — 스택은 힙 메모리</text>
+
+  <!-- Arrow -->
+  <line x1="422" y1="225" x2="448" y2="225" stroke="#55c555" stroke-width="2"/>
+  <polygon points="445,219 458,225 445,231" fill="#55c555"/>
+  <text x="435" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">전환</text>
+</svg>

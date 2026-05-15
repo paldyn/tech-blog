@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PL/Python 함수 예제</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">Python 생태계를 DB 함수 안에서 활용</text>
+
+  <!-- Left: basic example -->
+  <text x="75" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#b5cea8">① 기본 PL/Python3 함수</text>
+  <rect x="60" y="108" width="360" height="180" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 슈퍼유저만 생성 가능</text>
+  <text x="76" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE OR REPLACE FUNCTION</text>
+  <text x="76" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  sentiment_score(txt TEXT)</text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">RETURNS FLOAT</text>
+  <text x="76" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">LANGUAGE plpython3u AS $$</text>
+  <text x="76" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  from textblob import TextBlob</text>
+  <text x="76" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  return TextBlob(txt).sentiment.polarity</text>
+  <text x="76" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">$$;</text>
+
+  <!-- Right: SPI example -->
+  <text x="465" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#b5cea8">② SD/GD 캐시와 SPI 쿼리</text>
+  <rect x="450" y="108" width="370" height="210" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="466" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE FUNCTION cached_lookup(k INT)</text>
+  <text x="466" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">RETURNS TEXT LANGUAGE plpython3u AS $$</text>
+  <text x="466" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">  # SD: 세션 캐시, GD: 전역 캐시</text>
+  <text x="466" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  if</text>
+  <text x="490" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178"> 'cache'</text>
+  <text x="556" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3"> not in SD:</text>
+  <text x="466" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    SD[</text>
+  <text x="506" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'cache'</text>
+  <text x="554" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">] = {}</text>
+  <text x="466" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  if</text>
+  <text x="490" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> k not in SD[</text>
+  <text x="600" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'cache'</text>
+  <text x="648" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">]:</text>
+  <text x="466" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    rv = plpy.execute(</text>
+  <text x="466" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">      "SELECT v FROM t WHERE id=%d" % k</text>
+  <text x="466" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    )</text>
+  <text x="466" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    SD[</text>
+  <text x="506" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'cache'</text>
+  <text x="554" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">][k] = rv[</text>
+  <text x="638" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8">0</text>
+  <text x="650" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">][</text>
+  <text x="668" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'v'</text>
+  <text x="690" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">]</text>
+  <text x="466" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  return</text>
+  <text x="524" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"> SD[</text>
+  <text x="558" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'cache'</text>
+  <text x="606" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">][k]</text>
+  <text x="466" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">$$;</text>
+
+  <!-- Bottom tips -->
+  <rect x="60" y="308" width="760" height="88" rx="6" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
+  <text x="80" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">PL/Python 핵심 개념</text>
+  <text x="80" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• plpy.execute(): DB 쿼리 실행 (SPI), plpy.error(): 예외 발생</text>
+  <text x="80" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• SD (Session Dict): 세션 단위 캐시, GD (Global Dict): 백엔드 프로세스 단위 공유</text>
+  <text x="80" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">• plpython3u는 UNTRUSTED — 슈퍼유저만 생성, 신뢰된 서버에서만 허용</text>
+</svg>

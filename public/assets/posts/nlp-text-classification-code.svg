@@ -1,0 +1,78 @@
+<svg width="880" height="440" viewBox="0 0 880 440"
+  xmlns="http://www.w3.org/2000/svg"
+  font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">HuggingFace로 텍스트 분류기 구현</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">pipeline API vs 직접 파인튜닝</text>
+
+  <!-- Left panel: Pipeline API -->
+  <text x="220" y="100" text-anchor="middle" fill="#e8e8e8" font-size="16" font-weight="600">① 간단 추론 (Pipeline API)</text>
+  <rect x="40" y="112" width="360" height="208" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="56" y="133" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"># 3줄로 텍스트 분류</text>
+  <text x="56" y="151" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">from </text>
+  <text x="96" y="151" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">transformers </text>
+  <text x="216" y="151" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">import </text>
+  <text x="264" y="151" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">pipeline</text>
+
+  <text x="56" y="169" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">clf </text>
+  <text x="80" y="169" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="96" y="169" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">pipeline(</text>
+  <text x="56" y="187" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    "text-classification"</text>
+  <text x="56" y="205" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    model=</text>
+  <text x="104" y="205" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"snunlp/KR-FinBert"</text>
+  <text x="56" y="223" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+
+  <text x="56" y="247" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">result </text>
+  <text x="100" y="247" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="116" y="247" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">clf(</text>
+  <text x="148" y="247" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">"주가 급락"</text>
+  <text x="220" y="247" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+  <text x="56" y="265" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"># [{'label':'negative',</text>
+  <text x="56" y="283" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">#   'score': 0.97}]</text>
+  <text x="56" y="301" fill="#6a8aa0" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">#   ← 3줄로 끝!</text>
+
+  <!-- Right panel: Fine-tuning -->
+  <text x="660" y="100" text-anchor="middle" fill="#e8e8e8" font-size="16" font-weight="600">② 커스텀 파인튜닝</text>
+  <rect x="480" y="112" width="360" height="208" rx="6" fill="#070b14" stroke="#1e2433"/>
+
+  <text x="496" y="133" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">from </text>
+  <text x="536" y="133" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">transformers </text>
+  <text x="656" y="133" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">import</text>
+  <text x="496" y="151" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    AutoModelForSeqCls</text>
+  <text x="496" y="169" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    Trainer, TrainingArgs</text>
+
+  <text x="496" y="193" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">model </text>
+  <text x="536" y="193" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="552" y="193" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">AutoModelForSeqCls</text>
+  <text x="496" y="211" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    .from_pretrained(</text>
+  <text x="496" y="229" fill="#ce9178" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        "klue/bert-base"</text>
+  <text x="496" y="247" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">        num_labels=</text>
+  <text x="600" y="247" fill="#b5cea8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">3</text>
+  <text x="608" y="247" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">)</text>
+
+  <text x="496" y="271" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">trainer </text>
+  <text x="548" y="271" fill="#7ec8e3" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">= </text>
+  <text x="564" y="271" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">Trainer(model=model</text>
+  <text x="496" y="289" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">    train_dataset=ds)</text>
+  <text x="496" y="307" fill="#e8e8e8" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">trainer.train()</text>
+
+  <!-- Performance comparison bar chart -->
+  <text x="440" y="352" text-anchor="middle" fill="#e8e8e8" font-size="16" font-weight="600">모델별 성능 비교 (KLUE TC)</text>
+
+  <!-- Bars -->
+  <rect x="70" y="368" width="72" height="16" rx="3" fill="#7777cc"/>
+  <text x="150" y="380" fill="#e8e8e8" font-size="12">TF-IDF + LR</text>
+  <text x="310" y="380" fill="#888" font-size="12">F1: 0.82</text>
+
+  <rect x="70" y="392" width="108" height="16" rx="3" fill="#55c555"/>
+  <text x="186" y="404" fill="#e8e8e8" font-size="12">KoBERT 파인튜닝</text>
+  <text x="380" y="404" fill="#888" font-size="12">F1: 0.89</text>
+
+  <rect x="70" y="416" width="140" height="16" rx="3" fill="#7ec8e3"/>
+  <text x="218" y="428" fill="#e8e8e8" font-size="12">KLUE-RoBERTa-large</text>
+  <text x="460" y="428" fill="#888" font-size="12">F1: 0.93+</text>
+</svg>

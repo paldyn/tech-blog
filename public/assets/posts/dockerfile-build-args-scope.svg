@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle" xml:space="preserve">ARG 스코프와 유효 범위</text>
+
+  <!-- Left: scope diagram code -->
+  <rect x="60" y="72" width="380" height="320" fill="#070b14" rx="6" stroke="#1e2433"/>
+  <text x="76" y="96" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># FROM 앞 ARG: 스테이지 선택용</text>
+  <text x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ARG</text>
+  <text x="112" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> NODE_VERSION=20</text>
+  <text x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM</text>
+  <text x="112" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve"> node:${NODE_VERSION}</text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># FROM 이후: 스코프 리셋!</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">$NODE_VERSION = ""  </text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># 재선언해야 다시 사용 가능</text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ARG</text>
+  <text x="112" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> NODE_VERSION</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># 이제 $NODE_VERSION 사용 가능</text>
+  <text x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ENV로 변환 → 런타임에 유지</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ARG</text>
+  <text x="112" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> APP_VERSION=1.0.0</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ENV</text>
+  <text x="112" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve"> APP_VERSION=$APP_VERSION</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ARG: 빌드 시만 존재</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># ENV: 컨테이너 런타임에도 존재</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve"># 빌드 명령</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">$ docker build \</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">  --build-arg NODE_VERSION=22 \</text>
+
+  <!-- Right: ARG vs ENV comparison -->
+  <text x="466" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8e8e8" xml:space="preserve">ARG vs ENV</text>
+
+  <!-- Headers -->
+  <text x="466" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">특성</text>
+  <text x="600" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" xml:space="preserve">ARG</text>
+  <text x="720" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" xml:space="preserve">ENV</text>
+  <line x1="466" y1="120" x2="820" y2="120" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Rows -->
+  <text x="466" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">빌드 시 사용</text>
+  <text x="600" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" xml:space="preserve">✓</text>
+  <text x="720" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" xml:space="preserve">✓</text>
+
+  <text x="466" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">런타임 유지</text>
+  <text x="600" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" xml:space="preserve">✗</text>
+  <text x="720" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" xml:space="preserve">✓</text>
+
+  <text x="466" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">docker inspect 노출</text>
+  <text x="600" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" xml:space="preserve">✗ (빌드 후)</text>
+  <text x="720" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" xml:space="preserve">✓ (항상)</text>
+
+  <text x="466" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">캐시 영향</text>
+  <text x="600" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" xml:space="preserve">값 변경 시 무효화</text>
+  <text x="720" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" xml:space="preserve">값 변경 시 무효화</text>
+
+  <text x="466" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">--build-arg 오버라이드</text>
+  <text x="600" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" xml:space="preserve">✓</text>
+  <text x="720" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" xml:space="preserve">✗</text>
+
+  <!-- Security box -->
+  <rect x="466" y="264" width="354" height="120" fill="#2a0d0d" rx="8" stroke="#e05555"/>
+  <text x="486" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">보안 주의</text>
+  <text x="486" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">ARG로 전달한 민감 정보는</text>
+  <text x="486" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">docker history에서 보임!</text>
+  <text x="486" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">--build-arg PASSWORD=secret</text>
+  <text x="486" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">대신 BuildKit secret 마운트 사용</text>
+</svg>

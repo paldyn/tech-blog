@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="880" height="480">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PostgreSQL 전문 검색 파이프라인</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">원문 → tsvector 색인 → tsquery 검색 → GIN 인덱스 활용</text>
+
+  <!-- Step 1: Raw text -->
+  <rect x="60" y="100" width="200" height="60" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">원문 텍스트</text>
+  <text x="160" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">"PostgreSQL is great"</text>
+
+  <line x1="260" y1="130" x2="300" y2="130" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="280" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">to_tsvector</text>
+
+  <!-- Step 2: tsvector -->
+  <rect x="305" y="100" width="270" height="60" rx="8" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">tsvector (색인 벡터)</text>
+  <text x="440" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">'great':3 'postgresql':1</text>
+
+  <line x1="575" y1="130" x2="615" y2="130" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+  <text x="595" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">GIN 인덱스</text>
+
+  <!-- Step 3: GIN index -->
+  <rect x="620" y="100" width="200" height="60" rx="8" fill="#2e1a00" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="720" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">GIN 인덱스</text>
+  <text x="720" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">렉심 → 문서 위치 목록</text>
+
+  <!-- tsvector detail -->
+  <text x="75" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">tsvector 처리 단계</text>
+  <rect x="60" y="204" width="760" height="90" rx="6" fill="#111" stroke="#1e2433"/>
+
+  <!-- Pipeline steps -->
+  <rect x="80" y="222" width="120" height="54" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="140" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">토크나이징</text>
+  <text x="140" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">단어 분리</text>
+  <text x="140" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">구두점 제거</text>
+
+  <line x1="200" y1="249" x2="230" y2="249" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="234" y="222" width="120" height="54" rx="6" fill="#1a2030" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="294" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">불용어 제거</text>
+  <text x="294" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">is, the, a</text>
+  <text x="294" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">언어별 처리</text>
+
+  <line x1="354" y1="249" x2="384" y2="249" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="388" y="222" width="120" height="54" rx="6" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="448" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">어간 추출</text>
+  <text x="448" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">running → run</text>
+  <text x="448" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">Stemming</text>
+
+  <line x1="508" y1="249" x2="538" y2="249" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <rect x="542" y="222" width="120" height="54" rx="6" fill="#2e1a00" stroke="#ce9178" stroke-width="1"/>
+  <text x="602" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ce9178" text-anchor="middle">렉심 + 위치</text>
+  <text x="602" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">'run':2 'great':5</text>
+  <text x="602" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">위치 가중치 A~D</text>
+
+  <!-- tsquery operators -->
+  <text x="75" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#ce9178">tsquery 연산자</text>
+  <rect x="60" y="332" width="760" height="108" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- &amp;: AND,  |: OR,  !: NOT,  &lt;-&gt;: 인접(phrase)</text>
+  <text x="76" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">to_tsquery(</text>
+  <text x="162" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'english'</text>
+  <text x="234" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, </text>
+  <text x="246" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'postgres &amp; (fast | scalable) &amp; !slow'</text>
+  <text x="656" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="76" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- plainto_tsquery: 공백 → &amp; 자동 변환 (사용자 입력에 편리)</text>
+  <text x="76" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">plainto_tsquery(</text>
+  <text x="228" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'english'</text>
+  <text x="300" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">, </text>
+  <text x="312" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'postgresql fast database'</text>
+  <text x="546" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="76" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- websearch_to_tsquery (PG11+): "phrase" OR, - NOT 지원</text>
+</svg>

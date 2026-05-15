@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">BRIN 인덱스 — 블록 범위 필터링 원리</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">쿼리 범위와 블록 min/max를 비교해 불필요한 페이지 건너뜀</text>
+
+  <!-- Query range -->
+  <rect x="60" y="96" width="760" height="44" rx="6" fill="#0d1117" stroke="#7ec8e3"/>
+  <text x="440" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">쿼리: WHERE created_at BETWEEN '2026-03-01' AND '2026-03-31'</text>
+  <text x="440" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">BRIN이 각 블록 범위의 min/max와 비교</text>
+
+  <!-- Blocks timeline -->
+  <!-- Block Range 1: Jan -->
+  <rect x="60" y="160" width="140" height="60" rx="4" fill="#0d1a0d" stroke="#55c555"/>
+  <text x="130" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">블록 0~127</text>
+  <text x="130" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">Jan 1~31</text>
+  <text x="130" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">건너뜀</text>
+
+  <!-- Block Range 2: Feb -->
+  <rect x="220" y="160" width="140" height="60" rx="4" fill="#0d1a0d" stroke="#55c555"/>
+  <text x="290" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">블록 128~255</text>
+  <text x="290" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">Feb 1~28</text>
+  <text x="290" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">건너뜀</text>
+
+  <!-- Block Range 3: Mar ← MATCH -->
+  <rect x="380" y="160" width="140" height="60" rx="4" fill="#1a1a0d" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="450" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">블록 256~383</text>
+  <text x="450" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7ec8e3" text-anchor="middle">Mar 1~31</text>
+  <text x="450" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">스캔 대상</text>
+
+  <!-- Block Range 4: Apr -->
+  <rect x="540" y="160" width="140" height="60" rx="4" fill="#0d1a0d" stroke="#55c555"/>
+  <text x="610" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">블록 384~511</text>
+  <text x="610" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">Apr 1~30</text>
+  <text x="610" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">건너뜀</text>
+
+  <!-- Block Range 5: May -->
+  <rect x="700" y="160" width="120" height="60" rx="4" fill="#0d1a0d" stroke="#55c555"/>
+  <text x="760" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">블록 512+</text>
+  <text x="760" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">May~</text>
+  <text x="760" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">건너뜀</text>
+
+  <!-- Arrow from query to target block -->
+  <line x1="450" y1="140" x2="450" y2="158" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="444,158 450,162 456,158" fill="#7ec8e3"/>
+
+  <!-- Stats comparison -->
+  <rect x="60" y="244" width="760" height="132" rx="8" fill="#111" stroke="#1e2433"/>
+  <text x="440" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">인덱스 크기 비교 (1억 행 logs 테이블)</text>
+  <!-- header -->
+  <text x="120" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">인덱스 유형</text>
+  <text x="420" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">크기</text>
+  <text x="700" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="end">비고</text>
+  <line x1="80" y1="300" x2="800" y2="300" stroke="#1e2433"/>
+  <text x="120" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc">B-Tree</text>
+  <text x="420" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">~2.1 GB</text>
+  <text x="700" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="end">범위·등호 모두 지원</text>
+  <text x="120" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">BRIN</text>
+  <text x="420" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">~48 KB</text>
+  <text x="700" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="end">시계열 범위 쿼리 최적</text>
+  <text x="120" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">BRIN 절감률</text>
+  <text x="420" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">99.99%</text>
+  <text x="700" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="end">시계열 데이터에 탁월</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SKIP LOCKED 기반 분산 큐 패턴</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">여러 워커가 같은 작업 행을 중복 처리하지 않도록 행 수준 잠금</text>
+
+  <!-- Jobs table -->
+  <rect x="60" y="96" width="300" height="240" rx="8" fill="#111" stroke="#1e2433"/>
+  <text x="210" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">jobs 테이블</text>
+  <!-- header -->
+  <text x="80" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">id  status    payload</text>
+  <line x1="80" y1="150" x2="340" y2="150" stroke="#1e2433"/>
+  <!-- rows -->
+  <rect x="80" y="156" width="240" height="20" rx="2" fill="#1a2a1a"/>
+  <text x="88" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555">1   pending   task-A   ← Worker 1</text>
+  <rect x="80" y="180" width="240" height="20" rx="2" fill="#1a1a2e"/>
+  <text x="88" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc">2   pending   task-B   ← Worker 2</text>
+  <text x="88" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">3   pending   task-C   (대기)</text>
+  <text x="88" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">4   pending   task-D   (대기)</text>
+  <text x="88" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">5   done      task-E</text>
+  <!-- lock icons -->
+  <text x="88" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">🔒</text>
+  <text x="88" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">🔒</text>
+
+  <!-- Workers -->
+  <!-- Worker 1 -->
+  <rect x="420" y="96" width="200" height="100" rx="8" fill="#0d1a0d" stroke="#55c555"/>
+  <text x="520" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Worker 1</text>
+  <text x="435" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7ec8e3" xml:space="preserve">SELECT id, payload</text>
+  <text x="435" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7ec8e3" xml:space="preserve">FROM jobs</text>
+  <text x="435" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#e8e8e8" xml:space="preserve">WHERE status='pending'</text>
+  <text x="435" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#55c555" xml:space="preserve">FOR UPDATE SKIP LOCKED</text>
+
+  <!-- Worker 2 -->
+  <rect x="660" y="96" width="200" height="100" rx="8" fill="#0d0d1a" stroke="#7777cc"/>
+  <text x="760" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">Worker 2</text>
+  <text x="675" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7ec8e3" xml:space="preserve">SELECT id, payload</text>
+  <text x="675" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7ec8e3" xml:space="preserve">FROM jobs</text>
+  <text x="675" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#e8e8e8" xml:space="preserve">WHERE status='pending'</text>
+  <text x="675" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#7777cc" xml:space="preserve">FOR UPDATE SKIP LOCKED</text>
+
+  <!-- Arrows from table to workers -->
+  <line x1="360" y1="164" x2="418" y2="144" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="418,138 420,150 410,144" fill="#55c555"/>
+  <line x1="360" y1="188" x2="658" y2="144" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="658,138 660,150 650,144" fill="#7777cc"/>
+
+  <!-- Complete step -->
+  <rect x="420" y="220" width="440" height="80" rx="8" fill="#111" stroke="#1e2433"/>
+  <text x="640" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">처리 완료 후 상태 업데이트</text>
+  <text x="440" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7ec8e3" xml:space="preserve">UPDATE jobs SET status = 'done'</text>
+  <text x="440" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8" xml:space="preserve">  WHERE id = :fetched_id;</text>
+  <text x="440" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" xml:space="preserve">COMMIT;  -- 이 시점에 행 락 해제</text>
+
+  <!-- Bottom notes -->
+  <rect x="60" y="360" width="760" height="72" rx="6" fill="#0d1117" stroke="#1e2433"/>
+  <text x="440" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">SKIP LOCKED vs NOWAIT</text>
+  <text x="80" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">SKIP LOCKED: 잠긴 행을 결과에서 제외 → 큐·배치 처리에 적합</text>
+  <text x="80" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">NOWAIT: 잠긴 행 만나면 즉시 오류 → 단일 행 획득, 재시도 로직 필요</text>
+</svg>
