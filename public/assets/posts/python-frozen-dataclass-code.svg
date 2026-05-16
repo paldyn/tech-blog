@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">frozen dataclass 활용 패턴</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">딕셔너리 키, replace()로 값 변경, 상속 시 주의사항</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="760" height="360" rx="6" fill="#070b14" stroke="#1e2433" stroke-width="1.5"/>
+
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#7ec8e3">from</text>
+  <text x="112" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8"> dataclasses </text>
+  <text x="214" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#7ec8e3">import</text>
+  <text x="265" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8"> dataclass, replace</text>
+
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#7ec8e3">@dataclass</text>
+  <text x="166" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8c040">(frozen=True, order=True)</text>
+  <text x="76" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#7ec8e3">class</text>
+  <text x="122" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8"> Coordinate:</text>
+  <text x="76" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">    lat: float</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">    lon: float</text>
+
+  <!-- 1. dict 키 -->
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#6a8aa0"># 1. dict / set 키로 사용 가능</text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">seoul = Coordinate(</text>
+  <text x="224" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#b5cea8">37.5</text>
+  <text x="258" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">, </text>
+  <text x="276" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#b5cea8">127.0</text>
+  <text x="320" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">)</text>
+  <text x="76" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">cache = {seoul: </text>
+  <text x="193" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ce9178">"서울"</text>
+  <text x="240" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">}   </text>
+  <text x="290" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#6a8aa0"># ✓ __hash__ 있음</text>
+
+  <!-- 2. replace -->
+  <text x="76" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#6a8aa0"># 2. 수정하려면 replace() 로 새 인스턴스</text>
+  <text x="76" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">moved = replace(seoul, lat=</text>
+  <text x="284" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#b5cea8">38.0</text>
+  <text x="318" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">)</text>
+  <text x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#6a8aa0"># seoul 은 그대로, moved 는 새 객체</text>
+
+  <!-- 3. __post_init__ with frozen -->
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#6a8aa0"># 3. frozen + __post_init__: object.__setattr__</text>
+  <text x="76" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#7ec8e3">    def </text>
+  <text x="120" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">__post_init__(self):</text>
+  <text x="76" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#6a8aa0">        # self.x = v  ← FrozenInstanceError!</text>
+  <text x="76" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">        object.__setattr__(self, </text>
+  <text x="299" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ce9178">'x'</text>
+  <text x="324" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#e8e8e8">, value)</text>
+</svg>

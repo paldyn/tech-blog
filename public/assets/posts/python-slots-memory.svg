@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">__slots__ 메모리 구조 비교</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">__dict__ 기반 vs __slots__ 기반 인스턴스</text>
+
+  <!-- Without __slots__ -->
+  <rect x="60" y="88" width="360" height="340" rx="8" fill="#0d1117" stroke="#888" stroke-width="2"/>
+  <text x="240" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888">일반 클래스 (dict 기반)</text>
+
+  <!-- Object box -->
+  <rect x="80" y="128" width="320" height="50" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="148" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">obj (Python object)</text>
+  <text x="240" y="164" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ob_refcnt, ob_type, ...</text>
+
+  <!-- Arrow to dict -->
+  <line x1="240" y1="178" x2="240" y2="198" stroke="#888" stroke-width="1.5"/>
+  <polygon points="233,198 240,212 247,198" fill="#888"/>
+  <text x="280" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">__dict__ 포인터</text>
+
+  <!-- Dict box -->
+  <rect x="80" y="212" width="320" height="120" rx="6" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="234" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">__dict__ (해시 테이블)</text>
+  <text x="96" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">"x": 1.0</text>
+  <text x="96" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">"y": 2.0</text>
+  <text x="96" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">"z": 0.0</text>
+  <text x="96" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">런타임에 자유롭게 추가 가능</text>
+
+  <!-- Memory note -->
+  <rect x="80" y="352" width="320" height="56" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">메모리: ~200~400 bytes</text>
+  <text x="240" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">dict 오버헤드 + 해시 버킷 포함</text>
+
+  <!-- With __slots__ -->
+  <rect x="460" y="88" width="360" height="340" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="2"/>
+  <text x="640" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">__slots__ 클래스</text>
+
+  <!-- Object box -->
+  <rect x="480" y="128" width="320" height="50" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="148" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">obj (Python object)</text>
+  <text x="640" y="164" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ob_refcnt, ob_type, slot_0, slot_1, slot_2</text>
+
+  <!-- Slot boxes directly -->
+  <rect x="480" y="198" width="320" height="130" rx="6" fill="#1a102a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="640" y="218" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc">슬롯 (고정 크기 배열)</text>
+  <text x="496" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">slot[0] x → 1.0</text>
+  <text x="496" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">slot[1] y → 2.0</text>
+  <text x="496" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">slot[2] z → 0.0</text>
+  <text x="496" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">고정 오프셋으로 직접 접근 (더 빠름)</text>
+
+  <!-- No __dict__ label -->
+  <rect x="480" y="348" width="320" height="36" rx="4" fill="#0a1a0a" stroke="#1e2433"/>
+  <text x="640" y="372" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">__dict__ 없음</text>
+
+  <!-- Memory note -->
+  <rect x="480" y="394" width="320" height="24" rx="4" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="411" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">메모리: ~40~80 bytes (50~80% 절감)</text>
+
+  <!-- Footer -->
+  <rect x="60" y="444" width="760" height="26" rx="4" fill="#0d1117" stroke="#1e2433"/>
+  <text x="440" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#6a8aa0">수백만 개 인스턴스를 생성하는 경우 __slots__로 메모리와 속도를 동시에 개선할 수 있습니다</text>
+</svg>
