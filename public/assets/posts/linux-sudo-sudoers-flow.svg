@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">sudo 실행 흐름</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">인증 → 정책 확인 → 실행</text>
+
+  <!-- Steps -->
+  <!-- Step 1 -->
+  <rect x="60" y="92" width="180" height="70" fill="#111827" rx="8" stroke="#1e3a5f" stroke-width="1.5"/>
+  <text x="150" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">① 명령 실행</text>
+  <text x="150" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" text-anchor="middle">sudo COMMAND</text>
+  <text x="150" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">일반 사용자 alice</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="240" y1="127" x2="276" y2="127" stroke="#555" stroke-width="2"/>
+  <polygon points="276,122 286,127 276,132" fill="#555"/>
+
+  <!-- Step 2 -->
+  <rect x="286" y="92" width="180" height="70" fill="#111827" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="376" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">② 인증</text>
+  <text x="376" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">alice 비밀번호 입력</text>
+  <text x="376" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">5분간 캐시됨</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="466" y1="127" x2="502" y2="127" stroke="#555" stroke-width="2"/>
+  <polygon points="502,122 512,127 502,132" fill="#555"/>
+
+  <!-- Step 3 -->
+  <rect x="512" y="92" width="180" height="70" fill="#111827" rx="8" stroke="#2d4a1e" stroke-width="1.5"/>
+  <text x="602" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">③ 정책 확인</text>
+  <text x="602" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">/etc/sudoers 조회</text>
+  <text x="602" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">sudoers.d/* 포함</text>
+
+  <!-- Arrow 3→4 success -->
+  <line x1="692" y1="127" x2="728" y2="127" stroke="#55c555" stroke-width="2"/>
+  <polygon points="728,122 738,127 728,132" fill="#55c555"/>
+
+  <!-- Step 4 success -->
+  <rect x="738" y="92" width="102" height="70" fill="#0d2b0d" rx="8" stroke="#2d4a1e" stroke-width="1.5"/>
+  <text x="789" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">④ 실행</text>
+  <text x="789" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">root 권한</text>
+  <text x="789" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">명령 수행</text>
+
+  <!-- Denial arrow from step 3 down -->
+  <line x1="602" y1="162" x2="602" y2="210" stroke="#e05555" stroke-width="2"/>
+  <polygon points="597,210 602,220 607,210" fill="#e05555"/>
+  <rect x="502" y="220" width="200" height="50" fill="#2b0d0d" rx="6" stroke="#5f1e1e" stroke-width="1.5"/>
+  <text x="602" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">권한 거부</text>
+  <text x="602" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">syslog에 기록됨</text>
+
+  <!-- sudo logging -->
+  <rect x="60" y="300" width="760" height="110" fill="#070b14" rx="6" stroke="#1e2433" stroke-width="1"/>
+  <text x="76" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">sudo 로그 확인 (journalctl 또는 /var/log/auth.log)</text>
+  <text x="76" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">$ journalctl -u sudo --since today</text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">May 17 10:23:01 host sudo: alice : TTY=pts/0 ;</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">    PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/apt update</text>
+  <text x="76" y="400" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">$ sudo -l    </text><text x="186" y="400" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888"># 현재 사용자 권한 목록 확인</text>
+
+  <text x="440" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">sudo 기본 캐시 타임아웃: 5분 (timestamp_timeout 설정 가능)</text>
+</svg>
