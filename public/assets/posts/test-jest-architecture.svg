@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" style="background:#0a0a0a;border-radius:12px">
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" xml:space="preserve">Jest 아키텍처 — 격리된 병렬 실행</text>
+  <text x="60" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" xml:space="preserve">각 테스트 파일이 독립된 Worker(Node.js vm) 에서 실행</text>
+
+  <!-- Jest Runner box -->
+  <rect x="60" y="96" width="760" height="56" rx="8" fill="#0d1a2b" stroke="#1e4070"/>
+  <text x="76" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" xml:space="preserve">Jest Runner (Main Process)</text>
+  <text x="76" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">테스트 파일 수집 → 스케줄링 → 결과 집계 → 리포트 출력</text>
+
+  <!-- Worker boxes -->
+  <rect x="60" y="176" width="230" height="72" rx="6" fill="#1a0d2b" stroke="#3a1e70"/>
+  <text x="76" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" xml:space="preserve">Worker 1</text>
+  <text x="76" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">user.test.ts</text>
+  <text x="76" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">독립 vm 컨텍스트</text>
+
+  <rect x="310" y="176" width="230" height="72" rx="6" fill="#1a0d2b" stroke="#3a1e70"/>
+  <text x="326" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" xml:space="preserve">Worker 2</text>
+  <text x="326" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">cart.test.ts</text>
+  <text x="326" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">독립 vm 컨텍스트</text>
+
+  <rect x="560" y="176" width="260" height="72" rx="6" fill="#1a0d2b" stroke="#3a1e70"/>
+  <text x="576" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" xml:space="preserve">Worker 3</text>
+  <text x="576" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">payment.test.ts</text>
+  <text x="576" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">독립 vm 컨텍스트</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="268" x2="820" y2="268" stroke="#1e2433" stroke-width="1"/>
+
+  <!-- Jest lifecycle -->
+  <text x="60" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" xml:space="preserve">테스트 생명주기 훅</text>
+
+  <rect x="60" y="302" width="760" height="90" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">describe(</text>
+  <text x="140" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'UserService'</text>
+  <text x="219" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">, () =&gt; {</text>
+  <text x="76" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">  beforeAll</text>
+  <text x="140" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">(() =&gt; db.connect()); </text>
+  <text x="296" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// 블록 1회 실행</text>
+  <text x="76" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">  beforeEach</text>
+  <text x="145" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">(() =&gt; db.clear()); </text>
+  <text x="288" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// 각 test 전</text>
+  <text x="76" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">  afterAll</text>
+  <text x="134" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">(() =&gt; db.disconnect());  </text>
+  <text x="315" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// 블록 완료 후</text>
+
+  <text x="60" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">--runInBand: 직렬 실행 (디버깅용) / --maxWorkers=50%: CPU 절반 사용 / --testPathPattern: 파일 필터</text>
+</svg>

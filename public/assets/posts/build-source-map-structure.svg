@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" style="background:#0a0a0a;border-radius:12px">
+  <defs>
+    <marker id="sma" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" xml:space="preserve">소스맵 구조와 동작 원리</text>
+  <text x="60" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" xml:space="preserve">번들 → 원본 소스 역방향 매핑 (VLQ 인코딩)</text>
+
+  <!-- Source code box -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" xml:space="preserve">원본 소스 (src/app.ts:3:5)</text>
+  <rect x="60" y="110" width="330" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="92" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve"> const </text>
+  <text x="136" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">greet = (name: </text>
+  <text x="253" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">string</text>
+  <text x="293" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">) =&gt;</text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">2</text>
+  <text x="92" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">   `Hello, ${name}!`;</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">3</text>
+  <text x="92" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">greet(</text>
+  <text x="138" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"Alice"</text>
+  <text x="186" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// 3행 5열 → 오류 발생</text>
+  <text x="76" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// 런타임 TypeError</text>
+
+  <!-- Arrow 1 (source → bundle) -->
+  <text x="408" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">번들</text>
+  <line x1="392" y1="160" x2="460" y2="160" stroke="#7ec8e3" stroke-width="2" marker-end="url(#sma)"/>
+  <text x="408" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" xml:space="preserve">빌드</text>
+
+  <!-- Bundled output -->
+  <text x="462" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">번들 출력 (dist/app.js:1:1)</text>
+  <rect x="462" y="110" width="358" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="478" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// 최소화 · 난독화 후</text>
+  <text x="478" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">var n=</text>
+  <text x="519" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">function</text>
+  <text x="564" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">(e){</text>
+  <text x="478" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">return </text>
+  <text x="525" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">`Hello, ${e}!`</text>
+  <text x="638" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">};n(</text>
+  <text x="478" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"Alice"</text>
+  <text x="526" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="478" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">//# sourceMappingURL=app.js.map</text>
+
+  <!-- Source map structure -->
+  <text x="60" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" xml:space="preserve">소스맵 파일 (app.js.map)</text>
+  <rect x="60" y="242" width="760" height="130" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">{</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "version"</text>
+  <text x="155" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">: </text>
+  <text x="168" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">3</text>
+  <text x="176" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">,  </text>
+  <text x="204" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"sources"</text>
+  <text x="276" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">: [</text>
+  <text x="299" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"../src/app.ts"</text>
+  <text x="406" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">],</text>
+  <text x="76" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "mappings"</text>
+  <text x="162" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">: </text>
+  <text x="176" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"AAAA,SAAS,KAAK,CAAC,IAAY"</text>
+  <text x="374" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// VLQ 인코딩</text>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">  // mappings 각 세그먼트: [생성열, 소스인덱스, 원본행, 원본열, 이름인덱스]</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "names"</text>
+  <text x="131" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">: [</text>
+  <text x="153" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"greet"</text>
+  <text x="202" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="209" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"name"</text>
+  <text x="253" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">]</text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">}</text>
+
+  <text x="60" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">브라우저 DevTools가 sourceMappingURL을 감지해 원본 파일을 자동으로 역매핑합니다.</text>
+</svg>

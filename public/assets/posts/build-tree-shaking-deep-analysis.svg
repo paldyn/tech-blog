@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" style="background:#0a0a0a;border-radius:12px">
+  <!-- Title -->
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" xml:space="preserve">Tree Shaking — 작동 조건과 실패 패턴</text>
+  <text x="60" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" xml:space="preserve">정적 ESM 분석 → 미사용 export 제거 / sideEffects 선언 필수</text>
+
+  <!-- Success cases (left) -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" xml:space="preserve">✓ Tree Shaking 성공 패턴</text>
+  <rect x="60" y="110" width="376" height="270" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// math.ts — 정적 ESM export</text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">export function </text>
+  <text x="180" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">add</text>
+  <text x="202" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">(a,b) { </text>
+  <text x="253" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">return </text>
+  <text x="296" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">a+b }</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">export function </text>
+  <text x="180" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">sub</text>
+  <text x="202" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">(a,b) { </text>
+  <text x="253" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">return </text>
+  <text x="296" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">a-b } </text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// ↑ sub는 미사용 → 제거됨</text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// app.ts</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">import </text>
+  <text x="116" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">{ add } </text>
+  <text x="165" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">from </text>
+  <text x="203" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'./math'</text>
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// package.json 라이브러리</text>
+  <text x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">{</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "sideEffects"</text>
+  <text x="183" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">: </text>
+  <text x="196" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">false</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "module"</text>
+  <text x="150" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">: </text>
+  <text x="163" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"dist/index.esm.js"</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">}</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// → sub 함수 번들에서 완전 제거</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// → 번들 크기 감소</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// → 성공 ✓</text>
+
+  <!-- Fail cases (right) -->
+  <text x="476" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" xml:space="preserve">✗ Tree Shaking 실패 패턴</text>
+  <rect x="476" y="110" width="344" height="270" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="492" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// ① CJS require — 동적</text>
+  <text x="492" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">const </text>
+  <text x="530" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">{ add } = require(</text>
+  <text x="650" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'./math'</text>
+  <text x="703" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="492" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// → 정적 분석 불가, 전체 포함</text>
+  <text x="492" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// ② 네임스페이스 import</text>
+  <text x="492" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">import </text>
+  <text x="530" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">* </text>
+  <text x="543" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">as </text>
+  <text x="563" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">math </text>
+  <text x="598" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">from </text>
+  <text x="638" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'./math'</text>
+  <text x="492" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">math.add(</text>
+  <text x="551" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="559" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">,</text>
+  <text x="566" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">2</text>
+  <text x="574" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="492" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// → sub도 포함됨 (전체 ns)</text>
+  <text x="492" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">// ③ sideEffects 미선언</text>
+  <text x="492" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">{</text>
+  <text x="492" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">  // package.json에</text>
+  <text x="492" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#6a8aa0" xml:space="preserve">  // sideEffects 필드 없음</text>
+  <text x="492" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8e8e8" xml:space="preserve">}</text>
+  <text x="492" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// → 번들러가 보수적으로</text>
+  <text x="492" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// → 전체 모듈 포함</text>
+
+  <text x="60" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" xml:space="preserve">class 내부 메서드는 Tree Shaking 어려움 — 함수 단위 export 선호. 전체 클래스는 참조 시 포함됨.</text>
+</svg>
