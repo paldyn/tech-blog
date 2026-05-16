@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">Redo Log와 Undo Log — 역할 비교</text>
+
+  <!-- Redo Log -->
+  <rect x="60" y="70" width="370" height="390" rx="10" fill="#0d1117" stroke="#2a4a2a" stroke-width="2"/>
+  <rect x="60" y="70" width="370" height="36" rx="10" fill="#1e3a2a"/>
+  <rect x="60" y="90" width="370" height="16" fill="#1e3a2a"/>
+  <text x="245" y="95" text-anchor="middle" font-size="15" font-weight="600" fill="#55c555">Redo Log (재실행 로그)</text>
+
+  <text x="80" y="128" font-size="13" fill="#e8e8e8">목적</text>
+  <text x="200" y="128" font-size="13" fill="#888">충돌 후 커밋된 변경 복구</text>
+
+  <line x1="80" y1="138" x2="415" y2="138" stroke="#2a3a2a" stroke-width="0.5"/>
+  <text x="80" y="158" font-size="13" fill="#e8e8e8">파일 위치</text>
+  <text x="200" y="158" font-size="13" fill="#888">#ib_redo0 ~ #ib_redoN (8.0+)</text>
+
+  <line x1="80" y1="168" x2="415" y2="168" stroke="#2a3a2a" stroke-width="0.5"/>
+  <text x="80" y="188" font-size="13" fill="#e8e8e8">기록 내용</text>
+  <text x="200" y="188" font-size="13" fill="#888">변경 후(After Image) 값</text>
+
+  <line x1="80" y1="198" x2="415" y2="198" stroke="#2a3a2a" stroke-width="0.5"/>
+  <text x="80" y="218" font-size="13" fill="#e8e8e8">수명</text>
+  <text x="200" y="218" font-size="13" fill="#888">Checkpoint 이후 재사용(순환)</text>
+
+  <!-- Circular buffer diagram -->
+  <rect x="90" y="238" width="320" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="250" y="262" text-anchor="middle" font-size="12" fill="#6a8aa0">-- 순환 Redo Log 버퍼</text>
+  <text x="100" y="280" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8">[LSN 1000][LSN 1001]...[LSN 2000]</text>
+  <text x="100" y="298" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#55c555">   ↑ Checkpoint            ↑ Current</text>
+  <text x="100" y="316" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#888">   재사용 가능              LSN</text>
+
+  <text x="245" y="362" text-anchor="middle" font-size="13" fill="#888">innodb_log_file_size × innodb_log_files_in_group</text>
+  <text x="245" y="380" text-anchor="middle" font-size="13" fill="#888">= Redo Log 총 용량</text>
+  <text x="245" y="400" text-anchor="middle" font-size="12" fill="#7ec8e3">(8.0.30+ innodb_redo_log_capacity로 통합)</text>
+  <text x="245" y="430" text-anchor="middle" font-size="12" fill="#55c555">innodb_flush_log_at_trx_commit 로 내구성 조절</text>
+  <text x="245" y="450" text-anchor="middle" font-size="12" fill="#888">1=fsync per commit (ACID), 2=OS버퍼, 0=1초단위</text>
+
+  <!-- Undo Log -->
+  <rect x="450" y="70" width="370" height="390" rx="10" fill="#0d1117" stroke="#4a3a2a" stroke-width="2"/>
+  <rect x="450" y="70" width="370" height="36" rx="10" fill="#3a2a1a"/>
+  <rect x="450" y="90" width="370" height="16" fill="#3a2a1a"/>
+  <text x="635" y="95" text-anchor="middle" font-size="15" font-weight="600" fill="#e05555">Undo Log (취소 로그)</text>
+
+  <text x="470" y="128" font-size="13" fill="#e8e8e8">목적</text>
+  <text x="590" y="128" font-size="13" fill="#888">ROLLBACK + MVCC 이전 버전 제공</text>
+
+  <line x1="470" y1="138" x2="805" y2="138" stroke="#3a2a1a" stroke-width="0.5"/>
+  <text x="470" y="158" font-size="13" fill="#e8e8e8">파일 위치</text>
+  <text x="590" y="158" font-size="13" fill="#888">Undo Tablespace (undo_001 등)</text>
+
+  <line x1="470" y1="168" x2="805" y2="168" stroke="#3a2a1a" stroke-width="0.5"/>
+  <text x="470" y="188" font-size="13" fill="#e8e8e8">기록 내용</text>
+  <text x="590" y="188" font-size="13" fill="#888">변경 전(Before Image) 값</text>
+
+  <line x1="470" y1="198" x2="805" y2="198" stroke="#3a2a1a" stroke-width="0.5"/>
+  <text x="470" y="218" font-size="13" fill="#e8e8e8">수명</text>
+  <text x="590" y="218" font-size="13" fill="#888">트랜잭션 종료 + 모든 ReadView 닫힘</text>
+
+  <!-- Version chain -->
+  <rect x="470" y="238" width="340" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="640" y="262" text-anchor="middle" font-size="12" fill="#6a8aa0">-- MVCC 버전 체인</text>
+  <text x="480" y="280" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8">현재 행 → Undo(v3) → Undo(v2)</text>
+  <text x="480" y="298" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8">         → Undo(v1) → NULL</text>
+  <text x="480" y="316" font-size="12" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#888">각 Undo 레코드 = 이전 버전 값</text>
+
+  <text x="635" y="362" text-anchor="middle" font-size="13" fill="#888">ROLLBACK 시: Undo 체인 따라 되돌림</text>
+  <text x="635" y="382" text-anchor="middle" font-size="13" fill="#888">SELECT (구버전) 시: ReadView 기준으로</text>
+  <text x="635" y="400" text-anchor="middle" font-size="13" fill="#888">보이는 버전 선택 → Lock 없이 읽기</text>
+  <text x="635" y="430" text-anchor="middle" font-size="12" fill="#e05555">장시간 트랜잭션 → Undo 누적 → 성능 저하</text>
+</svg>

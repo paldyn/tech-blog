@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">쿼리 캐시 — 글로벌 Mutex 병목</text>
+
+  <!-- SELECT path -->
+  <rect x="60" y="80" width="160" height="44" rx="6" fill="#1e2d4a" stroke="#2a3a5a"/>
+  <text x="140" y="108" text-anchor="middle" font-size="13" fill="#e8e8e8">SELECT 쿼리</text>
+
+  <line x1="220" y1="102" x2="280" y2="102" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="280,96 292,102 280,108" fill="#7ec8e3"/>
+
+  <!-- Global Mutex -->
+  <rect x="292" y="68" width="160" height="68" rx="6" fill="#2a1010" stroke="#5a2020"/>
+  <text x="372" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">Global Mutex</text>
+  <text x="372" y="114" text-anchor="middle" font-size="12" fill="#888">캐시 읽기 잠금</text>
+  <text x="372" y="130" text-anchor="middle" font-size="12" fill="#888">(배타적 lock 필요)</text>
+
+  <!-- Cache Hit path -->
+  <line x1="372" y1="136" x2="372" y2="180" stroke="#7ec8e3" stroke-width="1.5"/>
+  <rect x="292" y="180" width="160" height="44" rx="6" fill="#1e3a2a" stroke="#2a5a2a"/>
+  <text x="372" y="207" text-anchor="middle" font-size="13" fill="#55c555">Cache HIT → 반환</text>
+
+  <!-- Cache Miss path -->
+  <line x1="452" y1="102" x2="530" y2="102" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="530,96 542,102 530,108" fill="#e05555"/>
+  <rect x="542" y="80" width="140" height="44" rx="6" fill="#1e1e2a" stroke="#3a3a5a"/>
+  <text x="612" y="108" text-anchor="middle" font-size="13" fill="#888">Cache MISS</text>
+  <text x="612" y="124" text-anchor="middle" font-size="12" fill="#888">→ 실행 후 저장</text>
+
+  <!-- UPDATE invalidation -->
+  <rect x="60" y="240" width="160" height="44" rx="6" fill="#2a1a10" stroke="#5a3020"/>
+  <text x="140" y="263" text-anchor="middle" font-size="13" fill="#e05555">UPDATE / INSERT</text>
+  <text x="140" y="281" text-anchor="middle" font-size="12" fill="#888">/ DELETE</text>
+
+  <line x1="220" y1="262" x2="280" y2="220" stroke="#e05555" stroke-width="2"/>
+  <polygon points="278,214 292,222 284,228" fill="#e05555"/>
+
+  <!-- Invalidation box -->
+  <rect x="292" y="240" width="400" height="80" rx="6" fill="#1a0f0f" stroke="#4a2020"/>
+  <text x="492" y="268" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">캐시 무효화 (Invalidation)</text>
+  <text x="492" y="292" text-anchor="middle" font-size="13" fill="#888">테이블 변경 시 해당 테이블의 모든 캐시 항목 삭제</text>
+  <text x="492" y="310" text-anchor="middle" font-size="13" fill="#e05555">쓰기 + 읽기 모두 Global Mutex 획득 후 진행</text>
+
+  <!-- Problem summary -->
+  <rect x="60" y="355" width="760" height="80" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="440" y="380" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">핵심 문제 — 쓰기가 많을수록 캐시가 오히려 느려진다</text>
+  <text x="220" y="408" text-anchor="middle" font-size="13" fill="#e05555">1. 모든 SELECT가 Global Mutex 경합</text>
+  <text x="640" y="408" text-anchor="middle" font-size="13" fill="#e05555">2. 잦은 DML → 캐시 항목 대부분이 무효화</text>
+</svg>

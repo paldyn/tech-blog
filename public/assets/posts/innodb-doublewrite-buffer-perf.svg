@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">Doublewrite Buffer 성능 영향</text>
+
+  <!-- Write amplification explanation -->
+  <rect x="60" y="70" width="400" height="190" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="260" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">쓰기 증폭(Write Amplification)</text>
+
+  <text x="80" y="124" font-size="13" fill="#888">논리 쓰기 1번 → 물리 쓰기 2번</text>
+  <text x="80" y="148" font-size="13" fill="#7ec8e3">① Doublewrite Area (순차, 연속)</text>
+  <text x="80" y="168" font-size="13" fill="#7ec8e3">② 실제 페이지 위치 (랜덤 가능)</text>
+
+  <line x1="80" y1="182" x2="440" y2="182" stroke="#2a2a40" stroke-width="0.5"/>
+
+  <text x="80" y="202" font-size="13" fill="#e8e8e8">실제 성능 영향 (SSD 환경)</text>
+  <text x="80" y="222" font-size="13" fill="#55c555">쓰기 처리량: 약 5~10% 감소</text>
+  <text x="80" y="242" text-anchor="start" font-size="12" fill="#888">① 구역이 순차 기록이라 HDD 대비 SSD에서</text>
+  <text x="80" y="258" font-size="12" fill="#888">   영향이 훨씬 작음</text>
+
+  <!-- MySQL 8.0.20+ parallel doublewrite -->
+  <rect x="480" y="70" width="360" height="190" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="660" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">MySQL 8.0.20+ 개선</text>
+
+  <text x="500" y="124" font-size="13" fill="#7ec8e3">독립 Doublewrite 파일</text>
+  <text x="500" y="144" font-size="13" fill="#888">#ib_16384_0.dblwr</text>
+  <text x="500" y="164" font-size="13" fill="#888">System Tablespace 공유에서 분리</text>
+
+  <line x1="500" y1="180" x2="825" y2="180" stroke="#2a2a40" stroke-width="0.5"/>
+
+  <text x="500" y="200" font-size="13" fill="#7ec8e3">병렬 배치 기록</text>
+  <text x="500" y="220" font-size="13" fill="#888">여러 페이지를 한꺼번에 배치 기록</text>
+  <text x="500" y="240" font-size="13" fill="#888">오버헤드 더욱 감소</text>
+
+  <!-- Config code -->
+  <rect x="60" y="282" width="760" height="76" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="306" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- Doublewrite 상태 확인</text>
+  <text x="76" y="324" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">SHOW</text>
+  <text x="118" y="324" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve"> VARIABLES </text>
+  <text x="240" y="324" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">LIKE</text>
+  <text x="282" y="324" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve"> 'innodb_doublewrite%'</text>
+  <text x="76" y="342" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">SHOW</text>
+  <text x="118" y="342" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve"> STATUS </text>
+  <text x="208" y="342" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">LIKE</text>
+  <text x="250" y="342" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve"> 'Innodb_dblwr%'</text>
+</svg>

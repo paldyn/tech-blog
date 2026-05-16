@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">커넥션 풀과 max_connections 설계</text>
+
+  <!-- Code block -->
+  <rect x="60" y="70" width="420" height="170" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="96" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- 커넥션 상태 확인</text>
+  <text x="76" y="114" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">SHOW</text>
+  <text x="118" y="114" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#e8e8e8" xml:space="preserve"> STATUS</text>
+  <text x="76" y="132" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" xml:space="preserve">  LIKE</text>
+  <text x="120" y="132" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve"> 'Threads%'</text>
+  <text x="76" y="150" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- Threads_connected: 현재 연결</text>
+  <text x="76" y="168" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- Threads_running: 실행 중</text>
+  <text x="76" y="186" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- Threads_cached: 캐시 대기 중</text>
+  <text x="76" y="204" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- Threads_created: 총 생성 수</text>
+  <text x="76" y="222" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#6a8aa0" xml:space="preserve">-- 비율: created/connections 낮을수록 좋음</text>
+
+  <!-- Metrics panel -->
+  <rect x="500" y="70" width="320" height="170" rx="6" fill="#111827" stroke="#2a2a40"/>
+  <text x="660" y="96" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">핵심 파라미터</text>
+
+  <text x="520" y="122" font-size="13" fill="#888">max_connections</text>
+  <text x="790" y="122" text-anchor="end" font-size="13" fill="#b5cea8">151~500</text>
+  <line x1="520" y1="132" x2="810" y2="132" stroke="#2a2a40" stroke-width="0.5"/>
+
+  <text x="520" y="152" font-size="13" fill="#888">thread_cache_size</text>
+  <text x="790" y="152" text-anchor="end" font-size="13" fill="#b5cea8">8~16</text>
+  <line x1="520" y1="162" x2="810" y2="162" stroke="#2a2a40" stroke-width="0.5"/>
+
+  <text x="520" y="182" font-size="13" fill="#888">wait_timeout</text>
+  <text x="790" y="182" text-anchor="end" font-size="13" fill="#b5cea8">28800 (8h)</text>
+  <line x1="520" y1="192" x2="810" y2="192" stroke="#2a2a40" stroke-width="0.5"/>
+
+  <text x="520" y="212" font-size="13" fill="#888">interactive_timeout</text>
+  <text x="790" y="212" text-anchor="end" font-size="13" fill="#b5cea8">28800 (8h)</text>
+  <line x1="520" y1="222" x2="810" y2="222" stroke="#2a2a40" stroke-width="0.5"/>
+
+  <!-- Memory per connection -->
+  <rect x="60" y="265" width="760" height="150" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="440" y="292" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">메모리 위험 계산 — 연결 × 스레드 메모리</text>
+
+  <text x="100" y="322" font-size="13" fill="#888">연결당 메모리 사용</text>
+  <text x="100" y="344" font-size="13" fill="#7ec8e3">sort_buffer_size</text>
+  <text x="380" y="344" text-anchor="end" font-size="13" fill="#b5cea8">256 KB</text>
+  <text x="100" y="364" font-size="13" fill="#7ec8e3">join_buffer_size</text>
+  <text x="380" y="364" text-anchor="end" font-size="13" fill="#b5cea8">256 KB</text>
+  <text x="100" y="384" font-size="13" fill="#7ec8e3">read_buffer_size</text>
+  <text x="380" y="384" text-anchor="end" font-size="13" fill="#b5cea8">128 KB</text>
+
+  <line x1="480" y1="308" x2="480" y2="400" stroke="#2a2a40" stroke-width="1"/>
+
+  <text x="520" y="322" font-size="13" fill="#e05555">max_connections = 500 시</text>
+  <text x="520" y="344" font-size="13" fill="#888">스레드 메모리만</text>
+  <text x="520" y="364" font-size="13" fill="#e05555">500 × ~1MB = ~500MB</text>
+  <text x="520" y="384" font-size="13" fill="#888">+ Buffer Pool 별도 계산 필요</text>
+
+  <text x="440" y="425" text-anchor="middle" font-size="13" fill="#888">실무에서는 애플리케이션 커넥션 풀(HikariCP, c3p0) + max_connections 함께 설계</text>
+</svg>

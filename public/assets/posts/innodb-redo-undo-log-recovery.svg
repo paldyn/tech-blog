@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">충돌 복구 흐름 — Redo → Undo 순서</text>
+
+  <!-- Timeline -->
+  <line x1="80" y1="200" x2="820" y2="200" stroke="#2a3a4a" stroke-width="2"/>
+
+  <!-- Events on timeline -->
+  <circle cx="120" cy="200" r="8" fill="#7777cc"/>
+  <text x="120" y="178" text-anchor="middle" font-size="12" fill="#7777cc">BEGIN</text>
+  <text x="120" y="222" text-anchor="middle" font-size="11" fill="#888">T1 시작</text>
+
+  <circle cx="230" cy="200" r="8" fill="#55c555"/>
+  <text x="230" y="178" text-anchor="middle" font-size="12" fill="#55c555">COMMIT</text>
+  <text x="230" y="222" text-anchor="middle" font-size="11" fill="#888">T1 커밋</text>
+
+  <circle cx="380" cy="200" r="8" fill="#7777cc"/>
+  <text x="380" y="178" text-anchor="middle" font-size="12" fill="#7777cc">BEGIN</text>
+  <text x="380" y="222" text-anchor="middle" font-size="11" fill="#888">T2 시작</text>
+
+  <circle cx="520" cy="200" r="8" fill="#e8a020"/>
+  <text x="520" y="178" text-anchor="middle" font-size="12" fill="#e8a020">CHECKPOINT</text>
+
+  <circle cx="660" cy="200" r="10" fill="#e05555"/>
+  <text x="660" y="178" text-anchor="middle" font-size="13" font-weight="700" fill="#e05555">CRASH</text>
+  <text x="660" y="222" text-anchor="middle" font-size="11" fill="#888">T2 미커밋</text>
+
+  <!-- Recovery steps -->
+  <rect x="60" y="260" width="760" height="120" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="440" y="285" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">복구 단계 (서버 재시작 시 자동)</text>
+
+  <rect x="78" y="300" width="210" height="62" rx="5" fill="#1e3a2a" stroke="#2a4a2a"/>
+  <text x="183" y="322" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">1단계: Redo (Roll Forward)</text>
+  <text x="183" y="342" text-anchor="middle" font-size="12" fill="#888">Checkpoint 이후 모든</text>
+  <text x="183" y="358" text-anchor="middle" font-size="12" fill="#888">Redo 레코드를 재실행</text>
+
+  <rect x="305" y="300" width="210" height="62" rx="5" fill="#1e2a4a" stroke="#2a3a5a"/>
+  <text x="410" y="322" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">2단계: Undo (Roll Back)</text>
+  <text x="410" y="342" text-anchor="middle" font-size="12" fill="#888">커밋되지 않은 트랜잭션</text>
+  <text x="410" y="358" text-anchor="middle" font-size="12" fill="#888">Undo 로 되돌림</text>
+
+  <rect x="532" y="300" width="270" height="62" rx="5" fill="#1a2a1a" stroke="#2a4a2a"/>
+  <text x="667" y="322" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">결과: T1 커밋 반영, T2 롤백</text>
+  <text x="667" y="342" text-anchor="middle" font-size="12" fill="#888">데이터 일관성 보장</text>
+  <text x="667" y="358" text-anchor="middle" font-size="12" fill="#888">ACID 중 Durability + Atomicity</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">RR에서 Phantom Read를 막는 Gap Lock</text>
+
+  <!-- Index range visualization -->
+  <rect x="60" y="70" width="760" height="80" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="440" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">orders 테이블 — user_id 인덱스</text>
+
+  <!-- Index values -->
+  <rect x="100" y="104" width="60" height="32" rx="4" fill="#1e2d4a" stroke="#2a3a5a"/>
+  <text x="130" y="125" text-anchor="middle" font-size="12" fill="#7ec8e3">id=1</text>
+
+  <rect x="200" y="104" width="60" height="32" rx="4" fill="#1e2d4a" stroke="#2a3a5a"/>
+  <text x="230" y="125" text-anchor="middle" font-size="12" fill="#7ec8e3">id=5</text>
+
+  <rect x="340" y="104" width="60" height="32" rx="4" fill="#1e3a2a" stroke="#2a4a2a"/>
+  <text x="370" y="125" text-anchor="middle" font-size="12" fill="#55c555">id=10</text>
+
+  <rect x="480" y="104" width="60" height="32" rx="4" fill="#1e3a2a" stroke="#2a4a2a"/>
+  <text x="510" y="125" text-anchor="middle" font-size="12" fill="#55c555">id=15</text>
+
+  <rect x="620" y="104" width="60" height="32" rx="4" fill="#1e2d4a" stroke="#2a3a5a"/>
+  <text x="650" y="125" text-anchor="middle" font-size="12" fill="#7ec8e3">id=20</text>
+
+  <rect x="720" y="104" width="60" height="32" rx="4" fill="#1e2d4a" stroke="#2a3a5a"/>
+  <text x="750" y="125" text-anchor="middle" font-size="12" fill="#7ec8e3">id=25</text>
+
+  <!-- Gap Lock visualization -->
+  <rect x="60" y="170" width="760" height="100" rx="8" fill="#0d1117" stroke="#3a2a10"/>
+  <text x="440" y="192" text-anchor="middle" font-size="13" font-weight="600" fill="#e8a020">SELECT ... WHERE id BETWEEN 10 AND 15 FOR UPDATE → Gap Lock + Next-Key Lock</text>
+
+  <!-- Lock ranges -->
+  <rect x="300" y="204" width="300" height="48" rx="4" fill="#2a1a10" stroke="#4a2a10" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="450" y="222" text-anchor="middle" font-size="12" fill="#e8a020">Gap Lock (5 &lt; id &lt; 10)</text>
+  <text x="450" y="240" text-anchor="middle" font-size="12" fill="#e05555">새 레코드 삽입 불가 — 팬텀 방지</text>
+
+  <rect x="320" y="204" width="250" height="48" rx="4" fill="#1a2a10" stroke="#3a4a10" stroke-width="1.5"/>
+  <text x="450" y="246" text-anchor="middle" font-size="0" fill="none">hidden</text>
+
+  <rect x="340" y="210" width="280" height="36" rx="3" fill="#2a3a10" stroke="#4a5a10"/>
+  <text x="480" y="232" text-anchor="middle" font-size="12" fill="#e8a020">Record Lock (id=10, id=15)</text>
+
+  <!-- Next key lock explanation -->
+  <rect x="60" y="290" width="760" height="108" rx="8" fill="#111827" stroke="#2a2a40"/>
+  <text x="440" y="314" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">잠금 종류 정리</text>
+
+  <text x="100" y="342" font-size="13" fill="#7ec8e3">Record Lock</text>
+  <text x="100" y="360" font-size="12" fill="#888">개별 인덱스 레코드를 잠금</text>
+
+  <text x="340" y="342" font-size="13" fill="#e8a020">Gap Lock</text>
+  <text x="340" y="360" font-size="12" fill="#888">인덱스 레코드 사이 갭을 잠금</text>
+  <text x="340" y="376" font-size="12" fill="#888">INSERT만 막고 SELECT는 허용</text>
+
+  <text x="600" y="342" font-size="13" fill="#55c555">Next-Key Lock</text>
+  <text x="600" y="360" font-size="12" fill="#888">Record + 왼쪽 Gap 조합</text>
+  <text x="600" y="376" font-size="12" fill="#888">InnoDB RR의 기본 잠금 단위</text>
+</svg>
