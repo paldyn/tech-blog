@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 380" width="880" style="background:#0a0a0a;border-radius:12px;font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">macvlan 네트워크 생성과 컨테이너 연결</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">bridge 모드 macvlan 설정 예시</text>
+
+  <!-- Left: network create -->
+  <rect x="60" y="90" width="360" height="260" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="116" fill="#888" font-size="12" xml:space="preserve"># 1. macvlan 네트워크 생성</text>
+  <text x="80" y="134" fill="#7ec8e3" font-size="12" xml:space="preserve">docker network create \</text>
+  <text x="80" y="152" fill="#7ec8e3" font-size="12" xml:space="preserve">  --driver macvlan \</text>
+  <text x="80" y="170" fill="#7ec8e3" font-size="12" xml:space="preserve">  --subnet 192.168.1.0/24 \</text>
+  <text x="80" y="188" fill="#7ec8e3" font-size="12" xml:space="preserve">  --gateway 192.168.1.1 \</text>
+  <text x="80" y="206" fill="#7ec8e3" font-size="12" xml:space="preserve">  --ip-range 192.168.1.128/25 \</text>
+  <text x="80" y="224" fill="#7ec8e3" font-size="12" xml:space="preserve">  -o parent=eth0 \</text>
+  <text x="80" y="242" fill="#7ec8e3" font-size="12" xml:space="preserve">  macvlan-net</text>
+  <line x1="80" y1="258" x2="400" y2="258" stroke="#1e2433" stroke-width="1"/>
+  <text x="80" y="278" fill="#888" font-size="12" xml:space="preserve"># 2. 컨테이너 실행</text>
+  <text x="80" y="296" fill="#7ec8e3" font-size="12" xml:space="preserve">docker run -d \</text>
+  <text x="80" y="314" fill="#7ec8e3" font-size="12" xml:space="preserve">  --network macvlan-net \</text>
+  <text x="80" y="332" fill="#7ec8e3" font-size="12" xml:space="preserve">  --ip 192.168.1.200 nginx</text>
+
+  <!-- Right: host-to-container -->
+  <rect x="460" y="90" width="360" height="260" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="480" y="116" fill="#888" font-size="12" xml:space="preserve"># 호스트 → 컨테이너 통신 허용</text>
+  <text x="480" y="134" fill="#888" font-size="12" xml:space="preserve"># (호스트에 macvlan 인터페이스 추가)</text>
+  <text x="480" y="152" fill="#7ec8e3" font-size="12" xml:space="preserve">ip link add macvlan0 \</text>
+  <text x="480" y="170" fill="#7ec8e3" font-size="12" xml:space="preserve">  link eth0 type macvlan \</text>
+  <text x="480" y="188" fill="#7ec8e3" font-size="12" xml:space="preserve">  mode bridge</text>
+  <text x="480" y="206" fill="#7ec8e3" font-size="12" xml:space="preserve">ip addr add 192.168.1.254/32 \</text>
+  <text x="480" y="224" fill="#7ec8e3" font-size="12" xml:space="preserve">  dev macvlan0</text>
+  <text x="480" y="242" fill="#7ec8e3" font-size="12" xml:space="preserve">ip link set macvlan0 up</text>
+  <text x="480" y="260" fill="#7ec8e3" font-size="12" xml:space="preserve">ip route add 192.168.1.128/25 \</text>
+  <text x="480" y="278" fill="#7ec8e3" font-size="12" xml:space="preserve">  dev macvlan0</text>
+  <line x1="480" y1="294" x2="800" y2="294" stroke="#1e2433" stroke-width="1"/>
+  <text x="480" y="316" fill="#888" font-size="12" xml:space="preserve"># 이후 호스트에서 컨테이너 IP로</text>
+  <text x="480" y="334" fill="#55c555" font-size="12" xml:space="preserve">ping 192.168.1.200  # 성공</text>
+</svg>

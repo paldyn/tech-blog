@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" width="880" style="background:#0a0a0a;border-radius:12px;font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">overlay 네트워크 설정 및 사용</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">Swarm 모드에서 overlay 네트워크 생성과 서비스 배포</text>
+
+  <!-- Left: Swarm init + network create -->
+  <rect x="60" y="90" width="360" height="240" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="116" fill="#888" font-size="12" xml:space="preserve"># 1. Swarm 초기화 (manager 노드)</text>
+  <text x="80" y="134" fill="#7ec8e3" font-size="12" xml:space="preserve">docker swarm init \</text>
+  <text x="80" y="152" fill="#7ec8e3" font-size="12" xml:space="preserve">  --advertise-addr 192.168.1.10</text>
+  <line x1="80" y1="168" x2="400" y2="168" stroke="#1e2433" stroke-width="1"/>
+  <text x="80" y="188" fill="#888" font-size="12" xml:space="preserve"># 2. overlay 네트워크 생성</text>
+  <text x="80" y="206" fill="#7ec8e3" font-size="12" xml:space="preserve">docker network create \</text>
+  <text x="80" y="224" fill="#7ec8e3" font-size="12" xml:space="preserve">  --driver overlay \</text>
+  <text x="80" y="242" fill="#7ec8e3" font-size="12" xml:space="preserve">  --subnet 10.0.1.0/24 \</text>
+  <text x="80" y="260" fill="#7ec8e3" font-size="12" xml:space="preserve">  --attachable \</text>
+  <text x="80" y="278" fill="#7ec8e3" font-size="12" xml:space="preserve">  my-overlay</text>
+  <text x="80" y="308" fill="#888" font-size="12" xml:space="preserve"># --attachable: 단독 컨테이너도 연결 가능</text>
+
+  <!-- Right: service deploy -->
+  <rect x="460" y="90" width="360" height="240" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="480" y="116" fill="#888" font-size="12" xml:space="preserve"># 3. 서비스 배포 (overlay 네트워크)</text>
+  <text x="480" y="134" fill="#7ec8e3" font-size="12" xml:space="preserve">docker service create \</text>
+  <text x="480" y="152" fill="#7ec8e3" font-size="12" xml:space="preserve">  --name web \</text>
+  <text x="480" y="170" fill="#7ec8e3" font-size="12" xml:space="preserve">  --network my-overlay \</text>
+  <text x="480" y="188" fill="#7ec8e3" font-size="12" xml:space="preserve">  --replicas 3 \</text>
+  <text x="480" y="206" fill="#7ec8e3" font-size="12" xml:space="preserve">  nginx</text>
+  <line x1="480" y1="222" x2="800" y2="222" stroke="#1e2433" stroke-width="1"/>
+  <text x="480" y="242" fill="#888" font-size="12" xml:space="preserve"># 4. 서비스 간 통신 (이름으로)</text>
+  <text x="480" y="260" fill="#55c555" font-size="12" xml:space="preserve">curl http://web/      # 서비스명 DNS</text>
+  <text x="480" y="278" fill="#888" font-size="12" xml:space="preserve"># VIP(가상 IP) 기반 로드밸런싱</text>
+  <text x="480" y="296" fill="#888" font-size="12" xml:space="preserve"># 호스트에 무관하게 라우팅</text>
+  <text x="480" y="316" fill="#55c555" font-size="12" xml:space="preserve"># DNS RR 또는 VIP 선택 가능</text>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="880" style="background:#0a0a0a;border-radius:12px;font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">host 네트워크 vs bridge 네트워크 비교</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">NAT 없이 호스트 네트워크 스택을 직접 공유</text>
+
+  <!-- Bridge side (left) -->
+  <rect x="40" y="90" width="370" height="360" rx="10" fill="#0d1320" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="225" y="118" text-anchor="middle" fill="#7ec8e3" font-size="15" font-weight="600">bridge 네트워크</text>
+
+  <!-- Host box bridge -->
+  <rect x="60" y="130" width="330" height="60" rx="6" fill="#0a0a0a" stroke="#444"/>
+  <text x="225" y="155" text-anchor="middle" fill="#e8e8e8" font-size="13">Host: eth0 (192.168.1.100)</text>
+  <text x="225" y="173" text-anchor="middle" fill="#888" font-size="12">docker0: 172.17.0.1</text>
+
+  <!-- NAT box -->
+  <rect x="150" y="210" width="150" height="36" rx="6" fill="#1a0d0d" stroke="#e05555"/>
+  <text x="225" y="233" text-anchor="middle" fill="#e05555" font-size="13">iptables NAT</text>
+
+  <!-- Container bridge -->
+  <rect x="100" y="270" width="250" height="80" rx="6" fill="#0d1b2a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="225" y="296" text-anchor="middle" fill="#55c555" font-size="14" font-weight="600">Container</text>
+  <text x="225" y="316" text-anchor="middle" fill="#e8e8e8" font-size="12">eth0: 172.17.0.2</text>
+  <text x="225" y="334" text-anchor="middle" fill="#888" font-size="11">-p 8080:80 포트 포워딩 필요</text>
+
+  <!-- Bridge arrows -->
+  <line x1="225" y1="190" x2="225" y2="210" stroke="#555" stroke-width="1.5"/>
+  <line x1="225" y1="246" x2="225" y2="270" stroke="#555" stroke-width="1.5"/>
+
+  <text x="225" y="390" text-anchor="middle" fill="#888" font-size="12">외부 → 8080 → NAT → 172.17.0.2:80</text>
+  <text x="225" y="412" text-anchor="middle" fill="#e05555" font-size="12">NAT 오버헤드 존재</text>
+  <text x="225" y="434" text-anchor="middle" fill="#888" font-size="11">포트 충돌 없음 (격리)</text>
+
+  <!-- Host side (right) -->
+  <rect x="470" y="90" width="370" height="360" rx="10" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="655" y="118" text-anchor="middle" fill="#55c555" font-size="15" font-weight="600">host 네트워크</text>
+
+  <!-- Host box host -->
+  <rect x="490" y="130" width="330" height="60" rx="6" fill="#0a0a0a" stroke="#444"/>
+  <text x="655" y="155" text-anchor="middle" fill="#e8e8e8" font-size="13">Host: eth0 (192.168.1.100)</text>
+  <text x="655" y="173" text-anchor="middle" fill="#888" font-size="12">네트워크 스택 공유</text>
+
+  <!-- Shared indicator -->
+  <rect x="580" y="210" width="150" height="36" rx="6" fill="#0d2a0d" stroke="#55c555"/>
+  <text x="655" y="233" text-anchor="middle" fill="#55c555" font-size="13">공유 (NAT 없음)</text>
+
+  <!-- Container host -->
+  <rect x="530" y="270" width="250" height="80" rx="6" fill="#0d1b2a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="655" y="296" text-anchor="middle" fill="#55c555" font-size="14" font-weight="600">Container</text>
+  <text x="655" y="316" text-anchor="middle" fill="#e8e8e8" font-size="12">eth0 = Host eth0 직접 사용</text>
+  <text x="655" y="334" text-anchor="middle" fill="#888" font-size="11">-p 포트 포워딩 불필요</text>
+
+  <!-- Host arrows -->
+  <line x1="655" y1="190" x2="655" y2="246" stroke="#55c555" stroke-width="2"/>
+
+  <line x1="655" y1="246" x2="655" y2="270" stroke="#55c555" stroke-width="2"/>
+
+  <text x="655" y="390" text-anchor="middle" fill="#888" font-size="12">외부 → 80 → Container:80 직접</text>
+  <text x="655" y="412" text-anchor="middle" fill="#55c555" font-size="12">NAT 없음 → 최고 성능</text>
+  <text x="655" y="434" text-anchor="middle" fill="#e05555" font-size="11">포트 충돌 주의 (격리 없음)</text>
+</svg>

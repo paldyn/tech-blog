@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" width="880" style="background:#0a0a0a;border-radius:12px;font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <text x="440" y="44" text-anchor="middle" fill="#e8e8e8" font-size="22" font-weight="700">Docker 포트 매핑 동작 원리</text>
+  <text x="440" y="68" text-anchor="middle" fill="#888" font-size="13">외부 → 호스트 포트 → iptables DNAT → 컨테이너 포트</text>
+
+  <!-- External client -->
+  <rect x="60" y="100" width="160" height="60" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="140" y="135" text-anchor="middle" fill="#7777cc" font-size="14">외부 클라이언트</text>
+
+  <!-- Arrow 1 -->
+  <line x1="220" y1="130" x2="290" y2="130" stroke="#7777cc" stroke-width="2"/>
+  <polygon points="290,130 278,124 278,136" fill="#7777cc"/>
+  <text x="255" y="120" text-anchor="middle" fill="#888" font-size="11">:8080</text>
+
+  <!-- Host box -->
+  <rect x="290" y="80" width="540" height="370" rx="10" fill="none" stroke="#444" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="310" y="100" fill="#555" font-size="12">Host OS</text>
+
+  <!-- iptables -->
+  <rect x="310" y="106" width="200" height="60" rx="6" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="410" y="130" text-anchor="middle" fill="#e05555" font-size="13" font-weight="600">iptables DNAT</text>
+  <text x="410" y="150" text-anchor="middle" fill="#888" font-size="11">0.0.0.0:8080 → 172.17.0.2:80</text>
+
+  <!-- Arrow 2 -->
+  <line x1="510" y1="136" x2="570" y2="136" stroke="#e05555" stroke-width="2"/>
+  <polygon points="570,136 558,130 558,142" fill="#e05555"/>
+
+  <!-- docker-proxy -->
+  <rect x="570" y="106" width="200" height="60" rx="6" fill="#0d1320" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="670" y="130" text-anchor="middle" fill="#7ec8e3" font-size="13" font-weight="600">docker-proxy</text>
+  <text x="670" y="150" text-anchor="middle" fill="#888" font-size="11">userspace 포워더 (보조)</text>
+
+  <!-- Container -->
+  <rect x="380" y="220" width="280" height="180" rx="10" fill="#0d1b2a" stroke="#55c555" stroke-width="2"/>
+  <text x="520" y="250" text-anchor="middle" fill="#55c555" font-size="15" font-weight="600">Container</text>
+  <text x="520" y="274" text-anchor="middle" fill="#e8e8e8" font-size="13">eth0: 172.17.0.2</text>
+  <text x="520" y="296" text-anchor="middle" fill="#888" font-size="12">nginx: 0.0.0.0:80</text>
+  <rect x="420" y="314" width="200" height="36" rx="4" fill="#0d2a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="520" y="337" text-anchor="middle" fill="#55c555" font-size="12">포트 80 리슨</text>
+  <text x="520" y="380" text-anchor="middle" fill="#888" font-size="11">컨테이너 포트 ≠ 호스트 포트</text>
+
+  <!-- Arrow down -->
+  <line x1="520" y1="166" x2="520" y2="220" stroke="#55c555" stroke-width="2"/>
+  <polygon points="520,220 514,208 526,208" fill="#55c555"/>
+  <text x="560" y="198" fill="#888" font-size="11">:80</text>
+
+  <!-- Port format examples -->
+  <rect x="60" y="200" width="200" height="250" rx="8" fill="#070b14" stroke="#1e2433"/>
+  <text x="80" y="226" fill="#888" font-size="12" xml:space="preserve"># 포트 매핑 형식</text>
+  <text x="80" y="246" fill="#7ec8e3" font-size="11" xml:space="preserve">-p 8080:80</text>
+  <text x="80" y="262" fill="#888" font-size="10" xml:space="preserve">  호스트:컨테이너</text>
+  <text x="80" y="284" fill="#7ec8e3" font-size="11" xml:space="preserve">-p 127.0.0.1:80:80</text>
+  <text x="80" y="300" fill="#888" font-size="10" xml:space="preserve">  로컬호스트만 바인딩</text>
+  <text x="80" y="322" fill="#7ec8e3" font-size="11" xml:space="preserve">-p 80</text>
+  <text x="80" y="338" fill="#888" font-size="10" xml:space="preserve">  임의 호스트포트 자동</text>
+  <text x="80" y="360" fill="#7ec8e3" font-size="11" xml:space="preserve">-p 8000-8010:80</text>
+  <text x="80" y="376" fill="#888" font-size="10" xml:space="preserve">  포트 범위</text>
+  <text x="80" y="398" fill="#7ec8e3" font-size="11" xml:space="preserve">-p 5000/udp</text>
+  <text x="80" y="414" fill="#888" font-size="10" xml:space="preserve">  UDP 포트</text>
+  <text x="80" y="436" fill="#7ec8e3" font-size="11" xml:space="preserve">-P (대문자)</text>
+  <text x="80" y="452" fill="#888" font-size="10" xml:space="preserve">  EXPOSE 포트 전체 공개</text>
+</svg>
