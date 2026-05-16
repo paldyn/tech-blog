@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">String Pool 메모리 구조</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">리터럴은 Pool 공유, new String()은 별도 힙 객체 생성</text>
+
+  <!-- Stack frame -->
+  <rect x="50" y="90" width="160" height="260" rx="8" fill="#111827" stroke="#2a3a55"/>
+  <text x="130" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888" text-anchor="middle">Stack</text>
+
+  <rect x="66" y="124" width="128" height="32" rx="4" fill="#1a2233" stroke="#2a3a55"/>
+  <text x="80" y="145" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">a</text>
+  <text x="130" y="145" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">ref</text>
+
+  <rect x="66" y="166" width="128" height="32" rx="4" fill="#1a2233" stroke="#2a3a55"/>
+  <text x="80" y="187" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">b</text>
+  <text x="130" y="187" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">ref</text>
+
+  <rect x="66" y="208" width="128" height="32" rx="4" fill="#1a2233" stroke="#2a3a55"/>
+  <text x="80" y="229" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">c</text>
+  <text x="130" y="229" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">ref</text>
+
+  <rect x="66" y="250" width="128" height="32" rx="4" fill="#1a2233" stroke="#2a3a55"/>
+  <text x="80" y="271" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">d</text>
+  <text x="130" y="271" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">ref</text>
+
+  <rect x="66" y="292" width="128" height="32" rx="4" fill="#1a2233" stroke="#2a3a55"/>
+  <text x="80" y="313" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">e</text>
+  <text x="130" y="313" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">ref</text>
+
+  <!-- Heap area -->
+  <rect x="260" y="90" width="570" height="390" rx="8" fill="#0d1520" stroke="#1e2a40"/>
+  <text x="545" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888" text-anchor="middle">Heap</text>
+
+  <!-- String Pool (inside heap, Java 7+) -->
+  <rect x="280" y="124" width="240" height="200" rx="8" fill="#0f1a2a" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="400" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">String Pool (Heap 내부)</text>
+  <text x="400" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">Java 7+ — PermGen → Heap 이동</text>
+
+  <!-- Pool entry: "hello" -->
+  <rect x="298" y="178" width="204" height="40" rx="6" fill="#112233" stroke="#7ec8e3"/>
+  <text x="400" y="195" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" text-anchor="middle">"hello"</text>
+  <text x="400" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">Pool 항목 — a, b 공유</text>
+
+  <!-- Pool entry: "world" -->
+  <rect x="298" y="228" width="204" height="40" rx="6" fill="#112233" stroke="#7ec8e3"/>
+  <text x="400" y="245" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" text-anchor="middle">"world"</text>
+  <text x="400" y="261" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">Pool 항목</text>
+
+  <!-- Pool entry: "java" from intern -->
+  <rect x="298" y="278" width="204" height="40" rx="6" fill="#112233" stroke="#55c555"/>
+  <text x="400" y="295" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" text-anchor="middle">"java"  ← intern()</text>
+  <text x="400" y="311" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">e.intern() 후 Pool 등록</text>
+
+  <!-- Heap: new String objects -->
+  <rect x="556" y="160" width="254" height="50" rx="6" fill="#1a1a1a" stroke="#777"/>
+  <text x="683" y="181" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#aaa" text-anchor="middle">new String("hello")</text>
+  <text x="683" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">c — Pool 밖의 별도 객체</text>
+
+  <rect x="556" y="224" width="254" height="50" rx="6" fill="#1a1a1a" stroke="#777"/>
+  <text x="683" y="245" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#aaa" text-anchor="middle">new String("hello")</text>
+  <text x="683" y="263" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">d — 또 다른 별도 객체</text>
+
+  <rect x="556" y="288" width="254" height="50" rx="6" fill="#1a1420" stroke="#7777cc"/>
+  <text x="683" y="309" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7777cc" text-anchor="middle">new String("java")</text>
+  <text x="683" y="327" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">e — intern() 전</text>
+
+  <!-- Arrows: stack → heap -->
+  <!-- a → "hello" pool -->
+  <line x1="194" y1="140" x2="296" y2="198" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="296,198 284,192 287,203" fill="#7ec8e3"/>
+
+  <!-- b → "hello" pool (same) -->
+  <line x1="194" y1="182" x2="296" y2="198" stroke="#7ec8e3" stroke-width="1.5"/>
+  <polygon points="296,198 284,192 287,203" fill="#7ec8e3"/>
+
+  <!-- c → new String c -->
+  <line x1="194" y1="224" x2="554" y2="185" stroke="#777" stroke-width="1.5"/>
+  <polygon points="554,185 542,181 545,192" fill="#777"/>
+
+  <!-- d → new String d -->
+  <line x1="194" y1="266" x2="554" y2="249" stroke="#777" stroke-width="1.5"/>
+  <polygon points="554,249 542,245 545,256" fill="#777"/>
+
+  <!-- e → new String e -->
+  <line x1="194" y1="308" x2="554" y2="313" stroke="#7777cc" stroke-width="1.5"/>
+  <polygon points="554,313 542,309 545,320" fill="#7777cc"/>
+
+  <!-- intern arrow: e object → pool "java" -->
+  <line x1="556" y1="313" x2="504" y2="298" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="504,298 516,295 513,306" fill="#55c555"/>
+
+  <!-- Bottom: code -->
+  <rect x="50" y="396" width="780" height="96" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="66" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">String</tspan><tspan fill="#e8e8e8"> a = </tspan><tspan fill="#ce9178">"hello"</tspan><tspan fill="#e8e8e8">;  </tspan><tspan fill="#7ec8e3">String</tspan><tspan fill="#e8e8e8"> b = </tspan><tspan fill="#ce9178">"hello"</tspan><tspan fill="#e8e8e8">;  a == b; </tspan><tspan fill="#6a8aa0">// true  (Pool 같은 객체)</tspan></text>
+  <text x="66" y="438" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">String</tspan><tspan fill="#e8e8e8"> c = </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> String(</tspan><tspan fill="#ce9178">"hello"</tspan><tspan fill="#e8e8e8">);  </tspan><tspan fill="#7ec8e3">String</tspan><tspan fill="#e8e8e8"> d = </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> String(</tspan><tspan fill="#ce9178">"hello"</tspan><tspan fill="#e8e8e8">);  c == d; </tspan><tspan fill="#6a8aa0">// false</tspan></text>
+  <text x="66" y="458" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3">String</tspan><tspan fill="#e8e8e8"> e = </tspan><tspan fill="#7ec8e3">new</tspan><tspan fill="#e8e8e8"> String(</tspan><tspan fill="#ce9178">"java"</tspan><tspan fill="#e8e8e8">);  e.intern() == </tspan><tspan fill="#ce9178">"java"</tspan><tspan fill="#e8e8e8">; </tspan><tspan fill="#6a8aa0">// true (intern 후 Pool 참조)</tspan></text>
+  <text x="66" y="478" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">c.intern() == a;           </tspan><tspan fill="#6a8aa0">// true  (c가 Pool의 "hello"를 반환)</tspan></text>
+</svg>
