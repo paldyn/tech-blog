@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <defs>
+    <clipPath id="ml-clip"><rect x="480" y="84" width="340" height="338" rx="8"/></clipPath>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">StringBuilder 핵심 API</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#888" text-anchor="middle">메서드 체이닝과 주요 연산</text>
+
+  <!-- ===== LEFT: Code block ===== -->
+  <rect x="60" y="84" width="400" height="216" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <!-- Code lines (x=76, first at y=107, spacing=18) -->
+  <text x="76" y="107" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// StringBuilder 핵심 메서드 체이닝</text>
+  <text x="76" y="125" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> sb = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> StringBuilder(</tspan><tspan fill="#ce9178">"Hello"</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="76" y="143" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">sb.append(</tspan><tspan fill="#ce9178">", World"</tspan><tspan fill="#ffffff">);   </tspan><tspan fill="#9aa4b8">// Hello, World</tspan></text>
+  <text x="76" y="161" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">sb.insert(</tspan><tspan fill="#b5cea8">5</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"!"</tspan><tspan fill="#ffffff">);       </tspan><tspan fill="#9aa4b8">// Hello!, World</tspan></text>
+  <text x="76" y="179" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">sb.delete(</tspan><tspan fill="#b5cea8">6</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">7</tspan><tspan fill="#ffffff">);        </tspan><tspan fill="#9aa4b8">// Hello!World</tspan></text>
+  <text x="76" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">sb.replace(</tspan><tspan fill="#b5cea8">6</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">11</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"Java"</tspan><tspan fill="#ffffff">); </tspan><tspan fill="#9aa4b8">// Hello!Java</tspan></text>
+  <text x="76" y="215" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">sb.reverse();            </tspan><tspan fill="#9aa4b8">// avaJ!olleH</tspan></text>
+  <text x="76" y="233" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> len = sb.length();   </tspan><tspan fill="#9aa4b8">// 10</tspan></text>
+  <text x="76" y="251" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> cap = sb.capacity(); </tspan><tspan fill="#9aa4b8">// ≥10</tspan></text>
+  <text x="76" y="269" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff"> s = sb.toString();   </tspan><tspan fill="#9aa4b8">// 불변 변환</tspan></text>
+
+  <!-- ===== LEFT: Note box (internal buffer) ===== -->
+  <rect x="60" y="316" width="400" height="106" rx="6" fill="#0d1520" stroke="#1e2a40" stroke-width="1.5"/>
+  <text x="80" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">내부 버퍼 (char[]) 동작</text>
+  <text x="80" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">초기 capacity = 지정값 또는 <tspan font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#b5cea8">16</tspan> (기본값)</text>
+  <text x="80" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">버퍼 초과 시 자동 확장: <tspan font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#b5cea8">2 × old + 2</tspan></text>
+  <text x="80" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">미리 확보: <tspan font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3">ensureCapacity(n)</tspan></text>
+
+  <!-- ===== RIGHT: Method list ===== -->
+  <rect x="480" y="84" width="340" height="338" rx="8" fill="#111827" stroke="#2a3a55" stroke-width="1.5"/>
+  <rect x="480" y="84" width="340" height="50" clip-path="url(#ml-clip)" fill="#1e2a1e"/>
+  <text x="650" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#55c555" text-anchor="middle">주요 메서드 목록</text>
+
+  <!-- Row dividers -->
+  <line x1="500" y1="175" x2="800" y2="175" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="500" y1="216" x2="800" y2="216" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="500" y1="257" x2="800" y2="257" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="500" y1="298" x2="800" y2="298" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="500" y1="339" x2="800" y2="339" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="500" y1="380" x2="800" y2="380" stroke="#1e2a3a" stroke-width="1"/>
+
+  <!-- Method rows: y=134 start, each 41px -->
+  <!-- Row 1: append (y=134-175) -->
+  <text x="500" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">append(x)</text>
+  <text x="500" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">끝에 데이터 추가 (체이닝 지원)</text>
+
+  <!-- Row 2: insert (y=175-216) -->
+  <text x="500" y="193" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">insert(i, x)</text>
+  <text x="500" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인덱스 i 위치에 x 삽입</text>
+
+  <!-- Row 3: delete (y=216-257) -->
+  <text x="500" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">delete(s, e)</text>
+  <text x="500" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">[s, e) 구간 문자 삭제</text>
+
+  <!-- Row 4: replace (y=257-298) -->
+  <text x="500" y="275" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">replace(s, e, str)</text>
+  <text x="500" y="291" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">[s, e) 구간을 str로 교체</text>
+
+  <!-- Row 5: reverse (y=298-339) -->
+  <text x="500" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">reverse()</text>
+  <text x="500" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">전체 문자 역순 변환</text>
+
+  <!-- Row 6: length / capacity (y=339-380) -->
+  <text x="500" y="357" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">length() / capacity()</text>
+  <text x="500" y="373" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">실제 길이 / 내부 버퍼 크기</text>
+
+  <!-- Row 7: toString (y=380-422) -->
+  <text x="500" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">toString()</text>
+  <text x="500" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">불변 String 객체로 변환</text>
+
+</svg>
