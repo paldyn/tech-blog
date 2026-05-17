@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="360" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Generated Column 기반 인덱스 (8.0 이전 대안)</text>
+
+  <!-- Code: generated column approach -->
+  <rect x="60" y="66" width="760" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- MySQL 5.7+: Generated Column에 인덱스 (Functional Index 미지원 버전 대안)</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ALTER TABLE</text>
+  <text x="186" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> users</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  ADD COLUMN</text>
+  <text x="186" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> email_lower </text>
+  <text x="302" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">VARCHAR</text>
+  <text x="362" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">(255)</text>
+  <text x="76" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    GENERATED ALWAYS AS</text>
+  <text x="280" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (LOWER(email)) </text>
+  <text x="430" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">VIRTUAL</text>
+  <text x="502" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">,</text>
+  <text x="76" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  ADD UNIQUE INDEX</text>
+  <text x="238" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> uq_email_lower (email_lower);</text>
+
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- VIRTUAL: 읽을 때 계산, 디스크 저장 없음</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- STORED: 쓸 때 계산·저장, 인덱스 가능, 디스크 사용</text>
+
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- Functional Index는 내부적으로 VIRTUAL Generated Column을 자동 생성</text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- → 두 방법은 동일�� 결과, Functional Index가 더 간결</text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- JSON 필드 인덱스 예시</text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">CREATE INDEX</text>
+  <text x="186" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> idx_city </text>
+  <text x="268" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ON</text>
+  <text x="290" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> users ((address-&gt;&gt;</text>
+  <text x="448" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">'$.city'</text>
+  <text x="510" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">));</text>
+
+  <!-- Constraint box -->
+  <rect x="60" y="316" width="760" height="34" rx="6" fill="#1a1a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">제약: 비결정적 함수(NOW, RAND, UUID) 불가 · 서브쿼리 불가 · 복��� 컬럼 참조는 괄호 이중 ((expr)) 필수</text>
+</svg>

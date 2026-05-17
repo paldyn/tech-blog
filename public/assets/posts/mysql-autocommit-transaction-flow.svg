@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">autocommit ON vs OFF — 트랜잭션 경계 비교</text>
+
+  <!-- Left column: autocommit ON -->
+  <text x="220" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">autocommit = ON (기본값)</text>
+
+  <rect x="80" y="104" width="280" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="220" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">INSERT INTO t VALUES (1)</text>
+  <text x="220" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ 즉시 자동 COMMIT</text>
+
+  <line x1="220" y1="152" x2="220" y2="178" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+  <rect x="80" y="178" width="280" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="220" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">UPDATE t SET val=2 WHERE id=1</text>
+  <text x="220" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ 즉시 자동 COMMIT</text>
+
+  <line x1="220" y1="226" x2="220" y2="252" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+  <rect x="80" y="252" width="280" height="48" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="220" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">DELETE FROM t WHERE id=1</text>
+  <text x="220" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">→ ROLLBACK 불가 (이미 COMMIT)</text>
+
+  <!-- Right column: autocommit OFF -->
+  <text x="660" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">autocommit = OFF / START TRANSACTION</text>
+
+  <rect x="520" y="104" width="310" height="48" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="675" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">INSERT INTO t VALUES (1)</text>
+  <text x="675" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ 트랜잭션 내 미확정 상태</text>
+
+  <line x1="675" y1="152" x2="675" y2="178" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-b)"/>
+
+  <rect x="520" y="178" width="310" height="48" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="675" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">UPDATE t SET val=2 WHERE id=1</text>
+  <text x="675" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ 트랜잭션 내 미확정 상태</text>
+
+  <line x1="675" y1="226" x2="675" y2="252" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-b)"/>
+
+  <!-- Branch: COMMIT or ROLLBACK -->
+  <rect x="520" y="252" width="140" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="590" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">COMMIT</text>
+  <text x="590" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">영구 반영</text>
+
+  <rect x="690" y="252" width="140" height="48" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="760" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">ROLLBACK</text>
+  <text x="760" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">전체 취소</text>
+
+  <line x1="675" y1="252" x2="630" y2="252" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+  <line x1="675" y1="252" x2="720" y2="252" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-r)"/>
+
+  <!-- DDL autocommit note -->
+  <rect x="60" y="360" width="760" height="96" rx="8" fill="#1a1a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc">DDL의 암묵적 COMMIT</text>
+  <text x="440" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">CREATE TABLE, ALTER TABLE, DROP TABLE, TRUNCATE 등 DDL은 실행 전·후에 암묵적 COMMIT</text>
+  <text x="440" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">트랜잭션 도중 DDL을 실행하면 이전 DML이 강제로 COMMIT됨 — 주의 필요</text>
+  <text x="440" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">ROLLBACK으로 DDL 되돌리기 불가 (PostgreSQL은 트랜잭션 DDL 가능 — MySQL 차이점)</text>
+</svg>

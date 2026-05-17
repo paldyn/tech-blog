@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ICP OFF vs ON — 스토리지 엔진 필터링 위치 비교</text>
+
+  <!-- Left column: ICP OFF -->
+  <text x="200" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">ICP OFF (전통 방식)</text>
+
+  <!-- SQL Server / MySQL Server layer -->
+  <rect x="60" y="100" width="280" height="48" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">MySQL Server (실행 엔진)</text>
+  <text x="200" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">WHERE 필터링 전담</text>
+
+  <line x1="200" y1="148" x2="200" y2="172" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- Storage engine: index scan -->
+  <rect x="60" y="172" width="280" height="48" rx="6" fill="#281010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="193" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Storage Engine (InnoDB)</text>
+  <text x="200" y="209" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">인덱스 스캔 → 모든 행 반환</text>
+
+  <line x1="200" y1="220" x2="200" y2="244" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- Clustered index lookup: ALL rows -->
+  <rect x="60" y="244" width="280" height="48" rx="6" fill="#281010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">클러스터드 인덱스 조회</text>
+  <text x="200" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">매칭 여부 무관하게 전체 행 fetch</text>
+
+  <!-- Filter at server -->
+  <line x1="200" y1="292" x2="200" y2="316" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <rect x="60" y="316" width="280" height="48" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">Server에서 WHERE 필터링</text>
+  <text x="200" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">불필요 I/O 많음 ✗</text>
+
+  <!-- Right column: ICP ON -->
+  <text x="660" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">ICP ON (MySQL 5.6+)</text>
+
+  <rect x="520" y="100" width="300" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">MySQL Server (실행 엔진)</text>
+  <text x="670" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">조건 일부를 스토리지 엔진에 위임</text>
+
+  <line x1="670" y1="148" x2="670" y2="172" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Storage engine: index scan + filter -->
+  <rect x="520" y="172" width="300" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="193" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Storage Engine (InnoDB)</text>
+  <text x="670" y="209" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">인덱스 내 조건 즉시 평가 → 탈락 행 제거</text>
+
+  <line x1="670" y1="220" x2="670" y2="244" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Clustered index lookup: only matching rows -->
+  <rect x="520" y="244" width="300" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">클러스터드 인덱스 조회</text>
+  <text x="670" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">조건 통과한 행만 fetch → I/O 감소 ✓</text>
+
+  <!-- EXPLAIN marker -->
+  <line x1="670" y1="292" x2="670" y2="316" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="520" y="316" width="300" height="48" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">EXPLAIN Extra: Using index condition</text>
+  <text x="670" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ICP 활용 중 표시</text>
+
+  <!-- Code box -->
+  <rect x="60" y="400" width="760" height="96" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- ICP 활성화 여부 확인 및 제어</text>
+  <text x="76" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SELECT</text>
+  <text x="130" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> @@optimizer_switch</text>
+  <text x="76" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- index_condition_pushdown=on (기본값)</text>
+  <text x="76" y="480" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SET</text>
+  <text x="110" y="480" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> optimizer_switch = </text>
+  <text x="276" y="480" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">'index_condition_pushdown=off'</text>
+  <text x="558" y="480" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">;</text>
+</svg>

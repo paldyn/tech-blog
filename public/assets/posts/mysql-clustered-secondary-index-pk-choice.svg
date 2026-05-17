@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">PK 선택이 성능에 미치는 영향</text>
+
+  <!-- Good PK: AUTO_INCREMENT -->
+  <rect x="60" y="80" width="360" height="230" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">순차 PK (AUTO_INCREMENT)</text>
+
+  <text x="240" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">항상 B-tree 오른쪽 끝에 삽입</text>
+  <text x="240" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">페이지 분할 최소화</text>
+  <text x="240" y="174" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">메모리 내 핫 페이지 활용</text>
+  <text x="240" y="194" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">InnoDB 기본 권장 방식</text>
+
+  <!-- Visual: sequential -->
+  <rect x="80" y="210" width="40" height="30" rx="3" fill="#55c555" opacity="0.7"/>
+  <rect x="128" y="210" width="40" height="30" rx="3" fill="#55c555" opacity="0.7"/>
+  <rect x="176" y="210" width="40" height="30" rx="3" fill="#55c555" opacity="0.7"/>
+  <rect x="224" y="210" width="40" height="30" rx="3" fill="#55c555" opacity="0.7"/>
+  <rect x="272" y="210" width="40" height="30" rx="3" fill="#55c555"/>
+  <text x="292" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#0a0a0a" font-weight="700">+new</text>
+  <text x="240" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">→ 순서대로 채워짐</text>
+  <text x="240" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">페이지 단편화 ↓, 쓰기 성능 ↑</text>
+  <text x="240" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">권장 ✓</text>
+
+  <!-- Bad PK: UUID -->
+  <rect x="460" y="80" width="360" height="230" rx="8" fill="#1f0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">무작위 PK (UUID v4)</text>
+
+  <text x="640" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">B-tree 임의 위치에 삽입</text>
+  <text x="640" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">잦은 페이지 분할 (page split)</text>
+  <text x="640" y="174" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">임의 I/O → 버퍼 풀 오염</text>
+  <text x="640" y="194" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">인덱스 크기 증가 (16B × row)</text>
+
+  <!-- Visual: random -->
+  <rect x="480" y="210" width="40" height="30" rx="3" fill="#e05555" opacity="0.5"/>
+  <rect x="528" y="210" width="40" height="30" rx="3" fill="#e05555" opacity="0.7"/>
+  <rect x="576" y="210" width="40" height="30" rx="3" fill="#e05555" opacity="0.4"/>
+  <rect x="624" y="210" width="40" height="30" rx="3" fill="#e05555"/>
+  <text x="644" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#fff" font-weight="700">+new</text>
+  <rect x="672" y="210" width="40" height="30" rx="3" fill="#e05555" opacity="0.6"/>
+  <text x="640" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">→ 중간에 끼어들기 반복</text>
+  <text x="640" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">페이지 단편화 ↑, 쓰기 성능 ↓</text>
+  <text x="640" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">비권장 ✗</text>
+
+  <!-- Note: UUIDv7/ULID -->
+  <rect x="60" y="328" width="760" height="38" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="348" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">UUID 사용이 필요하다면 UUIDv7 또는 ULID — 시간순 정렬로 순차 삽입 성질 회복</text>
+  <text x="440" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">세컨더리 인덱스는 모두 PK를 포함하므로, PK가 클수록 전체 인덱스 크기가 비례해 커짐</text>
+</svg>

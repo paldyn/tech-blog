@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">복합 인덱스 칼럼 순서 설계 원칙</text>
+
+  <!-- Principle 1: cardinality -->
+  <rect x="60" y="70" width="360" height="110" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="94" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">① 높은 카디널리티 칼럼 먼저</text>
+  <text x="240" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">카디널리티 높을수록 탐색 범위 빠르게 축소</text>
+  <text x="240" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">user_id(수백만 종) > status(3~5종)</text>
+  <text x="240" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">예: (user_id, status) ← 좋음</text>
+  <text x="240" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">예: (status, user_id) ← 나쁨</text>
+
+  <!-- Principle 2: equality before range -->
+  <rect x="460" y="70" width="360" height="110" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="94" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">② 등치 조건을 범위 조건보다 앞에</text>
+  <text x="640" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">범위 조건 이후 칼럼은 인덱스 탐색 중단</text>
+  <text x="640" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">WHERE a=? AND b>? AND c=?</text>
+  <text x="640" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">→ (a, b, c) 인덱스에서 c는 미사용</text>
+  <text x="640" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">→ (a, c, b) 로 바꾸면 c까지 활용</text>
+
+  <!-- Principle 3: sort/group -->
+  <rect x="60" y="204" width="360" height="110" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">③ ORDER BY / GROUP BY 칼럼 포함</text>
+  <text x="240" y="250" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">인덱스 순서 = 정렬 순서이면 filesort 없음</text>
+  <text x="240" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">WHERE status=? ORDER BY created_at</text>
+  <text x="240" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">→ (status, created_at) 인덱스면 최적</text>
+
+  <!-- Principle 4: covering -->
+  <rect x="460" y="204" width="360" height="110" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">④ 자주 SELECT 되는 칼럼 포함 고려</text>
+  <text x="640" y="250" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">커버링 인덱스 → Double Lookup 제거</text>
+  <text x="640" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">SELECT status, amount WHERE user_id=?</text>
+  <text x="640" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">→ (user_id, status, amount) 인덱스면 OK</text>
+
+  <!-- Note -->
+  <rect x="60" y="330" width="760" height="36" rx="6" fill="#1a1a0a" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">인덱스를 너무 많이 만들면 INSERT/UPDATE/DELETE 성능 저하 — 필요한 쿼리 패턴만 선별</text>
+</svg>

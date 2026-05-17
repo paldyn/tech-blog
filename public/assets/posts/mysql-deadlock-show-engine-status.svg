@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="540" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SHOW ENGINE INNODB STATUS — 데드락 분석</text>
+
+  <!-- Code block: SHOW ENGINE output -->
+  <rect x="60" y="70" width="760" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="76" y="94" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- LATEST DETECTED DEADLOCK 섹션 예시</text>
+
+  <text x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">TRANSACTION</text>
+  <text x="186" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 100, ACTIVE 5 sec starting index read</text>
+
+  <text x="76" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">LOCK WAIT 2 lock struct(s), heap size 1136</text>
+
+  <text x="76" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">RECORD LOCKS</text>
+  <text x="178" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> space id 53 page no 4 n bits 72</text>
+
+  <text x="76" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  index PRIMARY of table `test`.`t`</text>
+
+  <text x="76" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">trx id</text>
+  <text x="130" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 100 </text>
+  <text x="178" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">lock_mode X</text>
+  <text x="290" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> locks gap before rec</text>
+
+  <text x="76" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- WE ROLL BACK TRANSACTION (2) → 비용이 낮은 쪽 롤백</text>
+
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">TRANSACTION</text>
+  <text x="186" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 101 ROLLED BACK</text>
+
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 살아남은 트랜잭션은 계속 진행</text>
+
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">ERROR 1213 (40001): Deadlock found when trying</text>
+  <text x="76" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  to get lock; try restarting transaction</text>
+  <text x="76" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 애플리케이션은 이 오류를 잡아 재시도해야 함</text>
+
+  <!-- Diagnostic steps -->
+  <text x="60" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">데드락 진단 체크리스트</text>
+
+  <!-- Step boxes -->
+  <rect x="60" y="398" width="185" height="56" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="152" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① 상태 확인</text>
+  <text x="152" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SHOW ENGINE INNODB STATUS</text>
+
+  <line x1="245" y1="426" x2="275" y2="426" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <rect x="275" y="398" width="185" height="56" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="367" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② 잠금 구조 파악</text>
+  <text x="367" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">lock_mode, 테이블, 인덱스</text>
+
+  <line x1="460" y1="426" x2="490" y2="426" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <rect x="490" y="398" width="185" height="56" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="582" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ 쿼리 순서 조정</text>
+  <text x="582" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">잠금 획득 순서 일원화</text>
+
+  <line x1="675" y1="426" x2="705" y2="426" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <rect x="705" y="398" width="130" height="56" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="770" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">④ 재시도 로직</text>
+  <text x="770" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">ER_LOCK_DEADLOCK 잡기</text>
+</svg>

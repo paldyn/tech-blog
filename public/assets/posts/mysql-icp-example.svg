@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ICP 효과 — 행 fetch 수 비교</text>
+
+  <!-- Query -->
+  <rect x="60" y="66" width="760" height="56" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 인덱스: (last_name, first_name)</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SELECT</text>
+  <text x="124" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> * </text>
+  <text x="148" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">FROM</text>
+  <text x="190" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> people </text>
+  <text x="254" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">WHERE</text>
+  <text x="306" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> last_name </text>
+  <text x="390" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">LIKE</text>
+  <text x="430" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve"> 'Kim%'</text>
+  <text x="500" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve"> AND</text>
+  <text x="540" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> first_name </text>
+  <text x="636" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">LIKE</text>
+  <text x="674" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve"> 'Min%'</text>
+
+  <!-- ICP OFF scenario -->
+  <rect x="60" y="148" width="360" height="120" rx="8" fill="#1f0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">ICP OFF</text>
+  <text x="240" y="196" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">last_name LIKE 'Kim%' 로 인덱스 탐색</text>
+  <text x="240" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">→ Kim으로 시작하는 1,000개 행 fetch</text>
+  <text x="240" y="236" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">→ Server에서 first_name 필터</text>
+  <text x="240" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">클러스터드 I/O: 1,000회</text>
+
+  <!-- ICP ON scenario -->
+  <rect x="460" y="148" width="360" height="120" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">ICP ON</text>
+  <text x="640" y="196" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">last_name LIKE 'Kim%' 로 인덱스 탐색</text>
+  <text x="640" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">→ 인덱스에서 first_name 조건도 즉시 평가</text>
+  <text x="640" y="236" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">→ 통과한 50개 행만 클러스터드 fetch</text>
+  <text x="640" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">클러스터드 I/O: 50회 (95% 감소)</text>
+
+  <!-- Note -->
+  <rect x="60" y="296" width="760" height="44" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">ICP는 세컨더리 인덱스 + 범위/필터 조건 조합에서 특히 효과적</text>
+  <text x="440" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">클러스터드 인덱스 직접 스캔이나 커버링 인덱스에서는 이미 모든 데이터가 인덱스에 있어 ICP 효과 없음</text>
+</svg>

@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">InnoDB FULLTEXT 인덱스 구조</text>
+
+  <!-- Document processing pipeline -->
+  <text x="440" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#888">문서 → 역인덱스(Inverted Index) 생성 파이프라인</text>
+
+  <!-- Step: Raw text -->
+  <rect x="60" y="100" width="180" height="56" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">원본 텍스트</text>
+  <text x="150" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">"MySQL index guide"</text>
+
+  <line x1="240" y1="128" x2="270" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Step: Tokenization -->
+  <rect x="270" y="100" width="160" height="56" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="350" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">토크나이저</text>
+  <text x="350" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">공백/구두점 기준 분리</text>
+
+  <line x1="430" y1="128" x2="460" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Step: Stopword filter -->
+  <rect x="460" y="100" width="160" height="56" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="540" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">불용어 제거</text>
+  <text x="540" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">"a","the","is" 등 제외</text>
+
+  <line x1="620" y1="128" x2="650" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Step: Inverted Index -->
+  <rect x="650" y="100" width="170" height="56" rx="8" fill="#0d1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="735" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">역인덱스</text>
+  <text x="735" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">단어 → {doc_id, pos} 목록</text>
+
+  <!-- Inverted index table -->
+  <text x="440" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">역인덱스 구조 (InnoDB FTS 내부 6개 보조 테이블)</text>
+
+  <rect x="60" y="208" width="760" height="120" rx="6" fill="#0a1020" stroke="#7777cc" stroke-width="1"/>
+
+  <!-- Header -->
+  <rect x="60" y="208" width="760" height="28" rx="4" fill="#1a1a3a" stroke="#7777cc" stroke-width="1"/>
+  <text x="220" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">단어 (WORD)</text>
+  <text x="460" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">문서 ID</text>
+  <text x="680" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">위치 (POSITION)</text>
+
+  <text x="220" y="258" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3">MySQL</text>
+  <text x="460" y="258" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">1, 5, 23</text>
+  <text x="680" y="258" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">0, 7, 2</text>
+
+  <text x="220" y="278" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3">index</text>
+  <text x="460" y="278" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">1, 8</text>
+  <text x="680" y="278" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">1, 4</text>
+
+  <text x="220" y="298" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3">guide</text>
+  <text x="460" y="298" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">1</text>
+  <text x="680" y="298" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">2</text>
+
+  <!-- Search modes -->
+  <text x="440" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">MATCH … AGAINST 검색 모드</text>
+
+  <rect x="60" y="372" width="233" height="80" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="176" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">IN NATURAL LANGUAGE MODE</text>
+  <text x="176" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">기본값 · 관련도(relevance) 점수</text>
+  <text x="176" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">흔한 단어 자동 무시</text>
+  <text x="176" y="446" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">50% 이상 문서에 등장 시 제외</text>
+
+  <rect x="313" y="372" width="233" height="80" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="429" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">IN BOOLEAN MODE</text>
+  <text x="429" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">+필수 -제외 * 와일드카드 " "구문</text>
+  <text x="429" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">50% 임계값 없음</text>
+  <text x="429" y="446" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">최소 innodb_ft_min_token_size=3자</text>
+
+  <rect x="566" y="372" width="254" height="80" rx="6" fill="#281a0a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="693" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">WITH QUERY EXPANSION</text>
+  <text x="693" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">맹목적 관련성 확장 (2-pass)</text>
+  <text x="693" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">1차 결과로 쿼리 재확장</text>
+  <text x="693" y="446" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">소형 데이터셋 최적화</text>
+
+  <!-- Language note -->
+  <rect x="60" y="470" width="760" height="38" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="493" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">한국어 전문 검색 주의: 기본 파서는 공백 기준 — 형태소 분석은 MeCab 파서 플러그인 필요</text>
+</svg>

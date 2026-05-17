@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-w" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#888"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Gap Lock 데드락 시나리오</text>
+
+  <!-- Tx A box -->
+  <rect x="60" y="80" width="340" height="56" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="230" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">트랜잭션 A</text>
+  <text x="230" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">SELECT * FROM t WHERE id BETWEEN 20 AND 30 FOR UPDATE</text>
+
+  <!-- Tx B box -->
+  <rect x="480" y="80" width="340" height="56" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="650" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">트랜잭션 B</text>
+  <text x="650" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">SELECT * FROM t WHERE id BETWEEN 25 AND 35 FOR UPDATE</text>
+
+  <!-- Step 1: A acquires gap lock (20,30) -->
+  <rect x="60" y="180" width="340" height="52" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">① A: Gap Lock (20, 30] 획득</text>
+  <text x="230" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">갭 잠금 성공 → 진행 중</text>
+
+  <!-- Step 2: B acquires gap lock (25,35) -->
+  <rect x="480" y="180" width="340" height="52" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② B: Gap Lock (25, 35] 획득</text>
+  <text x="650" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">A의 갭과 겹침 — 하지만 읽기이므로 OK</text>
+
+  <!-- Step 3: A tries INSERT 25 -->
+  <rect x="60" y="278" width="340" height="52" rx="6" fill="#1f0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">③ A: INSERT id=25 → WAIT</text>
+  <text x="230" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">B의 Gap Lock (25,35]에 막힘</text>
+
+  <!-- Step 4: B tries INSERT 28 -->
+  <rect x="480" y="278" width="340" height="52" rx="6" fill="#1f0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="650" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">④ B: INSERT id=28 → WAIT</text>
+  <text x="650" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">A의 Gap Lock (20,30]에 막힘</text>
+
+  <!-- Cross arrows for deadlock -->
+  <path d="M 400 304 C 450 350 440 304 480 304" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arr-r)"/>
+  <path d="M 480 310 C 430 365 440 310 400 310" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arr-r)"/>
+
+  <!-- Deadlock resolution -->
+  <rect x="240" y="380" width="400" height="70" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">DEADLOCK 감지</text>
+  <text x="440" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">InnoDB: 비용 낮은 트랜잭션 롤백</text>
+  <text x="440" y="444" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">ERROR 1213 (40001): Deadlock found when trying to get lock</text>
+</svg>

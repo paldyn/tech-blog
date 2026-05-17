@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Functional Index — 표현식 기반 인덱스 패턴</text>
+
+  <!-- Code block 1: without functional index -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">인덱스 미활용 패턴 (함수 호출로 인덱스 무력화)</text>
+  <rect x="60" y="94" width="760" height="96" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- idx_created_at 인덱스 있어도 YEAR() 함수로 인덱스 무력화</text>
+  <text x="76" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SELECT</text>
+  <text x="130" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> * </text>
+  <text x="154" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">FROM</text>
+  <text x="196" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> orders </text>
+  <text x="260" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">WHERE</text>
+  <text x="312" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> YEAR(created_at) = 2024;</text>
+  <text x="76" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">-- → Full Table Scan (EXPLAIN type: ALL)</text>
+  <text x="76" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 해결책 1: 범위 조건으로 변환  WHERE created_at BETWEEN '2024-01-01' AND '2024-12-31'</text>
+
+  <!-- Code block 2: functional index -->
+  <text x="60" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">해결책 2: Functional Index (MySQL 8.0.13+)</text>
+  <rect x="60" y="228" width="760" height="168" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- YEAR(created_at) 표현식에 인덱스 생성</text>
+  <text x="76" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">CREATE INDEX</text>
+  <text x="186" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> idx_year_created </text>
+  <text x="346" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ON</text>
+  <text x="374" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> orders ((YEAR(created_at)));</text>
+
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 이제 YEAR() 함수 쿼리도 인덱스 활용</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SELECT</text>
+  <text x="130" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> * </text>
+  <text x="154" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">FROM</text>
+  <text x="196" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> orders </text>
+  <text x="260" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">WHERE</text>
+  <text x="312" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> YEAR(created_at) = 2024;</text>
+  <text x="76" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">-- → range scan (EXPLAIN type: range, key: idx_year_created)</text>
+
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 소문자 변환 + UNIQUE (대소문자 무관 중복 방지)</text>
+  <text x="76" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ALTER TABLE</text>
+  <text x="186" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> users </text>
+  <text x="234" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ADD UNIQUE INDEX</text>
+  <text x="386" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> uq_email_lower ((LOWER(email)));</text>
+
+  <!-- Note -->
+  <rect x="60" y="416" width="760" height="60" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">내부 구현: 가상 Generated Column</text>
+  <text x="440" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">MySQL이 자동으로 숨겨진 Generated Column을 생성하고 그 칼럼에 인덱스를 건다</text>
+  <text x="440" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">표현식 결과값이 인덱스에 저장 → 쿼리 시 동일 표현식 자동 매칭</text>
+</svg>

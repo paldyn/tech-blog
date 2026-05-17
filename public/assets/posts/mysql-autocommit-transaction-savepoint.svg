@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SAVEPOINT — 부분 롤백</text>
+
+  <!-- Timeline bar -->
+  <line x1="60" y1="180" x2="820" y2="180" stroke="#444" stroke-width="2"/>
+
+  <!-- START -->
+  <circle cx="100" cy="180" r="8" fill="#55c555"/>
+  <text x="100" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">START TRANSACTION</text>
+
+  <!-- Step 1: INSERT -->
+  <circle cx="230" cy="180" r="8" fill="#7ec8e3"/>
+  <text x="230" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">INSERT</text>
+  <text x="230" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">id=10</text>
+
+  <!-- SP1 -->
+  <circle cx="370" cy="180" r="10" fill="#7777cc"/>
+  <text x="370" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" font-weight="600">SAVEPOINT sp1</text>
+
+  <!-- Step 2: UPDATE -->
+  <circle cx="510" cy="180" r="8" fill="#7ec8e3"/>
+  <text x="510" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">UPDATE</text>
+  <text x="510" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">val=99</text>
+
+  <!-- Step 3: DELETE (bad) -->
+  <circle cx="650" cy="180" r="8" fill="#e05555"/>
+  <text x="650" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">DELETE</text>
+  <text x="650" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">실수!</text>
+
+  <!-- Rollback to SP1 arc -->
+  <path d="M 650 188 Q 510 260 370 188" stroke="#e05555" stroke-width="2.5"
+        stroke-dasharray="5,3" fill="none" marker-end="url(#arr-r)"/>
+  <text x="510" y="285" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">ROLLBACK TO sp1</text>
+  <text x="510" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sp1 이후 변경(UPDATE, DELETE) 취소</text>
+  <text x="510" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sp1 이전 변경(INSERT) 유지</text>
+
+  <!-- COMMIT -->
+  <circle cx="790" cy="180" r="8" fill="#55c555"/>
+  <text x="790" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">COMMIT</text>
+
+  <!-- Code snippet -->
+  <rect x="60" y="340" width="760" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SAVEPOINT</text>
+  <text x="168" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> sp1; </text>
+  <text x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ROLLBACK TO SAVEPOINT</text>
+  <text x="294" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> sp1; </text>
+  <text x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">                              -- 또는 RELEASE SAVEPOINT sp1;</text>
+</svg>
