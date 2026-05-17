@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arrf" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">순환 임포트 실행 순서 추적</text>
+
+  <!-- Step by step -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">import a 실행 시 내부 흐름</text>
+
+  <rect x="60" y="94" width="760" height="44" rx="6" fill="#0d1117" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① sys.modules['a'] = &lt;부분 로드된 a 모듈&gt;</text>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">a.py 실행 시작 전, 먼저 빈(부분) 모듈 객체를 sys.modules에 등록</text>
+
+  <rect x="60" y="148" width="760" height="44" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1"/>
+  <text x="80" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">② a.py 실행 중 "from b import B_func" 만남</text>
+  <text x="80" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">b.py 임포트 시작</text>
+
+  <rect x="60" y="202" width="760" height="44" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1"/>
+  <text x="80" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">③ sys.modules['b'] = &lt;부분 로드된 b 모듈&gt;</text>
+  <text x="80" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">b.py 실행 시작 전 등록</text>
+
+  <rect x="60" y="256" width="760" height="44" rx="6" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">④ b.py 실행 중 "from a import A_func" 만남</text>
+  <text x="80" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sys.modules['a']에 이미 있음 → 부분 로드된 객체 반환, A_func가 아직 정의 안된 상태</text>
+
+  <rect x="60" y="310" width="760" height="44" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">⑤ ImportError: cannot import name 'A_func' from partially initialized module 'a'</text>
+  <text x="80" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">A_func 이 a.py 에서 아직 실행되지 않아 부분 모듈에 없는 상태</text>
+
+  <!-- Key insight -->
+  <rect x="60" y="368" width="760" height="56" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">핵심: import a (모듈 전체)는 가능, from a import A_func (아직 없는 이름)는 불가</text>
+  <text x="80" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">b.py가 "import a" 후 나중에 a.A_func()를 사용하면 동작할 수도 있음 — 모듈 로드 완료 후 접근이라면</text>
+</svg>

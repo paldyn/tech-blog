@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">importlib.reload() 동작과 주의사항</text>
+
+  <!-- Left: what reload does -->
+  <rect x="60" y="66" width="370" height="140" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">reload()가 하는 일</text>
+  <rect x="76" y="100" width="338" height="96" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="150" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> importlib</text>
+  <text x="92" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="150" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> mymod</text>
+  <text x="92" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 파일 수정 후</text>
+  <text x="92" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">importlib.reload(mymod)</text>
+  <text x="92" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">                       # 재실행됨</text>
+
+  <!-- Right: what reload does NOT do -->
+  <rect x="450" y="66" width="370" height="140" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="470" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">reload()가 하지 않는 일</text>
+  <rect x="466" y="100" width="338" height="96" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">from</text>
+  <text x="520" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> mymod </text>
+  <text x="576" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="628" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> greet</text>
+  <text x="482" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># greet는 구버전 참조</text>
+  <text x="482" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">importlib.reload(mymod)</text>
+  <text x="482" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">greet()      # 여전히 구버전!</text>
+  <text x="482" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">mymod.greet()  # 이건 새버전</text>
+
+  <!-- .pyc caching -->
+  <text x="60" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">바이트코드 캐시 (.pyc)</text>
+
+  <rect x="60" y="242" width="760" height="130" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="80" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Python은 .py 파일을 처음 임포트할 때 컴파일된 바이트코드를 __pycache__/ 에 저장합니다.</text>
+  <text x="80" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">다음 임포트 시 .py 파일 수정 시각과 크기를 비교해 캐시가 유효하면 .pyc를 직접 로드합니다.</text>
+  <rect x="76" y="300" width="724" height="62" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># __pycache__/ 구조</text>
+  <text x="92" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">__pycache__/mymod.cpython-312.pyc</text>
+  <text x="92" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># python -B 옵션으로 .pyc 생성 억제 가능</text>
+</svg>
