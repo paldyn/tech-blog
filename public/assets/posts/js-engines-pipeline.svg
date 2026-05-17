@@ -1,6 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500"
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="580" viewBox="0 0 880 580"
      style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
-  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+  <defs>
+    <marker id="deoptArrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 6 L 0 12 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="580" rx="12" fill="#0a0a0a"/>
 
   <!-- Title -->
   <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">V8 엔진의 JS 코드 실행 파이프라인</text>
@@ -8,18 +13,18 @@
   <!-- Pipeline steps: horizontal flow -->
   <!-- Step 1: Source Code -->
   <rect x="60" y="80" width="110" height="70" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
-  <text x="115" y="110" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">소스 코드</text>
-  <text x="115" y="130" text-anchor="middle" font-size="11" fill="#888">JavaScript</text>
-  <text x="115" y="145" text-anchor="middle" font-size="11" fill="#888">텍스트 파일</text>
+  <text x="115" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">소스 코드</text>
+  <text x="115" y="128" text-anchor="middle" font-size="11" fill="#888">JavaScript</text>
+  <text x="115" y="144" text-anchor="middle" font-size="11" fill="#888">텍스트 파일</text>
 
   <!-- Arrow 1→2 -->
   <polygon points="175,115 196,108 196,112 208,112 208,118 196,118 196,122" fill="#444"/>
 
   <!-- Step 2: Parser -->
   <rect x="210" y="80" width="110" height="70" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
-  <text x="265" y="110" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">파서</text>
-  <text x="265" y="130" text-anchor="middle" font-size="11" fill="#888">토크나이징</text>
-  <text x="265" y="145" text-anchor="middle" font-size="11" fill="#888">AST 생성</text>
+  <text x="265" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">파서</text>
+  <text x="265" y="128" text-anchor="middle" font-size="11" fill="#888">토크나이징</text>
+  <text x="265" y="144" text-anchor="middle" font-size="11" fill="#888">AST 생성</text>
 
   <!-- Arrow 2→3 -->
   <polygon points="325,115 346,108 346,112 358,112 358,118 346,118 346,122" fill="#444"/>
@@ -44,61 +49,47 @@
 
   <!-- Step 5: Machine Code -->
   <rect x="695" y="80" width="125" height="70" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
-  <text x="757" y="110" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">기계어</text>
-  <text x="757" y="130" text-anchor="middle" font-size="11" fill="#888">CPU 직접 실행</text>
-  <text x="757" y="145" text-anchor="middle" font-size="11" fill="#888">최고 성능</text>
+  <text x="757" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">기계어</text>
+  <text x="757" y="128" text-anchor="middle" font-size="11" fill="#888">CPU 직접 실행</text>
+  <text x="757" y="144" text-anchor="middle" font-size="11" fill="#888">최고 성능</text>
 
-  <!-- Deoptimization arrow (curved back) -->
-  <path d="M 820 150 Q 820 195 593 195 Q 365 195 425 158" stroke="#e05555" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
-  <polygon points="425,158 418,172 432,172" fill="#e05555"/>
-  <text x="593" y="218" text-anchor="middle" font-size="11" fill="#e05555">역최적화 (Deopt)</text>
-  <text x="593" y="234" text-anchor="middle" font-size="10" fill="#888">타입 가정이 틀렸을 때</text>
+  <!-- Deoptimization arrow (curved back, large U-shape so labels fit inside) -->
+  <path d="M 757 158 Q 757 270 593 270 Q 425 270 425 162"
+        stroke="#e05555" stroke-width="1.5" stroke-dasharray="5,3" fill="none"
+        marker-end="url(#deoptArrow)"/>
+
+  <!-- Deopt labels INSIDE the U-curve, with subtle background to mask any line crossings -->
+  <text x="593" y="210" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">역최적화 (Deopt)</text>
+  <text x="593" y="232" text-anchor="middle" font-size="11" fill="#888">타입 가정이 빗나가면 Ignition으로 돌아감</text>
 
   <!-- Hidden Class explanation -->
-  <text x="60" y="255" font-size="16" font-weight="600" fill="#e8e8e8">Hidden Class — V8의 최적화 비결</text>
+  <text x="60" y="320" font-size="16" font-weight="600" fill="#e8e8e8">Hidden Class — V8의 최적화 비결</text>
 
-  <rect x="60" y="270" width="370" height="100" rx="8" fill="#0d1117" stroke="#333"/>
-  <text x="80" y="292" font-size="13" font-weight="600" fill="#7ec8e3">같은 구조 → 같은 Hidden Class → 빠름</text>
-  <rect x="80" y="302" width="330" height="58" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="96" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">const</text>
-  <text x="136" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> p1 = { x: </text>
-  <text x="230" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
-  <text x="238" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, y: </text>
-  <text x="274" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">2</text>
-  <text x="282" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> };</text>
-  <text x="96" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">const</text>
-  <text x="136" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> p2 = { x: </text>
-  <text x="230" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">3</text>
-  <text x="238" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, y: </text>
-  <text x="274" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">4</text>
-  <text x="282" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> };</text>
-  <text x="96" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// p1, p2 → 동일 Hidden Class → 최적화</text>
+  <rect x="60" y="334" width="370" height="108" rx="8" fill="#0d1117" stroke="#333"/>
+  <text x="80" y="356" font-size="13" font-weight="600" fill="#7ec8e3">같은 구조 → 같은 Hidden Class → 빠름</text>
+  <rect x="80" y="366" width="330" height="64" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="96" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> p1 = { x: </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8">, y: </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#e8e8e8"> };</tspan></text>
+  <text x="96" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> p2 = { x: </tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#e8e8e8">, y: </tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#e8e8e8"> };</tspan></text>
+  <text x="96" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// p1, p2 → 동일 Hidden Class → 최적화</text>
 
-  <rect x="450" y="270" width="370" height="100" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1"/>
-  <text x="470" y="292" font-size="13" font-weight="600" fill="#e05555">다른 구조 → 다른 Hidden Class → 느림</text>
-  <rect x="470" y="302" width="330" height="58" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="486" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">const</text>
-  <text x="526" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> a = { x: </text>
-  <text x="616" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
-  <text x="624" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> };</text>
-  <text x="486" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">a.y = </text>
-  <text x="536" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">2</text>
-  <text x="544" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">;</text>
-  <text x="486" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 프로퍼티 동적 추가 → Class 전환</text>
+  <rect x="450" y="334" width="370" height="108" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1"/>
+  <text x="470" y="356" font-size="13" font-weight="600" fill="#e05555">다른 구조 → 다른 Hidden Class → 느림</text>
+  <rect x="470" y="366" width="330" height="64" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="486" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3">const</tspan><tspan fill="#e8e8e8"> a = { x: </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#e8e8e8"> };</tspan></text>
+  <text x="486" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#e8e8e8">a.y = </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#e8e8e8">;</tspan></text>
+  <text x="486" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" xml:space="preserve">// 프로퍼티 동적 추가 → Class 전환</text>
 
   <!-- Three engines comparison -->
-  <text x="60" y="400" font-size="16" font-weight="600" fill="#e8e8e8">3대 엔진 비교</text>
-  <rect x="60" y="414" width="230" height="56" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
-  <text x="175" y="436" text-anchor="middle" font-size="13" font-weight="700" fill="#7ec8e3">V8 (Google)</text>
-  <text x="175" y="456" text-anchor="middle" font-size="11" fill="#888">Chrome · Node · Deno · Bun · Edge</text>
+  <text x="60" y="480" font-size="16" font-weight="600" fill="#e8e8e8">3대 엔진 비교</text>
+  <rect x="60" y="494" width="230" height="60" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="518" text-anchor="middle" font-size="13" font-weight="700" fill="#7ec8e3">V8 (Google)</text>
+  <text x="175" y="538" text-anchor="middle" font-size="11" fill="#888">Chrome · Node · Deno · Bun · Edge</text>
 
-  <rect x="325" y="414" width="230" height="56" rx="8" fill="#0d1117" stroke="#ce9178" stroke-width="1.5"/>
-  <text x="440" y="436" text-anchor="middle" font-size="13" font-weight="700" fill="#ce9178">SpiderMonkey (Mozilla)</text>
-  <text x="440" y="456" text-anchor="middle" font-size="11" fill="#888">Firefox · Firefox Android</text>
+  <rect x="325" y="494" width="230" height="60" rx="8" fill="#0d1117" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="440" y="518" text-anchor="middle" font-size="13" font-weight="700" fill="#ce9178">SpiderMonkey (Mozilla)</text>
+  <text x="440" y="538" text-anchor="middle" font-size="11" fill="#888">Firefox · Firefox Android</text>
 
-  <rect x="590" y="414" width="230" height="56" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
-  <text x="705" y="436" text-anchor="middle" font-size="13" font-weight="700" fill="#55c555">JavaScriptCore (Apple)</text>
-  <text x="705" y="456" text-anchor="middle" font-size="11" fill="#888">Safari · iOS · Bun 내부</text>
-
-  <!-- Footer -->
+  <rect x="590" y="494" width="230" height="60" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="705" y="518" text-anchor="middle" font-size="13" font-weight="700" fill="#55c555">JavaScriptCore (Apple)</text>
+  <text x="705" y="538" text-anchor="middle" font-size="11" fill="#888">Safari · iOS · Bun 내부</text>
 </svg>
