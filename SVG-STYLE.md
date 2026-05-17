@@ -58,7 +58,8 @@
 - 라벨 y는 화살표 y에서 ±14px 이상
 - 좌·우 컬럼 간격 ≥60px (880=360+60+360+양쪽50)
 - ≤40px 간격에는 라벨 두지 말 것
-- 큰 박스 사이 의미 화살표는 solid 폴리곤 — shaft ≥30px, 화살촉 너비 ≥16px, 어두운 outline
+- **화살표는 `<line>`/`<path>` + `<marker>` 조합으로만** 만든다. `<rect>` shaft + `<polygon>` 화살촉 조합 금지 — shaft 두께와 화살촉 너비가 어긋나서 어색하고, 박스 가장자리 정렬도 깨지기 쉬움.
+- **화살표 끝점은 인접 박스 가장자리에 정확히** 닿아야 한다. 박스 안으로 침범하거나, 박스에 못 닿는 gap이 생기지 말 것 (`line x2=박스.x` 형태로 명시).
 
 ## 점선/곡선 화살표 (Deopt·역방향·옵션 흐름 등)
 
@@ -66,18 +67,19 @@
 - `stroke-dasharray="4,4"` 또는 `"5,3"` — `"6,3"` 이상은 점선 갭이 커서 곡선이 조각조각 보임
 - 라벨이 곡선 근처면 라벨과 곡선 사이 최소 **35px 간격** 확보 (필요시 곡선 dip 깊이를 늘리거나 라벨 배치 변경)
 
-### 화살촉은 `<marker>` 사용 권장 (분리된 `<polygon>` 대신)
+### 화살촉은 `<marker>` 사용 필수 (분리된 `<polygon>` 대신)
 
 ```svg
 <defs>
   <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
-          markerWidth="14" markerHeight="14" orient="auto">
+          markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
     <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
   </marker>
 </defs>
 <path d="..." marker-end="url(#arr)"/>
 ```
 
+- ⚠ **`markerUnits="userSpaceOnUse"` 명시 필수**. 누락하면 기본값이 `strokeWidth`라서 marker 크기가 `markerWidth × stroke-width` 로 계산됨 → stroke-width 2~3 짜리 굵은 화살표에 markerWidth 14를 붙이면 화살촉이 28~42px로 거대해진다. `userSpaceOnUse`로 marker 크기를 stroke와 분리해 절대 크기 14×14로 고정.
 - `markerWidth/Height ≥ 14` — 11 이하는 작아서 화살촉 거의 안 보임
 - `refX=tip`, `refY=center`, `orient="auto"`로 path 끝에서 자동 회전
 
@@ -95,6 +97,8 @@
 - [ ] **코드 박스 콘트라스트**: 코드 박스 fill·stroke가 페이지 배경과 명확히 구분됨 (fill=#000 + stroke=#3a4a6e 정도)
 - [ ] **코드 글자 가독성**: 폰트 size 13, 일반 텍스트 `#ffffff`, 키워드 `font-weight="600"`
 - [ ] **점선 화살표 연속성**: dashed curve가 끊겨 보이지 않음 (stroke-width 2, dasharray 4,4)
-- [ ] **마커 크기**: 화살촉이 명확히 보임 (markerWidth/Height ≥ 14)
+- [ ] **마커 크기**: 화살촉이 명확히 보임 (markerWidth/Height ≥ 14, `markerUnits="userSpaceOnUse"` 명시)
+- [ ] **화살촉 비례**: 화살촉이 shaft 두께 대비 과도하게 크지 않음 (userSpaceOnUse 빠지면 거대해짐)
+- [ ] **박스-화살표 연결**: 화살표 끝점이 박스 가장자리에 정확히 닿음 (안쪽 침범·gap 없음)
 
 4. 결함 발견 시 수정 후 2번부터 재검증.
