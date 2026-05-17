@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">멀티 DataSource 아키텍처</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">Primary(쓰기) / Secondary(읽기) 분리 구조</text>
+
+  <!-- Application Layer -->
+  <rect x="300" y="96" width="280" height="52" rx="8" fill="#1a1f2e" stroke="#e8e8e8" stroke-width="1.5"/>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">Spring Application</text>
+  <text x="440" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">@Transactional 서비스 레이어</text>
+
+  <!-- Arrows down to two datasources -->
+  <line x1="330" y1="148" x2="220" y2="202" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="213,207 218,194 226,204" fill="#7ec8e3"/>
+  <text x="256" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">쓰기 트랜잭션</text>
+
+  <line x1="550" y1="148" x2="660" y2="202" stroke="#55c555" stroke-width="2"/>
+  <polygon points="667,207 662,194 654,204" fill="#55c555"/>
+  <text x="624" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">읽기 전용 트랜잭션</text>
+
+  <!-- Primary DataSource -->
+  <rect x="60" y="210" width="320" height="100" rx="8" fill="#0f1318" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="220" y="236" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">@Primary DataSource</text>
+  <text x="220" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">primaryDataSource (HikariCP)</text>
+  <text x="220" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">app.datasource.primary.*</text>
+  <text x="220" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">INSERT · UPDATE · DELETE</text>
+
+  <!-- Secondary DataSource -->
+  <rect x="500" y="210" width="320" height="100" rx="8" fill="#0f1318" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="236" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Secondary DataSource</text>
+  <text x="660" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">replicaDataSource (HikariCP)</text>
+  <text x="660" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">app.datasource.replica.*</text>
+  <text x="660" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">SELECT (읽기 전용)</text>
+
+  <!-- Arrows down to DB -->
+  <line x1="220" y1="310" x2="220" y2="360" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="220,368 213,356 227,356" fill="#7ec8e3"/>
+  <line x1="660" y1="310" x2="660" y2="360" stroke="#55c555" stroke-width="2"/>
+  <polygon points="660,368 653,356 667,356" fill="#55c555"/>
+
+  <!-- DB boxes -->
+  <rect x="60" y="368" width="320" height="60" rx="8" fill="#1a1428" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="220" y="393" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">MySQL Primary (Master)</text>
+  <text x="220" y="413" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쓰기 가능 · Binlog 발송</text>
+
+  <rect x="500" y="368" width="320" height="60" rx="8" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="393" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">MySQL Replica (Slave)</text>
+  <text x="660" y="413" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">읽기 전용 · 복제 지연 고려</text>
+
+  <!-- Replication arrow -->
+  <line x1="384" y1="398" x2="497" y2="398" stroke="#ce9178" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="505,398 493,392 493,404" fill="#ce9178"/>
+  <text x="440" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#ce9178">복제 (Replication)</text>
+
+  <!-- AbstractRoutingDataSource note -->
+  <rect x="260" y="446" width="360" height="40" rx="8" fill="#1a1f2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">AbstractRoutingDataSource로</text>
+  <text x="440" y="478" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">트랜잭션 readOnly 플래그 기반 자동 라우팅 가능</text>
+</svg>

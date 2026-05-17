@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">DataSource Auto-configuration 동작 흐름</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">Spring Boot가 DataSource를 자동 구성하는 단계</text>
+
+  <!-- Step 1 -->
+  <rect x="300" y="96" width="280" height="52" rx="8" fill="#1a1f2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">DataSourceAutoConfiguration 로드</text>
+  <text x="440" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">@ConditionalOnClass(DataSource.class) → true</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="148" x2="440" y2="172" stroke="#444" stroke-width="2"/>
+  <polygon points="440,180 433,168 447,168" fill="#444"/>
+
+  <!-- Step 2: Pool detection -->
+  <rect x="240" y="180" width="400" height="52" rx="8" fill="#1a1f2e" stroke="#e8e8e8" stroke-width="1.5"/>
+  <text x="440" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">커넥션 풀 라이브러리 감지</text>
+  <text x="440" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">클래스패스 우선순위: HikariCP → Tomcat → DBCP2 → Oracle UCP</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="232" x2="440" y2="256" stroke="#444" stroke-width="2"/>
+  <polygon points="440,264 433,252 447,252" fill="#444"/>
+
+  <!-- Step 3: HikariCP (default) -->
+  <rect x="60" y="264" width="220" height="80" rx="8" fill="#0f1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">HikariCP (기본)</text>
+  <text x="170" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">HikariDataSource 생성</text>
+  <text x="170" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">spring.datasource.hikari.*</text>
+  <!-- Arrow from step2 to hikari -->
+  <line x1="340" y1="264" x2="283" y2="264" stroke="#55c555" stroke-width="2"/>
+  <polygon points="275,264 287,258 287,270" fill="#55c555"/>
+
+  <!-- Step 3: Embedded (H2/HSQL) -->
+  <rect x="330" y="264" width="220" height="80" rx="8" fill="#1a1f2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">내장 DB (H2 등)</text>
+  <text x="440" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">URL 미설정 시 자동 감지</text>
+  <text x="440" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">@ConditionalOnEmbeddedDatabaseType</text>
+
+  <!-- Step 3: Custom -->
+  <rect x="600" y="264" width="220" height="80" rx="8" fill="#12100f" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="710" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#ce9178">사용자 정의 DataSource</text>
+  <text x="710" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">@ConditionalOnMissingBean</text>
+  <text x="710" y="328" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ Auto-config 전체 건너뜀</text>
+  <!-- Arrow from step2 to custom -->
+  <line x1="540" y1="264" x2="597" y2="264" stroke="#ce9178" stroke-width="2"/>
+  <polygon points="605,264 593,258 593,270" fill="#ce9178"/>
+
+  <!-- Arrow down from all 3 to JdbcTemplate -->
+  <line x1="170" y1="344" x2="170" y2="390" stroke="#444" stroke-width="1.5"/>
+  <line x1="440" y1="344" x2="440" y2="390" stroke="#444" stroke-width="1.5"/>
+  <line x1="710" y1="344" x2="710" y2="390" stroke="#444" stroke-width="1.5"/>
+  <line x1="170" y1="390" x2="710" y2="390" stroke="#444" stroke-width="1.5"/>
+  <line x1="440" y1="390" x2="440" y2="410" stroke="#444" stroke-width="2"/>
+  <polygon points="440,418 433,406 447,406" fill="#444"/>
+
+  <!-- Step 4: JdbcTemplate / JPA -->
+  <rect x="240" y="418" width="400" height="52" rx="8" fill="#1a1f2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">JdbcTemplate · JPA · Transaction 자동 구성</text>
+  <text x="440" y="460" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">DataSource Bean이 있으면 연쇄적으로 상위 Auto-config가 활성화됨</text>
+</svg>
