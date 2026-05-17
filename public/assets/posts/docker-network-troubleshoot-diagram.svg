@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Docker 네트워크 트러블슈팅 흐름도</text>
+
+  <!-- Step 1 -->
+  <rect x="340" y="70" width="200" height="52" rx="8" fill="#132030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">1. 컨테이너 상태 확인</text>
+  <text x="440" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker ps / docker inspect</text>
+
+  <line x1="440" y1="122" x2="440" y2="148" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Step 2 -->
+  <rect x="340" y="150" width="200" height="52" rx="8" fill="#132030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">2. 네트워크 연결 확인</text>
+  <text x="440" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker network inspect</text>
+
+  <line x1="440" y1="202" x2="440" y2="228" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Step 3: branch -->
+  <rect x="340" y="230" width="200" height="52" rx="8" fill="#132030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">3. DNS 해석 테스트</text>
+  <text x="440" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ping / nslookup</text>
+
+  <!-- Branch arrows from step 3 -->
+  <line x1="340" y1="256" x2="270" y2="256" stroke="#7ec8e3" stroke-width="2"/>
+  <line x1="270" y1="256" x2="270" y2="320" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="230" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">DNS</text>
+  <text x="230" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">실패</text>
+
+  <line x1="540" y1="256" x2="610" y2="256" stroke="#7ec8e3" stroke-width="2"/>
+  <line x1="610" y1="256" x2="610" y2="320" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="660" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">DNS</text>
+  <text x="660" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">성공</text>
+
+  <!-- DNS fail branch -->
+  <rect x="160" y="322" width="220" height="52" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="270" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">4a. 네트워크 재연결</text>
+  <text x="270" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">network connect 재실행</text>
+
+  <!-- DNS success branch -->
+  <rect x="500" y="322" width="220" height="52" rx="8" fill="#0f1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="610" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">4b. 포트 접근 테스트</text>
+  <text x="610" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">curl / nc / telnet</text>
+
+  <!-- Continue from 4b -->
+  <line x1="610" y1="374" x2="610" y2="400" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <rect x="500" y="402" width="220" height="52" rx="8" fill="#0f1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="610" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">5. iptables 확인</text>
+  <text x="610" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">iptables -L -n / --line-numbers</text>
+
+  <!-- continue from 4a -->
+  <line x1="270" y1="374" x2="270" y2="400" stroke="#e05555" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <rect x="160" y="402" width="220" height="52" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="270" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">5. 네임스페이스 진단</text>
+  <text x="270" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">nsenter / ip route</text>
+
+  <!-- Info bar -->
+  <rect x="60" y="460" width="760" height="32" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="440" y="481" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">도구 우선순위: docker inspect → ping/curl → ss → iptables → nsenter (호스트 네트워크 네임스페이스)</text>
+</svg>

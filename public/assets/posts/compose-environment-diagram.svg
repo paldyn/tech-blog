@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">환경 변수 우선순위 체계</text>
+
+  <!-- Priority chain (top = highest priority) -->
+  <!-- Level 1: shell env (highest) -->
+  <rect x="200" y="68" width="480" height="52" rx="8" fill="#0f1820" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="260" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">① 셸 환경 변수 (가장 높음)</text>
+  <text x="260" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">DB_PASSWORD=xxx docker compose up</text>
+  <text x="630" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">Priority 1</text>
+
+  <line x1="440" y1="120" x2="440" y2="142" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Level 2: --env-file -->
+  <rect x="200" y="144" width="480" height="52" rx="8" fill="#111820" stroke="#555" stroke-width="1.5"/>
+  <text x="260" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">② --env-file 옵션</text>
+  <text x="260" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">docker compose --env-file .env.prod up</text>
+  <text x="630" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">Priority 2</text>
+
+  <line x1="440" y1="196" x2="440" y2="218" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Level 3: .env file -->
+  <rect x="200" y="220" width="480" height="52" rx="8" fill="#111820" stroke="#555" stroke-width="1.5"/>
+  <text x="260" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">③ 프로젝트 루트 .env 파일</text>
+  <text x="260" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">compose.yaml 과 같은 위치의 .env</text>
+  <text x="630" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">Priority 3</text>
+
+  <line x1="440" y1="272" x2="440" y2="294" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Level 4: environment in compose -->
+  <rect x="200" y="296" width="480" height="52" rx="8" fill="#111820" stroke="#555" stroke-width="1.5"/>
+  <text x="260" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">④ compose.yaml environment 키</text>
+  <text x="260" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">environment: - NODE_ENV=production</text>
+  <text x="630" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#888" text-anchor="middle">Priority 4</text>
+
+  <line x1="440" y1="348" x2="440" y2="370" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Level 5: Dockerfile ENV (lowest) -->
+  <rect x="200" y="372" width="480" height="52" rx="8" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="260" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">⑤ Dockerfile ENV (가장 낮음)</text>
+  <text x="260" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">이미지 레이어에 포함된 기본값</text>
+  <text x="630" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#555" text-anchor="middle">Priority 5</text>
+
+  <!-- Bottom rule -->
+  <rect x="60" y="440" width="760" height="48" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="440" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">상위 우선순위 값이 하위 값을 덮어씀</text>
+  <text x="440" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">셸 변수 → --env-file → .env → compose environment → Dockerfile ENV</text>
+</svg>

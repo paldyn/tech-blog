@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">-p (publish) vs --expose 비교</text>
+
+  <!-- Left side: -p publish -->
+  <text x="200" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">-p (publish)</text>
+
+  <!-- Internet box -->
+  <rect x="60" y="104" width="120" height="48" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="120" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">인터넷</text>
+  <text x="120" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">외부 클라이언트</text>
+
+  <!-- Host box -->
+  <rect x="60" y="200" width="280" height="120" rx="8" fill="#111820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">호스트 머신</text>
+  <!-- Port box in host -->
+  <rect x="80" y="232" width="100" height="36" rx="6" fill="#1c2a3a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="130" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">0.0.0.0:8080</text>
+  <text x="130" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">호스트 포트</text>
+  <!-- Container box in host -->
+  <rect x="210" y="232" width="110" height="36" rx="6" fill="#1a2814" stroke="#55c555" stroke-width="1"/>
+  <text x="265" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">Container</text>
+  <text x="265" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">:80</text>
+
+  <!-- Arrow Internet -> host port -->
+  <line x1="120" y1="152" x2="120" y2="230" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="128" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">TCP 8080</text>
+
+  <!-- Arrow host port -> container -->
+  <line x1="180" y1="250" x2="208" y2="250" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- iptables DNAT label -->
+  <text x="200" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">iptables DNAT</text>
+  <text x="200" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">외부 → 컨테이너 포트 전달</text>
+
+  <!-- Publish description -->
+  <rect x="60" y="336" width="280" height="64" rx="8" fill="#0f1a10" stroke="#55c555" stroke-width="1"/>
+  <text x="200" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">✓ 외부 접근 가능</text>
+  <text x="200" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">호스트 포트 바인딩 발생</text>
+  <text x="200" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker run -p 8080:80</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="80" x2="440" y2="460" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Right side: --expose -->
+  <text x="660" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7777cc" text-anchor="middle">--expose / EXPOSE</text>
+
+  <!-- Internet box blocked -->
+  <rect x="530" y="104" width="120" height="48" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="590" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">인터넷</text>
+  <text x="590" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">외부 클라이언트</text>
+
+  <!-- Blocked line -->
+  <line x1="590" y1="152" x2="590" y2="190" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="600" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="18" fill="#e05555" font-weight="700">✕</text>
+
+  <!-- Host box (no host port binding) -->
+  <rect x="530" y="200" width="280" height="120" rx="8" fill="#111820" stroke="#555" stroke-width="1"/>
+  <text x="670" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888" text-anchor="middle">호스트 머신</text>
+  <!-- No host port -->
+  <rect x="550" y="232" width="110" height="36" rx="6" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="605" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">호스트 포트</text>
+  <text x="605" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">바인딩 없음</text>
+  <!-- Container A -->
+  <rect x="680" y="232" width="110" height="36" rx="6" fill="#1a1a28" stroke="#7777cc" stroke-width="1"/>
+  <text x="735" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">Container A</text>
+  <text x="735" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">:80 exposed</text>
+
+  <!-- Same network container B -->
+  <rect x="660" y="290" width="130" height="28" rx="6" fill="#141428" stroke="#7777cc" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="725" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">같은 네트워크 컨테이너만</text>
+
+  <!-- Expose description -->
+  <rect x="530" y="336" width="280" height="64" rx="8" fill="#100f1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="670" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">✓ 컨테이너 간 통신만</text>
+  <text x="670" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">메타데이터 역할 (문서화)</text>
+  <text x="670" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker run --expose 80</text>
+
+  <!-- Bottom comparison table -->
+  <rect x="60" y="424" width="760" height="72" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="200" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">-p / --publish</text>
+  <text x="200" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">호스트 포트 실제 바인딩</text>
+  <text x="200" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">런타임 옵션, 외부 공개</text>
+  <line x1="440" y1="430" x2="440" y2="490" stroke="#333" stroke-width="1"/>
+  <text x="660" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">--expose / EXPOSE</text>
+  <text x="660" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">메타데이터만, 바인딩 없음</text>
+  <text x="660" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Dockerfile 선언, 문서화 목적</text>
+</svg>
