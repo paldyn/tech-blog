@@ -6,22 +6,22 @@
   <text x="440" y="70" text-anchor="middle" fill="#888" font-size="13" xml:space="preserve">트랜스포머의 Pre-LN 패턴과 수동 LN 구현</text>
 
   <!-- Code block -->
-  <rect x="60" y="88" width="760" height="240" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <rect x="60" y="88" width="760" height="240" rx="6" fill="#000000" stroke="#3a4a6e"/>
 
-  <text x="76" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">import</tspan> torch, torch.nn <tspan fill="#7ec8e3">as</tspan> nn</text>
+  <text x="76" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3">import</tspan> torch, torch.nn <tspan fill="#7ec8e3">as</tspan> nn</text>
 
-  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># LayerNorm: 마지막 d_model 차원 정규화</tspan></text>
-  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">ln = nn.LayerNorm(<tspan fill="#b5cea8">512</tspan>)</text>
-  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">x = torch.randn(<tspan fill="#b5cea8">4</tspan>, <tspan fill="#b5cea8">128</tspan>, <tspan fill="#b5cea8">512</tspan>)  <tspan fill="#6a8aa0"># (B, T, D)</tspan></text>
-  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">out = ln(x)  <tspan fill="#6a8aa0"># 마지막 512 차원 정규화</tspan></text>
+  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#9aa4b8"># LayerNorm: 마지막 d_model 차원 정규화</tspan></text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">ln = nn.LayerNorm(<tspan fill="#b5cea8">512</tspan>)</text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">x = torch.randn(<tspan fill="#b5cea8">4</tspan>, <tspan fill="#b5cea8">128</tspan>, <tspan fill="#b5cea8">512</tspan>)  <tspan fill="#9aa4b8"># (B, T, D)</tspan></text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">out = ln(x)  <tspan fill="#9aa4b8"># 마지막 512 차원 정규화</tspan></text>
 
-  <text x="76" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#6a8aa0"># Pre-LN 트랜스포머 블록 패턴</tspan></text>
-  <text x="76" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8"><tspan fill="#7ec8e3">class</tspan> <tspan fill="#e8e8e8">TransformerBlock</tspan>(nn.Module):</text>
-  <text x="76" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  <tspan fill="#7ec8e3">def</tspan> <tspan fill="#55c555">forward</tspan>(self, x):</text>
-  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    <tspan fill="#6a8aa0"># Pre-LN: 정규화 → 연산 → 잔차합</tspan></text>
-  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    x = x + self.attn(self.norm1(x))</text>
-  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    x = x + self.ff(self.norm2(x))</text>
-  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    <tspan fill="#7ec8e3">return</tspan> x</text>
+  <text x="76" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#9aa4b8"># Pre-LN 트랜스포머 블록 패턴</tspan></text>
+  <text x="76" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3">class</tspan> <tspan fill="#ffffff">TransformerBlock</tspan>(nn.Module):</text>
+  <text x="76" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3">def</tspan> <tspan fill="#55c555">forward</tspan>(self, x):</text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#9aa4b8"># Pre-LN: 정규화 → 연산 → 잔차합</tspan></text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    x = x + self.attn(self.norm1(x))</text>
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    x = x + self.ff(self.norm2(x))</text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#7ec8e3">return</tspan> x</text>
 
   <!-- Info boxes -->
   <rect x="60" y="345" width="350" height="58" rx="8" fill="#0c1a0c" stroke="#55c555" stroke-width="1.5"/>
@@ -35,5 +35,4 @@
   <text x="645" y="398" text-anchor="middle" fill="#888" font-size="11" xml:space="preserve">LN보다 빠르고 안정적</text>
 
   <!-- Footer -->
-  <text x="440" y="428" text-anchor="middle" fill="#444" font-size="11" xml:space="preserve">PALDYN · AI 완전 정복 시리즈</text>
 </svg>

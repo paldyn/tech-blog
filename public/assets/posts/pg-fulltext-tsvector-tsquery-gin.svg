@@ -7,24 +7,24 @@
 
   <!-- Setup DDL -->
   <text x="75" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">① 컬럼 + GIN 인덱스 생성</text>
-  <rect x="60" y="108" width="760" height="82" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="76" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ALTER TABLE articles ADD COLUMN tsv tsvector</text>
-  <text x="76" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  GENERATED ALWAYS AS (to_tsvector(</text>
-  <text x="76" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">    'simple', coalesce(title,'') || ' ' || coalesce(body,'')</text>
-  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  )) STORED;</text>
-  <text x="430" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 한국어: 'simple' 설정 사용</text>
+  <rect x="60" y="108" width="760" height="82" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="76" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">ALTER TABLE articles ADD COLUMN tsv tsvector</text>
+  <text x="76" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  GENERATED ALWAYS AS (to_tsvector(</text>
+  <text x="76" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">    'simple', coalesce(title,'') || ' ' || coalesce(body,'')</text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  )) STORED;</text>
+  <text x="430" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 한국어: 'simple' 설정 사용</text>
 
   <!-- GIN index -->
   <text x="75" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">② GIN 인덱스 + 검색 + 랭킹 + 하이라이트</text>
-  <rect x="60" y="222" width="760" height="154" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="76" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE INDEX idx_articles_tsv ON articles USING GIN (tsv);</text>
-  <text x="76" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888"/>
-  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT</text>
-  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  title,</text>
-  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  ts_rank(tsv, q)                          AS rank,</text>
-  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  ts_headline('simple', body, q,</text>
-  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">    'MaxWords=20,MinWords=10')             AS snippet</text>
-  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">FROM articles,</text>
-  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">  websearch_to_tsquery('simple', '데이터베이스 성능') AS q(q)</text>
-  <text x="76" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">WHERE tsv @@ q ORDER BY rank DESC LIMIT 20;</text>
+  <rect x="60" y="222" width="760" height="154" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="76" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">CREATE INDEX idx_articles_tsv ON articles USING GIN (tsv);</text>
+  <text x="76" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"/>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">SELECT</text>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  title,</text>
+  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">  ts_rank(tsv, q)                          AS rank,</text>
+  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  ts_headline('simple', body, q,</text>
+  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">    'MaxWords=20,MinWords=10')             AS snippet</text>
+  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">FROM articles,</text>
+  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  websearch_to_tsquery('simple', '데이터베이스 성능') AS q(q)</text>
+  <text x="76" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">WHERE tsv @@ q ORDER BY rank DESC LIMIT 20;</text>
 </svg>

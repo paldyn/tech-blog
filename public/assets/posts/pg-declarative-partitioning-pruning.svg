@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" width="880" height="460">
   <defs>
-    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#7ec8e3"/>
+    <marker id="arr" markerWidth="20" markerHeight="14" refX="18" refY="7" orient="auto">
+      <polygon points="0 0, 20 7, 0 14" fill="#7ec8e3"/>
     </marker>
-    <marker id="arrd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#e05555"/>
+    <marker id="arrd" markerWidth="20" markerHeight="14" refX="18" refY="7" orient="auto">
+      <polygon points="0 0, 20 7, 0 14" fill="#e05555"/>
     </marker>
   </defs>
   <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
@@ -15,20 +15,20 @@
 
   <!-- Pruning query -->
   <text x="75" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">① 파티션 프루닝 (Partition Pruning)</text>
-  <rect x="60" y="108" width="510" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 파티션 키가 WHERE에 포함 → 해당 파티션만 스캔</text>
-  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">SELECT * FROM logs</text>
-  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">WHERE ts BETWEEN</text>
-  <text x="76" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">  '2026-03-01' AND '2026-03-31';</text>
-  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- EXPLAIN: logs_2026_03 만 스캔 (다른 월 파티션 SKIP)</text>
+  <rect x="60" y="108" width="510" height="100" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 파티션 키가 WHERE에 포함 → 해당 파티션만 스캔</text>
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">SELECT * FROM logs</text>
+  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">WHERE ts BETWEEN</text>
+  <text x="76" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  '2026-03-01' AND '2026-03-31';</text>
+  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- EXPLAIN: logs_2026_03 만 스캔 (다른 월 파티션 SKIP)</text>
 
   <!-- Pruning diagram -->
   <text x="610" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">프루닝 효과</text>
   <rect x="600" y="108" width="220" height="100" rx="6" fill="#111" stroke="#55c555" stroke-width="1"/>
   <rect x="620" y="125" width="80" height="22" rx="4" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
-  <text x="660" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">logs_2026_01 ✗</text>
+  <text x="660" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#9aa4b8" text-anchor="middle">logs_2026_01 ✗</text>
   <rect x="620" y="153" width="80" height="22" rx="4" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
-  <text x="660" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#888" text-anchor="middle">logs_2026_02 ✗</text>
+  <text x="660" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#9aa4b8" text-anchor="middle">logs_2026_02 ✗</text>
   <rect x="620" y="181" width="80" height="22" rx="4" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
   <text x="660" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="10" fill="#55c555" text-anchor="middle">logs_2026_03 ✓</text>
   <text x="715" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">SKIP</text>
@@ -37,15 +37,15 @@
 
   <!-- Sliding window -->
   <text x="75" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">② 슬라이딩 윈도우 — 새 파티션 추가 + 오래된 것 DROP</text>
-  <rect x="60" y="242" width="760" height="140" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="76" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 다음 달 파티션 미리 생성 (크론으로 자동화)</text>
-  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">CREATE TABLE logs_2026_06</text>
-  <text x="76" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">  PARTITION OF logs</text>
-  <text x="76" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  FOR VALUES FROM ('2026-06-01') TO ('2026-07-01');</text>
-  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 90일 지난 파티션 즉시 DROP (TRUNCATE보다 빠름 — 파일 삭제)</text>
-  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">DROP TABLE logs_2026_02;   </text>
-  <text x="298" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0">-- 또는 DETACH 후 아카이브</text>
-  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">ALTER TABLE logs DETACH PARTITION logs_2026_01 CONCURRENTLY;</text>
+  <rect x="60" y="242" width="760" height="140" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="76" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 다음 달 파티션 미리 생성 (크론으로 자동화)</text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">CREATE TABLE logs_2026_06</text>
+  <text x="76" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">  PARTITION OF logs</text>
+  <text x="76" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">  FOR VALUES FROM ('2026-06-01') TO ('2026-07-01');</text>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 90일 지난 파티션 즉시 DROP (TRUNCATE보다 빠름 — 파일 삭제)</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">DROP TABLE logs_2026_02;   </text>
+  <text x="298" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 또는 DETACH 후 아카이브</text>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">ALTER TABLE logs DETACH PARTITION logs_2026_01 CONCURRENTLY;</text>
 
   <!-- Index note -->
   <rect x="60" y="402" width="760" height="44" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1"/>

@@ -4,7 +4,7 @@
   <rect x="0" y="60" width="880" height="12" fill="#0d1a2a"/>
   <text x="60" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#ffffff">L1·L2 정규화와 드롭아웃 구현</text>
   <text x="60" y="62" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">가중치 패널티와 뉴런 비활성화로 일반화 향상</text>
-  <line x1="60" y1="82" x2="820" y2="82" stroke="#1e2433" stroke-width="1"/>
+  <line x1="60" y1="82" x2="820" y2="82" stroke="#3a4a6e" stroke-width="1"/>
 
   <!-- L1 L2 formulas -->
   <text x="60" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">L1 vs L2 정규화 비교</text>
@@ -21,12 +21,12 @@
   <text x="80" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">희소 가중치 (많은 w=0) → 특성 선택 효과</text>
 
   <!-- L1 L2 code -->
-  <rect x="60" y="256" width="370" height="138" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># L2: optimizer weight_decay로 간편 구현</text>
-  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">opt = torch.optim.AdamW(model.parameters(), weight_decay=</tspan><tspan fill="#b5cea8">1e-2</tspan><tspan fill="#e8e8e8">)</tspan></text>
-  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0"># L1: 손실에 직접 추가</text>
-  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">l1 = sum(p.abs().sum() </tspan><tspan fill="#7ec8e3">for</tspan><tspan fill="#e8e8e8"> p in model.parameters())</tspan></text>
-  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">loss = loss + </tspan><tspan fill="#b5cea8">1e-4</tspan><tspan fill="#e8e8e8"> * l1</tspan></text>
+  <rect x="60" y="256" width="370" height="138" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># L2: optimizer weight_decay로 간편 구현</text>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">opt = torch.optim.AdamW(model.parameters(), weight_decay=</tspan><tspan fill="#b5cea8">1e-2</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># L1: 손실에 직접 추가</text>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">l1 = sum(p.abs().sum() </tspan><tspan fill="#7ec8e3">for</tspan><tspan fill="#ffffff"> p in model.parameters())</tspan></text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">loss = loss + </tspan><tspan fill="#b5cea8">1e-4</tspan><tspan fill="#ffffff"> * l1</tspan></text>
 
   <!-- RIGHT: Dropout + BN -->
   <text x="460" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">드롭아웃과 배치 정규화</text>
@@ -37,20 +37,20 @@
   <text x="480" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">앙상블 효과: 매번 다른 서브네트워크 학습</text>
   <text x="480" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">완전 연결층: p=0.5, 트랜스포머: p=0.1</text>
 
-  <rect x="460" y="226" width="360" height="132" rx="6" fill="#070b14" stroke="#1e2433"/>
-  <text x="476" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3">import</text>
-  <text x="524" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">torch.nn as nn</text>
-  <text x="476" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">model = nn.Sequential(</text>
-  <text x="476" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    nn.Linear(</tspan><tspan fill="#b5cea8">256, 128</tspan><tspan fill="#e8e8e8">),</tspan></text>
+  <rect x="460" y="226" width="360" height="132" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="476" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">import</text>
+  <text x="524" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">torch.nn as nn</text>
+  <text x="476" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">model = nn.Sequential(</text>
+  <text x="476" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    nn.Linear(</tspan><tspan fill="#b5cea8">256, 128</tspan><tspan fill="#ffffff">),</tspan></text>
 
-  <text x="476" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    nn.BatchNorm1d(</tspan><tspan fill="#b5cea8">128</tspan><tspan fill="#e8e8e8">),</tspan></text>
+  <text x="476" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    nn.BatchNorm1d(</tspan><tspan fill="#b5cea8">128</tspan><tspan fill="#ffffff">),</tspan></text>
 
-  <text x="476" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">    nn.ReLU(),</text>
-  <text x="476" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    nn.Dropout(p=</tspan><tspan fill="#b5cea8">0.5</tspan><tspan fill="#e8e8e8">),</tspan></text>
+  <text x="476" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    nn.ReLU(),</text>
+  <text x="476" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    nn.Dropout(p=</tspan><tspan fill="#b5cea8">0.5</tspan><tspan fill="#ffffff">),</tspan></text>
 
-  <text x="476" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#e8e8e8">    nn.Linear(</tspan><tspan fill="#b5cea8">128, 10</tspan><tspan fill="#e8e8e8">)</tspan></text>
+  <text x="476" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    nn.Linear(</tspan><tspan fill="#b5cea8">128, 10</tspan><tspan fill="#ffffff">)</tspan></text>
 
-  <text x="476" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">)</text>
+  <text x="476" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
 
   <!-- Bottom: training vs eval mode -->
   <rect x="60" y="368" width="760" height="82" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1"/>
