@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">vLLM 핵심 기술: PagedAttention</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">OS 가상 메모리 개념을 KV 캐시에 적용한 혁신</text>
+
+  <!-- Before: Static KV Cache -->
+  <rect x="60" y="96" width="360" height="200" rx="6" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">기존: 정적 KV 캐시</text>
+
+  <!-- Static blocks -->
+  <rect x="80" y="136" width="320" height="24" rx="3" fill="#2a0a0a"/>
+  <text x="240" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">Request A: max_len=2048 미리 예약 (실사용 512)</text>
+  <rect x="80" y="164" width="320" height="24" rx="3" fill="#2a0a0a"/>
+  <text x="240" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">Request B: max_len=2048 미리 예약 (실사용 256)</text>
+  <rect x="80" y="192" width="320" height="24" rx="3" fill="#333" stroke="#444"/>
+  <text x="240" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">낭비된 메모리 (내부 단편화)</text>
+  <rect x="80" y="220" width="320" height="24" rx="3" fill="#333" stroke="#444"/>
+  <text x="240" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">낭비된 메모리 (외부 단편화)</text>
+
+  <text x="240" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">평균 60~80% 메모리 낭비</text>
+
+  <!-- After: PagedAttention -->
+  <rect x="460" y="96" width="360" height="200" rx="6" fill="#111" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">PagedAttention: 블록 단위</text>
+
+  <!-- Physical blocks -->
+  <rect x="480" y="136" width="72" height="24" rx="3" fill="#1a3a1a" stroke="#55c555"/>
+  <text x="516" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555" text-anchor="middle">A·블록1</text>
+  <rect x="556" y="136" width="72" height="24" rx="3" fill="#151c24" stroke="#7ec8e3"/>
+  <text x="592" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3" text-anchor="middle">B·블록1</text>
+  <rect x="632" y="136" width="72" height="24" rx="3" fill="#1a3a1a" stroke="#55c555"/>
+  <text x="668" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555" text-anchor="middle">A·블록2</text>
+  <rect x="708" y="136" width="72" height="24" rx="3" fill="#151c24" stroke="#7ec8e3"/>
+  <text x="744" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3" text-anchor="middle">B·블록2</text>
+
+  <rect x="480" y="164" width="72" height="24" rx="3" fill="#1a3a1a" stroke="#55c555"/>
+  <text x="516" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555" text-anchor="middle">A·블록3</text>
+  <rect x="556" y="164" width="72" height="24" rx="3" fill="#20181a" stroke="#7777cc"/>
+  <text x="592" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">C·블록1</text>
+  <rect x="632" y="164" width="72" height="24" rx="3" fill="#151c24" stroke="#7ec8e3"/>
+  <text x="668" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3" text-anchor="middle">B·블록3</text>
+  <rect x="708" y="164" width="72" height="24" rx="3" fill="#20181a" stroke="#7777cc"/>
+  <text x="744" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">C·블록2</text>
+
+  <rect x="480" y="192" width="72" height="24" rx="3" fill="#1a1020" stroke="#e05555" stroke-dasharray="2,2"/>
+  <text x="516" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555" text-anchor="middle">빈 블록</text>
+  <rect x="556" y="192" width="72" height="24" rx="3" fill="#1a1020" stroke="#e05555" stroke-dasharray="2,2"/>
+  <text x="592" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555" text-anchor="middle">빈 블록</text>
+
+  <text x="640" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">낭비 거의 없음 → 배치 2~4× 증가</text>
+
+  <!-- Code block -->
+  <rect x="60" y="316" width="760" height="100" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># vLLM 서버 실행 (OpenAI 호환 API)</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">python -m vllm.entrypoints.openai.api_server \</text>
+  <text x="76" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  --model meta-llama/Llama-3.1-8B-Instruct \</text>
+  <text x="76" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  --quantization awq \</text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">  --gpu-memory-utilization 0.90 --port 8000</text>
+</svg>

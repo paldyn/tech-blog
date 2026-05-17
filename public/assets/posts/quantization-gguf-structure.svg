@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">GGUF 파일 구조</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">llama.cpp가 읽는 바이너리 포맷의 내부 레이아웃</text>
+
+  <!-- File layout left column -->
+  <!-- Header -->
+  <rect x="60" y="96" width="280" height="44" rx="6" fill="#1a2433" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">헤더 (고정 24 bytes)</text>
+  <text x="200" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">magic "GGUF" · version · tensor_count · kv_count</text>
+
+  <!-- Metadata KV -->
+  <rect x="60" y="148" width="280" height="44" rx="6" fill="#1a2420" stroke="#55c555" stroke-width="1.5"/>
+  <text x="200" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">메타데이터 KV 쌍</text>
+  <text x="200" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">모델 이름 · 아키텍처 · 컨텍스트 길이 · 토크나이저</text>
+
+  <!-- Tensor Info -->
+  <rect x="60" y="200" width="280" height="44" rx="6" fill="#20181a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="200" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">텐서 정보 배열</text>
+  <text x="200" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">name · n_dims · shape · quant_type · offset</text>
+
+  <!-- Padding -->
+  <rect x="60" y="252" width="280" height="28" rx="6" fill="#151515" stroke="#333" stroke-width="1"/>
+  <text x="200" y="271" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">페이지 정렬 패딩 (ALIGNMENT 단위)</text>
+
+  <!-- Tensor Data -->
+  <rect x="60" y="288" width="280" height="80" rx="6" fill="#1a1520" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">텐서 데이터 (대부분의 용량)</text>
+  <text x="200" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">양자화된 가중치 블록</text>
+  <text x="200" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">mmap으로 직접 접근 가능 (zero-copy)</text>
+
+  <!-- Arrow down -->
+  <line x1="200" y1="140" x2="200" y2="148" stroke="#444" stroke-width="1.5"/>
+  <line x1="200" y1="192" x2="200" y2="200" stroke="#444" stroke-width="1.5"/>
+  <line x1="200" y1="244" x2="200" y2="252" stroke="#444" stroke-width="1.5"/>
+  <line x1="200" y1="280" x2="200" y2="288" stroke="#444" stroke-width="1.5"/>
+
+  <!-- Right column: code block -->
+  <rect x="380" y="96" width="460" height="272" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="396" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># Python으로 GGUF 메타데이터 읽기</text>
+  <text x="396" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">from</text>
+  <text x="432" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> gguf </text>
+  <text x="476" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">import</text>
+  <text x="518" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> GGUFReader</text>
+  <text x="396" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> </text>
+  <text x="396" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">reader = GGUFReader(</text>
+  <text x="528" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">"model.gguf"</text>
+  <text x="612" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+  <text x="396" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 메타데이터 순회</text>
+  <text x="396" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">for</text>
+  <text x="420" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> field </text>
+  <text x="462" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">in</text>
+  <text x="480" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> reader.fields.values():</text>
+  <text x="396" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    print(field.name, field.parts)</text>
+  <text x="396" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 텐서 목록</text>
+  <text x="396" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">for</text>
+  <text x="420" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> tensor </text>
+  <text x="468" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">in</text>
+  <text x="486" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> reader.tensors:</text>
+  <text x="396" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    print(tensor.name, tensor.shape,</text>
+  <text x="396" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">          tensor.tensor_type)</text>
+  <text x="396" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># → blk.0.attn_q: [4096,4096] Q4_K</text>
+  <text x="396" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> </text>
+
+  <!-- Bottom: key facts -->
+  <rect x="60" y="395" width="760" height="80" rx="6" fill="#111" stroke="#222"/>
+  <text x="80" y="419" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">장점</text>
+  <text x="80" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">mmap 제로카피 로드 · 단일 파일 배포 · 풍부한 메타데이터</text>
+  <text x="80" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">토크나이저 내장 · llama.cpp·Ollama·LM Studio 호환</text>
+
+  <text x="430" y="419" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">vs 기존 포맷</text>
+  <text x="430" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">GGML(구형): 메타데이터 없음 · 파편화</text>
+  <text x="430" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SafeTensors: 훈련용 · 양자화 정보 없음</text>
+</svg>

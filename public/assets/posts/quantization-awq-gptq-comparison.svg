@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">AWQ vs GPTQ 알고리즘 비교</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">두 INT4 양자화 방법의 핵심 아이디어와 동작 방식</text>
+
+  <!-- AWQ column -->
+  <rect x="60" y="96" width="360" height="42" rx="6" fill="#1a2433" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="240" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">AWQ</text>
+  <text x="240" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Activation-aware Weight Quantization</text>
+
+  <!-- AWQ steps -->
+  <rect x="60" y="148" width="360" height="36" rx="4" fill="#111"/>
+  <text x="80" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">1. 활성화 중요도 분석</text>
+  <text x="80" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">보정 데이터로 각 가중치 채널의 활성화 크기 측정</text>
+
+  <rect x="60" y="192" width="360" height="36" rx="4" fill="#111"/>
+  <text x="80" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">2. 중요 채널 보호 (scale)</text>
+  <text x="80" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">활성화 큰 채널 → scale 값 키워 가중치를 "작게" 만듦</text>
+
+  <rect x="60" y="236" width="360" height="36" rx="4" fill="#111"/>
+  <text x="80" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">3. 균일 INT4 양자화</text>
+  <text x="80" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">scale 보정 후 일반 INT4 적용. 재구성 오차 최소화</text>
+
+  <rect x="60" y="280" width="360" height="50" rx="4" fill="#0f1a0f"/>
+  <text x="80" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">✓ 보정 시간 짧음 (수 분)</text>
+  <text x="80" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">✓ 빠른 추론 (Efficient GEMM 커널 지원)</text>
+  <text x="80" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">△ 활성화 분포 가정에 의존</text>
+
+  <!-- GPTQ column -->
+  <rect x="460" y="96" width="360" height="42" rx="6" fill="#20181a" stroke="#7777cc" stroke-width="2"/>
+  <text x="640" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#7777cc" text-anchor="middle">GPTQ</text>
+  <text x="640" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Generative Pre-Training Quantization</text>
+
+  <!-- GPTQ steps -->
+  <rect x="460" y="148" width="360" height="36" rx="4" fill="#111"/>
+  <text x="480" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">1. Hessian 행렬 계산</text>
+  <text x="480" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">입력 X의 2차 정보(XᵀX)로 가중치 중요도 행렬 계산</text>
+
+  <rect x="460" y="192" width="360" height="36" rx="4" fill="#111"/>
+  <text x="480" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">2. OBC (Optimal Brain Compression)</text>
+  <text x="480" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">가중치를 열 단위로 양자화 + 나머지 열에 오차 보상</text>
+
+  <rect x="460" y="236" width="360" height="36" rx="4" fill="#111"/>
+  <text x="480" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">3. 그룹 양자화</text>
+  <text x="480" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">group_size=128로 묶어 독립적 scale·zero 계산</text>
+
+  <rect x="460" y="280" width="360" height="50" rx="4" fill="#1a1520"/>
+  <text x="480" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">✓ 수학적으로 정밀한 오차 최소화</text>
+  <text x="480" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">✓ 다양한 그룹 크기 지원</text>
+  <text x="480" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">△ 보정 시간 길음 (수십 분~수 시간)</text>
+
+  <!-- Center divider -->
+  <line x1="440" y1="96" x2="440" y2="342" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="440" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444" text-anchor="middle">vs</text>
+
+  <!-- Code block: AWQ loading -->
+  <rect x="60" y="362" width="760" height="108" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># AutoAWQ로 INT4 양자화 모델 로드</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">from</text>
+  <text x="112" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> awq </text>
+  <text x="148" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">import</text>
+  <text x="196" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> AutoAWQForCausalLM</text>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">model = AutoAWQForCausalLM.from_quantized(</text>
+  <text x="76" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">    "TheBloke/Llama-2-7B-AWQ"</text>
+  <text x="76" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">                             ,</text>
+  <text x="76" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    fuse_layers=</text>
+  <text x="172" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">True</text>
+  <text x="196" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">,  </text>
+  <text x="220" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">trust_remote_code=True</text>
+  <text x="76" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+</svg>

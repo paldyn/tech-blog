@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">지식 증류 (Knowledge Distillation)</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">Teacher의 Soft Label이 Student에게 풍부한 정보를 전달한다</text>
+
+  <!-- Teacher box -->
+  <rect x="60" y="100" width="220" height="200" rx="8" fill="#151c24" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="170" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">Teacher Model</text>
+  <text x="170" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">70B LLaMA / GPT-4</text>
+  <!-- Teacher layers visual -->
+  <rect x="90" y="166" width="160" height="12" rx="3" fill="#1e3a5f"/>
+  <rect x="90" y="184" width="160" height="12" rx="3" fill="#1e3a5f"/>
+  <rect x="90" y="202" width="160" height="12" rx="3" fill="#1e3a5f"/>
+  <rect x="90" y="220" width="160" height="12" rx="3" fill="#1e3a5f"/>
+  <text x="170" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">대형 · 고성능</text>
+  <text x="170" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">많은 자원 필요</text>
+  <text x="170" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">훈련 중 동결(frozen)</text>
+
+  <!-- Arrow: Teacher → Soft Logits -->
+  <line x1="280" y1="200" x2="330" y2="200" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="330,194 342,200 330,206" fill="#7ec8e3"/>
+
+  <!-- Soft Logit box -->
+  <rect x="342" y="136" width="196" height="128" rx="6" fill="#0f1620" stroke="#7ec8e3" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="440" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Soft Logits (T &gt; 1)</text>
+  <text x="440" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">"고양이" 0.70</text>
+  <text x="440" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">"강아지" 0.20</text>
+  <text x="440" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">"동물" 0.08</text>
+  <text x="440" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">"...기타" 0.02</text>
+  <text x="440" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">클래스 간 유사도 정보 포함</text>
+
+  <!-- Arrow: Soft Logits → Student -->
+  <line x1="538" y1="200" x2="588" y2="200" stroke="#55c555" stroke-width="2"/>
+  <polygon points="588,194 600,200 588,206" fill="#55c555"/>
+
+  <!-- Student box -->
+  <rect x="600" y="100" width="220" height="200" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="2"/>
+  <text x="710" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="700" fill="#55c555" text-anchor="middle">Student Model</text>
+  <text x="710" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">7B LLaMA / DistilBERT</text>
+  <!-- Student layers visual (fewer) -->
+  <rect x="630" y="166" width="160" height="12" rx="3" fill="#1a3a1a"/>
+  <rect x="630" y="188" width="160" height="12" rx="3" fill="#1a3a1a"/>
+  <rect x="630" y="210" width="160" height="12" rx="3" fill="#1a3a1a"/>
+  <text x="710" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">소형 · 경량</text>
+  <text x="710" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">빠른 추론</text>
+  <text x="710" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">Teacher 지식 흡수</text>
+
+  <!-- Loss formula -->
+  <rect x="60" y="320" width="760" height="130" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># 증류 손실 = (1-α) × CE(hard) + α × KL(soft, T)</text>
+  <text x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">import</text>
+  <text x="124" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> torch.nn.functional </text>
+  <text x="276" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">as</text>
+  <text x="296" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> F</text>
+  <text x="76" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">def</text>
+  <text x="104" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> distill_loss(s_logits, t_logits, labels, T=</text>
+  <text x="444" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">4.0</text>
+  <text x="468" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, α=</text>
+  <text x="504" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0.5</text>
+  <text x="528" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">):</text>
+  <text x="76" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    hard = F.cross_entropy(s_logits, labels)</text>
+  <text x="76" y="416" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">    soft = F.kl_div(</text>
+  <text x="196" y="416" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">F.log_softmax(s_logits/T, </text>
+  <text x="424" y="416" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">dim=-1</text>
+  <text x="484" y="416" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">),</text>
+  <text x="76" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">               F.softmax(t_logits/T, </text>
+  <text x="316" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">dim=-1</text>
+  <text x="376" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)) * T**</text>
+  <text x="456" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">2</text>
+  <text x="76" y="452" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">    return</text>
+  <text x="136" y="452" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> (</text>
+  <text x="152" y="452" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="164" y="452" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">-α)*hard + α*soft</text>
+</svg>

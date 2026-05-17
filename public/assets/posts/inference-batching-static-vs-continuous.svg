@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">정적 배치 vs Continuous Batching</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">타임라인으로 보는 GPU 활용률 차이</text>
+
+  <!-- Static batching timeline -->
+  <text x="80" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">정적 배치 (Static Batching)</text>
+
+  <!-- Time axis -->
+  <line x1="80" y1="200" x2="820" y2="200" stroke="#333" stroke-width="1"/>
+  <text x="80" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">t=0</text>
+  <text x="820" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444" text-anchor="end">t=T</text>
+
+  <!-- Batch 1: slots 1-4 -->
+  <text x="80" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Req A (긴)</text>
+  <rect x="120" y="118" width="360" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Req B (짧)</text>
+  <rect x="120" y="138" width="100" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <rect x="220" y="138" width="260" height="16" rx="2" fill="#222" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="270" y="151" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#444">패딩(낭비)</text>
+  <text x="80" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Req C (중간)</text>
+  <rect x="120" y="158" width="200" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <rect x="320" y="158" width="160" height="16" rx="2" fill="#222" stroke="#333" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="360" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#444">패딩</text>
+  <text x="80" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Req D (긴)</text>
+  <rect x="120" y="178" width="360" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+
+  <!-- Next batch waits -->
+  <text x="490" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Req E 대기 중...</text>
+  <rect x="490" y="138" width="180" height="16" rx="2" fill="#111" stroke="#e05555" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="490" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Req F 대기 중...</text>
+  <rect x="490" y="178" width="180" height="16" rx="2" fill="#111" stroke="#e05555" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Continuous batching timeline -->
+  <text x="80" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">Continuous Batching (Iteration-level)</text>
+
+  <line x1="80" y1="340" x2="820" y2="340" stroke="#333" stroke-width="1"/>
+  <text x="80" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">t=0</text>
+  <text x="820" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444" text-anchor="end">t=T</text>
+
+  <!-- Slot 1: A 전체 -->
+  <text x="80" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">슬롯 1</text>
+  <rect x="120" y="258" width="360" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="156" y="271" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">A (완료)</text>
+  <rect x="484" y="258" width="240" height="16" rx="2" fill="#151c24" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="536" y="271" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">E (즉시 투입)</text>
+
+  <!-- Slot 2: B 완료 후 F -->
+  <text x="80" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">슬롯 2</text>
+  <rect x="120" y="278" width="100" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="136" y="291" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">B(완)</text>
+  <rect x="224" y="278" width="240" height="16" rx="2" fill="#20181a" stroke="#7777cc" stroke-width="1"/>
+  <text x="280" y="291" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">F (즉시 투입)</text>
+  <rect x="468" y="278" width="256" height="16" rx="2" fill="#1a1020" stroke="#e05555" stroke-width="1"/>
+  <text x="528" y="291" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555">G (즉시 투입)</text>
+
+  <!-- Slot 3 -->
+  <text x="80" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">슬롯 3</text>
+  <rect x="120" y="298" width="200" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="176" y="311" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">C (완료)</text>
+  <rect x="324" y="298" width="400" height="16" rx="2" fill="#0f1620" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="480" y="311" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">H (즉시 투입)</text>
+
+  <!-- Slot 4 -->
+  <text x="80" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">슬롯 4</text>
+  <rect x="120" y="318" width="360" height="16" rx="2" fill="#1a3a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="256" y="331" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">D (완료)</text>
+
+  <!-- Result summary -->
+  <rect x="60" y="375" width="760" height="82" rx="6" fill="#111" stroke="#222"/>
+  <text x="80" y="399" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">처리량 비교</text>
+  <text x="80" y="419" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">정적 배치: 가장 긴 요청 완료까지 모든 슬롯이 기다림 → GPU 유휴 발생 · 짧은 요청도 지연</text>
+  <text x="80" y="439" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Continuous: 완료된 슬롯에 즉시 새 요청 투입 → GPU 낭비 없음 · 짧은 요청 지연 최소화</text>
+  <text x="80" y="455" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">실측 효과: 동일 GPU에서 처리량 3~10배 향상 (요청 분포에 따라 다름)</text>
+</svg>

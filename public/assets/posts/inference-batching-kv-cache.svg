@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">KV 캐시: LLM 추론의 핵심 자원</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">왜 KV 캐시가 크고, 어떻게 최적화하는가</text>
+
+  <!-- KV cache size formula -->
+  <rect x="60" y="90" width="760" height="70" rx="6" fill="#111" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="80" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">KV 캐시 크기 계산</text>
+  <text x="80" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">KV Cache = 2 × n_layers × n_heads × head_dim × seq_len × batch_size × dtype_bytes</text>
+  <text x="560" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&nbsp; (K·V 각각)</text>
+
+  <!-- Example calculation -->
+  <rect x="60" y="178" width="360" height="130" rx="6" fill="#111" stroke="#222"/>
+  <text x="80" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">Llama-3.1-8B 예시</text>
+  <text x="80" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">n_layers=32, n_kv_heads=8</text>
+  <text x="80" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">head_dim=128, BF16(2 bytes)</text>
+  <text x="80" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">seq_len=8192, batch=1</text>
+  <text x="80" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">= 2×32×8×128×8192×1×2 = 1.07 GB</text>
+  <text x="80" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">batch=32 → 34 GB (모델 무게보다 크다)</text>
+
+  <!-- Optimization methods -->
+  <rect x="460" y="178" width="360" height="130" rx="6" fill="#111" stroke="#222"/>
+  <text x="480" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">KV 캐시 최적화 기법</text>
+  <text x="480" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">GQA (Grouped Query Attention)</text>
+  <text x="480" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">KV 헤드 수 줄이기: Llama-3는 GQA 적용</text>
+  <text x="480" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">KV Cache Quantization</text>
+  <text x="480" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">INT8/FP8 양자화: 크기 50~75% 절감</text>
+  <text x="480" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">PagedAttention: 동적 블록 할당 (앞 글 참조)</text>
+
+  <!-- Code block -->
+  <rect x="60" y="326" width="760" height="72" rx="6" fill="#070b14" stroke="#1e2433"/>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># vLLM에서 KV 캐시 최적화 옵션</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">llm = LLM(model=</text>
+  <text x="196" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">"..."</text>
+  <text x="216" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, kv_cache_dtype=</text>
+  <text x="364" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">"fp8"</text>
+  <text x="400" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">,  </text>
+  <text x="424" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve"># FP8로 절반 절감</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">            gpu_memory_utilization=</text>
+  <text x="316" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">0.95</text>
+  <text x="352" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">, max_num_seqs=</text>
+  <text x="468" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#b5cea8" xml:space="preserve">512</text>
+  <text x="492" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">)</text>
+</svg>
