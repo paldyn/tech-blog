@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">안전한 데이터 출력 패턴 비교</text>
+
+  <!-- Bad -->
+  <rect x="60" y="62" width="360" height="290" rx="6" fill="#070b14" stroke="#e05555"/>
+  <text x="240" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">위험 패턴</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// 서버 HTML을 innerHTML로 직접 삽입</text>
+  <text x="76" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">div.innerHTML = serverData; </text><text x="76" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// ← XSS!</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// eval로 서버 스크립트 실행</text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">eval(serverResponse);</text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">// ← 임의 코드 실행!</text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// URL 파라미터를 검증 없이 표시</text>
+  <text x="76" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">var</text><text x="104" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> q = nexacro.getQueryParam(</text><text x="316" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">"q"</text><text x="340" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">WebBrowser00.execScript(</text>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">  "show('" + q + "')"</text><text x="226" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve"> // ← XSS!</text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">);</text>
+
+  <!-- Good -->
+  <rect x="460" y="62" width="360" height="290" rx="6" fill="#070b14" stroke="#55c555"/>
+  <text x="640" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">안전 패턴</text>
+  <text x="476" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// textContent 사용 (이스케이프 자동)</text>
+  <text x="476" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">div.textContent = serverData;</text>
+  <text x="476" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// ← 안전</text>
+  <text x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// JSON.parse 사용</text>
+  <text x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">var</text><text x="504" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> data = JSON.parse(serverResponse);</text>
+  <text x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">// ← 안전</text>
+  <text x="476" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#6a8aa0" xml:space="preserve">// JSON.stringify로 직렬화 후 전달</text>
+  <text x="476" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">var</text><text x="504" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve"> safe = JSON.stringify(q);</text>
+  <text x="476" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8" xml:space="preserve">WebBrowser00.execScript(</text>
+  <text x="476" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">  "show(" + safe + ")"</text>
+  <text x="476" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">); // ← 안전</text>
+</svg>

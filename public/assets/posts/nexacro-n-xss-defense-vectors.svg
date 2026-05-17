@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Nexacro N XSS 취약점 벡터와 방어</text>
+
+  <!-- Vector 1: WebBrowser -->
+  <rect x="60" y="72" width="760" height="76" rx="8" fill="#2a1a1a" stroke="#e05555"/>
+  <text x="130" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">① WebBrowser 컴포넌트</text>
+  <text x="130" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서버 데이터를 execScript()로 HTML에 직접 삽입 시 스크립트 인젝션 위험</text>
+  <text x="130" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">→ JSON.stringify()로 직렬화 필수. HTML 문자열을 execScript에 삽입 금지</text>
+
+  <!-- Vector 2: Static/Edit -->
+  <rect x="60" y="164" width="760" height="76" rx="8" fill="#2a1a1a" stroke="#e05555"/>
+  <text x="130" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">② Static / Edit 텍스트 표시</text>
+  <text x="130" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서버 값을 Static.set_text()로 표시할 때 Nexacro는 HTML 파싱 안 함 → 직접 XSS 없음</text>
+  <text x="130" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">→ 단, WebBrowser에 innerHTML로 넣으면 위험. innerText/textContent 사용</text>
+
+  <!-- Vector 3: eval/dynamic script -->
+  <rect x="60" y="256" width="760" height="76" rx="8" fill="#2a1a1a" stroke="#e05555"/>
+  <text x="130" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">③ eval() / Dynamic Script 실행</text>
+  <text x="130" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서버에서 받은 문자열을 eval()로 실행하면 임의 코드 실행 가능</text>
+  <text x="130" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">→ eval() 사용 금지. JSON 파싱은 JSON.parse() 사용</text>
+
+  <!-- Defense summary -->
+  <rect x="60" y="348" width="760" height="100" rx="8" fill="#1a2430" stroke="#7ec8e3"/>
+  <text x="440" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">서버 측 방어 (필수)</text>
+  <text x="130" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• 모든 응답 데이터를 HTML 이스케이프 처리 (OWASP Java Encoder 등)</text>
+  <text x="130" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• Content-Security-Policy 헤더 설정 (script-src 제한)</text>
+  <text x="130" y="436" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• X-XSS-Protection, X-Content-Type-Options 헤더 적용</text>
+</svg>
