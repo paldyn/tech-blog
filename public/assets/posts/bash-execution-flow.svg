@@ -1,0 +1,60 @@
+<svg width="880" height="420" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">./script.sh 실행 시 커널 처리 흐름</text>
+
+  <!-- Defs -->
+  <defs>
+    <marker id="earr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1 -->
+  <rect x="60" y="80" width="160" height="52" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="140" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">① execve 호출</text>
+  <text x="140" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">./script.sh 실행 요청</text>
+
+  <line x1="220" y1="106" x2="270" y2="106" stroke="#7ec8e3" stroke-width="2" marker-end="url(#earr)"/>
+
+  <!-- Step 2 -->
+  <rect x="270" y="80" width="160" height="52" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="350" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">② 매직바이트 확인</text>
+  <text x="350" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">커널이 #! 감지</text>
+
+  <line x1="430" y1="106" x2="480" y2="106" stroke="#7ec8e3" stroke-width="2" marker-end="url(#earr)"/>
+
+  <!-- Step 3 -->
+  <rect x="480" y="80" width="160" height="52" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="560" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">③ 인터프리터 실행</text>
+  <text x="560" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">/usr/bin/env bash 실행</text>
+
+  <line x1="640" y1="106" x2="690" y2="106" stroke="#7ec8e3" stroke-width="2" marker-end="url(#earr)"/>
+
+  <!-- Step 4 -->
+  <rect x="690" y="80" width="130" height="52" rx="8" fill="#071407" stroke="#55c555" stroke-width="2"/>
+  <text x="755" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">④ 스크립트 실행</text>
+  <text x="755" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">bash가 파일 해석</text>
+
+  <!-- Code example: typical script structure -->
+  <text x="440" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8e8e8">Bash 스크립트 표준 구조</text>
+
+  <rect x="60" y="186" width="760" height="196" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" font-weight="600">#!/usr/bin/env bash</text>
+  <text x="76" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># strict mode: 오류 즉시 종료, 미정의 변수 오류, 파이프 오류 전파</text>
+  <text x="76" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">set</text>
+  <text x="118" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> -euo pipefail</text>
+  <text x="76" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 스크립트 위치 기준 상대 경로 사용</text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">SCRIPT_DIR</text>
+  <text x="186" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">=$( cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &amp;&amp; pwd )</text>
+  <text x="76" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 정리 함수 등록 (종료 시 자동 호출)</text>
+  <text x="76" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">trap</text>
+  <text x="116" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> 'echo "종료됨"; rm -f /tmp/mylock' EXIT</text>
+  <text x="76" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 실행권한 부여: chmod +x script.sh</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># shellcheck로 정적 검사: shellcheck script.sh</text>
+
+  <!-- Note -->
+  <text x="440" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">셔뱅이 없으면 현재 셸(보통 /bin/sh)로 실행 — bash 전용 문법이 동작하지 않을 수 있음</text>
+</svg>

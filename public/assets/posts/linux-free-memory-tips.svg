@@ -1,0 +1,42 @@
+<svg width="880" height="380" viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">메모리 부족 신호와 대응</text>
+
+  <!-- 2 columns -->
+  <!-- Left: warning signs -->
+  <rect x="60" y="72" width="370" height="270" rx="10" fill="#0e0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555">위험 신호</text>
+
+  <rect x="80" y="114" width="330" height="56" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">available: <tspan fill="#e05555">500M</tspan>  (총 16G의 3%)</text>
+  <text x="96" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">Swap used: <tspan fill="#e05555">1.5G</tspan>  (스와핑 중)</text>
+  <text x="96" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># vmstat: si/so > 0 지속</text>
+
+  <text x="80" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• available이 총 RAM의 5% 미만</text>
+  <text x="80" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• Swap used가 0이 아니면 스와핑 중</text>
+  <text x="80" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• OOM Killer가 dmesg에 출력됨</text>
+  <text x="80" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• buff/cache가 급감 (캐시 고갈)</text>
+  <text x="80" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• 응답 속도 저하 + 페이지 폴트 급증</text>
+  <text x="80" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• slab 메모리(dentry, inode) 과다 점유</text>
+  <text x="80" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">(vmstat -m 또는 /proc/slabinfo 확인)</text>
+
+  <!-- Right: actions -->
+  <rect x="450" y="72" width="370" height="270" rx="10" fill="#071407" stroke="#55c555" stroke-width="1.5"/>
+  <text x="635" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">대응 방법</text>
+
+  <rect x="470" y="114" width="330" height="74" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="486" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># 메모리 대량 소비 프로세스</text>
+  <text x="486" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">ps aux --sort=-%mem | head -10</text>
+  <text x="486" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># slab 캐시 강제 해제</text>
+  <text x="486" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">echo 3 &gt; /proc/sys/vm/drop_caches</text>
+
+  <text x="470" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• /proc/&lt;PID&gt;/smaps로 RSS 추적</text>
+  <text x="470" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• pmap -x PID로 메모리 맵 상세 확인</text>
+  <text x="470" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• vm.overcommit_memory 정책 검토</text>
+  <text x="470" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• cgroup memory.limit_in_bytes 설정</text>
+  <text x="470" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• ZRAM(압축 스왑)으로 메모리 확장</text>
+  <text x="470" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">drop_caches는 임시방편,</text>
+  <text x="470" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">근본 원인을 반드시 찾아야 함</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg width="880" height="380" viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">perf → FlameGraph 생성 흐름</text>
+
+  <!-- Defs -->
+  <defs>
+    <marker id="farr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Step boxes connected by arrows -->
+  <!-- Step 1: perf record -->
+  <rect x="60" y="84" width="180" height="60" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="150" y="108" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">perf record</text>
+  <text x="150" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">-F 99 -g --call-graph</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="240" y1="114" x2="290" y2="114" stroke="#7ec8e3" stroke-width="2" marker-end="url(#farr)"/>
+  <text x="265" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">perf.data</text>
+
+  <!-- Step 2: perf script -->
+  <rect x="290" y="84" width="160" height="60" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="370" y="108" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#7ec8e3">perf script</text>
+  <text x="370" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">스택 트레이스 출력</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="450" y1="114" x2="500" y2="114" stroke="#7ec8e3" stroke-width="2" marker-end="url(#farr)"/>
+  <text x="475" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">text</text>
+
+  <!-- Step 3: stackcollapse-perf.pl -->
+  <rect x="500" y="84" width="180" height="60" rx="8" fill="#071407" stroke="#55c555" stroke-width="2"/>
+  <text x="590" y="104" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" font-weight="600" fill="#55c555">stackcollapse</text>
+  <text x="590" y="120" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" font-weight="600" fill="#55c555">-perf.pl</text>
+  <text x="590" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">스택 접기</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="680" y1="114" x2="730" y2="114" stroke="#55c555" stroke-width="2" marker-end="url(#farr)"/>
+  <text x="705" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">folded</text>
+
+  <!-- Step 4: flamegraph.pl -->
+  <rect x="730" y="84" width="90" height="60" rx="8" fill="#150808" stroke="#e05555" stroke-width="2"/>
+  <text x="775" y="108" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" font-weight="600" fill="#e05555">flamegraph</text>
+  <text x="775" y="124" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" font-weight="600" fill="#e05555">.pl</text>
+  <text x="775" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">SVG 생성</text>
+
+  <!-- Full command pipeline -->
+  <text x="440" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">전체 파이프라인 명령</text>
+  <rect x="60" y="200" width="760" height="76" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># FlameGraph 리포지토리 클론</text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">git clone https://github.com/brendangregg/FlameGraph</text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># 한 줄로 생성</text>
+  <text x="76" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl &gt; flame.svg</text>
+
+  <!-- perf stat example -->
+  <text x="440" y="314" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">perf record 옵션</text>
+  <rect x="60" y="328" width="760" height="36" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># -F: 샘플링 주파수(Hz)  -g: 콜그래프  -p: PID  -a: 시스템 전체  --call-graph=dwarf: DWARF 언와인드</text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">perf record -F 99 -a -g --call-graph=dwarf sleep 30</text>
+</svg>

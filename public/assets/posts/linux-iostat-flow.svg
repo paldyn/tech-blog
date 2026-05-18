@@ -1,0 +1,76 @@
+<svg width="880" height="400" viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">I/O 성능 진단 흐름</text>
+
+  <!-- Defs -->
+  <defs>
+    <marker id="iarr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="iarr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="iarr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: iostat -x 1 -->
+  <rect x="340" y="72" width="200" height="50" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="93" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">iostat -x 1</text>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">전체 디스크 상태 확인</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="122" x2="440" y2="155" stroke="#7ec8e3" stroke-width="2" marker-end="url(#iarr)"/>
+
+  <!-- Decision: util% > 80? -->
+  <!-- Diamond shape using polygon -->
+  <polygon points="440,158 530,188 440,218 350,188" fill="#111820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">util% &gt; 80?</text>
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">또는 await 급증?</text>
+
+  <!-- YES arrow → right -->
+  <line x1="530" y1="188" x2="650" y2="188" stroke="#e05555" stroke-width="2" marker-end="url(#iarr-r)"/>
+  <text x="590" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">YES</text>
+
+  <!-- Right branch: I/O 병목 -->
+  <rect x="650" y="165" width="170" height="46" rx="8" fill="#150808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="735" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">I/O 병목 확인됨</text>
+  <text x="735" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">원인 프로세스 추적</text>
+
+  <!-- Arrow down from right -->
+  <line x1="735" y1="211" x2="735" y2="250" stroke="#e05555" stroke-width="2" marker-end="url(#iarr-r)"/>
+
+  <!-- iotop -->
+  <rect x="655" y="250" width="160" height="50" rx="8" fill="#150808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="735" y="272" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" font-weight="600" fill="#e05555">iotop -o</text>
+  <text x="735" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">고부하 프로세스 찾기</text>
+
+  <!-- NO arrow → down -->
+  <line x1="440" y1="218" x2="440" y2="252" stroke="#55c555" stroke-width="2" marker-end="url(#iarr-g)"/>
+  <text x="452" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">NO</text>
+
+  <!-- Normal state box -->
+  <rect x="340" y="252" width="200" height="46" rx="8" fill="#071407" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="273" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">I/O 정상 범위</text>
+  <text x="440" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">다른 병목 지표 확인</text>
+
+  <!-- Left branch: check await -->
+  <line x1="350" y1="188" x2="230" y2="188" stroke="#e0a055" stroke-width="2" marker-end="url(#iarr)"/>
+  <text x="290" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e0a055">await 높음</text>
+
+  <!-- iostat with device filter -->
+  <rect x="60" y="165" width="170" height="46" rx="8" fill="#120c00" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="145" y="186" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" font-weight="600" fill="#e0a055">iostat -x sda 1</text>
+  <text x="145" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">디스크별 상세 추적</text>
+
+  <!-- Code at bottom -->
+  <rect x="60" y="330" width="760" height="48" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># 핵심 원칙: util% 높고 await 낮으면 처리량 과다, await 높으면 지연 과다</text>
+  <text x="76" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">iostat -xdz 1 | grep -v "^$"   <tspan fill="#9aa4b8"># 활성 디스크만 표시</tspan></text>
+</svg>
