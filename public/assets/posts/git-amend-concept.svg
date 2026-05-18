@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+  <defs>
+    <marker id="arram" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arram2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arram3" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">git commit --amend 동작 원리</text>
+
+  <!-- Before amend -->
+  <text x="220" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#888" text-anchor="middle">amend 전</text>
+  <rect x="60" y="96" width="140" height="60" rx="8" fill="#1a1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="130" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">commit A</text>
+  <text x="130" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">abc1234</text>
+
+  <line x1="200" y1="126" x2="238" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arram)"/>
+
+  <rect x="240" y="96" width="160" height="60" rx="8" fill="#1a1a2e" stroke="#e05555" stroke-width="2"/>
+  <text x="320" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" text-anchor="middle">commit B (HEAD)</text>
+  <text x="320" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">def5678 ← 오타!</text>
+  <text x="320" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">"feat: add loginn"</text>
+
+  <!-- After amend -->
+  <text x="640" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">amend 후</text>
+  <rect x="480" y="96" width="140" height="60" rx="8" fill="#1a1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="550" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">commit A</text>
+  <text x="550" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">abc1234</text>
+
+  <line x1="620" y1="126" x2="658" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arram)"/>
+
+  <rect x="660" y="96" width="160" height="60" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+  <text x="740" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">commit B' (HEAD)</text>
+  <text x="740" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">ghi9012 ← 새 SHA!</text>
+  <text x="740" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">"feat: add login"</text>
+
+  <!-- Old B strike -->
+  <rect x="240" y="176" width="160" height="44" rx="4" fill="#111111" stroke="#3a4a6e" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="320" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555" text-anchor="middle">def5678 (고아 커밋)</text>
+  <text x="320" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#444" text-anchor="middle">GC에 의해 정리됨</text>
+
+  <!-- Key point -->
+  <rect x="60" y="240" width="760" height="80" rx="8" fill="#111111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">핵심: amend는 기존 커밋을 수정하지 않는다</text>
+  <text x="440" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">새 커밋 객체(B')를 생성하고 HEAD를 이동 → 기존 B는 참조 없는 고아 커밋이 됨</text>
+  <text x="440" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">SHA가 바뀌므로 이미 push된 커밋을 amend하면 원격과 충돌</text>
+
+  <!-- Code block -->
+  <rect x="60" y="340" width="760" height="58" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">git commit --amend</text>
+  <text x="286" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">              # 에디터로 메시지 수정</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">git commit --amend -m</text>
+  <text x="315" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178"> "새 메시지"</text>
+  <text x="450" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # 메시지 직접 지정</text>
+</svg>
