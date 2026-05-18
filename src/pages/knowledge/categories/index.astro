@@ -61,10 +61,17 @@ function dotDate(date: Date): string {
         <section class="main">
           {categories.map((cat) => (
             <section class="group" id={`cat-${cat.slug}`}>
-              <h2>{cat.name}</h2>
+              <div class="group-head">
+                <h2>{cat.name}</h2>
+                {cat.posts.length > 1 && (
+                  <a class="first-link" href={`#first-${cat.slug}`} aria-label={`${cat.name} 1편으로 이동`}>
+                    1편 <span class="arrow">↓</span>
+                  </a>
+                )}
+              </div>
               <ul class="posts">
-                {cat.posts.map((post) => (
-                  <li>
+                {cat.posts.map((post, idx) => (
+                  <li id={idx === cat.posts.length - 1 ? `first-${cat.slug}` : undefined}>
                     <a href={postUrl(post)}>{post.data.title}</a>
                     {isNew(post.data.pubDate) && <span class="badge">NEW</span>}
                     <time datetime={post.data.pubDate.toISOString()}>{dotDate(post.data.pubDate)}</time>
@@ -140,12 +147,41 @@ function dotDate(date: Date): string {
     padding-bottom: 0;
     border-bottom: none;
   }
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
   .group h2 {
     font-size: 2rem;
     font-weight: 600;
     color: var(--accent-bright);
-    margin-bottom: 16px;
     letter-spacing: 0.01em;
+  }
+  .first-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    text-transform: uppercase;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .first-link:hover {
+    color: var(--accent-bright);
+    border-color: var(--accent-bright);
+  }
+  .first-link .arrow {
+    margin-left: 4px;
+    font-family: inherit;
+  }
+  .posts li[id^="first-"] {
+    scroll-margin-top: 90px;
   }
 
   .posts {
