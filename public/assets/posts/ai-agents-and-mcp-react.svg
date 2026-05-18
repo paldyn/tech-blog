@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ReAct 루프: Reasoning + Acting</text>
+
+  <!-- ReAct 루프 다이어그램 (사각형 순환) -->
+  <!-- Step 1: 사용자 입력 -->
+  <rect x="320" y="68" width="240" height="52" rx="8" fill="#1a1a2e" stroke="#3a3a6e" stroke-width="1.5"/>
+  <text x="440" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">① 사용자 질문</text>
+  <text x="440" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">"오늘 서울 날씨와 우산 필요 여부 알려줘"</text>
+
+  <!-- → Thought -->
+  <line x1="440" y1="120" x2="440" y2="148" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: Thought -->
+  <rect x="320" y="148" width="240" height="52" rx="8" fill="#0f1a0f" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="440" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">② Thought (추론)</text>
+  <text x="440" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">"날씨 API 호출 후 강수량으로 판단"</text>
+
+  <!-- → Action -->
+  <line x1="440" y1="200" x2="440" y2="228" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Action -->
+  <rect x="320" y="228" width="240" height="52" rx="8" fill="#1a0f0a" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="440" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">③ Action (도구 호출)</text>
+  <text x="440" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">weather_tool(city="서울")</text>
+
+  <!-- → Observation -->
+  <line x1="440" y1="280" x2="440" y2="308" stroke="#ce9178" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Observation -->
+  <rect x="320" y="308" width="240" height="52" rx="8" fill="#1a1a0a" stroke="#6e6e3a" stroke-width="1.5"/>
+  <text x="440" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#b5cea8" text-anchor="middle">④ Observation (관찰)</text>
+  <text x="440" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">{"temp":18, "rain_prob":80}</text>
+
+  <!-- 루프 화살표 (재추론) -->
+  <path d="M 320 334 C 160 334 160 172 320 172" stroke="#7777cc" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+  <text x="200" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">재추론</text>
+  <text x="200" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">(필요 시)</text>
+
+  <!-- → Final Answer -->
+  <line x1="440" y1="360" x2="440" y2="388" stroke="#b5cea8" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5: Final Answer -->
+  <rect x="280" y="388" width="320" height="52" rx="8" fill="#1a0a1a" stroke="#6e3a6e" stroke-width="2"/>
+  <text x="440" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">⑤ Final Answer</text>
+  <text x="440" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">"오늘 18°C, 비 올 확률 80% → 우산 필수"</text>
+
+  <!-- 오른쪽: 코드 블록 -->
+  <rect x="620" y="68" width="220" height="248" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="640" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"
+        ># ReAct 형식 프롬프트</text>
+  <text x="640" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8">Thought: </tspan><tspan fill="#ffffff">날씨를</tspan>
+  </text>
+  <text x="640" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  확인해야 한다.</tspan>
+  </text>
+  <text x="640" y="154" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8">Action: </tspan><tspan fill="#55c555">weather_tool</tspan>
+  </text>
+  <text x="640" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ce9178">Action Input: </tspan>
+  </text>
+  <text x="640" y="194" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  {"city": "서울"}</tspan>
+  </text>
+  <text x="640" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8">Observation:</tspan>
+  </text>
+  <text x="640" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  temp: 18°C</tspan>
+  </text>
+  <text x="640" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  rain_prob: 80%</tspan>
+  </text>
+  <text x="640" y="282" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8">Thought: 비 확률이</tspan>
+  </text>
+  <text x="640" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8">  높으니 우산 필요.</tspan>
+  </text>
+  <text x="640" y="326" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">Final Answer: </tspan>
+  </text>
+  <text x="640" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  우산 챙기세요.</tspan>
+  </text>
+</svg>

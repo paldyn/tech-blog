@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">FastAPI 기반 OpenAI 호환 서버 구조</text>
+
+  <!-- 코드 블록 왼쪽 -->
+  <rect x="60" y="62" width="370" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># FastAPI 서버 설정</text>
+  <text x="80" y="104" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> fastapi </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> FastAPI, HTTPException</tspan>
+  </text>
+  <text x="80" y="124" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> pydantic </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> BaseModel</tspan>
+  </text>
+  <text x="80" y="144" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> vllm </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> AsyncLLMEngine</tspan>
+  </text>
+  <text x="80" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">app</tspan><tspan fill="#ffffff"> = FastAPI(</tspan><tspan fill="#ce9178">title</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"LLM API"</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> ChatRequest(BaseModel):</tspan>
+  </text>
+  <text x="80" y="212" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    model: </tspan><tspan fill="#7ec8e3" font-weight="600">str</tspan>
+  </text>
+  <text x="80" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    messages: list[dict]</tspan>
+  </text>
+  <text x="80" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    temperature: </tspan><tspan fill="#7ec8e3" font-weight="600">float</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#b5cea8">0.7</tspan>
+  </text>
+  <text x="80" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    stream: </tspan><tspan fill="#7ec8e3" font-weight="600">bool</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#7ec8e3" font-weight="600">False</tspan>
+  </text>
+
+  <!-- 코드 블록 오른쪽 -->
+  <rect x="450" y="62" width="370" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="470" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># 엔드포인트 구현</text>
+  <text x="470" y="104" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7777cc">@app.post</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">"/v1/chat/completions"</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="470" y="124" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">async def</tspan><tspan fill="#ffffff"> chat(req: ChatRequest):</tspan>
+  </text>
+  <text x="470" y="144" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 스트리밍 응답</tspan>
+  </text>
+  <text x="470" y="164" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan><tspan fill="#ffffff"> req.stream:</tspan>
+  </text>
+  <text x="470" y="184" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan><tspan fill="#ffffff"> StreamingResponse(</tspan>
+  </text>
+  <text x="470" y="204" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            stream_tokens(req),</tspan>
+  </text>
+  <text x="470" y="224" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            </tspan><tspan fill="#ce9178">media_type</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"text/event-stream"</tspan>
+  </text>
+  <text x="470" y="244" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        )</tspan>
+  </text>
+  <text x="470" y="264" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return await</tspan><tspan fill="#ffffff"> generate(req)</tspan>
+  </text>
+
+  <!-- ── 응답 형식 예시 ── -->
+  <rect x="60" y="300" width="760" height="152" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># OpenAI 호환 응답 형식</text>
+  <text x="80" y="342" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">{</tspan>
+    <tspan fill="#ce9178"> "id"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"chatcmpl-abc123"</tspan><tspan fill="#ffffff">,  </tspan>
+    <tspan fill="#ce9178">"object"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"chat.completion"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="362" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ce9178">  "choices"</tspan><tspan fill="#ffffff">: [{</tspan>
+    <tspan fill="#ce9178">"message"</tspan><tspan fill="#ffffff">: {</tspan>
+    <tspan fill="#ce9178">"role"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"assistant"</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan fill="#ce9178">"content"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"안녕하세요!"</tspan><tspan fill="#ffffff">}}],</tspan>
+  </text>
+  <text x="80" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ce9178">  "usage"</tspan><tspan fill="#ffffff">: {</tspan>
+    <tspan fill="#ce9178">"prompt_tokens"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#b5cea8">12</tspan><tspan fill="#ffffff">, </tspan>
+    <tspan fill="#ce9178">"completion_tokens"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#b5cea8">8</tspan><tspan fill="#ffffff">, </tspan>
+    <tspan fill="#ce9178">"total_tokens"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#b5cea8">20</tspan><tspan fill="#ffffff">}</tspan>
+  </text>
+  <text x="80" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}  </tspan>
+    <tspan fill="#9aa4b8"># finish_reason: "stop" | "length" | "content_filter"</tspan>
+  </text>
+  <text x="80" y="426" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># 스트리밍: data: {"choices":[{"delta":{"content":"안"}}]}\n\n</text>
+  <text x="80" y="446" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># 종료:     data: [DONE]\n\n</text>
+</svg>

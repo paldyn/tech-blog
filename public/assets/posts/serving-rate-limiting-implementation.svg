@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Redis 기반 분산 Rate Limiting 구현</text>
+
+  <!-- 코드 블록 왼쪽 -->
+  <rect x="60" y="62" width="370" height="348" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># Redis 슬라이딩 윈도우 구현</text>
+  <text x="80" y="104" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> redis.asyncio </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> aioredis</tspan>
+  </text>
+  <text x="80" y="124" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> time</tspan>
+  </text>
+  <text x="80" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> SlidingWindowRL:</tspan>
+  </text>
+  <text x="80" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan><tspan fill="#ffffff"> __init__(self, redis_url, limit, window):</tspan>
+  </text>
+  <text x="80" y="188" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.r = aioredis.from_url(redis_url)</tspan>
+  </text>
+  <text x="80" y="208" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.limit = limit    </tspan>
+    <tspan fill="#9aa4b8"># 허용 요청 수</tspan>
+  </text>
+  <text x="80" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.window = window  </tspan>
+    <tspan fill="#9aa4b8"># 윈도우 초</tspan>
+  </text>
+  <text x="80" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    async def</tspan><tspan fill="#ffffff"> is_allowed(self, key: str) -> bool:</tspan>
+  </text>
+  <text x="80" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        now = time.time()</tspan>
+  </text>
+  <text x="80" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pipe = self.r.pipeline()</tspan>
+  </text>
+  <text x="80" y="312" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">        # Sorted Set으로 타임스탬프 관리</tspan>
+  </text>
+  <text x="80" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pipe.zremrangebyscore(key, </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">, now - self.window)</tspan>
+  </text>
+  <text x="80" y="352" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pipe.zadd(key, {</tspan><tspan fill="#ce9178">f"</tspan><tspan fill="#b5cea8">{now}</tspan><tspan fill="#ce9178">"</tspan><tspan fill="#ffffff">: now})</tspan>
+  </text>
+  <text x="80" y="372" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pipe.zcard(key)</tspan>
+  </text>
+  <text x="80" y="392" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pipe.expire(key, self.window)</tspan>
+  </text>
+  <text x="80" y="392" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pipe.expire(key, self.window)</tspan>
+  </text>
+  <text x="80" y="408" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        _, _, count, _ = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> pipe.execute()</tspan>
+  </text>
+
+  <!-- 오른쪽: FastAPI 미들웨어 -->
+  <rect x="450" y="62" width="370" height="348" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="470" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># FastAPI 미들웨어 통합</text>
+  <text x="470" y="104" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> fastapi </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> Request, Response</tspan>
+  </text>
+  <text x="470" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7777cc">@app.middleware</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">"http"</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="470" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">async def</tspan><tspan fill="#ffffff"> rate_limit_middleware(</tspan>
+  </text>
+  <text x="470" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    request: Request, call_next</tspan>
+  </text>
+  <text x="470" y="188" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+  <text x="470" y="208" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    api_key = request.headers.get(</tspan>
+  </text>
+  <text x="470" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        </tspan><tspan fill="#ce9178">"Authorization"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">""</tspan><tspan fill="#ffffff">)[</tspan><tspan fill="#b5cea8">7</tspan><tspan fill="#ffffff">:]</tspan>
+    <tspan fill="#9aa4b8">  # "Bearer sk-..."</tspan>
+  </text>
+  <text x="470" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if not await</tspan><tspan fill="#ffffff"> rl.is_allowed(api_key):</tspan>
+  </text>
+  <text x="470" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan><tspan fill="#ffffff"> Response(</tspan>
+  </text>
+  <text x="470" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            </tspan><tspan fill="#ce9178">"Too Many Requests"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="470" y="312" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            status_code=</tspan><tspan fill="#b5cea8">429</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="470" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            headers={</tspan><tspan fill="#ce9178">"Retry-After"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"60"</tspan><tspan fill="#ffffff">}</tspan>
+  </text>
+  <text x="470" y="352" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        )</tspan>
+  </text>
+  <text x="470" y="376" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 허용된 요청 처리</tspan>
+  </text>
+  <text x="470" y="396" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return await</tspan><tspan fill="#ffffff"> call_next(request)</tspan>
+  </text>
+</svg>

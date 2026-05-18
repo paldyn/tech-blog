@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Plan-and-Execute 구현 코드</text>
+
+  <!-- 코드 블록 -->
+  <rect x="60" y="64" width="760" height="356" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># Plan-and-Execute 에이전트 (LangGraph 스타일)</text>
+  <text x="80" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> anthropic </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> Anthropic</tspan>
+  </text>
+  <text x="80" y="126" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> json</tspan>
+  </text>
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> PlanAndExecuteAgent:</tspan>
+  </text>
+  <text x="80" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan><tspan fill="#ffffff"> __init__(self, tools):</tspan>
+  </text>
+  <text x="80" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.client = Anthropic()</tspan>
+  </text>
+  <text x="80" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.tools = tools</tspan>
+  </text>
+  <text x="80" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan><tspan fill="#ffffff"> plan(self, goal: str) -> list[str]:</tspan>
+  </text>
+  <text x="80" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">        """Planner LLM: 목표를 단계별 계획으로 분해"""</tspan>
+  </text>
+  <text x="80" y="274" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        resp = self.client.messages.create(</tspan>
+  </text>
+  <text x="80" y="294" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            </tspan><tspan fill="#ce9178">model</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"claude-sonnet-4-6"</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan fill="#ce9178">max_tokens</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#b5cea8">1024</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            </tspan><tspan fill="#ce9178">system</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"목표를 JSON 배열 형식의 단계로 나누세요."</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            </tspan><tspan fill="#ce9178">messages</tspan><tspan fill="#ffffff">=[{</tspan><tspan fill="#ce9178">"role"</tspan><tspan fill="#ffffff">:</tspan><tspan fill="#ce9178">"user"</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#ce9178">"content"</tspan><tspan fill="#ffffff">:goal}]</tspan>
+  </text>
+  <text x="80" y="354" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        )</tspan>
+  </text>
+  <text x="80" y="374" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan><tspan fill="#ffffff"> json.loads(resp.content[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">].text)</tspan>
+    <tspan fill="#9aa4b8">  # 단계 목록</tspan>
+  </text>
+  <text x="80" y="398" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    async def</tspan><tspan fill="#ffffff"> run(self, goal: str) -> str:</tspan>
+  </text>
+  <text x="80" y="418" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        steps = self.plan(goal)</tspan>
+    <tspan fill="#9aa4b8">  # 계획 수립</tspan>
+  </text>
+</svg>

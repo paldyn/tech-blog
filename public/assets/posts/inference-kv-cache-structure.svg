@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">KV 캐시 구조: Attention과 메모리 관리</text>
+
+  <!-- ── 왼쪽: Attention 블록 ── -->
+  <!-- 섹션 라벨 -->
+  <text x="200" y="85" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Attention 메커니즘</text>
+
+  <!-- 입력 토큰 박스 -->
+  <rect x="140" y="100" width="120" height="44" rx="8" fill="#1a1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="200" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">입력 토큰 X</text>
+  <text x="200" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">[seq_len × d_model]</text>
+
+  <!-- Q, K, V 프로젝션 박스들 -->
+  <rect x="60" y="200" width="80" height="44" rx="8" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="100" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Q</text>
+  <text x="100" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Query</text>
+
+  <rect x="160" y="200" width="80" height="44" rx="8" fill="#2e1a1a" stroke="#6e3a3a" stroke-width="1.5"/>
+  <text x="200" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">K</text>
+  <text x="200" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Key</text>
+
+  <rect x="260" y="200" width="80" height="44" rx="8" fill="#2e2e1a" stroke="#6e6e3a" stroke-width="1.5"/>
+  <text x="300" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#ce9178" text-anchor="middle">V</text>
+  <text x="300" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Value</text>
+
+  <!-- X → Q, K, V 화살표들 -->
+  <line x1="200" y1="144" x2="100" y2="200" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="200" y1="144" x2="200" y2="200" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+  <line x1="200" y1="144" x2="300" y2="200" stroke="#ce9178" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+
+  <!-- Attention 결과 박스 -->
+  <rect x="130" y="300" width="140" height="44" rx="8" fill="#1a1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="200" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Attention Score</text>
+  <text x="200" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">softmax(QKᵀ/√d) · V</text>
+
+  <!-- Q → Attention, K,V → Attention -->
+  <line x1="100" y1="244" x2="160" y2="300" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="200" y1="244" x2="200" y2="300" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="300" y1="244" x2="240" y2="300" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- KV 저장 표시 -->
+  <text x="200" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">K, V → 캐시에 저장 ↗</text>
+
+  <!-- ── 오른쪽: KV 캐시 저장소 ── -->
+  <text x="650" y="85" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178" text-anchor="middle">KV 캐시 (GPU 메모리)</text>
+
+  <!-- Layer 1 KV 캐시 -->
+  <rect x="490" y="100" width="320" height="68" rx="8" fill="#1e1a10" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="650" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">Layer 1 KV Cache</text>
+  <rect x="506" y="132" width="135" height="28" rx="4" fill="#2e2418" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="573" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">K₁ [n_heads × seq × d]</text>
+  <rect x="649" y="132" width="145" height="28" rx="4" fill="#2e2418" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="721" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ce9178" text-anchor="middle">V₁ [n_heads × seq × d]</text>
+
+  <!-- Layer 2 KV 캐시 -->
+  <rect x="490" y="180" width="320" height="68" rx="8" fill="#1e1a10" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="650" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">Layer 2 KV Cache</text>
+  <rect x="506" y="212" width="135" height="28" rx="4" fill="#2e2418" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="573" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">K₂ [n_heads × seq × d]</text>
+  <rect x="649" y="212" width="145" height="28" rx="4" fill="#2e2418" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="721" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ce9178" text-anchor="middle">V₂ [n_heads × seq × d]</text>
+
+  <!-- 점선: 더 많은 레이어 -->
+  <text x="650" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="18" fill="#555" text-anchor="middle">⋮</text>
+
+  <!-- Layer N KV 캐시 -->
+  <rect x="490" y="280" width="320" height="68" rx="8" fill="#1e1a10" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="650" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">Layer N KV Cache</text>
+  <rect x="506" y="312" width="135" height="28" rx="4" fill="#2e2418" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="573" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">Kₙ [n_heads × seq × d]</text>
+  <rect x="649" y="312" width="145" height="28" rx="4" fill="#2e2418" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="721" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ce9178" text-anchor="middle">Vₙ [n_heads × seq × d]</text>
+
+  <!-- K, V → KV Cache 화살표 -->
+  <path d="M 340 222 C 420 222 430 165 490 165" stroke="#ce9178" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arr-orange)"/>
+
+  <!-- 메모리 계산 박스 (하단) -->
+  <rect x="60" y="415" width="760" height="104" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="437" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># Llama-3.1-8B KV 캐시 메모리 계산</text>
+  <text x="80" y="457" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">n_layers</tspan><tspan fill="#ffffff"> = 32  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">n_kv_heads</tspan><tspan fill="#ffffff"> = 8  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">head_dim</tspan><tspan fill="#ffffff"> = 128</tspan>
+  </text>
+  <text x="80" y="477" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># KV 캐시(FP16) = 2 × n_layers × n_kv_heads × head_dim × seq_len × batch</tspan>
+  </text>
+  <text x="80" y="497" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">kv_mem</tspan><tspan fill="#ffffff"> = 2 × 32 × 8 × 128 × 8192 × 32 × 2B </tspan>
+    <tspan fill="#9aa4b8">≈ 34 GB</tspan>
+  </text>
+  <text x="80" y="513" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 모델 가중치(BF16) ≈ 16 GB &lt; KV 캐시 메모리!</tspan>
+  </text>
+
+  <!-- 총 메모리 표시 -->
+  <rect x="490" y="360" width="320" height="44" rx="8" fill="#1a0a0a" stroke="#6e3a3a" stroke-width="1.5"/>
+  <text x="650" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">총 KV 캐시 크기</text>
+  <text x="650" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">2 × L × H × d × seq × batch × dtype</text>
+</svg>

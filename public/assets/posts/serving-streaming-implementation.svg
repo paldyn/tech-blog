@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">스트리밍 클라이언트 구현 비교</text>
+
+  <!-- 왼쪽: Python -->
+  <rect x="60" y="62" width="370" height="36" rx="6" fill="#1a1a2e" stroke="#3a3a6e" stroke-width="1.5"/>
+  <text x="245" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">Python (openai SDK)</text>
+
+  <rect x="60" y="106" width="370" height="188" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> openai </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> OpenAI</tspan>
+  </text>
+  <text x="80" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">client = OpenAI(</tspan>
+    <tspan fill="#ce9178">base_url</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"http://localhost:8000/v1"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">              </tspan><tspan fill="#ce9178">api_key</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"sk-xxx"</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">with</tspan><tspan fill="#ffffff"> client.chat.completions.create(</tspan>
+  </text>
+  <text x="80" y="212" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan><tspan fill="#ce9178">model</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"llama-3.1-8b"</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan fill="#ce9178">messages</tspan><tspan fill="#ffffff">=[...],</tspan>
+    <tspan fill="#ce9178">stream</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#7ec8e3" font-weight="600">True</tspan>
+  </text>
+  <text x="80" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">) </tspan><tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> stream:</tspan>
+  </text>
+  <text x="80" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    for</tspan><tspan fill="#ffffff"> chunk </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> stream:</tspan>
+  </text>
+  <text x="80" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        delta = chunk.choices[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">].delta</tspan>
+  </text>
+  <text x="80" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        if</tspan><tspan fill="#ffffff"> delta.content:</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> print</tspan><tspan fill="#ffffff">(delta.content, end=</tspan><tspan fill="#ce9178">""</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <!-- 오른쪽: JavaScript -->
+  <rect x="450" y="62" width="370" height="36" rx="6" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="635" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">JavaScript (fetch SSE)</text>
+
+  <rect x="450" y="106" width="370" height="188" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="470" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> res = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> fetch(</tspan><tspan fill="#ce9178">"/v1/chat/completions"</tspan><tspan fill="#ffffff">, {</tspan>
+  </text>
+  <text x="470" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ce9178">  method</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"POST"</tspan><tspan fill="#ffffff">, </tspan>
+    <tspan fill="#ce9178">body</tspan><tspan fill="#ffffff">: JSON.stringify({</tspan>
+    <tspan fill="#ce9178">stream</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">})</tspan>
+  </text>
+  <text x="470" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">});</tspan>
+  </text>
+  <text x="470" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> reader = res.body.getReader();</tspan>
+  </text>
+  <text x="470" y="212" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> decoder = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> TextDecoder();</tspan>
+  </text>
+  <text x="470" y="236" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">while</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">) {</tspan>
+  </text>
+  <text x="470" y="256" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> {done, value} = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> reader.read();</tspan>
+  </text>
+  <text x="470" y="276" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (done) </tspan><tspan fill="#7ec8e3" font-weight="600">break</tspan><tspan fill="#ffffff">;</tspan>
+  </text>
+  <text x="470" y="296" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">  // data: {...}\n\n 파싱</tspan>
+  </text>
+
+  <!-- 하단: 오류 처리 -->
+  <rect x="60" y="314" width="760" height="120" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="336" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># 스트리밍 오류 처리 (재연결 포함)</text>
+  <text x="80" y="356" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">async def</tspan><tspan fill="#ffffff"> safe_stream(client, messages, retries=</tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff">):</tspan>
+  </text>
+  <text x="80" y="376" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    for</tspan><tspan fill="#ffffff"> attempt </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> range(retries):</tspan>
+  </text>
+  <text x="80" y="396" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        try</tspan><tspan fill="#ffffff">:</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> async for</tspan><tspan fill="#ffffff"> chunk </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> client.stream(messages): </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">yield</tspan><tspan fill="#ffffff"> chunk</tspan>
+  </text>
+  <text x="80" y="416" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        except</tspan><tspan fill="#ffffff"> (ConnectionError, TimeoutError):</tspan>
+  </text>
+  <text x="80" y="432" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">            if</tspan><tspan fill="#ffffff"> attempt == retries-</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">: </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">raise</tspan>
+    <tspan fill="#9aa4b8">  # 마지막 시도면 예외 전파</tspan>
+  </text>
+</svg>

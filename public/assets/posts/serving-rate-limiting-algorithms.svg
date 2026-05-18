@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Rate Limiting 알고리즘 비교</text>
+
+  <!-- ── Token Bucket ── -->
+  <rect x="60" y="68" width="188" height="220" rx="10" fill="#0f1a0f" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="154" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">Token Bucket</text>
+  <!-- 버킷 시각화 -->
+  <rect x="100" y="104" width="108" height="76" rx="6" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1"/>
+  <text x="154" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">🪣 버킷</text>
+  <text x="154" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">토큰 ●●●●●</text>
+  <text x="154" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">용량: 100 토큰</text>
+  <!-- 보충 -->
+  <text x="154" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">+10 토큰/초 보충</text>
+  <text x="154" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">요청 시 토큰 소비</text>
+  <rect x="80" y="232" width="148" height="44" rx="6" fill="#0a0a0a" stroke="#3a6e3a" stroke-width="1"/>
+  <text x="154" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555" text-anchor="middle">✅ 버스트 허용</text>
+  <text x="154" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">평균 속도만 제한</text>
+
+  <!-- ── Sliding Window ── -->
+  <rect x="268" y="68" width="188" height="220" rx="10" fill="#0f0f1a" stroke="#3a3a6e" stroke-width="1.5"/>
+  <text x="362" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Sliding Window</text>
+  <!-- 타임라인 시각화 -->
+  <rect x="286" y="108" width="144" height="32" rx="4" fill="#1a1a2e" stroke="#3a3a6e" stroke-width="1"/>
+  <text x="358" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">← 1분 슬라이딩 윈도우 →</text>
+  <!-- 요청 점들 -->
+  <circle cx="300" cy="158" r="5" fill="#7ec8e3"/>
+  <circle cx="318" cy="158" r="5" fill="#7ec8e3"/>
+  <circle cx="336" cy="158" r="5" fill="#7ec8e3"/>
+  <circle cx="354" cy="158" r="5" fill="#e05555"/>
+  <circle cx="372" cy="158" r="5" fill="#e05555"/>
+  <text x="362" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">파란=허용, 빨간=거부</text>
+  <text x="362" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">최근 N분 내 요청 카운트</text>
+  <text x="362" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">한도 초과 즉시 429</text>
+  <rect x="286" y="232" width="148" height="44" rx="6" fill="#0a0a0a" stroke="#3a3a6e" stroke-width="1"/>
+  <text x="362" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3" text-anchor="middle">✅ 정확한 제한</text>
+  <text x="362" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">버스트 없음</text>
+
+  <!-- ── Fixed Window ── -->
+  <rect x="476" y="68" width="188" height="220" rx="10" fill="#1a0f0a" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="570" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#ce9178" text-anchor="middle">Fixed Window</text>
+  <!-- 윈도우 시각화 -->
+  <rect x="494" y="108" width="64" height="52" rx="4" fill="#2e1a0a" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="526" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178" text-anchor="middle">0:00</text>
+  <text x="526" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">3/10</text>
+  <rect x="566" y="108" width="64" height="52" rx="4" fill="#2e1a0a" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="598" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178" text-anchor="middle">0:01</text>
+  <text x="598" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">0/10</text>
+  <text x="570" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">분/시간 단위 고정 윈도우</text>
+  <text x="570" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">구현이 가장 단순</text>
+  <text x="570" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">경계에서 2× 버스트</text>
+  <rect x="494" y="232" width="148" height="44" rx="6" fill="#0a0a0a" stroke="#6e5a3a" stroke-width="1"/>
+  <text x="570" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#ce9178" text-anchor="middle">⚠ 경계 버스트 취약</text>
+  <text x="570" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">소규모 단순 서비스에 적합</text>
+
+  <!-- ── Leaky Bucket ── -->
+  <rect x="684" y="68" width="136" height="220" rx="10" fill="#1a0a1a" stroke="#6e3a6e" stroke-width="1.5"/>
+  <text x="752" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">Leaky Bucket</text>
+  <text x="752" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="28" fill="#7777cc" text-anchor="middle">🪣</text>
+  <text x="752" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">요청을 큐에 쌓고</text>
+  <text x="752" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">일정 속도로 처리</text>
+  <text x="752" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">출력 속도 일정</text>
+  <rect x="700" y="232" width="104" height="44" rx="6" fill="#0a0a0a" stroke="#6e3a6e" stroke-width="1"/>
+  <text x="752" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7777cc" text-anchor="middle">✅ 출력 평탄화</text>
+  <text x="752" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">지연 증가</text>
+
+  <!-- ── LLM 특화: 토큰 기반 ── -->
+  <rect x="60" y="310" width="760" height="164" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># LLM 특화: 토큰 기반 Rate Limiting (요청 수 + 토큰 수 동시 제한)</text>
+  <text x="80" y="352" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> LLMRateLimiter:</tspan>
+  </text>
+  <text x="80" y="372" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    req_limit = </tspan><tspan fill="#b5cea8">60</tspan><tspan fill="#ffffff">   </tspan>
+    <tspan fill="#9aa4b8"># 분당 요청 수</tspan>
+  </text>
+  <text x="80" y="392" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    tok_limit = </tspan><tspan fill="#b5cea8">100000</tspan><tspan fill="#ffffff"> </tspan>
+    <tspan fill="#9aa4b8"># 분당 토큰 수 (입력+출력)</tspan>
+  </text>
+  <text x="80" y="412" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    async def</tspan><tspan fill="#ffffff"> check(self, api_key, input_tokens):</tspan>
+  </text>
+  <text x="80" y="432" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">        # Redis에서 현재 윈도우의 req/tok 카운트 조회 후 판단</tspan>
+  </text>
+  <text x="80" y="452" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan><tspan fill="#ffffff"> req_count &lt; self.req_limit </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">and</tspan><tspan fill="#ffffff"> tok_count &lt; self.tok_limit</tspan>
+  </text>
+</svg>

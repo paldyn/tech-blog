@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Semantic Cache 구조와 코드</text>
+
+  <!-- 흐름도 -->
+  <!-- 요청 박스 -->
+  <rect x="60" y="68" width="140" height="44" rx="8" fill="#1a1a2e" stroke="#3a3a6e" stroke-width="1.5"/>
+  <text x="130" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">사용자 요청</text>
+  <text x="130" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">"파이썬 리스트란?"</text>
+
+  <!-- 임베딩 박스 -->
+  <line x1="200" y1="90" x2="260" y2="90" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="260" y="68" width="140" height="44" rx="8" fill="#0f1a0f" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="330" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">임베딩 생성</text>
+  <text x="330" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">text-embedding-3-small</text>
+
+  <!-- 벡터 검색 박스 -->
+  <line x1="400" y1="90" x2="460" y2="90" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="460" y="68" width="140" height="44" rx="8" fill="#1a0f0a" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="530" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">벡터 유사도 검색</text>
+  <text x="530" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">cosine similarity ≥ 0.95</text>
+
+  <!-- 캐시 히트 분기 -->
+  <line x1="600" y1="90" x2="660" y2="90" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="660" y="68" width="160" height="44" rx="8" fill="#0a1a0a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="740" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">HIT → 캐시 응답</text>
+  <text x="740" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">LLM 호출 없음 ⚡</text>
+
+  <!-- MISS 분기 -->
+  <line x1="530" y1="112" x2="530" y2="152" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="545" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">MISS</text>
+
+  <!-- LLM 호출 -->
+  <rect x="400" y="152" width="140" height="44" rx="8" fill="#1a0a1a" stroke="#6e3a6e" stroke-width="1.5"/>
+  <text x="470" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">LLM 호출</text>
+  <text x="470" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">실제 추론 실행</text>
+
+  <!-- 캐시 저장 -->
+  <line x1="540" y1="174" x2="640" y2="174" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="640" y="152" width="180" height="44" rx="8" fill="#1a1a0a" stroke="#6e6e3a" stroke-width="1.5"/>
+  <text x="730" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#b5cea8" text-anchor="middle">캐시 저장 (벡터 DB)</text>
+  <text x="730" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">임베딩 + 응답 쌍 저장</text>
+
+  <!-- 코드 블록 -->
+  <rect x="60" y="220" width="760" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="242" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># Semantic Cache 구현 (Redis + pgvector)</text>
+  <text x="80" y="262" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> SemanticCache:</tspan>
+  </text>
+  <text x="80" y="282" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan><tspan fill="#ffffff"> __init__(self, embed_model, vector_store, threshold=</tspan><tspan fill="#b5cea8">0.95</tspan><tspan fill="#ffffff">):</tspan>
+  </text>
+  <text x="80" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.embed = embed_model</tspan>
+  </text>
+  <text x="80" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.store = vector_store; self.threshold = threshold</tspan>
+  </text>
+  <text x="80" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    async def</tspan><tspan fill="#ffffff"> get(self, query: str) -> str | None:</tspan>
+  </text>
+  <text x="80" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        vec = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> self.embed(query)</tspan>
+  </text>
+  <text x="80" y="386" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        hits = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> self.store.search(vec, top_k=</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="406" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        if</tspan><tspan fill="#ffffff"> hits </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">and</tspan><tspan fill="#ffffff"> hits[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">].score &gt;= self.threshold:</tspan>
+  </text>
+  <text x="80" y="426" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">            return</tspan><tspan fill="#ffffff"> hits[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">].cached_response</tspan>
+    <tspan fill="#9aa4b8">  # 캐시 히트</tspan>
+  </text>
+  <text x="80" y="432" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan><tspan fill="#ffffff"> None</tspan>
+    <tspan fill="#9aa4b8">                          # MISS → LLM 호출 필요</tspan>
+  </text>
+</svg>

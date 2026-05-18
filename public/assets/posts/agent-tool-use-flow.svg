@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-o" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Tool Use 동작 흐름</text>
+
+  <!-- ── 흐름도 (좌→우) ── -->
+  <!-- 1. 사용자 요청 -->
+  <rect x="30" y="80" width="120" height="56" rx="8" fill="#1a1a2e" stroke="#3a3a6e" stroke-width="1.5"/>
+  <text x="90" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">사용자</text>
+  <text x="90" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">"서울 날씨?"</text>
+  <text x="90" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">+ 도구 목록 전달</text>
+
+  <!-- → LLM -->
+  <line x1="150" y1="108" x2="200" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 2. LLM (도구 선택) -->
+  <rect x="200" y="80" width="160" height="56" rx="8" fill="#1a0a1a" stroke="#6e3a6e" stroke-width="1.5"/>
+  <text x="280" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">LLM</text>
+  <text x="280" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">도구 선택 + 파라미터</text>
+  <text x="280" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7777cc" text-anchor="middle">stop_reason: tool_use</text>
+
+  <!-- → 호스트 (도구 실행) -->
+  <line x1="360" y1="108" x2="420" y2="108" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="390" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">tool_use 블록</text>
+
+  <!-- 3. 호스트/실행기 -->
+  <rect x="420" y="80" width="160" height="56" rx="8" fill="#0f1a0f" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="500" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">호스트</text>
+  <text x="500" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">함수 실행</text>
+  <text x="500" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">get_weather("서울")</text>
+
+  <!-- → 외부 시스템 -->
+  <line x1="580" y1="108" x2="640" y2="108" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- 4. 외부 API -->
+  <rect x="640" y="80" width="200" height="56" rx="8" fill="#1a0f0a" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="740" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">외부 시스템</text>
+  <text x="740" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">날씨 API, DB, 파일시스템</text>
+  <text x="740" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">{"temp":18,"rain":80%}</text>
+
+  <!-- 결과 반환 (아래 방향) -->
+  <line x1="740" y1="136" x2="740" y2="180" stroke="#ce9178" stroke-width="2" marker-end="url(#arr-o)"/>
+  <line x1="500" y1="136" x2="500" y2="180" stroke="#ce9178" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="500" y1="180" x2="740" y2="180" stroke="#ce9178" stroke-width="1.5"/>
+  <line x1="500" y1="180" x2="500" y2="180" stroke="#ce9178" stroke-width="1.5"/>
+  <!-- 호스트로 결과 -->
+  <line x1="580" y1="192" x2="420" y2="192" stroke="#ce9178" stroke-width="2" marker-end="url(#arr-o)"/>
+  <text x="500" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">결과 반환</text>
+
+  <!-- tool_result → LLM -->
+  <line x1="420" y1="208" x2="360" y2="208" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="390" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">tool_result</text>
+
+  <!-- LLM 최종 응답 -->
+  <line x1="200" y1="208" x2="150" y2="208" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="30" y="188" width="120" height="40" rx="6" fill="#1a1a2e" stroke="#3a3a6e" stroke-width="1.5"/>
+  <text x="90" y="211" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3" text-anchor="middle">최종 응답</text>
+
+  <!-- ── 도구 정의 예시 (코드 블록) ── -->
+  <rect x="30" y="260" width="820" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="50" y="282" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># Anthropic Claude Tool Use: 도구 정의 형식</text>
+  <text x="50" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">tools</tspan><tspan fill="#ffffff"> = [</tspan>
+  </text>
+  <text x="50" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    {</tspan>
+    <tspan fill="#ce9178">"name"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"get_weather"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="50" y="342" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">     </tspan><tspan fill="#ce9178">"description"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"도시의 현재 날씨를 조회합니다."</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="50" y="362" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">     </tspan><tspan fill="#ce9178">"input_schema"</tspan><tspan fill="#ffffff">: {</tspan>
+    <tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"object"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="50" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">       </tspan><tspan fill="#ce9178">"properties"</tspan><tspan fill="#ffffff">: {</tspan>
+    <tspan fill="#ce9178">"city"</tspan><tspan fill="#ffffff">: {</tspan>
+    <tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"string"</tspan><tspan fill="#ffffff">, </tspan>
+    <tspan fill="#ce9178">"description"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"도시명"</tspan><tspan fill="#ffffff">}},</tspan>
+  </text>
+  <text x="50" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">       </tspan><tspan fill="#ce9178">"required"</tspan><tspan fill="#ffffff">: [</tspan><tspan fill="#ce9178">"city"</tspan><tspan fill="#ffffff">]</tspan>
+    <tspan fill="#9aa4b8">  # 필수 파라미터</tspan>
+  </text>
+  <text x="50" y="422" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">     }}</tspan>
+    <tspan fill="#9aa4b8">  # input_schema: JSON Schema 형식</tspan>
+  </text>
+  <text x="50" y="442" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    }</tspan>
+  </text>
+  <text x="50" y="462" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">]</tspan>
+  </text>
+</svg>
