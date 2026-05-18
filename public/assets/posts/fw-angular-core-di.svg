@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Angular — DI 시스템과 변경 감지</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">계층형 Injector → Zone.js → OnPush 최적화 → Signals</text>
+
+  <!-- Injector hierarchy -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">계층형 Injector</text>
+
+  <rect x="60" y="118" width="180" height="48" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="150" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">Root Injector</text>
+
+  <line x1="150" y1="166" x2="150" y2="196" stroke="#888" stroke-width="1.5"/>
+
+  <rect x="60" y="196" width="180" height="48" rx="6" fill="#1a1a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="150" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">Module Injector</text>
+
+  <line x1="150" y1="244" x2="150" y2="274" stroke="#888" stroke-width="1.5"/>
+
+  <rect x="60" y="274" width="180" height="48" rx="6" fill="#1a1a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="150" y="304" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">Component Injector</text>
+
+  <!-- DI Code -->
+  <rect x="270" y="96" width="580" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="286" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// 서비스 — 기본은 Root 스코프</text>
+  <text x="286" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">@Injectable({ providedIn: <tspan fill="#ce9178">'root'</tspan> })</text>
+  <text x="286" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export class</tspan> UserService {</text>
+  <text x="286" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  private http = inject(HttpClient)</text>
+  <text x="286" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  getUser(id: <tspan fill="#7ec8e3" font-weight="600">number</tspan>) {</text>
+  <text x="286" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return</tspan> <tspan fill="#7ec8e3" font-weight="600">this</tspan>.http.get&lt;User&gt;(`/api/users/${id}`)</text>
+  <text x="286" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  }</text>
+  <text x="286" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="286" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// 컴포넌트 — inject() 함수 (Angular 14+)</text>
+  <text x="286" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">@Component({ ... })</text>
+  <text x="286" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export class</tspan> UserComponent {</text>
+  <text x="286" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  userService = inject(UserService) <tspan fill="#9aa4b8">// 생성자 주입 대체</tspan></text>
+  <text x="286" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- Change Detection -->
+  <text x="60" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">변경 감지 전략</text>
+
+  <rect x="60" y="414" width="370" height="60" rx="6" fill="#1a1a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="245" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">Default — Zone.js 기반</text>
+  <text x="245" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">비동기 이벤트마다 전체 트리 검사. 단순하지만 느림</text>
+
+  <rect x="450" y="414" width="400" height="60" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">OnPush — 참조 변경 시만 검사</text>
+  <text x="650" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">immutable 입력 + async pipe. 성능 최적화</text>
+</svg>

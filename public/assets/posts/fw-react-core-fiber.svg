@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">React Fiber — 렌더링 파이프라인</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Render Phase(중단 가능) → Commit Phase(동기)</text>
+
+  <!-- Trigger -->
+  <rect x="60" y="100" width="150" height="56" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="135" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">setState / props</text>
+  <text x="135" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">업데이트 트리거</text>
+
+  <line x1="210" y1="128" x2="255" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Render Phase -->
+  <rect x="260" y="90" width="240" height="76" rx="8" fill="#0d1f2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="380" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">Render Phase</text>
+  <text x="380" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Work Loop — Fiber 트리 구축</text>
+  <text x="380" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">⟳ 중단/재개 가능 (비동기)</text>
+
+  <line x1="500" y1="128" x2="545" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Commit Phase -->
+  <rect x="550" y="90" width="270" height="76" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="685" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">Commit Phase</text>
+  <text x="685" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">DOM 변경 실제 적용</text>
+  <text x="685" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">✗ 중단 불가 (동기)</text>
+
+  <!-- Work Loop detail -->
+  <text x="60" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Work Loop — 우선순위 기반 스케줄링</text>
+
+  <rect x="60" y="225" width="760" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="247" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// React 18: Transition으로 업데이트 우선순위 구분</text>
+  <text x="76" y="267" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan> { startTransition, useTransition } <tspan fill="#7ec8e3" font-weight="600">from</tspan> <tspan fill="#ce9178">'react'</tspan></text>
+  <text x="76" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"></text>
+  <text x="76" y="307" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">const</tspan> [isPending, startTransition] = useTransition()</text>
+  <text x="76" y="327" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">startTransition(() =&gt; setQuery(value)) <tspan fill="#9aa4b8">// 낮은 우선순위</tspan></text>
+
+  <!-- Reconciliation -->
+  <text x="60" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Reconciliation — Diff 알고리즘</text>
+
+  <rect x="60" y="396" width="370" height="96" rx="6" fill="#1a1a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="245" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">key 없는 리스트</text>
+  <text x="245" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">항목 삭제·추가 시 전체 재생성</text>
+  <text x="245" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">인덱스 기반 비교 → 버그 유발</text>
+  <text x="245" y="482" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">성능 저하, 상태 꼬임</text>
+
+  <rect x="450" y="396" width="370" height="96" rx="6" fill="#1a1a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="635" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">key 있는 리스트</text>
+  <text x="635" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">key로 이전 Fiber와 매핑</text>
+  <text x="635" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이동·삭제·삽입만 적용</text>
+  <text x="635" y="482" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">최소 DOM 변경</text>
+</svg>

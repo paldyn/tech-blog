@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Svelte Stores — 전역 상태 관리</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">writable / readable / derived — subscribe 계약</text>
+
+  <!-- writable -->
+  <rect x="60" y="100" width="230" height="60" rx="8" fill="#0d1f2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="124" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3">writable(value)</text>
+  <text x="175" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">읽기/쓰기 스토어</text>
+
+  <!-- readable -->
+  <rect x="325" y="100" width="230" height="60" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="124" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555">readable(value, start)</text>
+  <text x="440" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">외부 소스 연결</text>
+
+  <!-- derived -->
+  <rect x="590" y="100" width="230" height="60" rx="8" fill="#1f1a0d" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="705" y="124" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">derived(stores, fn)</text>
+  <text x="705" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파생 스토어</text>
+
+  <!-- Code blocks -->
+  <rect x="60" y="185" width="370" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="207" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// stores.js</text>
+  <text x="76" y="227" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan> { writable, derived } <tspan fill="#7ec8e3" font-weight="600">from</tspan> <tspan fill="#ce9178">'svelte/store'</tspan></text>
+  <text x="76" y="247" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export const</tspan> count = writable(<tspan fill="#b5cea8">0</tspan>)</text>
+  <text x="76" y="267" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export const</tspan> doubled = derived(</text>
+  <text x="76" y="287" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  count, $c =&gt; $c * <tspan fill="#b5cea8">2</tspan></text>
+  <text x="76" y="307" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">)</text>
+  <text x="76" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// JS에서 구독</text>
+  <text x="76" y="357" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">const</tspan> unsub = count.subscribe(v =&gt; {</text>
+  <text x="76" y="377" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  console.log(v)</text>
+
+  <rect x="450" y="185" width="370" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="207" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">&lt;!-- Component.svelte --&gt;</text>
+  <text x="466" y="227" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan> { count, doubled } <tspan fill="#7ec8e3" font-weight="600">from</tspan> <tspan fill="#ce9178">'./stores'</tspan></text>
+  <text x="466" y="257" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// $ 자동 구독 문법 (템플릿용)</text>
+  <text x="466" y="277" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">&lt;p&gt;&#123;$count&#125; / doubled: &#123;$doubled&#125;&lt;/p&gt;</text>
+  <text x="466" y="297" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">&lt;<tspan fill="#55c555">button</tspan> on:click=&#123;() =&gt; count.update(n =&gt; n+1)&#125;&gt;</text>
+  <text x="466" y="317" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  증가</text>
+  <text x="466" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">&lt;/<tspan fill="#55c555">button</tspan>&gt;</text>
+  <text x="466" y="367" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// $count — 자동 구독·해제</text>
+</svg>
