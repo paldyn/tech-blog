@@ -1,259 +1,194 @@
 ---
-title: "들여쓰기: Python이 공백을 문법으로 삼은 이유"
-description: "Python 들여쓰기 규칙을 설명합니다. 왜 공백이 문법인지, 스페이스 vs 탭, 들여쓰기 수준, 자주 발생하는 IndentationError 해결법을 다룹니다."
+title: "들여쓰기: Python 문법의 핵심"
+description: "Python에서 들여쓰기가 문법 요소인 이유를 설명합니다. IndentationError, TabError의 원인과 해결법, 에디터 설정까지 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-05-09"
+pubDate: "2026-05-19"
 archiveOrder: 10
 type: "knowledge"
 category: "Python"
-tags: ["Python", "들여쓰기", "IndentationError", "문법", "PEP8"]
+tags: ["Python", "들여쓰기", "IndentationError", "TabError", "기초문법"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-comments/)에서 주석 작성법을 살펴봤다. 이번 편에서는 Python을 처음 배우는 사람들이 가장 당황하는 특징 중 하나인 **들여쓰기(indentation)**를 다룬다. 대부분의 언어는 들여쓰기를 가독성을 위한 "권장 스타일"로 본다. 중괄호(`{}`)나 키워드(`begin`/`end`)로 블록을 표시하기 때문에 들여쓰기 없이도 코드가 실행된다. Python은 다르다. 들여쓰기가 **문법(syntax) 그 자체**다. 들여쓰기가 틀리면 코드가 실행되지 않는다.
+[지난 글](/posts/python-comments/)에서 주석을 다뤘다. Python에서 코드를 작성하다 보면 다른 언어와 확연히 다른 점을 마주하게 된다. 중괄호 `{}`가 없다. 그 역할을 들여쓰기가 대신한다. Python에서 들여쓰기는 단순한 미적 선택이 아니라 **문법의 일부**다.
 
-## 왜 Python은 들여쓰기를 문법으로 택했나?
+## 들여쓰기가 블록을 정의한다
 
-Guido van Rossum의 의도는 명확했다. "어차피 읽기 좋은 코드를 쓰려면 들여쓰기를 해야 한다. 그렇다면 이것을 문법으로 강제하면, 모든 Python 코드의 레이아웃이 동일하게 읽기 좋아진다."
+대부분의 언어에서 코드 블록은 중괄호 `{}`로 구분된다. Python은 이 역할을 **들여쓰기(indentation)**가 한다.
 
-C, Java, JavaScript에서는 이런 코드가 문법적으로 유효하다.
+```python
+# 함수 정의
+def greet(name):          # 헤더 (콜론으로 끝남)
+    message = f"안녕, {name}!"  # 블록 시작 (들여쓰기)
+    print(message)             # 같은 블록
+                               # 들여쓰기 끝 = 블록 끝
+
+# 조건문
+if True:
+    print("True 블록")   # if 블록
+    print("여기도 같은 블록")
+print("if 밖 코드")      # 들여쓰기 없음 = 블록 밖
+```
+
+코드 블록이 시작되는 것은 **콜론 `:`** 뒤에서다. `if`, `for`, `while`, `def`, `class` 등 뒤에 콜론이 오면 다음 줄부터 블록이 시작된다. 블록이 끝나는 것은 들여쓰기 수준이 같거나 낮아지는 첫 줄이다.
+
+```python
+for i in range(3):
+    print(i)          # 루프 블록
+    print(i * 2)      # 루프 블록
+print("루프 끝")       # 루프 밖 — 이 줄부터 루프가 종료됨
+```
+
+## 왜 들여쓰기인가
+
+Python을 처음 배우는 사람들이 "왜 중괄호를 안 쓰나요?"라고 물으면 Guido van Rossum의 답은 명확했다. "들여쓰기로 블록을 구분하면 어차피 해야 할 들여쓰기를 강제함으로써 모든 코드가 자연스럽게 읽기 쉬워진다."
+
+C나 Java에서는 이런 코드가 문법적으로 유효하다.
 
 ```c
-// C: 중괄호가 블록을 정의
-if (x > 0) {
-int y = x * 2;
-printf("%d", y);
-}
-// 들여쓰기 없어도 실행된다 (하지만 읽기 매우 어렵다)
+// C: 들여쓰기 없어도 동작 (가독성만 나쁨)
+if(x>0){result=x*2;}else{result=0;}
 ```
 
-Python에서 들여쓰기가 없거나 잘못되면 즉시 `IndentationError`가 발생한다. 코드 스타일이 언어 수준에서 강제된다. 이 철학이 Python 코드베이스가 다른 언어들에 비해 일관되게 읽기 좋은 이유 중 하나다.
+Python에서는 이게 불가능하다. 들여쓰기가 없으면 SyntaxError가 발생한다. 규칙이 강제되기 때문에 Python 코드는 어디서 보든 동일한 구조를 갖는다.
 
-## 기본 규칙: 스페이스 4칸
+![들여쓰기가 만드는 블록 구조](/assets/posts/python-indentation-structure.svg)
 
-PEP 8이 권장하는 들여쓰기 단위는 **스페이스 4칸**이다.
+## 들여쓰기 규칙
+
+PEP 8 기준으로 **스페이스 4칸**이 표준이다.
 
 ```python
-def greet(name):
-    # 함수 본체: 스페이스 4칸
-    if name:
-        # if 블록: 스페이스 8칸 (4 × 2)
-        msg = f"Hello, {name}!"
-        print(msg)
-    else:
-        # else 블록: 스페이스 8칸
-        print("이름을 알 수 없어요")
+# 올바른 들여쓰기: 스페이스 4칸
+def calculate(x):
+    if x > 0:           # 4칸
+        result = x * 2  # 8칸 (중첩)
+    return result       # 4칸
+
+# 중첩 블록
+def nested_example():
+    for i in range(5):       # 4칸
+        if i % 2 == 0:       # 8칸
+            print(f"{i}은 짝수")  # 12칸
 ```
 
-들여쓰기 수준이 하나 늘어날 때마다 4칸씩 증가한다. 시각적으로 코드 블록의 깊이를 즉시 알 수 있다.
+들여쓰기 수준이 일관성이 있으면 2칸, 3칸도 작동한다. 그러나 **같은 파일에서 혼용하면 안 된다**. PEP 8에서 4칸을 권장하는 이유는 가독성과 중첩 처리의 균형 때문이다.
 
-![Python 들여쓰기 규칙](/assets/posts/python-indentation-rules.svg)
+## 흔한 오류들
 
-## 들여쓰기로 블록 구조 표현
-
-Python에서 들여쓰기는 블록(block)의 시작과 끝을 나타낸다. `:`으로 끝나는 문장 다음 줄부터 들여쓰기가 시작되고, 이전 수준으로 돌아오면 블록이 끝난다.
+들여쓰기 관련 오류는 Python 입문자가 가장 자주 만나는 오류다.
 
 ```python
-# 블록을 만드는 문장들: if, for, while, def, class, with, try...
-def process_data(items):
-    results = []
+# IndentationError: expected an indented block
+def greet():
+    # 이 줄이 비어있으면 함수 본문이 없음
+# → 해결: pass나 실제 코드 추가
 
-    for item in items:              # for 블록 시작
-        if item > 0:                # if 블록 시작
-            processed = item * 2
-            results.append(processed)
-        else:                       # if 블록 끝, else 블록 시작
-            results.append(0)
-                                    # else 블록 끝 (들여쓰기 감소)
+def greet():
+    pass  # 빈 블록은 pass로 채움
 
-    return results                  # for 블록 끝 (함수 수준으로 복귀)
+# IndentationError: unexpected indent
+x = 10
+    y = 20  # 이유 없이 들여쓴 경우
+# → 해결: 들여쓰기 제거
+
+# IndentationError: unindent does not match
+def process():
+    if True:
+        x = 1
+       y = 2  # 3칸은 어느 레벨도 아님
+# → 해결: 일관된 들여쓰기 사용
 ```
 
-같은 들여쓰기 수준의 코드는 같은 블록에 속한다. 들여쓰기 수준이 줄어드는 것이 블록의 종료 신호다. `}`나 `end` 키워드가 필요 없다.
+![들여쓰기 오류 유형과 해결](/assets/posts/python-indentation-errors.svg)
 
-## 스페이스 vs 탭: 오래된 논쟁
+## 탭 vs 스페이스
 
-들여쓰기에 스페이스를 쓸지 탭을 쓸지는 프로그래머들 사이의 오랜 논쟁이다. Python의 공식 답변은 명확하다. **스페이스를 사용하라.**
-
-```python
-# 스페이스 4칸: PEP 8 권장
-def good():
-    x = 1  # 실제로 스페이스 4개
-
-# 탭: 허용되지만 비권장
-def ok_but_not_recommended():
-	x = 1  # 탭 문자 1개
-```
-
-탭과 스페이스를 혼용하면 Python 3에서는 `TabError`가 즉시 발생한다.
+탭과 스페이스를 혼용하면 `TabError`가 발생한다. Python 3는 탭과 스페이스 혼용을 허용하지 않는다.
 
 ```python
-# TabError 유발 코드 (섞어서 사용)
+# Python 3: 탭과 스페이스 혼용 → TabError
 def mixed():
-    x = 1  # 스페이스 4개
-	y = 2  # 탭 1개
-# TabError: inconsistent use of tabs and spaces
+    a = 1    # 스페이스 4칸
+	b = 2    # 탭 1개 → TabError!
+
+# 해결: 둘 중 하나만 사용 (스페이스 4칸 권장)
+def consistent():
+    a = 1    # 스페이스 4칸
+    b = 2    # 스페이스 4칸 ✓
 ```
 
-탭 키를 누를 때 스페이스로 자동 변환되도록 에디터를 설정하면 이 문제를 원천 차단할 수 있다.
+모든 현대 에디터는 탭 키를 스페이스로 변환하는 옵션을 제공한다.
 
-**VS Code**: `settings.json` → `"editor.insertSpaces": true`, `"editor.tabSize": 4`
-**PyCharm**: Settings → Editor → Code Style → Python → Tabs and Indents
+```
+# VS Code settings.json
+"editor.insertSpaces": true,
+"editor.tabSize": 4,
+"editor.detectIndentation": false  // 파일마다 다른 설정 방지
 
-## 자주 발생하는 들여쓰기 오류
-
-![들여쓰기 오류 유형](/assets/posts/python-indentation-errors.svg)
-
-### IndentationError: unexpected indent
-
-블록 없이 들여쓰기가 되어 있을 때.
-
-```python
-x = 5
-    y = 10  # ← 왜 들여쓰기가 되어 있는가?
-# IndentationError: unexpected indent
+# .editorconfig (팀 공유용)
+[*.py]
+indent_style = space
+indent_size = 4
 ```
 
-`if`, `for`, `def` 등 블록을 만드는 문장 없이 들여쓰기하면 발생한다. 들여쓰기 단계를 제거하면 해결된다.
+## 연속 줄에서의 들여쓰기
 
-### IndentationError: expected an indented block
-
-블록을 시작하는 문장(`def`, `if`, `for` 등) 다음에 들여쓰기된 코드가 없을 때.
+긴 표현식을 여러 줄로 나눌 때 들여쓰기 규칙이 조금 다르다.
 
 ```python
-def do_something():
-# 아무것도 없음
-x = 1  # 블록 밖으로 나와버림
-# IndentationError: expected an indented block after function definition
-```
-
-빈 블록이 필요하다면 `pass` 또는 `...`을 사용한다.
-
-```python
-def not_yet_implemented():
-    pass  # 나중에 구현할 예정
-
-def also_empty():
-    ...   # pass와 동일한 역할
-```
-
-### IndentationError: unindent does not match any outer indentation level
-
-들여쓰기 수준이 기존 블록과 맞지 않을 때.
-
-```python
-def calculate():
-    x = 1
-        y = 2  # 8칸 들여쓰기 (4칸 블록 안에서 8칸?)
-    return x + y
-# IndentationError: unexpected indent
-```
-
-들여쓰기는 항상 4칸 단위로 늘리고 줄여야 한다.
-
-## 긴 식(expression)의 들여쓰기
-
-한 줄이 너무 길 때 줄을 바꾸면서 들여쓰기를 어떻게 처리해야 할까?
-
-```python
-# 괄호 안에서 줄 바꿈: 열린 괄호 기준으로 정렬
-result = some_function(
-    argument_one,
-    argument_two,
-    keyword=value,
+# 괄호 안에서는 들여쓰기가 자유로움
+result = (
+    first_value
+    + second_value
+    + third_value
 )
 
-# 또는 4칸 추가 들여쓰기
-result = some_function(
-        argument_one,  # 함수 호출 기준 4칸 더
-        argument_two,
+# 함수 호출 인자
+long_function(
+    arg1,
+    arg2,
+    arg3,
 )
 
-# if문의 긴 조건
-if (condition_one
-        and condition_two
-        and condition_three):
-    do_something()
-
-# 리스트, 딕셔너리
-items = [
-    "item_one",
-    "item_two",
-    "item_three",
-]
-
+# 딕셔너리
 config = {
     "host": "localhost",
-    "port": 5432,
-    "database": "mydb",
+    "port": 8080,
+    "debug": True,
 }
 ```
 
-PEP 8은 두 가지 스타일을 허용한다. 열린 구분자에 맞추거나, 4칸을 추가로 들여쓰는 것. 프로젝트 내에서 일관되게 사용하면 된다.
+괄호 `()`, 대괄호 `[]`, 중괄호 `{}` 안에서는 줄이 바뀌어도 자동으로 연속된 표현식으로 처리된다. 이런 경우 들여쓰기는 가독성을 위한 것이지 블록을 정의하는 것이 아니다.
 
-## 들여쓰기와 가독성
+## 빈 블록: pass
 
-Python 코드에서 들여쓰기 깊이가 깊어질수록 코드가 복잡해진다는 신호다. 들여쓰기가 4~5단계를 넘어가면 함수를 분리하거나 로직을 단순화하는 것을 고려해야 한다.
+Python에서 블록은 반드시 최소 하나의 실행 가능한 문(statement)을 가져야 한다. 나중에 채울 생각으로 빈 블록을 만들 때는 `pass`를 사용한다.
 
 ```python
-# 과도한 중첩 (피하라)
-def process(data):
-    if data:
-        for item in data:
-            if item.is_valid():
-                for sub in item.children:
-                    if sub.active:
-                        result = sub.process()
-                        if result:
-                            save(result)
+# 아직 구현하지 않은 함수
+def future_feature():
+    pass  # 나중에 구현
 
-# 개선: 조기 반환(early return)과 함수 분리
-def process_item(item):
-    if not item.is_valid():
-        return
-    for sub in item.children:
-        if sub.active:
-            result = sub.process()
-            if result:
-                save(result)
+# 빈 클래스 뼈대
+class EmptyClass:
+    pass
 
-def process(data):
-    if not data:
-        return
-    for item in data:
-        process_item(item)
+# 특정 예외를 무시할 때 (드물게 사용)
+try:
+    risky_operation()
+except SpecificError:
+    pass  # 이 오류는 의도적으로 무시
 ```
 
-들여쓰기를 줄이는 것이 곧 복잡도를 줄이는 것이다. 조기 반환(early return)을 적극 활용하면 들여쓰기 중첩을 줄일 수 있다.
-
-## 들여쓰기 자동화 도구
-
-현대적인 IDE와 에디터는 들여쓰기를 자동으로 관리한다.
-
-```bash
-# black: 들여쓰기 포함 자동 포매팅
-black my_file.py
-
-# ruff: 빠른 포매터
-ruff format my_file.py
-
-# autopep8: PEP 8 준수 자동 수정
-pip install autopep8
-autopep8 --in-place my_file.py
-```
-
-이 도구들을 파일 저장 시 자동 실행되도록 에디터에 설정해두면 들여쓰기 오류를 원천 차단할 수 있다.
-
-## 정리: 들여쓰기는 Python의 정체성
-
-Python이 들여쓰기를 문법으로 사용하는 것은 "강제로 읽기 좋은 코드를 쓰게 하는" 철학적 결정이다. 처음에는 낯설고 불편할 수 있지만, 익숙해지면 Python 코드의 일관된 레이아웃이 얼마나 읽기 편한지 느끼게 된다. 다른 언어의 코드베이스를 보면 사람마다 들여쓰기 스타일이 제각각이라 오히려 불편함을 느낄 것이다.
-
-스페이스 4칸을 사용하고, 탭과 섞지 않고, 들여쓰기 수준을 일관되게 유지하는 것. 이것이 Python 들여쓰기의 전부다. 에디터 설정을 한 번만 올바르게 해두면 나머지는 자동으로 해결된다.
+이렇게 들여쓰기는 Python의 핵심 문법 요소다. 처음에는 낯설 수 있지만, 일관된 코드 구조를 강제함으로써 결국 더 읽기 쉬운 코드를 만드는 데 기여한다.
 
 ---
 
 **지난 글:** [주석 완전 정복: 좋은 주석과 나쁜 주석](/posts/python-comments/)
+
+**다음 글:** [input()과 print(): 표준 입출력 완전 정복](/posts/python-input-print/)
 
 <br>
 읽어주셔서 감사합니다. 😊
