@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">트리거 작성 예시 — 감사 로그</text>
+
+  <!-- Left: AFTER UPDATE for audit -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">AFTER UPDATE — 변경 이력 자동 기록</text>
+  <rect x="40" y="88" width="380" height="272" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">CREATE TRIGGER</text>
+  <text x="196" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> trg_members_audit</text>
+  <text x="56" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">AFTER UPDATE ON</text>
+  <text x="206" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> members</text>
+  <text x="56" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FOR EACH ROW</text>
+  <text x="56" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">BEGIN</text>
+  <text x="56" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  IF</text>
+  <text x="84" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> NEW.points &lt;&gt; OLD.points </text>
+  <text x="56" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  THEN</text>
+  <text x="56" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    INSERT INTO</text>
+  <text x="166" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> member_audit</text>
+  <text x="56" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      (member_id, old_pts, new_pts,</text>
+  <text x="56" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">       changed_by, changed_at)</text>
+  <text x="56" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    VALUES</text>
+  <text x="56" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      (NEW.id, OLD.points, NEW.points,</text>
+  <text x="56" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">       USER(), NOW());</text>
+  <text x="56" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  END IF</text>
+  <text x="56" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">END</text>
+
+  <!-- Right: BEFORE INSERT for validation -->
+  <text x="460" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">BEFORE INSERT — 값 검증 및 자동 설정</text>
+  <rect x="440" y="88" width="400" height="272" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="456" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">CREATE TRIGGER</text>
+  <text x="596" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> trg_order_before_ins</text>
+  <text x="456" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">BEFORE INSERT ON</text>
+  <text x="610" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> orders</text>
+  <text x="456" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FOR EACH ROW</text>
+  <text x="456" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">BEGIN</text>
+  <text x="456" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  -- 음수 금액 거부</text>
+  <text x="456" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  IF</text>
+  <text x="484" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> NEW.amount &lt; </text>
+  <text x="596" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">0</text>
+  <text x="608" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600"> THEN</text>
+  <text x="456" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    SIGNAL SQLSTATE</text>
+  <text x="604" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178"> '45000'</text>
+  <text x="456" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      SET MESSAGE_TEXT =</text>
+  <text x="456" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">           '금액은 0 이상'</text>
+  <text x="456" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  END IF</text>
+  <text x="456" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  -- 기본 status 자동 설정</text>
+  <text x="456" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  IF</text>
+  <text x="484" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> NEW.status </text>
+  <text x="560" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">IS NULL THEN</text>
+  <text x="456" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    SET</text>
+  <text x="496" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> NEW.status = </text>
+  <text x="600" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'pending'</text>
+  <text x="456" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  END IF</text>
+
+  <!-- Bottom: show / drop -->
+  <rect x="40" y="378" width="800" height="0" fill="none"/>
+</svg>

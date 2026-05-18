@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">MySQL 조인 알고리즘 비교</text>
+
+  <!-- === LEFT: Nested Loop === -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">Nested Loop Join (NLJ)</text>
+
+  <!-- Driving table -->
+  <rect x="40" y="92" width="160" height="52" fill="#0e1a2e" rx="6" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="120" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Driving Table</text>
+  <text x="120" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">customers (100행)</text>
+
+  <!-- Arrow: per row -->
+  <line x1="200" y1="118" x2="250" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="225" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">행마다</text>
+
+  <!-- Inner table (with index) -->
+  <rect x="250" y="92" width="160" height="52" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="330" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">Inner Table</text>
+  <text x="330" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">orders + PK 인덱스</text>
+
+  <!-- Result -->
+  <rect x="430" y="92" width="100" height="52" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="480" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">결과</text>
+  <text x="480" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">100 × 1 룩업</text>
+  <line x1="410" y1="118" x2="430" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- NLJ characteristics -->
+  <rect x="40" y="158" width="500" height="52" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="290" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">최적 조건: Inner 테이블에 조인 키 인덱스 존재</text>
+  <text x="290" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">복잡도: O(N × M/선택도) → 인덱스 있으면 O(N × log M)</text>
+
+  <!-- === MIDDLE: BNL === -->
+  <text x="60" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e0aa55">Block Nested Loop (BNL) — 8.0.20 이전</text>
+
+  <rect x="40" y="252" width="140" height="52" fill="#1e1a0a" rx="6" stroke="#e0aa55" stroke-width="1.5"/>
+  <text x="110" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e0aa55" text-anchor="middle">Driving</text>
+  <text x="110" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">배치 버퍼에 적재</text>
+
+  <!-- join_buffer -->
+  <rect x="200" y="252" width="160" height="52" fill="#1e1a0a" rx="6" stroke="#e0aa55" stroke-width="1.5"/>
+  <text x="280" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e0aa55" text-anchor="middle">join_buffer</text>
+  <text x="280" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">메모리에 블록 적재</text>
+  <line x1="180" y1="278" x2="200" y2="278" stroke="#e0aa55" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Inner scan -->
+  <rect x="380" y="252" width="160" height="52" fill="#2a1a1a" rx="6" stroke="#e05555" stroke-width="1.5"/>
+  <text x="460" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">Inner 전체 스캔</text>
+  <text x="460" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">블록과 비교 (인덱스 불필요)</text>
+  <line x1="360" y1="278" x2="380" y2="278" stroke="#e0aa55" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="40" y="318" width="520" height="44" fill="#1e1a0a" rx="6" stroke="#e0aa55" stroke-width="1"/>
+  <text x="300" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e0aa55" text-anchor="middle">8.0.20부터 BNL 제거 → Hash Join으로 대체. Extra: Using join buffer (hash join)</text>
+  <text x="300" y="355" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">join_buffer_size 크면 블록 횟수 줄어 성능 향상</text>
+
+  <!-- === RIGHT: Hash Join === -->
+  <text x="60" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">Hash Join (8.0.18+)</text>
+
+  <rect x="40" y="404" width="140" height="52" fill="#0e1a2e" rx="6" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="110" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Build Phase</text>
+  <text x="110" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">작은 테이블로 해시 맵</text>
+
+  <line x1="180" y1="430" x2="210" y2="430" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="210" y="404" width="160" height="52" fill="#0e1a2e" rx="6" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="290" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Hash Map</text>
+  <text x="290" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">join_buffer에 보관</text>
+
+  <line x1="370" y1="430" x2="400" y2="430" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="400" y="404" width="160" height="52" fill="#0e1a2e" rx="6" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="480" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Probe Phase</text>
+  <text x="480" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">큰 테이블 스캔하며</text>
+  <text x="480" y="455" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">해시 맵 조회</text>
+
+  <rect x="40" y="468" width="760" height="36" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="420" y="482" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">Hash Join: 인덱스 없는 대용량 조인에 유리 / 복잡도 O(N+M) / join_buffer_size 메모리 필요</text>
+  <text x="420" y="497" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">join_buffer 초과 시 온디스크 Hash Join으로 전환 (느려짐)</text>
+</svg>

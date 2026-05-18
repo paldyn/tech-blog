@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">옵티마이저 힌트 vs SET_VAR 힌트 비교</text>
+
+  <!-- Left panel: Optimizer hints -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">옵티마이저 힌트 — 특정 쿼리 제어</text>
+  <rect x="40" y="90" width="380" height="240" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 인덱스 강제 지정</text>
+  <text x="56" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
+  <text x="116" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"> /*+ INDEX(o idx_created) */</text>
+  <text x="56" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  * </text>
+  <text x="80" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
+  <text x="120" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> orders o</text>
+  <text x="56" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">WHERE</text>
+  <text x="112" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> o.created_at &gt; </text>
+  <text x="248" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'2024-01-01'</text>
+  <text x="56" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 조인 순서 지정</text>
+  <text x="56" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
+  <text x="116" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"> /*+ JOIN_ORDER(c, o) */</text>
+  <text x="56" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  c.name, COUNT(*) cnt</text>
+  <text x="56" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
+  <text x="96" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> customers c </text>
+  <text x="56" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">JOIN</text>
+  <text x="96" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> orders o </text>
+  <text x="182" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ON</text>
+  <text x="206" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> o.cust_id = c.id</text>
+  <text x="56" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">GROUP BY</text>
+  <text x="144" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> c.name</text>
+
+  <!-- Right panel: SET_VAR -->
+  <text x="460" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">SET_VAR — 세션 변수 임시 변경</text>
+  <rect x="440" y="90" width="400" height="240" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="456" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 쿼리 실행 중 sort_buffer 일시 확대</text>
+  <text x="456" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
+  <text x="516" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"> /*+ SET_VAR(</text>
+  <text x="624" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sort_buffer_size</text>
+  <text x="760" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">=</text>
+  <text x="770" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">16777216</text>
+  <text x="860" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">) */</text>
+  <text x="456" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  *</text>
+  <text x="472" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600"> FROM</text>
+  <text x="516" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> large_table</text>
+  <text x="456" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ORDER BY</text>
+  <text x="548" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> col1, col2, col3</text>
+  <text x="456" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 해당 쿼리 실행 중에만 적용</text>
+  <text x="456" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 쿼리 종료 후 세션 값 복원</text>
+  <text x="456" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- SET 명령 불필요, 세션 간섭 없음</text>
+
+  <!-- Bottom: comparison table -->
+  <rect x="40" y="352" width="185" height="76" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="132" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">옵티마이저 힌트</text>
+  <text x="132" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">실행 계획 구조 제어</text>
+  <text x="132" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스·조인·변환 힌트</text>
+
+  <rect x="240" y="352" width="185" height="76" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="332" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">SET_VAR 힌트</text>
+  <text x="332" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">쿼리 수준 세션 변수 변경</text>
+  <text x="332" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">sort/join 버퍼 임시 확대</text>
+
+  <rect x="440" y="352" width="400" height="76" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">힌트 우선순위</text>
+  <text x="640" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">힌트 &gt; SET_VAR &gt; optimizer_switch 변수 &gt; 기본 옵티마이저</text>
+  <text x="640" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">여러 힌트 충돌 시 더 세밀한 쪽이 우선</text>
+</svg>

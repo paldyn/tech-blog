@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">MySQL 트리거 실행 타이밍</text>
+
+  <!-- DML statement box -->
+  <rect x="340" y="66" width="200" height="48" fill="#0e1a2e" rx="8" stroke="#3a5a8e" stroke-width="2"/>
+  <text x="440" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">DML 문 실행</text>
+  <text x="440" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">INSERT / UPDATE / DELETE</text>
+
+  <!-- BEFORE triggers -->
+  <rect x="60" y="150" width="280" height="60" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="200" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">BEFORE 트리거</text>
+  <text x="200" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">NEW 값 수정 가능 / 검증 / 거부(SIGNAL)</text>
+
+  <!-- Arrow: DML → BEFORE -->
+  <line x1="340" y1="100" x2="220" y2="150" stroke="#55c555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-g)"/>
+  <text x="255" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">1. BEFORE</text>
+
+  <!-- Actual row change -->
+  <rect x="320" y="150" width="240" height="60" fill="#0e1a2e" rx="8" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">실제 행 변경</text>
+  <text x="440" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">InnoDB 버퍼에 기록 (아직 COMMIT 아님)</text>
+
+  <!-- Arrow: BEFORE done → row change -->
+  <line x1="340" y1="180" x2="320" y2="180" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="330" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">2.</text>
+
+  <!-- AFTER triggers -->
+  <rect x="540" y="150" width="280" height="60" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="680" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">AFTER 트리거</text>
+  <text x="680" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">감사 로그 / 파생 데이터 업데이트</text>
+
+  <!-- Arrow: row change → AFTER -->
+  <line x1="560" y1="180" x2="540" y2="180" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="555" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">3.</text>
+
+  <!-- OLD / NEW reference -->
+  <text x="60" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">OLD / NEW 레퍼런스</text>
+
+  <rect x="60" y="264" width="360" height="80" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="240" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">OLD</text>
+  <text x="240" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">변경 전 값 (UPDATE, DELETE에서 사용 가능)</text>
+  <text x="240" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">INSERT에서는 OLD 없음</text>
+  <text x="240" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">READ ONLY</text>
+
+  <rect x="440" y="264" width="400" height="80" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="640" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">NEW</text>
+  <text x="640" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">변경 후 값 (INSERT, UPDATE에서 사용 가능)</text>
+  <text x="640" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">DELETE에서는 NEW 없음</text>
+  <text x="640" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">BEFORE 트리거에서 SET NEW.col = val 수정 가능</text>
+
+  <!-- Trigger constraints -->
+  <text x="60" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">트리거 제약 사항</text>
+
+  <rect x="60" y="392" width="220" height="44" fill="#2a1a1a" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="170" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">트리거 내 COMMIT/ROLLBACK 금지</text>
+  <text x="170" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">트랜잭션 제어 불가</text>
+
+  <rect x="296" y="392" width="220" height="44" fill="#2a1a1a" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="406" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">같은 테이블 수정 금지</text>
+  <text x="406" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">트리거 자체 테이블 변경 불가</text>
+
+  <rect x="532" y="392" width="308" height="44" fill="#2a1a1a" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="686" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">이벤트당 BEFORE/AFTER 각 1개</text>
+  <text x="686" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">8.0.2+: 동일 이벤트 여러 트리거 가능 (FOLLOWS/PRECEDES)</text>
+</svg>

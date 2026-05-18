@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Derived Table Merge vs Materialization</text>
+
+  <!-- ===== LEFT: NO MERGE (Materialization) ===== -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e0aa55">Materialization (병합 X — 구버전 기본)</text>
+
+  <!-- Step 1: execute subquery -->
+  <rect x="40" y="90" width="360" height="52" fill="#1e1a0a" rx="6" stroke="#e0aa55" stroke-width="1.5"/>
+  <text x="220" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">① FROM 서브쿼리 전체 실행</text>
+  <text x="220" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">SELECT status, COUNT(*) cnt FROM orders GROUP BY status</text>
+
+  <line x1="220" y1="142" x2="220" y2="162" stroke="#e0aa55" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: temp table -->
+  <rect x="40" y="162" width="360" height="52" fill="#1e1a0a" rx="6" stroke="#e0aa55" stroke-width="1.5"/>
+  <text x="220" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e0aa55" text-anchor="middle">② 임시 테이블 생성 (전체 결과 저장)</text>
+  <text x="220" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Extra: Using temporary</text>
+
+  <line x1="220" y1="214" x2="220" y2="234" stroke="#e0aa55" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: scan temp + filter -->
+  <rect x="40" y="234" width="360" height="52" fill="#1e1a0a" rx="6" stroke="#e0aa55" stroke-width="1.5"/>
+  <text x="220" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e0aa55" text-anchor="middle">③ 임시 테이블 스캔 + WHERE 필터</text>
+  <text x="220" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">WHERE cnt > 100 → 외부에서 필터</text>
+
+  <!-- ===== RIGHT: MERGE ===== -->
+  <text x="480" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">Derived Merge (병합 O — 5.7.6+ 기본)</text>
+
+  <!-- Step 1: parse -->
+  <rect x="460" y="90" width="380" height="52" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">① 파서가 서브쿼리를 외부 쿼리에 병합</text>
+  <text x="650" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">논리적으로 하나의 쿼리로 재작성</text>
+
+  <line x1="650" y1="142" x2="650" y2="162" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Step 2: push condition down -->
+  <rect x="460" y="162" width="380" height="52" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">② Condition Pushdown — 조건이 안으로 이동</text>
+  <text x="650" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">HAVING cnt > 100 → 인덱스·필터 활용 가능</text>
+
+  <line x1="650" y1="214" x2="650" y2="234" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Step 3: execute merged -->
+  <rect x="460" y="234" width="380" height="52" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">③ 병합된 단일 쿼리 실행</text>
+  <text x="650" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">임시 테이블 없음, select_type: SIMPLE</text>
+
+  <!-- Merge fails when -->
+  <text x="60" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">병합 불가 조건 (항상 Materialization)</text>
+
+  <rect x="40" y="330" width="240" height="44" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="160" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0aa55" text-anchor="middle">UNION / UNION ALL 포함</text>
+  <text x="160" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">집합 연산자 서브쿼리</text>
+
+  <rect x="296" y="330" width="240" height="44" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="416" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0aa55" text-anchor="middle">GROUP BY 또는 집계 함수</text>
+  <text x="416" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">집계 결과 서브쿼리</text>
+
+  <rect x="552" y="330" width="288" height="44" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="696" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0aa55" text-anchor="middle">LIMIT / DISTINCT / window fn</text>
+  <text x="696" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">순서/중복 결정 불가 서브쿼리</text>
+
+  <!-- Note -->
+  <rect x="40" y="392" width="800" height="60" fill="#0e1a2e" rx="6" stroke="#3a5a8e" stroke-width="1"/>
+  <text x="440" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" text-anchor="middle">EXPLAIN에서 확인: select_type = DERIVED → Materialization / SIMPLE → Merge 성공</text>
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">NO_MERGE(sub) 힌트로 강제 Materialization 가능 / MERGE(sub)로 강제 병합 가능</text>
+  <text x="440" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">optimizer_switch='derived_merge=on' (기본 ON in 5.7.6+)</text>
+</svg>

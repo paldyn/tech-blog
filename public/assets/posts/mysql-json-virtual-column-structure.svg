@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">MySQL JSON 타입과 가상 컬럼</text>
+
+  <!-- JSON vs VARCHAR comparison -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">JSON 타입 vs VARCHAR 저장</text>
+
+  <rect x="40" y="90" width="360" height="120" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="220" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">VARCHAR(TEXT) JSON 저장</text>
+  <text x="220" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">문자열 그대로 저장</text>
+  <text x="220" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">형식 검증 없음 — 잘못된 JSON도 저장</text>
+  <text x="220" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">JSON_VALUE() 조회 시 매번 파싱</text>
+  <text x="220" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">인덱스 직접 생성 불가</text>
+
+  <rect x="440" y="90" width="400" height="120" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">JSON 네이티브 타입</text>
+  <text x="640" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">이진 최적화 형식(BSON-like)으로 저장</text>
+  <text x="640" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">삽입 시 형식 자동 검증 — 잘못된 JSON 거부</text>
+  <text x="640" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">파싱 없이 경로 접근 (부분 업데이트 가능)</text>
+  <text x="640" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">생성 컬럼 + 인덱스로 특정 경로 인덱스 가능</text>
+
+  <!-- Virtual column explanation -->
+  <text x="60" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">가상 컬럼 (Generated Column)</text>
+
+  <rect x="40" y="252" width="360" height="80" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="220" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">VIRTUAL (가상)</text>
+  <text x="220" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">디스크 저장 안 함 — 읽을 때 계산</text>
+  <text x="220" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">INSERT/UPDATE 부하 없음, 조회 시 계산 비용</text>
+  <text x="220" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0aa55" text-anchor="middle">인덱스 생성 가능 (인덱스만 디스크 저장)</text>
+
+  <rect x="440" y="252" width="400" height="80" fill="#0b1520" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="640" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">STORED (저장)</text>
+  <text x="640" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">디스크에 저장 — 읽기 시 계산 불필요</text>
+  <text x="640" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">INSERT/UPDATE 시 계산·저장 비용</text>
+  <text x="640" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">인덱스 + 파티셔닝 기준으로 사용 가능</text>
+
+  <!-- JSON path operators -->
+  <text x="60" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">JSON 경로 접근 연산자</text>
+
+  <rect x="40" y="380" width="360" height="56" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="220" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">col-&gt;'$.key'</text>
+  <text x="220" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">JSON_EXTRACT 단축형 — 따옴표 포함 반환</text>
+  <text x="220" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">예: data-&gt;'$.name' → "홍길동"</text>
+
+  <rect x="440" y="380" width="400" height="56" fill="#0e1420" rx="6" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="640" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">col->>'$.key'</text>
+  <text x="640" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">JSON_UNQUOTE(JSON_EXTRACT) — 따옴표 제거</text>
+  <text x="640" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">예: data->>'$.name' → 홍길동 (순수 문자열)</text>
+</svg>
