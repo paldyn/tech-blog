@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CSRF 공격 흐름</text>
+
+  <!-- Actors row -->
+  <!-- Victim browser -->
+  <rect x="60" y="80" width="160" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="140" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">피해자 브라우저</text>
+  <text x="140" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Nexacro N 앱 로그인 중</text>
+
+  <!-- Nexacro Server -->
+  <rect x="360" y="80" width="160" height="56" rx="8" fill="#1a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Nexacro 서버</text>
+  <text x="440" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">세션 쿠키 관리</text>
+
+  <!-- Attacker Site -->
+  <rect x="660" y="80" width="160" height="56" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="740" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">공격자 사이트</text>
+  <text x="740" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">악성 페이지</text>
+
+  <!-- Step 1: 피해자 방문 공격자 사이트 -->
+  <line x1="220" y1="105" x2="654" y2="105" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="440" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">① 악성 페이지 방문</text>
+
+  <!-- Step 2: 악성 요청 위조 -->
+  <path d="M 740 136 Q 740 200 440 200" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arr-red)"/>
+  <text x="620" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">② 위조 요청 트리거</text>
+
+  <!-- Step 3: 피해자 브라우저 → 서버 (자동 쿠키 전송) -->
+  <path d="M 220 130 Q 220 230 354" stroke="#e05555" stroke-width="2" fill="none"/>
+  <line x1="305" y1="240" x2="356" y2="240" stroke="#e05555" stroke-width="2"
+        marker-end="url(#arr-red)"/>
+  <text x="270" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">③ 세션쿠키 자동 포함</text>
+  <text x="270" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">피해자 권한으로 실행</text>
+
+  <!-- Victim area label -->
+  <rect x="60" y="210" width="280" height="70" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  <text x="200" y="233" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#888" text-anchor="middle">피해자 브라우저 행동</text>
+  <text x="200" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">this.transaction("update", ...) 위조 실행</text>
+  <text x="200" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">피해자는 아무것도 모름</text>
+
+  <!-- Server response -->
+  <rect x="360" y="210" width="280" height="70" rx="6" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="500" y="233" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">서버 처리 결과</text>
+  <text x="500" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">세션 유효 → 정상 처리로 오인</text>
+  <text x="500" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">계좌이체·정보변경 등 실행</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="320" x2="820" y2="320" stroke="#222" stroke-width="1"/>
+
+  <!-- Defense Section -->
+  <text x="440" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">방어 전략 개요</text>
+
+  <!-- Defense boxes -->
+  <rect x="60" y="364" width="180" height="80" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="150" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">CSRF 토큰</text>
+  <text x="150" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">서버 발급 난수 토큰</text>
+  <text x="150" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">매 요청 검증</text>
+
+  <rect x="260" y="364" width="180" height="80" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="350" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">SameSite 쿠키</text>
+  <text x="350" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Strict / Lax 설정</text>
+  <text x="350" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">크로스사이트 전송 차단</text>
+
+  <rect x="460" y="364" width="180" height="80" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="550" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Referer 검증</text>
+  <text x="550" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Origin 헤더 확인</text>
+  <text x="550" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">허용 도메인 화이트리스트</text>
+
+  <rect x="660" y="364" width="160" height="80" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Double Submit</text>
+  <text x="740" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">쿠키+헤더 동시 전송</text>
+  <text x="740" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">값 일치 여부 비교</text>
+</svg>
