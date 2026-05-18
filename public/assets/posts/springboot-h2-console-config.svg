@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- 배경 -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">H2 Console — 핵심 설정과 Security 통합</text>
+
+  <!-- 왼쪽: application.yml 설정 -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">application-dev.yml</text>
+  <rect x="60" y="92" width="380" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">spring:</text>
+  <text x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  datasource:</text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    url: jdbc:h2:mem:testdb</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">        ;MODE=MySQL</text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">        ;DB_CLOSE_DELAY=-1</text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    driver-class-name:</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">      org.h2.Driver</text>
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  h2.console:</text>
+  <text x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    enabled: true</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    path: /h2-console</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    settings.web-allow-others: false</text>
+
+  <!-- 오른쪽: SecurityConfig -->
+  <text x="460" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">SecurityConfig.java (dev 전용)</text>
+  <rect x="460" y="92" width="400" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">@Profile("dev")</text>
+  <text x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">@Configuration</text>
+  <text x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">public class</text>
+  <text x="544" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> H2SecurityConfig {</text>
+  <text x="476" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  @Bean SecurityFilterChain</text>
+  <text x="476" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  h2Console(HttpSecurity http)</text>
+  <text x="476" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">      throws Exception {</text>
+  <text x="476" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    http.securityMatcher(</text>
+  <text x="476" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">      "/h2-console/**")</text>
+  <text x="476" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">      .authorizeHttpRequests(</text>
+  <text x="476" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        a -> a.anyRequest().permitAll())</text>
+  <text x="476" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">      .csrf(c -> c.disable())</text>
+  <text x="476" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">      .headers(h -> h.frameOptions(</text>
+
+  <!-- 하단 설명 박스들 -->
+  <rect x="60" y="336" width="180" height="92" rx="8" fill="#1a2030" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="150" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">DB_CLOSE_DELAY=-1</text>
+  <text x="150" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">커넥션 없어도</text>
+  <text x="150" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">DB를 유지</text>
+  <text x="150" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">(테스트 중 재사용)</text>
+
+  <rect x="260" y="336" width="180" height="92" rx="8" fill="#1a2030" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="350" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">MODE=MySQL</text>
+  <text x="350" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">MySQL 문법 호환</text>
+  <text x="350" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">AUTO_INCREMENT,</text>
+  <text x="350" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">LIMIT 등 지원</text>
+
+  <rect x="460" y="336" width="180" height="92" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="1"/>
+  <text x="550" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">csrf.disable()</text>
+  <text x="550" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">H2 Console은</text>
+  <text x="550" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">iframe 기반</text>
+  <text x="550" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">→ CSRF + X-Frame 해제</text>
+
+  <rect x="660" y="336" width="180" height="92" rx="8" fill="#200a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="750" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">@Profile("dev")</text>
+  <text x="750" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">prod 프로파일에서</text>
+  <text x="750" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Bean 자체가 생성</text>
+  <text x="750" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">되지 않음</text>
+</svg>

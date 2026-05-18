@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-w" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" marketHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">@Transactional 3대 함정과 해법</text>
+
+  <!-- 함정 1: 자기 호출 -->
+  <rect x="60" y="70" width="240" height="200" rx="10" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="180" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">함정 1 — 자기 호출</text>
+  <text x="180" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Self-invocation: 프록시 우회</text>
+
+  <rect x="76" y="126" width="208" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">public class Svc {</text>
+  <text x="92" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  public void outer() {</text>
+  <text x="92" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">    inner(); // ← 프록시 우회!</text>
+  <text x="92" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">  }</text>
+
+  <text x="180" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">→ inner()의 @Transactional</text>
+  <text x="180" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">무시됨 (AOP 프록시 미통과)</text>
+
+  <!-- 화살표 아래 해법 -->
+  <line x1="180" y1="272" x2="180" y2="300" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="60" y="302" width="240" height="60" rx="6" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="180" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">해법</text>
+  <text x="180" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">메서드를 별도 Bean으로 분리</text>
+  <text x="180" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">또는 ApplicationContext.getBean()</text>
+
+  <!-- 함정 2: checked exception -->
+  <rect x="320" y="70" width="240" height="200" rx="10" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">함정 2 — Checked Exception</text>
+  <text x="440" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">기본값: Unchecked만 롤백</text>
+
+  <rect x="336" y="126" width="208" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="352" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">@Transactional</text>
+  <text x="352" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">void save() throws</text>
+  <text x="352" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve">        IOException { // checked</text>
+  <text x="352" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">  // ← 커밋됨! 롤백 안 됨</text>
+
+  <text x="440" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">IOException 발생해도</text>
+  <text x="440" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">기본 롤백 규칙 적용 안 됨</text>
+
+  <line x1="440" y1="272" x2="440" y2="300" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="320" y="302" width="240" height="60" rx="6" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">해법</text>
+  <text x="440" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" text-anchor="middle">rollbackFor=Exception.class</text>
+  <text x="440" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">명시적 지정 또는 RuntimeException 변환</text>
+
+  <!-- 함정 3: readOnly 오해 -->
+  <rect x="580" y="70" width="240" height="200" rx="10" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="700" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">함정 3 — readOnly 오해</text>
+  <text x="700" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">읽기 전용이라고 쓰기 불가는 아님</text>
+
+  <rect x="596" y="126" width="208" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="612" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">@Transactional(</text>
+  <text x="612" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve">  readOnly = true)</text>
+  <text x="612" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">List&lt;User&gt; findAll() {</text>
+  <text x="612" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">  entity.setName("x"); // 반영!</text>
+
+  <text x="700" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">dirty checking 최적화 힌트일 뿐</text>
+  <text x="700" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">→ 실수로 수정해도 DB에 반영됨</text>
+
+  <line x1="700" y1="272" x2="700" y2="300" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="580" y="302" width="240" height="60" rx="6" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="700" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">해법</text>
+  <text x="700" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">DTO로 반환 + Entity 수정 금지</text>
+  <text x="700" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">코드 리뷰로 설계 원칙 유지</text>
+
+  <!-- 하단: 트랜잭션 범위 권장 패턴 -->
+  <rect x="60" y="400" width="760" height="116" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">트랜잭션 경계 원칙</text>
+  <text x="440" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Service 레이어에서 시작 — Controller / Repository는 트랜잭션을 직접 열지 않음</text>
+  <text x="440" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">읽기 메서드: @Transactional(readOnly=true) → dirty-check 비활성, FlushMode=MANUAL → 성능 이점</text>
+  <text x="440" y="486" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">트랜잭션 안에서 외부 API 호출 금지 — 느린 I/O가 커넥션 점유 시간을 늘려 풀 고갈 유발</text>
+  <text x="440" y="506" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">클래스 기본 @Transactional + 쓰기 메서드는 개별 오버라이드 — readOnly 기본값 전략</text>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-w" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Service 레이어 readOnly 기본값 전략</text>
+
+  <!-- 레이어 흐름 -->
+  <!-- Controller -->
+  <rect x="60" y="76" width="760" height="56" rx="8" fill="#1a2030" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="200" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888" text-anchor="middle">Controller</text>
+  <text x="200" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">트랜잭션 없음 (HTTP 요청 처리만)</text>
+  <text x="600" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" text-anchor="middle" xml:space="preserve">@RestController — @Transactional 사용하지 말 것</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="132" x2="440" y2="158" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-w)"/>
+
+  <!-- Service -->
+  <rect x="60" y="160" width="760" height="130" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="200" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Service</text>
+  <text x="200" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">트랜잭션 경계 담당</text>
+
+  <!-- readOnly 기본 전략 -->
+  <rect x="80" y="218" width="340" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">@Service</text>
+  <text x="96" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">@Transactional(readOnly=true)</text>
+  <text x="96" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">public class OrderService {</text>
+
+  <rect x="460" y="218" width="340" height="60" rx="6" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="476" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">  // 조회: 클래스 기본값 readOnly 상속</text>
+  <text x="476" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" xml:space="preserve">  public List&lt;Order&gt; findAll() {}</text>
+  <text x="476" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">  // 쓰기: 메서드 수준 오버라이드</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="292" x2="440" y2="316" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-w)"/>
+
+  <!-- Repository -->
+  <rect x="60" y="318" width="760" height="56" rx="8" fill="#1a2030" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="200" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888" text-anchor="middle">Repository</text>
+  <text x="200" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">트랜잭션 참여만 (기존 트랜잭션 사용)</text>
+  <text x="600" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" text-anchor="middle" xml:space="preserve">Spring Data JPA: 기본 CRUD에 @Transactional 내장</text>
+
+  <!-- 쓰기 메서드 오버라이드 예시 -->
+  <rect x="60" y="400" width="760" height="60" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">  // 쓰기 메서드: readOnly=false 오버라이드</text>
+  <text x="76" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  @Transactional</text>
+  <text x="214" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  public Order create(OrderRequest req) { return repo.save(Order.from(req)); }</text>
+  <text x="76" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">  // readOnly 기본값 덕분에 쓰기 메서드에만 @Transactional 추가하면 됨</text>
+</svg>
