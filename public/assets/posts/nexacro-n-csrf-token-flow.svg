@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Nexacro N CSRF 토큰 처리 흐름</text>
+
+  <!-- Client Column Header -->
+  <text x="200" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">클라이언트 (Nexacro)</text>
+  <!-- Server Column Header -->
+  <text x="680" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">서버</text>
+
+  <!-- Column divider -->
+  <line x1="440" y1="95" x2="440" y2="460" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: 초기 로드 -->
+  <rect x="80" y="100" width="240" height="56" rx="8" fill="#1a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">① 앱 초기 로드</text>
+  <text x="200" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Form_Load 이벤트 실행</text>
+
+  <line x1="320" y1="128" x2="554" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="560" y="100" width="240" height="56" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="680" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">CSRF 토큰 발급</text>
+  <text x="680" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">세션에 난수 저장</text>
+
+  <!-- Token response -->
+  <line x1="560" y1="152" x2="326" y2="178" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="440" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">토큰 응답 (Dataset)</text>
+
+  <!-- Step 2: 토큰 저장 -->
+  <rect x="80" y="192" width="240" height="56" rx="8" fill="#1a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">② 토큰 전역 저장</text>
+  <text x="200" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">gfn_getCsrfToken() 로 관리</text>
+
+  <!-- Step 3: 트랜잭션 실행 -->
+  <rect x="80" y="280" width="240" height="56" rx="8" fill="#1a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">③ 트랜잭션 실행</text>
+  <text x="200" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">헤더에 X-CSRF-Token 추가</text>
+
+  <line x1="320" y1="308" x2="554" y2="308" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: 서버 검증 -->
+  <rect x="560" y="280" width="240" height="56" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="680" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">④ 토큰 검증</text>
+  <text x="680" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">헤더 vs 세션 토큰 비교</text>
+
+  <!-- Vertical arrows (client) -->
+  <line x1="200" y1="156" x2="200" y2="186" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="200" y1="248" x2="200" y2="274" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Verify result -->
+  <!-- Success path -->
+  <rect x="560" y="368" width="110" height="50" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="615" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">토큰 일치</text>
+  <text x="615" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">정상 처리</text>
+
+  <!-- Fail path -->
+  <rect x="690" y="368" width="110" height="50" rx="6" fill="#2a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="745" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">토큰 불일치</text>
+  <text x="745" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">403 Forbidden</text>
+
+  <!-- Arrows to results -->
+  <line x1="640" y1="336" x2="615" y2="362" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <line x1="720" y1="336" x2="745" y2="362" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- Code box -->
+  <rect x="60" y="380" width="360" height="104" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 트랜잭션 헤더에 CSRF 토큰 추가</text>
+  <text x="80" y="422" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">var</tspan>
+    <tspan fill="#ffffff"> sToken = gfn_getCsrfToken();</tspan>
+  </text>
+  <text x="80" y="442" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">this</tspan>
+    <tspan fill="#ffffff">.addServiceHeader(</tspan>
+  </text>
+  <text x="80" y="460" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#ce9178">"X-CSRF-Token"</tspan>
+    <tspan fill="#ffffff">, sToken);</tspan>
+  </text>
+  <text x="80" y="478" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">this</tspan>
+    <tspan fill="#ffffff">.transaction(</tspan>
+    <tspan fill="#ce9178">"saveData"</tspan>
+    <tspan fill="#ffffff">, ...);</tspan>
+  </text>
+</svg>
