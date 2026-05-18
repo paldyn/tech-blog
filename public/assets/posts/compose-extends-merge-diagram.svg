@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="a1" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">compose extends — 서비스 설정 재사용</text>
+
+  <!-- base.yaml -->
+  <text x="100" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#888" text-anchor="middle">base.yaml</text>
+  <rect x="60" y="96" width="180" height="140" fill="#1a1a2e" rx="8" stroke="#555" stroke-width="1.5"/>
+  <text x="150" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#888" text-anchor="middle">base-service</text>
+  <text x="76" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">image: my-app</text>
+  <text x="76" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">env_file: .env</text>
+  <text x="76" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">restart: unless-stopped</text>
+  <text x="76" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">logging: ...</text>
+  <text x="76" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">공통 설정 모음</text>
+
+  <!-- Arrow base → web -->
+  <line x1="240" y1="150" x2="308" y2="150" stroke="#7ec8e3" stroke-width="2" marker-end="url(#a1)"/>
+  <text x="274" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3" text-anchor="middle">extends</text>
+
+  <!-- Arrow base → worker (vertical offset) -->
+  <line x1="240" y1="196" x2="308" y2="292" stroke="#7ec8e3" stroke-width="2" marker-end="url(#a1)"/>
+
+  <!-- web service box -->
+  <rect x="310" y="96" width="220" height="140" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="420" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">web</text>
+  <text x="326" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">extends: base-service (base.yaml)</text>
+  <text x="326" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">ports: ["80:3000"]</text>
+  <text x="326" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">command: npm start</text>
+  <line x1="326" y1="192" x2="514" y2="192" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="326" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">+image, env_file, restart,</text>
+  <text x="326" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">  logging (base에서 상속)</text>
+
+  <!-- worker service box -->
+  <rect x="310" y="256" width="220" height="140" fill="#1a1400" rx="8" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="420" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e0a055" text-anchor="middle">worker</text>
+  <text x="326" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e0a055">extends: base-service (base.yaml)</text>
+  <text x="326" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">command: npm run worker</text>
+  <text x="326" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">environment:</text>
+  <text x="326" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">  QUEUE=jobs</text>
+  <line x1="326" y1="370" x2="514" y2="370" stroke="#3a3010" stroke-width="1"/>
+  <text x="326" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">+base 공통 설정 상속</text>
+
+  <!-- Merge section -->
+  <text x="600" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">배열 키 merge 규칙</text>
+
+  <rect x="560" y="96" width="260" height="200" fill="#150a1a" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="576" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">덮어쓰기 (scalar)</text>
+  <text x="576" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">image, command, restart</text>
+  <text x="576" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">→ 자식이 부모 값 대체</text>
+  <line x1="576" y1="170" x2="804" y2="170" stroke="#2a1a3a" stroke-width="1"/>
+  <text x="576" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">병합 (mapping/list)</text>
+  <text x="576" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">environment, labels, ports</text>
+  <text x="576" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">→ 부모 + 자식 합산</text>
+  <line x1="576" y1="240" x2="804" y2="240" stroke="#2a1a3a" stroke-width="1"/>
+  <text x="576" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">미지원</text>
+  <text x="576" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">networks, volumes, deploy</text>
+  <text x="576" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">→ extends 상속 불가</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="420" x2="820" y2="420" stroke="#2a2a3a" stroke-width="1"/>
+
+  <!-- Key restriction -->
+  <text x="60" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">⚠  extends는 같은 파일 또는 다른 파일의 서비스를 대상으로 가능 — 순환 참조는 오류</text>
+  <text x="60" y="468" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">⚠  Compose v2에서 extends 지원 재개 (v1에서 제한적이었음)</text>
+</svg>

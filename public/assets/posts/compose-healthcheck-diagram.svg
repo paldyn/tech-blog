@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="a1" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="a2" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="a3" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">compose healthcheck — 상태 흐름</text>
+
+  <!-- State machine -->
+  <!-- starting box -->
+  <rect x="60" y="80" width="160" height="56" fill="#1a1400" rx="8" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="140" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e0a055" text-anchor="middle">starting</text>
+  <text x="140" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">start_period 내 실패 무시</text>
+
+  <!-- arrow starting→healthy -->
+  <line x1="220" y1="108" x2="358" y2="108" stroke="#55c555" stroke-width="2" marker-end="url(#a2)"/>
+  <text x="289" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">test 성공</text>
+
+  <!-- healthy box -->
+  <rect x="360" y="80" width="160" height="56" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">healthy</text>
+  <text x="440" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">depends_on 조건 충족</text>
+
+  <!-- arrow healthy→unhealthy -->
+  <line x1="520" y1="108" x2="658" y2="108" stroke="#e05555" stroke-width="2" marker-end="url(#a3)"/>
+  <text x="589" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">retries 초과</text>
+
+  <!-- unhealthy box -->
+  <rect x="660" y="80" width="160" height="56" fill="#1a0a0a" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="740" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">unhealthy</text>
+  <text x="740" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">depends_on 조건 불충족</text>
+
+  <!-- arrow unhealthy→healthy (curved, dashed) -->
+  <path d="M 740 136 Q 740 185 440 185 Q 140 185 140 136" fill="none" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#a2)"/>
+  <text x="440" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">test 재성공 → healthy로 복귀</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="222" x2="820" y2="222" stroke="#2a2a3a" stroke-width="1"/>
+
+  <!-- Options breakdown -->
+  <text x="60" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">healthcheck 옵션</text>
+
+  <!-- test -->
+  <rect x="60" y="266" width="192" height="80" fill="#1a1a2e" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="156" y="289" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">test</text>
+  <text x="156" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">실행할 검사 명령어</text>
+  <text x="156" y="329" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">NONE으로 비활성화</text>
+
+  <!-- interval -->
+  <rect x="270" y="266" width="192" height="80" fill="#1a1a2e" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="366" y="289" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">interval</text>
+  <text x="366" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">검사 간격 (기본 30s)</text>
+  <text x="366" y="329" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">최소 1s 이상</text>
+
+  <!-- timeout -->
+  <rect x="480" y="266" width="192" height="80" fill="#1a1a2e" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="576" y="289" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">timeout</text>
+  <text x="576" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">단일 검사 제한 시간</text>
+  <text x="576" y="329" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">기본 30s</text>
+
+  <!-- retries -->
+  <rect x="60" y="364" width="192" height="80" fill="#1a1a2e" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="156" y="387" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">retries</text>
+  <text x="156" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">실패 허용 횟수</text>
+  <text x="156" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">기본 3회</text>
+
+  <!-- start_period -->
+  <rect x="270" y="364" width="192" height="80" fill="#1a1400" rx="8" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="366" y="387" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e0a055" text-anchor="middle">start_period</text>
+  <text x="366" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">초기화 유예 시간</text>
+  <text x="366" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">기본 0s</text>
+
+  <!-- start_interval -->
+  <rect x="480" y="364" width="192" height="80" fill="#1a1a2e" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="576" y="387" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">start_interval</text>
+  <text x="576" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">초기화 중 검사 간격</text>
+  <text x="576" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">기본 5s (v2.3+)</text>
+
+  <!-- disable note -->
+  <rect x="690" y="364" width="130" height="80" fill="#150a1a" rx="8" stroke="#555" stroke-width="1"/>
+  <text x="755" y="387" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#888" text-anchor="middle">비활성화</text>
+  <text x="755" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">disable: true</text>
+  <text x="755" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666" text-anchor="middle">또는 NONE</text>
+</svg>
