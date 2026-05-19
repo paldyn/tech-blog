@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ColumnStore 아키텍처 — 컬럼 기반 저장</text>
+
+  <defs>
+    <marker id="arr-cs" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- Row store vs Column store -->
+  <rect x="60" y="74" width="340" height="200" rx="8" fill="#0f1a2e" stroke="#3a6aae" stroke-width="1.5"/>
+  <text x="230" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">행(Row) 기반 (InnoDB)</text>
+
+  <text x="76" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Page 1: [id=1,name='A',amt=100] [id=2,name='B',amt=200]</text>
+  <text x="76" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Page 2: [id=3,name='C',amt=300] [id=4,name='D',amt=400]</text>
+  <text x="76" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">SELECT SUM(amt) FROM orders</text>
+  <text x="76" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 모든 행의 전체 컬럼을 읽음</text>
+  <text x="76" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">id, name 컬럼 불필요인데도 읽음</text>
+  <text x="76" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">장점: OLTP, 단건 조회/갱신 최적</text>
+  <text x="76" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">단점: 집계 쿼리에서 I/O 낭비</text>
+
+  <rect x="480" y="74" width="340" height="200" rx="8" fill="#1a0f2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="650" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">열(Column) 기반 (ColumnStore)</text>
+
+  <text x="496" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">id 파일: [1,2,3,4,5,6,7,8...]</text>
+  <text x="496" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">amt 파일: [100,200,300,400...]  ← 압축률 높음</text>
+  <text x="496" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">SELECT SUM(amt) FROM orders</text>
+  <text x="496" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ amt 컬럼 파일만 읽음</text>
+  <text x="496" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">I/O 최소화 + 벡터 연산 적용</text>
+  <text x="496" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">장점: 집계/분석, 압축률 극대화</text>
+  <text x="496" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">단점: 단건 갱신 느림</text>
+
+  <!-- ColumnStore nodes -->
+  <rect x="60" y="298" width="760" height="90" rx="8" fill="#0a0a1a" stroke="#555" stroke-width="1"/>
+  <text x="440" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">ColumnStore 분산 노드 구성</text>
+
+  <rect x="80" y="330" width="160" height="40" rx="4" fill="#1a0f2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="160" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" text-anchor="middle">UM (User Module)</text>
+  <text x="160" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">쿼리 파싱·계획·집계</text>
+
+  <line x1="242" y1="350" x2="298" y2="350" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-cs)"/>
+
+  <rect x="300" y="330" width="160" height="40" rx="4" fill="#0a2a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="380" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">PM (Perf Module)</text>
+  <text x="380" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">데이터 스토리지·스캔</text>
+
+  <line x1="462" y1="350" x2="518" y2="350" stroke="#55c555" stroke-width="2" marker-end="url(#arr-cs)"/>
+
+  <rect x="520" y="330" width="160" height="40" rx="4" fill="#0a2a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="600" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">PM (Perf Module)</text>
+  <text x="600" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">수평 확장 가능</text>
+
+  <text x="730" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">여러 PM으로</text>
+  <text x="730" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">페타바이트 확장</text>
+
+  <text x="440" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">MariaDB ColumnStore는 InfiniDB를 기반으로 2016년 오픈소스화. Columnstore 10.5+ Community Edition 무료</text>
+</svg>
