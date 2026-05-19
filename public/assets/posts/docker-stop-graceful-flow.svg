@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">docker stop 종료 흐름</text>
+
+  <!-- Step 1: docker stop -->
+  <rect x="60" y="72" width="200" height="56" rx="8" fill="#1a2035" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="160" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">docker stop</text>
+  <text x="160" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">또는 Ctrl+C / SIGTERM</text>
+
+  <!-- Arrow 1 -->
+  <line x1="260" y1="100" x2="320" y2="100" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="290" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SIGTERM</text>
+
+  <!-- Step 2: PID 1 receives SIGTERM -->
+  <rect x="320" y="72" width="220" height="56" rx="8" fill="#1a2035" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="430" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">PID 1 (앱 프로세스)</text>
+  <text x="430" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">SIGTERM 수신 후 종료 처리</text>
+
+  <!-- Timeout box -->
+  <rect x="340" y="172" width="180" height="44" rx="6" fill="#2a1515" stroke="#e05555" stroke-width="1"/>
+  <text x="430" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">타임아웃 대기</text>
+  <text x="430" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">기본 10초 (--time 조정)</text>
+
+  <!-- Arrow down from PID1 to timeout -->
+  <line x1="430" y1="128" x2="430" y2="172" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-blue)"/>
+
+  <!-- Arrow: graceful exit -->
+  <line x1="540" y1="100" x2="610" y2="100" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="575" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">정상 종료</text>
+
+  <!-- Step 3: Graceful exit -->
+  <rect x="610" y="72" width="210" height="56" rx="8" fill="#0f2015" stroke="#55c555" stroke-width="1.5"/>
+  <text x="715" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">컨테이너 종료</text>
+  <text x="715" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">exit code 0 또는 앱 지정값</text>
+
+  <!-- SIGKILL path -->
+  <path d="M 430 216 C 430 260 630 260 715 230" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arr-red)"/>
+  <text x="590" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">타임아웃 초과 → SIGKILL</text>
+
+  <!-- Force exit -->
+  <rect x="610" y="230" width="210" height="56" rx="8" fill="#2a1515" stroke="#e05555" stroke-width="1.5"/>
+  <text x="715" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">강제 종료</text>
+  <text x="715" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">exit code 137</text>
+
+  <!-- Timeline bar -->
+  <rect x="60" y="320" width="760" height="4" rx="2" fill="#2a2a3a"/>
+  <rect x="60" y="320" width="380" height="4" rx="2" fill="#7ec8e3"/>
+  <text x="60" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">t=0 SIGTERM</text>
+  <text x="440" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">t=10s 기본 타임아웃</text>
+  <text x="820" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="end">t=--time</text>
+
+  <!-- Command reference -->
+  <rect x="60" y="360" width="760" height="76" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">명령어 참고</text>
+
+  <rect x="76" y="390" width="728" height="34" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="413" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">docker</tspan> stop --time=<tspan fill="#b5cea8">30</tspan> &lt;container&gt;  <tspan fill="#9aa4b8"># 30초 대기 후 SIGKILL</tspan></text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PID 1과 시그널 전파</text>
+
+  <!-- BAD pattern: shell as PID 1 -->
+  <text x="220" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">나쁜 패턴: 셸이 PID 1</text>
+
+  <rect x="60" y="96" width="140" height="48" rx="8" fill="#2a1515" stroke="#e05555" stroke-width="1.5"/>
+  <text x="130" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">Docker daemon</text>
+  <text x="130" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SIGTERM 발송</text>
+
+  <line x1="200" y1="120" x2="256" y2="120" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <rect x="256" y="96" width="130" height="48" rx="8" fill="#2a1515" stroke="#e05555" stroke-width="1.5"/>
+  <text x="321" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">/bin/sh</text>
+  <text x="321" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">PID 1 — 전달 안 함</text>
+
+  <!-- X mark: no forwarding -->
+  <text x="430" y="125" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="28" font-weight="700" fill="#e05555" text-anchor="middle">✕</text>
+
+  <rect x="460" y="96" width="130" height="48" rx="8" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="525" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">myapp</text>
+  <text x="525" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SIGTERM 못 받음</text>
+
+  <text x="640" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">→ 타임아웃 후 SIGKILL</text>
+
+  <!-- Dockerfile bad example -->
+  <rect x="60" y="162" width="760" height="52" rx="6" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">CMD</tspan> <tspan fill="#ce9178">"/bin/sh -c myapp"</tspan>   <tspan fill="#e05555"># ❌ 셸이 PID 1 — SIGTERM 전달 안 됨</tspan></text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">CMD</tspan> [<tspan fill="#ce9178">"/bin/sh"</tspan>, <tspan fill="#ce9178">"-c"</tspan>, <tspan fill="#ce9178">"myapp"</tspan>]   <tspan fill="#e05555"># ❌ 동일 문제</tspan></text>
+
+  <!-- GOOD pattern -->
+  <text x="220" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">좋은 패턴: exec로 교체</text>
+
+  <rect x="60" y="258" width="140" height="48" rx="8" fill="#0f2015" stroke="#55c555" stroke-width="1.5"/>
+  <text x="130" y="279" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">Docker daemon</text>
+  <text x="130" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">SIGTERM 발송</text>
+
+  <line x1="200" y1="282" x2="256" y2="282" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <rect x="256" y="258" width="130" height="48" rx="8" fill="#0f2015" stroke="#55c555" stroke-width="1.5"/>
+  <text x="321" y="279" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">myapp</text>
+  <text x="321" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">PID 1 — 직접 수신</text>
+
+  <text x="430" y="285" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">→ SIGTERM 핸들러 실행 → 정상 종료</text>
+
+  <!-- Dockerfile good examples -->
+  <rect x="60" y="326" width="760" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">CMD</tspan> [<tspan fill="#ce9178">"myapp"</tspan>]          <tspan fill="#9aa4b8"># ✅ exec form — 직접 PID 1</tspan></text>
+  <text x="76" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">CMD</tspan> [<tspan fill="#ce9178">"/bin/sh"</tspan>, <tspan fill="#ce9178">"-c"</tspan>, <tspan fill="#ce9178">"exec myapp"</tspan>]   <tspan fill="#9aa4b8"># ✅ exec로 교체</tspan></text>
+  <text x="76" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">ENTRYPOINT</tspan> [<tspan fill="#ce9178">"myapp"</tspan>]   <tspan fill="#9aa4b8"># ✅ JSON 배열 형식</tspan></text>
+  <text x="76" y="408" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">ENTRYPOINT</tspan> [<tspan fill="#ce9178">"tini"</tspan>, <tspan fill="#ce9178">"--"</tspan>, <tspan fill="#ce9178">"myapp"</tspan>]   <tspan fill="#9aa4b8"># ✅ init 사용</tspan></text>
+</svg>
