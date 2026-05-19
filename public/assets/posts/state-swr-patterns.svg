@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+
+  <!-- Background -->
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="45" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SWR 고급 패턴</text>
+
+  <!-- ===== LEFT: useSWR 기본 ===== -->
+  <!-- Header -->
+  <rect x="60" y="70" width="380" height="30" fill="#0a1020" rx="6"/>
+  <text x="250" y="89" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">useSWR 기본</text>
+
+  <!-- Code box -->
+  <rect x="60" y="100" width="380" height="300" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="78" dy="0" y="122" fill="#ffffff">import useSWR </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> 'swr'</tspan>
+    <tspan x="78" dy="22" fill="#9aa4b8">// fetcher 함수 정의</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">const fetcher = url =&gt;</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">  fetch(url).then(r =&gt; r.json())</tspan>
+    <tspan x="78" dy="22" fill="#ffffff">function Profile() {</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">  const { data, error,</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">    isLoading } = useSWR(</tspan>
+    <tspan x="78" dy="18" fill="#ce9178">    '/api/user'</tspan><tspan fill="#ffffff">, fetcher, {</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">      revalidateOnFocus: </tspan><tspan fill="#b5cea8">true</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">      refreshInterval: </tspan><tspan fill="#b5cea8">30000</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">      fallbackData: []</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">    }</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">  )</tspan>
+    <tspan x="78" dy="22" fill="#7ec8e3" font-weight="600">  if </tspan><tspan fill="#ffffff">(isLoading)</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">    return &lt;Spinner /&gt;</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">  return &lt;User data={data} /&gt;</tspan>
+    <tspan x="78" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- ===== RIGHT: useSWRMutation ===== -->
+  <!-- Header -->
+  <rect x="460" y="70" width="380" height="30" fill="#0a1a0a" rx="6"/>
+  <text x="650" y="89" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">useSWRMutation &amp; 낙관적 UI</text>
+
+  <!-- Code box -->
+  <rect x="460" y="100" width="380" height="300" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="478" dy="0" y="122" fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> useSWRMutation</tspan>
+    <tspan x="478" dy="18" fill="#7ec8e3" font-weight="600">  from</tspan><tspan fill="#ce9178"> 'swr/mutation'</tspan>
+    <tspan x="478" dy="22" fill="#ffffff">const { trigger,</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">  isMutating } =</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">  useSWRMutation(</tspan>
+    <tspan x="478" dy="18" fill="#ce9178">  '/api/user'</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">  (url, { arg }) =&gt;</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">    fetch(url, {</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">      method: </tspan><tspan fill="#ce9178">'PUT'</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">      body: JSON.stringify(arg)</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">    })</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">)</tspan>
+    <tspan x="478" dy="22" fill="#9aa4b8">// 낙관적 업데이트</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">mutate(</tspan><tspan fill="#ce9178">'/api/user'</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">  updatedData,</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">  { revalidate: </tspan><tspan fill="#b5cea8">false</tspan><tspan fill="#ffffff"> }</tspan>
+    <tspan x="478" dy="18" fill="#ffffff">)</tspan>
+  </text>
+
+</svg>

@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="45" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Streaming SSR — React 18 Suspense</text>
+
+  <!-- ===== Left Panel: Flow Diagram ===== -->
+  <!-- Server box -->
+  <rect x="60" y="75" width="160" height="295" fill="#0a1a0a" stroke="#55c555" stroke-width="2" rx="8"/>
+  <text x="140" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555" text-anchor="middle">Server</text>
+
+  <text x="78" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">① HTML shell 전송</text>
+  <text x="78" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">② &lt;Suspense&gt; fallback</text>
+  <text x="78" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">③ 데이터 fetch 중...</text>
+  <text x="78" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">④ chunk 스트리밍</text>
+  <text x="78" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">⑤ 완료 신호 전송</text>
+  <!-- Spinner indicator -->
+  <text x="78" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">   (DB / API 응답 대기)</text>
+  <!-- Chunk indicator -->
+  <text x="78" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">   &lt;script&gt; 인라인으로</text>
+
+  <!-- Browser box -->
+  <rect x="300" y="75" width="160" height="295" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="2" rx="8"/>
+  <text x="380" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">Browser</text>
+
+  <text x="318" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">① shell 수신 → 표시</text>
+  <text x="318" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">② Spinner 표시</text>
+  <text x="318" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">③ (대기)</text>
+  <text x="318" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">④ chunk → Spinner 교체</text>
+  <text x="318" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">⑤ 하이드레이션 완료</text>
+  <text x="318" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">   (서버 응답 대기)</text>
+  <text x="318" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">   콘텐츠 DOM 교체</text>
+
+  <!-- Horizontal arrows Server → Browser -->
+  <!-- Step ① -->
+  <line x1="220" y1="135" x2="298" y2="135" stroke="#55c555" stroke-width="2"
+        marker-end="url(#arr-green)"/>
+  <!-- Step ② -->
+  <line x1="220" y1="158" x2="298" y2="158" stroke="#888" stroke-width="1.5" stroke-dasharray="4,4"
+        marker-end="url(#arr-blue)"/>
+  <!-- Step ④ -->
+  <line x1="220" y1="226" x2="298" y2="226" stroke="#55c555" stroke-width="2"
+        marker-end="url(#arr-green)"/>
+  <!-- Step ⑤ -->
+  <line x1="220" y1="264" x2="298" y2="264" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"
+        marker-end="url(#arr-blue)"/>
+
+  <!-- Time axis label -->
+  <text x="248" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">시간 흐름 →</text>
+
+  <!-- Benefit labels -->
+  <rect x="60" y="385" width="400" height="92" fill="#111111" stroke="#333" stroke-width="1" rx="8"/>
+  <text x="80" y="407" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Streaming SSR 장점</text>
+  <text x="80" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▸ TTFB 최소화 — shell 즉시 전송</text>
+  <text x="80" y="447" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">▸ Progressive rendering — 조각씩 표시</text>
+  <text x="80" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b07ec8">▸ Selective Hydration — 우선순위 선택</text>
+
+  <!-- ===== Right Panel: Code Box ===== -->
+  <rect x="480" y="75" width="360" height="402" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+
+  <!-- Code comment -->
+  <text x="496" y="100" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        >// app/page.tsx</text>
+
+  <text x="496" y="120" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> { Suspense } </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> 'react'</tspan>
+  </text>
+
+  <text x="496" y="140" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> SlowComponent </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> './Slow'</tspan>
+  </text>
+
+  <text x="496" y="172" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export default function</tspan><tspan fill="#ffffff"> Page() {</tspan>
+  </text>
+
+  <text x="496" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> (</tspan>
+  </text>
+
+  <text x="496" y="212" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    &lt;</tspan><tspan fill="#7ec8e3" font-weight="600">&gt;</tspan>
+  </text>
+
+  <text x="496" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      &lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Header</tspan><tspan fill="#ffffff"> /&gt;</tspan>
+  </text>
+
+  <text x="496" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      &lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Suspense</tspan>
+  </text>
+
+  <text x="496" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        </tspan><tspan fill="#ce9178">fallback</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ffffff">{&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Spinner</tspan><tspan fill="#ffffff">/&gt;}</tspan>
+  </text>
+
+  <text x="496" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      &gt;</tspan>
+  </text>
+
+  <text x="496" y="312" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        &lt;</tspan><tspan fill="#7ec8e3" font-weight="600">SlowComponent</tspan><tspan fill="#ffffff"> /&gt;</tspan>
+  </text>
+
+  <text x="496" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      &lt;/</tspan><tspan fill="#7ec8e3" font-weight="600">Suspense</tspan><tspan fill="#ffffff">&gt;</tspan>
+  </text>
+
+  <text x="496" y="352" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    &lt;/</tspan><tspan fill="#7ec8e3" font-weight="600">&gt;</tspan>
+  </text>
+
+  <text x="496" y="372" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  )</tspan>
+  </text>
+
+  <text x="496" y="392" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- SlowComponent note -->
+  <text x="496" y="424" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        >// SlowComponent: async Server Component</text>
+  <text x="496" y="444" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">async function</tspan><tspan fill="#ffffff"> SlowComponent() {</tspan>
+  </text>
+  <text x="496" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> data = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> fetchData()</tspan>
+  </text>
+</svg>

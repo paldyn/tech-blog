@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr-teal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14"
+            refX="11" refY="5" orient="auto">
+      <path d="M2,1 L11,5 L2,9 Z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14"
+            refX="11" refY="5" orient="auto">
+      <path d="M2,1 L11,5 L2,9 Z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-yellow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14"
+            refX="11" refY="5" orient="auto">
+      <path d="M2,1 L11,5 L2,9 Z" fill="#e8c55a"/>
+    </marker>
+    <marker id="arr-purple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14"
+            refX="11" refY="5" orient="auto">
+      <path d="M2,1 L11,5 L2,9 Z" fill="#b07ec8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="45" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SWR — stale-while-revalidate 전략</text>
+
+  <!-- Timeline axis -->
+  <line x1="80" y1="200" x2="800" y2="200" stroke="#333" stroke-width="2"/>
+  <!-- Axis arrow tip -->
+  <polygon points="800,196 810,200 800,204" fill="#333"/>
+
+  <!-- EVENT 1: First request (x=120) -->
+  <circle cx="120" cy="200" r="10" fill="#7ec8e3" stroke="#7ec8e3"/>
+  <text x="120" y="178" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">최초 요청</text>
+  <text x="120" y="225" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">캐시 없음</text>
+  <text x="120" y="240" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">→ 로딩</text>
+
+  <!-- EVENT 2: Data received (x=240) -->
+  <circle cx="240" cy="200" r="10" fill="#55c555" stroke="#55c555"/>
+  <text x="240" y="178" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">데이터 수신</text>
+  <text x="240" y="225" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">캐시 저장</text>
+
+  <!-- EVENT 3: Second request (x=400) -->
+  <circle cx="400" cy="200" r="10" fill="#e8c55a" stroke="#e8c55a"/>
+  <text x="400" y="165" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8c55a">두 번째 요청</text>
+  <text x="400" y="225" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c55a">stale 캐시</text>
+  <text x="400" y="240" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c55a">즉시 반환</text>
+  <!-- Dashed line from event 3 to event 4 (background revalidation) -->
+  <line x1="410" y1="200" x2="510" y2="200"
+        stroke="#e8c55a" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- EVENT 4: Revalidation complete (x=530) -->
+  <circle cx="530" cy="200" r="10" fill="#55c555" stroke="#55c555"/>
+  <text x="530" y="165" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">백그라운드</text>
+  <text x="530" y="178" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">재검증</text>
+  <text x="530" y="225" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">캐시 갱신</text>
+
+  <!-- EVENT 5: Focus event (x=670) -->
+  <circle cx="670" cy="200" r="10" fill="#b07ec8" stroke="#b07ec8"/>
+  <text x="670" y="178" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b07ec8">탭 포커스</text>
+  <text x="670" y="225" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">자동 재검증</text>
+
+  <!-- ===== THREE STRATEGY BOXES ===== -->
+
+  <!-- Box 1: 캐시 우선 -->
+  <rect x="80" y="262" width="210" height="128" fill="#0a1018" stroke="#7ec8e3" stroke-width="1.5" rx="6"/>
+  <text x="185" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">캐시 우선</text>
+  <text x="185" y="300" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">stale-while-revalidate</text>
+  <text x="97" y="320"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">1. 캐시 즉시 반환</text>
+  <text x="97" y="340"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">2. 백그라운드 재검증</text>
+  <text x="97" y="360"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">3. 캐시 업데이트</text>
+
+  <!-- Box 2: 자동 재검증 트리거 -->
+  <rect x="310" y="262" width="210" height="128" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5" rx="6"/>
+  <text x="415" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">자동 재검증 트리거</text>
+  <text x="327" y="308"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">revalidateOnFocus</text>
+  <text x="327" y="328"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">revalidateOnReconnect</text>
+  <text x="327" y="348"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">revalidateOnMount</text>
+  <text x="327" y="368"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">refreshInterval</text>
+
+  <!-- Box 3: 에러 처리 -->
+  <rect x="540" y="262" width="210" height="128" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5" rx="6"/>
+  <text x="645" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">에러 처리</text>
+  <text x="557" y="308"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">onError 콜백</text>
+  <text x="557" y="328"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">errorRetryCount</text>
+  <text x="557" y="348"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">shouldRetryOnError</text>
+  <text x="557" y="368"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">fallbackData</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="418" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">시간 →</text>
+</svg>

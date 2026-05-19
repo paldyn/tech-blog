@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+
+  <!-- Background -->
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="45" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">TanStack Query — 캐시 무효화 전략</text>
+
+  <!-- ===== LEFT: useQuery 기본 ===== -->
+  <!-- Header -->
+  <rect x="60" y="70" width="240" height="30" fill="#0a1020" rx="6"/>
+  <text x="180" y="89" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">useQuery 기본</text>
+
+  <!-- Code box -->
+  <rect x="60" y="100" width="240" height="310" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="75" dy="0" y="122" fill="#ffffff">const {</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  data,</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  isLoading,</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  isError,</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  refetch</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">} = useQuery({</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  queryKey: [</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">    </tspan><tspan fill="#ce9178">'posts'</tspan><tspan fill="#ffffff">, id</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  ],</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  queryFn: () =&gt;</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">    fetchPost(id),</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  staleTime:</tspan>
+    <tspan x="75" dy="18" fill="#b5cea8">    1000 * 60,</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">  gcTime:</tspan>
+    <tspan x="75" dy="18" fill="#b5cea8">    1000 * 60 * 5</tspan>
+    <tspan x="75" dy="18" fill="#ffffff">})</tspan>
+  </text>
+
+  <!-- ===== CENTER: useMutation + invalidate ===== -->
+  <!-- Header -->
+  <rect x="320" y="70" width="240" height="30" fill="#0a1a0a" rx="6"/>
+  <text x="440" y="89" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">useMutation + invalidate</text>
+
+  <!-- Code box -->
+  <rect x="320" y="100" width="240" height="310" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="335" dy="0" y="122" fill="#ffffff">const mutation =</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">  useMutation({</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">    mutationFn:</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">      createPost,</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">    onSuccess: () =&gt; {</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">      queryClient</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">       .invalidateQueries({</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">         queryKey: [</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">           </tspan><tspan fill="#ce9178">'posts'</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">         ]</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">       })</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">    }</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">  })</tspan>
+    <tspan x="335" dy="22" fill="#9aa4b8">// 호출</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">mutation.mutate({</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">  title: </tspan><tspan fill="#ce9178">'New'</tspan>
+    <tspan x="335" dy="18" fill="#ffffff">})</tspan>
+  </text>
+
+  <!-- ===== RIGHT: prefetch + optimistic ===== -->
+  <!-- Header -->
+  <rect x="580" y="70" width="240" height="30" fill="#130a1a" rx="6"/>
+  <text x="700" y="89" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#b07ec8">고급 패턴</text>
+
+  <!-- Code box -->
+  <rect x="580" y="100" width="240" height="310" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="595" dy="0" y="122" fill="#9aa4b8">// Prefetch</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">queryClient</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">  .prefetchQuery({</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">    queryKey: [</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">      </tspan><tspan fill="#ce9178">'posts'</tspan><tspan fill="#ffffff">],</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">    queryFn: fetchPosts</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">  })</tspan>
+    <tspan x="595" dy="22" fill="#9aa4b8">// 낙관적 업데이트</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">onMutate:</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">  async (newPost) =&gt; {</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">  await queryClient</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">    .cancelQueries({</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">    queryKey: [</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">      </tspan><tspan fill="#ce9178">'posts'</tspan><tspan fill="#ffffff">]</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">  })</tspan>
+    <tspan x="595" dy="18" fill="#9aa4b8">  // setQueryData...</tspan>
+    <tspan x="595" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+</svg>
