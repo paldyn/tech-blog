@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">subprocess.run() 프로세스 흐름</text>
+
+  <defs>
+    <marker id="arr-sp" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Python process box -->
+  <rect x="60" y="80" width="200" height="56" rx="8" fill="#1a1a2a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="160" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">Python 프로세스</text>
+
+  <!-- Arrow: Python → subprocess.run -->
+  <line x1="260" y1="108" x2="330" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-sp)"/>
+  <text x="295" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">호출</text>
+
+  <!-- subprocess.run box -->
+  <rect x="330" y="80" width="220" height="56" rx="8" fill="#111820" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="107" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" fill="#ffffff" text-anchor="middle">subprocess.run()</text>
+  <text x="440" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">차단 (완료까지 대기)</text>
+
+  <!-- Arrow: subprocess.run → Child process -->
+  <line x1="550" y1="108" x2="620" y2="108" stroke="#55c555" stroke-width="2" marker-end="url(#arr-sp)"/>
+  <text x="585" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">fork/exec</text>
+
+  <!-- Child process box -->
+  <rect x="620" y="80" width="200" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+  <text x="720" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">자식 프로세스</text>
+
+  <!-- stdin/stdout/stderr pipes -->
+  <!-- stdin: Python → Child -->
+  <text x="160" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">stdin=</text>
+  <line x1="220" y1="164" x2="620" y2="164" stroke="#888" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-sp)"/>
+  <text x="420" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">input 데이터 전달</text>
+
+  <!-- stdout: Child → Python -->
+  <defs>
+    <marker id="arr-sp2" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <line x1="620" y1="192" x2="220" y2="192" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-sp2)"/>
+  <text x="420" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">stdout 캡처 (capture_output=True)</text>
+  <text x="160" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">result.stdout</text>
+
+  <!-- stderr: Child → Python -->
+  <defs>
+    <marker id="arr-sp3" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <line x1="620" y1="218" x2="220" y2="218" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-sp3)"/>
+  <text x="420" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555" text-anchor="middle">stderr 캡처</text>
+  <text x="160" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">result.stderr</text>
+
+  <!-- returncode -->
+  <line x1="720" y1="240" x2="720" y2="280" stroke="#f0a020" stroke-width="1.5"/>
+  <line x1="720" y1="280" x2="440" y2="280" stroke="#f0a020" stroke-width="1.5" marker-end="url(#arr-sp)"/>
+  <text x="590" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#f0a020" text-anchor="middle">returncode</text>
+
+  <rect x="330" y="288" width="220" height="44" rx="6" fill="#111" stroke="#f0a020" stroke-width="1"/>
+  <text x="440" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" text-anchor="middle">result.returncode</text>
+  <text x="440" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">0 = 정상, 그 외 = 오류</text>
+
+  <!-- Key parameters table -->
+  <rect x="60" y="356" width="760" height="100" rx="8" fill="#111820" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">주요 매개변수</text>
+  <text x="80" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">capture_output=True</text>
+  <text x="250" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">stdout+stderr 캡처</text>
+  <text x="480" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">text=True</text>
+  <text x="580" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">바이트→str 자동 디코드</text>
+  <text x="80" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">check=True</text>
+  <text x="200" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">returncode≠0 시 예외 발생</text>
+  <text x="480" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">timeout=N</text>
+  <text x="580" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">N초 초과 시 TimeoutExpired</text>
+  <text x="80" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">shell=True</text>
+  <text x="200" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쉘을 통해 실행 (보안 주의)</text>
+  <text x="480" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">cwd=path</text>
+  <text x="580" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">작업 디렉토리 지정</text>
+</svg>
