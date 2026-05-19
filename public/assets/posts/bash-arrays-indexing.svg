@@ -1,0 +1,59 @@
+<svg width="880" height="400" viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">인덱스 배열 메모리 구조</text>
+
+  <!-- Array visual -->
+  <text x="60" y="80" font-size="14" fill="#888">fruits=("apple" "banana" "cherry" "date")</text>
+
+  <!-- Index row -->
+  <text x="110" y="115" text-anchor="middle" font-size="13" fill="#888">인덱스</text>
+  <text x="280" y="115" text-anchor="middle" font-size="13" fill="#888">0</text>
+  <text x="430" y="115" text-anchor="middle" font-size="13" fill="#888">1</text>
+  <text x="580" y="115" text-anchor="middle" font-size="13" fill="#888">2</text>
+  <text x="730" y="115" text-anchor="middle" font-size="13" fill="#888">3</text>
+
+  <!-- Cells -->
+  <rect x="210" y="125" width="140" height="50" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="2"/>
+  <text x="280" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">apple</text>
+
+  <rect x="360" y="125" width="140" height="50" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="2"/>
+  <text x="430" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">banana</text>
+
+  <rect x="510" y="125" width="140" height="50" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="2"/>
+  <text x="580" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">cherry</text>
+
+  <rect x="660" y="125" width="140" height="50" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="2"/>
+  <text x="730" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">date</text>
+
+  <!-- Annotation arrows and labels -->
+  <defs>
+    <marker id="arr1" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- ${fruits[0]} -->
+  <line x1="280" y1="220" x2="280" y2="178" stroke="#55c555" stroke-width="2" marker-end="url(#arr1)"/>
+  <text x="280" y="238" text-anchor="middle" font-size="12" fill="#55c555">${fruits[0]}</text>
+
+  <!-- ${fruits[-1]} (last) -->
+  <line x1="730" y1="220" x2="730" y2="178" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr1)"/>
+  <text x="730" y="238" text-anchor="middle" font-size="12" fill="#7ec8e3">${fruits[-1]}</text>
+
+  <!-- slice annotation -->
+  <line x1="360" y1="100" x2="650" y2="100" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="505" y="94" text-anchor="middle" font-size="12" fill="#e05555">${fruits[@]:1:2} → "banana" "cherry"</text>
+
+  <!-- Code reference -->
+  <rect x="60" y="270" width="760" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="292" font-size="13" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve" fill="#9aa4b8"># @ vs *  — 큰따옴표 안에서 차이 발생</text>
+  <text x="76" y="310" font-size="13" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> x </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> "${fruits[@]}"; </tspan><tspan fill="#7ec8e3" font-weight="600">do</tspan><tspan fill="#ffffff"> ...; </tspan><tspan fill="#7ec8e3" font-weight="600">done</tspan><tspan fill="#9aa4b8">  # 각 원소 분리 보존</tspan></text>
+  <text x="76" y="328" font-size="13" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> x </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> "${fruits[*]}"; </tspan><tspan fill="#7ec8e3" font-weight="600">do</tspan><tspan fill="#ffffff"> ...; </tspan><tspan fill="#7ec8e3" font-weight="600">done</tspan><tspan fill="#9aa4b8">  # IFS로 합쳐진 하나의 문자열</tspan></text>
+  <text x="76" y="346" font-size="13" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">echo</tspan><tspan fill="#ffffff"> "${#fruits[@]}"</tspan><tspan fill="#9aa4b8">                  # 원소 수: 4</tspan></text>
+  <text x="76" y="364" font-size="13" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">echo</tspan><tspan fill="#ffffff"> "${#fruits[1]}"</tspan><tspan fill="#9aa4b8">                  # 원소 길이: 6 (banana)</tspan></text>
+</svg>
