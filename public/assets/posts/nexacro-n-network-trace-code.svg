@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">Transaction 타임아웃 및 재시도 패턴</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">네트워크 지연·타임아웃을 코드에서 제어한다</text>
+
+  <!-- Left: timeout config -->
+  <text x="40" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">Transaction 타임아웃 설정</text>
+  <rect x="40" y="106" width="390" height="260" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Transaction 호출 전 타임아웃 설정</text>
+  <text x="56" y="149" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#9aa4b8">// 기본값은 서비스 설정 따름 (보통 30초)</tspan></text>
+  <text x="56" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> svcUrl = <tspan fill="#ce9178">"svc::selectList.do"</tspan>;</text>
+  <text x="56" y="195" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> nTimeout = <tspan fill="#b5cea8">10000</tspan>; <tspan fill="#9aa4b8">// 10초</tspan></text>
+  <text x="56" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#9aa4b8">// 로컬 타임아웃 처리 패턴</tspan></text>
+  <text x="56" y="241" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> nTimerId = setTimeout(</text>
+  <text x="56" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">this</tspan>.id + <tspan fill="#ce9178">".fnTimeout()"</tspan>,</text>
+  <text x="56" y="279" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  nTimeout);</text>
+  <text x="56" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">this</tspan>.nTimerId = nTimerId;</text>
+  <text x="56" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">this</tspan>.transaction(<tspan fill="#ce9178">"LIST"</tspan>,</text>
+  <text x="56" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  svcUrl, args, out, <tspan fill="#ce9178">""</tspan>, <tspan fill="#ce9178">"cbList"</tspan>);</text>
+
+  <!-- Right: callback with timeout clear -->
+  <text x="450" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">콜백 + 타임아웃 핸들러</text>
+  <rect x="450" y="106" width="390" height="260" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 콜백: 타임아웃 타이머 먼저 해제</text>
+  <text x="466" y="149" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> cbList(id, err, msg) {</text>
+  <text x="466" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (<tspan fill="#7ec8e3" font-weight="600">this</tspan>.nTimerId != <tspan fill="#b5cea8">-1</tspan>) {</text>
+  <text x="466" y="187" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    clearTimeout(<tspan fill="#7ec8e3" font-weight="600">this</tspan>.nTimerId);</text>
+  <text x="466" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#7ec8e3" font-weight="600">this</tspan>.nTimerId = <tspan fill="#b5cea8">-1</tspan>;</text>
+  <text x="466" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  }</text>
+  <text x="466" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (err != <tspan fill="#b5cea8">0</tspan>) { <tspan fill="#9aa4b8">/* 에러 처리 */</tspan> }</text>
+  <text x="466" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="466" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 타임아웃 핸들러</text>
+  <text x="466" y="309" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> fnTimeout() {</text>
+  <text x="466" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">this</tspan>.nTimerId = <tspan fill="#b5cea8">-1</tspan>;</text>
+  <text x="466" y="347" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  alert(<tspan fill="#ce9178">"요청 시간이 초과됐습니다."</tspan>);</text>
+  <text x="466" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#9aa4b8">// cancelTransaction 등 추가 가능</tspan></text>
+</svg>

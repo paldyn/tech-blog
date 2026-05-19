@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">beginUpdate / endUpdate 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">배치 처리로 렌더링 횟수를 1회로 줄인다</text>
+
+  <!-- Left: Bad pattern -->
+  <text x="40" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">Bad — 매 반복마다 렌더링 발생</text>
+  <rect x="40" y="110" width="380" height="270" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 루프마다 set_value 호출 → repaint</text>
+  <text x="56" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">for</tspan> (<tspan fill="#7ec8e3" font-weight="600">var</tspan> i = <tspan fill="#b5cea8">0</tspan>;</text>
+  <text x="56" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">     i &lt; dsList.rowcount; i++) {</text>
+  <text x="56" y="193" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">var</tspan> val = dsList.getColumn(</text>
+  <text x="56" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    i, <tspan fill="#ce9178">"AMT"</tspan>);</text>
+  <text x="56" y="231" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  dsList.setColumn(i,</text>
+  <text x="56" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#ce9178">"CALC_AMT"</tspan>, val * <tspan fill="#b5cea8">1.1</tspan>);</text>
+  <text x="56" y="269" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#9aa4b8">// 매 setColumn 마다 Grid repaint</tspan></text>
+  <text x="56" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <rect x="56" y="305" width="348" height="60" rx="6" fill="#2a1010"/>
+  <text x="70" y="325" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">문제: 1,000행 루프 = 1,000회 렌더링</text>
+  <text x="70" y="345" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">화면이 버벅이고 스크롤이 튀는 증상 발생</text>
+  <text x="70" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">데이터 건수가 많을수록 지연이 심해짐</text>
+
+  <!-- Right: Good pattern -->
+  <text x="460" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Good — 배치 종료 후 단 1회 렌더링</text>
+  <rect x="460" y="110" width="380" height="270" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// beginUpdate로 렌더링 일시 정지</text>
+  <text x="476" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">dsList.<tspan fill="#7ec8e3" font-weight="600">beginUpdate</tspan>();</text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">for</tspan> (<tspan fill="#7ec8e3" font-weight="600">var</tspan> i = <tspan fill="#b5cea8">0</tspan>;</text>
+  <text x="476" y="193" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">     i &lt; dsList.rowcount; i++) {</text>
+  <text x="476" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">var</tspan> val = dsList.getColumn(</text>
+  <text x="476" y="231" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    i, <tspan fill="#ce9178">"AMT"</tspan>);</text>
+  <text x="476" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  dsList.setColumn(i,</text>
+  <text x="476" y="269" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#ce9178">"CALC_AMT"</tspan>, val * <tspan fill="#b5cea8">1.1</tspan>);</text>
+  <text x="476" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="476" y="307" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">dsList.<tspan fill="#55c555" font-weight="600">endUpdate</tspan>(); <tspan fill="#9aa4b8">// 1회 갱신</tspan></text>
+  <rect x="476" y="322" width="348" height="45" rx="6" fill="#0d2010"/>
+  <text x="490" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">결과: 건수 관계없이 렌더링은 1회만 발생</text>
+  <text x="490" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">루프 종료 시점에 Grid가 한 번에 다시 그려짐</text>
+</svg>

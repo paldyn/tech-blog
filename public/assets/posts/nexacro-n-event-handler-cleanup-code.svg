@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">이벤트 핸들러 등록·해제 코드 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">onload ↔ onunload 쌍으로 관리</text>
+
+  <!-- Left: onload -->
+  <text x="40" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">form_onload — 등록</text>
+  <rect x="40" y="108" width="390" height="300" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 타이머 ID 저장용 변수</text>
+  <text x="56" y="151" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> nTimerId = <tspan fill="#b5cea8">-1</tspan>;</text>
+  <text x="56" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 전역 키 핸들러 등록</text>
+  <text x="56" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">application.addEventHandler(</text>
+  <text x="56" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"onkeydown"</tspan>, <tspan fill="#ce9178">"fnGlobalKey"</tspan>,</text>
+  <text x="56" y="235" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">this</tspan>);</text>
+  <text x="56" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 3초마다 서버 상태 체크 타이머</text>
+  <text x="56" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">nTimerId = setInterval(</text>
+  <text x="56" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">this</tspan>.id + <tspan fill="#ce9178">".fnPoll()"</tspan>,</text>
+  <text x="56" y="319" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#b5cea8">3000</tspan>);</text>
+  <text x="56" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Dataset 변경 이벤트 동적 등록</text>
+  <text x="56" y="365" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">this.dsMain.addEventHandler(</text>
+  <text x="56" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"onchanged"</tspan>, <tspan fill="#ce9178">"fnOnChanged"</tspan>, <tspan fill="#7ec8e3" font-weight="600">this</tspan>);</text>
+
+  <!-- Right: onunload -->
+  <text x="450" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">form_onunload — 해제</text>
+  <rect x="450" y="108" width="390" height="300" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 전역 키 핸들러 해제</text>
+  <text x="466" y="151" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">application.removeEventHandler(</text>
+  <text x="466" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"onkeydown"</tspan>, <tspan fill="#ce9178">"fnGlobalKey"</tspan>,</text>
+  <text x="466" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">this</tspan>);</text>
+  <text x="466" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 타이머 해제</text>
+  <text x="466" y="235" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">if</tspan> (nTimerId != <tspan fill="#b5cea8">-1</tspan>) {</text>
+  <text x="466" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  clearInterval(nTimerId);</text>
+  <text x="466" y="273" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  nTimerId = <tspan fill="#b5cea8">-1</tspan>;</text>
+  <text x="466" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="466" y="319" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Dataset 이벤트 핸들러 해제</text>
+  <text x="466" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">this.dsMain.removeEventHandler(</text>
+  <text x="466" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"onchanged"</tspan>, <tspan fill="#ce9178">"fnOnChanged"</tspan>,</text>
+  <text x="466" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">this</tspan>);</text>
+</svg>

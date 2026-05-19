@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">Test Form 기반 단위 테스트 패턴</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">공통 함수를 Nexacro Form 안에서 직접 검증한다</text>
+
+  <!-- Left: pure function -->
+  <text x="40" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">테스트 대상 — 순수 함수 (common.js)</text>
+  <rect x="40" y="106" width="390" height="290" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 날짜 포맷 변환 (UI 의존성 없음)</text>
+  <text x="56" y="149" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> gfn_formatDate(sDate) {</text>
+  <text x="56" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (!sDate || sDate.length != <tspan fill="#b5cea8">8</tspan>)</text>
+  <text x="56" y="187" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#7ec8e3" font-weight="600">return</tspan> <tspan fill="#ce9178">""</tspan>;</text>
+  <text x="56" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> sDate.substr(<tspan fill="#b5cea8">0</tspan>,<tspan fill="#b5cea8">4</tspan>)</text>
+  <text x="56" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    + <tspan fill="#ce9178">"-"</tspan> + sDate.substr(<tspan fill="#b5cea8">4</tspan>,<tspan fill="#b5cea8">2</tspan>)</text>
+  <text x="56" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    + <tspan fill="#ce9178">"-"</tspan> + sDate.substr(<tspan fill="#b5cea8">6</tspan>,<tspan fill="#b5cea8">2</tspan>);</text>
+  <text x="56" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 금액 포맷 (천 단위 쉼표)</text>
+  <text x="56" y="309" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> gfn_formatAmt(nAmt) {</text>
+  <text x="56" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (isNaN(nAmt)) <tspan fill="#7ec8e3" font-weight="600">return</tspan> <tspan fill="#ce9178">"0"</tspan>;</text>
+  <text x="56" y="347" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> Number(nAmt)</text>
+  <text x="56" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    .toLocaleString();</text>
+  <text x="56" y="385" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+
+  <!-- Right: test form -->
+  <text x="450" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Test Form — 검증 코드</text>
+  <rect x="450" y="106" width="390" height="290" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// assert 헬퍼</text>
+  <text x="466" y="149" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> assert(sName, a, b) {</text>
+  <text x="466" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (a === b)</text>
+  <text x="466" y="187" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    trace(<tspan fill="#ce9178">"✓ "</tspan> + sName);</text>
+  <text x="466" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">else</tspan></text>
+  <text x="466" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    trace(<tspan fill="#ce9178">"✗ "</tspan> + sName</text>
+  <text x="466" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">      + <tspan fill="#ce9178">" exp:"</tspan>+b+<tspan fill="#ce9178">" got:"</tspan>+a);</text>
+  <text x="466" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="466" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 테스트 실행</text>
+  <text x="466" y="309" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> btnTest_onclick() {</text>
+  <text x="466" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  assert(<tspan fill="#ce9178">"formatDate 정상"</tspan>,</text>
+  <text x="466" y="347" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    gfn_formatDate(<tspan fill="#ce9178">"20260101"</tspan>),</text>
+  <text x="466" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#ce9178">"2026-01-01"</tspan>);</text>
+  <text x="466" y="385" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  assert(<tspan fill="#ce9178">"formatDate 빈값"</tspan>,</text>
+  <text x="466" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    gfn_formatDate(<tspan fill="#ce9178">""</tspan>), <tspan fill="#ce9178">""</tspan>);</text>
+
+  <!-- Bottom -->
+  <rect x="40" y="408" width="800" height="22" rx="4" fill="#111118" stroke="#2a2a3a" stroke-width="1"/>
+  <text x="60" y="423" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">결과: Output Window에 ✓/✗ 로 즉시 확인 | 실패 시 exp(기대값)와 got(실제값) 비교 가능</text>
+</svg>

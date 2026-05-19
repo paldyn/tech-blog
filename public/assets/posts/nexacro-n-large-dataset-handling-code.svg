@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">서버 페이징 구현 패턴</text>
+  <text x="440" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">Transaction 파라미터 전달 → Dataset 교체 흐름</text>
+
+  <!-- Left: Code block (search function) -->
+  <rect x="40" y="100" width="390" height="310" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">페이징 조회 함수</text>
+
+  <text x="56" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 페이지 파라미터 초기화</text>
+  <text x="56" y="167" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> nPage = <tspan fill="#b5cea8">1</tspan>;</text>
+  <text x="56" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> nPageSize = <tspan fill="#b5cea8">100</tspan>;</text>
+  <text x="56" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 검색 파라미터 Dataset 세팅</text>
+  <text x="56" y="233" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">dsSearch.setColumn(<tspan fill="#b5cea8">0</tspan>,</text>
+  <text x="56" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"PAGE_NO"</tspan>, nPage);</text>
+  <text x="56" y="271" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">dsSearch.setColumn(<tspan fill="#b5cea8">0</tspan>,</text>
+  <text x="56" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"PAGE_SIZE"</tspan>, nPageSize);</text>
+  <text x="56" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Transaction 호출</text>
+  <text x="56" y="337" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">this</tspan>.transaction(</text>
+  <text x="56" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"LIST"</tspan>, svcUrl, args,</text>
+  <text x="56" y="375" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#ce9178">"ds=dsList"</tspan>, <tspan fill="#ce9178">""</tspan>, cb);</text>
+
+  <!-- Right: Code block (callback + paging control) -->
+  <rect x="450" y="100" width="390" height="310" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">콜백 및 페이지 제어</text>
+
+  <text x="466" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 콜백에서 총 건수 처리</text>
+  <text x="466" y="167" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> cb(id, err, msg) {</text>
+  <text x="466" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (err != <tspan fill="#b5cea8">0</tspan>) <tspan fill="#7ec8e3" font-weight="600">return</tspan>;</text>
+  <text x="466" y="205" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  nTotal = dsResult.getColumn(</text>
+  <text x="466" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#b5cea8">0</tspan>, <tspan fill="#ce9178">"TOTAL_CNT"</tspan>);</text>
+  <text x="466" y="243" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  nMaxPage = Math.ceil(</text>
+  <text x="466" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    nTotal / nPageSize);</text>
+  <text x="466" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  updatePager();</text>
+  <text x="466" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="466" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 다음 페이지로 이동</text>
+  <text x="466" y="347" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> fnNextPage() {</text>
+  <text x="466" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (nPage &gt;= nMaxPage) <tspan fill="#7ec8e3" font-weight="600">return</tspan>;</text>
+  <text x="466" y="385" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  nPage++; fnSearch();</text>
+  <text x="466" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+
+  <!-- Arrow between boxes -->
+  <defs>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="430" y1="255" x2="450" y2="255" stroke="#7777cc" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="440" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">응답</text>
+
+  <!-- Bottom note -->
+  <rect x="40" y="422" width="800" height="26" rx="6" fill="#111118" stroke="#2a2a3a" stroke-width="1"/>
+  <text x="56" y="439" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">핵심: dsSearch에 PAGE_NO/PAGE_SIZE를 담아 보내고, 응답 Dataset의 TOTAL_CNT로 페이저를 업데이트한다.</text>
+</svg>

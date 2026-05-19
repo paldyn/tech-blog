@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">전역 변수 누수 방지 코드 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">var 선언과 null 초기화로 누수를 원천 차단</text>
+
+  <!-- Left: Bad -->
+  <text x="40" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">Bad — 전역 변수 누적 패턴</text>
+  <rect x="40" y="108" width="380" height="268" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// var 없이 선언 → 전역 객체에 쌓임</text>
+  <text x="56" y="151" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#e05555">tempData</tspan> = dsResult.getColumn(</text>
+  <text x="56" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#b5cea8">0</tspan>, <tspan fill="#ce9178">"RESULT"</tspan>);</text>
+  <text x="56" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 배열에 계속 push, 해제 안 함</text>
+  <text x="56" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#e05555">resultCache</tspan> = [];</text>
+  <text x="56" y="235" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">for</tspan> (<tspan fill="#7ec8e3" font-weight="600">var</tspan> i = <tspan fill="#b5cea8">0</tspan>; i &lt; <tspan fill="#b5cea8">1000</tspan>; i++) {</text>
+  <text x="56" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#e05555">resultCache</tspan>.push(i);</text>
+  <text x="56" y="273" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// DOM 참조 전역 보관 후 미해제</text>
+  <text x="56" y="319" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#e05555">savedForm</tspan> = this.getOwnerFrame();</text>
+  <text x="56" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// savedForm = null 없으면 GC 불가</text>
+  <rect x="56" y="355" width="348" height="10" rx="4" fill="#2a1010"/>
+
+  <!-- Right: Good -->
+  <text x="460" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">Good — 스코프 내 선언 + 사용 후 해제</text>
+  <rect x="460" y="108" width="380" height="268" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 함수 스코프에서 var로 선언</text>
+  <text x="476" y="151" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> tempData = dsResult.getColumn(</text>
+  <text x="476" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#b5cea8">0</tspan>, <tspan fill="#ce9178">"RESULT"</tspan>);</text>
+  <text x="476" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 지역 배열, 사용 후 null 초기화</text>
+  <text x="476" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> resultCache = [];</text>
+  <text x="476" y="235" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">for</tspan> (<tspan fill="#7ec8e3" font-weight="600">var</tspan> i = <tspan fill="#b5cea8">0</tspan>; i &lt; <tspan fill="#b5cea8">1000</tspan>; i++) {</text>
+  <text x="476" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  resultCache.push(i);</text>
+  <text x="476" y="273" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="476" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">fnProcess(resultCache);</text>
+  <text x="476" y="311" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">resultCache = <tspan fill="#7ec8e3" font-weight="600">null</tspan>; <tspan fill="#9aa4b8">// GC 가능</tspan></text>
+  <text x="476" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 참조 보관 후 반드시 null 해제</text>
+  <text x="476" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">savedForm = <tspan fill="#7ec8e3" font-weight="600">null</tspan>; <tspan fill="#9aa4b8">// onunload에서</tspan></text>
+
+  <!-- Bottom -->
+  <rect x="40" y="390" width="800" height="20" rx="4" fill="#111118" stroke="#2a2a3a" stroke-width="1"/>
+  <text x="60" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">var 선언 → 함수 스코프로 제한 | null 초기화 → GC 대상으로 전환 | 폼 변수 null → 순환 참조 해소</text>
+</svg>

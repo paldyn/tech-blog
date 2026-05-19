@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Nexacro N 메모리 누수 패턴 4가지</text>
+  <text x="440" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">패턴을 알면 코드 작성 시점에 예방할 수 있다</text>
+
+  <!-- Pattern 1 -->
+  <rect x="40" y="100" width="380" height="160" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="60" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">① 전역 변수 누적</text>
+  <line x1="60" y1="132" x2="400" y2="132" stroke="#3a1e1e" stroke-width="1"/>
+  <text x="60" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">원인: var 선언 없이 변수에 값 할당</text>
+  <text x="60" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">     → application 전역 객체에 쌓임</text>
+  <text x="60" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">증상: 장시간 사용 시 메모리 점진적 증가</text>
+  <text x="60" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">진단: Chrome DevTools Memory 스냅샷에서</text>
+  <text x="60" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">      Window 하위 이름 없는 객체 증가 확인</text>
+  <text x="60" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">예방: 항상 var/let 선언, 사용 후 null 할당</text>
+
+  <!-- Pattern 2 -->
+  <rect x="460" y="100" width="380" height="160" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="480" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">② Dataset 무한 증가</text>
+  <line x1="480" y1="132" x2="820" y2="132" stroke="#3a1e1e" stroke-width="1"/>
+  <text x="480" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">원인: 조회마다 clearData 없이 appendData</text>
+  <text x="480" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">     → 행 수가 누적 증가</text>
+  <text x="480" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">증상: 조회 반복 시 Grid 느려짐, 메모리 증가</text>
+  <text x="480" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">진단: ds.rowcount 값이 조회할수록 커지면</text>
+  <text x="480" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">      clearData 누락 의심</text>
+  <text x="480" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">예방: 새 조회 시 dsList.clearData() 선행</text>
+
+  <!-- Pattern 3 -->
+  <rect x="40" y="280" width="380" height="160" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="60" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">③ 닫히지 않는 팝업</text>
+  <line x1="60" y1="312" x2="400" y2="312" stroke="#3a1e1e" stroke-width="1"/>
+  <text x="60" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">원인: popup.close() 없이 폼 이동</text>
+  <text x="60" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">     → 팝업 폼 인스턴스가 메모리에 잔류</text>
+  <text x="60" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">증상: 팝업 반복 open 시 메모리 계단식 증가</text>
+  <text x="60" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">진단: 팝업 open 전후 메모리 비교</text>
+  <text x="60" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">      close 없으면 open할수록 증가</text>
+  <text x="60" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">예방: 팝업 콜백에서 반드시 popup.close()</text>
+
+  <!-- Pattern 4 -->
+  <rect x="460" y="280" width="380" height="160" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="480" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">④ 이벤트 핸들러 미해제</text>
+  <line x1="480" y1="312" x2="820" y2="312" stroke="#3a1e1e" stroke-width="1"/>
+  <text x="480" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">원인: addEventHandler 후 remove 누락</text>
+  <text x="480" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#c8c8c8">     → 폼이 닫혀도 핸들러 참조가 남음</text>
+  <text x="480" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">증상: 폼 반복 접근 시 중복 이벤트 발생</text>
+  <text x="480" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">진단: 이벤트 핸들러가 2번 이상 호출되면</text>
+  <text x="480" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">      중복 등록 의심</text>
+  <text x="480" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">예방: onunload에서 removeEventHandler</text>
+
+  <!-- Bottom -->
+  <rect x="40" y="452" width="800" height="30" rx="6" fill="#111118" stroke="#2a2a3a" stroke-width="1"/>
+  <text x="60" y="471" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">공통 원칙: "만든 것은 직접 정리한다" — Nexacro N 런타임은 자동 GC를 보장하지 않는다</text>
+</svg>

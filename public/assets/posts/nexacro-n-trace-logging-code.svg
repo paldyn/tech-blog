@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">공통 로깅 함수 구현</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">LOG_LEVEL 전역 변수로 환경별 출력 제어</text>
+
+  <!-- Left: Logger impl -->
+  <text x="40" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">공통 라이브러리 — gfn_log 구현</text>
+  <rect x="40" y="108" width="390" height="300" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 0:없음 1:ERROR 2:WARN 3:INFO 4:DEBUG</text>
+  <text x="56" y="151" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> LOG_LEVEL = <tspan fill="#b5cea8">4</tspan>; <tspan fill="#9aa4b8">// 개발: 4</tspan></text>
+  <text x="56" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 래퍼 함수</text>
+  <text x="56" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> gfn_error(sMsg) {</text>
+  <text x="56" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (LOG_LEVEL &gt;= <tspan fill="#b5cea8">1</tspan>)</text>
+  <text x="56" y="235" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    trace(<tspan fill="#ce9178">"[E] "</tspan> + sMsg);</text>
+  <text x="56" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="281" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> gfn_warn(sMsg) {</text>
+  <text x="56" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (LOG_LEVEL &gt;= <tspan fill="#b5cea8">2</tspan>)</text>
+  <text x="56" y="319" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    trace(<tspan fill="#ce9178">"[W] "</tspan> + sMsg);</text>
+  <text x="56" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="365" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> gfn_debug(sMsg) {</text>
+  <text x="56" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (LOG_LEVEL &gt;= <tspan fill="#b5cea8">4</tspan>)</text>
+  <text x="56" y="403" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    trace(<tspan fill="#ce9178">"[D] "</tspan> + sMsg);</text>
+
+  <!-- Right: Usage -->
+  <text x="450" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">업무 폼에서의 사용 예</text>
+  <rect x="450" y="108" width="390" height="300" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Transaction 콜백에서 로깅</text>
+  <text x="466" y="151" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> cbSearch(id, err, msg) {</text>
+  <text x="466" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (err != <tspan fill="#b5cea8">0</tspan>) {</text>
+  <text x="466" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    gfn_error(<tspan fill="#ce9178">"LIST 조회 실패: "</tspan> + msg);</text>
+  <text x="466" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    <tspan fill="#7ec8e3" font-weight="600">return</tspan>;</text>
+  <text x="466" y="227" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  }</text>
+  <text x="466" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  gfn_debug(<tspan fill="#ce9178">"rowcount: "</tspan></text>
+  <text x="466" y="273" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    + <tspan fill="#7ec8e3" font-weight="600">this</tspan>.dsList.rowcount);</text>
+  <text x="466" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 조건 미충족 경고</text>
+  <text x="466" y="319" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (<tspan fill="#7ec8e3" font-weight="600">this</tspan>.dsList.rowcount == <tspan fill="#b5cea8">0</tspan>) {</text>
+  <text x="466" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    gfn_warn(<tspan fill="#ce9178">"LIST 결과 없음"</tspan>);</text>
+  <text x="466" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  }</text>
+  <text x="466" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 운영 배포: LOG_LEVEL = 1</text>
+  <text x="466" y="403" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// → gfn_debug/warn 자동 무시</text>
+</svg>
