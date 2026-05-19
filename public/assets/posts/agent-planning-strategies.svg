@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-o" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e0a855"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">에이전트 플래닝 전략 비교</text>
+  <text x="440" y="66" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">ReAct · Plan-and-Execute · LLM+P · MCTS — 목표와 복잡도에 따라 전략 선택</text>
+
+  <!-- ReAct -->
+  <rect x="40" y="90" width="380" height="170" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="230" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">ReAct (Reasoning + Acting)</text>
+
+  <!-- ReAct loop steps -->
+  <rect x="56" y="126" width="80" height="34" rx="5" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="96" y="143" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">Thought</text>
+  <text x="96" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">추론</text>
+
+  <line x1="136" y1="143" x2="154" y2="143" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="156" y="126" width="80" height="34" rx="5" fill="#1a1000" stroke="#e0a855" stroke-width="1"/>
+  <text x="196" y="143" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e0a855">Action</text>
+  <text x="196" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">도구호출</text>
+
+  <line x1="236" y1="143" x2="254" y2="143" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="256" y="126" width="80" height="34" rx="5" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="296" y="143" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Observation</text>
+  <text x="296" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">결과수신</text>
+
+  <!-- Loop back arrow -->
+  <path d="M 336 143 Q 370 143 370 180 Q 370 195 240 195 Q 80 195 56 180 Q 56 160 56 160" stroke="#7777cc"
+        stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+
+  <text x="230" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">반복 (최종 답이 나올 때까지)</text>
+
+  <rect x="56" y="230" width="348" height="18" rx="4" fill="#000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="243" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" xml:space="preserve">Thought → Action → Obs → Thought → ... → Answer</text>
+
+  <text x="56" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">장점: 단순, 대부분 상황 적합</text>
+  <text x="56" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">단점: 장기 플래닝 약함, 반복 실수 가능</text>
+
+  <!-- Plan-and-Execute -->
+  <rect x="460" y="90" width="380" height="170" rx="8" fill="#1a0f0a" stroke="#e0a855" stroke-width="1.5"/>
+  <text x="650" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e0a855">Plan-and-Execute</text>
+
+  <!-- Plan steps -->
+  <rect x="476" y="126" width="348" height="42" rx="5" fill="#2a1a0a" stroke="#e0a855" stroke-width="1"/>
+  <text x="650" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e0a855">① 계획 (Planner LLM)</text>
+  <text x="650" y="160" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">태스크를 순서 있는 서브태스크 목록으로 분해</text>
+
+  <line x1="650" y1="168" x2="650" y2="184" stroke="#e0a855" stroke-width="2" marker-end="url(#arr-o)"/>
+
+  <rect x="476" y="186" width="348" height="42" rx="5" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="650" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">② 실행 (Executor LLM)</text>
+  <text x="650" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">각 서브태스크를 순서대로 실행, 도구 사용</text>
+
+  <text x="476" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">장점: 복잡한 장기 태스크에 강함, 계획 수정 가능</text>
+  <text x="476" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">단점: 초기 계획 오류 전파, 오버헤드 증가</text>
+
+  <!-- LATS/MCTS -->
+  <rect x="40" y="280" width="380" height="180" rx="8" fill="#0f1f0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">LATS / MCTS (트리 탐색)</text>
+
+  <!-- Tree structure -->
+  <circle cx="230" cy="340" r="18" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">루트</text>
+
+  <line x1="215" y1="358" x2="165" y2="382" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+  <line x1="230" y1="358" x2="230" y2="382" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+  <line x1="245" y1="358" x2="295" y2="382" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+  <circle cx="155" cy="394" r="14" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="155" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">행동1</text>
+  <circle cx="230" cy="394" r="14" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="230" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">행동2</text>
+  <circle cx="305" cy="394" r="14" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="305" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">행동3</text>
+
+  <!-- Best path highlight -->
+  <line x1="230" y1="408" x2="230" y2="426" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="196" y="428" width="68" height="22" rx="4" fill="#0f2f0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="443" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">최적 경로</text>
+
+  <text x="56" y="455" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">장점: 최적 행동 탐색, 백트래킹 지원</text>
+
+  <!-- Reflexion -->
+  <rect x="460" y="280" width="380" height="180" rx="8" fill="#1a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="650" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc">Reflexion (자기 반성)</text>
+
+  <rect x="476" y="316" width="348" height="36" rx="5" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="650" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">① 행동 실행</text>
+  <text x="650" y="348" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">ReAct 루프로 태스크 시도</text>
+
+  <line x1="650" y1="352" x2="650" y2="368" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+
+  <rect x="476" y="370" width="348" height="36" rx="5" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="650" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">② 자기 반성 (Reflector LLM)</text>
+  <text x="650" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">실패 원인 분석 → 개선 방향 생성</text>
+
+  <line x1="650" y1="406" x2="650" y2="422" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+
+  <rect x="476" y="424" width="348" height="22" rx="5" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="650" y="439" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">③ 개선된 접근법으로 재시도</text>
+
+  <text x="476" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">장점: 실패에서 학습, 반복적 개선</text>
+</svg>
