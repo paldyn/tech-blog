@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Spring에서 상태 코드 반환하기</text>
+  <text x="440" y="72" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">@ResponseStatus · ResponseEntity · @ExceptionHandler 세 가지 방법</text>
+
+  <!-- Left code box: ResponseEntity examples -->
+  <text x="60" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">CRUD 메서드별 응답 코드 전략</text>
+  <rect x="60" y="108" width="380" height="316" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">@PostMapping</tspan></text>
+  <text x="76" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public </tspan><tspan fill="#ffffff">ResponseEntity&lt;UserDto&gt; create(</tspan></text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">@RequestBody</tspan><tspan fill="#ffffff"> CreateUserReq req) {</tspan></text>
+  <text x="76" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">UserDto dto = service.create(req);</tspan></text>
+  <text x="76" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">URI location = URI.create(</tspan></text>
+  <text x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ce9178">"/users/"</tspan><tspan fill="#ffffff"> + dto.getId());</tspan></text>
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">ResponseEntity</tspan></text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">.created(location) </tspan><tspan fill="#9aa4b8">// 201</tspan></text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">.body(dto);</tspan></text>
+  <text x="76" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">}</tspan></text>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"> </text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">@DeleteMapping</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">"/{id}"</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public </tspan><tspan fill="#ffffff">ResponseEntity&lt;Void&gt; delete(</tspan></text>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">@PathVariable</tspan><tspan fill="#ffffff"> Long id) {</tspan></text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">service.delete(id);</tspan></text>
+  <text x="76" y="408" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">ResponseEntity.noContent() </tspan><tspan fill="#9aa4b8">// 204</tspan></text>
+  <text x="76" y="426" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">.build();</tspan></text>
+
+  <!-- Right code box: Exception handler -->
+  <text x="460" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">예외 → 상태 코드 매핑 (@ExceptionHandler)</text>
+  <rect x="460" y="108" width="360" height="316" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="476" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">@RestControllerAdvice</tspan></text>
+  <text x="476" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public class </tspan><tspan fill="#ffffff">GlobalExHandler {</tspan></text>
+  <text x="476" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"> </text>
+  <text x="476" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">@ExceptionHandler</tspan></text>
+  <text x="476" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">ResponseEntity&lt;?&gt; handle404(</tspan></text>
+  <text x="476" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">NotFoundException ex) {</tspan></text>
+  <text x="476" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">ResponseEntity</tspan></text>
+  <text x="476" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.notFound() </tspan><tspan fill="#9aa4b8">// 404</tspan></text>
+  <text x="476" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.build();</tspan></text>
+  <text x="476" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">}</tspan></text>
+  <text x="476" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"> </text>
+  <text x="476" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">@ExceptionHandler</tspan></text>
+  <text x="476" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">ResponseEntity&lt;?&gt; handle409(</tspan></text>
+  <text x="476" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">DuplicateException ex) {</tspan></text>
+  <text x="476" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">ResponseEntity</tspan></text>
+  <text x="476" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.status(</tspan><tspan fill="#b5cea8">409</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#9aa4b8">// Conflict</tspan></text>
+  <text x="476" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.body(ErrorDto.of(ex));</tspan></text>
+</svg>
