@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">stash 수명과 GC</text>
+
+  <!-- Timeline -->
+  <rect x="60" y="90" width="140" height="70" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="130" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">stash drop</text>
+  <text x="130" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">dangling commit</text>
+  <text x="130" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">으로 잔존</text>
+
+  <line x1="200" y1="125" x2="260" y2="125" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="260" y="90" width="160" height="70" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="340" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">reflog 조회 가능</text>
+  <text x="340" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">git fsck --unreachable</text>
+  <text x="340" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">SHA로 복구 가능</text>
+
+  <line x1="420" y1="125" x2="480" y2="125" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="450" y="115" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">git gc</text>
+  <text x="450" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">실행 후</text>
+
+  <rect x="480" y="90" width="160" height="70" rx="8" fill="#1f0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="560" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">영구 삭제</text>
+  <text x="560" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">unreachable object</text>
+  <text x="560" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">복구 불가</text>
+
+  <!-- Recovery code -->
+  <rect x="60" y="190" width="760" height="144" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># GC 전 복구 시도 (1): unreachable commit 조회</text>
+  <text x="76" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">git <tspan fill="#7ec8e3" font-weight="600">fsck</tspan> --unreachable | grep commit</text>
+  <text x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># GC 전 복구 시도 (2): SHA로 적용</text>
+  <text x="76" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">git stash <tspan fill="#55c555" font-weight="600">apply</tspan> &lt;SHA&gt;</text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># GC 주기 확인</text>
+  <text x="76" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">git <tspan fill="#7ec8e3" font-weight="600">config</tspan> gc.pruneExpire  <tspan fill="#9aa4b8"># 기본 2.weeks.ago</tspan></text>
+</svg>
