@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <!-- Background -->
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">환경 설정 분리 배포 스크립트</text>
+
+  <!-- Code box -->
+  <rect x="40" y="58" width="800" height="306" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <!-- Line 1 -->
+  <text x="60" y="82" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">#!/bin/bash</text>
+  <!-- Line 2 -->
+  <text x="60" y="99" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># deploy.sh — 환경별 설정 선택 배포</text>
+  <!-- blank -->
+  <!-- Line 4 -->
+  <text x="60" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#b5cea8">ENV</tspan><tspan fill="#ffffff">=${</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">:-</tspan><tspan fill="#ce9178">dev</tspan><tspan fill="#ffffff">}  </tspan><tspan fill="#9aa4b8"># dev | stg | prod</tspan>
+  </text>
+  <!-- blank -->
+  <text x="60" y="167" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">echo</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">"배포 환경: $ENV"</tspan>
+  </text>
+  <!-- blank -->
+  <text x="60" y="201" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 환경별 TypeDef 파일 선택</text>
+  <text x="60" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">cp</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">"config/TypeDef_${ENV}.xml"</tspan><tspan fill="#ffffff"> \</tspan>
+  </text>
+  <text x="60" y="235" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">   </tspan><tspan fill="#ce9178">"dist/TypeDef.xml"</tspan>
+  </text>
+  <!-- blank -->
+  <text x="60" y="269" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 환경별 서비스 URL 주입</text>
+  <text x="60" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">sed</tspan><tspan fill="#ffffff"> -i </tspan><tspan fill="#ce9178">"s|%SERVER_URL%|${SERVER_URL}|g"</tspan><tspan fill="#ffffff"> \</tspan>
+  </text>
+  <text x="60" y="303" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">   dist/TypeDef.xml</tspan>
+  </text>
+  <!-- blank -->
+  <text x="60" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 결과물 배포 서버로 전송</text>
+  <text x="60" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">rsync</tspan><tspan fill="#ffffff"> -av dist/ </tspan><tspan fill="#ce9178">"${DEPLOY_HOST}:/deploy/${ENV}/"</tspan>
+  </text>
+  <text x="60" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">echo</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">"배포 완료: $ENV"</tspan>
+  </text>
+</svg>
