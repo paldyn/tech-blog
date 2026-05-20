@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">직접 구현 — debounce · throttle</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">클로저와 타이머를 이용한 핵심 로직</text>
+
+  <!-- Debounce impl -->
+  <rect x="60" y="96" width="370" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// debounce 구현</text>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> debounce(fn, delay) {</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">let</tspan> timer;</text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> <tspan fill="#7ec8e3" font-weight="600">function</tspan>(...args) {</text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    clearTimeout(timer);</text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    timer = setTimeout(() => {</text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      fn.apply(<tspan fill="#7ec8e3" font-weight="600">this</tspan>, args);</text>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    }, delay);</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  };</text>
+  <text x="76" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+  <text x="76" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 호출마다 타이머 초기화</text>
+  <text x="76" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// → delay 후 마지막 한 번만 실행</text>
+
+  <!-- Throttle impl -->
+  <rect x="450" y="96" width="370" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// throttle 구현 (leading edge)</text>
+  <text x="466" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> throttle(fn, limit) {</text>
+  <text x="466" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">let</tspan> inThrottle = <tspan fill="#b5cea8">false</tspan>;</text>
+  <text x="466" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> <tspan fill="#7ec8e3" font-weight="600">function</tspan>(...args) {</text>
+  <text x="466" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    <tspan fill="#7ec8e3" font-weight="600">if</tspan> (inThrottle) <tspan fill="#7ec8e3" font-weight="600">return</tspan>;</text>
+  <text x="466" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    fn.apply(<tspan fill="#7ec8e3" font-weight="600">this</tspan>, args);</text>
+  <text x="466" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    inThrottle = <tspan fill="#b5cea8">true</tspan>;</text>
+  <text x="466" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    setTimeout(() => {</text>
+  <text x="466" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      inThrottle = <tspan fill="#b5cea8">false</tspan>;</text>
+  <text x="466" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    }, limit);</text>
+  <text x="466" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  };</text>
+  <text x="466" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Usage example -->
+  <rect x="60" y="360" width="760" height="68" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 사용 예시</text>
+  <text x="76" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> debouncedSearch = debounce(fetchResults, <tspan fill="#b5cea8">300</tspan>);</text>
+  <text x="76" y="420" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> throttledScroll = throttle(updatePosition, <tspan fill="#b5cea8">100</tspan>);</text>
+</svg>

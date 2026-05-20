@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">React 메모이제이션 API 비교</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">useMemo · useCallback · React.memo 사용 기준</text>
+
+  <!-- useMemo -->
+  <rect x="60" y="96" width="240" height="120" rx="8" fill="#0d1f2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="180" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">useMemo</text>
+  <text x="180" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">계산된 값 캐싱</text>
+  <text x="180" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">deps 바뀔 때만 재계산</text>
+  <text x="180" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">정렬/필터 등 무거운 연산</text>
+  <text x="180" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">⚠ 단순 연산엔 오버헤드</text>
+
+  <!-- useCallback -->
+  <rect x="320" y="96" width="240" height="120" rx="8" fill="#0d1f2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">useCallback</text>
+  <text x="440" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">함수 참조 안정화</text>
+  <text x="440" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">deps 바뀔 때만 새 함수</text>
+  <text x="440" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">React.memo 자식에 전달 시</text>
+  <text x="440" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">⚠ 단독 사용은 의미 없음</text>
+
+  <!-- React.memo -->
+  <rect x="580" y="96" width="240" height="120" rx="8" fill="#0d1f2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="700" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">React.memo</text>
+  <text x="700" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">컴포넌트 재렌더 방지</text>
+  <text x="700" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">props 얕은 비교</text>
+  <text x="700" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">렌더 비용 큰 순수 컴포넌트</text>
+  <text x="700" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">⚠ 비교 비용 &gt; 렌더 비용?</text>
+
+  <!-- Code block -->
+  <rect x="60" y="240" width="760" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// useMemo — 무거운 필터 연산 캐싱</text>
+  <text x="76" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> filtered = useMemo(</text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  () => items.filter(i => i.active &amp;&amp; i.price &lt; max),</text>
+  <text x="76" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  [items, max]  <tspan fill="#9aa4b8">// items 또는 max 바뀔 때만 재계산</tspan></text>
+  <text x="76" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+  <text x="76" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// useCallback — React.memo 자식에 콜백 전달</text>
+  <text x="76" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> handleClick = useCallback(() => setCount(c => c+<tspan fill="#b5cea8">1</tspan>), []);</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// deps [] → 항상 같은 참조 → 자식 재렌더 방지</text>
+</svg>

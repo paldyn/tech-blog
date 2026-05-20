@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">rIC 사용 사례 · 주의사항</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">언제 써야 하고, 언제 쓰면 안 되는가</text>
+
+  <!-- Good use cases -->
+  <rect x="60" y="96" width="360" height="148" rx="8" fill="#0d2a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">✅ 적합한 작업</text>
+  <text x="80" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 분석/텔레메트리 이벤트 전송</text>
+  <text x="80" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 사전 prefetch (다음 페이지 데이터)</text>
+  <text x="80" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 오프스크린 캐시 초기화</text>
+  <text x="80" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 비중요 데이터 localStorage 저장</text>
+  <text x="80" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 로그 배치 처리</text>
+
+  <!-- Bad use cases -->
+  <rect x="460" y="96" width="360" height="148" rx="8" fill="#2a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">❌ 부적합한 작업</text>
+  <text x="480" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 사용자에게 즉시 보여야 할 DOM 업데이트</text>
+  <text x="480" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 애니메이션 (rAF 사용)</text>
+  <text x="480" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 긴 동기 작업 (>50ms — UI 잠금)</text>
+  <text x="480" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• 예측 불가한 실행 시점 의존 로직</text>
+  <text x="480" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#aaa">• Safari (미지원 → fallback 필수)</text>
+
+  <!-- Timeout option -->
+  <rect x="60" y="266" width="760" height="104" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// timeout 옵션: 유휴가 없어도 N ms 후 강제 실행</text>
+  <text x="76" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">requestIdleCallback(sendAnalytics, { timeout: <tspan fill="#b5cea8">2000</tspan> });</text>
+  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// Safari 폴백 (rIC 미지원)</text>
+  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> rIC = <tspan fill="#7ec8e3" font-weight="600">typeof</tspan> requestIdleCallback !== <tspan fill="#ce9178">'undefined'</tspan></text>
+  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  ? requestIdleCallback</text>
+  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  : (cb) => setTimeout(() => cb({ timeRemaining: () => <tspan fill="#b5cea8">50</tspan> }), <tspan fill="#b5cea8">0</tspan>);</text>
+</svg>

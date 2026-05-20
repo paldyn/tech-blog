@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">플레임 차트 읽기 — 병목 함수 찾기</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Call Stack의 시간 분포를 시각화해 CPU 병목 탐지</text>
+
+  <!-- Flame chart visualization -->
+  <!-- Base row: main -->
+  <rect x="60" y="96" width="760" height="32" rx="4" fill="#1a2a4a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">main (760ms)</text>
+
+  <!-- Level 1 -->
+  <rect x="60" y="136" width="340" height="28" rx="4" fill="#2a1a4a" stroke="#7777cc" stroke-width="1"/>
+  <text x="230" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">handleClick (340ms)</text>
+  <rect x="410" y="136" width="240" height="28" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="530" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">renderList (240ms)</text>
+  <rect x="660" y="136" width="160" height="28" rx="4" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="740" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">other (160ms)</text>
+
+  <!-- Level 2 under handleClick -->
+  <rect x="60" y="172" width="120" height="28" rx="4" fill="#2a1a1a" stroke="#e05555" stroke-width="2"/>
+  <text x="120" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">sortData (120ms)</text>
+  <rect x="188" y="172" width="80" height="28" rx="4" fill="#2a1a4a" stroke="#7777cc" stroke-width="1"/>
+  <text x="228" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">filter (80ms)</text>
+  <rect x="276" y="172" width="124" height="28" rx="4" fill="#2a2a0d" stroke="#e0a055" stroke-width="1"/>
+  <text x="338" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e0a055" text-anchor="middle">formatDate (124ms)</text>
+
+  <!-- Level 2 under renderList -->
+  <rect x="410" y="172" width="140" height="28" rx="4" fill="#0d2a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">createElement (140ms)</text>
+  <rect x="558" y="172" width="92" height="28" rx="4" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="604" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">append (92ms)</text>
+
+  <!-- Level 3: sortData breakdown (the real bottleneck) -->
+  <rect x="60" y="208" width="120" height="28" rx="4" fill="#3a0d0d" stroke="#e05555" stroke-width="2"/>
+  <text x="120" y="227" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">compareFunc (120ms)</text>
+
+  <!-- Level 4: compareFunc -->
+  <rect x="60" y="244" width="120" height="28" rx="4" fill="#4a0d0d" stroke="#e05555" stroke-width="2.5"/>
+  <text x="120" y="263" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">⚡ new Date() (120ms)</text>
+
+  <!-- Annotation arrow -->
+  <line x1="190" y1="258" x2="320" y2="258" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="330" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">병목! 정렬 시 매번 Date 파싱</text>
+  <text x="330" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">→ timestamp 미리 변환해 비교</text>
+
+  <!-- Reading guide -->
+  <rect x="60" y="298" width="760" height="90" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">플레임 차트 읽는 법</text>
+  <text x="80" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa">• 가로폭 = 실행 시간. 넓을수록 오래 걸림</text>
+  <text x="80" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa">• 세로 = 콜스택 깊이. 아래로 갈수록 더 내부 호출</text>
+  <text x="440" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa">• 아래까지 이어지는 넓은 탑 = 해당 함수가 모든 시간 소비</text>
+  <text x="440" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa">• 가장 아래 가장 넓은 함수 = 실제 CPU 시간 소비 함수</text>
+
+  <!-- Code block: fix -->
+  <rect x="60" y="408" width="760" height="52" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ❌ 비교마다 Date 파싱 → ✅ 미리 변환 후 정렬</text>
+  <text x="76" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">items.map(i => ({...i, ts: +<tspan fill="#7ec8e3" font-weight="600">new</tspan> Date(i.date)})).sort((a,b) => a.ts - b.ts);</text>
+</svg>

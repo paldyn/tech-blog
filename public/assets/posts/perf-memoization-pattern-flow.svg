@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-hit" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-miss" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">메모이제이션 — 캐시 흐름</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">같은 인자로 재호출 시 계산 생략</text>
+
+  <!-- Call box -->
+  <rect x="340" y="100" width="200" height="56" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">fn(args) 호출</text>
+  <text x="440" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">키 = JSON.stringify(args)</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="156" x2="440" y2="192" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Cache check -->
+  <rect x="300" y="194" width="280" height="56" rx="8" fill="#1a1a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">캐시에 키 있음?</text>
+  <text x="440" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cache.has(key)</text>
+
+  <!-- HIT path -->
+  <line x1="300" y1="222" x2="168" y2="222" stroke="#55c555" stroke-width="2" marker-end="url(#arr-hit)"/>
+  <text x="234" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">HIT</text>
+  <rect x="60" y="196" width="108" height="52" rx="8" fill="#0d2a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="114" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">캐시 반환</text>
+  <text x="114" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">O(1) 조회</text>
+
+  <!-- MISS path -->
+  <line x1="580" y1="222" x2="712" y2="222" stroke="#e05555" stroke-width="2" marker-end="url(#arr-miss)"/>
+  <text x="646" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">MISS</text>
+  <rect x="712" y="196" width="108" height="52" rx="8" fill="#2a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="766" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">실제 계산</text>
+  <text x="766" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">fn(...args)</text>
+
+  <!-- Store to cache -->
+  <line x1="766" y1="248" x2="766" y2="310" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="766" y1="310" x2="582" y2="310" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-miss)"/>
+  <text x="680" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa">cache.set(key, result)</text>
+
+  <!-- Cache store box -->
+  <rect x="300" y="288" width="280" height="48" rx="8" fill="#1a1a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">캐시 저장 후 반환</text>
+  <text x="440" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">다음 호출부터 HIT 경로</text>
+
+  <!-- Code block -->
+  <rect x="60" y="358" width="760" height="90" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 범용 memoize</text>
+  <text x="76" y="400" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> memoize = (fn) => {</text>
+  <text x="76" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">const</tspan> cache = <tspan fill="#7ec8e3" font-weight="600">new</tspan> Map();</text>
+  <text x="76" y="436" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> (...args) => { <tspan fill="#7ec8e3" font-weight="600">const</tspan> k=JSON.stringify(args); <tspan fill="#7ec8e3" font-weight="600">return</tspan> cache.get(k)??(cache.set(k,fn(...args)),cache.get(k)); };</text>
+  <text x="76" y="440" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">};</text>
+</svg>
