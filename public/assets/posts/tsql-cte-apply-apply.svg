@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CROSS APPLY vs OUTER APPLY</text>
+
+  <!-- Left: Outer table -->
+  <text x="60" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">Customers (외부 테이블)</text>
+  <rect x="60" y="100" width="200" height="142" rx="6" fill="#0f1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">id | name</text>
+  <line x1="78" y1="128" x2="242" y2="128" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="160" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">1 | Alice</text>
+  <text x="160" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">2 | Bob</text>
+  <text x="160" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">3 | Carol</text>
+  <text x="160" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">(주문 없음)</text>
+  <text x="160" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">4 | Dave</text>
+
+  <!-- Arrow to function -->
+  <line x1="260" y1="172" x2="320" y2="172" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="290" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">행별 적용</text>
+
+  <!-- TVF box -->
+  <rect x="322" y="130" width="200" height="84" rx="6" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="422" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">테이블 함수 / 서브쿼리</text>
+  <text x="422" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">GetTopN_Orders(customer_id, N)</text>
+  <text x="422" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">외부 테이블의 열을 참조 가능</text>
+  <text x="422" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">(코릴레이티드 함수 인자 허용)</text>
+
+  <!-- CROSS APPLY result -->
+  <text x="590" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">CROSS APPLY 결과</text>
+  <rect x="590" y="100" width="250" height="142" rx="6" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="715" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">id | name | order_id</text>
+  <line x1="608" y1="128" x2="822" y2="128" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="715" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">1 | Alice | 101</text>
+  <text x="715" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">1 | Alice | 105</text>
+  <text x="715" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">2 | Bob   | 102</text>
+  <text x="715" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">← Carol 제외 (결과 없음)</text>
+  <text x="715" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">4 | Dave  | 110</text>
+
+  <!-- OUTER APPLY result -->
+  <text x="590" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">OUTER APPLY 결과</text>
+  <rect x="590" y="284" width="250" height="156" rx="6" fill="#0a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="715" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">id | name | order_id</text>
+  <line x1="608" y1="312" x2="822" y2="312" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="715" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">1 | Alice | 101</text>
+  <text x="715" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">1 | Alice | 105</text>
+  <text x="715" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">2 | Bob   | 102</text>
+  <text x="715" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">3 | Carol | NULL ← 포함!</text>
+  <text x="715" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">4 | Dave  | 110</text>
+
+  <!-- Arrow from function to results -->
+  <line x1="522" y1="172" x2="588" y2="172" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="522" y1="185" x2="572" y2="360" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Code block -->
+  <rect x="60" y="270" width="510" height="162" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- CROSS APPLY: 고객별 최신 3개 주문</text>
+  <text xml:space="preserve" x="80" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> c.id, c.name, o.order_id, o.amount</tspan></text>
+  <text xml:space="preserve" x="80" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> customers c</tspan></text>
+  <text xml:space="preserve" x="80" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">CROSS APPLY</tspan><tspan fill="#ffffff"> (</tspan></text>
+  <text xml:space="preserve" x="80" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">SELECT TOP</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff"> order_id, amount</tspan></text>
+  <text xml:space="preserve" x="80" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> orders o </tspan><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> o.customer_id = c.id</tspan></text>
+  <text xml:space="preserve" x="80" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">ORDER BY</tspan><tspan fill="#ffffff"> order_date </tspan><tspan fill="#7ec8e3" font-weight="600">DESC</tspan></text>
+  <text xml:space="preserve" x="80" y="418" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">) o;</tspan></text>
+  <text xml:space="preserve" x="80" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#9aa4b8">-- OUTER APPLY: 주문 없는 고객도 포함</tspan></text>
+</svg>

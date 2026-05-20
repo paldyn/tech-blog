@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">T-SQL CTE 구조와 재귀 CTE</text>
+
+  <!-- Regular CTE -->
+  <text x="60" y="85" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">일반 CTE 구조</text>
+
+  <rect x="60" y="100" width="760" height="120" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 복잡한 서브쿼리를 CTE로 분리</text>
+  <text xml:space="preserve" x="80" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">WITH</tspan><tspan fill="#ffffff"> RecentOrders </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> (</tspan></text>
+  <text xml:space="preserve" x="80" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> customer_id, </tspan><tspan fill="#7ec8e3" font-weight="600">SUM</tspan><tspan fill="#ffffff">(amount) total, </tspan><tspan fill="#7ec8e3" font-weight="600">COUNT</tspan><tspan fill="#ffffff">(*) cnt</tspan></text>
+  <text xml:space="preserve" x="80" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> orders </tspan><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> order_date >= DATEADD(MONTH,-</tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff">, GETDATE())</tspan></text>
+  <text xml:space="preserve" x="80" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">GROUP BY</tspan><tspan fill="#ffffff"> customer_id</tspan></text>
+  <text xml:space="preserve" x="80" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">)</tspan></text>
+
+  <!-- Recursive CTE -->
+  <text x="60" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">재귀 CTE 구조</text>
+
+  <rect x="60" y="265" width="370" height="190" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 조직도 계층 탐색</text>
+  <text xml:space="preserve" x="80" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">WITH</tspan><tspan fill="#ffffff"> OrgTree </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> (</tspan></text>
+  <text xml:space="preserve" x="80" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  -- 앵커 (초기값)</text>
+  <text xml:space="preserve" x="80" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> id, name, </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff"> lvl </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> emp </tspan><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> mgr </tspan><tspan fill="#7ec8e3" font-weight="600">IS NULL</tspan></text>
+  <text xml:space="preserve" x="80" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">  UNION ALL</tspan></text>
+  <text xml:space="preserve" x="80" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  -- 재귀 (자신 참조)</text>
+  <text xml:space="preserve" x="80" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> e.id, e.name, t.lvl+</tspan><tspan fill="#b5cea8">1</tspan></text>
+  <text xml:space="preserve" x="80" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> emp e </tspan><tspan fill="#7ec8e3" font-weight="600">JOIN</tspan><tspan fill="#ffffff"> OrgTree t </tspan><tspan fill="#7ec8e3" font-weight="600">ON</tspan><tspan fill="#ffffff"> e.mgr=t.id</tspan></text>
+  <text xml:space="preserve" x="80" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">)</tspan></text>
+  <text xml:space="preserve" x="80" y="450" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> *, REPLICATE(</tspan><tspan fill="#ce9178">'  '</tspan><tspan fill="#ffffff">,lvl)+name nm </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> OrgTree</tspan></text>
+
+  <!-- Hierarchy visual -->
+  <rect x="460" y="265" width="360" height="190" rx="8" fill="#0f1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">재귀 CTE 결과 예시</text>
+  <line x1="478" y1="300" x2="802" y2="300" stroke="#3a4a6e" stroke-width="1"/>
+
+  <!-- Level 0 -->
+  <text x="490" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0a040">Level 0:</text>
+  <text x="580" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">CEO (id=1, mgr=NULL)</text>
+
+  <text x="490" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">Level 1:</text>
+  <text x="580" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">CTO (id=2, mgr=1)</text>
+
+  <text x="490" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">Level 1:</text>
+  <text x="580" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">CFO (id=3, mgr=1)</text>
+
+  <text x="490" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Level 2:</text>
+  <text x="580" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Dev Lead (id=4, mgr=2)</text>
+
+  <text x="490" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Level 2:</text>
+  <text x="580" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">QA Lead (id=5, mgr=2)</text>
+
+  <rect x="478" y="424" width="322" height="26" rx="4" fill="#1a1520" stroke="#7777cc" stroke-width="1"/>
+  <text x="639" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">OPTION (MAXRECURSION 100) — 무한루프 방지</text>
+</svg>

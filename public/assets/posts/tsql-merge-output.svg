@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">MERGE OUTPUT 절과 주의사항</text>
+
+  <!-- OUTPUT columns -->
+  <text x="60" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">OUTPUT 절 주요 컬럼</text>
+
+  <rect x="60" y="100" width="200" height="64" rx="6" fill="#0f1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">$action</text>
+  <text x="160" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">수행된 작업 유형</text>
+  <text x="160" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">'INSERT'|'UPDATE'|'DELETE'</text>
+
+  <rect x="280" y="100" width="200" height="64" rx="6" fill="#0f1520" stroke="#55c555" stroke-width="1.5"/>
+  <text x="380" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">inserted.*</text>
+  <text x="380" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">변경 후 TARGET 행</text>
+  <text x="380" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">INSERT/UPDATE 시 유효</text>
+
+  <rect x="500" y="100" width="200" height="64" rx="6" fill="#0f1520" stroke="#e05555" stroke-width="1.5"/>
+  <text x="600" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">deleted.*</text>
+  <text x="600" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">변경 전 TARGET 행</text>
+  <text x="600" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">UPDATE/DELETE 시 유효</text>
+
+  <!-- Pitfalls section -->
+  <text x="60" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">⚠ MERGE 주요 함정</text>
+
+  <rect x="60" y="210" width="360" height="64" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">중복 SOURCE 행</text>
+  <text x="240" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">SOURCE에 같은 키가 2개 이상이면</text>
+  <text x="240" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">MATCH 조건이 여러 번 실행 → 오류</text>
+
+  <rect x="440" y="210" width="380" height="64" rx="6" fill="#1a1a0a" stroke="#e0a040" stroke-width="1.5"/>
+  <text x="630" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e0a040" text-anchor="middle">세미콜론 필수</text>
+  <text x="630" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">MERGE 문 끝에 ; 필수</text>
+  <text x="630" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">없으면 다음 문이 MERGE의 일부로 파싱됨</text>
+
+  <!-- Code block: OUTPUT to table -->
+  <rect x="60" y="294" width="760" height="128" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- OUTPUT 결과를 감사 테이블에 저장</text>
+  <text xml:space="preserve" x="80" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">MERGE INTO</tspan><tspan fill="#ffffff"> inventory </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> tgt </tspan><tspan fill="#7ec8e3" font-weight="600">USING</tspan><tspan fill="#ffffff"> daily_update src </tspan><tspan fill="#7ec8e3" font-weight="600">ON</tspan><tspan fill="#ffffff"> tgt.id=src.id</tspan></text>
+  <text xml:space="preserve" x="80" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">WHEN MATCHED THEN UPDATE SET</tspan><tspan fill="#ffffff"> tgt.qty=src.qty</tspan></text>
+  <text xml:space="preserve" x="80" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">WHEN NOT MATCHED BY TARGET THEN INSERT</tspan><tspan fill="#ffffff"> (id,qty) </tspan><tspan fill="#7ec8e3" font-weight="600">VALUES</tspan><tspan fill="#ffffff">(src.id,src.qty)</tspan></text>
+  <text xml:space="preserve" x="80" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">OUTPUT</tspan><tspan fill="#ffffff"> GETDATE(), $action, inserted.id, deleted.qty, inserted.qty</tspan></text>
+  <text xml:space="preserve" x="80" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">INTO</tspan><tspan fill="#ffffff"> change_audit(changed_at, action_type, product_id, old_qty, new_qty); </tspan><tspan fill="#9aa4b8">-- ; 필수!</tspan></text>
+</svg>

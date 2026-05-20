@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQL Server 버퍼 풀 구조</text>
+
+  <!-- Buffer Pool box -->
+  <rect x="60" y="68" width="500" height="300" rx="10" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="310" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">Buffer Pool (8KB 페이지 단위)</text>
+
+  <!-- Clean pages -->
+  <rect x="80" y="108" width="200" height="80" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="180" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Clean Pages</text>
+  <text x="180" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">디스크와 동일한 상태</text>
+  <text x="180" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">즉시 재사용 가능</text>
+
+  <!-- Dirty pages -->
+  <rect x="300" y="108" width="200" height="80" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="400" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Dirty Pages</text>
+  <text x="400" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">메모리에서 수정됨</text>
+  <text x="400" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Checkpoint 시 기록</text>
+
+  <!-- Free list -->
+  <rect x="80" y="208" width="200" height="70" rx="6" fill="#1a1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="180" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Free List</text>
+  <text x="180" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">즉시 사용 가능 빈 슬롯</text>
+  <text x="180" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">min_free_buffers 이하 시 Lazy Writer 실행</text>
+
+  <!-- Stolen -->
+  <rect x="300" y="208" width="200" height="70" rx="6" fill="#0a1520" stroke="#e0a040" stroke-width="1.5"/>
+  <text x="400" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e0a040" text-anchor="middle">Stolen Pages</text>
+  <text x="400" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">플랜 캐시, 정렬 버퍼 등</text>
+  <text x="400" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">데이터 페이지 외 용도</text>
+
+  <!-- LRU label -->
+  <text x="180" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">← LRU (Least Recently Used) 교체 알고리즘 →</text>
+
+  <!-- Max/Min Server Memory -->
+  <rect x="80" y="315" width="460" height="36" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="310" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">min server memory ~ max server memory (기본: 2147483647 MB = 무제한)</text>
+
+  <!-- Disk (right) -->
+  <rect x="620" y="110" width="200" height="110" rx="10" fill="#1a1a1a" stroke="#888" stroke-width="1.5"/>
+  <text x="720" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888" text-anchor="middle">데이터 파일</text>
+  <text x="720" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">(.mdf / .ndf)</text>
+  <text x="720" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">8KB 페이지</text>
+  <text x="720" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">extent = 8 pages = 64KB</text>
+
+  <!-- Arrows: disk <-> buffer pool -->
+  <line x1="560" y1="150" x2="618" y2="150" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="587" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">읽기</text>
+  <line x1="618" y1="178" x2="560" y2="178" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="587" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555" text-anchor="middle">Dirty 쓰기</text>
+
+  <!-- Code block -->
+  <rect x="60" y="395" width="760" height="84" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="418" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 버퍼 풀 페이지 현황 조회</text>
+  <text xml:space="preserve" x="80" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> DB_NAME(database_id) db, COUNT(*)*</tspan><tspan fill="#b5cea8">8</tspan><tspan fill="#ffffff">/</tspan><tspan fill="#b5cea8">1024</tspan><tspan fill="#ffffff"> AS cached_mb,</tspan></text>
+  <text xml:space="preserve" x="80" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">       SUM(is_modified) AS dirty_pages </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> sys.dm_os_buffer_descriptors</tspan></text>
+  <text xml:space="preserve" x="80" y="468" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> database_id != </tspan><tspan fill="#b5cea8">32767</tspan><tspan fill="#7ec8e3" font-weight="600"> GROUP BY</tspan><tspan fill="#ffffff"> database_id </tspan><tspan fill="#7ec8e3" font-weight="600">ORDER BY</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff"> DESC;</tspan></text>
+</svg>
