@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Jackson 커스텀 직렬화·역직렬화</text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">JsonSerializer / JsonDeserializer 구현 · ObjectMapper 전역 설정</text>
+
+  <!-- Left label -->
+  <text x="60" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">커스텀 Serializer / Deserializer</text>
+  <!-- Left code box: 12 lines -->
+  <rect x="60" y="108" width="380" height="262" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// Money 타입 커스텀 직렬화</tspan></text>
+  <text x="76" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public class </tspan><tspan fill="#ffffff">MoneySerializer</tspan></text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">extends </tspan><tspan fill="#ffffff">JsonSerializer&lt;Money&gt; {</tspan></text>
+  <text x="76" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">@Override</tspan></text>
+  <text x="76" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">public void </tspan><tspan fill="#ffffff">serialize(</tspan></text>
+  <text x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">Money m, JsonGenerator gen,</tspan></text>
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">SerializerProvider p)</tspan></text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#7ec8e3" font-weight="600">throws </tspan><tspan fill="#ffffff">IOException {</tspan></text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">gen.writeStartObject();</tspan></text>
+  <text x="76" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">gen.writeNumberField(</tspan><tspan fill="#ce9178">"amount"</tspan><tspan fill="#ffffff">, m.amount());</tspan></text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">gen.writeStringField(</tspan><tspan fill="#ce9178">"currency"</tspan><tspan fill="#ffffff">, m.currency());</tspan></text>
+  <text x="76" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#ffffff">gen.writeEndObject(); } }</tspan></text>
+
+  <!-- Right label -->
+  <text x="460" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">ObjectMapper 전역 설정 (Boot)</text>
+  <!-- Right code box: 12 lines -->
+  <rect x="460" y="108" width="360" height="262" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="476" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">@Configuration</tspan></text>
+  <text x="476" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public class </tspan><tspan fill="#ffffff">JacksonConfig {</tspan></text>
+  <text x="476" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">@Bean</tspan></text>
+  <text x="476" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">public </tspan><tspan fill="#ffffff">Jackson2ObjectMapperBuilderCustomizer</tspan></text>
+  <text x="476" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">  <tspan fill="#ffffff">customizer() {</tspan></text>
+  <text x="476" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">builder -&gt; builder</tspan></text>
+  <text x="476" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.featuresToDisable(</tspan></text>
+  <text x="476" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">        <tspan fill="#ffffff">WRITE_DATES_AS_TIMESTAMPS)</tspan></text>
+  <text x="476" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.propertyNamingStrategy(</tspan></text>
+  <text x="476" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">        <tspan fill="#ffffff">SNAKE_CASE)</tspan></text>
+  <text x="476" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">      <tspan fill="#ffffff">.serializerByType(Money.</tspan><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff">,</tspan></text>
+  <text x="476" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">        <tspan fill="#7ec8e3" font-weight="600">new </tspan><tspan fill="#ffffff">MoneySerializer()); } }</tspan></text>
+
+  <!-- Bottom note -->
+  <text x="440" y="394" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#555">@JsonSerialize(using=MoneySerializer.class) 로 특정 필드에만 적용 가능</text>
+</svg>
