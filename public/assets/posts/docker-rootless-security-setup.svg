@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <!-- background -->
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Rootless Docker 설치 &amp; 설정</text>
+
+  <!-- Left: install -->
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">설치 및 활성화</text>
+
+  <rect x="60" y="88" width="390" height="224" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># 전제: uidmap 패키지 설치</text>
+  <text x="76" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">sudo apt-get install -y uidmap</text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># rootless 설치 스크립트 실행 (일반 유저로)</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">dockerd-rootless-setuptool.sh install</text>
+  <text x="76" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># systemd user 서비스로 등록</text>
+  <text x="76" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">systemctl --user enable docker</text>
+  <text x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">systemctl --user start docker</text>
+  <text x="76" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># DOCKER_HOST 환경변수 설정</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#7ec8e3" font-weight="600">export</font><text x="122" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" font-size="13" fill="#ffffff"> DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock</text>
+  <text x="76" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># 또는 docker context 사용</text>
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">docker context use rootless</text>
+
+  <!-- Right: verify + limits -->
+  <text x="470" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">검증 &amp; 제약사항</text>
+
+  <rect x="470" y="88" width="350" height="116" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="486" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># rootless 확인</text>
+  <text x="486" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">docker info | grep rootless</text>
+  <text x="486" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># User Namespace 매핑 확인</text>
+  <text x="486" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">cat /proc/self/uid_map</text>
+  <text x="486" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># 0  100000  65536</text>
+  <text x="486" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># 컨테이너 UID 0 = 호스트 UID 100000</text>
+
+  <rect x="470" y="220" width="350" height="96" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="645" y="242" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Rootless 제약사항</text>
+  <text x="490" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">✗  1024 미만 포트 바인딩 (net.ipv4.ip_unprivileged_port_start)</text>
+  <text x="490" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">✗  overlay2 일부 환경 제한 (fuse-overlayfs 대안)</text>
+  <text x="490" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">✗  cgroup v1에서 메모리 제한 불가 (cgroup v2 권장)</text>
+
+  <!-- bottom note -->
+  <text x="440" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sysctl -w net.ipv4.ip_unprivileged_port_start=80 으로 저번호 포트 허용 가능 (root 권한 필요)</text>
+</svg>

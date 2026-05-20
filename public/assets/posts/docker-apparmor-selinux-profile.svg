@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <!-- background -->
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">AppArmor 프로파일 작성 &amp; 적용</text>
+
+  <!-- Left: profile content -->
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">/etc/apparmor.d/docker-myapp</text>
+
+  <rect x="60" y="88" width="390" height="274" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8">#include &lt;tunables/global&gt;</text>
+  <text x="76" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#7ec8e3" font-weight="600">profile</font><text x="132" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" font-size="13" fill="#ffffff"> docker-myapp flags=(attach_disconnected) {</text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8">  #include &lt;abstractions/base&gt;</text>
+  <text x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8">  # 네트워크 허용</text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  network inet tcp,</text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  network inet udp,</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8">  # 앱 바이너리 실행</text>
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  /usr/local/bin/myapp r,</text>
+  <text x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  /app/** r,</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  /app/uploads/** rw,</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8">  # /proc 접근 제한</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  deny /proc/sysrq-trigger rwklx,</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  deny /sys/** wklx,</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Right: commands -->
+  <text x="470" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">로드 &amp; 적용 명령</text>
+
+  <rect x="470" y="88" width="350" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="486" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># 프로파일 로드 (complain 모드)</text>
+  <text x="486" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">apparmor_parser -r -W \</text>
+  <text x="486" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  /etc/apparmor.d/docker-myapp</text>
+  <text x="486" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># 컨테이너에 프로파일 적용</text>
+  <text x="486" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">docker run \</text>
+  <text x="486" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#7ec8e3" font-weight="600">  --security-opt apparmor</font><text x="666" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve" font-size="13" fill="#ffffff">=\</text>
+  <text x="486" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  docker-myapp \</text>
+  <text x="486" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#ffffff">  myapp:latest</text>
+  <text x="486" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="13" fill="#9aa4b8"># AppArmor 비활성화</text>
+
+  <!-- Modes box -->
+  <rect x="470" y="284" width="350" height="80" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="645" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">AppArmor 모드</text>
+  <text x="490" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">enforce</text><text x="558" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">: 위반 시 차단 + 로그</text>
+  <text x="490" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0d025">complain</text><text x="572" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">: 위반 시 로그만 (개발 시 사용)</text>
+
+  <!-- bottom note -->
+  <text x="440" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Docker 기본 프로파일(docker-default)은 모든 컨테이너에 자동 적용 — 커스텀 프로파일로 더욱 강화 가능</text>
+</svg>
