@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ASR 파이프라인: 음성 → 텍스트</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Whisper 기준 전처리 → 인코더 → 디코더 흐름</text>
+
+  <!-- Step 1: Audio Input -->
+  <rect x="30" y="100" width="130" height="80" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="95" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">① 오디오 입력</text>
+  <text x="95" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">16kHz, mono</text>
+  <text x="95" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">PCM 파형</text>
+
+  <line x1="160" y1="140" x2="188" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: Mel Spectrogram -->
+  <rect x="190" y="100" width="140" height="80" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="260" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">② 멜 스펙트로그램</text>
+  <text x="260" y="147" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">STFT → 멜 필터뱅크</text>
+  <text x="260" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">80채널 × 3000 프레임</text>
+  <text x="260" y="175" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555" text-anchor="middle">(30초 오디오 기준)</text>
+
+  <line x1="330" y1="140" x2="358" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Audio Encoder -->
+  <rect x="360" y="90" width="160" height="100" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">③ 오디오 인코더</text>
+  <text x="440" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">CNN 다운샘플 (2×)</text>
+  <text x="440" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Transformer Encoder</text>
+  <text x="440" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">1500 × 512 특징</text>
+
+  <line x1="520" y1="140" x2="548" y2="140" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Decoder -->
+  <rect x="550" y="90" width="160" height="100" rx="8" fill="#1a0a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="630" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">④ 텍스트 디코더</text>
+  <text x="630" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Transformer Decoder</text>
+  <text x="630" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">크로스 어텐션</text>
+  <text x="630" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">자기회귀 생성</text>
+
+  <line x1="710" y1="140" x2="738" y2="140" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5: Text Output -->
+  <rect x="740" y="100" width="110" height="80" rx="8" fill="#0f2a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="795" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">⑤ 텍스트</text>
+  <text x="795" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">타임스탬프</text>
+  <text x="795" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">+ 언어 감지</text>
+  <text x="795" y="175" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">+ 번역 옵션</text>
+
+  <!-- Special Tokens -->
+  <rect x="30" y="222" width="820" height="100" rx="8" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="440" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Whisper 특수 토큰 (멀티태스킹 제어)</text>
+  <text x="60" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">&lt;|startoftranscript|&gt;</text>
+  <text x="220" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178">&lt;|ko|&gt;</text>
+  <text x="270" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">&lt;|transcribe|&gt;</text>
+  <text x="400" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">&lt;|notimestamps|&gt;</text>
+  <text x="550" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">&lt;|nospeech|&gt;</text>
+
+  <text x="60" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전사 시작</text>
+  <text x="220" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">언어 지정</text>
+  <text x="270" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전사/번역 지정</text>
+  <text x="400" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">타임스탬프 없음</text>
+  <text x="550" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">무음 감지</text>
+
+  <!-- Model Comparison Table -->
+  <rect x="30" y="338" width="820" height="120" rx="8" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="440" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Whisper 모델 크기별 비교</text>
+
+  <text x="80" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#e8e8e8" text-anchor="middle">tiny</text>
+  <text x="220" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#888" text-anchor="middle">base</text>
+  <text x="360" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">small</text>
+  <text x="500" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#55c555" text-anchor="middle">medium</text>
+  <text x="660" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#ce9178" text-anchor="middle">large-v3</text>
+  <text x="800" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#7777cc" text-anchor="middle">turbo</text>
+
+  <text x="80" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">39M</text>
+  <text x="220" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">74M</text>
+  <text x="360" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">244M</text>
+  <text x="500" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">769M</text>
+  <text x="660" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">1550M</text>
+  <text x="800" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">809M</text>
+
+  <text x="80" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">가장 빠름</text>
+  <text x="220" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">빠름</text>
+  <text x="360" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">균형</text>
+  <text x="500" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">고품질</text>
+  <text x="660" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">최고 품질</text>
+  <text x="800" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">large 품질+빠름</text>
+
+  <text x="80" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">엣지 디바이스</text>
+  <text x="360" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">★ 실시간 권장</text>
+  <text x="660" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ce9178" text-anchor="middle">자막 생성</text>
+  <text x="800" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">★ 실용 최고</text>
+</svg>

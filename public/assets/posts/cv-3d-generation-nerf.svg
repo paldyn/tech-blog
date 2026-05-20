@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">NeRF 볼륨 렌더링 원리</text>
+
+  <!-- Camera rays -->
+  <rect x="40" y="80" width="120" height="80" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="100" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">카메라</text>
+  <text x="100" y="133" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">시점 o + 방향 d</text>
+  <text x="100" y="149" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">레이: r(t)=o+td</text>
+
+  <!-- Ray arrow -->
+  <line x1="160" y1="120" x2="248" y2="120" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="204" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">레이 발사</text>
+
+  <!-- Sample points -->
+  <rect x="250" y="80" width="220" height="280" rx="8" fill="#0d1117" stroke="#444" stroke-width="1"/>
+  <text x="360" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888" text-anchor="middle">레이 위 샘플 포인트</text>
+
+  <!-- Sample points along ray -->
+  <circle cx="290" cy="130" r="6" fill="#7ec8e3" opacity="0.6"/>
+  <text x="310" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">t₁: (x₁,y₁,z₁)</text>
+
+  <circle cx="290" cy="165" r="6" fill="#7ec8e3" opacity="0.7"/>
+  <text x="310" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">t₂: (x₂,y₂,z₂)</text>
+
+  <circle cx="290" cy="200" r="6" fill="#7ec8e3" opacity="0.8"/>
+  <text x="310" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">t₃: (x₃,y₃,z₃)</text>
+
+  <circle cx="290" cy="235" r="6" fill="#55c555" opacity="0.9"/>
+  <text x="310" y="239" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">t₄: 객체 표면 (σ 높음)</text>
+
+  <circle cx="290" cy="270" r="6" fill="#7ec8e3" opacity="0.5"/>
+  <text x="310" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">t₅: 배경</text>
+
+  <circle cx="290" cy="305" r="6" fill="#7ec8e3" opacity="0.3"/>
+  <text x="310" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">t_far</text>
+
+  <!-- Arrow to MLP -->
+  <line x1="470" y1="220" x2="508" y2="220" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- MLP NeRF -->
+  <rect x="510" y="80" width="200" height="280" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="610" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">NeRF MLP</text>
+  <text x="610" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">F_θ(x,y,z,θ,φ)</text>
+
+  <rect x="530" y="145" width="160" height="34" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="610" y="167" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">위치 인코딩 (γ)</text>
+
+  <rect x="530" y="187" width="160" height="34" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="610" y="209" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">FC 레이어 ×8</text>
+
+  <rect x="530" y="229" width="160" height="34" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="610" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">σ (밀도)</text>
+
+  <rect x="530" y="271" width="160" height="34" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="610" y="293" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">RGB (뷰 의존)</text>
+
+  <!-- Arrow to Volume Rendering -->
+  <line x1="710" y1="220" x2="748" y2="220" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Volume rendering -->
+  <rect x="750" y="80" width="100" height="120" rx="6" fill="#0f2a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="800" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">볼륨 렌더링</text>
+  <text x="800" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">C(r) = ∫T(t)</text>
+  <text x="800" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">σ(r(t))c(r(t)</text>
+  <text x="800" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">,d)dt</text>
+  <text x="800" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">픽셀 RGB</text>
+
+  <!-- Loss -->
+  <rect x="750" y="220" width="100" height="70" rx="6" fill="#1a1a1a" stroke="#ce9178" stroke-width="1"/>
+  <text x="800" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">재구성 손실</text>
+  <text x="800" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">||Ĉ(r)-C(r)||²</text>
+  <text x="800" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">MSE 최소화</text>
+
+  <text x="440" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">T(t) = exp(-∫₀ᵗ σ(r(s))ds) : 누적 투과도 — 표면 앞 포인트일수록 렌더링에 더 기여</text>
+</svg>
