@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ssh-agent — 키 패스프레이즈 캐싱 원리</text>
+
+  <!-- Problem without agent -->
+  <rect x="60" y="68" width="340" height="130" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">agent 없을 때</text>
+  <text x="80" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">접속 1: 패스프레이즈 입력</text>
+  <text x="80" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">접속 2: 패스프레이즈 입력</text>
+  <text x="80" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">접속 3: 패스프레이즈 입력</text>
+  <text x="80" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">매번 패스프레이즈 입력 필요</text>
+
+  <!-- With agent -->
+  <rect x="480" y="68" width="340" height="130" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">agent 사용 시</text>
+  <text x="500" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">최초 1회: 패스프레이즈 입력</text>
+  <text x="500" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">접속 2: 자동 (캐시된 키)</text>
+  <text x="500" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">접속 3: 자동 (캐시된 키)</text>
+  <text x="500" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">이후 세션 동안 패스프레이즈 불필요</text>
+
+  <!-- Agent architecture -->
+  <text x="60" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">ssh-agent 동작 구조</text>
+
+  <!-- Process boxes -->
+  <rect x="60" y="248" width="160" height="70" rx="6" fill="#0f1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="140" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">ssh-agent</text>
+  <text x="140" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">메모리에 키 보관</text>
+  <text x="140" y="308" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888">$SSH_AUTH_SOCK</text>
+
+  <defs>
+    <marker id="arrB" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <line x1="222" y1="283" x2="268" y2="283" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+  <text x="228" y="277" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">서명요청</text>
+
+  <rect x="270" y="248" width="160" height="70" rx="6" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="350" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">ssh client</text>
+  <text x="350" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">개인키 직접 접근 안 함</text>
+  <text x="350" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">agent에 서명 위임</text>
+
+  <line x1="432" y1="283" x2="478" y2="283" stroke="#55c555" stroke-width="2" marker-end="url(#arrG)"/>
+  <text x="435" y="277" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">인증</text>
+
+  <rect x="480" y="248" width="160" height="70" rx="6" fill="#0f2a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="560" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">SSH 서버</text>
+  <text x="560" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">공개키 검증</text>
+  <text x="560" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">접속 허용</text>
+
+  <!-- ssh-add flow -->
+  <text x="720" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7777cc">ssh-add</text>
+  <text x="720" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">개인키를 agent에</text>
+  <text x="720" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">로드 (1회)</text>
+
+  <!-- keychain tip -->
+  <rect x="60" y="346" width="760" height="86" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">macOS Keychain 통합</text>
+  <text x="80" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">ssh-add --apple-use-keychain ~/.ssh/id_ed25519</text>
+  <text x="80" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">재부팅 후에도 Keychain에서 자동으로 agent에 로드 (macOS 전용)</text>
+
+  <text x="440" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">개인키는 agent 메모리에만 존재 — 디스크에 복호화 상태로 저장되지 않음</text>
+</svg>
