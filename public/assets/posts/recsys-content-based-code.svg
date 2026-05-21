@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="320" viewBox="0 0 880 320">
+  <rect width="880" height="320" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">TF-IDF 기반 영화 추천 구현</text>
+
+  <!-- 코드 박스 -->
+  <rect x="40" y="60" width="800" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <!-- 줄 1 -->
+  <text x="60" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="121" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> pandas </text>
+  <text x="193" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">as</text>
+  <text x="214" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> pd</text>
+
+  <!-- 줄 2 -->
+  <text x="60" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text x="103" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> sklearn.feature_extraction.text </text>
+  <text x="460" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="515" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> TfidfVectorizer</text>
+
+  <!-- 줄 3 -->
+  <text x="60" y="122" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text x="103" y="122" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> sklearn.metrics.pairwise </text>
+  <text x="358" y="122" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="413" y="122" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> cosine_similarity</text>
+
+  <!-- 줄 4: 빈 줄 -->
+
+  <!-- 줄 5 -->
+  <text x="60" y="152" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">movies = pd.DataFrame({</text>
+
+  <!-- 줄 6 -->
+  <text x="60" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">    'title'</text>
+  <text x="152" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">: [</text>
+  <text x="175" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">'인터스텔라', '마션', '그래비티', '어벤져스', '아이언맨'</text>
+  <text x="699" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">],</text>
+
+  <!-- 줄 7 -->
+  <text x="60" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">    'tags'</text>
+  <text x="144" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">: [</text>
+  <text x="167" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">'SF 우주 과학', 'SF 우주 생존', 'SF 우주 재난',</text>
+  <text x="616" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"> …</text>
+
+  <!-- 줄 8 -->
+  <text x="60" y="209" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">})</text>
+
+  <!-- 줄 9 -->
+  <text x="60" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">tfidf = TfidfVectorizer()</text>
+
+  <!-- 줄 10 -->
+  <text x="60" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">tfidf_matrix = tfidf.fit_transform(movies[</text>
+  <text x="414" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">'tags'</text>
+  <text x="453" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">])</text>
+
+  <!-- 줄 11 -->
+  <text x="60" y="266" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">sim = cosine_similarity(tfidf_matrix)</text>
+
+  <!-- 줄 12 -->
+  <text x="60" y="285" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># → sim[0] = [1.0, 0.82, 0.76, 0.08, 0.05]</text>
+</svg>

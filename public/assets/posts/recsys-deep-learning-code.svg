@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 330">
+  <!-- 배경 -->
+  <rect width="880" height="330" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="38" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PyTorch NCF 구현</text>
+  <text x="440" y="58" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Neural Collaborative Filtering</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="72" width="760" height="238" fill="#000000" stroke="#3a4a6e" stroke-width="1.5" rx="6"/>
+
+  <!-- 코드 라인 1 -->
+  <text x="76" y="92" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="130" y="92" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> torch</text>
+
+  <!-- 코드 라인 2 -->
+  <text x="76" y="112" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="130" y="112" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> torch.nn </text>
+  <text x="244" y="112" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">as</text>
+  <text x="265" y="112" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> nn</text>
+
+  <!-- 코드 라인 3: blank -->
+
+  <!-- 코드 라인 4 -->
+  <text x="76" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">class</text>
+  <text x="120" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> NCF(nn.Module):</text>
+
+  <!-- 코드 라인 5 -->
+  <text x="76" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    </text>
+  <text x="104" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text x="128" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> __init__(self, n_users, n_items, emb_dim=</text>
+  <text x="446" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">64</text>
+  <text x="456" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">):</text>
+
+  <!-- 코드 라인 6 -->
+  <text x="76" y="188" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        super().__init__()</text>
+
+  <!-- 코드 라인 7 -->
+  <text x="76" y="208" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        self.user_emb = nn.Embedding(n_users, emb_dim)</text>
+
+  <!-- 코드 라인 8 -->
+  <text x="76" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        self.item_emb = nn.Embedding(n_items, emb_dim)</text>
+
+  <!-- 코드 라인 9 -->
+  <text x="76" y="248" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        self.mlp = nn.Sequential(</text>
+
+  <!-- 코드 라인 10 -->
+  <text x="76" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">            nn.Linear(emb_dim * </text>
+  <text x="261" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">2</text>
+  <text x="270" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, </text>
+  <text x="285" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">128</text>
+  <text x="313" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">),</text>
+
+  <!-- 코드 라인 11 -->
+  <text x="76" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">            nn.ReLU(), nn.Linear(</text>
+  <text x="288" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">128</text>
+  <text x="316" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, </text>
+  <text x="331" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">1</text>
+  <text x="340" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">), nn.Sigmoid())</text>
+
+  <!-- 코드 라인 12 - forward -->
+  <text x="76" y="308" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    # forward: user_emb + item_emb → mlp(cat)</text>
+</svg>

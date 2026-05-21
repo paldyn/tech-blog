@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 320">
+  <!-- 배경 -->
+  <rect width="880" height="320" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="36" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">FAISS 기반 투타워 추론</text>
+  <text x="440" y="56" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Two-Tower Inference with FAISS ANN Search</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="68" width="760" height="232" fill="#000000" stroke="#3a4a6e" stroke-width="1.5" rx="6"/>
+
+  <!-- 라인 1 -->
+  <text x="76" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="130" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> faiss</text>
+  <text x="173" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">; import</text>
+  <text x="254" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> numpy </text>
+  <text x="308" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">as</text>
+  <text x="330" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> np; </text>
+  <text x="372" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="426" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> torch</text>
+
+  <!-- 라인 2: 빈 줄 + 주석 -->
+  <text x="76" y="108" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 사전 계산된 아이템 임베딩 (오프라인 배치)</text>
+
+  <!-- 라인 3 -->
+  <text x="76" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">item_embeddings = np.load(</text>
+  <text x="286" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"item_embeddings.npy"</text>
+  <text x="439" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+  <text x="452" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # (N, D) float32</text>
+
+  <!-- 라인 4: 빈 줄 + 주석 -->
+  <text x="76" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># FAISS 인덱스 구축</text>
+
+  <!-- 라인 5 -->
+  <text x="76" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">d = item_embeddings.shape[</text>
+  <text x="290" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">1</text>
+  <text x="299" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">]</text>
+  <text x="314" y="168" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # 임베딩 차원 수</text>
+
+  <!-- 라인 6 -->
+  <text x="76" y="188" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">index = faiss.IndexFlatIP(d)</text>
+  <text x="276" y="188" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # 내적 유사도 인덱스</text>
+
+  <!-- 라인 7 -->
+  <text x="76" y="208" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">faiss.normalize_L2(item_embeddings)</text>
+  <text x="316" y="208" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # L2 정규화 → 코사인 유사도</text>
+
+  <!-- 라인 8 -->
+  <text x="76" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">index.add(item_embeddings)</text>
+
+  <!-- 라인 9: 빈 줄 + 주석 -->
+  <text x="76" y="248" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 실시간: 사용자 임베딩 → Top-K 검색</text>
+
+  <!-- 라인 10 -->
+  <text x="76" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">user_emb = user_tower(user_features).numpy()</text>
+  <text x="399" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # (1, D)</text>
+
+  <!-- 라인 11 -->
+  <text x="76" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">faiss.normalize_L2(user_emb)</text>
+  <text x="276" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # 정규화</text>
+  <text x="345" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">; scores, idx = index.search(user_emb, </text>
+  <text x="685" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">100</text>
+  <text x="714" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 320" style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif;">
+  <!-- Background -->
+  <rect width="880" height="320" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="40" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">User-based CF 구현 코드</text>
+  <text x="440" y="62" font-size="13" fill="#888" text-anchor="middle">NumPy + 코사인 유사도로 구현하는 간단한 협업 필터링</text>
+
+  <!-- Code box -->
+  <rect x="60" y="78" width="760" height="220" fill="#000000" stroke="#3a4a6e" stroke-width="1.5" rx="6"/>
+
+  <!-- Line 1 -->
+  <text x="80" y="100" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> numpy </tspan><tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> np</tspan>
+  </text>
+  <!-- Line 2 -->
+  <text x="80" y="119" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> sklearn.metrics.pairwise </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> cosine_similarity</tspan>
+  </text>
+  <!-- Line 3: blank -->
+  <text x="80" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff"> </tspan>
+  </text>
+  <!-- Line 4: comment -->
+  <text x="80" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 사용자-아이템 평점 행렬 (0=미평가)</tspan>
+  </text>
+  <!-- Line 5 -->
+  <text x="80" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">ratings </tspan><tspan fill="#7ec8e3" font-weight="600">=</tspan><tspan fill="#ffffff"> np.array([[</tspan><tspan fill="#b5cea8">5</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff">],[</tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">],</tspan>
+  </text>
+  <!-- Line 6 -->
+  <text x="80" y="195" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    [</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">5</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff">],[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff">],[</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">5</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">]])</tspan>
+  </text>
+  <!-- Line 7: blank -->
+  <text x="80" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff"> </tspan>
+  </text>
+  <!-- Line 8: comment -->
+  <text x="80" y="233" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 코사인 유사도 계산 후 Top-K 예측</tspan>
+  </text>
+  <!-- Line 9 -->
+  <text x="80" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">sim </tspan><tspan fill="#7ec8e3" font-weight="600">=</tspan><tspan fill="#ffffff"> cosine_similarity(ratings)</tspan>
+  </text>
+  <!-- Line 10 -->
+  <text x="80" y="271" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">similar </tspan><tspan fill="#7ec8e3" font-weight="600">=</tspan><tspan fill="#ffffff"> np.argsort(sim[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">])[</tspan><tspan fill="#b5cea8">-4</tspan><tspan fill="#ffffff">:</tspan><tspan fill="#b5cea8">-1</tspan><tspan fill="#ffffff">][::</tspan><tspan fill="#b5cea8">-1</tspan><tspan fill="#ffffff">]</tspan>
+  </text>
+  <!-- Line 11 -->
+  <text x="80" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">print</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">f"예측 평점: {np.mean(ratings[similar, 2]):.2f}"</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+</svg>

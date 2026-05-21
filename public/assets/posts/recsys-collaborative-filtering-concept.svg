@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif;">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">협업 필터링 동작 원리</text>
+  <text x="440" y="64" font-size="13" fill="#888" text-anchor="middle">사용자-아이템 평점 행렬에서 유사도를 계산해 미평가 항목을 예측</text>
+
+  <!-- ===== LEFT: 원본 행렬 ===== -->
+  <text x="145" y="94" font-size="13" font-weight="600" fill="#888" text-anchor="middle">원본 평점 행렬</text>
+
+  <!-- Column headers -->
+  <text x="82"  y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템1</text>
+  <text x="132" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템2</text>
+  <text x="182" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템3</text>
+  <text x="232" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템4</text>
+  <text x="282" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템5</text>
+
+  <!-- Row header labels -->
+  <text x="40" y="137" font-size="12" fill="#7777cc" text-anchor="middle">U1</text>
+  <text x="40" y="167" font-size="12" fill="#7777cc" text-anchor="middle">U2</text>
+  <text x="40" y="197" font-size="12" fill="#e05555" font-weight="700" text-anchor="middle">U3</text>
+  <text x="40" y="227" font-size="12" fill="#7777cc" text-anchor="middle">U4</text>
+  <text x="40" y="257" font-size="12" fill="#7777cc" text-anchor="middle">U5</text>
+
+  <!-- Grid cells row 1 (U1) -->
+  <rect x="57" y="122" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="82"  y="139" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">5</text>
+  <rect x="107" y="122" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="132" y="139" font-size="13" fill="#e8e8e8" text-anchor="middle">3</text>
+  <rect x="157" y="122" width="50" height="25" fill="#111" stroke="#222" rx="3"/>
+  <text x="182" y="139" font-size="13" fill="#555" text-anchor="middle">—</text>
+  <rect x="207" y="122" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="232" y="139" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="257" y="122" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="282" y="139" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">4</text>
+
+  <!-- Grid cells row 2 (U2) -->
+  <rect x="57" y="152" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="82"  y="169" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">4</text>
+  <rect x="107" y="152" width="50" height="25" fill="#111" stroke="#222" rx="3"/>
+  <text x="132" y="169" font-size="13" fill="#555" text-anchor="middle">—</text>
+  <rect x="157" y="152" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="182" y="169" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">4</text>
+  <rect x="207" y="152" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="232" y="169" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="257" y="152" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="282" y="169" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+
+  <!-- Grid cells row 3 (U3 - target user, highlighted) -->
+  <rect x="57"  y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="82"  y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="107" y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="132" y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="157" y="182" width="50" height="25" fill="#2a1a1a" stroke="#e05555" stroke-width="2" rx="3"/>
+  <text x="182" y="199" font-size="13" fill="#e05555" font-weight="700" text-anchor="middle">?</text>
+  <rect x="207" y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="232" y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">5</text>
+  <rect x="257" y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="282" y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">4</text>
+
+  <!-- Grid cells row 4 (U4) -->
+  <rect x="57"  y="212" width="50" height="25" fill="#111" stroke="#222" rx="3"/>
+  <text x="82"  y="229" font-size="13" fill="#555" text-anchor="middle">—</text>
+  <rect x="107" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="132" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">3</text>
+  <rect x="157" y="212" width="50" height="25" fill="#111" stroke="#222" rx="3"/>
+  <text x="182" y="229" font-size="13" fill="#555" text-anchor="middle">—</text>
+  <rect x="207" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="232" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">4</text>
+  <rect x="257" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="282" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">3</text>
+
+  <!-- Grid cells row 5 (U5) -->
+  <rect x="57"  y="242" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="82"  y="259" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+  <rect x="107" y="242" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="132" y="259" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="157" y="242" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="182" y="259" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">5</text>
+  <rect x="207" y="242" width="50" height="25" fill="#111" stroke="#222" rx="3"/>
+  <text x="232" y="259" font-size="13" fill="#555" text-anchor="middle">—</text>
+  <rect x="257" y="242" width="50" height="25" fill="#111" stroke="#222" rx="3"/>
+  <text x="282" y="259" font-size="13" fill="#555" text-anchor="middle">—</text>
+
+  <!-- ===== CENTER: Arrow + Label ===== -->
+  <line x1="340" y1="192" x2="500" y2="192" stroke="#7ec8e3" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="348" y="170" width="144" height="44" fill="#0f1f2f" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text x="420" y="187" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">유사 사용자 탐색</text>
+  <text x="420" y="205" font-size="11" fill="#888" text-anchor="middle">코사인 유사도 계산</text>
+
+  <!-- ===== RIGHT: 예측 행렬 ===== -->
+  <text x="645" y="94" font-size="13" font-weight="600" fill="#888" text-anchor="middle">예측 평점 반영</text>
+
+  <!-- Column headers -->
+  <text x="532" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템1</text>
+  <text x="582" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템2</text>
+  <text x="632" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템3</text>
+  <text x="682" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템4</text>
+  <text x="732" y="115" font-size="12" fill="#7ec8e3" text-anchor="middle">아이템5</text>
+
+  <!-- Row headers right side -->
+  <text x="510" y="137" font-size="12" fill="#7777cc" text-anchor="middle">U1</text>
+  <text x="510" y="167" font-size="12" fill="#7777cc" text-anchor="middle">U2</text>
+  <text x="510" y="197" font-size="12" fill="#e05555" font-weight="700" text-anchor="middle">U3</text>
+  <text x="510" y="227" font-size="12" fill="#7777cc" text-anchor="middle">U4</text>
+  <text x="510" y="257" font-size="12" fill="#7777cc" text-anchor="middle">U5</text>
+
+  <!-- Right grid row 1 -->
+  <rect x="507" y="122" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="532" y="139" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">5</text>
+  <rect x="557" y="122" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="582" y="139" font-size="13" fill="#e8e8e8" text-anchor="middle">3</text>
+  <rect x="607" y="122" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="632" y="139" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+  <rect x="657" y="122" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="682" y="139" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="707" y="122" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="732" y="139" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">4</text>
+
+  <!-- Right grid row 2 -->
+  <rect x="507" y="152" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="532" y="169" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">4</text>
+  <rect x="557" y="152" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="582" y="169" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+  <rect x="607" y="152" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="632" y="169" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">4</text>
+  <rect x="657" y="152" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="682" y="169" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="707" y="152" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="732" y="169" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+
+  <!-- Right grid row 3 (U3 - predicted) -->
+  <rect x="507"  y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="532"  y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="557" y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="582" y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="607" y="182" width="50" height="25" fill="#1a3a1a" stroke="#55c555" stroke-width="2" rx="3"/>
+  <text x="632" y="199" font-size="13" fill="#55c555" font-weight="700" text-anchor="middle">4.5</text>
+  <rect x="657" y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="682" y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">5</text>
+  <rect x="707" y="182" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="732" y="199" font-size="13" fill="#e8e8e8" text-anchor="middle">4</text>
+
+  <!-- Right grid row 4 -->
+  <rect x="507"  y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="532"  y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+  <rect x="557" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="582" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">3</text>
+  <rect x="607" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="632" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="657" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="682" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">4</text>
+  <rect x="707" y="212" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="732" y="229" font-size="13" fill="#e8e8e8" text-anchor="middle">3</text>
+
+  <!-- Right grid row 5 -->
+  <rect x="507"  y="242" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="532"  y="259" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+  <rect x="557" y="242" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="582" y="259" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="607" y="242" width="50" height="25" fill="#1a2a1a" stroke="#333" rx="3"/>
+  <text x="632" y="259" font-size="13" fill="#55c555" text-anchor="middle" font-weight="600">5</text>
+  <rect x="657" y="242" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="682" y="259" font-size="13" fill="#e8e8e8" text-anchor="middle">1</text>
+  <rect x="707" y="242" width="50" height="25" fill="#111" stroke="#333" rx="3"/>
+  <text x="732" y="259" font-size="13" fill="#e8e8e8" text-anchor="middle">2</text>
+
+  <!-- ===== BOTTOM: Two CF type boxes ===== -->
+  <rect x="60" y="296" width="360" height="96" fill="#0f1a2a" stroke="#3a4a6e" stroke-width="1.5" rx="8"/>
+  <text x="240" y="320" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">User-based CF</text>
+  <text x="240" y="342" font-size="12" fill="#888" text-anchor="middle">비슷한 취향의 사용자를 찾아</text>
+  <text x="240" y="360" font-size="12" fill="#888" text-anchor="middle">그들이 좋아한 아이템 추천</text>
+  <text x="240" y="378" font-size="11" fill="#555" text-anchor="middle">ex. "U1과 U2가 유사 → U2가 좋아한 것 추천"</text>
+
+  <rect x="460" y="296" width="360" height="96" fill="#1a0f2a" stroke="#7777cc" stroke-width="1.5" rx="8"/>
+  <text x="640" y="320" font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">Item-based CF</text>
+  <text x="640" y="342" font-size="12" fill="#888" text-anchor="middle">함께 구매되는 유사 아이템을 찾아</text>
+  <text x="640" y="360" font-size="12" fill="#888" text-anchor="middle">현재 관심 아이템과 유사한 것 추천</text>
+  <text x="640" y="378" font-size="11" fill="#555" text-anchor="middle">ex. "아이템3과 아이템5가 유사 → 5 추천"</text>
+</svg>
