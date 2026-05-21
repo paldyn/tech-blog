@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">
+    BuildKit RUN --mount 타입
+  </text>
+
+  <!-- type=cache -->
+  <rect x="60" y="64" width="380" height="112" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">type=cache</text>
+  <text x="80" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">빌드 간 캐시 공유. 이미지 레이어에는</text>
+  <text x="80" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">포함 안 됨. apt, pip, npm, go 등</text>
+  <text x="80" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">패키지 다운로드 캐시에 최적</text>
+  <text x="80" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">--mount=type=cache,target=/root/.cache</text>
+
+  <!-- type=secret -->
+  <rect x="460" y="64" width="380" height="112" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="480" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">type=secret</text>
+  <text x="480" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">빌드 시 비밀값(토큰, 키) 주입.</text>
+  <text x="480" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이미지 레이어에 포함 안 됨 →</text>
+  <text x="480" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">npm 프라이빗 레지스트리, pip 토큰 등</text>
+  <text x="480" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">--mount=type=secret,id=npmrc</text>
+
+  <!-- type=bind -->
+  <rect x="60" y="196" width="380" height="96" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="80" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">type=bind</text>
+  <text x="80" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">호스트 디렉터리를 읽기 전용으로 마운트.</text>
+  <text x="80" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">COPY 없이 빌드 컨텍스트 파일 접근</text>
+  <text x="80" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7777cc">--mount=type=bind,source=.,target=/src</text>
+
+  <!-- type=tmpfs -->
+  <rect x="460" y="196" width="380" height="96" rx="8" fill="#1a1a0a" stroke="#e8a020" stroke-width="1"/>
+  <text x="480" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8a020">type=tmpfs</text>
+  <text x="480" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">메모리 기반 임시 디렉터리.</text>
+  <text x="480" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">빌드 중 민감 파일 임시 사용,</text>
+  <text x="480" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8a020">--mount=type=tmpfs,target=/tmp</text>
+
+  <!-- cache comparison -->
+  <text x="60" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">cache 마운트 효과 비교</text>
+
+  <!-- Before -->
+  <rect x="60" y="336" width="360" height="56" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" font-weight="600">캐시 없음 (기존 방식)</text>
+  <text x="80" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">pip install: 매번 PyPI에서 다운로드 → 2~5분</text>
+
+  <!-- After -->
+  <rect x="460" y="336" width="360" height="56" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" font-weight="600">type=cache 적용</text>
+  <text x="480" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">로컬 캐시 히트: 의존성 설치 5~15초</text>
+
+  <!-- Note about image size -->
+  <rect x="60" y="412" width="760" height="48" rx="6" fill="#0a0a0a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">핵심: 캐시는 이미지 레이어에 포함되지 않음</text>
+  <text x="80" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">--mount=type=cache의 데이터는 빌드 캐시 공간에만 저장. 최종 이미지 크기에 영향 없음</text>
+</svg>

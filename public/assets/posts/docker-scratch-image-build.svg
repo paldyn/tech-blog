@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">
+    scratch 기반 Go 바이너리 Dockerfile
+  </text>
+
+  <!-- Code block: Go dockerfile -->
+  <rect x="60" y="62" width="760" height="286" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="84" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># Stage 1: 빌드 (go:alpine)</text>
+  <text x="76" y="102" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> golang:1.22-alpine </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> builder</tspan>
+  </text>
+  <text x="76" y="120" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WORKDIR</tspan><tspan fill="#ffffff"> /app</tspan>
+  </text>
+  <text x="76" y="138" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">COPY</tspan><tspan fill="#ffffff"> go.mod go.sum ./</tspan>
+  </text>
+  <text x="76" y="156" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">RUN</tspan><tspan fill="#ffffff"> go mod download</tspan>
+  </text>
+  <text x="76" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">COPY</tspan><tspan fill="#ffffff"> . .</tspan>
+  </text>
+  <text x="76" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># CGO 비활성화 + 정적 링크</text>
+  <text x="76" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">RUN</tspan><tspan fill="#ffffff"> CGO_ENABLED=0 GOOS=linux \</tspan>
+  </text>
+  <text x="76" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    go build -ldflags=</tspan><tspan fill="#ce9178">"-s -w"</tspan><tspan fill="#ffffff"> -o server .</tspan>
+  </text>
+
+  <text x="76" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># Stage 2: scratch</text>
+  <text x="76" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> scratch</tspan>
+  </text>
+  <text x="76" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># CA 인증서 복사 (HTTPS 호출 필요 시)</text>
+  <text x="76" y="306" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">COPY</tspan><tspan fill="#ffffff"> --from=builder \</tspan>
+  </text>
+  <text x="76" y="324" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    /etc/ssl/certs/ca-certificates.crt \</tspan>
+  </text>
+  <text x="76" y="342" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    /etc/ssl/certs/</tspan>
+  </text>
+
+  <!-- Info boxes below code -->
+  <rect x="60" y="368" width="360" height="52" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">-ldflags="-s -w" 효과</text>
+  <text x="80" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-s: 심볼 테이블 제거 / -w: DWARF 디버그 정보 제거</text>
+
+  <rect x="460" y="368" width="360" height="52" rx="6" fill="#0a0a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="480" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">CGO_ENABLED=0 필수 이유</text>
+  <text x="480" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">CGO=1이면 libc에 동적 링크 → scratch에서 실행 불가</text>
+</svg>

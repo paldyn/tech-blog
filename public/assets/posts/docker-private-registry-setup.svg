@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">
+    registry:2 인증 설정 — htpasswd
+  </text>
+
+  <!-- Step 1: create htpasswd -->
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Step 1: htpasswd 파일 생성</text>
+  <rect x="60" y="86" width="760" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">mkdir -p auth</tspan>
+  </text>
+  <text x="76" y="124" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">docker run --rm --entrypoint htpasswd httpd:2 \</tspan>
+  </text>
+  <text x="76" y="142" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  -Bbn myuser mypassword &gt; auth/htpasswd</tspan>
+  </text>
+
+  <!-- Step 2: run with auth -->
+  <text x="60" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Step 2: 인증 포함 레지스트리 실행</text>
+  <rect x="60" y="180" width="760" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="200" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">docker run -d -p 5000:5000 \</tspan>
+  </text>
+  <text x="76" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  -v $(pwd)/auth:/auth \</tspan>
+  </text>
+  <text x="76" y="236" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  -e REGISTRY_AUTH=htpasswd \</tspan>
+  </text>
+  <text x="76" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  -e REGISTRY_AUTH_HTPASSWD_REALM=</tspan><tspan fill="#ce9178">"Registry"</tspan>
+  </text>
+  <text x="76" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \</tspan>
+  </text>
+
+  <!-- Step 3: use it -->
+  <text x="60" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Step 3: 사용</text>
+  <rect x="60" y="312" width="760" height="86" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">docker login localhost:5000 -u myuser -p mypassword</tspan>
+  </text>
+  <text x="76" y="350" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">docker tag myapp:latest localhost:5000/myapp:latest</tspan>
+  </text>
+  <text x="76" y="368" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">docker push localhost:5000/myapp:latest</tspan>
+  </text>
+  <text x="76" y="386" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">docker pull localhost:5000/myapp:latest</tspan>
+  </text>
+</svg>

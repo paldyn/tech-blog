@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">
+    Rate Limit 해결 전략
+  </text>
+
+  <!-- Strategy 1: Login -->
+  <rect x="60" y="64" width="360" height="100" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">전략 1: Docker Hub 로그인</text>
+  <rect x="80" y="96" width="320" height="58" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="116" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8"># GitHub Actions</tspan>
+  </text>
+  <text x="96" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">echo $DOCKERHUB_TOKEN | docker login \</tspan>
+  </text>
+  <text x="96" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  -u $DOCKERHUB_USERNAME --password-stdin</tspan>
+  </text>
+
+  <!-- Strategy 2: Mirror -->
+  <rect x="460" y="64" width="360" height="100" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="480" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">전략 2: 레지스트리 미러</text>
+  <rect x="480" y="96" width="320" height="58" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="116" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># /etc/docker/daemon.json</tspan></text>
+  <text x="496" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">{</tspan><tspan fill="#ce9178">"registry-mirrors"</tspan><tspan fill="#ffffff">:</tspan>
+  </text>
+  <text x="496" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  [</tspan><tspan fill="#ce9178">"https://mirror.gcr.io"</tspan><tspan fill="#ffffff">]}</tspan>
+  </text>
+
+  <!-- Strategy 3: Cache -->
+  <rect x="60" y="184" width="360" height="100" rx="8" fill="#1a1a0a" stroke="#e8a020" stroke-width="1"/>
+  <text x="80" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8a020">전략 3: ECR/GHCR로 미리 캐시</text>
+  <rect x="80" y="216" width="320" height="58" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="236" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8"># 자주 쓰는 이미지 복사</tspan>
+  </text>
+  <text x="96" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">crane copy nginx:latest \</tspan>
+  </text>
+  <text x="96" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">  ghcr.io/myorg/cache/nginx:latest</tspan>
+  </text>
+
+  <!-- Check current limit -->
+  <rect x="460" y="184" width="360" height="100" rx="8" fill="#0a1a1a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="480" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">현재 제한 확인</text>
+  <rect x="480" y="216" width="320" height="58" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="236" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">curl -s </tspan><tspan fill="#ce9178">"https://auth.docker.io/..."</tspan>
+  </text>
+  <text x="496" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#9aa4b8"># RateLimit-Remaining 헤더 확인</tspan>
+  </text>
+
+  <!-- Note -->
+  <rect x="60" y="304" width="760" height="36" rx="4" fill="#0a0a0a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">CI 환경에서 Docker Hub rate limit 에러가 나면 먼저 로그인(전략 1)부터 시도. 팀 규모가 크면 ECR/GHCR 미러(전략 3) 권장</text>
+</svg>

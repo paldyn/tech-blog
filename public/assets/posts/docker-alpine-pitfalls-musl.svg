@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-ok" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">
+    Alpine Linux 주요 함정
+  </text>
+
+  <!-- Pitfall 1: musl vs glibc -->
+  <rect x="60" y="64" width="380" height="90" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">함정 1: musl libc vs glibc</text>
+  <text x="80" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Alpine은 musl libc 사용 → glibc 기반 바이너리</text>
+  <text x="80" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">실행 불가. Java, Node.js 네이티브 모듈,</text>
+  <text x="80" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Python C 확장 등에서 빈번하게 발생</text>
+
+  <!-- Pitfall 2: missing packages -->
+  <rect x="460" y="64" width="360" height="90" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="480" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">함정 2: 패키지 누락</text>
+  <text x="480" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">curl, bash, tzdata, openssl, ca-certificates</text>
+  <text x="480" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">등이 기본 미포함. DNS 관련 패키지 누락 시</text>
+  <text x="480" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">컨테이너 내부 DNS 해석 실패</text>
+
+  <!-- Pitfall 3: slow DNS -->
+  <rect x="60" y="174" width="380" height="90" rx="8" fill="#1a0a0a" stroke="#e8a020" stroke-width="1"/>
+  <text x="80" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8a020">함정 3: musl DNS 느림</text>
+  <text x="80" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">musl의 DNS 해석기는 병렬 A/AAAA 쿼리를</text>
+  <text x="80" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">지원 안 함 → 첫 요청 수백 ms 지연.</text>
+  <text x="80" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">options ndots:0 설정이나 ndots 조정 필요</text>
+
+  <!-- Pitfall 4: build time slow -->
+  <rect x="460" y="174" width="360" height="90" rx="8" fill="#1a0a0a" stroke="#e8a020" stroke-width="1"/>
+  <text x="480" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8a020">함정 4: 빌드 캐시 오염</text>
+  <text x="480" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">apk add 실행마다 apk 인덱스 재다운로드.</text>
+  <text x="480" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">--no-cache 또는 인덱스 업데이트와 패키지</text>
+  <text x="480" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">설치를 한 RUN 명령으로 묶어야 함</text>
+
+  <!-- Fix section -->
+  <text x="60" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">올바른 Alpine Dockerfile 패턴</text>
+
+  <!-- Code block -->
+  <rect x="60" y="308" width="760" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="330" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> node:20-alpine</tspan>
+  </text>
+  <text x="76" y="348" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 패키지 설치는 반드시 한 RUN에, --no-cache로</tspan>
+  </text>
+  <text x="76" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">RUN</tspan><tspan fill="#ffffff"> apk add --no-cache \</tspan>
+  </text>
+  <text x="76" y="384" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        tzdata ca-certificates curl \</tspan>
+  </text>
+  <text x="76" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    &amp;&amp; cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime \</tspan>
+  </text>
+  <text x="76" y="420" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    &amp;&amp; echo </tspan><tspan fill="#ce9178">"Asia/Seoul"</tspan><tspan fill="#ffffff"> &gt; /etc/timezone \</tspan>
+  </text>
+  <text x="76" y="438" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    &amp;&amp; apk del tzdata</tspan><tspan fill="#9aa4b8">  # 설치 후 tzdata 자체 삭제</tspan>
+  </text>
+  <text x="76" y="456" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WORKDIR</tspan><tspan fill="#ffffff"> /app</tspan>
+  </text>
+</svg>
