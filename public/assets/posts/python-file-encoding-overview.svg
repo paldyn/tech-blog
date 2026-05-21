@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Python 파일 인코딩 완전 정리</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">UTF-8 · EUC-KR · CP949 — 한국어 환경에서 알아야 할 인코딩 지식</text>
+
+  <!-- BOM section -->
+  <rect x="60" y="96" width="370" height="160" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="245" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">주요 인코딩</text>
+  <text x="245" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">UTF-8 — 국제 표준, 웹 기본값</text>
+  <text x="245" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ASCII 호환, 가변 길이(1~4바이트)</text>
+  <text x="245" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">EUC-KR / CP949 — 한국 레거시</text>
+  <text x="245" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">한글 2바이트, Windows 기본값</text>
+  <text x="245" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">UTF-8-SIG — BOM 포함 UTF-8</text>
+  <text x="245" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Excel CSV 저장 시 생성</text>
+
+  <!-- Detect section -->
+  <rect x="450" y="96" width="370" height="160" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="635" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">인코딩 오류 처리 방법</text>
+  <text x="635" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">strict (기본)</text>
+  <text x="635" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">오류 시 UnicodeDecodeError 발생</text>
+  <text x="635" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">replace</text>
+  <text x="635" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">오류 바이트 → '?' 대체</text>
+  <text x="635" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">backslashreplace</text>
+  <text x="635" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">오류 바이트 → \xNN 형식</text>
+
+  <!-- Code block: detection -->
+  <rect x="60" y="276" width="760" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="78" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 인코딩 자동 감지 (chardet 라이브러리)</text>
+  <text xml:space="preserve" x="78" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">import</tspan> chardet</text>
+  <text xml:space="preserve" x="78" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">with</tspan> <tspan font-weight="600" fill="#7ec8e3">open</tspan>(<tspan fill="#ce9178">"unknown.txt"</tspan>, <tspan fill="#ce9178">"rb"</tspan>) as f:</text>
+  <text xml:space="preserve" x="78" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    raw = f.read(<tspan fill="#b5cea8">10000</tspan>)  <tspan fill="#9aa4b8"># 앞 10KB</tspan></text>
+  <text xml:space="preserve" x="78" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    result = chardet.detect(raw)</text>
+  <text xml:space="preserve" x="78" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    enc = result[<tspan fill="#ce9178">'encoding'</tspan>]  <tspan fill="#9aa4b8"># 'EUC-KR', 'UTF-8' 등</tspan></text>
+  <text xml:space="preserve" x="78" y="418" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    <tspan font-weight="600" fill="#7ec8e3">print</tspan>(enc, result[<tspan fill="#ce9178">'confidence'</tspan>])  <tspan fill="#9aa4b8"># 신뢰도</tspan></text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">대용량 파일 처리 패턴</text>
+
+  <rect x="60" y="68" width="370" height="26" rx="4" fill="#1a2a4a"/>
+  <text x="245" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">줄 단위 스트리밍</text>
+
+  <rect x="60" y="96" width="370" height="300" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># for loop — 파이써닉, 저메모리</text>
+  <text xml:space="preserve" x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">with</tspan> <tspan font-weight="600" fill="#7ec8e3">open</tspan>(<tspan fill="#ce9178">"big.log"</tspan>, encoding=<tspan fill="#ce9178">"utf-8"</tspan>) as f:</text>
+  <text xml:space="preserve" x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    <tspan font-weight="600" fill="#7ec8e3">for</tspan> line in f:          <tspan fill="#9aa4b8"># 한 줄씩</tspan></text>
+  <text xml:space="preserve" x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        line = line.rstrip(<tspan fill="#ce9178">"\n"</tspan>)</text>
+  <text xml:space="preserve" x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        process(line)</text>
+  <text xml:space="preserve" x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># islice — 처음 N줄만 읽기</text>
+  <text xml:space="preserve" x="76" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">from</tspan> itertools <tspan font-weight="600" fill="#7ec8e3">import</tspan> islice</text>
+  <text xml:space="preserve" x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">with</tspan> <tspan font-weight="600" fill="#7ec8e3">open</tspan>(<tspan fill="#ce9178">"big.csv"</tspan>, encoding=<tspan fill="#ce9178">"utf-8"</tspan>) as f:</text>
+  <text xml:space="preserve" x="76" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    first_100 = list(islice(f, <tspan fill="#b5cea8">100</tspan>))</text>
+  <text xml:space="preserve" x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># readline — 헤더만 읽고 중단</text>
+  <text xml:space="preserve" x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">with</tspan> <tspan font-weight="600" fill="#7ec8e3">open</tspan>(<tspan fill="#ce9178">"data.csv"</tspan>, encoding=<tspan fill="#ce9178">"utf-8"</tspan>) as f:</text>
+  <text xml:space="preserve" x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    header = f.readline().strip()</text>
+  <text xml:space="preserve" x="76" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    columns = header.split(<tspan fill="#ce9178">","</tspan>)</text>
+
+  <rect x="450" y="68" width="370" height="26" rx="4" fill="#1a2a1a"/>
+  <text x="635" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">청크 단위 이진 읽기</text>
+
+  <rect x="450" y="96" width="370" height="300" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="466" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># read(n) — n바이트씩 청크</text>
+  <text xml:space="preserve" x="466" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">def</tspan> <tspan fill="#55c555">checksum</tspan>(path, chunk=<tspan fill="#b5cea8">65536</tspan>):</text>
+  <text xml:space="preserve" x="466" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    <tspan font-weight="600" fill="#7ec8e3">import</tspan> hashlib</text>
+  <text xml:space="preserve" x="466" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    h = hashlib.sha256()</text>
+  <text xml:space="preserve" x="466" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    <tspan font-weight="600" fill="#7ec8e3">with</ttml:tspan> <tspan font-weight="600" fill="#7ec8e3">open</ttml:tspan>(path, <tspan fill="#ce9178">"rb"</ttml:tspan>) as f:</text>
+  <text xml:space="preserve" x="466" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        <tspan font-weight="600" fill="#7ec8e3">while</tspan> buf := f.read(chunk):</text>
+  <text xml:space="preserve" x="466" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">            h.update(buf)</text>
+  <text xml:space="preserve" x="466" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    <tspan font-weight="600" fill="#7ec8e3">return</tspan> h.hexdigest()</text>
+  <text xml:space="preserve" x="466" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># \n 처리 — strip vs rstrip</text>
+  <text xml:space="preserve" x="466" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">line = <tspan fill="#ce9178">"  hello\n"</tspan></text>
+  <text xml:space="preserve" x="466" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">line.strip()   <tspan fill="#9aa4b8"># → 'hello'</tspan></text>
+  <text xml:space="preserve" x="466" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">line.rstrip(<tspan fill="#ce9178">"\n"</tspan>) <tspan fill="#9aa4b8"># → '  hello'</tspan></text>
+  <text xml:space="preserve" x="466" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 앞 공백 보존 시 rstrip 선호</text>
+
+  <rect x="60" y="408" width="760" height="6" rx="3" fill="#3a4a6e"/>
+</svg>
