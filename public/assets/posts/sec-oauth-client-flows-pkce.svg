@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">OAuth 2.0 — Authorization Code + PKCE 흐름</text>
+
+  <!-- 세 주체 -->
+  <rect x="60" y="80" width="160" height="44" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">클라이언트 (SPA)</text>
+
+  <rect x="360" y="80" width="160" height="44" rx="8" fill="#1a1a0a" stroke="#e8e83a" stroke-width="1.5"/>
+  <text x="440" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e83a" text-anchor="middle">인가 서버 (AS)</text>
+
+  <rect x="660" y="80" width="160" height="44" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">리소스 서버 (API)</text>
+
+  <!-- 1: code_verifier 생성 -->
+  <text x="20" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">①</text>
+  <line x1="140" y1="165" x2="140" y2="195" stroke="#7777cc" stroke-width="1.5"/>
+  <rect x="60" y="170" width="160" height="32" rx="4" fill="#0a0a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="140" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">code_verifier 생성 (무작위)</text>
+
+  <!-- 2: code_challenge = SHA256(verifier) -->
+  <rect x="60" y="210" width="160" height="32" rx="4" fill="#0a0a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="140" y="231" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">code_challenge = SHA256(verifier)</text>
+
+  <!-- 3: 인가 요청 -->
+  <text x="20" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">②</text>
+  <line x1="220" y1="265" x2="358" y2="265" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="289" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">/authorize?code_challenge=...&amp;method=S256</text>
+
+  <!-- 4: 사용자 로그인 + 동의 -->
+  <rect x="360" y="252" width="160" height="30" rx="4" fill="#1a1a0a" stroke="#e8e83a" stroke-width="1"/>
+  <text x="440" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e83a" text-anchor="middle">사용자 로그인 / 동의</text>
+
+  <!-- 5: 인가 코드 반환 -->
+  <text x="20" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">③</text>
+  <line x1="360" y1="307" x2="222" y2="307" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="291" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">redirect_uri?code=AUTH_CODE</text>
+
+  <!-- 6: 토큰 교환 -->
+  <text x="20" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">④</text>
+  <line x1="220" y1="345" x2="358" y2="345" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="289" y="337" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">POST /token  code + code_verifier</text>
+
+  <!-- AS 검증 -->
+  <rect x="360" y="332" width="160" height="30" rx="4" fill="#1a1a0a" stroke="#e8e83a" stroke-width="1"/>
+  <text x="440" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e83a" text-anchor="middle">SHA256(verifier)==challenge 검증</text>
+
+  <!-- 7: Access Token 발급 -->
+  <text x="20" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">⑤</text>
+  <line x1="360" y1="388" x2="222" y2="388" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="291" y="381" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">access_token + refresh_token 발급</text>
+
+  <!-- 8: API 호출 -->
+  <text x="20" y="433" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">⑥</text>
+  <line x1="220" y1="428" x2="658" y2="428" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="439" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Authorization: Bearer access_token</text>
+
+  <!-- PKCE 설명 박스 -->
+  <rect x="60" y="455" width="760" height="35" rx="6" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">PKCE: code_verifier를 모르면 탈취한 인가 코드로 토큰을 교환할 수 없음 → 인가 코드 가로채기 방어</text>
+</svg>

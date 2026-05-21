@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CSP Nonce 동작 원리</text>
+
+  <!-- 서버 -->
+  <rect x="60" y="75" width="220" height="60" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">서버</text>
+  <text x="170" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">요청마다 nonce 생성</text>
+  <text x="170" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">crypto.randomBytes(16)</text>
+
+  <!-- 화살표 -->
+  <line x1="280" y1="105" x2="378" y2="105" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="329" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">HTTP 응답</text>
+
+  <!-- 브라우저 -->
+  <rect x="380" y="75" width="460" height="60" rx="8" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="610" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">브라우저가 받는 것</text>
+  <text x="396" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178">Content-Security-Policy: script-src 'nonce-ABC123'</text>
+  <text x="396" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff">&lt;script nonce="ABC123"&gt;...&lt;/script&gt;</text>
+
+  <!-- 브라우저 체크 -->
+  <rect x="60" y="170" width="760" height="80" rx="8" fill="#0d0d0d" stroke="#444" stroke-width="1"/>
+  <text x="440" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8" text-anchor="middle">브라우저 검증 로직</text>
+  <text x="200" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" text-anchor="middle">nonce="ABC123" ✓ 실행</text>
+  <text x="440" y="225" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">헤더 nonce == 태그 nonce ?</text>
+  <text x="680" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" text-anchor="middle">nonce 없음 ✗ 차단</text>
+
+  <!-- 결과 비교 -->
+  <rect x="60" y="275" width="360" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="297" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ✅ 실행됨 (nonce 일치)</text>
+  <text x="76" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&lt;</text>
+  <text x="87" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">script</text>
+  <text x="137" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> nonce=</text>
+  <text x="195" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">"ABC123"</text>
+  <text x="255" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&gt;</text>
+  <text x="76" y="337" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  legitCode();</text>
+  <text x="76" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&lt;/</text>
+  <text x="96" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">script</text>
+  <text x="147" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&gt;</text>
+
+  <rect x="460" y="275" width="360" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="297" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ❌ 차단됨 (nonce 없음)</text>
+  <text x="476" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&lt;</text>
+  <text x="487" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">script</text>
+  <text x="537" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&gt;</text>
+  <text x="476" y="337" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  xssPayload();</text>
+  <text x="476" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&lt;/</text>
+  <text x="496" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">script</text>
+  <text x="547" y="357" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&gt;</text>
+</svg>

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">프로토타입 오염 공격 원리</text>
+
+  <!-- 프로토타입 체인 -->
+  <rect x="60" y="75" width="200" height="52" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Object.prototype</text>
+  <text x="160" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">모든 객체의 조상</text>
+
+  <rect x="60" y="160" width="200" height="52" rx="8" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="160" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">일반 객체 {}</text>
+  <text x="160" y="201" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">__proto__ → Object.prototype</text>
+
+  <line x1="160" y1="160" x2="160" y2="129" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-g)"/>
+
+  <!-- 공격 코드 -->
+  <rect x="310" y="75" width="510" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="326" y="97" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ❌ 깊은 병합 함수 — 오염 가능</text>
+  <text x="326" y="117" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">function</text>
+  <text x="390" y="117" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> merge(target, src) {</text>
+  <text x="326" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">  for</text>
+  <text x="360" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3"> const</text>
+  <text x="410" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> key </text>
+  <text x="443" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">in</text>
+  <text x="461" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> src) {</text>
+  <text x="326" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">    if</text>
+  <text x="360" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (</text>
+  <text x="376" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">typeof</text>
+  <text x="424" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> src[key] === </text>
+  <text x="538" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'object'</text>
+  <text x="594" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">)</text>
+  <text x="326" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      merge(target[key], src[key]); </text>
+  <text x="606" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 위험!</text>
+  <text x="326" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">    else</text>
+  <text x="384" y="197" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> target[key] = src[key];</text>
+  <text x="326" y="217" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text x="326" y="237" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+  <text x="326" y="263" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">// 공격자 입력: JSON.parse에서 파싱된 페이로드</text>
+  <text x="326" y="283" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">merge({}, {"__proto__":{"isAdmin":true}});</text>
+
+  <!-- 오염 결과 -->
+  <rect x="60" y="320" width="760" height="120" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="343" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">오염 결과 — 모든 객체에 isAdmin이 전파됨</text>
+  <text x="76" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">({}).isAdmin          </text>
+  <text x="310" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">// true  ← Object.prototype이 오염됨</text>
+  <text x="76" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">({}).toString        </text>
+  <text x="310" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">// 덮어쓰면 함수 동작 변경 가능</text>
+  <text x="76" y="408" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">if (user.isAdmin) ...  </text>
+  <text x="330" y="408" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">// user가 빈 객체여도 true!</text>
+  <text x="76" y="428" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 권한 우회, DoS, RCE(Node.js)로 이어질 수 있음</text>
+</svg>

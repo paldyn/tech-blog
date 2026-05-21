@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CSRF 토큰 구현 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">서버 발급 → 클라이언트 전송 → 서버 검증</text>
+
+  <!-- 서버 토큰 생성 -->
+  <rect x="60" y="90" width="370" height="34" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="245" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">① 서버: 토큰 생성 및 쿠키 설정</text>
+
+  <rect x="60" y="136" width="370" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">import</text>
+  <text x="126" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> crypto from </text>
+  <text x="270" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'node:crypto'</text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">const</text>
+  <text x="126" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> token = crypto</text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  .randomBytes(32).toString(</text>
+  <text x="315" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'hex'</text>
+  <text x="357" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+  <text x="76" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">res.cookie(</text>
+  <text x="163" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'csrf'</text>
+  <text x="205" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">, token, { sameSite: </text>
+  <text x="355" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'Strict'</text>
+  <text x="408" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> });</text>
+
+  <!-- 클라이언트 전송 -->
+  <rect x="450" y="90" width="370" height="34" rx="6" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="635" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">② 클라이언트: 헤더에 토큰 포함</text>
+
+  <rect x="450" y="136" width="370" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">function</text>
+  <text x="530" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> getCsrfToken() {</text>
+  <text x="466" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">  return</text>
+  <text x="528" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> document.cookie</text>
+  <text x="466" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    .match(/csrf=([^;]+)/)?.[</text>
+  <text x="686" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">1</text>
+  <text x="700" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">];</text>
+  <text x="466" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- 서버 검증 -->
+  <rect x="60" y="258" width="760" height="34" rx="6" fill="#1a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">③ 서버: 요청 헤더 토큰과 세션 토큰 비교 검증</text>
+
+  <rect x="60" y="302" width="760" height="90" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="324" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">function</text>
+  <text x="140" y="324" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> verifyCsrf(req, res, next) {</text>
+  <text x="76" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">  const</text>
+  <text x="126" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> header = req.headers[</text>
+  <text x="298" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'x-csrf-token'</text>
+  <text x="420" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">];</text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">  if</text>
+  <text x="100" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (!header || header !== req.session.csrf)</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    </text>
+  <text x="90" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">return</text>
+  <text x="148" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> res.status(</text>
+  <text x="240" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">403</text>
+  <text x="261" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">).json({ error: </text>
+  <text x="387" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'CSRF mismatch'</text>
+  <text x="498" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> });</text>
+</svg>

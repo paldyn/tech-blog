@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">프로토타입 오염 방어 방법</text>
+
+  <!-- 방어 1: Object.create(null) -->
+  <rect x="60" y="70" width="370" height="34" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="245" y="93" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">① Object.create(null) — 프로토타입 없는 객체</text>
+
+  <rect x="60" y="115" width="370" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 프로토타입 체인 없음 → 오염 불가</text>
+  <text x="76" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">const</text>
+  <text x="126" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> safe = Object.create(</text>
+  <text x="293" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">null</text>
+  <text x="319" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+  <text x="76" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">safe.__proto__  </text>
+  <text x="218" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// undefined — 오염 전파 안 됨</text>
+
+  <!-- 방어 2: hasOwnProperty 검사 -->
+  <rect x="460" y="70" width="360" height="34" rx="6" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="93" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">② 키 검증 — __proto__ 차단</text>
+
+  <rect x="460" y="115" width="360" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="137" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 병합 전 위험 키 검사</text>
+  <text x="476" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">const</text>
+  <text x="526" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> BANNED = [</text>
+  <text x="626" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'__proto__'</text>
+  <text x="718" y="157" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">,</text>
+  <text x="476" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  'constructor'</text>
+  <text x="586" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">, </text>
+  <text x="601" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'prototype'</text>
+  <text x="687" y="177" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">];</text>
+
+  <!-- 방어 3: structuredClone + freeze -->
+  <rect x="60" y="215" width="370" height="34" rx="6" fill="#1a1a0a" stroke="#e8e83a" stroke-width="1.5"/>
+  <text x="245" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e83a" text-anchor="middle">③ Object.freeze(Object.prototype)</text>
+
+  <rect x="60" y="260" width="370" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 앱 초기화 시 한 번 실행</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">Object.freeze(Object.prototype);</text>
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 이후 __proto__ 쓰기 시도 → 조용히 무시됨</text>
+
+  <!-- 방어 4: JSON schema 검증 -->
+  <rect x="460" y="215" width="360" height="34" rx="6" fill="#0a1a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="640" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">④ JSON 스키마 검증</text>
+
+  <rect x="460" y="260" width="360" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ajv 등으로 입력 구조 검증</text>
+  <text x="476" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">const valid = ajv.validate(</text>
+  <text x="476" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  schema, userInput);</text>
+  <text x="620" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 스키마 외 키 거부</text>
+</svg>
