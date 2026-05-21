@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Validation Groups — 상황별 검증 규칙 분리</text>
+
+  <!-- 문제: 하나의 DTO로 Create/Update 겸용 -->
+  <rect x="60" y="70" width="760" height="80" rx="8" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="94" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">문제: 하나의 DTO를 Create / Update 겸용할 때</text>
+  <text x="440" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Create: id 불필요, name 필수   |   Update: id 필수, name 선택</text>
+  <text x="440" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ @NotBlank(name)과 @NotNull(id)를 동시에 달면 한쪽 요청은 항상 검증 실패</text>
+
+  <!-- 그룹 인터페이스 -->
+  <text x="440" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">해결: 검증 그룹 인터페이스 선언</text>
+
+  <!-- Create 그룹 박스 -->
+  <rect x="60" y="204" width="230" height="80" rx="8" fill="#0f1b0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="175" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">OnCreate 그룹</text>
+  <text x="175" y="252" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">interface OnCreate {}</text>
+  <text x="175" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">POST /users 시 적용</text>
+
+  <!-- Update 그룹 박스 -->
+  <rect x="325" y="204" width="230" height="80" rx="8" fill="#1a100a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="440" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">OnUpdate 그룹</text>
+  <text x="440" y="252" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">interface OnUpdate {}</text>
+  <text x="440" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">PUT /users/{id} 시 적용</text>
+
+  <!-- Default 그룹 박스 -->
+  <rect x="590" y="204" width="230" height="80" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="705" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Default 그룹</text>
+  <text x="705" y="252" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">jakarta.validation.groups</text>
+  <text x="705" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">groups 미지정 시 기본 적용</text>
+
+  <!-- 화살표 -->
+  <line x1="175" y1="284" x2="175" y2="320" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="440" y1="284" x2="440" y2="320" stroke="#ce9178" stroke-width="2" marker-end="url(#arr-orange)"/>
+  <line x1="705" y1="284" x2="705" y2="320" stroke="#7777cc" stroke-width="2">
+    <marker id="arr-purple" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse"
+            markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </line>
+  <line x1="705" y1="284" x2="705" y2="320" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-purple)"/>
+
+  <!-- DTO 박스 -->
+  <rect x="60" y="320" width="760" height="144" rx="8" fill="#111" stroke="#444" stroke-width="1.5"/>
+  <text x="440" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">UserRequest DTO — 그룹별 제약 조건</text>
+
+  <!-- 필드 행 1: id -->
+  <rect x="80" y="356" width="720" height="32" rx="4" fill="#1a1a1a"/>
+  <text x="100" y="377" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">@NotNull(groups = OnUpdate.class)</text>
+  <text x="430" y="377" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">Long id;</text>
+  <text x="670" y="377" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">// Update 시만 필수</text>
+
+  <!-- 필드 행 2: name -->
+  <rect x="80" y="396" width="720" height="32" rx="4" fill="#111"/>
+  <text x="100" y="417" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">@NotBlank(groups = OnCreate.class)</text>
+  <text x="430" y="417" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">String name;</text>
+  <text x="670" y="417" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">// Create 시만 필수</text>
+
+  <!-- 필드 행 3: email -->
+  <rect x="80" y="436" width="720" height="32" rx="4" fill="#1a1a1a"/>
+  <text x="100" y="457" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">@Email</text>
+  <text x="200" y="457" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" xml:space="preserve">(groups 없음 = Default)</text>
+  <text x="430" y="457" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">String email;</text>
+  <text x="670" y="457" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">// 항상 적용 (Default)</text>
+</svg>
