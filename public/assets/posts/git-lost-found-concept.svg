@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">git fsck --lost-found 동작 원리</text>
+
+  <!-- .git/objects area -->
+  <rect x="60" y="70" width="380" height="200" rx="8" fill="#0e0e0e" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="250" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888" text-anchor="middle">.git/objects/</text>
+
+  <circle cx="120" cy="135" r="24" fill="#0e1620" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="120" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc" text-anchor="middle">commit</text>
+  <text x="120" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">referenced</text>
+
+  <circle cx="210" cy="135" r="24" fill="#1a0e0e" stroke="#e05555" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="210" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555" text-anchor="middle">dangling</text>
+  <text x="210" y="143" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555" text-anchor="middle">commit</text>
+  <text x="210" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">unreachable</text>
+
+  <circle cx="300" cy="135" r="24" fill="#1a0e0e" stroke="#e8c84a" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="300" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e8c84a" text-anchor="middle">dangling</text>
+  <text x="300" y="143" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e8c84a" text-anchor="middle">blob</text>
+  <text x="300" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">unreachable</text>
+
+  <circle cx="390" cy="135" r="24" fill="#0e1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="390" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555" text-anchor="middle">tag</text>
+  <text x="390" y="143" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555" text-anchor="middle">obj</text>
+  <text x="390" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">referenced</text>
+
+  <text x="120" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">blob (many more)</text>
+  <text x="300" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">tree, etc...</text>
+  <text x="250" y="255" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">git fsck --lost-found</text>
+
+  <!-- Arrow to lost-found -->
+  <line x1="250" y1="270" x2="520" y2="270" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="385" y="263" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">dangling 객체만 추출</text>
+
+  <!-- .git/lost-found area -->
+  <rect x="530" y="70" width="310" height="230" rx="8" fill="#0e0e10" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="685" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">.git/lost-found/</text>
+
+  <rect x="550" y="108" width="130" height="80" rx="6" fill="#0e1620" stroke="#e05555" stroke-width="1"/>
+  <text x="615" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">commit/</text>
+  <text x="615" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" text-anchor="middle">abc1234</text>
+  <text x="615" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" text-anchor="middle">def5678</text>
+  <text x="615" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">(SHA가 파일명)</text>
+
+  <rect x="700" y="108" width="120" height="80" rx="6" fill="#0e1620" stroke="#e8c84a" stroke-width="1"/>
+  <text x="760" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8c84a" text-anchor="middle">other/</text>
+  <text x="760" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" text-anchor="middle">ghi9012</text>
+  <text x="760" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">(blob, tree)</text>
+
+  <text x="685" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">파일 내용 = 객체 내용</text>
+  <text x="685" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">(cat으로 바로 열람 가능)</text>
+  <text x="685" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">기존 파일 덮어쓰지 않음</text>
+
+  <!-- Browse commands -->
+  <rect x="60" y="320" width="760" height="130" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># lost-found 실행</text>
+  <text x="76" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git fsck --lost-found</text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># commit 디렉터리 내 각 파일(=SHA) 조회</text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ls .git/lost-found/commit/ | while read sha; do</text>
+  <text x="76" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  git log --oneline -1 "$sha"; done</text>
+</svg>

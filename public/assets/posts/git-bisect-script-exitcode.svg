@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">bisect run 스크립트 종료 코드 규칙</text>
+
+  <!-- Exit codes table -->
+  <rect x="60" y="68" width="760" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <!-- Headers -->
+  <text x="76" y="92" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">종료 코드   의미         bisect 판정</text>
+  <line x1="76" y1="100" x2="804" y2="100" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">0           테스트 통과  → good (버그 없음)</text>
+  <text x="76" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">1           테스트 실패  → bad  (버그 있음)</text>
+  <text x="76" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">2-127       테스트 에러  → skip (이 커밋 건너뜀)</text>
+  <text x="76" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">128+        치명적 오류  → bisect 즉시 중단</text>
+  <line x1="76" y1="214" x2="804" y2="214" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">특수: exit 125 → skip (컴파일 실패 등 테스트 불가 커밋)</text>
+
+  <!-- Script example -->
+  <rect x="60" y="285" width="760" height="110" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">#!/bin/bash  # test.sh — bisect용 테스트 스크립트</text>
+  <text x="76" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">make build 2>/dev/null || exit 125  </text>
+  <text x="490" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 빌드 실패 → skip</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">./run_tests.sh --filter login_test</text>
+  <text x="76" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 종료 코드 0 = 통과(good), 1 = 실패(bad) 자동 전달</text>
+</svg>

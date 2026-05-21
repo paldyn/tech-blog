@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">git bisect run — 스크립트 자동화 흐름</text>
+
+  <!-- Manual vs Auto comparison -->
+  <rect x="60" y="68" width="360" height="56" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">수동 bisect</text>
+  <text x="240" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">매번 체크아웃 → 테스트 → bad/good 입력</text>
+
+  <rect x="460" y="68" width="360" height="56" rx="8" fill="#0e1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">자동 bisect run</text>
+  <text x="640" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">스크립트 종료 코드(0/1)로 자동 판정</text>
+
+  <!-- Auto flow diagram -->
+  <text x="60" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">자동화 흐름</text>
+
+  <!-- Flow boxes -->
+  <rect x="60" y="170" width="150" height="52" rx="8" fill="#0e1620" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="135" y="193" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" text-anchor="middle">커밋 체크아웃</text>
+  <text x="135" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Git 자동 수행</text>
+
+  <line x1="210" y1="196" x2="248" y2="196" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="258" y="170" width="150" height="52" rx="8" fill="#14140e" stroke="#e8c84a" stroke-width="1.5"/>
+  <text x="333" y="193" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8c84a" text-anchor="middle">스크립트 실행</text>
+  <text x="333" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">./test.sh</text>
+
+  <line x1="408" y1="196" x2="446" y2="196" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="456" y="170" width="150" height="52" rx="8" fill="#0e0e1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="531" y="193" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc" text-anchor="middle">종료 코드 확인</text>
+  <text x="531" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">exit 0 / exit 1</text>
+
+  <!-- Branches from exit code -->
+  <line x1="606" y1="196" x2="644" y2="175" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="606" y1="196" x2="644" y2="218" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <rect x="654" y="160" width="166" height="30" rx="6" fill="#0e1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="737" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">exit 0 → good</text>
+
+  <rect x="654" y="200" width="166" height="30" rx="6" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="737" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" text-anchor="middle">exit 1 → bad</text>
+
+  <!-- Repeat arrow -->
+  <path d="M 737 232 Q 737 258 440 258 Q 143 258 135 232"
+        fill="none" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arr)"/>
+  <text x="440" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">범위 절반 축소 후 반복</text>
+
+  <!-- Code block: run script example -->
+  <rect x="60" y="295" width="760" height="170" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># bisect 시작 및 자동 실행</text>
+  <text x="76" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git bisect start</text>
+  <text x="76" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git bisect bad HEAD</text>
+  <text x="76" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git bisect good v2.0.0</text>
+  <text x="76" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 스크립트로 자동 탐색 실행</text>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git bisect run ./test.sh</text>
+  <text x="76" y="450" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># → 결과 자동 출력 후 reset 필요</text>
+</svg>

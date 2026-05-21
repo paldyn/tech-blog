@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">lost-found 활용: 커밋과 파일 복구</text>
+
+  <rect x="60" y="68" width="760" height="262" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="76" y="92" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 1. lost-found 실행 (dangling 객체 → .git/lost-found/ 저장)</text>
+  <text x="76" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git fsck --lost-found</text>
+
+  <text x="76" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 2. 잃어버린 커밋 목록과 메시지 확인</text>
+  <text x="76" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">for sha in $(ls .git/lost-found/commit/); do</text>
+  <text x="76" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  echo "--- $sha"</text>
+  <text x="76" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  git show --oneline --no-patch "$sha"</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">done</text>
+
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 3. 원하는 커밋 복구</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git checkout -b recovered/work abc1234</text>
+
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 4. 잃어버린 파일(blob) 내용 확인 및 추출</text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">cat .git/lost-found/other/def5678   </text>
+  <text x="540" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 파일 내용 직접 출력</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">git cat-file -p def5678 &gt; recovered.txt</text>
+</svg>

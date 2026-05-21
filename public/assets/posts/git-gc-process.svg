@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">git gc 동작: loose objects → packfile</text>
+
+  <!-- Before GC -->
+  <text x="60" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">GC 전: loose objects 산재</text>
+
+  <!-- Loose objects scattered -->
+  <rect x="60" y="100" width="340" height="140" rx="8" fill="#0e0e0e" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">.git/objects/</text>
+  <text x="80" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">  ab/1234...  (blob)</text>
+  <text x="80" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">  cd/5678...  (tree)</text>
+  <text x="80" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">  ef/9012...  (commit)</text>
+  <text x="80" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">  aa/bbcc...  (dangling!)</text>
+  <text x="80" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">  ... (수백 개 파일)</text>
+  <text x="80" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">  총 크기: 120MB</text>
+
+  <!-- Arrow -->
+  <line x1="430" y1="170" x2="468" y2="170" stroke="#7ec8e3" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="449" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">git gc</text>
+
+  <!-- After GC -->
+  <text x="480" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">GC 후: packfile로 통합</text>
+
+  <rect x="480" y="100" width="340" height="140" rx="8" fill="#0e0e0e" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="500" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">.git/objects/pack/</text>
+  <text x="500" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" xml:space="preserve">  pack-abc...idx  (인덱스)</text>
+  <text x="500" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" xml:space="preserve">  pack-abc...pack (데이터)</text>
+  <text x="500" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">  (dangling 객체 제거됨)</text>
+  <text x="500" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">  reflog 만료 처리됨</text>
+  <text x="500" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" xml:space="preserve">  총 크기: 18MB (85% 감소)</text>
+
+  <!-- GC Tasks -->
+  <text x="60" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">git gc가 수행하는 작업</text>
+
+  <rect x="60" y="283" width="760" height="168" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">1. pack-objects  </text>
+  <text x="240" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">loose objects → packfile (delta 압축)</text>
+
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">2. prune         </text>
+  <text x="240" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">만료된 unreachable 객체 삭제</text>
+
+  <text x="76" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">3. reflog expire </text>
+  <text x="240" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">오래된 reflog 항목 만료</text>
+
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">4. repack        </text>
+  <text x="240" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">기존 packfile 재압축 (여러 개 → 하나)</text>
+
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">5. rerere        </text>
+  <text x="240" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">오래된 rerere 캐시 정리</text>
+
+  <text x="76" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">6. commit-graph  </text>
+  <text x="240" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">커밋 그래프 파일 업데이트</text>
+
+  <text x="76" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">※ git fetch/commit 시 자동 auto gc (loose objects ≥ 6700)</text>
+</svg>
