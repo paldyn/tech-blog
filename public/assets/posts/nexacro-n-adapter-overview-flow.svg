@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">트랜잭션 요청 처리 흐름</text>
+
+  <!-- Step boxes horizontal -->
+  <!-- Step 1 -->
+  <rect x="40" y="100" width="140" height="80" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="110" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">① 클라이언트</text>
+  <text x="110" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">transaction()</text>
+  <text x="110" y="167" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">호출</text>
+
+  <line x1="180" y1="140" x2="214" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="216" y="100" width="140" height="80" rx="8" fill="#0a0a14" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="286" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">② PL 직렬화</text>
+  <text x="286" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Dataset →</text>
+  <text x="286" y="167" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">PL 바이트</text>
+
+  <line x1="356" y1="140" x2="390" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="392" y="100" width="140" height="80" rx="8" fill="#14200a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="462" y="123" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">③ 어댑터</text>
+  <text x="462" y="143" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">PL 파싱 →</text>
+  <text x="462" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Dataset 객체</text>
+  <text x="462" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">생성</text>
+
+  <line x1="532" y1="140" x2="566" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="568" y="100" width="140" height="80" rx="8" fill="#1a1400" stroke="#e8e8e3" stroke-width="1"/>
+  <text x="638" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">④ 서비스</text>
+  <text x="638" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">비즈니스</text>
+  <text x="638" y="167" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">로직 처리</text>
+
+  <line x1="708" y1="140" x2="742" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5 -->
+  <rect x="744" y="100" width="96" height="80" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="792" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">⑤ DB</text>
+  <text x="792" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">SQL</text>
+  <text x="792" y="167" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">실행</text>
+
+  <!-- Response flow (dotted, going back left) -->
+  <path d="M 792 210 L 792 240 L 110 240 L 110 210" fill="none" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+
+  <text x="440" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">↑  응답: DB 결과 → Dataset 직렬화 → PL 응답 → 클라이언트 수신</text>
+
+  <!-- Detail boxes below -->
+  <rect x="40" y="290" width="380" height="120" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 어댑터 서비스 메서드 시그니처</text>
+  <text x="56" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">public void</text>
+  <text x="138" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> search(</text>
+  <text x="56" y="354" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    DataSet dsSearch,</text>
+  <text x="56" y="374" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    DataSet dsResult,</text>
+  <text x="56" y="394" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    VariableList vl)</text>
+
+  <rect x="460" y="290" width="380" height="120" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 클라이언트 transaction 호출</text>
+  <text x="476" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">this</text>
+  <text x="504" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">.transaction(</text>
+  <text x="476" y="354" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  "search"</text>
+  <text x="476" y="374" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  , "SVC::Search"</text>
+  <text x="476" y="394" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  , "in:dsSearch out:dsResult"</text>
+</svg>
