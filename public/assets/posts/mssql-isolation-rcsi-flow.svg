@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arrc" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">RCSI 행 버전 저장 메커니즘</text>
+
+  <!-- T1: Writer -->
+  <rect x="60" y="70" width="240" height="46" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="180" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">트랜잭션 T1 (Writer)</text>
+  <text x="180" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">UPDATE orders SET amt = 200</text>
+
+  <!-- T2: Reader -->
+  <rect x="580" y="70" width="240" height="46" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="700" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">트랜잭션 T2 (Reader)</text>
+  <text x="700" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">SELECT * FROM orders</text>
+
+  <!-- tempdb version store -->
+  <rect x="280" y="180" width="320" height="80" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">tempdb 버전 저장소</text>
+  <text x="440" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">[이전 버전] amt = 100 (XSN 기록)</text>
+  <text x="440" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">T1 COMMIT 후 일정 시간 유지</text>
+
+  <!-- Data page -->
+  <rect x="280" y="310" width="320" height="60" rx="8" fill="#0f1a0f" stroke="#2a4a2a" stroke-width="1.5"/>
+  <text x="440" y="333" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">데이터 페이지 (최신)</text>
+  <text x="440" y="353" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">amt = 200 (T1이 쓴 새 값)</text>
+
+  <!-- T1 arrow to version store -->
+  <line x1="180" y1="116" x2="350" y2="180" stroke="#7777cc" stroke-width="2"
+        marker-end="url(#arrc)"/>
+  <text x="240" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">이전값 복사</text>
+
+  <!-- T1 arrow to data page -->
+  <line x1="180" y1="116" x2="350" y2="310" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arrc)"/>
+  <text x="170" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">새 값 기록</text>
+
+  <!-- T2 arrow to version store -->
+  <line x1="700" y1="116" x2="600" y2="180" stroke="#55c555" stroke-width="2"
+        marker-end="url(#arrg2)"/>
+  <text x="648" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">이전값 읽기</text>
+
+  <!-- Note box -->
+  <rect x="60" y="395" width="760" height="44" rx="8" fill="#0f1a0f" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="440" y="413" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">T2는 T1의 쓰기 락을 기다리지 않는다 — 버전 저장소에서 이전 값을 즉시 읽는다</text>
+  <text x="440" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">읽기가 쓰기를 막지 않고, 쓰기도 읽기를 막지 않는다 (Reader-Writer 충돌 없음)</text>
+</svg>

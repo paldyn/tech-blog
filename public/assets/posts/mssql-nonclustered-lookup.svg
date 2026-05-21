@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arrnc" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrncp" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">비클러스터형 인덱스 — 키 조회(Key Lookup) 발생 구조</text>
+
+  <!-- NC Index B-Tree (left) -->
+  <rect x="60" y="72" width="340" height="44" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="230" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">비클러스터형 인덱스 (email 열)</text>
+
+  <!-- NC Index leaf pages -->
+  <rect x="60" y="148" width="160" height="72" rx="6" fill="#0d0d20" stroke="#2a2a4a" stroke-width="1.5"/>
+  <text x="140" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">리프 노드</text>
+  <text x="140" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">kim@ → CK=(1)</text>
+  <text x="140" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">lee@ → CK=(2)</text>
+
+  <rect x="240" y="148" width="160" height="72" rx="6" fill="#0d0d20" stroke="#2a2a4a" stroke-width="1.5"/>
+  <text x="320" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">리프 노드</text>
+  <text x="320" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">park@ → CK=(3)</text>
+  <text x="320" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">yoon@ → CK=(4)</text>
+
+  <!-- NC index label -->
+  <text x="200" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CK = 클러스터 키 (id 값)</text>
+
+  <!-- Clustered Index (right) -->
+  <rect x="480" y="72" width="340" height="44" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+  <text x="650" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">클러스터형 인덱스 (id 열)</text>
+
+  <!-- Clustered leaf pages -->
+  <rect x="480" y="148" width="340" height="100" rx="6" fill="#0f1a0f" stroke="#2a4a2a" stroke-width="1.5"/>
+  <text x="650" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">데이터 페이지 (실제 행)</text>
+  <text x="650" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">id=1 | 김민수 | kim@ | ...전체 열</text>
+  <text x="650" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">id=2 | 이지현 | lee@ | ...전체 열</text>
+  <text x="650" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8" text-anchor="middle">id=3 | 박서준 | park@ | ...전체 열</text>
+
+  <!-- Key Lookup arrow -->
+  <path d="M 400 184 Q 440 270 480 198" stroke="#e05555" stroke-width="2.5"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arrncp)"/>
+  <text x="440" y="265" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">⚠ Key Lookup</text>
+  <text x="440" y="285" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">추가 I/O 발생</text>
+
+  <!-- Query example -->
+  <rect x="60" y="310" width="760" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- email로 검색 → NC Index로 CK 찾기 → CK로 클러스터 인덱스 재탐색</text>
+  <text x="76" y="354" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">SELECT</text>
+  <text x="76" y="354" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> id, name, phone   </text>
+  <text x="76" y="354" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- ← phone은 NC Index에 없음 → Key Lookup</text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">FROM  </text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> customers</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">WHERE </text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> email = </text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'kim@example.com';</text>
+  <text x="76" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 해결: INCLUDE (phone) 추가 → Key Lookup 제거</text>
+</svg>

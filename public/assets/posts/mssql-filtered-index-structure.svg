@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">필터된 인덱스 — 전체 인덱스 vs 필터된 인덱스</text>
+
+  <!-- Full index (left) -->
+  <rect x="60" y="72" width="350" height="44" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="235" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">전체 인덱스 (일반 NC Index)</text>
+
+  <!-- Table rows: all -->
+  <rect x="60" y="134" width="350" height="180" rx="6" fill="#0d0d18" stroke="#2a2a3e" stroke-width="1"/>
+  <text x="235" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#888" text-anchor="middle">전체 1,000,000 행 색인</text>
+  <!-- rows -->
+  <rect x="76" y="168" width="318" height="24" rx="3" fill="#111122"/>
+  <text x="86" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">status='ACTIVE' (10,000행)</text>
+  <rect x="76" y="196" width="318" height="24" rx="3" fill="#111133"/>
+  <text x="86" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">status='COMPLETED' (500,000행)</text>
+  <rect x="76" y="224" width="318" height="24" rx="3" fill="#111133"/>
+  <text x="86" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">status='CANCELLED' (490,000행)</text>
+  <rect x="76" y="252" width="318" height="22" rx="3" fill="#111122"/>
+  <text x="86" y="267" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">...</text>
+  <text x="235" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">인덱스 크기: 대용량</text>
+
+  <!-- Filtered index (right) -->
+  <rect x="470" y="72" width="350" height="44" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="2"/>
+  <text x="645" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">필터된 인덱스 (WHERE status='ACTIVE')</text>
+
+  <!-- Filtered rows -->
+  <rect x="470" y="134" width="350" height="180" rx="6" fill="#0f1a0f" stroke="#2a4a2a" stroke-width="1.5"/>
+  <text x="645" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">조건 충족 10,000행만 색인</text>
+  <rect x="486" y="168" width="318" height="24" rx="3" fill="#0f2a0f"/>
+  <text x="496" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">status='ACTIVE' (10,000행) ✓</text>
+  <rect x="486" y="196" width="318" height="24" rx="3" fill="#0d0d18"/>
+  <text x="496" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#333">status='COMPLETED' → 제외</text>
+  <rect x="486" y="224" width="318" height="24" rx="3" fill="#0d0d18"/>
+  <text x="496" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#333">status='CANCELLED' → 제외</text>
+  <text x="645" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">인덱스 크기: 1% (압도적 절감)</text>
+
+  <!-- Code block -->
+  <rect x="60" y="340" width="760" height="96" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 필터된 인덱스: 조건 절에 맞는 행만 색인</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">CREATE NONCLUSTERED INDEX</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> ix_active_orders</text>
+  <text x="76" y="400" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">ON</text>
+  <text x="76" y="400" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> orders (order_date, customer_id)</text>
+  <text x="76" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">WHERE</text>
+  <text x="76" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> status = </text>
+  <text x="76" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'ACTIVE'</text>
+  <text x="76" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">;</text>
+</svg>

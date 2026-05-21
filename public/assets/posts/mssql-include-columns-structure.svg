@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">INCLUDE 절 — 리프 노드 구조 비교</text>
+
+  <!-- Without INCLUDE (left) -->
+  <rect x="60" y="72" width="350" height="44" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="235" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">INCLUDE 없는 인덱스</text>
+
+  <!-- Without INCLUDE tree levels -->
+  <!-- Root/Internal -->
+  <rect x="140" y="136" width="190" height="44" rx="6" fill="#111122" stroke="#3a3a4e" stroke-width="1"/>
+  <text x="235" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">루트/중간 노드</text>
+
+  <!-- Leaf without include -->
+  <rect x="80" y="216" width="310" height="80" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="235" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">리프 노드</text>
+  <text x="235" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">키 열만 저장:</text>
+  <text x="235" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">email | CK(customer_id)</text>
+
+  <!-- Key Lookup label -->
+  <text x="235" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">→ name, phone 조회 시 Key Lookup!</text>
+  <text x="235" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">클러스터 인덱스 추가 탐색 필요</text>
+
+  <!-- With INCLUDE (right) -->
+  <rect x="470" y="72" width="350" height="44" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="2"/>
+  <text x="645" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">INCLUDE(name, phone) 인덱스</text>
+
+  <!-- With INCLUDE tree levels -->
+  <rect x="550" y="136" width="190" height="44" rx="6" fill="#111122" stroke="#3a3a4e" stroke-width="1"/>
+  <text x="645" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">루트/중간 노드 (동일)</text>
+
+  <!-- Leaf with include -->
+  <rect x="490" y="216" width="310" height="80" rx="6" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="645" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">리프 노드</text>
+  <text x="645" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">키 + 포함 열:</text>
+  <text x="645" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">email | CK | name | phone</text>
+
+  <!-- Covering label -->
+  <text x="645" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">→ 커버링 인덱스! Key Lookup 제거</text>
+  <text x="645" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">리프 노드에서 모든 열 즉시 반환</text>
+
+  <!-- Code comparison -->
+  <rect x="60" y="360" width="760" height="76" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- INCLUDE 절 활용 (키 열은 WHERE/JOIN/ORDER에, INCLUDE는 SELECT에)</text>
+  <text x="76" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">CREATE NONCLUSTERED INDEX</text>
+  <text x="76" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> ix_email_cov</text>
+  <text x="76" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">ON</text>
+  <text x="76" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> customers (email) </text>
+  <text x="76" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">INCLUDE</text>
+  <text x="76" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (name, phone);</text>
+</svg>

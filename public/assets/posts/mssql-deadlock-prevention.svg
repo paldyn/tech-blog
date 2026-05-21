@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">데드락 예방 전략 및 진단 쿼리</text>
+
+  <!-- Strategy 1 -->
+  <rect x="60" y="68" width="365" height="80" rx="8" fill="#111122" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">① 락 획득 순서 통일</text>
+  <text x="80" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">항상 동일한 순서로 테이블/행 접근</text>
+  <text x="80" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">T1, T2 모두 A → B 순서로 접근하면 사이클 불가</text>
+
+  <!-- Strategy 2 -->
+  <rect x="455" y="68" width="365" height="80" rx="8" fill="#111122" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="475" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">② 트랜잭션 짧게 유지</text>
+  <text x="475" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">락 보유 시간 최소화 → 사이클 확률 감소</text>
+  <text x="475" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">TRAN 내부에서 외부 호출·대기 금지</text>
+
+  <!-- Strategy 3 -->
+  <rect x="60" y="164" width="365" height="80" rx="8" fill="#111122" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">③ UPDLOCK 힌트 활용</text>
+  <text x="80" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">SELECT 시점에 업데이트 락 선취</text>
+  <text x="80" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">공유락 → 배타락 변환 단계 제거</text>
+
+  <!-- Strategy 4 -->
+  <rect x="455" y="164" width="365" height="80" rx="8" fill="#111122" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="475" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">④ RCSI / SNAPSHOT 격리</text>
+  <text x="475" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">읽기 트랜잭션이 락을 걸지 않아</text>
+  <text x="475" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">읽기-쓰기 간 데드락 원천 차단</text>
+
+  <!-- Code block: deadlock trace -->
+  <rect x="60" y="262" width="760" height="148" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 최근 데드락 그래프 조회 (XEvent/시스템 헬스 세션)</text>
+  <text x="76" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">SELECT</text>
+  <text x="76" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">       xdr.value('@timestamp','datetime2') AS deadlock_time,</text>
+  <text x="76" y="324" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">       xdr.query('.') AS deadlock_graph</text>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">FROM  </text>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">       sys.dm_xe_session_targets xst</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">CROSS</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> APPLY xst.target_data.nodes</text>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        ('//RingBufferTarget/event') AS xr(xdr)</text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">WHERE </text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> xdr.value('@name','nvarchar(4000)')=</text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">                                    'xml_deadlock_report'</text>
+</svg>
