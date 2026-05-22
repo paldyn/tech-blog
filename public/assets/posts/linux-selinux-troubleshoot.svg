@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SELinux 트러블슈팅 플로우</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="68" width="760" height="52" rx="6" fill="#2e1a1a" stroke="#6e3a3a" stroke-width="1.5"/>
+  <text x="90" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">① 서비스 실패 — "permission denied" 또는 동작 안 됨</text>
+  <text x="90" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">setenforce 0 으로 일시 Permissive 전환 → 재시도 → 정상 동작하면 SELinux 문제</text>
+
+  <line x1="440" y1="120" x2="440" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="60" y="140" width="760" height="72" rx="6" fill="#111122" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="90" y="161" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② audit 로그에서 거부 내역 확인</text>
+  <rect x="90" y="170" width="680" height="34" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="110" y="186" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ausearch</text>
+  <text x="178" y="186" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -m avc -ts recent</text>
+  <text x="110" y="200" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">grep</text>
+  <text x="140" y="200" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> "denied" /var/log/audit/audit.log</text>
+
+  <line x1="440" y1="212" x2="440" y2="232" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="60" y="232" width="760" height="72" rx="6" fill="#111122" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="90" y="253" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ audit2allow / sealert로 해결책 제안</text>
+  <rect x="90" y="262" width="680" height="34" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="110" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">audit2allow</text>
+  <text x="190" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -w -a          </text>
+  <text x="110" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">sealert</text>
+  <text x="162" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -a /var/log/audit/audit.log</text>
+
+  <line x1="440" y1="304" x2="440" y2="324" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: two paths -->
+  <rect x="60" y="324" width="360" height="60" rx="6" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="240" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">④a 컨텍스트 수정 (권장)</text>
+  <text x="240" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" text-anchor="middle">chcon / restorecon / semanage</text>
+  <text x="240" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">라벨이 잘못됐을 때</text>
+
+  <rect x="460" y="324" width="360" height="60" rx="6" fill="#1a1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="640" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">④b boolean 전환</text>
+  <text x="640" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" text-anchor="middle">setsebool -P httpd_can_network_connect on</text>
+  <text x="640" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">정책 불리언 변경</text>
+</svg>

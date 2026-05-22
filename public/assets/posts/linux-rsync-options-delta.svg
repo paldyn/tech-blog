@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">rsync 델타 전송 알고리즘</text>
+
+  <!-- Source file -->
+  <text x="140" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">원본 (로컬)</text>
+
+  <!-- Blocks source -->
+  <rect x="60" y="96" width="80" height="40" rx="4" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="100" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">블록 A</text>
+  <rect x="148" y="96" width="80" height="40" rx="4" fill="#2e2e1a" stroke="#6e6e3a" stroke-width="1.5"/>
+  <text x="188" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#c8e37e" text-anchor="middle">블록 B'</text>
+  <text x="188" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">변경됨</text>
+  <rect x="236" y="96" width="80" height="40" rx="4" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="276" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">블록 C</text>
+  <rect x="324" y="96" width="80" height="40" rx="4" fill="#2e1a1a" stroke="#6e3a3a" stroke-width="1.5"/>
+  <text x="364" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e07777" text-anchor="middle">블록 D</text>
+  <text x="364" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">신규</text>
+
+  <!-- Destination file -->
+  <text x="680" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">목적지 (원격)</text>
+
+  <!-- Blocks destination -->
+  <rect x="600" y="96" width="80" height="40" rx="4" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="640" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">블록 A</text>
+  <rect x="688" y="96" width="80" height="40" rx="4" fill="#111122" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="728" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">블록 B</text>
+  <text x="728" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">구버전</text>
+  <rect x="776" y="96" width="80" height="40" rx="4" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="816" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">블록 C</text>
+
+  <!-- Step indicators -->
+  <text x="440" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">델타 전송 단계</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="180" width="760" height="44" rx="6" fill="#111122" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="90" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">① 체크섬 교환</text>
+  <text x="90" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">원격이 각 블록의 rolling checksum을 보냄 → 로컬이 비교하여 변경 블록 파악</text>
+
+  <!-- Step 2 -->
+  <rect x="60" y="232" width="760" height="44" rx="6" fill="#111122" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="90" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">② 델타만 전송</text>
+  <text x="90" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">블록 B' (변경분)과 블록 D (신규)만 전송 — 블록 A, C는 원격에 이미 있으므로 전송 생략</text>
+
+  <!-- Step 3 -->
+  <rect x="60" y="284" width="760" height="44" rx="6" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1"/>
+  <text x="90" y="303" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">③ 결과</text>
+  <text x="90" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">원격 파일 = 로컬 파일 (완전 동기화) — 전송량은 변경 블록 크기만큼</text>
+
+  <!-- Code -->
+  <rect x="60" y="344" width="760" height="62" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="364" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># --checksum: 크기/시간 대신 MD5로 변경 판단 (느리지만 정확)</text>
+  <text x="80" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">rsync</text>
+  <text x="116" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -avz --checksum src/ user@host:dst/</text>
+  <text x="80" y="400" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># --partial: 중단된 파일 보존 → 다음 실행 시 이어받기</text>
+</svg>

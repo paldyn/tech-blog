@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">fail2ban 동작 아키텍처</text>
+
+  <!-- Attacker -->
+  <rect x="60" y="72" width="140" height="60" rx="8" fill="#2e1a1a" stroke="#6e3a3a" stroke-width="1.5"/>
+  <text x="130" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">공격자</text>
+  <text x="130" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">brute-force 시도</text>
+
+  <!-- Arrow to sshd -->
+  <line x1="200" y1="102" x2="260" y2="102" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- sshd -->
+  <rect x="260" y="72" width="140" height="60" rx="8" fill="#1a1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="330" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">sshd</text>
+  <text x="330" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인증 실패 로그 기록</text>
+
+  <!-- Arrow to log -->
+  <line x1="330" y1="132" x2="330" y2="160" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Log file -->
+  <rect x="260" y="160" width="140" height="60" rx="8" fill="#1a1a1a" stroke="#3a3a5e" stroke-width="1.5"/>
+  <text x="330" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">/var/log/auth.log</text>
+  <text x="330" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#555" text-anchor="middle">Failed password for...</text>
+
+  <!-- Arrow to fail2ban -->
+  <line x1="400" y1="190" x2="460" y2="190" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="430" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">모니터링</text>
+
+  <!-- fail2ban -->
+  <rect x="460" y="140" width="200" height="120" rx="10" fill="#1a102e" stroke="#6a3a9e" stroke-width="2"/>
+  <text x="560" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">fail2ban-server</text>
+
+  <rect x="480" y="178" width="160" height="36" rx="4" fill="#111122" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="560" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">필터 (정규식 매칭)</text>
+  <text x="560" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">failregex 패턴</text>
+
+  <rect x="480" y="220" width="160" height="30" rx="4" fill="#1a2e1a" stroke="#3a6e3a" stroke-width="1"/>
+  <text x="560" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">maxretry 초과 → 밴</text>
+
+  <!-- Arrow to iptables -->
+  <line x1="660" y1="200" x2="720" y2="200" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- iptables -->
+  <rect x="720" y="160" width="140" height="80" rx="8" fill="#2e1a1a" stroke="#6e3a3a" stroke-width="1.5"/>
+  <text x="790" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">iptables / nftables</text>
+  <text x="790" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">IP 차단 규칙 추가</text>
+  <text x="790" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#e05555" text-anchor="middle">DROP 1.2.3.4</text>
+
+  <!-- Block arrow back -->
+  <line x1="720" y1="102" x2="400" y2="102" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-r)"/>
+  <text x="560" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">이후 접속 차단</text>
+
+  <!-- Config code -->
+  <text x="70" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">jail.local 핵심 설정</text>
+
+  <rect x="60" y="308" width="760" height="176" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="328" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># /etc/fail2ban/jail.local</text>
+  <text x="80" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">[sshd]</text>
+  <text x="80" y="364" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">enabled</text>
+  <text x="166" y="364" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  = true</text>
+  <text x="80" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">port</text>
+  <text x="118" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">     = ssh</text>
+  <text x="80" y="400" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">maxretry</text>
+  <text x="158" y="400" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8"> = 5</text>
+  <text x="80" y="418" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">findtime</text>
+  <text x="158" y="418" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8"> = 600</text>
+  <text x="80" y="436" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">             # 600초 내 maxretry 초과 시 밴</text>
+  <text x="80" y="454" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">bantime</text>
+  <text x="152" y="454" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">  = 3600</text>
+  <text x="80" y="472" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">             # -1 = 영구 차단</text>
+</svg>
