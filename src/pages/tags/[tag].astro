@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/PostCard.astro';
 import {
   getPublishedPosts,
   getTags,
   tagSlug,
-  readingTimeFor,
-  thumbFor,
-  variantFor,
   postUrl,
-  logoFor,
 } from '../../utils/posts';
 
 export async function getStaticPaths() {
@@ -20,14 +15,24 @@ export async function getStaticPaths() {
     params: { tag: tag.slug },
     props: {
       tag,
-      tags,
       posts: posts.filter((post) => post.data.tags.some((t) => tagSlug(t) === tag.slug)),
     },
   }));
 }
 
-const { tag, tags, posts } = Astro.props;
+const { tag, posts } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const newWindowMs = 1000 * 60 * 60 * 24 * 30;
+function isNew(pubDate: Date): boolean {
+  return Date.now() - pubDate.getTime() <= newWindowMs;
+}
+function dotDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+}
 ---
 
 <BaseLayout title={`#${tag.name}`}>
@@ -39,32 +44,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </header>
 
     <nav class="sub-nav">
-      <a href={`${base}/tags/`} class="sub-link">All</a>
-      {tags.map((t) => (
-        <a
-          href={`${base}/tags/${t.slug}/`}
-          class:list={['sub-link', { active: t.slug === tag.slug }]}
-        >#{t.name}</a>
-      ))}
+      <a href={`${base}/tags/`} class="sub-link">← All tags</a>
     </nav>
 
     {posts.length > 0 ? (
-      <div class="grid">
+      <ul class="posts">
         {posts.map((post) => (
-          <PostCard
-            title={post.data.title}
-            description={post.data.description}
-            author={post.data.author}
-            pubDate={post.data.pubDate}
-            readingTime={readingTimeFor(post)}
-            category={post.data.category}
-            url={postUrl(post)}
-            thumb={thumbFor(post)}
-            thumbVariant={variantFor(post)}
-            logo={logoFor(post)}
-          />
+          <li>
+            <a href={postUrl(post)}>{post.data.title}</a>
+            {isNew(post.data.pubDate) && <span class="badge">NEW</span>}
+            <time datetime={post.data.pubDate.toISOString()}>{dotDate(post.data.pubDate)}</time>
+          </li>
         ))}
-      </div>
+      </ul>
     ) : (
       <section class="empty">
         <h2>아직 글이 없습니다.</h2>
@@ -99,12 +91,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .sub-nav {
     display: flex;
     gap: 4px;
-    margin-bottom: 48px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 2px;
+    margin-bottom: 32px;
   }
-  .sub-nav::-webkit-scrollbar { display: none; }
   .sub-link {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -118,22 +106,65 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: color 0.2s, border-color 0.2s, background 0.2s;
   }
   .sub-link:hover { color: var(--accent-bright); border-color: var(--text-dim); }
-  .sub-link.active {
-    color: var(--bg);
-    background: var(--accent-bright);
-    border-color: var(--accent-bright);
+
+  .posts {
+    list-style: none;
+    margin: 0 0 80px;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .posts li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+  }
+  .posts time {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .posts a {
+    flex: 1;
+    min-width: 0;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+  .posts a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .badge {
+    background: #ff6400;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    padding: 5px 7px 4px;
+    border-radius: 3px;
+    flex-shrink: 0;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-  }
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-  }
-  @media (max-width: 600px) {
-    .grid { grid-template-columns: 1fr; }
+  @media (max-width: 640px) {
+    .posts li {
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 6px 8px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 10px;
+    }
+    .posts a { flex-basis: 100%; font-size: 1rem; }
+    .posts time { margin-left: auto; }
   }
 
   .empty {
