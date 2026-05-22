@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">에러 계층과 집계 에러 패턴</text>
+
+  <!-- Error hierarchy code -->
+  <rect x="60" y="68" width="360" height="232" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 구별 가능한 에러 유니온 타입</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">type</text>
+  <text x="111" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> AppError =</text>
+  <text x="76" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  | { type: </text>
+  <text x="152" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'PARSE_ERROR'</text>
+  <text x="238" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">; input: string }</text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  | { type: </text>
+  <text x="152" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'VALIDATION_ERROR'</text>
+  <text x="265" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">; field: string }</text>
+  <text x="76" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  | { type: </text>
+  <text x="152" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'DB_ERROR'</text>
+  <text x="221" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">; cause: Error };</text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 소진적 switch로 모든 에러 처리 강제</text>
+  <text x="76" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">function</text>
+  <text x="147" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> handleError(e: AppError) {</text>
+  <text x="76" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  switch</text>
+  <text x="121" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (e.type) {</text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    case</text>
+  <text x="118" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178"> 'PARSE_ERROR'</text>
+  <text x="201" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">: /* ... */</text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // 처리 누락 시 TS 컴파일 에러</text>
+
+  <!-- AggregateError / Validation errors -->
+  <rect x="460" y="68" width="360" height="232" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 여러 에러 수집 (폼 유효성 검사)</text>
+  <text x="476" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">function</text>
+  <text x="547" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> validateForm(data) {</text>
+  <text x="476" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  const</text>
+  <text x="520" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> errors = [];</text>
+  <text x="476" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  if</text>
+  <text x="500" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (!data.name)</text>
+  <text x="476" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    errors.push({ field: </text>
+  <text x="618" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'name'</text>
+  <text x="648" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> });</text>
+  <text x="476" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  if</text>
+  <text x="500" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (!data.email)</text>
+  <text x="476" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    errors.push({ field: </text>
+  <text x="618" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'email'</text>
+  <text x="652" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> });</text>
+  <text x="476" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  return</text>
+  <text x="533" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> errors.length</text>
+  <text x="476" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    ? Err(errors) : Ok(data);</text>
+  <text x="476" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Bottom: try/catch wrap pattern -->
+  <rect x="60" y="322" width="760" height="80" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">기존 예외 코드를 Result로 래핑하는 패턴</text>
+  <rect x="76" y="356" width="728" height="34" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ResultAsync.fromThrowable(fs.readFileSync, e => new IoError(String(e)))(path);</text>
+</svg>
