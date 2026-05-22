@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="502" viewBox="0 0 880 502">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="502" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Spring Security 필터 체인 아키텍처</text>
+
+  <!-- Box 1: HTTP 요청 -->
+  <rect x="190" y="62" width="500" height="54" rx="8" fill="#1a1a2e" stroke="#555577" stroke-width="1.5"/>
+  <text x="440" y="84" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8">HTTP 요청 (Client)</text>
+  <text x="440" y="103" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">서블릿 컨테이너로 들어오는 모든 HTTP 트래픽</text>
+
+  <!-- Arrow 1 (y=116 to y=145) -->
+  <line x1="440" y1="116" x2="440" y2="143"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Box 2: DelegatingFilterProxy -->
+  <rect x="190" y="145" width="500" height="54" rx="8" fill="#0f1820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="167" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">DelegatingFilterProxy</text>
+  <text x="440" y="187" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">서블릿 필터로 등록 → Spring Bean(FilterChainProxy)에 처리 위임</text>
+
+  <!-- Arrow 2 (y=199 to y=228) -->
+  <line x1="440" y1="199" x2="440" y2="226"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Box 3: FilterChainProxy -->
+  <rect x="190" y="228" width="500" height="54" rx="8" fill="#0f1820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="250" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">FilterChainProxy (Spring Bean)</text>
+  <text x="440" y="270" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">URL 패턴 매칭 → 해당 SecurityFilterChain에 디스패치</text>
+
+  <!-- Arrow 3 (y=282 to y=311) -->
+  <line x1="440" y1="282" x2="440" y2="309"
+        stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Box 4: SecurityFilterChain (with sub-items) -->
+  <rect x="160" y="311" width="560" height="102" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="334" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">SecurityFilterChain</text>
+  <line x1="160" y1="343" x2="720" y2="343" stroke="#55c555" stroke-width="1" opacity="0.35"/>
+  <!-- Filter sub-items at y=362, 382 (symmetric in 160px body) -->
+  <text x="185" y="362"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">① SecurityContextFilter</text>
+  <text x="440" y="362"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">② UsernamePasswordAuthFilter</text>
+  <text x="185" y="392"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">③ ExceptionTranslationFilter</text>
+  <text x="440" y="392"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">④ AuthorizationFilter</text>
+
+  <!-- Arrow 4 (box4 bottom y=413 to box5 top y=442) -->
+  <line x1="440" y1="413" x2="440" y2="440"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Box 5: DispatcherServlet -->
+  <rect x="190" y="442" width="500" height="44" rx="8" fill="#1a1a2e" stroke="#555577" stroke-width="1.5"/>
+  <text x="440" y="463" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8">DispatcherServlet → Controller</text>
+  <text x="440" y="479" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">인증·인가 통과 후 비즈니스 로직 실행</text>
+</svg>
