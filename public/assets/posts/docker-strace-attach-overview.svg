@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">strace 컨테이너 시스템콜 추적</text>
+
+  <!-- strace method 1: inside container -->
+  <rect x="40" y="70" width="360" height="160" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="220" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">방법 1: 컨테이너 내부에서 strace</text>
+  <rect x="56" y="108" width="328" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># strace가 이미지에 포함된 경우</text>
+  <text x="72" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">docker exec myapp <tspan fill="#7ec8e3" font-weight="600">strace</tspan> -p 1 -e trace=all</text>
+  <text x="72" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># alpine에서 설치</text>
+  <text x="72" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">docker exec myapp apk add strace</text>
+  <text x="72" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">docker exec myapp <tspan fill="#7ec8e3" font-weight="600">strace</tspan> -p 1</text>
+
+  <!-- strace method 2: host nsenter -->
+  <rect x="460" y="70" width="380" height="160" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="650" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">방법 2: 호스트 strace + nsenter</text>
+  <rect x="476" y="108" width="348" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 컨테이너 PID 조회 (호스트 PID)</text>
+  <text x="492" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">PID=$(docker inspect \</text>
+  <text x="492" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --format <tspan fill="#ce9178">'{{.State.Pid}}'</tspan> myapp)</text>
+  <text x="492" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 호스트에서 직접 attach</text>
+  <text x="492" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">sudo <tspan fill="#7ec8e3" font-weight="600">strace</tspan> -p $PID -e trace=all -f</text>
+
+  <!-- seccomp notice -->
+  <rect x="40" y="252" width="800" height="56" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">⚠ seccomp 프로파일이 ptrace를 차단할 수 있음</text>
+  <text x="440" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">docker run --security-opt seccomp=unconfined ... 또는 --cap-add SYS_PTRACE 추가 필요</text>
+
+  <!-- Useful flags -->
+  <text x="440" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">주요 strace 옵션</text>
+
+  <rect x="40" y="356" width="180" height="64" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="130" y="380" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="14" font-weight="600" fill="#7ec8e3">-e trace=file</text>
+  <text x="130" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">파일 관련 syscall만</text>
+  <text x="130" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">open, read, write...</text>
+
+  <rect x="240" y="356" width="180" height="64" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="330" y="380" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="14" font-weight="600" fill="#7ec8e3">-e trace=net</text>
+  <text x="330" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">네트워크 syscall만</text>
+  <text x="330" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">connect, accept...</text>
+
+  <rect x="440" y="356" width="180" height="64" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="530" y="380" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="14" font-weight="600" fill="#7ec8e3">-f</text>
+  <text x="530" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">자식 프로세스도 추적</text>
+  <text x="530" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">fork/exec 포함</text>
+
+  <rect x="640" y="356" width="200" height="64" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="740" y="380" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="14" font-weight="600" fill="#7ec8e3">-c</text>
+  <text x="740" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">syscall 통계 요약</text>
+  <text x="740" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">성능 분석에 유용</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="340" viewBox="0 0 880 340">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="340" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">종료된 컨테이너 분석 명령</text>
+
+  <!-- Code block -->
+  <rect x="40" y="58" width="800" height="264" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="80" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 1. 종료 코드 + 에러 메시지 확인</text>
+  <text x="56" y="98" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker inspect</tspan> myapp | jq <tspan fill="#ce9178">'.[0].State | {ExitCode, Error, OOMKilled}'</tspan></text>
+  <text x="56" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># { "ExitCode": 137, "Error": "", "OOMKilled": true }</text>
+  <text x="56" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 2. 마지막 로그 (이미 종료된 컨테이너)</text>
+  <text x="56" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker logs</tspan> --tail=50 myapp</text>
+  <text x="56" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 3. 이미지 덮어쓰기 — entrypoint를 sleep으로 바꿔 재실행</text>
+  <text x="56" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker run</tspan> --rm -it --entrypoint sh myapp:latest</text>
+  <text x="56" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 4. 파일시스템 덤프 (이미 종료됐어도 컨테이너 레이어 남아있음)</text>
+  <text x="56" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker export</tspan> myapp | tar -tf - | grep <tspan fill="#ce9178">"\.log$"</tspan></text>
+  <text x="56" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker cp</tspan> myapp:/var/log/app/error.log ./</text>
+  <text x="56" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 5. 호스트 dmesg로 OOM 이벤트 확인</text>
+  <text x="56" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">dmesg | grep -i "oom\|killed process"</text>
+  <text x="56" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">journalctl -k --since=<tspan fill="#ce9178">"1 hour ago"</tspan> | grep -i oom</text>
+  <text x="56" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># → kernel: myapp killed by OOM</text>
+</svg>

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">AWS ECR 구조 및 인증 흐름</text>
+
+  <!-- Developer/CI -->
+  <rect x="40" y="80" width="150" height="56" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="115" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">개발자 / CI</text>
+  <text x="115" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">docker push/pull</text>
+
+  <!-- AWS STS -->
+  <rect x="240" y="80" width="150" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="315" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">AWS IAM / STS</text>
+  <text x="315" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">임시 자격증명 발급</text>
+
+  <!-- ECR Auth Token -->
+  <rect x="440" y="80" width="160" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="520" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">ECR 인증 토큰</text>
+  <text x="520" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">get-login-password</text>
+  <text x="520" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">유효 12시간</text>
+
+  <!-- ECR Registry -->
+  <rect x="650" y="60" width="190" height="100" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="745" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Amazon ECR</text>
+  <text x="745" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Private Registry</text>
+  <text x="745" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">{account}.dkr.ecr</text>
+  <text x="745" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">.{region}.amazonaws.com</text>
+
+  <!-- Arrows -->
+  <line x1="190" y1="108" x2="240" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="215" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">1. 인증</text>
+  <line x1="390" y1="108" x2="440" y2="108" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <text x="415" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">2. 토큰</text>
+  <line x1="600" y1="108" x2="650" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="625" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">3. push</text>
+
+  <!-- Code block -->
+  <rect x="40" y="185" width="800" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="207" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># ECR 로그인 (12시간 유효한 토큰 자동 획득)</text>
+  <text x="56" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">aws ecr <tspan fill="#7ec8e3" font-weight="600">get-login-password</tspan> --region ap-northeast-2 \</text>
+  <text x="56" y="243" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  | <tspan fill="#7ec8e3" font-weight="600">docker login</tspan> --username AWS --password-stdin \</text>
+  <text x="56" y="261" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  123456789012.dkr.ecr.ap-northeast-2.amazonaws.com</text>
+  <text x="56" y="279" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># Login Succeeded</text>
+
+  <!-- Lifecycle policy section -->
+  <text x="440" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">ECR 수명 주기 정책 구성요소</text>
+
+  <rect x="40" y="348" width="180" height="100" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="130" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">rulePriority</text>
+  <text x="130" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">규칙 우선순위</text>
+  <text x="130" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">낮을수록 먼저 평가</text>
+  <text x="130" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">1부터 시작</text>
+  <text x="130" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">최대 100개 규칙</text>
+
+  <rect x="240" y="348" width="180" height="100" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="330" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">selection</text>
+  <text x="330" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">태그 패턴 매칭</text>
+  <text x="330" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">tagStatus: any/</text>
+  <text x="330" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">tagged/untagged</text>
+  <text x="330" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">countType: imageCount</text>
+
+  <rect x="440" y="348" width="180" height="100" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="530" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">countNumber</text>
+  <text x="530" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">유지할 이미지 수</text>
+  <text x="530" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">또는 보관 일수</text>
+  <text x="530" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">초과분 자동 삭제</text>
+  <text x="530" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">오래된 것부터</text>
+
+  <rect x="640" y="348" width="200" height="100" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="740" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">action: expire</text>
+  <text x="740" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">규칙 초과 시 삭제</text>
+  <text x="740" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">현재 expire만 지원</text>
+  <text x="740" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">S3 비용 절감 핵심</text>
+  <text x="740" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">복구 불가</text>
+</svg>

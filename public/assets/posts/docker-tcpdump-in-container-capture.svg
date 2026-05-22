@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">컨테이너 패킷 캡처 방법</text>
+
+  <!-- Method 1: exec into container -->
+  <rect x="40" y="66" width="360" height="170" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="220" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">방법 1: 컨테이너 내부 tcpdump</text>
+  <rect x="56" y="104" width="328" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 이미지에 tcpdump 있는 경우</text>
+  <text x="72" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">docker exec myapp <tspan fill="#7ec8e3" font-weight="600">tcpdump</tspan> \</text>
+  <text x="72" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  -i eth0 -n -s 0 \</text>
+  <text x="72" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  -w /tmp/capture.pcap</text>
+  <text x="72" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">docker cp myapp:/tmp/capture.pcap ./</text>
+
+  <!-- Method 2: nsenter + host tcpdump -->
+  <rect x="460" y="66" width="380" height="170" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="650" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">방법 2: 호스트 tcpdump + nsenter</text>
+  <rect x="476" y="104" width="348" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 컨테이너 veth 인터페이스 찾기</text>
+  <text x="492" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">PID=$(docker inspect \</text>
+  <text x="492" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --format <tspan fill="#ce9178">'{{.State.Pid}}'</tspan> myapp)</text>
+  <text x="492" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">sudo <tspan fill="#7ec8e3" font-weight="600">nsenter</tspan> -t $PID --net -- \</text>
+  <text x="492" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">tcpdump</tspan> -i eth0 -n -w /tmp/c.pcap</text>
+
+  <!-- Method 3: sidecar netshoot -->
+  <rect x="40" y="260" width="360" height="160" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="220" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">방법 3: netshoot 사이드카 (권장)</text>
+  <rect x="56" y="298" width="328" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 동일 네트워크 네임스페이스 공유</text>
+  <text x="72" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">docker run --rm -it \</text>
+  <text x="72" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --network container:myapp \</text>
+  <text x="72" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  nicolaka/netshoot \</text>
+  <text x="72" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">tcpdump</tspan> -i eth0 -n port 5432</text>
+
+  <!-- Method 4: Wireshark live -->
+  <rect x="460" y="260" width="380" height="160" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="650" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">방법 4: Wireshark 실시간 분석</text>
+  <rect x="476" y="298" width="348" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># stdout → Wireshark 파이프</text>
+  <text x="492" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">sudo nsenter -t $PID --net -- \</text>
+  <text x="492" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  tcpdump -i eth0 -U -s 0 -w - \</text>
+  <text x="492" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  | wireshark -k -i -</text>
+  <text x="492" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># -U: 패킷 단위 버퍼 (실시간)</text>
+</svg>

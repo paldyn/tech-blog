@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">디버깅 시나리오별 syscall 필터</text>
+
+  <!-- code block -->
+  <rect x="40" y="58" width="800" height="284" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="80" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 시나리오 1: 파일 접근 추적 (어떤 파일을 읽는지)</text>
+  <text x="56" y="98" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">strace -p $PID -e <tspan fill="#7ec8e3" font-weight="600">trace=openat,open,read,write,close</tspan> -s 256</text>
+  <text x="56" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># → openat(AT_FDCWD, "/etc/app/config.yaml", O_RDONLY) = 3</text>
+
+  <text x="56" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 시나리오 2: 네트워크 연결 추적 (어디로 연결하는지)</text>
+  <text x="56" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">strace -p $PID -e <tspan fill="#7ec8e3" font-weight="600">trace=network</tspan> 2>&amp;1 | grep -v EAGAIN</text>
+  <text x="56" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># → connect(3, {sa_family=AF_INET, sin_addr=10.0.0.5, sin_port=5432}, ...) = 0</text>
+
+  <text x="56" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 시나리오 3: 시스템콜 통계 (느린 syscall 파악)</text>
+  <text x="56" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">strace -p $PID -c <tspan fill="#9aa4b8">&amp;&amp;</tspan> sleep 10 <tspan fill="#9aa4b8">&amp;&amp;</tspan> kill -SIGINT $STRACE_PID</text>
+  <text x="56" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># % time  calls  syscall</text>
+  <text x="56" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 62.34   1024  epoll_wait  ← 이벤트 루프</text>
+  <text x="56" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 18.45    512  futex       ← 뮤텍스 대기</text>
+
+  <text x="56" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 시나리오 4: execve 추적 (어떤 프로세스가 실행되는지)</text>
+  <text x="56" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">strace -p $PID -f -e <tspan fill="#7ec8e3" font-weight="600">trace=execve</tspan> 2>&amp;1</text>
+  <text x="56" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># → execve("/usr/bin/sh", ["sh", "-c", "healthcheck.sh"], ...) = 0</text>
+</svg>

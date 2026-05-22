@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">tcpdump 필터 & tshark 분석 패턴</text>
+
+  <!-- code block -->
+  <rect x="40" y="58" width="800" height="284" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="80" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 특정 포트 필터링</text>
+  <text x="56" y="98" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tcpdump -i eth0 -n <tspan fill="#7ec8e3" font-weight="600">port 5432</tspan>          <tspan fill="#9aa4b8"># PostgreSQL</tspan></text>
+  <text x="56" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tcpdump -i eth0 -n <tspan fill="#7ec8e3" font-weight="600">port 80 or port 443</tspan>  <tspan fill="#9aa4b8"># HTTP/S</tspan></text>
+  <text x="56" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tcpdump -i eth0 -n <tspan fill="#7ec8e3" font-weight="600">host 10.0.0.5</tspan>        <tspan fill="#9aa4b8"># 특정 IP</tspan></text>
+  <text x="56" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tcpdump -i eth0 -n <tspan fill="#7ec8e3" font-weight="600">tcp and port 8080</tspan>    <tspan fill="#9aa4b8"># TCP만</tspan></text>
+
+  <text x="56" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># tshark (Wireshark CLI)로 pcap 분석</text>
+  <text x="56" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tshark -r capture.pcap -Y <tspan fill="#ce9178">"http.request"</tspan> -T fields \</text>
+  <text x="56" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  -e http.request.method -e http.request.uri</text>
+
+  <text x="56" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tshark -r capture.pcap -Y <tspan fill="#ce9178">"tcp.flags.syn==1"</tspan>  <tspan fill="#9aa4b8"># 연결 시도</tspan></text>
+  <text x="56" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tshark -r capture.pcap -Y <tspan fill="#ce9178">"tcp.flags.reset==1"</tspan> <tspan fill="#9aa4b8"># 연결 거부</tspan></text>
+
+  <text x="56" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 통신 상대 IP 목록 추출</text>
+  <text x="56" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">tshark -r capture.pcap -T fields -e ip.dst \</text>
+  <text x="56" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  | sort | uniq -c | sort -rn | head -10</text>
+  <text x="56" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># → 컨테이너가 실제로 통신하는 외부 IP 파악</text>
+</svg>

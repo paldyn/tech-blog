@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">Distroless/Scratch 컨테이너 접속 패턴</text>
+
+  <!-- Left: nsenter pattern -->
+  <rect x="40" y="58" width="380" height="280" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="230" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">nsenter 방법</text>
+  <rect x="56" y="94" width="348" height="226" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># PID 확인</text>
+  <text x="72" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">PID=$(docker inspect \</text>
+  <text x="72" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --format <tspan fill="#ce9178">'{{.State.Pid}}'</tspan> myapp)</text>
+  <text x="72" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 모든 네임스페이스 진입</text>
+  <text x="72" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">nsenter</tspan> --target $PID \</text>
+  <text x="72" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --mount --uts --ipc \</text>
+  <text x="72" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --net --pid -- sh</text>
+  <text x="72" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 네트워크만 진입</text>
+  <text x="72" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">nsenter</tspan> -t $PID --net -- \</text>
+  <text x="72" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  ss -tlnp</text>
+  <text x="72" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 호스트의 ss/ip 명령 사용 가능</text>
+  <text x="56" y="326" text-anchor="start" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">루트 권한 필요 · 호스트에서 실행</text>
+
+  <!-- Right: sidecar/debug pattern -->
+  <rect x="460" y="58" width="380" height="280" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="650" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">debug 컨테이너 방법</text>
+  <rect x="476" y="94" width="348" height="226" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># Docker Desktop (docker debug)</text>
+  <text x="492" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker debug</tspan> --image busybox myapp</text>
+  <text x="492" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># 네임스페이스 공유 컨테이너</text>
+  <text x="492" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">docker run</tspan> -it --rm \</text>
+  <text x="492" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --pid container:myapp \</text>
+  <text x="492" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --network container:myapp \</text>
+  <text x="492" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  nicolaka/netshoot</text>
+  <text x="492" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve"># Kubernetes ephemeral container</text>
+  <text x="492" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">kubectl debug -it mypod \</text>
+  <text x="492" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --image=busybox \</text>
+  <text x="492" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">  --target=myapp-container</text>
+  <text x="476" y="326" text-anchor="start" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">셸 없는 이미지에서도 동작 · 도구 컨테이너 필요</text>
+</svg>
