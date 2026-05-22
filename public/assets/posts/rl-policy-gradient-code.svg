@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <!-- 배경 -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">REINFORCE 알고리즘 구현</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="60" width="760" height="338" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan>
+    <tspan fill="#ffffff"> PolicyNet(nn.Module):</tspan>
+  </text>
+
+  <text x="80" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan>
+    <tspan fill="#ffffff"> forward(self, x):   </tspan>
+    <tspan fill="#9aa4b8"># Softmax → 행동 확률 분포</tspan>
+  </text>
+
+  <text x="80" y="126" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan>
+    <tspan fill="#ffffff"> F.softmax(self.net(x), dim=-</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 에피소드 수집 + 리턴 계산</tspan>
+  </text>
+
+  <text x="80" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> compute_returns(rewards, gamma=</tspan>
+    <tspan fill="#b5cea8">0.99</tspan>
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+
+  <text x="80" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    G, returns = </tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">, []</tspan>
+  </text>
+
+  <text x="80" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    for</tspan>
+    <tspan fill="#ffffff"> r </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">in</tspan>
+    <tspan fill="#ffffff"> reversed(rewards):</tspan>
+  </text>
+
+  <text x="80" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        G = r + gamma * G      </tspan>
+    <tspan fill="#9aa4b8"># 역방향 누적</tspan>
+  </text>
+
+  <text x="80" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        returns.insert(</tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">, G)</tspan>
+  </text>
+
+  <text x="80" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> torch.tensor(returns)</tspan>
+  </text>
+
+  <text x="80" y="294" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># REINFORCE 손실 함수 (정책 경사)</tspan>
+  </text>
+
+  <text x="80" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">returns = compute_returns(rewards)</tspan>
+  </text>
+
+  <text x="80" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">returns = (returns - returns.mean()) / (returns.std() + </tspan>
+    <tspan fill="#b5cea8">1e-8</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <text x="80" y="354" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">loss = -(log_probs * returns).mean()  </tspan>
+    <tspan fill="#9aa4b8"># -E[log π · G]</tspan>
+  </text>
+
+  <text x="80" y="374" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 음수인 이유: PyTorch는 손실 최소화, 정책 경사는 최대화</tspan>
+  </text>
+
+  <text x="80" y="388" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#555">
+    <tspan fill="#9aa4b8"># 분산 감소: baseline(기준선) b 빼기 → -(log π · (G - b))</tspan>
+  </text>
+</svg>

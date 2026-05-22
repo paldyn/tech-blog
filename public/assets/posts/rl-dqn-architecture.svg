@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e0a555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">DQN 아키텍처: 두 신경망 + 경험 재생</text>
+
+  <!-- 왼쪽: 환경 + 경험 수집 -->
+  <rect x="40" y="68" width="200" height="80" fill="#0f1a2e" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="140" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">환경 (Environment)</text>
+  <text x="140" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">상태 s (픽셀 프레임)</text>
+  <text x="140" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">보상 r, 종료 done</text>
+
+  <!-- 화살표: 환경 → Online Network -->
+  <line x1="240" y1="108" x2="318" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="279" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">상태 s</text>
+
+  <!-- Online Network -->
+  <rect x="320" y="68" width="200" height="80" fill="#1a1030" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="420" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">온라인 네트워크</text>
+  <text x="420" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Q(s, a; θ)</text>
+  <text x="420" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">파라미터 θ (매 스텝 업데이트)</text>
+
+  <!-- 화살표: Online → 행동 -->
+  <line x1="520" y1="108" x2="598" y2="108" stroke="#e0a555" stroke-width="2" marker-end="url(#arr-orange)"/>
+  <text x="559" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e0a555" text-anchor="middle">행동 선택</text>
+
+  <!-- 행동 박스 -->
+  <rect x="600" y="80" width="160" height="56" fill="#1a1010" rx="6" stroke="#e0a555" stroke-width="1.5"/>
+  <text x="680" y="105" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e0a555" text-anchor="middle">행동 a</text>
+  <text x="680" y="125" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ε-greedy 선택</text>
+
+  <!-- 화살표: 행동 → 환경 (루프) -->
+  <path d="M 760 108 Q 820 108 820 260 Q 820 350 140 350 Q 70 350 140 148"
+        fill="none" stroke="#e0a555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-orange)"/>
+  <text x="820" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e0a555" text-anchor="middle">실행</text>
+
+  <!-- 경험 재생 버퍼 -->
+  <rect x="270" y="192" width="300" height="76" fill="#0d1520" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="420" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">경험 재생 버퍼</text>
+  <text x="420" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Replay Buffer (최대 100k 전이)</text>
+  <text x="420" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" text-anchor="middle">(s, a, r, s', done) 저장</text>
+
+  <!-- 화살표: Online → Buffer (경험 저장) -->
+  <line x1="420" y1="148" x2="420" y2="192" stroke="#3a4a6e" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="456" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">저장</text>
+
+  <!-- 미니배치 화살표: Buffer → Online (학습) -->
+  <line x1="310" y1="268" x2="360" y2="330" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="310" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">랜덤 샘플</text>
+
+  <!-- Target Network -->
+  <rect x="320" y="336" width="200" height="80" fill="#0f1a0a" rx="8" stroke="#55c555" stroke-width="2"/>
+  <text x="420" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">타겟 네트워크</text>
+  <text x="420" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Q(s', a'; θ⁻)</text>
+  <text x="420" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">파라미터 θ⁻ (N 스텝마다 복사)</text>
+
+  <!-- Target → Online (TD 타겟 계산) -->
+  <line x1="420" y1="336" x2="420" y2="268" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+  <text x="456" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">TD 타겟</text>
+
+  <!-- θ → θ⁻ 복사 화살표 -->
+  <path d="M 520 108 Q 600 200 520 370" fill="none" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="590" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">N스텝마다</text>
+  <text x="590" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">θ→θ⁻ 복사</text>
+
+  <!-- 두 핵심 혁신 설명 -->
+  <rect x="40" y="336" width="260" height="120" fill="#0a1010" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="170" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">DQN 2대 혁신</text>
+  <text x="60" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">① 경험 재생</text>
+  <text x="60" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  데이터 상관성 제거</text>
+  <text x="60" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">② 타겟 네트워크</text>
+  <text x="60" y="436" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  학습 안정성 확보</text>
+  <text x="60" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">  → Atari 26개 게임 인간 수준 달성</text>
+</svg>

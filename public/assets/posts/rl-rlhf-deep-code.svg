@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <!-- 배경 -->
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">RLHF 보상 계산 및 PPO 업데이트</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="60" width="760" height="318" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> compute_rlhf_reward(prompt, response, reward_model,</tspan>
+  </text>
+  <text x="80" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">                        ref_model, policy_model, beta=</tspan>
+    <tspan fill="#b5cea8">0.1</tspan>
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 보상 모델 점수 (응답 품질)</tspan>
+  </text>
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    rm_score = reward_model(prompt + response)</tspan>
+  </text>
+
+  <text x="80" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # KL 발산: 현재 정책 vs SFT 기준 정책</tspan>
+  </text>
+  <text x="80" y="194" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    with torch.no_grad():</tspan>
+  </text>
+  <text x="80" y="214" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        ref_logps  = ref_model.log_prob(response | prompt)</tspan>
+  </text>
+  <text x="80" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        pol_logps  = policy_model.log_prob(response | prompt)</tspan>
+  </text>
+  <text x="80" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    kl_div = (pol_logps - ref_logps).sum()   </tspan>
+    <tspan fill="#9aa4b8"># 토큰별 합산</tspan>
+  </text>
+
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 최종 보상 = 보상 모델 점수 - β*KL 패널티</tspan>
+  </text>
+  <text x="80" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    reward = rm_score - beta * kl_div</tspan>
+  </text>
+  <text x="80" y="318" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> reward   </tspan>
+    <tspan fill="#9aa4b8"># → PPO 업데이트에 사용</tspan>
+  </text>
+
+  <text x="80" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># beta 크면 SFT에 가깝게 유지, 작으면 보상 최대화 집중</tspan>
+  </text>
+  <text x="80" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># beta=0: 보상 해킹 위험 / beta=∞: SFT와 동일</tspan>
+  </text>
+</svg>

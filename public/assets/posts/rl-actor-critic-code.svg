@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <!-- 배경 -->
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">A2C 핵심 구현: Actor-Critic 손실</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="60" width="760" height="318" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> a2c_update(actor_critic, optimizer, transitions, gamma=</tspan>
+    <tspan fill="#b5cea8">0.99</tspan>
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+
+  <text x="80" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    states, actions, rewards, dones = transitions</tspan>
+  </text>
+
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # Critic: 상태 가치 추정</tspan>
+  </text>
+
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    logits, values = actor_critic(states)</tspan>
+  </text>
+
+  <text x="80" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    dist = Categorical(logits=logits)</tspan>
+  </text>
+
+  <text x="80" y="194" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # TD 어드밴티지: Â = r + γV(s') - V(s)</tspan>
+  </text>
+
+  <text x="80" y="214" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    returns = compute_returns(rewards, gamma)</tspan>
+  </text>
+
+  <text x="80" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    advantages = returns - values.detach()  </tspan>
+    <tspan fill="#9aa4b8"># detach 필수!</tspan>
+  </text>
+
+  <text x="80" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # Actor 손실: -E[log π(a|s) · Â]</tspan>
+  </text>
+
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    actor_loss = -(dist.log_prob(actions) * advantages).mean()</tspan>
+  </text>
+
+  <text x="80" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # Critic 손실: MSE(V(s), G_t)</tspan>
+  </text>
+
+  <text x="80" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    critic_loss = F.mse_loss(values, returns)</tspan>
+  </text>
+
+  <text x="80" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 합산 후 역전파 (엔트로피 보너스로 탐험 유도)</tspan>
+  </text>
+
+  <text x="80" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    loss = actor_loss + </tspan>
+    <tspan fill="#b5cea8">0.5</tspan>
+    <tspan fill="#ffffff">*critic_loss - </tspan>
+    <tspan fill="#b5cea8">0.01</tspan>
+    <tspan fill="#ffffff">*dist.entropy().mean()</tspan>
+  </text>
+</svg>

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440">
+  <!-- 배경 -->
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">DQN 핵심 구현 (PyTorch)</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="60" width="760" height="358" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> torch, torch.nn </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">as</tspan>
+    <tspan fill="#ffffff"> nn</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">, </tspan>
+    <tspan fill="#ffffff">collections, random</tspan>
+  </text>
+
+  <text x="80" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan>
+    <tspan fill="#ffffff"> QNetwork(nn.Module):</tspan>
+  </text>
+
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan>
+    <tspan fill="#ffffff"> __init__(self, obs_dim, act_dim):</tspan>
+  </text>
+
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">super</tspan>
+    <tspan fill="#ffffff">().__init__()</tspan>
+  </text>
+
+  <text x="80" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.net = nn.Sequential(</tspan>
+  </text>
+
+  <text x="80" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            nn.Linear(obs_dim, </tspan>
+    <tspan fill="#b5cea8">128</tspan>
+    <tspan fill="#ffffff">), nn.ReLU(),</tspan>
+  </text>
+
+  <text x="80" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            nn.Linear(</tspan>
+    <tspan fill="#b5cea8">128</tspan>
+    <tspan fill="#ffffff">, </tspan>
+    <tspan fill="#b5cea8">128</tspan>
+    <tspan fill="#ffffff">), nn.ReLU(),</tspan>
+  </text>
+
+  <text x="80" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            nn.Linear(</tspan>
+    <tspan fill="#b5cea8">128</tspan>
+    <tspan fill="#ffffff">, act_dim)    </tspan>
+    <tspan fill="#9aa4b8"># Q값 출력 (행동별)</tspan>
+  </text>
+
+  <text x="80" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        )</tspan>
+  </text>
+
+  <text x="80" y="274" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 타겟 네트워크: 주기적으로 온라인 → 복사</tspan>
+  </text>
+
+  <text x="80" y="294" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">online_net = QNetwork(obs_dim, act_dim)</tspan>
+  </text>
+
+  <text x="80" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">target_net = QNetwork(obs_dim, act_dim)</tspan>
+  </text>
+
+  <text x="80" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">target_net.load_state_dict(online_net.state_dict())</tspan>
+  </text>
+
+  <text x="80" y="358" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># TD 손실: (r + γ·max Q_target(s') - Q_online(s,a))²</tspan>
+  </text>
+
+  <text x="80" y="378" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">td_targets = rewards + gamma * target_net(s_next).max(</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">)[</tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">]</tspan>
+  </text>
+
+  <text x="80" y="398" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">loss = nn.MSELoss()(online_net(s).gather(</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">, actions), td_targets)</tspan>
+  </text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <!-- 배경 -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">LLM 기반 추천 — 핵심 구현 패턴</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="68" width="760" height="324" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="94" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># LLM 기반 추천 시스템 핵심 패턴</text>
+
+  <text x="80" y="114" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> anthropic, numpy </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">as</tspan>
+    <tspan fill="#ffffff"> np</tspan>
+  </text>
+
+  <text x="80" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ffffff"> sklearn.metrics.pairwise </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> cosine_similarity</tspan>
+  </text>
+
+  <text x="80" y="158" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> get_user_embedding(user_history: list[str]) -> np.ndarray:</tspan>
+  </text>
+
+  <text x="80" y="178" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    client = anthropic.Anthropic()</tspan>
+  </text>
+
+  <text x="80" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    prompt = </tspan>
+    <tspan fill="#ce9178">f"사용자가 최근 본 콘텐츠: {user_history}"</tspan>
+  </text>
+
+  <text x="80" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    resp = client.messages.create(</tspan>
+  </text>
+
+  <text x="80" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        model=</tspan>
+    <tspan fill="#ce9178">"claude-sonnet-4-6"</tspan>
+    <tspan fill="#ffffff">, max_tokens=</tspan>
+    <tspan fill="#b5cea8">256</tspan>
+    <tspan fill="#ffffff">,</tspan>
+  </text>
+
+  <text x="80" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        messages=[{</tspan>
+    <tspan fill="#ce9178">"role"</tspan>
+    <tspan fill="#ffffff">: </tspan>
+    <tspan fill="#ce9178">"user"</tspan>
+    <tspan fill="#ffffff">, </tspan>
+    <tspan fill="#ce9178">"content"</tspan>
+    <tspan fill="#ffffff">: prompt}]</tspan>
+  </text>
+
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    )</tspan>
+  </text>
+
+  <text x="80" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> recommend_top_k(user_emb, item_embs, k=</tspan>
+    <tspan fill="#b5cea8">10</tspan>
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+
+  <text x="80" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    scores = cosine_similarity([user_emb], item_embs)[</tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">]</tspan>
+  </text>
+
+  <text x="80" y="342" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> np.argsort(scores)[::-</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">][:k]  </tspan>
+    <tspan fill="#9aa4b8"># Top-K 인덱스 반환</tspan>
+  </text>
+
+  <text x="80" y="374" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># LLM 응답으로 추천 근거 자연어 생성 후 반환</text>
+</svg>

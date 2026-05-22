@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <!-- 배경 -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">PPO 클리핑 손실 구현 (PyTorch)</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="60" width="760" height="340" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> ppo_clip_loss(old_log_probs, new_log_probs, advantages,</tspan>
+  </text>
+  <text x="80" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">                   clip_eps=</tspan>
+    <tspan fill="#b5cea8">0.2</tspan>
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 확률 비율 rₜ(θ) = π_θ(a|s) / π_θ_old(a|s)</tspan>
+  </text>
+
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    ratio = torch.exp(new_log_probs - old_log_probs)</tspan>
+  </text>
+
+  <text x="80" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 어드밴티지 정규화 (학습 안정성)</tspan>
+  </text>
+  <text x="80" y="194" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    adv = (advantages - advantages.mean()) / (advantages.std() + </tspan>
+    <tspan fill="#b5cea8">1e-8</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <text x="80" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 클리핑되지 않은 항</tspan>
+  </text>
+  <text x="80" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    surr1 = ratio * adv</tspan>
+  </text>
+
+  <text x="80" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 클리핑된 항: ratio를 [1-ε, 1+ε] 범위로 제한</tspan>
+  </text>
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    surr2 = torch.clamp(ratio, </tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">-clip_eps, </tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">+clip_eps) * adv</tspan>
+  </text>
+
+  <text x="80" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 보수적인 목적 함수: 두 항 중 작은 값</tspan>
+  </text>
+  <text x="80" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    policy_loss = -torch.min(surr1, surr2).mean()</tspan>
+  </text>
+
+  <text x="80" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 전체 PPO 손실 = 정책 + 가치 + 엔트로피 보너스</tspan>
+  </text>
+  <text x="80" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    total_loss = policy_loss + </tspan>
+    <tspan fill="#b5cea8">0.5</tspan>
+    <tspan fill="#ffffff">*value_loss - </tspan>
+    <tspan fill="#b5cea8">0.01</tspan>
+    <tspan fill="#ffffff">*entropy</tspan>
+  </text>
+
+  <text x="80" y="390" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> total_loss</tspan>
+  </text>
+</svg>

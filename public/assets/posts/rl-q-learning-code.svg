@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 430">
+  <!-- 배경 -->
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">Q-러닝 핵심 구현</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="60" width="760" height="346" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="80" y="86" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan>
+    <tspan fill="#ffffff"> QLearningAgent:</tspan>
+  </text>
+
+  <text x="80" y="106" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan>
+    <tspan fill="#ffffff"> __init__(self, n_states, n_actions, lr=</tspan>
+    <tspan fill="#b5cea8">0.1</tspan>
+    <tspan fill="#ffffff">, gamma=</tspan>
+    <tspan fill="#b5cea8">0.99</tspan>
+    <tspan fill="#ffffff">):</tspan>
+  </text>
+
+  <text x="80" y="126" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.Q = np.zeros((n_states, n_actions))  </tspan>
+    <tspan fill="#9aa4b8"># Q-테이블</tspan>
+  </text>
+
+  <text x="80" y="146" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.lr, self.gamma = lr, gamma</tspan>
+  </text>
+
+  <text x="80" y="166" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.epsilon = </tspan>
+    <tspan fill="#b5cea8">1.0</tspan>
+    <tspan fill="#ffffff">   </tspan>
+    <tspan fill="#9aa4b8"># 초기 탐험률</tspan>
+  </text>
+
+  <text x="80" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan>
+    <tspan fill="#ffffff"> act(self, state: int) -> int:</tspan>
+  </text>
+
+  <text x="80" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        if</tspan>
+    <tspan fill="#ffffff"> np.random.random() &lt; self.epsilon:</tspan>
+  </text>
+
+  <text x="80" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">            return</tspan>
+    <tspan fill="#ffffff"> np.random.randint(self.Q.shape[</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">])  </tspan>
+    <tspan fill="#9aa4b8"># 탐험</tspan>
+  </text>
+
+  <text x="80" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan>
+    <tspan fill="#ffffff"> np.argmax(self.Q[state])              </tspan>
+    <tspan fill="#9aa4b8"># 활용</tspan>
+  </text>
+
+  <text x="80" y="274" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    def</tspan>
+    <tspan fill="#ffffff"> learn(self, s, a, r, s_next, done):</tspan>
+  </text>
+
+  <text x="80" y="294" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        target = r + self.gamma * np.max(self.Q[s_next])</tspan>
+  </text>
+
+  <text x="80" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        if</tspan>
+    <tspan fill="#ffffff"> done: target = r       </tspan>
+    <tspan fill="#9aa4b8"># 종료 시 미래 없음</tspan>
+  </text>
+
+  <text x="80" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        td_err = target - self.Q[s, a]</tspan>
+  </text>
+
+  <text x="80" y="354" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.Q[s, a] += self.lr * td_err  </tspan>
+    <tspan fill="#9aa4b8"># Bellman 업데이트</tspan>
+  </text>
+
+  <text x="80" y="388" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># epsilon 앤닐링: 에피소드마다 epsilon 감소</tspan>
+  </text>
+
+  <text x="80" y="408" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">self.epsilon = max(</tspan>
+    <tspan fill="#b5cea8">0.01</tspan>
+    <tspan fill="#ffffff">, self.epsilon * </tspan>
+    <tspan fill="#b5cea8">0.995</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+</svg>
