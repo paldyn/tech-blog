@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="340" viewBox="0 0 880 340">
+  <rect width="880" height="340" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Grid 렌더링 수동 갱신 패턴</text>
+
+  <!-- Bad -->
+  <rect x="60" y="62" width="360" height="250" rx="6" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="84" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e05555">콜백 전 Grid 접근 (문제)</text>
+  <text x="76" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function</text><text x="136" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve"> fn_search() {</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  this.transaction(</text>
+  <text x="76" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "search", url, "",</text>
+  <text x="76" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "dsOut=dsResult", "", ""</text>
+  <text x="76" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  );</text>
+  <text x="76" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">  // ← 응답 전에 Grid 갱신 시도</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#e05555" xml:space="preserve">  grd00.setRedraw(true); // 공백!</text>
+  <text x="76" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- Good -->
+  <rect x="460" y="62" width="360" height="250" rx="6" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="84" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">콜백 이후 갱신 (권장)</text>
+  <text x="476" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function</text><text x="536" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve"> fn_search() {</text>
+  <text x="476" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  this.transaction(</text>
+  <text x="476" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "search", url, "",</text>
+  <text x="476" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "dsOut=dsResult",</text>
+  <text x="476" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "", "fn_searchCb"</text>
+  <text x="476" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  );</text>
+  <text x="476" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="476" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">// 콜백에서 갱신</text>
+  <text x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#55c555" xml:space="preserve">grd00.setRedraw(true);</text>
+
+  <text x="440" y="328" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#555">비동기 트랜잭션 — 데이터는 반드시 콜백 이후에만 접근 가능</text>
+</svg>

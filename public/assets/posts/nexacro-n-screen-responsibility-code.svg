@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="370" viewBox="0 0 880 370">
+  <rect width="880" height="370" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">책임 분리 코드 패턴</text>
+
+  <!-- Anti-pattern -->
+  <rect x="60" y="62" width="360" height="280" rx="6" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="84" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e05555">책임 혼재 (anti-pattern)</text>
+  <text x="76" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">// View에서 직접 트랜잭션 호출</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function</text><text x="136" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve"> btn_onclick(obj, e) {</text>
+  <text x="76" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">  // ← View가 서버 URL을 알고 있음</text>
+  <text x="76" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  this.transaction(</text>
+  <text x="76" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "svcID","/api/save",</text>
+  <text x="76" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "dsIn=dsInput",</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">    "dsOut=dsResult","","cb"</text>
+  <text x="76" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  );</text>
+  <text x="76" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#e05555" xml:space="preserve">  // ← 서비스 로직도 View에 있음</text>
+  <text x="76" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  dsInput.setColumn(</text>
+  <text x="76" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#b5cea8" xml:space="preserve">    0</text><text x="98" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">, </text><text x="110" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">"status"</text><text x="172" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">, </text><text x="184" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">"Y"</text><text x="206" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">);</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- Good pattern -->
+  <rect x="460" y="62" width="360" height="280" rx="6" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="84" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#55c555">책임 분리 (권장)</text>
+  <text x="476" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">// View는 Controller만 호출</text>
+  <text x="476" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function</text><text x="536" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve"> btn_onclick(obj, e) {</text>
+  <text x="476" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">  // View는 "저장 요청"만 위임</text>
+  <text x="476" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  this.pCtrl.fnSave();</text>
+  <text x="476" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="476" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8" xml:space="preserve">// Controller에서 실제 로직 처리</text>
+  <text x="476" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function</text><text x="536" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve"> fnSave() {</text>
+  <text x="476" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">  dsInput.setColumn(</text>
+  <text x="476" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#b5cea8" xml:space="preserve">    0</text><text x="498" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">, </text><text x="510" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">"status"</text><text x="572" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">, </text><text x="584" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ce9178" xml:space="preserve">"Y"</text><text x="606" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">);</text>
+  <text x="476" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#55c555" xml:space="preserve">  this.fnTransaction(...);</text>
+  <text x="476" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+</svg>

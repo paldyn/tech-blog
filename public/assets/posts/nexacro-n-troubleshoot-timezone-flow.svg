@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+      markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+      markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">타임존 불일치 발생 구조</text>
+
+  <!-- Client box -->
+  <rect x="60" y="68" width="240" height="100" rx="6" fill="#0d1e35" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="180" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">클라이언트 (KST)</text>
+  <text x="180" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">new Date() 사용</text>
+  <text x="180" y="130" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">2026-05-22 14:30:00</text>
+  <text x="180" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">로컬 PC 시간 (UTC+9)</text>
+
+  <!-- Arrow right -->
+  <line x1="300" y1="118" x2="380" y2="118" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="340" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666">전송</text>
+
+  <!-- Server box -->
+  <rect x="380" y="68" width="240" height="100" rx="6" fill="#0d2b1e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="500" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">서버 (UTC / 별도 TZ)</text>
+  <text x="500" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">서버 시스템 시간 사용</text>
+  <text x="500" y="130" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">2026-05-22 05:30:00</text>
+  <text x="500" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">UTC 기준 저장</text>
+
+  <!-- Arrow right -->
+  <line x1="620" y1="118" x2="700" y2="118" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="660" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666">응답</text>
+
+  <!-- DB box -->
+  <rect x="700" y="68" width="120" height="100" rx="6" fill="#1a1435" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="760" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">DB</text>
+  <text x="760" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">UTC 저장</text>
+  <text x="760" y="132" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178">05:30:00</text>
+
+  <!-- Problem box -->
+  <rect x="60" y="200" width="760" height="64" rx="6" fill="#2a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">문제: 화면 표시 시 9시간 차이 발생</text>
+  <text x="440" y="246" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">DB에서 UTC로 읽어 그대로 표시 → 클라이언트 KST와 불일치 / 날짜 계산 오류</text>
+
+  <!-- Solution box -->
+  <rect x="60" y="286" width="760" height="64" rx="6" fill="#0d2b1e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">해결 방향: 문자열 날짜 통일 또는 오프셋 변환</text>
+  <text x="440" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">날짜를 "YYYYMMDD" 문자열로 처리 or 클라이언트에서 +9h 오프셋 적용</text>
+
+  <text x="440" y="368" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#555">타임존 문제는 서버·클라이언트·DB 세 군데의 시간대를 모두 파악해야 해결된다</text>
+</svg>
