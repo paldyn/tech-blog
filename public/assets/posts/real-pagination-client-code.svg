@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">커서 페이지네이션 + 무한 스크롤 구현</text>
+
+  <!-- Left: cursor fetch hook -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">useCursorPagination 훅</text>
+  <rect x="60" y="94" width="360" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> useCursorPagination(fetcher) {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> [pages, setPages] = useState([]);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> [cursor, setCursor] = useState(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">null</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> [hasMore, setHasMore] = useState(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">true</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> [loading, setLoading] = useState(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">false</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> loadMore =</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> async</tspan>
+    <tspan fill="#ffffff"> () </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">=&gt;</tspan>
+    <tspan fill="#ffffff"> {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan>
+    <tspan fill="#ffffff"> (loading || !hasMore)</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> return</tspan>
+    <tspan fill="#ffffff">;</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    setLoading(true);</text>
+  <text xml:space="preserve" x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    const</tspan>
+    <tspan fill="#ffffff"> res = await fetcher({ cursor });</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    setPages(p => [...p, res.data]);</text>
+  <text xml:space="preserve" x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    setCursor(res.nextCursor);</text>
+  <text xml:space="preserve" x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    setHasMore(!!res.nextCursor);</text>
+  <text xml:space="preserve" x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    setLoading(false);</text>
+  <text xml:space="preserve" x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  };</text>
+
+  <!-- Right: intersection observer -->
+  <text x="460" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">IntersectionObserver로 자동 로드</text>
+  <rect x="460" y="94" width="360" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 목록 맨 아래 sentinel 요소 감지</text>
+  <text xml:space="preserve" x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> useInfiniteScroll(callback) {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> ref = useRef(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">null</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  useEffect(() => {</text>
+  <text xml:space="preserve" x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    const</tspan>
+    <tspan fill="#ffffff"> obs =</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> new</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      IntersectionObserver(</text>
+  <text xml:space="preserve" x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        ([entry]) => {</text>
+  <text xml:space="preserve" x="476" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">          if</tspan>
+    <tspan fill="#ffffff"> (entry.isIntersecting)</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">            callback();</text>
+  <text xml:space="preserve" x="476" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        }, { rootMargin:</text>
+  <text xml:space="preserve" x="476" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ce9178">             '200px'</tspan>
+    <tspan fill="#ffffff"> });</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan>
+    <tspan fill="#ffffff"> (ref.current) obs.observe(ref.current);</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> () => obs.disconnect();</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }, [callback]);</text>
+  <text xml:space="preserve" x="476" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> ref; </tspan>
+    <tspan fill="#9aa4b8">// &lt;div ref={sentinelRef} /&gt;</tspan>
+  </text>
+
+  <text x="440" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">sentinel 요소가 viewport에 들어오면 loadMore 자동 호출</text>
+</svg>

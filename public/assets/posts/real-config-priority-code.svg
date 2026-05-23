@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">설정 병합 구현 패턴</text>
+
+  <!-- Left: layered config -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">레이어 병합 패턴</text>
+  <rect x="60" y="94" width="360" height="260" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> { loadConfig }</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> from</tspan>
+    <tspan fill="#ce9178"> 'c12'</tspan>
+    <tspan fill="#ffffff">;</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// c12: Nuxt 생태계의 설정 로더</text>
+  <text xml:space="preserve" x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> { config } =</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> await</tspan>
+    <tspan fill="#ffffff"> loadConfig({</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  name: </tspan>
+  <text xml:space="preserve" x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  name: </tspan>
+    <tspan fill="#ce9178">'myapp'</tspan>
+    <tspan fill="#ffffff">,</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  defaults: { port: </tspan>
+  <text xml:space="preserve" x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  defaults: { port: </tspan>
+    <tspan fill="#b5cea8">3000</tspan>
+    <tspan fill="#ffffff"> },</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // myapp.config.js, .myapprc 자동 탐색</text>
+  <text xml:space="preserve" x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">});</text>
+  <text xml:space="preserve" x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 직접 구현: 우선순위 병합</text>
+  <text xml:space="preserve" x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> mergeConfig(...layers) {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> layers.reduce((acc, layer) </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">=&gt;</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    Object.fromEntries(</text>
+  <text xml:space="preserve" x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      Object.entries({ ...acc, ...layer })</text>
+  <text xml:space="preserve" x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        .filter(([, v]) =&gt; v !== undefined)</text>
+  <text xml:space="preserve" x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    ), {});</text>
+
+  <!-- Right: env-specific config -->
+  <text x="460" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">환경별 설정 파일 분기</text>
+  <rect x="460" y="94" width="360" height="260" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// config/index.js</text>
+  <text xml:space="preserve" x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> env = process.env.NODE_ENV</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">           </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">??</tspan>
+    <tspan fill="#ce9178"> 'development'</tspan>
+    <tspan fill="#ffffff">;</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> base = {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  logLevel: </tspan>
+    <tspan fill="#ce9178">'info'</tspan>
+    <tspan fill="#ffffff">, port: </tspan>
+    <tspan fill="#b5cea8">3000</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">};</text>
+  <text xml:space="preserve" x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> overrides = {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  development: { logLevel: </tspan>
+    <tspan fill="#ce9178">'debug'</tspan>
+    <tspan fill="#ffffff"> },</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  test:        { port: </tspan>
+    <tspan fill="#b5cea8">4000</tspan>
+    <tspan fill="#ffffff"> },</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  production:  { logLevel: </tspan>
+    <tspan fill="#ce9178">'warn'</tspan>
+    <tspan fill="#ffffff"> },</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">};</text>
+  <text xml:space="preserve" x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan>
+    <tspan fill="#ffffff"> config = {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  ...base, ...overrides[env] };</text>
+
+  <text x="440" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">우선순위 병합은 나중에 오는 레이어가 이전 레이어를 덮어씀</text>
+</svg>

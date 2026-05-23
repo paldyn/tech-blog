@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Silent Refresh 흐름</text>
+
+  <!-- Client box -->
+  <rect x="50" y="80" width="160" height="280" rx="8" fill="#111" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="130" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">브라우저</text>
+  <text x="130" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">AT: 메모리 변수</text>
+  <text x="130" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">RT: HttpOnly Cookie</text>
+
+  <!-- Auth Server box -->
+  <rect x="360" y="80" width="160" height="280" rx="8" fill="#111" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">인증 서버</text>
+
+  <!-- API Server box -->
+  <rect x="670" y="80" width="160" height="280" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="750" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">API 서버</text>
+
+  <!-- Step 1: login -->
+  <text x="30" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">①</text>
+  <line x1="210" y1="164" x2="358" y2="164" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="283" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">POST /login</text>
+
+  <!-- Step 2: AT+RT response -->
+  <text x="30" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">②</text>
+  <line x1="358" y1="194" x2="210" y2="194" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="283" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">AT(body)+RT(cookie)</text>
+
+  <!-- Step 3: API call with AT -->
+  <text x="30" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">③</text>
+  <line x1="210" y1="234" x2="668" y2="234" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="436" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">Authorization: Bearer {AT}</text>
+
+  <!-- Step 4: API response -->
+  <line x1="668" y1="254" x2="210" y2="254" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="436" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">200 OK {data}</text>
+
+  <!-- Step 5: 401 AT 만료 -->
+  <text x="30" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">④</text>
+  <line x1="210" y1="304" x2="668" y2="304" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="436" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">Bearer {만료된 AT}</text>
+  <line x1="668" y1="320" x2="210" y2="320" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="436" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">401 Unauthorized</text>
+
+  <!-- Step 5: silent refresh -->
+  <text x="30" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">⑤</text>
+  <line x1="210" y1="354" x2="358" y2="354" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="283" y="348" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">POST /refresh (RT cookie)</text>
+  <line x1="358" y1="366" x2="210" y2="366" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="283" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">새 AT (body) + 새 RT (cookie)</text>
+
+  <text x="440" y="416" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">401 발생 시 RT 쿠키로 자동 재발급 → 원래 요청 재시도 (사용자 로그아웃 없이)</text>
+</svg>

@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">JavaScript 구현 예시</text>
+
+  <!-- Adapter code -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">어댑터 — 외부 API 래핑</text>
+  <rect x="60" y="94" width="360" height="174" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 기존: fetch 기반 HTTP 클라이언트</text>
+  <text xml:space="preserve" x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 신규 팀 표준: axios 스타일 .get()</text>
+  <text xml:space="preserve" x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan>
+    <tspan fill="#ffffff"> FetchAdapter {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">async</tspan>
+    <tspan fill="#ffffff"> get(url, config = {}) {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    const res = await fetch(url,</text>
+  <text xml:space="preserve" x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      { headers: config.headers });</text>
+  <text xml:space="preserve" x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> { data: await res.json(),</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      status: res.status };</text>
+  <text xml:space="preserve" x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text xml:space="preserve" x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Facade code -->
+  <text x="460" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">퍼사드 — 복잡성 캡슐화</text>
+  <rect x="460" y="94" width="360" height="174" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 인증+요청+로깅 한 번에</text>
+  <text xml:space="preserve" x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan>
+    <tspan fill="#ffffff"> ApiFacade {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  constructor() {</text>
+  <text xml:space="preserve" x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    this.auth = new AuthService();</text>
+  <text xml:space="preserve" x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    this.http = new HttpClient();</text>
+  <text xml:space="preserve" x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    this.logger = new Logger();</text>
+  <text xml:space="preserve" x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text xml:space="preserve" x="476" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  async</tspan>
+    <tspan fill="#ffffff"> fetch(url) {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    /* 인증→요청→로깅 조율 */</text>
+
+  <!-- Proxy code -->
+  <text x="60" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">프록시 — Proxy 객체 활용</text>
+  <rect x="60" y="312" width="760" height="150" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> createCacheProxy(target) {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> cache = new Map();</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return new</tspan>
+    <tspan fill="#ffffff"> Proxy(target, {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    apply(fn, ctx, args) {</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">      const</tspan>
+    <tspan fill="#ffffff"> key = JSON.stringify(args);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">      if</tspan>
+    <tspan fill="#ffffff"> (cache.has(key))</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> return</tspan>
+    <tspan fill="#ffffff"> cache.get(key);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">      const</tspan>
+    <tspan fill="#ffffff"> result = fn.apply(ctx, args);</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="458" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      cache.set(key, result); return result;</text>
+
+  <text x="440" y="490" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">ES6 Proxy는 동일 인터페이스를 유지하면서 캐시·로깅·접근 제어를 투명하게 삽입</text>
+</svg>

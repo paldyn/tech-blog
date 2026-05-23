@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">환경 변수 설정 모듈 패턴</text>
+
+  <!-- Left: .env file -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">.env 파일 구성</text>
+  <rect x="60" y="94" width="360" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 서버 전용 (절대 클라이언트 노출 금지)</text>
+  <text xml:space="preserve" x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">DATABASE_URL</tspan>
+    <tspan fill="#ffffff">=</tspan>
+    <tspan fill="#ce9178">postgresql://...</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">SECRET_KEY</tspan>
+    <tspan fill="#ffffff">=</tspan>
+    <tspan fill="#ce9178">abc123secret</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 클라이언트 노출 가능 (Vite)</text>
+  <text xml:space="preserve" x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">VITE_API_BASE</tspan>
+    <tspan fill="#ffffff">=</tspan>
+    <tspan fill="#ce9178">https://api.example.com</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">VITE_APP_NAME</tspan>
+    <tspan fill="#ffffff">=</tspan>
+    <tspan fill="#ce9178">MyApp</tspan>
+  </text>
+  <text xml:space="preserve" x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># .env.local → .gitignore 필수</text>
+
+  <!-- Right: config module -->
+  <text x="460" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">설정 모듈 (검증 포함)</text>
+  <rect x="460" y="94" width="360" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// config/env.js</text>
+  <text xml:space="preserve" x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> requireEnv(key) {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> v = process.env[key];</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan>
+    <tspan fill="#ffffff"> (!v)</tspan>
+    <tspan fill="#7ec8e3" font-weight="600"> throw new</tspan>
+    <tspan fill="#ffffff"> Error(</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ce9178">    `${key} 환경 변수 필수`</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> v;</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+  <text xml:space="preserve" x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan>
+    <tspan fill="#ffffff"> config = {</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  db: {</text>
+  <text xml:space="preserve" x="476" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    url: requireEnv('DATABASE_URL'),</text>
+  <text xml:space="preserve" x="476" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  },</text>
+  <text xml:space="preserve" x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  port: Number(process.env.PORT</text>
+  <text xml:space="preserve" x="476" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">         </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">??</tspan>
+    <tspan fill="#b5cea8"> 3000</tspan>
+    <tspan fill="#ffffff">),</tspan>
+  </text>
+  <text xml:space="preserve" x="476" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  isDev: process.env.NODE_ENV</text>
+  <text xml:space="preserve" x="476" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">         </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">===</tspan>
+    <tspan fill="#ce9178"> 'development'</tspan>
+    <tspan fill="#ffffff">,</tspan>
+  </text>
+
+  <text x="440" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">설정을 한 곳에서 읽고 검증 → 앱 전체에 타입 안전하게 공유</text>
+</svg>
