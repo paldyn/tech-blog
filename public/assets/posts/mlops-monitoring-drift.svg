@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">데이터 드리프트 감지 원리</text>
+
+  <!-- ===== LEFT PANEL: 학습 데이터 분포 ===== -->
+  <rect x="60" y="80" width="360" height="240" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#55c555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">학습 데이터 분포</text>
+  <text x="240" y="120" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">학습 시점 분포 · μ=180, σ=25</text>
+
+  <!-- Bell curve centered at x_data=180 within panel -->
+  <!-- Panel x: 60→420, chart area x: 80→400 (320px wide)
+       Data range: 80→280, center=180 → x_center = 80 + (180-80)/(200)*320 = 80 + 160 = 240 (panel-relative) = 300 absolute
+       σ=25 → x_sigma_px = 25/200*320 = 40px
+       y range: chart top y=130, bottom y=295 (165px), peak at y=135
+  -->
+  <!--
+    Bell curve approximation using cubic bezier
+    Peak: (300, 138)
+    Inflection ±40px: (260,175), (340,175)
+    Tails ±100px: (200, 295), (400, 295) and (80+overshoot clipped to 200,295)
+    Actually recalculate with panel-local coords then shift:
+    panel_left=60, data_left=80, data_right=400
+    center_x = 60 + (180-80)/200 * 320 + 20(padding) = 60 + 0.5*320 + 20 = 240
+    Hmm simpler: let's just use coords directly
+    Peak: x=240, y=138
+    Inflection: x=200, x=280, y=175
+    Tail left: x=108, y=293
+    Tail right: x=372, y=293
+  -->
+  <path d="M 108,293
+           C 108,293 150,293 200,200
+           C 220,166 230,138 240,135
+           C 250,138 260,166 280,200
+           C 330,293 372,293 372,293"
+        fill="#55c55530" stroke="#55c555" stroke-width="2.5" fill-rule="nonzero"/>
+
+  <!-- Baseline -->
+  <line x1="80" y1="293" x2="418" y2="293" stroke="#333" stroke-width="1"/>
+
+  <!-- μ marker -->
+  <line x1="240" y1="135" x2="240" y2="295" stroke="#55c555" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+  <text x="240" y="308" text-anchor="middle" font-size="10" fill="#55c555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">μ=180</text>
+
+  <!-- σ markers -->
+  <line x1="200" y1="175" x2="200" y2="295" stroke="#55c555" stroke-width="1" stroke-dasharray="2,4" opacity="0.4"/>
+  <line x1="280" y1="175" x2="280" y2="295" stroke="#55c555" stroke-width="1" stroke-dasharray="2,4" opacity="0.4"/>
+  <text x="200" y="308" text-anchor="middle" font-size="9" fill="#555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">-σ</text>
+  <text x="280" y="308" text-anchor="middle" font-size="9" fill="#555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">+σ</text>
+
+  <!-- X-axis label -->
+  <text x="240" y="327" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">구매 금액 (원)</text>
+
+  <!-- ===== RIGHT PANEL: 서빙 데이터 분포 ===== -->
+  <rect x="460" y="80" width="360" height="240" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">서빙 데이터 분포</text>
+  <text x="640" y="120" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">현재 서빙 분포 · μ=240, σ=40</text>
+
+  <!--
+    Shifted & flatter bell curve:
+    center=240 on data scale (range 80-340 = 260 span mapped to 320px)
+    center_px = 460+20 + (240-80)/260*320 = 480 + 197 = 677 (absolute)
+    σ=40 → 40/260*320 = 49px
+    Peak height reduced (flatter): peak at y=158 (vs 138 for training)
+    Tails: much wider
+  -->
+  <path d="M 480,293
+           C 490,293 530,293 580,220
+           C 610,178 630,158 677,153
+           C 700,158 720,178 750,220
+           C 800,293 818,293 818,293"
+        fill="#e0555530" stroke="#e05555" stroke-width="2.5" fill-rule="nonzero"/>
+
+  <!-- Baseline -->
+  <line x1="480" y1="293" x2="818" y2="293" stroke="#333" stroke-width="1"/>
+
+  <!-- μ marker -->
+  <line x1="677" y1="153" x2="677" y2="295" stroke="#e05555" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+  <text x="677" y="308" text-anchor="middle" font-size="10" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">μ=240</text>
+
+  <!-- σ markers -->
+  <line x1="628" y1="178" x2="628" y2="295" stroke="#e05555" stroke-width="1" stroke-dasharray="2,4" opacity="0.4"/>
+  <line x1="726" y1="178" x2="726" y2="295" stroke="#e05555" stroke-width="1" stroke-dasharray="2,4" opacity="0.4"/>
+  <text x="628" y="308" text-anchor="middle" font-size="9" fill="#555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">-σ</text>
+  <text x="726" y="308" text-anchor="middle" font-size="9" fill="#555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">+σ</text>
+
+  <!-- X-axis label -->
+  <text x="640" y="327" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">구매 금액 (원)</text>
+
+  <!-- Drift warning label -->
+  <text x="640" y="144" text-anchor="middle" font-size="11" font-weight="700" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">⚠ 드리프트 감지!</text>
+
+  <!-- ===== BOTTOM SECTION: Drift metrics ===== -->
+  <!-- KL Divergence -->
+  <rect x="130" y="347" width="180" height="40" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.2"/>
+  <text x="220" y="363" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">KL Divergence</text>
+  <text x="220" y="380" text-anchor="middle" font-size="13" font-weight="700" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">0.34 ↑ 위험</text>
+
+  <!-- PSI -->
+  <rect x="350" y="347" width="180" height="40" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.2"/>
+  <text x="440" y="363" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">PSI (Population Stability)</text>
+  <text x="440" y="380" text-anchor="middle" font-size="13" font-weight="700" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">0.26 ↑ 심각</text>
+
+  <!-- KS stat -->
+  <rect x="570" y="347" width="180" height="40" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.2"/>
+  <text x="660" y="363" text-anchor="middle" font-size="10" fill="#888" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">KS 통계량</text>
+  <text x="660" y="380" text-anchor="middle" font-size="13" font-weight="700" fill="#e05555" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">0.41 (p &lt; 0.01)</text>
+
+</svg>
