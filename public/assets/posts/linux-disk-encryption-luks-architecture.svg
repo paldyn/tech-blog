@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">LUKS 암호화 레이어 구조</text>
+
+  <!-- 상단: 애플리케이션 레이어 -->
+  <rect x="200" y="70" width="480" height="50" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="94" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">애플리케이션 · 파일시스템 (ext4, xfs...)</text>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">일반 파일 읽기/쓰기 — 암호화 사실을 모름</text>
+
+  <line x1="440" y1="120" x2="440" y2="150" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- dm-crypt / device mapper -->
+  <rect x="160" y="150" width="560" height="60" rx="6" fill="#0a1420" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="176" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">dm-crypt (Linux Device Mapper)</text>
+  <text x="440" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">투명 암호화/복호화 레이어 — AES-XTS-256 기본</text>
+
+  <line x1="440" y1="210" x2="440" y2="240" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- LUKS 헤더 -->
+  <rect x="60" y="240" width="340" height="100" rx="6" fill="#1a1020" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="230" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">LUKS2 헤더 (4MB)</text>
+  <text x="230" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Magic / UUID / cipher info</text>
+  <text x="230" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Keyslot 0~31 (마스터 키 암호화본)</text>
+  <text x="230" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Argon2id KDF (패스프레이즈 → 키)</text>
+
+  <!-- 암호화 데이터 -->
+  <rect x="480" y="240" width="340" height="100" rx="6" fill="#0a0a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="650" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">암호화 데이터 영역</text>
+  <text x="650" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">XTS 모드 AES-256 암호화</text>
+  <text x="650" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">섹터 단위 암호화</text>
+  <text x="650" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">마스터 키 없이 복호화 불가</text>
+
+  <!-- 물리 디스크 -->
+  <rect x="60" y="366" width="760" height="50" rx="6" fill="#111827" stroke="#2a3040" stroke-width="1"/>
+  <text x="440" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">물리 디스크 / NVMe / SSD</text>
+  <text x="440" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">/dev/sda, /dev/nvme0n1 — 분실·도난 시 데이터 판독 불가</text>
+
+  <!-- 키슬롯 설명 -->
+  <rect x="60" y="434" width="760" height="50" rx="6" fill="#111827" stroke="#2a3040" stroke-width="1"/>
+  <text x="90" y="455" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">LUKS2 Keyslot:</text>
+  <text x="200" y="455" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">패스프레이즈 · SSH 키 · TPM · FIDO2 등 최대 32개 슬롯. 각 슬롯은 마스터 키를 별도 암호화해 저장.</text>
+  <text x="90" y="475" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">LUKS1 vs LUKS2:</text>
+  <text x="200" y="475" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">LUKS1은 PBKDF2, LUKS2는 Argon2id(메모리하드) KDF — 브루트포스 저항 강화.</text>
+</svg>

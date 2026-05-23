@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">루프백 마운트 실전 명령</text>
+
+  <!-- 이미지 생성 및 마운트 -->
+  <rect x="60" y="66" width="370" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="245" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">이미지 파일 생성 · 마운트</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 1GB 이미지 파일 생성</text>
+  <text x="76" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">dd if=/dev/zero of=disk.img \</text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">   bs=1M count=</text>
+  <text x="218" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">1024</text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 파일시스템 생성</text>
+  <text x="76" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">mkfs.ext4</text>
+  <text x="168" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> disk.img</text>
+  <text x="76" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># loop 디바이스 연결 후 마운트</text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">sudo losetup</text>
+  <text x="176" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -f --show disk.img</text>
+  <text x="76" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sudo mount /dev/loop0 /mnt/disk</text>
+  <text x="76" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 간편 방법 (-o loop)</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">sudo mount</text>
+  <text x="164" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -o loop disk.img /mnt/disk</text>
+  <text x="76" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 언마운트 · loop 해제</text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sudo umount /mnt/disk</text>
+  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sudo losetup -d /dev/loop0</text>
+
+  <!-- ISO 및 sparse 이미지 -->
+  <rect x="450" y="66" width="370" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="635" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">ISO 마운트 · 파티션 · sparse</text>
+  <text x="466" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># ISO 이미지 마운트</text>
+  <text x="466" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">sudo mount</text>
+  <text x="554" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -o loop,ro \</text>
+  <text x="466" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  ubuntu.iso /mnt/iso</text>
+  <text x="466" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># sparse 이미지 (실제 사용만 디스크)</text>
+  <text x="466" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">truncate -s </text>
+  <text x="558" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">10G</text>
+  <text x="588" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> sparse.img</text>
+  <text x="466" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 파티션 포함 이미지 (kpartx)</text>
+  <text x="466" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">sudo kpartx</text>
+  <text x="560" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -av disk.img</text>
+  <text x="466" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 출력: /dev/mapper/loop0p1</text>
+  <text x="466" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># → mount /dev/mapper/loop0p1</text>
+  <text x="466" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 오프셋 지정 (파티션 직접)</text>
+  <text x="466" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sudo mount -o loop,offset=</text>
+  <text x="466" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">1048576</text>
+  <text x="466" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  disk.img /mnt/part1</text>
+
+  <!-- 하단 -->
+  <rect x="60" y="378" width="760" height="14" rx="4" fill="#111827" stroke="#2a3040" stroke-width="1"/>
+  <text x="440" y="389" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">loop 디바이스 수 늘리기: /etc/modprobe.d/loop.conf — options loop max_loop=64  |  modprobe -r loop &amp;&amp; modprobe loop</text>
+</svg>

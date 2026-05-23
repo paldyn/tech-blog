@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Port Knocking — 포트 시퀀스로 방화벽 열기</text>
+
+  <!-- ── 왼쪽: 클라이언트 ── -->
+  <rect x="60" y="80" width="160" height="60" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="140" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">클라이언트</text>
+  <text x="140" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">192.168.1.100</text>
+
+  <!-- ── 가운데: 방화벽 ── -->
+  <rect x="340" y="80" width="200" height="60" rx="8" fill="#111827" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">iptables 방화벽</text>
+  <text x="440" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SSH Port 22 기본 차단</text>
+
+  <!-- ── 오른쪽: 서버 ── -->
+  <rect x="660" y="80" width="160" height="60" rx="8" fill="#111827" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">서버</text>
+  <text x="740" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">knockd 데몬 실행 중</text>
+
+  <!-- Step 1: Knock 1 -->
+  <text x="60" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① Knock 1 → TCP:7000</text>
+  <line x1="225" y1="192" x2="335" y2="192" stroke="#7ec8e3" stroke-width="2"
+        marker-end="url(#arr-blue)"/>
+  <text x="440" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">기록(로그)</text>
+
+  <!-- Step 2: Knock 2 -->
+  <text x="60" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② Knock 2 → TCP:8000</text>
+  <line x1="225" y1="235" x2="335" y2="235" stroke="#7ec8e3" stroke-width="2"
+        marker-end="url(#arr-blue)"/>
+  <text x="440" y="231" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">시퀀스 추적</text>
+
+  <!-- Step 3: Knock 3 -->
+  <text x="60" y="271" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ Knock 3 → TCP:9000</text>
+  <line x1="225" y1="278" x2="335" y2="278" stroke="#7ec8e3" stroke-width="2"
+        marker-end="url(#arr-blue)"/>
+  <text x="440" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">시퀀스 완성!</text>
+
+  <!-- knockd action: open port -->
+  <text x="440" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">↓ iptables -A INPUT -s {ip} -p tcp --dport 22 -j ACCEPT</text>
+
+  <!-- Step 4: SSH connection -->
+  <text x="60" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">④ SSH 접속 → TCP:22</text>
+  <line x1="225" y1="365" x2="655" y2="365" stroke="#55c555" stroke-width="2"
+        marker-end="url(#arr-green)"/>
+  <text x="440" y="355" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">포트 열림 — 접속 허용</text>
+
+  <!-- Step 5: Close port -->
+  <text x="60" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">⑤ 세션 종료 → 포트 재차단</text>
+  <line x1="540" y1="416" x2="342" y2="416" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arr-red)"/>
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">timeout 후 자동 차단 복원</text>
+
+  <!-- Legend -->
+  <rect x="60" y="462" width="760" height="42" rx="6" fill="#111827" stroke="#2a3040" stroke-width="1"/>
+  <line x1="90" y1="483" x2="130" y2="483" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="140" y="487" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">포트 노크 (로그 기록)</text>
+  <line x1="310" y1="483" x2="350" y2="483" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="360" y="487" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">허용된 SSH 연결</text>
+  <line x1="530" y1="483" x2="570" y2="483" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arr-red)"/>
+  <text x="580" y="487" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">자동 차단 복원</text>
+</svg>

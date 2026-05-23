@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Secure Boot 상태 확인 · 모듈 서명</text>
+
+  <!-- 상태 확인 블록 -->
+  <rect x="60" y="66" width="370" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="245" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Secure Boot 상태 확인</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># mokutil로 상태 확인</text>
+  <text x="76" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">mokutil --sb-state</text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 출력 예시</text>
+  <text x="76" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555">SecureBoot enabled</text>
+  <text x="76" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># efivar로 확인</text>
+  <text x="76" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">cat /sys/firmware/efi/efivars/\</text>
+  <text x="76" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">SecureBoot-*/</text>
+  <text x="76" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># bootctl 확인 (systemd)</text>
+
+  <!-- 모듈 서명 블록 -->
+  <rect x="450" y="66" width="370" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="635" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">커널 모듈 서명 (MOK)</text>
+  <text x="466" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># MOK 키 생성</text>
+  <text x="466" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">openssl req -new -x509 \</text>
+  <text x="466" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  -newkey rsa:2048 -nodes \</text>
+  <text x="466" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  -keyout mok.key \</text>
+  <text x="466" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  -out mok.crt -days 3650</text>
+  <text x="466" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># MOK 등록</text>
+  <text x="466" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">mokutil --import mok.crt</text>
+  <text x="466" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 재부팅 후 MOKManager에서 확인</text>
+
+  <!-- DKMS 서명 -->
+  <rect x="60" y="280" width="760" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">DKMS 모듈 자동 서명 (sign-file)</text>
+  <text x="76" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">/usr/lib/linux-kbuild-$(uname -r)/scripts/sign-file sha256 \</text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  mok.key mok.crt /lib/modules/$(uname -r)/updates/mymodule.ko</text>
+</svg>
