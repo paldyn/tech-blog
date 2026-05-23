@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">저장소 크기 진단 명령어</text>
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">문제를 먼저 측정하고, 그 다음에 해결한다</text>
+
+  <!-- Left code block: git count-objects -->
+  <rect x="60" y="92" width="360" height="136" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" y="116" fill="#7ec8e3" font-weight="600">$</tspan><tspan fill="#ffffff"> git count-objects </tspan><tspan fill="#7ec8e3" font-weight="600">-vH</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">count: 1,247</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">size: 4.50 MiB</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">in-pack: 98,432</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">size-pack: 340.20 MiB</tspan>
+  </text>
+
+  <!-- Left label -->
+  <text x="240" y="246" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" font-weight="600">패키지 파일 크기 전체 확인</text>
+  <text x="240" y="264" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">size-pack이 크면 LFS·filter-repo 검토</text>
+
+  <!-- Right code block: git rev-list -->
+  <rect x="460" y="92" width="360" height="136" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" y="116" fill="#7ec8e3" font-weight="600">$</tspan><tspan fill="#ffffff"> git rev-list --objects --all \</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  | git cat-file --batch-check \</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  | sort -k3 -rn | </tspan><tspan fill="#7ec8e3" font-weight="600">head</tspan><tspan fill="#ffffff"> -5</tspan>
+    <tspan x="476" dy="18" fill="#ce9178">&lt;sha&gt; blob 52428800 video.mp4</tspan>
+    <tspan x="476" dy="18" fill="#ce9178">&lt;sha&gt; blob 31457280 dist/app.js</tspan>
+  </text>
+
+  <!-- Right label -->
+  <text x="640" y="246" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" font-weight="600">가장 큰 오브젝트 식별</text>
+  <text x="640" y="264" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파일명 + 크기(bytes)로 상위 5개 출력</text>
+
+  <!-- Step boxes at bottom -->
+  <!-- Step 1 -->
+  <rect x="60" y="292" width="220" height="70" fill="#0f1520" rx="8" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="170" y="320" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">① 크기 측정</text>
+  <text x="170" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">count-objects -vH</text>
+  <text x="170" y="356" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">du -sh .git/</text>
+
+  <!-- Arrow 1→2 -->
+  <defs>
+    <marker id="arr1" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#555"/>
+    </marker>
+  </defs>
+  <line x1="280" y1="327" x2="330" y2="327" stroke="#555" stroke-width="2" marker-end="url(#arr1)"/>
+
+  <!-- Step 2 -->
+  <rect x="330" y="292" width="220" height="70" fill="#0f1520" rx="8" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="440" y="320" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">② 원인 파악</text>
+  <text x="440" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">rev-list | cat-file</text>
+  <text x="440" y="356" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">큰 파일·이진 파일 식별</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="550" y1="327" x2="600" y2="327" stroke="#555" stroke-width="2" marker-end="url(#arr1)"/>
+
+  <!-- Step 3 -->
+  <rect x="600" y="292" width="220" height="70" fill="#0f1520" rx="8" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="710" y="320" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">③ 대응책 선택</text>
+  <text x="710" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">LFS / gc / filter-repo</text>
+  <text x="710" y="356" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sparse / partial clone</text>
+
+  <!-- Total size indicator -->
+  <rect x="60" y="380" width="760" height="42" fill="#0a0f1a" rx="6" stroke="#1e2c4a" stroke-width="1"/>
+  <text x="440" y="397" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">git gc --prune=now --aggressive  →  loose objects 정리 + packfile 재압축</text>
+  <text x="440" y="413" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666">진단 후 가장 먼저 실행해볼 명령어</text>
+</svg>
