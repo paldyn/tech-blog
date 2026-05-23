@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" marketHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Query Store 플랜 회귀 대응 흐름</text>
+
+  <!-- Steps -->
+  <rect x="60" y="76" width="220" height="64" rx="8" fill="#0d1e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="170" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① 성능 회귀 감지</text>
+  <text x="170" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">평균 CPU · 논리 읽기 증가</text>
+  <text x="170" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SSMS Regressed Queries 보고서</text>
+
+  <line x1="280" y1="108" x2="320" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="320" y="76" width="220" height="64" rx="8" fill="#0d1e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="430" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② 플랜 이력 비교</text>
+  <text x="430" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">좋은 플랜 vs 나쁜 플랜</text>
+  <text x="430" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">plan_id 별 avg_duration 비교</text>
+
+  <line x1="540" y1="108" x2="580" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="580" y="76" width="240" height="64" rx="8" fill="#0a1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="700" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">③ 좋은 플랜 강제</text>
+  <text x="700" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">sp_query_store_force_plan</text>
+  <text x="700" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">재시작 후에도 유지됨</text>
+
+  <!-- Code 1 -->
+  <rect x="60" y="168" width="380" height="148" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 상위 10 회귀 쿼리 조회</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT TOP 10</text>
+  <text x="76" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  q.query_id, qt.query_sql_text,</text>
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  rs.avg_duration / 1000.0 AS avg_ms</text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">FROM sys.query_store_query q</text>
+  <text x="76" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">JOIN sys.query_store_query_text qt ON ...</text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">ORDER BY rs.avg_duration DESC;</text>
+
+  <!-- Code 2 -->
+  <rect x="480" y="168" width="340" height="148" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="496" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 좋은 플랜 강제 적용</text>
+  <text x="496" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">EXEC sys.sp_query_store_force_plan</text>
+  <text x="496" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  @query_id  = 42,</text>
+  <text x="496" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  @plan_id   = 17;</text>
+  <text x="496" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 강제 해제</text>
+  <text x="496" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">EXEC sys.sp_query_store_unforce_plan</text>
+
+  <!-- Plan sniffing tip -->
+  <rect x="60" y="336" width="760" height="88" rx="8" fill="#1a1000" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="440" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178">파라미터 스니핑 문제 대응</text>
+  <text x="440" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">최초 실행 파라미터 기준으로 플랜이 캐싱 → 다른 파라미터 값에 비효율</text>
+  <text x="440" y="396" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">OPTION (OPTIMIZE FOR UNKNOWN)  |  OPTION (RECOMPILE)</text>
+  <text x="440" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">RECOMPILE: 매번 컴파일 — CPU ↑ / 항상 최적 플랜</text>
+
+  <text x="440" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Query Store = "실행 계획의 블랙박스"</text>
+</svg>

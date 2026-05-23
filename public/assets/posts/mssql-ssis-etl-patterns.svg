@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SSIS 주요 적재 패턴 비교</text>
+
+  <!-- Full Load -->
+  <rect x="60" y="76" width="240" height="132" rx="8" fill="#0d1e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="180" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Full Load (전체 적재)</text>
+  <text x="180" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8">소스 전체를 TRUNCATE 후 재적재</text>
+  <text x="180" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">단순 구현 / 소용량 참조 테이블</text>
+  <text x="180" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">대용량 시 적재 시간 길어짐</text>
+  <text x="180" y="174" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#9aa4b8">TRUNCATE + BULK INSERT</text>
+  <text x="180" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">권장: 수십만 행 이하</text>
+
+  <!-- Incremental -->
+  <rect x="330" y="76" width="240" height="132" rx="8" fill="#0a1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="450" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Incremental Load (증분)</text>
+  <text x="450" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8">마지막 적재 이후 변경분만 추출</text>
+  <text x="450" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">UpdatedAt 컬럼 또는 CDC 기반</text>
+  <text x="450" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">대용량 DW에 적합 (주 패턴)</text>
+  <text x="450" y="174" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#9aa4b8">WHERE UpdatedAt &gt; @LastRun</text>
+  <text x="450" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">삭제 행 감지 어려움 (CDC 보완)</text>
+
+  <!-- SCD Type 2 -->
+  <rect x="600" y="76" width="220" height="132" rx="8" fill="#101030" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="710" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">SCD Type 2</text>
+  <text x="710" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8e8e8">이력을 새 행으로 보존</text>
+  <text x="710" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">IsCurrent · EffectiveDate 컬럼</text>
+  <text x="710" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">고객 주소·등급 변경 이력 유지</text>
+  <text x="710" y="174" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Dimension 테이블 크기 증가</text>
+  <text x="710" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SSIS SCD Wizard 제공</text>
+
+  <!-- Performance tips -->
+  <rect x="60" y="228" width="760" height="184" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">SSIS 성능 최적화 핵심</text>
+
+  <text x="76" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▶ OLE DB Destination 대신 SQL Destination</text>
+  <text x="96" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">같은 서버라면 SQL Destination이 빠름 (IPC 사용)</text>
+
+  <text x="76" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▶ 적재 전 제약조건·인덱스 비활성화</text>
+  <text x="96" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff" xml:space="preserve">ALTER INDEX ALL ON FactSales DISABLE;</text>
+  <text x="96" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff" xml:space="preserve">-- 적재 후 → ALTER INDEX ALL ON FactSales REBUILD;</text>
+
+  <text x="76" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▶ DefaultBufferMaxRows · DefaultBufferSize 조정</text>
+  <text x="96" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">메모리 여유가 있으면 늘려서 IO 왕복 줄이기</text>
+
+  <text x="76" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▶ Bulk-Logged 복구 모델로 일시 전환</text>
+  <text x="96" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">대량 INSERT 로그 최소화 → 속도 2~5배 향상</text>
+</svg>

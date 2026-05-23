@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">파티션 테이블 생성 T-SQL</text>
+
+  <rect x="60" y="68" width="760" height="312" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="88" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 1. 파티션 함수 (월별 범위)</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">CREATE PARTITION FUNCTION pf_Monthly (DATE)</text>
+  <text x="76" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  AS RANGE RIGHT FOR VALUES (</text>
+  <text x="76" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#b5cea8" xml:space="preserve">    '2024-01-01','2024-02-01','2024-03-01',</text>
+  <text x="76" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#b5cea8" xml:space="preserve">    '2024-04-01','2024-05-01','2024-06-01'</text>
+  <text x="76" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  );</text>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 2. 파티션 스킴 (파일그룹 매핑)</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">CREATE PARTITION SCHEME ps_Monthly</text>
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  AS PARTITION pf_Monthly ALL TO ([PRIMARY]);</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 3. 파티션 테이블 생성</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">CREATE TABLE SalesData (</text>
+  <text x="76" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  SaleDate   DATE          NOT NULL,</text>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  OrderID    INT           NOT NULL,</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  Amount     DECIMAL(18,2) NOT NULL</text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">) ON ps_Monthly(SaleDate);</text>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">-- SaleDate 기준으로 파티션 자동 배치</text>
+
+  <text x="440" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파티션 함수 N개 경계값 → N+1개 파티션 생성</text>
+</svg>

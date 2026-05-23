@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">CE 오추정 진단과 해결 패턴</text>
+
+  <!-- Problem: CE mismatch -->
+  <rect x="60" y="76" width="380" height="88" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="250" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">CE 오추정 증상</text>
+  <text x="250" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Estimated Rows vs Actual Rows 큰 차이</text>
+  <text x="250" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">통계 오래됨 / 데이터 편중(skew)</text>
+  <text x="250" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">복잡한 조건절 조합 (상관관계 미반영)</text>
+
+  <line x1="440" y1="120" x2="480" y2="120" stroke="#e05555" stroke-width="2" marker-end="url(#arrd)"/>
+
+  <!-- Solutions -->
+  <rect x="480" y="76" width="340" height="88" rx="8" fill="#0a1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">1차 진단: 통계 갱신</text>
+  <text x="650" y="118" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">UPDATE STATISTICS Orders</text>
+  <text x="650" y="136" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  WITH FULLSCAN;</text>
+  <text x="650" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">FULLSCAN: 전수 샘플, 시간 ↑ 정확도 ↑</text>
+
+  <!-- Code box: multicolumn stats -->
+  <rect x="60" y="184" width="380" height="112" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 다중열 통계 생성 (상관관계 반영)</text>
+  <text x="76" y="223" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">CREATE STATISTICS stat_cust_amt</text>
+  <text x="76" y="241" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  ON Orders(CustomerID, Amount)</text>
+  <text x="76" y="259" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  WITH FULLSCAN;</text>
+  <text x="76" y="283" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- CE가 두 열 조합 선택도를 더 정확히 추정</text>
+
+  <!-- Code box: hint -->
+  <rect x="480" y="184" width="340" height="112" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="496" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- CE 버전 강제 (힌트)</text>
+  <text x="496" y="223" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT *</text>
+  <text x="496" y="241" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">FROM Orders</text>
+  <text x="496" y="259" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">WHERE CustomerID = 42</text>
+  <text x="496" y="277" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">OPTION (USE HINT ('FORCE_LEGACY_CARDINALITY_ESTIMATION'));</text>
+
+  <!-- Query Store tip -->
+  <rect x="60" y="320" width="760" height="80" rx="8" fill="#101030" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Query Store로 CE 회귀 감지</text>
+  <text x="440" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">쿼리별 실제 vs 추정 행 수 비교 → Regressed Queries 뷰 → 플랜 강제(Force Plan)</text>
+  <text x="440" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sys.dm_exec_query_stats · sys.query_store_runtime_stats 로 모니터링</text>
+
+  <text x="440" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">CE 정확도 = 실행 계획 품질 = 쿼리 성능의 핵심 변수</text>
+</svg>

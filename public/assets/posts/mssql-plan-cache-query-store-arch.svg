@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">플랜 캐시 vs Query Store 아키텍처</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">재사용 메커니즘과 영속 저장 비교</text>
+
+  <!-- Query flow -->
+  <rect x="60" y="92" width="760" height="48" rx="8" fill="#101030" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">SQL 쿼리 수신</text>
+  <text x="440" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">해시 키 생성 (쿼리 텍스트 + DB 컨텍스트 + 파라미터 스니핑)</text>
+
+  <line x1="280" y1="140" x2="280" y2="172" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="600" y1="140" x2="600" y2="172" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Plan Cache -->
+  <rect x="60" y="172" width="380" height="140" rx="8" fill="#0d1e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="250" y="196" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">플랜 캐시 (Plan Cache)</text>
+  <text x="250" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">메모리 상주 (재시작 시 소멸)</text>
+  <text x="250" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">해시 키 일치 시 컴파일 생략</text>
+  <text x="250" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">메모리 압박 시 자동 퇴출</text>
+  <text x="250" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">sys.dm_exec_cached_plans 조회</text>
+  <text x="250" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Ad-hoc 쿼리: 싱글 유즈 플랜 오염 주의</text>
+
+  <!-- Query Store -->
+  <rect x="480" y="172" width="340" height="140" rx="8" fill="#0a1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="196" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Query Store (SQL 2016+)</text>
+  <text x="650" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">DB 파일에 영속 저장</text>
+  <text x="650" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">런타임 통계 + 플랜 이력 보관</text>
+  <text x="650" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">재시작 후에도 이력 유지</text>
+  <text x="650" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">sys.query_store_* 뷰 조회</text>
+  <text x="650" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">플랜 강제(Force Plan) 가능</text>
+
+  <!-- Code -->
+  <rect x="60" y="332" width="760" height="128" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 플랜 캐시 히트율 확인</text>
+  <text x="76" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT</text>
+  <text x="76" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  objtype, usecounts, size_in_bytes, cacheobjtype</text>
+  <text x="76" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">FROM sys.dm_exec_cached_plans</text>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">WHERE usecounts = 1 AND objtype = 'Adhoc'</text>
+  <text x="76" y="442" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">ORDER BY size_in_bytes DESC;  -- 싱글유즈 플랜 오염 점검</text>
+
+  <text x="440" y="476" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Query Store는 플랜 캐시를 대체하지 않고 보완한다</text>
+</svg>

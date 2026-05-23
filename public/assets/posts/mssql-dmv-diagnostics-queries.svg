@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">실전 DMV 진단 쿼리 패턴</text>
+
+  <!-- Wait stats -->
+  <rect x="60" y="72" width="380" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="92" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 1. 대기 유형 상위 10개</text>
+  <text x="76" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT TOP 10</text>
+  <text x="76" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  wait_type,</text>
+  <text x="76" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  waiting_tasks_count,</text>
+  <text x="76" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  wait_time_ms / 1000.0 AS wait_sec</text>
+  <text x="76" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">FROM sys.dm_os_wait_stats</text>
+  <text x="76" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">WHERE wait_type NOT LIKE 'SLEEP%'</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">ORDER BY wait_time_ms DESC;</text>
+
+  <!-- CPU top queries -->
+  <rect x="460" y="72" width="380" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="92" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 2. CPU 상위 쿼리</text>
+  <text x="476" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT TOP 10</text>
+  <text x="476" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  qs.total_worker_time/1000 AS cpu_ms,</text>
+  <text x="476" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  qs.execution_count AS cnt,</text>
+  <text x="476" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  SUBSTRING(st.text,1,60) AS sql</text>
+  <text x="476" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">FROM sys.dm_exec_query_stats qs</text>
+  <text x="476" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  CROSS APPLY sys.dm_exec_sql_text</text>
+  <text x="476" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  (qs.sql_handle) st</text>
+
+  <!-- Blocking -->
+  <rect x="60" y="252" width="380" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 3. 블로킹 체인 확인</text>
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT r.session_id,</text>
+  <text x="76" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  r.blocking_session_id AS blocked_by,</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  r.wait_type, r.wait_time / 1000 AS wait_s,</text>
+  <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  SUBSTRING(st.text, 1, 60) AS sql</text>
+  <text x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">FROM sys.dm_exec_requests r</text>
+  <text x="76" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  CROSS APPLY sys.dm_exec_sql_text</text>
+  <text x="76" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  (r.sql_handle) st</text>
+
+  <!-- Index missing -->
+  <rect x="460" y="252" width="380" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">-- 4. 누락 인덱스 추천</text>
+  <text x="476" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#7ec8e3" xml:space="preserve">SELECT TOP 10</text>
+  <text x="476" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  mid.statement AS tbl,</text>
+  <text x="476" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  migs.avg_user_impact AS impact_pct,</text>
+  <text x="476" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  mid.equality_columns,</text>
+  <text x="476" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  mid.inequality_columns</text>
+  <text x="476" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">FROM sys.dm_db_missing_index_details mid</text>
+  <text x="476" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">JOIN sys.dm_db_missing_index_groups mig ON ...</text>
+
+  <text x="440" y="436" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">DMV 쿼리는 인스턴스 재시작 시 초기화됨 (누적값 주의)</text>
+</svg>
