@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">컨테이너 권한 확인 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Linux 권한 모델이 컨테이너 안에서 동일하게 동작한다</text>
+
+  <!-- Step 1: Process -->
+  <rect x="60" y="100" width="180" height="70" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">프로세스 실행</text>
+  <text x="150" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">UID / GID 결정</text>
+
+  <!-- Step 2: Owner Check -->
+  <rect x="310" y="100" width="180" height="70" rx="8" fill="#0f1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="400" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">파일 소유자 확인</text>
+  <text x="400" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">owner / group / other</text>
+
+  <!-- Step 3: Permission bits -->
+  <rect x="560" y="100" width="180" height="70" rx="8" fill="#0f1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="650" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">권한 비트 확인</text>
+  <text x="650" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">r / w / x (rwxrwxrwx)</text>
+
+  <!-- Arrows step 1 → 2 → 3 -->
+  <line x1="240" y1="135" x2="308" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <line x1="490" y1="135" x2="558" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Decision: Allow / Deny -->
+  <rect x="620" y="230" width="140" height="56" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="690" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">허용 (ALLOW)</text>
+  <text x="690" y="275" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">작업 수행</text>
+
+  <rect x="460" y="230" width="140" height="56" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="530" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">거부 (DENY)</text>
+  <text x="530" y="275" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">Permission denied</text>
+
+  <!-- Arrow from Step 3 down to allow -->
+  <line x1="690" y1="170" x2="690" y2="228" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="710" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">권한 있음</text>
+
+  <line x1="650" y1="170" x2="530" y2="228" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="545" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">권한 없음</text>
+
+  <!-- Key facts boxes -->
+  <rect x="60" y="220" width="360" height="200" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="240" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">핵심 개념</text>
+
+  <!-- Code block inside -->
+  <rect x="78" y="260" width="324" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="94" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 컨테이너 프로세스 UID 확인</text>
+  <text x="94" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">docker exec myapp id</text>
+  <text x="94" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># uid=0(root) gid=0(root)</text>
+  <text x="94" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 파일 권한 확인</text>
+  <text x="94" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">docker exec myapp ls -la /app</text>
+  <text x="94" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># -rw-r--r-- 1 node node ...</text>
+
+  <!-- Key points on right -->
+  <rect x="460" y="310" width="300" height="110" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="470" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">• UID 0 = root → 대부분 권한 통과</text>
+  <text x="470" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 비-root USER 지정 시 소유자 확인</text>
+  <text x="470" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">• 볼륨 마운트 시 호스트 UID 상속</text>
+  <text x="470" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">• UID 불일치 → Permission denied</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">DNS 문제 진단 및 수정</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">증상별 원인과 수정 방법</text>
+
+  <!-- Symptom 1: Name resolution failure -->
+  <rect x="60" y="90" width="360" height="175" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">증상: Name or service not known</text>
+  <text x="80" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">컨테이너 이름 해석 실패</text>
+  <rect x="78" y="143" width="324" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="94" y="165" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 같은 네트워크인지 확인</text>
+  <text x="94" y="183" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">docker network inspect mynet</text>
+  <text x="94" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 수동 DNS 쿼리</text>
+  <text x="94" y="223" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">docker exec app nslookup db</text>
+
+  <!-- Symptom 2: Slow DNS -->
+  <rect x="460" y="90" width="360" height="175" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="480" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">증상: DNS 느림 / 외부 도메인 실패</text>
+  <text x="480" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">ndots 설정 또는 DNS 서버 문제</text>
+  <rect x="478" y="143" width="324" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="494" y="165" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 커스텀 DNS 서버 지정</text>
+  <text x="494" y="183" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">docker run \</text>
+  <text x="494" y="201" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  --dns</text>
+  <text x="544" y="201" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> 8.8.8.8 myimage</text>
+  <text x="494" y="223" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># /etc/hosts 직접 확인</text>
+
+  <!-- Fix 1: Custom DNS in compose -->
+  <rect x="60" y="285" width="360" height="165" rx="8" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">수정: Compose DNS 설정</text>
+  <rect x="78" y="320" width="324" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="94" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># compose.yml</text>
+  <text x="94" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">services</text>
+  <text x="94" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  app:</text>
+  <text x="94" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    dns</text>
+  <text x="94" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      - 8.8.8.8</text>
+
+  <!-- Fix 2: extra_hosts -->
+  <rect x="460" y="285" width="360" height="165" rx="8" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">수정: extra_hosts로 강제 매핑</text>
+  <rect x="478" y="320" width="324" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="494" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># /etc/hosts 항목 추가</text>
+  <text x="494" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  app:</text>
+  <text x="494" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    extra_hosts</text>
+  <text x="494" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      - "db:192.168.1.10"</text>
+  <text x="494" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 정적 이름 해석 강제</text>
+
+  <!-- Note -->
+  <text x="440" y="465" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">같은 user-defined 네트워크에 있을 때만 컨테이너 이름으로 통신 가능</text>
+</svg>

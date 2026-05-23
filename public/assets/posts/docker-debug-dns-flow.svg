@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-dash" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">컨테이너 DNS 해석 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Docker 내장 DNS 서버가 서비스 이름을 IP로 해석한다</text>
+
+  <!-- Container box -->
+  <rect x="60" y="90" width="300" height="320" rx="10" fill="#0d0d1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="210" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">컨테이너 (app)</text>
+
+  <!-- Application -->
+  <rect x="80" y="128" width="260" height="50" rx="6" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="210" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">애플리케이션</text>
+  <text x="210" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">connect("db:5432")</text>
+
+  <!-- resolv.conf -->
+  <rect x="80" y="200" width="260" height="50" rx="6" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="210" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">/etc/resolv.conf</text>
+  <text x="210" y="241" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">nameserver 127.0.0.11</text>
+
+  <!-- search domains -->
+  <rect x="80" y="272" width="260" height="50" rx="6" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="210" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">search 도메인</text>
+  <text x="210" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">mynetwork, default.svc...</text>
+
+  <!-- Arrows inside container -->
+  <line x1="210" y1="178" x2="210" y2="198" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="210" y1="250" x2="210" y2="270" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Docker DNS box -->
+  <rect x="440" y="120" width="220" height="80" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="550" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">Docker 내장 DNS</text>
+  <text x="550" y="167" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">127.0.0.11:53</text>
+  <text x="550" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">컨테이너 이름 → IP 매핑</text>
+
+  <!-- Arrow from container to Docker DNS -->
+  <line x1="340" y1="225" x2="438" y2="165" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- External DNS -->
+  <rect x="440" y="240" width="220" height="80" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="550" y="269" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">외부 DNS</text>
+  <text x="550" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">8.8.8.8 (Google) 등</text>
+  <text x="550" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">내장 DNS 미매칭 시 전달</text>
+
+  <!-- Arrow from Docker DNS to External -->
+  <line x1="550" y1="200" x2="550" y2="238" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-dash)"/>
+  <text x="558" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">미매칭</text>
+
+  <!-- Target container -->
+  <rect x="700" y="120" width="140" height="60" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="770" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">db 컨테이너</text>
+  <text x="770" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">172.18.0.3</text>
+
+  <!-- Arrow from Docker DNS to target -->
+  <line x1="660" y1="155" x2="698" y2="150" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Code block: resolv.conf contents -->
+  <rect x="60" y="380" width="760" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># docker exec app cat /etc/resolv.conf</text>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">nameserver 127.0.0.11    options ndots:0    search mynet.svc.cluster.local</text>
+</svg>

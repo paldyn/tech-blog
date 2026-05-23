@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">네임스페이스 RBAC 패턴</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Role + RoleBinding으로 네임스페이스 단위 권한 부여</text>
+
+  <!-- ServiceAccount -->
+  <rect x="60" y="100" width="180" height="64" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">ServiceAccount</text>
+  <text x="150" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">my-app-sa</text>
+
+  <!-- Arrow to RoleBinding -->
+  <line x1="240" y1="132" x2="318" y2="132" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- RoleBinding -->
+  <rect x="320" y="100" width="220" height="64" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="430" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">RoleBinding</text>
+  <text x="430" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">subject → role 바인딩</text>
+
+  <!-- Arrow to Role -->
+  <line x1="540" y1="132" x2="618" y2="132" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Role -->
+  <rect x="620" y="100" width="200" height="64" rx="8" fill="#0f0f2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="720" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">Role</text>
+  <text x="720" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">특정 NS 내 권한</text>
+
+  <!-- Code block: Role YAML -->
+  <rect x="60" y="190" width="390" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># Role: pod-reader</text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kind</text>
+  <text x="116" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">: Role</text>
+  <text x="76" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">metadata</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  namespace: production</text>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  name: pod-reader</text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">rules</text>
+  <text x="76" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  - apiGroups: [""]</text>
+  <text x="76" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    resources: ["pods"]</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    verbs:</text>
+  <text x="76" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      - get</text>
+  <text x="76" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      - list, watch</text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 이 NS 안에서만 유효</text>
+
+  <!-- Code block: ClusterRole note -->
+  <rect x="470" y="190" width="350" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="486" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># ClusterRole: 클러스터 전체</text>
+  <text x="486" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kind</text>
+  <text x="526" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">: ClusterRole</text>
+  <text x="486" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># namespace 필드 없음</text>
+  <text x="486" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># kubectl 빠른 권한 확인</text>
+  <text x="486" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="550" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> auth can-i \</text>
+  <text x="486" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  get pods \</text>
+  <text x="486" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  -n production \</text>
+  <text x="486" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  --as=sa:my-app-sa</text>
+  <text x="486" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 네임스페이스 목록</text>
+  <text x="486" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="550" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> get namespaces</text>
+  <text x="486" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># default, kube-system...</text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">네트워크 문제 진단 흐름도</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">단계적으로 범위를 좁혀 원인 찾기</text>
+
+  <!-- Step 1 -->
+  <rect x="320" y="90" width="240" height="56" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">컨테이너 실행 중?</text>
+  <text x="440" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">docker ps 확인</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="146" x2="440" y2="174" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="320" y="175" width="240" height="56" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="201" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">같은 네트워크에 있나?</text>
+  <text x="440" y="221" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">docker inspect 네트워크 확인</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="231" x2="440" y2="259" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="320" y="260" width="240" height="56" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">ping 통신 됨?</text>
+  <text x="440" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">3계층(IP) 연결 확인</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="316" x2="440" y2="344" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="320" y="345" width="240" height="56" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="371" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">포트 열려 있나?</text>
+  <text x="440" y="391" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">nc / ss / curl 확인</text>
+
+  <!-- Branches NO -->
+  <!-- Step 1 NO -->
+  <line x1="320" y1="118" x2="230" y2="118" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <rect x="60" y="90" width="168" height="56" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="144" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">컨테이너 재시작</text>
+  <text x="144" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">logs 확인 후 조치</text>
+  <text x="265" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">NO</text>
+
+  <!-- Step 2 NO -->
+  <line x1="320" y1="203" x2="230" y2="203" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <rect x="60" y="175" width="168" height="56" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="144" y="201" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">네트워크 연결</text>
+  <text x="144" y="219" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">docker network connect</text>
+  <text x="265" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">NO</text>
+
+  <!-- Step 3 NO -->
+  <line x1="320" y1="288" x2="230" y2="288" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <rect x="60" y="260" width="168" height="56" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="144" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">iptables 규칙 확인</text>
+  <text x="144" y="304" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">방화벽 / DOCKER chain</text>
+  <text x="265" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">NO</text>
+
+  <!-- Step 4 NO -->
+  <line x1="320" y1="373" x2="230" y2="373" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <rect x="60" y="345" width="168" height="56" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="144" y="371" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">앱 LISTEN 확인</text>
+  <text x="144" y="389" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ss -tlnp · 0.0.0.0 바인딩</text>
+  <text x="265" y="365" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">NO</text>
+
+  <!-- YES labels -->
+  <text x="448" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">YES</text>
+  <text x="448" y="249" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">YES</text>
+  <text x="448" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">YES</text>
+
+  <!-- Final OK -->
+  <rect x="620" y="345" width="200" height="56" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="720" y="371" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">연결 성공</text>
+  <text x="720" y="389" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">애플리케이션 계층 확인</text>
+  <line x1="560" y1="373" x2="618" y2="373" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="570" y="365" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">YES</text>
+</svg>
