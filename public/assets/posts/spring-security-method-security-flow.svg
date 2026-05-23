@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">메서드 보안 AOP 프록시 동작 흐름</text>
+
+  <!-- ===== 왼쪽: 호출 흐름 다이어그램 ===== -->
+
+  <!-- Caller (Controller) -->
+  <rect x="60" y="70" width="260" height="54" rx="8" fill="#1a1a2e" stroke="#555577" stroke-width="1.5"/>
+  <text x="190" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">Controller (호출자)</text>
+  <text x="190" y="110" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">serviceBean.sensitiveMethod() 호출</text>
+
+  <!-- Arrow 1 -->
+  <line x1="190" y1="124" x2="190" y2="152"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Spring AOP Proxy -->
+  <rect x="50" y="154" width="280" height="54" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="190" y="176" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">Spring AOP Proxy</text>
+  <text x="190" y="194" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Interceptor 체인 실행</text>
+
+  <!-- Arrow 2 -->
+  <line x1="190" y1="208" x2="190" y2="236"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- AuthorizationInterceptor -->
+  <rect x="40" y="238" width="300" height="54" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="190" y="260" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">AuthorizationManagerBeforeMethodInterceptor</text>
+  <text x="190" y="278" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SecurityContextHolder에서 Authentication 조회</text>
+
+  <!-- Arrow 3 -->
+  <line x1="190" y1="292" x2="190" y2="320"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 권한 검사 -->
+  <rect x="60" y="322" width="260" height="54" rx="8" fill="#0d1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="190" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">표현식 평가</text>
+  <text x="190" y="362" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SpEL: hasRole / hasAuthority / @beanName.check()</text>
+
+  <!-- Arrow 4 -->
+  <line x1="190" y1="376" x2="190" y2="404"
+        stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 실제 서비스 메서드 -->
+  <rect x="60" y="406" width="260" height="54" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="190" y="428" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">Service.sensitiveMethod()</text>
+  <text x="190" y="446" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">권한 통과 후 실제 비즈니스 로직 실행</text>
+
+  <!-- ===== 오른쪽: 거부 경로 ===== -->
+
+  <!-- 권한 거부 -->
+  <rect x="510" y="322" width="300" height="54" rx="8" fill="#1f0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="660" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">AccessDeniedException</text>
+  <text x="660" y="362" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ExceptionTranslationFilter → 403 응답</text>
+
+  <!-- 권한 부족 화살표 (dashed red, from 권한 검사 right edge to 거부 box) -->
+  <path d="M 320,349 H 510"
+        stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arr-r)"/>
+  <text x="415" y="335" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">권한 없음</text>
+
+  <!-- 권한 통과 화살표 label -->
+  <text x="340" y="392" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">권한 있음 →</text>
+
+  <!-- ===== 오른쪽 상단: @PostAuthorize 설명 ===== -->
+  <rect x="510" y="70" width="300" height="200" rx="8" fill="#0d1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="660" y="95" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">@Pre vs @Post 차이</text>
+  <line x1="510" y1="106" x2="810" y2="106" stroke="#7777cc" stroke-width="1" opacity="0.35"/>
+
+  <text x="526" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" font-weight="600">@PreAuthorize</text>
+  <text x="526" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">메서드 실행 전 권한 검사</text>
+  <text x="526" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">인자(#param) 참조 가능</text>
+
+  <line x1="526" y1="178" x2="794" y2="178" stroke="#3a4a6e" stroke-width="1" opacity="0.5"/>
+
+  <text x="526" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" font-weight="600">@PostAuthorize</text>
+  <text x="526" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">메서드 실행 후 반환값 검사</text>
+  <text x="526" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">returnObject 참조 가능</text>
+
+  <text x="526" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">※ DB 조회 후 소유권 검증에 활용</text>
+</svg>
