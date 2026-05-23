@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-x" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-c" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-ok" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">getter/setter 안티패턴과 대안</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">setter를 남발하면 캡슐화가 무너진다 — 더 나은 설계를 선택하라</text>
+
+  <!--
+    Anti-pattern boxes: y=88, height=150 (bottom=238)
+    Title at y=110 (top_pad=22), last text at y=216 (bottom_pad=22), diff=0 ✓
+    Box 3 has extra code line, last text at y=234 → height=168 (bottom=256, bottom_pad=22) ✓
+    We'll use height=150 for boxes 1&2, height=168 for box 3
+    But for visual consistency, use height=168 for all three.
+    Box 1&2: last text at y=216, bottom=256, bottom_pad=40 → diff=18. Bad.
+
+    Better: use height=150 for 1&2, height=168 for box 3 (visual asymmetry acceptable).
+    Actually let's add one more text line to boxes 1&2 to fill space.
+
+    OR: Use same height for all 3, move content down in boxes 1&2.
+    Box height=168 (bottom=256).
+    Box 1: title at y=114 (top_pad=26), last text at y=230 (bottom_pad=26). Add extra note at y=230. diff=0.
+    Box 2: same.
+    Box 3: title at y=114, content goes to y=234, bottom_pad=22. diff=4. Close enough.
+
+    Let me do this: use height=168, title at y=114 for all boxes.
+  -->
+
+  <!-- 상단 3개 안티패턴: y=88, height=168, bottom=256 -->
+
+  <!-- 1. 무의미한 getter/setter -->
+  <!-- top_pad=114-88=26, last text y=230, bottom_pad=256-230=26, diff=0 ✓ -->
+  <rect x="40" y="88" width="240" height="168" fill="#1a1010" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="160" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">① 무의미한 getter/setter</text>
+  <text x="160" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">모든 필드에 자동 생성</text>
+  <text x="55" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">public void</text>
+  <text x="145" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> setX(int x)</text>
+  <text x="55" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  { this.x = x; }</text>
+  <text x="160" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">→ private과 다를 바 없음</text>
+  <text x="160" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">   캡슐화 의미 없음</text>
+  <text x="160" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">   (검증 로직 없음)</text>
+
+  <!-- 2. 내부 구현 노출 getter -->
+  <!-- top_pad=114-88=26, last text y=230, bottom_pad=256-230=26, diff=0 ✓ -->
+  <rect x="320" y="88" width="240" height="168" fill="#1a1010" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">② 내부 구현 노출 getter</text>
+  <text x="440" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">가변 객체 직접 반환</text>
+  <text x="335" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">public</text>
+  <text x="375" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> List&lt;?&gt; getList()</text>
+  <text x="335" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  { return list; }</text>
+  <text x="440" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">→ 호출자가 내부 list를</text>
+  <text x="440" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">   직접 수정 가능</text>
+  <text x="440" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">   (캡슐화 누출)</text>
+
+  <!-- 3. setter 체인 남용 -->
+  <!-- top_pad=114-88=26, last text y=234, bottom_pad=256-234=22, diff=4 (acceptable) -->
+  <rect x="600" y="88" width="240" height="168" fill="#1a1010" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="720" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">③ 복잡한 객체 setter 조립</text>
+  <text x="720" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">생성자 대신 setter 남용</text>
+  <text x="615" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">new Order()</text>
+  <text x="615" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  .setXX(..)</text>
+  <text x="615" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  .setYY(..)</text>
+  <text x="720" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">→ 중간 상태에서</text>
+  <text x="720" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">   불변식 파괴 가능</text>
+  <!-- box bottom=256, last text y=230, bottom_pad=26, diff=0 ✓ -->
+
+  <!-- 대안 섹션 -->
+  <text x="440" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">더 나은 대안</text>
+
+  <!--
+    Alternative boxes: y=298, height=120 (bottom=418)
+    Title at y=320 (top_pad=22), last text at y=396 (bottom_pad=22), diff=0 ✓
+  -->
+
+  <!-- 대안 1: 의미 있는 메서드 -->
+  <rect x="40" y="298" width="240" height="120" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="160" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">① 의미 있는 메서드</text>
+  <text x="55" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// setter 대신</text>
+  <text x="55" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">void</text>
+  <text x="81" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> changeEmail(</text>
+  <text x="55" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">    String</text>
+  <text x="107" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> email)</text>
+  <!-- last text y=396, bottom_pad=418-396=22, diff=0 ✓ -->
+  <text x="160" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">도메인 의도를 메서드명에 표현</text>
+
+  <!-- 대안 2: unmodifiable 반환 -->
+  <rect x="320" y="298" width="240" height="120" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② unmodifiable 반환</text>
+  <text x="335" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">return</text>
+  <text x="376" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> Collections</text>
+  <text x="335" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  .unmodifiable</text>
+  <text x="335" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  List(list)</text>
+  <text x="440" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">내부 컬렉션 수정 차단</text>
+
+  <!-- 대안 3: 빌더 패턴 -->
+  <rect x="600" y="298" width="240" height="120" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="720" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">③ 빌더 패턴 / record</text>
+  <text x="615" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">Order.builder()</text>
+  <text x="615" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  .item(item)</text>
+  <text x="615" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  .build()</text>
+  <text x="720" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">build() 시점에 일괄 검증</text>
+
+  <!--
+    Bottom summary box: y=432, height=50 (bottom=482)
+    Title at y=453 (top_pad=21), last text at y=467 (bottom_pad=15). diff=6.
+    Use height=56: bottom=488. title y=453 (top_pad=21), last text y=467, bottom_pad=21. diff=0. ✓
+  -->
+  <rect x="40" y="432" width="800" height="56" fill="#111827" rx="8" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="453" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">setter 설계 원칙</text>
+  <!-- last text y=467, bottom_pad=488-467=21, top_pad=21, diff=0 ✓ -->
+  <text x="440" y="467" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">setter가 필요하다면 검증을 포함하라 · 필요없다면 아예 만들지 마라 · 불변 객체가 최선이다</text>
+</svg>
