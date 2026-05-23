@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">yield from 리팩터링 비교</text>
+
+  <!-- Left: before -->
+  <text x="230" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">Before — 수동 위임</text>
+  <rect x="50" y="80" width="370" height="284" rx="6"
+        fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="66" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 각 그룹을 yield하는 제너레이터</tspan></text>
+  <text x="66" y="121" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan font-weight="600" fill="#7ec8e3">def </tspan><tspan>chain_manual(*iterables):</tspan>
+  </text>
+  <text x="66" y="139" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="66" dy="0">    </tspan><tspan font-weight="600" fill="#7ec8e3">for </tspan><tspan>it </tspan><tspan font-weight="600" fill="#7ec8e3">in </tspan><tspan>iterables:</tspan>
+  </text>
+  <text x="66" y="157" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="66" dy="0">        </tspan><tspan font-weight="600" fill="#7ec8e3">for </tspan><tspan>item </tspan><tspan font-weight="600" fill="#7ec8e3">in </tspan><tspan>it:</tspan>
+  </text>
+  <text x="66" y="175" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="66" dy="0">            </tspan><tspan font-weight="600" fill="#7ec8e3">yield </tspan><tspan>item</tspan>
+  </text>
+  <text x="66" y="211" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># send/throw 전달 없음</tspan></text>
+  <text x="66" y="229" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># StopIteration.value 손실</tspan></text>
+  <text x="66" y="265" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">result = list(chain_manual(</text>
+  <text x="66" y="283" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    [<tspan fill="#b5cea8">1</tspan>, <tspan fill="#b5cea8">2</tspan>], [<tspan fill="#b5cea8">3</tspan>, <tspan fill="#b5cea8">4</tspan>], [<tspan fill="#b5cea8">5</tspan>]))</text>
+  <text x="66" y="301" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># [1, 2, 3, 4, 5]</tspan></text>
+  <text x="66" y="337" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 중첩 for 2개, 코드 장황</tspan></text>
+
+  <!-- Right: after -->
+  <text x="650" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">After — yield from</text>
+  <rect x="460" y="80" width="370" height="284" rx="6"
+        fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># yield from으로 간결하게</tspan></text>
+  <text x="476" y="121" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan font-weight="600" fill="#7ec8e3">def </tspan><tspan>chain(*iterables):</tspan>
+  </text>
+  <text x="476" y="139" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="476" dy="0">    </tspan><tspan font-weight="600" fill="#7ec8e3">for </tspan><tspan>it </tspan><tspan font-weight="600" fill="#7ec8e3">in </tspan><tspan>iterables:</tspan>
+  </text>
+  <text x="476" y="157" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="476" dy="0">        </tspan><tspan font-weight="600" fill="#7ec8e3">yield from </tspan><tspan>it</tspan>
+  </text>
+  <text x="476" y="193" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># send/throw 자동 전달됨</tspan></text>
+  <text x="476" y="211" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># return 값도 수집 가능</tspan></text>
+  <text x="476" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">result = list(chain(</text>
+  <text x="476" y="265" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    [<tspan fill="#b5cea8">1</tspan>, <tspan fill="#b5cea8">2</tspan>], [<tspan fill="#b5cea8">3</tspan>, <tspan fill="#b5cea8">4</tspan>], [<tspan fill="#b5cea8">5</tspan>]))</text>
+  <text x="476" y="283" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># [1, 2, 3, 4, 5]</tspan></text>
+  <text x="476" y="319" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555"># 중첩 for 1개로 단순화</tspan></text>
+  <text x="476" y="337" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555"># 완전한 프로토콜 투명성</tspan></text>
+</svg>

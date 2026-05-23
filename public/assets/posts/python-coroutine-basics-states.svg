@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 320">
+  <rect width="880" height="320" rx="12" fill="#0a0a0a"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrs" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">코루틴(제너레이터) 상태 전이</text>
+
+  <!-- State: CREATED -->
+  <rect x="50" y="72" width="160" height="70" rx="8"
+        fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="130" y="102" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">GEN_CREATED</text>
+  <text x="130" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">생성됨</text>
+
+  <!-- Arrow: CREATED → RUNNING -->
+  <line x1="210" y1="107" x2="258" y2="107"
+        stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="234" y="99" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">next()또는 send(None)</text>
+
+  <!-- State: RUNNING -->
+  <rect x="260" y="72" width="160" height="70" rx="8"
+        fill="#111827" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="340" y="102" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">GEN_RUNNING</text>
+  <text x="340" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">실행 중</text>
+
+  <!-- Arrow: RUNNING → SUSPENDED -->
+  <line x1="420" y1="107" x2="468" y2="107"
+        stroke="#55c555" stroke-width="2" marker-end="url(#arrs)"/>
+  <text x="444" y="99" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">yield (값 반환)</text>
+
+  <!-- State: SUSPENDED -->
+  <rect x="470" y="72" width="160" height="70" rx="8"
+        fill="#111827" stroke="#55c555" stroke-width="1.5"/>
+  <text x="550" y="102" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">GEN_SUSPENDED</text>
+  <text x="550" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">일시 정지</text>
+
+  <!-- Arrow: SUSPENDED → RUNNING (resume) -->
+  <path d="M 550 72 C 550 44, 340 44, 340 72"
+        fill="none" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arr)"/>
+  <text x="445" y="38" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">send(값) 또는 next()</text>
+
+  <!-- Arrow: SUSPENDED → CLOSED -->
+  <line x1="630" y1="107" x2="678" y2="107"
+        stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+  <text x="654" y="99" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">함수 끝 또는 return</text>
+
+  <!-- State: CLOSED -->
+  <rect x="680" y="72" width="160" height="70" rx="8"
+        fill="#111827" stroke="#e05555" stroke-width="1.5"/>
+  <text x="760" y="102" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">GEN_CLOSED</text>
+  <text x="760" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">StopIteration</text>
+
+  <!-- Coroutine prime rule -->
+  <rect x="50" y="172" width="760" height="66" rx="8"
+        fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="196" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc">코루틴 프라이밍(priming) 규칙</text>
+  <text x="440" y="220" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">처음 코루틴을 사용하려면 반드시 next(coro) 또는 coro.send(None) 으로 프라이밍해야 한다.</text>
+
+  <!-- Note: send value only possible at yield -->
+  <rect x="50" y="258" width="760" height="44" rx="8"
+        fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="278" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">GEN_CREATED 상태에서 send(None 아닌 값) 호출 → TypeError: can't send non-None value to a just-started generator</text>
+  <text x="440" y="295" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">— 코루틴이 yield에 도달해야 값을 전달받을 수 있기 때문</text>
+</svg>

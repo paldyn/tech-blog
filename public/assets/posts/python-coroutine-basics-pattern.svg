@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">제너레이터 코루틴: 데이터 파이프라인</text>
+
+  <!-- Left: producer -->
+  <text x="230" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">코루틴 (소비자)</text>
+  <rect x="50" y="80" width="370" height="284" rx="6"
+        fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="66" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 값을 받아 누적하는 코루틴</tspan></text>
+  <text x="66" y="121" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan font-weight="600" fill="#7ec8e3">def </tspan><tspan>accumulator():</tspan>
+  </text>
+  <text x="66" y="139" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    total = <tspan fill="#b5cea8">0</tspan></text>
+  <text x="66" y="157" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="66" dy="0">    </tspan><tspan font-weight="600" fill="#7ec8e3">while True</tspan><tspan>:</tspan>
+  </text>
+  <text x="66" y="175" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="66" dy="0">        value = </tspan><tspan font-weight="600" fill="#7ec8e3">yield </tspan><tspan>total</tspan>
+  </text>
+  <text x="66" y="193" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">        # ↑ yield는 total 반환</tspan></text>
+  <text x="66" y="211" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">        # send() 값은 value에 저장</tspan></text>
+  <text x="66" y="229" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="66" dy="0">        </tspan><tspan font-weight="600" fill="#7ec8e3">if </tspan><tspan>value </tspan><tspan font-weight="600" fill="#7ec8e3">is not None</tspan><tspan>:</tspan>
+  </text>
+  <text x="66" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">            total += value</text>
+
+  <!-- Right: usage -->
+  <text x="650" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">사용 예시</text>
+  <rect x="460" y="80" width="370" height="284" rx="6"
+        fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="103" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">acc = accumulator()</text>
+  <text x="476" y="121" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 1) 프라이밍 필수</tspan></text>
+  <text x="476" y="139" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">next(acc)  <tspan fill="#9aa4b8"># 또는 acc.send(None)</tspan></text>
+  <text x="476" y="157" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># → 0 반환 (첫 yield total)</tspan></text>
+  <text x="476" y="193" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 2) 값 전송</tspan></text>
+  <text x="476" y="211" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">print(acc.send(<tspan fill="#b5cea8">10</tspan>))  <tspan fill="#9aa4b8"># 10</tspan></text>
+  <text x="476" y="229" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">print(acc.send(<tspan fill="#b5cea8">20</tspan>))  <tspan fill="#9aa4b8"># 30</tspan></text>
+  <text x="476" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">print(acc.send(<tspan fill="#b5cea8">5</tspan>))   <tspan fill="#9aa4b8"># 35</tspan></text>
+  <text x="476" y="283" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 3) 종료</tspan></text>
+  <text x="476" y="301" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">acc.close()</tspan></text>
+  <text x="476" y="337" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># GeneratorExit 내부 발생</tspan></text>
+</svg>
