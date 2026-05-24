@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="ca-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ca-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="ca-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" marketHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">다층 LLM 캐시 아키텍처</text>
+
+  <!-- User -->
+  <rect x="360" y="70" width="160" height="50" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">사용자 요청</text>
+  <text x="440" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">자연어 질문</text>
+
+  <line x1="440" y1="120" x2="440" y2="142" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ca-arr)"/>
+
+  <!-- L1: Exact Cache -->
+  <rect x="180" y="150" width="520" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">L1: Exact Match Cache (Redis, TTL=1h)</text>
+  <text x="440" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">동일 문자열 입력 → 해시 조회 → 즉시 반환 (~1ms)</text>
+
+  <!-- L1 hit path -->
+  <path d="M 700 178 Q 800 178 800 300 Q 800 420 700 420" stroke="#55c555" stroke-width="2" fill="none"
+        stroke-dasharray="4,4" marker-end="url(#ca-green)"/>
+  <text x="810" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Cache</text>
+  <text x="810" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">HIT</text>
+
+  <line x1="440" y1="206" x2="440" y2="228" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ca-arr)"/>
+
+  <!-- L2: Semantic Cache -->
+  <rect x="180" y="236" width="520" height="56" rx="8" fill="#2a1a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">L2: Semantic Cache (pgvector, threshold=0.92)</text>
+  <text x="440" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">임베딩 → 코사인 유사도 검색 → 유사 응답 반환 (~20ms)</text>
+
+  <!-- L2 hit path (dashed) -->
+  <path d="M 700 264 Q 760 264 760 370 Q 760 420 700 420" stroke="#7ec8e3" stroke-width="2" fill="none"
+        stroke-dasharray="4,4" marker-end="url(#ca-arr)"/>
+
+  <line x1="440" y1="292" x2="440" y2="314" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ca-arr)"/>
+
+  <!-- L3: Prompt Cache -->
+  <rect x="180" y="322" width="520" height="56" rx="8" fill="#1a2a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">L3: Prompt Cache (Claude cache_control, 5min)</text>
+  <text x="440" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">시스템 프롬프트·RAG 컨텍스트 서버 측 캐싱 → 90% 토큰 절감</text>
+
+  <line x1="440" y1="378" x2="440" y2="400" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ca-arr)"/>
+
+  <!-- LLM -->
+  <rect x="300" y="408" width="280" height="52" rx="8" fill="#2a2a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">LLM 추론 (캐시 미스)</text>
+  <text x="440" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">전체 비용 청구 · 응답 생성 후 L1/L2에 저장</text>
+</svg>

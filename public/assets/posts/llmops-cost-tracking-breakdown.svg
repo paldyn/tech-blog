@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="ct-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">LLM 비용 구조 분해</text>
+
+  <!-- Cost formula -->
+  <rect x="60" y="68" width="760" height="54" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">총 비용 = (입력 토큰 × 입력 단가 + 출력 토큰 × 출력 단가) × 요청 수</text>
+  <text x="440" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">출력 단가 ≈ 입력 단가의 3~5배 → 출력 길이 제어가 가장 중요</text>
+
+  <!-- Three buckets -->
+  <!-- System Prompt -->
+  <rect x="60" y="142" width="240" height="100" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="180" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">시스템 프롬프트</text>
+  <text x="180" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">매 요청마다 반복 청구</text>
+  <text x="180" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">→ 프롬프트 캐싱으로</text>
+  <text x="180" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">90% 절감 가능</text>
+
+  <!-- Context / RAG chunks -->
+  <rect x="320" y="142" width="240" height="100" rx="8" fill="#2a1a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">RAG 컨텍스트</text>
+  <text x="440" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">검색 청크 길이 비례</text>
+  <text x="440" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">→ 청크 크기 최적화</text>
+  <text x="440" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">압축 / top-k 줄이기</text>
+
+  <!-- Output -->
+  <rect x="580" y="142" width="240" height="100" rx="8" fill="#2a2a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="700" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">출력 토큰</text>
+  <text x="700" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">단가가 가장 비쌈</text>
+  <text x="700" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">→ max_tokens 제한</text>
+  <text x="700" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">간결한 출력 유도</text>
+
+  <!-- Optimization strategies -->
+  <text x="60" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">비용 절감 전략</text>
+
+  <!-- Strategy boxes -->
+  <rect x="60" y="288" width="180" height="76" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="150" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">프롬프트 캐싱</text>
+  <text x="150" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Claude: 캐시 히트 시</text>
+  <text x="150" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">입력 토큰 90% 할인</text>
+  <text x="150" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">cache_control 설정</text>
+
+  <rect x="260" y="288" width="180" height="76" rx="6" fill="#1a1a2a" stroke="#7777cc" stroke-width="1"/>
+  <text x="350" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">시맨틱 캐싱</text>
+  <text x="350" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">유사 질문 캐시 히트</text>
+  <text x="350" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">GPTCache / Redis</text>
+  <text x="350" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">코사인 유사도 기반</text>
+
+  <rect x="460" y="288" width="180" height="76" rx="6" fill="#2a1a2a" stroke="#e05555" stroke-width="1"/>
+  <text x="550" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">모델 다운사이징</text>
+  <text x="550" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">단순 질문→Haiku</text>
+  <text x="550" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">복잡→Sonnet/Opus</text>
+  <text x="550" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">복잡도 분류기 필요</text>
+
+  <rect x="660" y="288" width="180" height="76" rx="6" fill="#2a1a1a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="750" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">배치 API</text>
+  <text x="750" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">비실시간 요청 묶음</text>
+  <text x="750" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Claude Batch API</text>
+  <text x="750" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">최대 50% 할인</text>
+
+  <!-- Code block -->
+  <rect x="60" y="382" width="760" height="62" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 비용 예산 알림 (일일 $20 초과 시)</text>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> daily_cost_usd > </tspan><tspan fill="#b5cea8">20.0</tspan><tspan fill="#ffffff">: alert_slack(</tspan><tspan fill="#ce9178">"#llm-cost"</tspan><tspan fill="#ffffff">, f</tspan><tspan fill="#ce9178">"$</tspan><tspan fill="#b5cea8">{daily_cost_usd:.2f}</tspan><tspan fill="#ce9178"> 초과"</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> daily_cost_usd > </tspan><tspan fill="#b5cea8">50.0</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">raise</tspan><tspan fill="#ffffff"> CostCircuitBreaker(</tspan><tspan fill="#ce9178">"비용 회로 차단"</tspan><tspan fill="#ffffff">)</tspan></text>
+</svg>
