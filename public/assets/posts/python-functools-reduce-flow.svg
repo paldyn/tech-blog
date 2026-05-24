@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">reduce() 작동 원리</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">reduce(f, [1, 2, 3, 4])  →  f(f(f(1, 2), 3), 4)</text>
+
+  <!-- Step boxes -->
+  <defs>
+    <marker id="arrf" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#4a90d9"/>
+    </marker>
+  </defs>
+
+  <!-- Input list -->
+  <rect x="60" y="92" width="60" height="44" rx="6" fill="#1e3a5f" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="90" y="119" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">1</text>
+
+  <rect x="140" y="92" width="60" height="44" rx="6" fill="#1e3a5f" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="170" y="119" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">2</text>
+
+  <rect x="220" y="92" width="60" height="44" rx="6" fill="#1e3a5f" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="250" y="119" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">3</text>
+
+  <rect x="300" y="92" width="60" height="44" rx="6" fill="#1e3a5f" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="330" y="119" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="700" fill="#7ec8e3" text-anchor="middle">4</text>
+
+  <!-- Step 1: f(1,2) = 3 -->
+  <text x="200" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Step 1: f(1, 2)</text>
+  <line x1="90" y1="136" x2="90" y2="186" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="170" y1="136" x2="170" y2="186" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <rect x="116" y="186" width="108" height="40" rx="6" fill="#0f2a1f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="211" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="15" font-weight="700" fill="#55c555" text-anchor="middle">f(1,2)=3</text>
+
+  <!-- Step 2: f(3,3) = 6 -->
+  <text x="340" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Step 2: f(3, 3)</text>
+  <line x1="170" y1="226" x2="170" y2="270" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="250" y1="136" x2="250" y2="270" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <rect x="196" y="270" width="108" height="40" rx="6" fill="#0f2a1f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="250" y="295" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="15" font-weight="700" fill="#55c555" text-anchor="middle">f(3,3)=6</text>
+
+  <!-- Step 3: f(6,4) = 10 -->
+  <text x="450" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Step 3: f(6, 4)</text>
+  <line x1="250" y1="310" x2="250" y2="346" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="330" y1="136" x2="330" y2="346" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <rect x="276" y="346" width="108" height="44" rx="6" fill="#2a1a3f" stroke="#7777cc" stroke-width="2"/>
+  <text x="330" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="700" fill="#7777cc" text-anchor="middle">결과: 10</text>
+
+  <!-- Code example on right -->
+  <rect x="440" y="92" width="400" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="456" y="114" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># reduce 기본 사용법</text>
+  <text x="456" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ffffff"> functools </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> reduce</tspan>
+  </text>
+  <text x="456" y="162" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 합계</text>
+  <text x="456" y="182" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">total = reduce(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">lambda</tspan>
+    <tspan fill="#ffffff"> a, b: a+b, [</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">,</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff">,</tspan>
+    <tspan fill="#b5cea8">3</tspan>
+    <tspan fill="#ffffff">,</tspan>
+    <tspan fill="#b5cea8">4</tspan>
+    <tspan fill="#ffffff">])</tspan>
+  </text>
+  <text x="456" y="202" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#9aa4b8"># → 10</tspan>
+  </text>
+  <text x="456" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 초기값 지정</text>
+  <text x="456" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">total = reduce(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">lambda</tspan>
+    <tspan fill="#ffffff"> a,b: a+b, [], </tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="456" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#9aa4b8"># 빈 리스트 → 초기값 0 반환</tspan>
+  </text>
+  <text x="456" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># operator 모듈 활용</text>
+  <text x="456" y="318" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> operator</tspan>
+  </text>
+  <text x="456" y="338" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">product = reduce(operator.mul, [</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">,</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff">,</tspan>
+    <tspan fill="#b5cea8">3</tspan>
+    <tspan fill="#ffffff">,</tspan>
+    <tspan fill="#b5cea8">4</tspan>
+    <tspan fill="#ffffff">])</tspan>
+  </text>
+  <text x="456" y="358" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#9aa4b8"># → 24</tspan>
+  </text>
+  <text x="456" y="378" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#9aa4b8"># sum([1,2,3,4]) 이 더 Pythonic</tspan>
+  </text>
+</svg>

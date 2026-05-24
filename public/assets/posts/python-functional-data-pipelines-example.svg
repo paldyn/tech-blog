@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">실전 파이프라인: 판매 데이터 처리</text>
+
+  <!-- Left: data flow -->
+  <rect x="60" y="68" width="340" height="56" rx="6" fill="#1e3a5f" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="230" y="90" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">raw: "2024-01,Product A,1500,5"</text>
+  <text x="230" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">CSV 원본 문자열</text>
+
+  <defs>
+    <marker id="da" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <line x1="230" y1="124" x2="230" y2="148" stroke="#55c555" stroke-width="2" marker-end="url(#da)"/>
+
+  <rect x="60" y="148" width="340" height="56" rx="6" fill="#0f2a1f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" text-anchor="middle">parse → {"month":"2024-01","product":</text>
+  <text x="230" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" text-anchor="middle">"Product A","price":1500,"qty":5}</text>
+
+  <line x1="230" y1="204" x2="230" y2="228" stroke="#55c555" stroke-width="2" marker-end="url(#da)"/>
+
+  <rect x="60" y="228" width="340" height="56" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="230" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7777cc" text-anchor="middle">enrich → {"revenue": 7500,</text>
+  <text x="230" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7777cc" text-anchor="middle">"tax": 750, ...}</text>
+
+  <line x1="230" y1="284" x2="230" y2="308" stroke="#55c555" stroke-width="2" marker-end="url(#da)"/>
+
+  <rect x="60" y="308" width="340" height="56" rx="6" fill="#1e2a1f" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="230" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#b5cea8" text-anchor="middle">format_report → "2024-01: 7500"</text>
+  <text x="230" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">최종 보고서 문자열</text>
+
+  <!-- Right: code -->
+  <rect x="440" y="68" width="400" height="296" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="456" y="88" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 각 단계 = 순수 함수</text>
+  <text x="456" y="108" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> parse(line: str) -&gt; dict:</tspan>
+  </text>
+  <text x="456" y="128" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    m, p, pr, q = line.split(</tspan>
+    <tspan fill="#ce9178">","</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="456" y="148" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> {</tspan>
+    <tspan fill="#ce9178">"month"</tspan>
+    <tspan fill="#ffffff">:m, </tspan>
+    <tspan fill="#ce9178">"price"</tspan>
+    <tspan fill="#ffffff">:</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">int</tspan>
+    <tspan fill="#ffffff">(pr), </tspan>
+    <tspan fill="#ce9178">"qty"</tspan>
+    <tspan fill="#ffffff">:</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">int</tspan>
+    <tspan fill="#ffffff">(q)}</tspan>
+  </text>
+  <text x="456" y="176" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> enrich(d: dict) -&gt; dict:</tspan>
+  </text>
+  <text x="456" y="196" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> {**d, </tspan>
+    <tspan fill="#ce9178">"revenue"</tspan>
+    <tspan fill="#ffffff">: d[</tspan>
+    <tspan fill="#ce9178">"price"</tspan>
+    <tspan fill="#ffffff">]*d[</tspan>
+    <tspan fill="#ce9178">"qty"</tspan>
+    <tspan fill="#ffffff">]}</tspan>
+  </text>
+  <text x="456" y="224" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> fmt(d: dict) -&gt; str:</tspan>
+  </text>
+  <text x="456" y="244" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> </tspan>
+    <tspan fill="#ce9178">f"{d['month']}: {d['revenue']}"</tspan>
+  </text>
+  <text x="456" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 파이프라인 실행</text>
+  <text x="456" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ffffff"> toolz </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> pipe</tspan>
+  </text>
+  <text x="456" y="312" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">result = pipe(line, parse, enrich, fmt)</tspan>
+  </text>
+  <text x="456" y="340" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 여러 줄 처리</text>
+  <text x="456" y="356" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">reports = [pipe(l, parse, enrich, fmt)</tspan>
+  </text>
+  <text x="456" y="356" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"> </text>
+</svg>

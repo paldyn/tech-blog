@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">파이프 패턴: 데이터 변환 흐름</text>
+
+  <!-- Pipeline flow diagram -->
+  <defs>
+    <marker id="pf" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#4a90d9"/>
+    </marker>
+  </defs>
+
+  <!-- Data boxes with arrows -->
+  <rect x="60" y="80" width="100" height="50" rx="8" fill="#1e3a5f" stroke="#4a90d9" stroke-width="1.5"/>
+  <text x="110" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">원본 데이터</text>
+
+  <line x1="160" y1="105" x2="200" y2="105" stroke="#4a90d9" stroke-width="2" marker-end="url(#pf)"/>
+
+  <rect x="200" y="80" width="110" height="50" rx="8" fill="#0f2a1f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="255" y="101" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">filter</text>
+  <text x="255" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">필터링</text>
+
+  <line x1="310" y1="105" x2="350" y2="105" stroke="#4a90d9" stroke-width="2" marker-end="url(#pf)"/>
+
+  <rect x="350" y="80" width="110" height="50" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="405" y="101" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">map</text>
+  <text x="405" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">변환</text>
+
+  <line x1="460" y1="105" x2="500" y2="105" stroke="#4a90d9" stroke-width="2" marker-end="url(#pf)"/>
+
+  <rect x="500" y="80" width="110" height="50" rx="8" fill="#2a1a10" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="555" y="101" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178" text-anchor="middle">reduce</text>
+  <text x="555" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">집계</text>
+
+  <line x1="610" y1="105" x2="650" y2="105" stroke="#4a90d9" stroke-width="2" marker-end="url(#pf)"/>
+
+  <rect x="650" y="80" width="170" height="50" rx="8" fill="#1e2a1f" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="735" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#b5cea8" text-anchor="middle">최종 결과</text>
+
+  <!-- 세 가지 구현 방식 -->
+  <text x="440" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">같은 파이프라인, 다른 표현 방식</text>
+
+  <!-- Nested -->
+  <rect x="60" y="176" width="760" height="56" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="196" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 중첩 호출 (읽기 어려움)</text>
+  <text x="76" y="220" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">result = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">sum</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">map</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">lambda</tspan>
+    <tspan fill="#ffffff"> x: x**</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff">, </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">filter</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">lambda</tspan>
+    <tspan fill="#ffffff"> x: x%</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff">==</tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">, </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">range</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#b5cea8">10</tspan>
+    <tspan fill="#ffffff">))))</tspan>
+  </text>
+
+  <!-- pipe version -->
+  <rect x="60" y="248" width="760" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># toolz.pipe (읽기 쉬운 순서)</text>
+  <text x="76" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ffffff"> toolz </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> pipe</tspan>
+    <tspan fill="#ffffff">; </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ffffff"> functools </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> partial</tspan>
+  </text>
+  <text x="76" y="308" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">result = pipe(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">range</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#b5cea8">10</tspan>
+    <tspan fill="#ffffff">), partial(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">filter</tspan>
+    <tspan fill="#ffffff">, </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">lambda</tspan>
+    <tspan fill="#ffffff"> x: x%</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff">==</tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">), partial(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">map</tspan>
+    <tspan fill="#ffffff">, </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">lambda</tspan>
+    <tspan fill="#ffffff"> x: x**</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff">), </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">sum</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <!-- walrus/comprehension version -->
+  <rect x="60" y="336" width="760" height="64" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="356" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 리스트 컴프리헨션 (Pythonic, 가독성 최고)</text>
+  <text x="76" y="376" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">result = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">sum</tspan>
+    <tspan fill="#ffffff">(x**</tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff"> </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">for</tspan>
+    <tspan fill="#ffffff"> x </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">in</tspan>
+    <tspan fill="#ffffff"> </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">range</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#b5cea8">10</tspan>
+    <tspan fill="#ffffff">) </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">if</tspan>
+    <tspan fill="#ffffff"> x % </tspan>
+    <tspan fill="#b5cea8">2</tspan>
+    <tspan fill="#ffffff"> == </tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">)  </tspan>
+    <tspan fill="#9aa4b8"># 120</tspan>
+  </text>
+</svg>
