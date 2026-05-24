@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Git Blob 오브젝트 내부 구조</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">파일 내용을 그대로 저장하는 불변 오브젝트</text>
+
+  <!-- Step 1: Raw content -->
+  <rect x="60" y="104" width="240" height="70" fill="#111" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="180" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">원본 파일 내용</text>
+  <text x="180" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" text-anchor="middle">Hello, Git!</text>
+  <text x="180" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">11 bytes</text>
+
+  <!-- Arrow 1 -->
+  <defs>
+    <marker id="arr1" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="300" y1="139" x2="358" y2="139" stroke="#7777cc" stroke-width="2" marker-end="url(#arr1)"/>
+  <text x="329" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">prepend</text>
+
+  <!-- Step 2: Header + Content -->
+  <rect x="360" y="94" width="280" height="100" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="500" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">오브젝트 데이터</text>
+  <text x="376" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">blob</tspan><tspan fill="#ffffff"> 11\0Hello, Git!</tspan></text>
+  <text x="376" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#555" xml:space="preserve">  ├── 헤더: "blob {size}\0"</text>
+  <text x="376" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#555" xml:space="preserve">  └── 내용: 파일 원본 bytes</text>
+
+  <!-- Arrow 2 -->
+  <defs>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="640" y1="139" x2="698" y2="139" stroke="#7777cc" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="669" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">SHA-1</text>
+
+  <!-- Step 3: SHA Hash -->
+  <rect x="700" y="104" width="140" height="70" fill="#111" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="770" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Object ID</text>
+  <text x="770" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff" text-anchor="middle">8ab686e...</text>
+  <text x="770" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">40자 hex</text>
+
+  <!-- Storage path diagram -->
+  <text x="440" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">.git/objects/ 저장 경로</text>
+
+  <rect x="60" y="244" width="760" height="90" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  SHA-1: </text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">         <tspan fill="#7ec8e3" font-weight="600">8a</tspan><tspan fill="#ffffff">b686e8a729...f4b0c       (40자)</tspan></text>
+  <text x="76" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  경로: .git/objects/<tspan fill="#7ec8e3" font-weight="600">8a</tspan><tspan fill="#888">/b686e8a729...f4b0c</tspan></text>
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">        ↑ 앞 2자리 = 디렉터리  ↑ 나머지 38자리 = 파일명</text>
+  <text x="76" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  압축: zlib deflate 적용된 바이너리</text>
+
+  <!-- Key properties -->
+  <text x="440" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">Blob 핵심 특성</text>
+
+  <!-- Property 1 -->
+  <rect x="60" y="380" width="220" height="80" fill="#0d1a0d" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="170" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">내용 기반 주소</text>
+  <text x="170" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">내용이 같으면</text>
+  <text x="170" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">항상 같은 SHA</text>
+  <text x="170" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">(중복 저장 없음)</text>
+
+  <!-- Property 2 -->
+  <rect x="330" y="380" width="220" height="80" fill="#0d0d1a" rx="8" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">불변(Immutable)</text>
+  <text x="440" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">저장된 blob은</text>
+  <text x="440" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">절대 수정 불가</text>
+  <text x="440" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">(내용 변경 = 새 SHA)</text>
+
+  <!-- Property 3 -->
+  <rect x="600" y="380" width="220" height="80" fill="#1a0d0d" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="710" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">파일명 미저장</text>
+  <text x="710" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">blob은 순수 내용만</text>
+  <text x="710" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">파일명/권한 없음</text>
+  <text x="710" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">(tree가 담당)</text>
+</svg>

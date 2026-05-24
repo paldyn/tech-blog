@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Packfile 내부 포맷</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">.pack 파일의 바이너리 구조</text>
+
+  <!-- .pack file layout -->
+  <text x="220" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">.pack 파일 레이아웃</text>
+
+  <!-- Header -->
+  <rect x="60" y="116" width="320" height="56" fill="#0d0d1a" rx="6" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="220" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">헤더 (12 bytes)</text>
+  <text x="220" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" text-anchor="middle">PACK | version(4B) | count(4B)</text>
+
+  <!-- Objects section -->
+  <rect x="60" y="180" width="320" height="100" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="220" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">오브젝트 데이터 (가변 길이)</text>
+  <text x="220" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" text-anchor="middle">[오브젝트1] [오브젝트2] ...</text>
+  <text x="220" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">FULL / OFS_DELTA / REF_DELTA</text>
+  <text x="220" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">각 오브젝트는 타입·크기 헤더 + 압축 데이터</text>
+
+  <!-- Checksum -->
+  <rect x="60" y="288" width="320" height="44" fill="#0d1a0d" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="220" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">트레일러: SHA-1 체크섬 (20 bytes)</text>
+  <text x="220" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">파일 전체에 대한 SHA-1 → 무결성 검증</text>
+
+  <!-- .idx file layout -->
+  <text x="660" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555" text-anchor="middle">.idx 파일 레이아웃 (v2)</text>
+
+  <!-- idx magic -->
+  <rect x="460" y="116" width="360" height="44" fill="#0d0d1a" rx="6" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="640" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">매직 + 버전 (8 bytes)</text>
+  <text x="640" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" text-anchor="middle">ff 74 4f 63 | 00 00 00 02</text>
+
+  <!-- Fan-out -->
+  <rect x="460" y="168" width="360" height="44" fill="#111" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Fan-out 테이블 (1024 bytes)</text>
+  <text x="640" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">256개 4-byte 카운터 (이진 탐색 가속)</text>
+
+  <!-- SHA list -->
+  <rect x="460" y="220" width="360" height="44" fill="#111" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">SHA-1 목록 (20 × N bytes)</text>
+  <text x="640" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">정렬된 오브젝트 SHA 배열</text>
+
+  <!-- CRC32 -->
+  <rect x="460" y="272" width="360" height="44" fill="#111" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">CRC32 목록 (4 × N bytes)</text>
+  <text x="640" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">각 오브젝트의 CRC32 체크섬</text>
+
+  <!-- Offset -->
+  <rect x="460" y="324" width="360" height="44" fill="#0d1a0d" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">.pack 오프셋 (4 × N bytes)</text>
+  <text x="640" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">SHA → .pack 내 위치 매핑</text>
+
+  <!-- Object types -->
+  <text x="440" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">Pack 오브젝트 타입</text>
+
+  <rect x="60" y="406" width="160" height="76" fill="#111" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="140" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">OBJ_COMMIT</text>
+  <text x="140" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">타입 비트: 001</text>
+  <text x="140" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">전체 커밋 내용</text>
+
+  <rect x="240" y="406" width="160" height="76" fill="#111" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="320" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">OBJ_BLOB</text>
+  <text x="320" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">타입 비트: 011</text>
+  <text x="320" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">전체 파일 내용</text>
+
+  <rect x="420" y="406" width="180" height="76" fill="#0d1a0d" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="510" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">OFS_DELTA</text>
+  <text x="510" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">타입 비트: 110</text>
+  <text x="510" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">pack 내 오프셋 기준 델타</text>
+
+  <rect x="620" y="406" width="200" height="76" fill="#0d0d1a" rx="6" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="720" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">REF_DELTA</text>
+  <text x="720" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">타입 비트: 111</text>
+  <text x="720" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">SHA 참조 기준 델타</text>
+</svg>

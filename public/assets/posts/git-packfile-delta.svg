@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">델타 압축 원리</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">유사 오브젝트를 기준 + 차이만 저장</text>
+
+  <!-- Base object -->
+  <rect x="60" y="92" width="280" height="160" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="200" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">기준 오브젝트 (FULL)</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  Hello, World!</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  This is version 1.</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  Some content here.</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  End of file.</text>
+  <text x="200" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">blob SHA: abc123</text>
+  <text x="200" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">100 bytes (전체 저장)</text>
+
+  <!-- Arrow -->
+  <line x1="340" y1="172" x2="398" y2="172" stroke="#7777cc" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="369" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">delta</text>
+
+  <!-- Delta object -->
+  <rect x="400" y="92" width="280" height="160" fill="#0d0d1a" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="540" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">델타 오브젝트 (OFS_DELTA)</text>
+  <text x="416" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  base: offset -100</text>
+  <text x="416" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  copy 0..13          </text>
+  <text x="416" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve">  <tspan fill="#55c555">insert "version 2."</tspan></text>
+  <text x="416" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  copy 33..end</text>
+  <text x="540" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">blob SHA: fff000</text>
+  <text x="540" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">22 bytes (차이만 저장!)</text>
+
+  <!-- Reconstructed -->
+  <rect x="700" y="92" width="160" height="160" fill="#0d1a0d" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="780" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">복원 결과</text>
+  <text x="716" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve">  Hello, World!</text>
+  <text x="716" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" xml:space="preserve">  This is version 2.</text>
+  <text x="716" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" xml:space="preserve">  Some content here.</text>
+  <text x="716" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" xml:space="preserve">  End of file.</text>
+
+  <!-- Arrow 2 -->
+  <line x1="680" y1="172" x2="698" y2="172" stroke="#55c555" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- verify-pack command -->
+  <rect x="60" y="280" width="760" height="120" fill="#000000" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">pack 내용 조회</text>
+  <text x="76" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#888">  # pack 오브젝트 상세 목록 (타입·크기·delta 정보)</tspan></text>
+  <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  git verify-pack</tspan><tspan fill="#ffffff"> -v .git/objects/pack/pack-*.idx | sort -k3 -n | tail</tspan></text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  # 저장소에서 가장 큰 파일 찾기 (크기 역순)</text>
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  git verify-pack</tspan><tspan fill="#ffffff"> -v .git/objects/pack/pack-*.idx | sort -k4 -n | tail -5</tspan></text>
+</svg>
