@@ -1,42 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
-  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
-
-  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">커스텀 이벤트 코드 패턴</text>
-
-  <!-- Left: basic dispatch -->
-  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">기본 생성 &amp; 발송</text>
-
-  <rect x="60" y="94" width="370" height="162" rx="6" fill="#000000" stroke="#3a4a6e"/>
-  <text x="76" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">const <text fill="#ffffff">evt = </text><text fill="#7ec8e3">new </text><text fill="#e8e8e8">CustomEvent(</text><text fill="#ce9178">'user:login'</text><text fill="#e8e8e8">, {</text></text>
-  <text x="76" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  bubbles: <text fill="#b5cea8">true</text><text fill="#e8e8e8">,</text></text>
-  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  detail: { userId: <text fill="#b5cea8">42</text><text fill="#e8e8e8">, role: </text><text fill="#ce9178">'admin'</text><text fill="#e8e8e8"> },</text></text>
-  <text x="76" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">});</text>
-  <text x="76" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">document.<text fill="#7ec8e3">dispatchEvent</text><text fill="#e8e8e8">(evt);</text></text>
-  <text x="76" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 리스너에서 e.detail.userId로 접근</text>
-  <text x="76" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">document.<text fill="#7ec8e3">addEventListener</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'user:login'</text><text fill="#e8e8e8">, e =&gt;</text></text>
-  <text x="76" y="244" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  console.<text fill="#7ec8e3">log</text><text fill="#e8e8e8">(e.detail.userId));</text></text>
-
-  <!-- Right: EventTarget class -->
-  <text x="450" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">EventTarget 상속 이벤트 버스</text>
-
-  <rect x="450" y="94" width="370" height="162" rx="6" fill="#000000" stroke="#3a4a6e"/>
-  <text x="466" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">class <text fill="#ffffff">Store </text><text fill="#7ec8e3">extends </text><text fill="#e8e8e8">EventTarget {</text></text>
-  <text x="466" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <text fill="#7ec8e3">set</text><text fill="#e8e8e8">(key, val) {</text></text>
-  <text x="466" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    this[key] = val;</text></text>
-  <text x="466" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">    this.<text fill="#7ec8e3">dispatchEvent</text><text fill="#e8e8e8">(</text><text fill="#7ec8e3">new</text></text>
-  <text x="466" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">      CustomEvent(<text fill="#ce9178">'change'</text><text fill="#e8e8e8">, {</text></text>
-  <text x="466" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        detail:{key,val}}));</text></text>
-  <text x="466" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  }</text>
-  <text x="466" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
-
-  <!-- Bottom: TypeScript typed events -->
-  <text x="60" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8a84c">TypeScript — 타입 안전 커스텀 이벤트</text>
-
-  <rect x="60" y="296" width="760" height="126" rx="6" fill="#000000" stroke="#3a4a6e"/>
-  <text x="76" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">interface <text fill="#ffffff">UserLoginDetail { userId: </text><text fill="#7ec8e3">number</text><text fill="#e8e8e8">; role: </text><text fill="#ce9178">'admin'</text><text fill="#e8e8e8"> | </text><text fill="#ce9178">'user'</text><text fill="#e8e8e8">; }</text></text>
-  <text x="76" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">type <text fill="#ffffff">UserLoginEvent = CustomEvent&lt;UserLoginDetail&gt;;</text></text>
-  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">document.<text fill="#7ec8e3">addEventListener</text><text fill="#e8e8e8">(</text><text fill="#ce9178">'user:login'</text><text fill="#e8e8e8">, (e: UserLoginEvent) =&gt; {</text></text>
-  <text x="76" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <text fill="#9aa4b8">// e.detail이 UserLoginDetail로 타입 추론</text></text>
-  <text x="76" y="388" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  </text><text x="76" y="406" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3">  const <text fill="#ffffff">{ userId } = e.detail;</text></text>
-  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">});</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
+  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
+  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="98" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">커스텀 이벤트 완전 이해</text>
+  <text x="440" y="124" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
 </svg>
