@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 540" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">JWT 인증 플로우</text>
+
+  <!-- Column headers -->
+  <text x="100" y="76" text-anchor="middle" font-size="14" font-weight="600" fill="#888">Client</text>
+  <text x="340" y="76" text-anchor="middle" font-size="14" font-weight="600" fill="#888">JwtAuthFilter</text>
+  <text x="580" y="76" text-anchor="middle" font-size="14" font-weight="600" fill="#888">AuthenticationManager</text>
+  <text x="800" y="76" text-anchor="middle" font-size="14" font-weight="600" fill="#888">Resource</text>
+
+  <!-- Vertical lanes (dashed) -->
+  <line x1="100" y1="84" x2="100" y2="510" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="340" y1="84" x2="340" y2="510" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="580" y1="84" x2="580" y2="510" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="800" y1="84" x2="800" y2="510" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: POST /auth/login -->
+  <rect x="60" y="96" width="80" height="36" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="100" y="119" text-anchor="middle" font-size="12" fill="#e8e8e8">POST /login</text>
+  <line x1="140" y1="114" x2="318" y2="114" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="228" y="108" text-anchor="middle" font-size="11" fill="#888">username + password</text>
+
+  <!-- Step 2: Filter passes to AuthManager -->
+  <line x1="340" y1="114" x2="558" y2="114" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="448" y="108" text-anchor="middle" font-size="11" fill="#888">authenticate()</text>
+
+  <!-- Step 3: AuthManager validates -->
+  <rect x="540" y="126" width="80" height="36" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="580" y="149" text-anchor="middle" font-size="12" fill="#55c555">검증 성공</text>
+
+  <!-- Step 4: Return JWT -->
+  <line x1="540" y1="162" x2="362" y2="162" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="448" y="156" text-anchor="middle" font-size="11" fill="#888">Authentication</text>
+  <line x1="318" y1="162" x2="140" y2="162" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="228" y="156" text-anchor="middle" font-size="11" fill="#888">accessToken + refreshToken</text>
+
+  <!-- Client stores token -->
+  <rect x="60" y="178" width="80" height="36" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="100" y="201" text-anchor="middle" font-size="12" fill="#e8e8e8">토큰 저장</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="232" x2="820" y2="232" stroke="#333" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="440" y="226" text-anchor="middle" font-size="11" fill="#555">— 이후 API 요청 —</text>
+
+  <!-- Step 5: API Request with Bearer Token -->
+  <rect x="60" y="244" width="80" height="36" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="100" y="267" text-anchor="middle" font-size="12" fill="#e8e8e8">GET /api/data</text>
+  <line x1="140" y1="262" x2="318" y2="262" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="228" y="256" text-anchor="middle" font-size="11" fill="#888">Authorization: Bearer {jwt}</text>
+
+  <!-- Step 6: Filter extracts token -->
+  <rect x="300" y="276" width="80" height="36" rx="6" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="340" y="294" text-anchor="middle" font-size="11" fill="#7ec8e3">토큰 추출</text>
+  <text x="340" y="307" text-anchor="middle" font-size="11" fill="#7ec8e3">서명 검증</text>
+
+  <!-- Step 7: Valid branch -->
+  <line x1="380" y1="294" x2="558" y2="294" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="468" y="288" text-anchor="middle" font-size="11" fill="#888">Claims 파싱</text>
+
+  <!-- Step 8: SecurityContext set -->
+  <rect x="540" y="306" width="80" height="62" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="580" y="322" text-anchor="middle" font-size="11" fill="#55c555">SecurityContext</text>
+  <text x="580" y="337" text-anchor="middle" font-size="11" fill="#55c555">UserDetails 등록</text>
+  <text x="580" y="352" text-anchor="middle" font-size="11" fill="#888">인가 완료</text>
+
+  <!-- Step 9: Proceed to resource -->
+  <line x1="620" y1="337" x2="778" y2="337" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <rect x="760" y="319" width="60" height="36" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="790" y="342" text-anchor="middle" font-size="12" fill="#55c555">200 OK</text>
+
+  <!-- Step 10: Response back to client -->
+  <line x1="760" y1="366" x2="140" y2="366" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="440" y="360" text-anchor="middle" font-size="11" fill="#888">응답 데이터</text>
+
+  <!-- Invalid token branch -->
+  <rect x="300" y="396" width="80" height="36" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="340" y="414" text-anchor="middle" font-size="11" fill="#e05555">서명 불일치</text>
+  <text x="340" y="427" text-anchor="middle" font-size="11" fill="#e05555">만료 토큰</text>
+  <line x1="318" y1="414" x2="140" y2="414" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="228" y="408" text-anchor="middle" font-size="11" fill="#888">401 Unauthorized</text>
+
+  <!-- Legend -->
+  <text x="60" y="476" font-size="13" fill="#888">범례:</text>
+  <line x1="102" y1="472" x2="140" y2="472" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="148" y="476" font-size="12" fill="#7ec8e3">정상 흐름</text>
+  <line x1="240" y1="472" x2="278" y2="472" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="286" y="476" font-size="12" fill="#55c555">인증 성공</text>
+  <line x1="370" y1="472" x2="408" y2="472" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="416" y="476" font-size="12" fill="#e05555">인증 실패</text>
+</svg>

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">Remember-Me 인증 플로우 (Persistent Token 방식)</text>
+
+  <!-- Columns -->
+  <text x="110" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#888">Browser</text>
+  <text x="340" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#888">RememberMeFilter</text>
+  <text x="580" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#888">PersistentTokenRepo</text>
+  <text x="780" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#888">DB</text>
+
+  <!-- Swimlanes -->
+  <line x1="110" y1="82" x2="110" y2="480" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="340" y1="82" x2="340" y2="480" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="580" y1="82" x2="580" y2="480" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="780" y1="82" x2="780" y2="480" stroke="#222" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: Login with remember-me -->
+  <line x1="110" y1="100" x2="318" y2="100" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="213" y="94" text-anchor="middle" font-size="11" fill="#888">① POST /login + remember-me=on</text>
+
+  <!-- Step 2: Generate token -->
+  <rect x="300" y="112" width="80" height="36" rx="6" fill="#0a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="340" y="130" text-anchor="middle" font-size="11" fill="#7777cc">토큰 생성</text>
+  <text x="340" y="143" text-anchor="middle" font-size="11" fill="#666">series + token</text>
+
+  <!-- Step 3: Save to DB -->
+  <line x1="380" y1="130" x2="558" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="468" y="124" text-anchor="middle" font-size="11" fill="#888">② 저장 (username, series, token)</text>
+
+  <line x1="580" y1="148" x2="768" y2="148" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="673" y="142" text-anchor="middle" font-size="11" fill="#888">③ INSERT persistent_logins</text>
+
+  <!-- Step 4: Set cookie -->
+  <line x1="300" y1="172" x2="122" y2="172" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="211" y="166" text-anchor="middle" font-size="11" fill="#888">④ remember-me 쿠키 설정 (series:token)</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="210" x2="820" y2="210" stroke="#333" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="440" y="204" text-anchor="middle" font-size="11" fill="#555">— 세션 만료 후 재접속 —</text>
+
+  <!-- Step 5: Browser sends cookie -->
+  <line x1="110" y1="226" x2="318" y2="226" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="213" y="220" text-anchor="middle" font-size="11" fill="#888">⑤ GET /page (쿠키 포함)</text>
+
+  <!-- Step 6: Filter extracts cookie -->
+  <rect x="300" y="238" width="80" height="36" rx="6" fill="#0a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="340" y="256" text-anchor="middle" font-size="11" fill="#7777cc">쿠키 파싱</text>
+  <text x="340" y="269" text-anchor="middle" font-size="11" fill="#666">series + token</text>
+
+  <!-- Step 7: Lookup by series -->
+  <line x1="380" y1="256" x2="558" y2="256" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="468" y="250" text-anchor="middle" font-size="11" fill="#888">⑥ findBySeries(series)</text>
+
+  <line x1="580" y1="274" x2="768" y2="274" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="768" y1="292" x2="582" y2="292" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="673" y="286" text-anchor="middle" font-size="11" fill="#888">⑦ DB 조회 결과 반환</text>
+
+  <!-- Step 8: Token match? -->
+  <rect x="300" y="304" width="80" height="36" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="340" y="318" text-anchor="middle" font-size="11" fill="#55c555">토큰 일치</text>
+  <text x="340" y="331" text-anchor="middle" font-size="11" fill="#55c555">→ 인증 성공</text>
+
+  <!-- Step 9: Update token (rotation) -->
+  <line x1="380" y1="322" x2="558" y2="322" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="468" y="316" text-anchor="middle" font-size="11" fill="#888">⑧ 새 token으로 업데이트 (rotation)</text>
+
+  <!-- Step 10: New cookie -->
+  <line x1="300" y1="360" x2="122" y2="360" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="211" y="354" text-anchor="middle" font-size="11" fill="#888">⑨ 새 remember-me 쿠키 발급</text>
+
+  <!-- Theft detection -->
+  <rect x="300" y="390" width="80" height="36" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="340" y="404" text-anchor="middle" font-size="11" fill="#e05555">토큰 불일치</text>
+  <text x="340" y="417" text-anchor="middle" font-size="11" fill="#e05555">→ 도난 의심</text>
+
+  <line x1="300" y1="408" x2="122" y2="408" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-r)"/>
+  <text x="211" y="402" text-anchor="middle" font-size="11" fill="#888">⑩ 전체 series 삭제 + 재로그인 요구</text>
+
+  <!-- Legend -->
+  <text x="60" y="460" font-size="13" fill="#888">※ series는 고정, token은 매 요청마다 갱신 — 탈취 감지 가능</text>
+</svg>

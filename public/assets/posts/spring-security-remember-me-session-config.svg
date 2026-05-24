@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 540" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">세션 고정 공격 방어 전략</text>
+
+  <!-- Left: Attack flow -->
+  <text x="200" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#e05555">세션 고정 공격</text>
+
+  <rect x="60" y="92" width="280" height="60" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="116" text-anchor="middle" font-size="13" fill="#e8e8e8">① 공격자가 미리 세션 ID를 알아냄</text>
+  <text x="200" y="134" text-anchor="middle" font-size="12" fill="#888">예: ?jsessionid=ABC123 로 링크 공유</text>
+
+  <line x1="200" y1="152" x2="200" y2="172" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="60" y="172" width="280" height="60" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="196" text-anchor="middle" font-size="13" fill="#e8e8e8">② 피해자가 해당 세션으로 로그인</text>
+  <text x="200" y="214" text-anchor="middle" font-size="12" fill="#888">서버: 기존 세션 ID 유지, 인증 등록</text>
+
+  <line x1="200" y1="232" x2="200" y2="252" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="60" y="252" width="280" height="60" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="276" text-anchor="middle" font-size="13" fill="#e05555">③ 공격자가 동일 세션으로 접근</text>
+  <text x="200" y="294" text-anchor="middle" font-size="12" fill="#888">→ 피해자로 인증된 상태 획득!</text>
+
+  <!-- Right: Defense -->
+  <text x="660" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#55c555">Spring Security 방어</text>
+
+  <rect x="500" y="92" width="320" height="60" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="116" text-anchor="middle" font-size="13" fill="#e8e8e8">SessionFixationProtectionStrategy</text>
+  <text x="660" y="134" text-anchor="middle" font-size="12" fill="#888">로그인 성공 시 새 세션 ID 자동 발급</text>
+
+  <rect x="500" y="172" width="320" height="60" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="196" text-anchor="middle" font-size="13" fill="#7ec8e3" font-weight="600">migrateSession (기본값)</text>
+  <text x="660" y="214" text-anchor="middle" font-size="12" fill="#888">기존 세션 속성 복사 + 새 ID 발급</text>
+
+  <rect x="500" y="252" width="320" height="60" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="276" text-anchor="middle" font-size="13" fill="#55c555">newSession</text>
+  <text x="660" y="294" text-anchor="middle" font-size="12" fill="#888">속성 복사 없이 새 세션 생성 (엄격)</text>
+
+  <!-- Divider -->
+  <line x1="400" y1="88" x2="400" y2="328" stroke="#333" stroke-width="1"/>
+
+  <!-- Code block -->
+  <text x="60" y="348" font-size="16" font-weight="600" fill="#e8e8e8">세션 보안 설정 예시</text>
+  <rect x="60" y="362" width="760" height="152" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">http</tspan><tspan fill="#ffffff">.sessionManagement(session -&gt; session</tspan></text>
+  <text x="76" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    .sessionFixation(sf -&gt; sf.migrateSession())</tspan></text>
+  <text x="76" y="422" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    .maximumSessions(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">)         </tspan><tspan fill="#9aa4b8">// 동시 세션 1개 제한</tspan></text>
+  <text x="76" y="440" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    .maxSessionsPreventsLogin(</tspan><tspan fill="#7ec8e3" font-weight="600">false</tspan><tspan fill="#ffffff">)  </tspan><tspan fill="#9aa4b8">// 기존 세션 만료</tspan></text>
+  <text x="76" y="458" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    .expiredUrl(</tspan><tspan fill="#ce9178">"/login?expired"</tspan><tspan fill="#ffffff">));</tspan></text>
+  <text x="76" y="476" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#9aa4b8">// SessionRegistry 빈 등록 필요: new SessionRegistryImpl()</tspan></text>
+  <text x="76" y="494" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#9aa4b8">// 분산 환경: Spring Session + Redis 사용 권장</tspan></text>
+</svg>
