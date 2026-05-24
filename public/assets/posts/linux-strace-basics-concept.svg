@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">strace — 시스템 콜 추적 원리</text>
+
+  <!-- User Space -->
+  <text x="50" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">사용자</text>
+
+  <!-- Program -->
+  <rect x="120" y="76" width="160" height="52" rx="8" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">프로그램</text>
+  <text x="200" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">open() / read() / write()</text>
+
+  <!-- strace -->
+  <rect x="560" y="76" width="200" height="52" rx="8" fill="#1a1200" stroke="#e8c55e" stroke-width="1.5"/>
+  <text x="660" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8c55e" text-anchor="middle">strace 프로세스</text>
+  <text x="660" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ptrace() 시스템 콜로 감시</text>
+
+  <!-- Kernel boundary -->
+  <line x1="80" y1="155" x2="800" y2="155" stroke="#333" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="50" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">커널</text>
+
+  <!-- Kernel -->
+  <rect x="280" y="168" width="200" height="60" rx="8" fill="#0f2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="380" y="193" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">리눅스 커널</text>
+  <text x="380" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">시스템 콜 처리</text>
+
+  <!-- Arrows: Program -> Kernel (syscall) -->
+  <line x1="200" y1="128" x2="200" y2="175" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="200" y1="175" x2="280" y2="198" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="150" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">① 시스템콜</text>
+
+  <!-- Kernel -> Program (return) -->
+  <line x1="280" y1="218" x2="200" y2="218" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <line x1="200" y1="218" x2="200" y2="155" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="150" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">④ 결과 반환</text>
+
+  <!-- Kernel -> strace (intercept) -->
+  <path d="M 480 190 C 540 190 560 110 570 110" stroke="#e8c55e" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+  <text x="520" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c55e">② 진입 인터셉트</text>
+
+  <!-- strace -> kernel (pass through) -->
+  <path d="M 560 118 C 540 118 520 195 490 195" stroke="#e8c55e" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+  <text x="520" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c55e">③ 콜 로깅 후 통과</text>
+
+  <!-- Output box -->
+  <rect x="120" y="272" width="640" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="136" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888"># strace 출력 예시</text>
+  <text x="136" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">execve</tspan>(<tspan fill="#ce9178">"/usr/bin/ls"</tspan>, [...], [...]) = <tspan fill="#b5cea8">0</tspan></text>
+  <text x="136" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">openat</tspan>(AT_FDCWD, <tspan fill="#ce9178">"/etc/ld.so.cache"</tspan>, O_RDONLY) = <tspan fill="#b5cea8">3</tspan></text>
+  <text x="136" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">fstat</tspan>(<tspan fill="#b5cea8">3</tspan>, {st_mode=S_IFREG|<tspan fill="#b5cea8">0644</tspan>, st_size=<tspan fill="#b5cea8">65536</tspan>, ...}) = <tspan fill="#b5cea8">0</tspan></text>
+  <text x="136" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">mmap</tspan>(NULL, <tspan fill="#b5cea8">65536</tspan>, PROT_READ, MAP_PRIVATE, <tspan fill="#b5cea8">3</tspan>, <tspan fill="#b5cea8">0</tspan>) = <tspan fill="#b5cea8">0x7fa8c3...</tspan></text>
+  <text x="136" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555"><tspan fill="#7ec8e3" font-weight="600">openat</tspan>(AT_FDCWD, <tspan fill="#ce9178">"/etc/missing"</tspan>, O_RDONLY) = <tspan fill="#e05555">-1 ENOENT (No such file)</tspan></text>
+  <text x="136" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># 형식: syscall_name(인자...) = 반환값</text>
+  <text x="136" y="420" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># 에러: 음수 반환값 + errno 이름</text>
+  <text x="136" y="438" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># 리눅스 x86-64: 약 350개 시스템 콜</text>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CIFS/SMB 마운트 명령어</text>
+
+  <!-- Basic mount -->
+  <text x="220" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">기본 마운트</text>
+
+  <rect x="60" y="95" width="320" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="117" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># 패키지 설치</text>
+  <text x="76" y="135" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">apt</tspan> install cifs-utils smbclient</text>
+  <text x="76" y="153" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># 임시 마운트</text>
+  <text x="76" y="171" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">mount</tspan> -t cifs //SRV/share /mnt/smb \</text>
+  <text x="76" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  -o <tspan fill="#ce9178">username=alice,password=pass</tspan></text>
+  <text x="76" y="207" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888"># 서버 공유 목록 확인</text>
+  <text x="76" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">smbclient</tspan> -L //SRV -U alice</text>
+
+  <!-- Credentials file -->
+  <text x="660" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">자격증명 파일 (보안)</text>
+
+  <rect x="500" y="95" width="320" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="516" y="117" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># ~/.smbcredentials 파일 생성</text>
+  <text x="516" y="135" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">username=alice</text>
+  <text x="516" y="153" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">password=secret123</text>
+  <text x="516" y="171" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">domain=WORKGROUP</text>
+  <text x="516" y="189" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># 권한 제한</text>
+  <text x="516" y="207" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">chmod</tspan> 600 ~/.smbcredentials</text>
+  <text x="516" y="225" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">mount</tspan> -t cifs //SRV/share /mnt -o <tspan fill="#ce9178">credentials=~/.smbcredentials</tspan></text>
+
+  <!-- fstab -->
+  <text x="220" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8c55e" text-anchor="middle">fstab 영구 설정</text>
+
+  <rect x="60" y="270" width="320" height="104" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888"># /etc/fstab</text>
+  <text x="76" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff">//192.168.1.10/share /mnt/smb cifs</text>
+  <text x="76" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178">  credentials=/root/.smbcredentials,</text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178">  uid=1000,gid=1000,vers=3.0,</text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178">  _netdev,noauto,x-systemd.automount  0 0</text>
+
+  <!-- smbclient interactive -->
+  <text x="660" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">smbclient 셸 사용</text>
+
+  <rect x="500" y="270" width="320" height="104" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="516" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># FTP처럼 대화형 접속</text>
+  <text x="516" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">smbclient</tspan> //SRV/share -U alice</text>
+  <text x="516" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># 내부 명령: ls, get, put, cd</text>
+  <text x="516" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888"># 단일 명령 실행</text>
+  <text x="516" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">smbclient</tspan> //SRV/share -c 'ls'</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="394" width="760" height="46" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="440" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8c55e" text-anchor="middle">SMB1 비활성화 (보안)</text>
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">mount 시 vers=3.0 이상 지정 | Samba: min protocol = SMB2 설정 | WannaCry 등 랜섬웨어가 SMB1 악용</text>
+</svg>
