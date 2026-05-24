@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arru" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrc2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">WAL 모드 동작 흐름</text>
+
+  <!-- DB file -->
+  <rect x="60" y="80" width="220" height="200" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">app.db</text>
+  <rect x="76" y="116" width="188" height="30" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="170" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">페이지 1 (스키마)</text>
+  <rect x="76" y="154" width="188" height="30" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="170" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">페이지 2 (데이터 - 구버전)</text>
+  <rect x="76" y="192" width="188" height="30" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="170" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">페이지 3</text>
+  <text x="170" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">체크포인트 후 최신화</text>
+
+  <!-- WAL file -->
+  <rect x="330" y="80" width="260" height="240" fill="#0f1a2e" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">app.db-wal</text>
+
+  <rect x="346" y="116" width="228" height="30" fill="#1a1a2e" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="460" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">WAL 헤더 (32 bytes)</text>
+
+  <rect x="346" y="154" width="228" height="30" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="460" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">WAL 프레임: 페이지 2 (신버전)</text>
+
+  <rect x="346" y="192" width="228" height="30" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="460" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">WAL 프레임: 페이지 5 (새 페이지)</text>
+
+  <rect x="346" y="230" width="228" height="30" fill="#1a2a1a" rx="4" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="460" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">커밋 마커 (salt + checksum)</text>
+
+  <text x="460" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">순차 추가 기록 (append-only)</text>
+
+  <!-- SHM -->
+  <rect x="330" y="340" width="260" height="54" fill="#1a1a2e" rx="6" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="460" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">app.db-shm (공유 메모리)</text>
+  <text x="460" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">WAL 인덱스 — 프레임 위치 빠른 조회</text>
+
+  <!-- Arrows -->
+  <line x1="280" y1="170" x2="328" y2="170" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arru)"/>
+  <text x="304" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">쓰기</text>
+
+  <line x1="460" y1="324" x2="460" y2="338" stroke="#7777cc" stroke-width="2" marker-end="url(#arru)"/>
+
+  <!-- checkpoint arrow -->
+  <path d="M 460 80 L 460 60 L 170 60 L 170 78" stroke="#55c555" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arrc2)"/>
+  <text x="315" y="54" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">체크포인트 (WAL → DB)</text>
+
+  <!-- Reader -->
+  <rect x="660" y="120" width="180" height="100" fill="#1a1a2e" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="750" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">읽기 트랜잭션</text>
+  <text x="750" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">1. SHM에서 유효</text>
+  <text x="750" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">    WAL 프레임 확인</text>
+  <text x="750" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">2. WAL → DB 파일 순서</text>
+
+  <line x1="592" y1="170" x2="658" y2="170" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arru)"/>
+</svg>

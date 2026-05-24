@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arrw" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrv" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQLite 저널 모드 비교 — Rollback vs WAL</text>
+
+  <!-- Rollback Journal -->
+  <rect x="60" y="68" width="360" height="260" fill="#0f1a2e" rx="10" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#e05555" text-anchor="middle">롤백 저널 (기본)</text>
+
+  <rect x="76" y="108" width="328" height="44" fill="#2a1a1a" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8" text-anchor="middle">쓰기 전 원본 페이지를 저널 파일에 저장</text>
+  <text x="240" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">app.db-journal 생성</text>
+
+  <text x="76" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">1. BEGIN: 저널 파일 생성</text>
+  <text x="76" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">2. 변경할 페이지 원본 → 저널</text>
+  <text x="76" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">3. 변경 페이지를 DB 파일에 직접 씀</text>
+  <text x="76" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">4. COMMIT: 저널 파일 삭제</text>
+  <text x="76" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">5. ROLLBACK: 저널로 DB 복원</text>
+
+  <rect x="76" y="276" width="328" height="36" fill="#1a1a2e" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">쓰기 중 배타적 잠금 — 읽기도 차단</text>
+  <text x="240" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">파일: app.db + app.db-journal</text>
+
+  <!-- WAL -->
+  <rect x="460" y="68" width="360" height="260" fill="#0a1a0a" rx="10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#55c555" text-anchor="middle">WAL 모드 (권장)</text>
+
+  <rect x="476" y="108" width="328" height="44" fill="#1a2a1a" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8" text-anchor="middle">변경 내용을 WAL 파일에 추가 기록</text>
+  <text x="640" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">app.db-wal + app.db-shm 생성</text>
+
+  <text x="476" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">1. BEGIN: 현재 WAL 끝 위치 기록</text>
+  <text x="476" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">2. 새 페이지를 WAL 파일에 추가</text>
+  <text x="476" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">3. COMMIT: WAL에 커밋 마커 추가</text>
+  <text x="476" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">4. 읽기: WAL 먼저 확인 → DB 파일</text>
+  <text x="476" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">5. WAL 체크포인트: WAL → DB 파일 반영</text>
+
+  <rect x="476" y="276" width="328" height="36" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">읽기와 쓰기 동시 — 읽기 차단 없음</text>
+  <text x="640" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">파일: app.db + app.db-wal + app.db-shm</text>
+
+  <!-- Feature comparison -->
+  <rect x="60" y="350" width="760" height="148" fill="#0f1a2e" rx="10" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8" text-anchor="middle">성능·동작 비교</text>
+
+  <!-- Header -->
+  <text x="100" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3">항목</text>
+  <text x="310" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e05555">롤백 저널</text>
+  <text x="570" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555">WAL</text>
+
+  <line x1="76" y1="402" x2="804" y2="402" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="100" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">읽기 동시성</text>
+  <text x="310" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">쓰기 중 읽기 차단</text>
+  <text x="570" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">읽기·쓰기 동시 가능</text>
+
+  <text x="100" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">쓰기 동시성</text>
+  <text x="310" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">단일 writer</text>
+  <text x="570" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">단일 writer (동일)</text>
+
+  <text x="100" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">쓰기 속도</text>
+  <text x="310" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">fsync 2회</text>
+  <text x="570" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">fsync 1회 (더 빠름)</text>
+
+  <text x="100" y="474" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">원격 파일시스템</text>
+  <text x="310" y="474" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">가능 (일부 주의)</text>
+  <text x="570" y="474" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">NFS 등에서 불안정</text>
+
+  <text x="100" y="492" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">DB 크기</text>
+  <text x="310" y="492" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">단일 파일</text>
+  <text x="570" y="492" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">3 파일 (.db .wal .shm)</text>
+</svg>

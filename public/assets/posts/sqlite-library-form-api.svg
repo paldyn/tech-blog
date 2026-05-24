@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arra" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQLite C API 흐름과 언어 바인딩</text>
+
+  <!-- C API flow -->
+  <rect x="60" y="70" width="760" height="60" fill="#0f1a2e" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">C API 호출 순서</text>
+
+  <text x="90" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">sqlite3_open()</text>
+  <line x1="195" y1="113" x2="218" y2="113" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arra)"/>
+  <text x="225" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">sqlite3_prepare_v2()</text>
+  <line x1="368" y1="113" x2="391" y2="113" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arra)"/>
+  <text x="398" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">sqlite3_bind_*()</text>
+  <line x1="510" y1="113" x2="533" y2="113" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arra)"/>
+  <text x="540" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">sqlite3_step()</text>
+  <line x1="640" y1="113" x2="663" y2="113" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arra)"/>
+  <text x="670" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">sqlite3_finalize()</text>
+
+  <!-- Code blocks: C vs Python vs Java -->
+  <rect x="60" y="150" width="360" height="200" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">/* C API */</text>
+  <text x="76" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">sqlite3</tspan><tspan fill="#ffffff"> *db;</tspan></text>
+  <text x="76" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">sqlite3_open(<tspan fill="#ce9178">"app.db"</tspan>, &amp;db);</text>
+  <text x="76" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">sqlite3_stmt</tspan><tspan fill="#ffffff"> *stmt;</tspan></text>
+  <text x="76" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">sqlite3_prepare_v2(</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  db, <tspan fill="#ce9178">"SELECT * FROM t WHERE id=?"</tspan>,</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  -1, &amp;stmt, NULL);</text>
+  <text x="76" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">sqlite3_bind_int(stmt, 1, id);</text>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">while</tspan><tspan fill="#ffffff"> (sqlite3_step(stmt) == </tspan></text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">      SQLITE_ROW) { ... }</text>
+
+  <rect x="460" y="150" width="360" height="200" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Python (sqlite3 표준 모듈)</text>
+  <text x="476" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">import</tspan><tspan fill="#ffffff"> sqlite3</tspan></text>
+  <text x="476" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">conn = sqlite3.connect(<tspan fill="#ce9178">"app.db"</tspan>)</text>
+  <text x="476" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">cur = conn.cursor()</text>
+  <text x="476" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">cur.execute(</text>
+  <text x="476" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#ce9178">"SELECT * FROM t WHERE id=?"</tspan>,</text>
+  <text x="476" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  (id_val,))</text>
+  <text x="476" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">for</tspan><tspan fill="#ffffff"> row </tspan><tspan font-weight="600" fill="#7ec8e3">in</tspan><tspan fill="#ffffff"> cur.fetchall():</tspan></text>
+  <text x="476" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan font-weight="600" fill="#7ec8e3">print</tspan><tspan fill="#ffffff">(row)</tspan></text>
+
+  <!-- Language bindings -->
+  <rect x="60" y="370" width="760" height="50" fill="#1a1a2e" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">주요 언어 바인딩</text>
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">Python (내장) · Java (xerial/sqlite-jdbc) · Rust (rusqlite) · Go (mattn/go-sqlite3) · JavaScript (better-sqlite3, wa-sqlite)</text>
+</svg>

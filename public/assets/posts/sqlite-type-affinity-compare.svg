@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQLite 스토리지 클래스와 비교 규칙</text>
+
+  <!-- Storage classes -->
+  <rect x="60" y="68" width="380" height="180" fill="#0f1a2e" rx="10" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="250" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8" text-anchor="middle">5가지 스토리지 클래스</text>
+
+  <text x="90" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">NULL</text>
+  <text x="200" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">값 없음</text>
+
+  <text x="90" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">INTEGER</text>
+  <text x="200" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">1~8 바이트 부호 정수</text>
+
+  <text x="90" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">REAL</text>
+  <text x="200" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">8 바이트 IEEE-754 부동소수</text>
+
+  <text x="90" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">TEXT</text>
+  <text x="200" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">UTF-8 / UTF-16 문자열</text>
+
+  <text x="90" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">BLOB</text>
+  <text x="200" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">그대로의 바이트 배열</text>
+
+  <text x="250" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">어파이니티 ≠ 스토리지 클래스 (실제 저장 방식)</text>
+
+  <!-- Comparison order -->
+  <rect x="460" y="68" width="360" height="180" fill="#0f1a2e" rx="10" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="640" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8" text-anchor="middle">비교 우선순위 (낮을수록 작음)</text>
+
+  <rect x="476" y="104" width="328" height="34" fill="#1a1a2e" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">1. NULL — 모든 값보다 작음</text>
+
+  <rect x="476" y="146" width="328" height="34" fill="#1a1a2e" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">2. INTEGER / REAL — 수치 비교</text>
+
+  <rect x="476" y="188" width="328" height="34" fill="#1a1a2e" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178" text-anchor="middle">3. TEXT — 대조 순서(COLLATION)</text>
+
+  <rect x="476" y="230" width="328" height="18" fill="#1a1a2e" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="243" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">4. BLOB — 바이트 단위 비교</text>
+
+  <!-- Code blocks -->
+  <rect x="60" y="268" width="380" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 놀라운 동작 예시</text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">CREATE TABLE</tspan><tspan fill="#ffffff"> t (v TEXT);</tspan></text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">INSERT INTO</tspan><tspan fill="#ffffff"> t VALUES (</tspan><tspan fill="#b5cea8">42</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">SELECT</tspan><tspan fill="#ffffff"> v, </tspan><tspan font-weight="600" fill="#7ec8e3">typeof</tspan><tspan fill="#ffffff">(v) </tspan><tspan font-weight="600" fill="#7ec8e3">FROM</tspan><tspan fill="#ffffff"> t;</tspan></text>
+  <text x="76" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 결과: v=42, typeof='text'</text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- TEXT 어파이니티 → 42를 "42"로 변환</text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- ORDER BY v: "9" &gt; "42" (사전순!)</text>
+
+  <rect x="460" y="268" width="360" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- STRICT 모드 (SQLite 3.37+)</text>
+  <text x="476" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">CREATE TABLE</tspan><tspan fill="#ffffff"> t2 (</tspan></text>
+  <text x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  id  <tspan font-weight="600" fill="#7ec8e3">INTEGER</tspan><tspan fill="#ffffff"> PRIMARY KEY,</tspan></text>
+  <text x="476" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  val <tspan font-weight="600" fill="#7ec8e3">TEXT</tspan><tspan fill="#ffffff"> NOT NULL</tspan></text>
+  <text x="476" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">) <tspan font-weight="600" fill="#7ec8e3">STRICT</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="476" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 숫자를 TEXT에 넣으면 오류 발생</text>
+  <text x="476" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">-- 다른 DBMS처럼 엄격한 타입 체크</text>
+</svg>
