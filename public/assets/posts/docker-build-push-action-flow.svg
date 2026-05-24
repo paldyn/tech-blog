@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">build-push-action 실행 흐름</text>
+
+  <!-- Step 1: metadata-action -->
+  <rect x="60" y="74" width="180" height="72" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="150" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">metadata-action</text>
+  <text x="150" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">tags / labels</text>
+  <text x="150" y="137" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">자동 생성</text>
+
+  <line x1="240" y1="110" x2="274" y2="110" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: build-push-action -->
+  <rect x="278" y="74" width="200" height="72" rx="8" fill="#0d1f2d" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="378" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">build-push-action</text>
+  <text x="378" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">BuildKit 빌드</text>
+  <text x="378" y="137" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">캐시 I/O</text>
+
+  <line x1="478" y1="110" x2="512" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Registry -->
+  <rect x="516" y="74" width="180" height="72" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="606" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Registry</text>
+  <text x="606" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">이미지 Push</text>
+  <text x="606" y="137" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">multi-arch manifest</text>
+
+  <!-- Output arrow -->
+  <line x1="696" y1="110" x2="730" y2="110" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="734" y="74" width="110" height="72" rx="8" fill="#1a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="789" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">outputs</text>
+  <text x="789" y="121" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">imageid</text>
+  <text x="789" y="137" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">digest</text>
+
+  <!-- Code block: Complete example -->
+  <rect x="60" y="180" width="760" height="152" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># digest 출력 활용 예시</text>
+  <text x="76" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">- name: Build and push</text>
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  id: build</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  uses</text>
+  <text x="114" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">: docker/build-push-action@v5</text>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">- run: echo "${{ steps.build.outputs.digest }}"</text>
+  <text x="76" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  # sha256:abc123... — K8s 배포에 digest 태그 사용</text>
+</svg>

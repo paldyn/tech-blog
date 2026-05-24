@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">데몬 연결 오류 진단 트리</text>
+
+  <!-- Error box at top -->
+  <rect x="240" y="68" width="400" height="52" rx="8" fill="#2a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Cannot connect to the Docker daemon</text>
+  <text x="440" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">at unix:///var/run/docker.sock</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="120" x2="440" y2="148" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- Check 1: Is daemon running? -->
+  <rect x="300" y="152" width="280" height="48" rx="8" fill="#1a1a0a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="440" y="175" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">데몬이 실행 중인가?</text>
+  <text x="440" y="193" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">systemctl status docker</text>
+
+  <!-- No arrow left -->
+  <line x1="300" y1="176" x2="180" y2="248" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-r)"/>
+  <text x="220" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">아니오</text>
+
+  <!-- Yes arrow right -->
+  <line x1="580" y1="176" x2="700" y2="248" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-g)"/>
+  <text x="660" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">실행 중</text>
+
+  <!-- Left: Start daemon -->
+  <rect x="60" y="252" width="220" height="72" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="170" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">데몬 시작</text>
+  <text x="170" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">sudo systemctl start docker</text>
+  <text x="170" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">또는 Docker Desktop 실행</text>
+
+  <!-- Right: Check permissions -->
+  <rect x="600" y="252" width="220" height="72" rx="8" fill="#1a1a0a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="710" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#ce9178" text-anchor="middle">소켓 권한 확인</text>
+  <text x="710" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">ls -la /var/run/docker.sock</text>
+  <text x="710" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">id (docker 그룹 확인)</text>
+
+  <!-- Arrow from permission check -->
+  <line x1="710" y1="324" x2="710" y2="362" stroke="#ce9178" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Permission fix -->
+  <rect x="600" y="366" width="220" height="72" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="710" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">그룹 추가</text>
+  <text x="710" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">sudo usermod -aG docker $USER</text>
+  <text x="710" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">newgrp docker (재로그인 불필요)</text>
+
+  <!-- Center: DOCKER_HOST -->
+  <rect x="290" y="366" width="300" height="72" rx="8" fill="#0d1f2d" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">원격 연결 문제</text>
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">echo $DOCKER_HOST</text>
+  <text x="440" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">docker context ls</text>
+</svg>

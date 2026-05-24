@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CI에서 Docker 빌드 캐시 전략</text>
+
+  <!-- Left: Without cache -->
+  <rect x="60" y="72" width="360" height="270" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">캐시 없음 (매번 풀 빌드)</text>
+  <rect x="80" y="112" width="320" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 매 실행마다 의존성 재설치</text>
+  <text x="96" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">COPY package*.json ./</text>
+  <text x="96" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve" font-weight="600">RUN</text>
+  <text x="124" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> npm install  # 매번!</text>
+  <text x="96" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">COPY . .</text>
+  <text x="96" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve" font-weight="600">RUN</text>
+  <text x="124" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> npm run build</text>
+  <text x="96" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 소스 변경 → 전체 레이어 무효화</text>
+  <text x="96" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve"># 빌드 시간: 3~5분 (npm install)</text>
+  <text x="96" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve"># CI 크레딧 낭비</text>
+  <text x="96" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># ---</text>
+
+  <!-- Right: With cache -->
+  <rect x="460" y="72" width="360" height="270" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">캐시 최적화 (레이어 분리)</text>
+  <rect x="480" y="112" width="320" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 의존성 레이어 먼저</text>
+  <text x="496" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">COPY package*.json ./</text>
+  <text x="496" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve" font-weight="600">RUN</text>
+  <text x="524" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> npm ci  # 캐시됨</text>
+  <text x="496" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 소스는 나중에</text>
+  <text x="496" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">COPY src/ ./src/</text>
+  <text x="496" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve" font-weight="600">RUN</text>
+  <text x="524" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> npm run build</text>
+  <text x="496" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve"># 소스만 변경 → npm ci 캐시 재사용</text>
+  <text x="496" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve"># 빌드 시간: ~30초</text>
+  <text x="496" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># ---</text>
+</svg>
