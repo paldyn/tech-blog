@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">cgroups v2 실전 사용법</text>
+
+  <!-- Block 1: v2 basic -->
+  <rect x="60" y="64" width="370" height="250" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># cgroup v2 기본 제어</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># v2 여부 확인</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">stat</text>
+  <text x="108" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -fc %T /sys/fs/cgroup/</text>
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># cgroup 생성</text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">mkdir</text>
+  <text x="120" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> /sys/fs/cgroup/myapp</text>
+  <text x="76" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 서브시스템 활성화</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="116" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> "+cpu +memory +io" | sudo tee \</text>
+  <text x="76" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">   /sys/fs/cgroup/cgroup.subtree_control</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 프로세스 추가</text>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="116" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> $$ | sudo tee /sys/fs/cgroup/myapp/cgroup.procs</text>
+  <text x="76" y="305" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 포함된 프로세스 확인</text>
+
+  <!-- Block 2: resource limits -->
+  <rect x="450" y="64" width="370" height="250" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="466" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 리소스 한도 설정 (v2)</text>
+  <text x="466" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 메모리 하드 한도 512MB</text>
+  <text x="466" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="506" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 536870912 | sudo tee \</text>
+  <text x="466" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">   /sys/fs/cgroup/myapp/memory.max</text>
+  <text x="466" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 메모리 소프트 한도 400MB</text>
+  <text x="466" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="506" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 419430400 | sudo tee \</text>
+  <text x="466" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">   /sys/fs/cgroup/myapp/memory.high</text>
+  <text x="466" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># CPU 가중치 (기본 100)</text>
+  <text x="466" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="506" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 200 | sudo tee /sys/fs/cgroup/myapp/cpu.weight</text>
+  <text x="466" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># CPU 최대 50%로 제한</text>
+  <text x="466" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="506" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> "50000 100000" | sudo tee \</text>
+  <text x="466" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">   /sys/fs/cgroup/myapp/cpu.max</text>
+
+  <!-- PSI and systemd -->
+  <rect x="60" y="330" width="760" height="122" rx="8" fill="#111111" stroke="#444" stroke-width="1"/>
+  <text x="440" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">PSI (Pressure Stall Information) &amp; systemd 연동</text>
+
+  <text x="80" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">PSI:</text>
+  <text x="115" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">메모리/CPU/I/O 압박 정도를 0~100% 수치로 제공 — v2 전용</text>
+  <text x="80" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">cat /proc/pressure/memory</text>
+  <text x="285" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">→ some avg10=0.25 full avg10=0.00 총 stall 시간</text>
+
+  <text x="80" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">systemd 서비스 설정:</text>
+  <text x="240" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">[Service] MemoryMax=512M  MemoryHigh=400M  CPUQuota=50%</text>
+  <text x="80" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">확인:</text>
+  <text x="120" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">systemctl status myapp.service</text>
+  <text x="320" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">→ CGroup 항목에서 v2 계층 확인 가능</text>
+</svg>

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">OOM Killer 동작 원리 &amp; oom_score</text>
+
+  <!-- Memory pressure indicator -->
+  <text x="60" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">메모리 압박 → OOM 트리거 조건</text>
+
+  <rect x="60" y="92" width="760" height="36" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <!-- memory bar: full -->
+  <rect x="64" y="96" width="656" height="28" rx="4" fill="#e05555"/>
+  <rect x="720" y="96" width="96" height="28" rx="4" fill="#333"/>
+  <text x="392" y="115" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff">RAM 사용 중 (86%)</text>
+  <text x="768" y="115" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">여유 (14%)</text>
+
+  <!-- OOM trigger flow -->
+  <text x="60" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">메모리 할당 실패 →</text>
+  <text x="192" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" font-weight="600">페이지 회수 시도 →</text>
+  <text x="350" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">swap도 부족 →</text>
+  <text x="470" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" font-weight="600">OOM Killer 발동</text>
+
+  <!-- oom_score scoring table -->
+  <text x="60" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">oom_score 계산 방식</text>
+
+  <rect x="60" y="198" width="440" height="200" rx="8" fill="#111111" stroke="#444" stroke-width="1"/>
+
+  <text x="80" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">기본 점수 (높을수록 죽임 대상)</text>
+
+  <text x="80" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">메모리 사용량이 많을수록</text>
+  <text x="380" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">+높음</text>
+
+  <text x="80" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">오래된 프로세스일수록</text>
+  <text x="380" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">-낮음</text>
+
+  <text x="80" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">root 프로세스</text>
+  <text x="380" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">-낮음 (약간)</text>
+
+  <text x="80" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">oom_score_adj (-1000 ~ 1000)</text>
+
+  <text x="80" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-1000: 절대 죽이지 않음 (init 등)</text>
+  <text x="80" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">0: 기본값</text>
+  <text x="80" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">+1000: 최우선 종료 대상</text>
+
+  <text x="80" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">최종 oom_score = 기본점수 × (oom_score_adj/1000 + 1)</text>
+
+  <!-- Process oom_score examples -->
+  <rect x="520" y="198" width="320" height="200" rx="8" fill="#111111" stroke="#444" stroke-width="1"/>
+  <text x="680" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">프로세스별 oom_score 예시</text>
+
+  <text x="536" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">systemd (PID 1)</text>
+  <text x="780" y="246" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">0</text>
+
+  <text x="536" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">sshd</text>
+  <text x="780" y="266" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">3</text>
+
+  <text x="536" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">nginx worker</text>
+  <text x="780" y="286" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">120</text>
+
+  <text x="536" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Java app (1GB)</text>
+  <text x="780" y="306" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0a050">450</text>
+
+  <text x="536" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Chrome renderer</text>
+  <text x="780" y="326" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0a050">300</text>
+
+  <text x="536" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">메모리 누수 프로세스</text>
+  <text x="780" y="346" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">890 ← 종료 대상</text>
+
+  <text x="536" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">확인 명령:</text>
+  <text x="620" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">cat /proc/PID/oom_score</text>
+
+  <!-- OOM log message -->
+  <rect x="60" y="414" width="760" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># dmesg | grep -i 'oom\|killed' 출력 예</text>
+  <text x="76" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">Out of memory: Kill process 12345 (java) score 450</text>
+  <text x="76" y="476" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">Killed process 12345 (java) total-vm:2048000kB, anon-rss:1024000kB</text>
+</svg>

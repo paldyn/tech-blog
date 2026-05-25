@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">OOM Killer 제어 &amp; 예방 전략</text>
+
+  <!-- Block 1: oom_score_adj control -->
+  <rect x="60" y="64" width="370" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># oom_score_adj 조정</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 중요 서비스: 죽이지 말 것</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="116" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -900 | sudo tee /proc/$(pgrep nginx)/oom_score_adj</text>
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 절대 죽이지 않음 (-1000)</text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="116" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -1000 | sudo tee /proc/1/oom_score_adj</text>
+  <text x="76" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 우선 종료 (테스트 프로세스)</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">echo</text>
+  <text x="116" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> 500 | sudo tee /proc/$TEST_PID/oom_score_adj</text>
+  <text x="76" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># systemd 서비스에서 영구 설정</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># [Service] OOMScoreAdjust=-900</text>
+
+  <!-- Block 2: prevention -->
+  <rect x="450" y="64" width="370" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="466" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># OOM 징후 사전 모니터링</text>
+  <text x="466" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># dmesg에서 OOM 확인</text>
+  <text x="466" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">dmesg</text>
+  <text x="514" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -T | grep -i oom | tail</text>
+  <text x="466" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># journalctl에서 확인</text>
+  <text x="466" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">journalctl</text>
+  <text x="552" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -k | grep -i 'oom\|killed'</text>
+  <text x="466" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 메모리 높은 프로세스 순위</text>
+  <text x="466" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ps</text>
+  <text x="488" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> aux --sort=-%mem | head -10</text>
+  <text x="466" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 전체 oom_score 목록</text>
+  <text x="466" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">for p in /proc/[0-9]*/oom_score; do awk '{print $1, FILENAME}' $p; done | sort -rn | head -10</text>
+
+  <!-- Prevention strategies -->
+  <rect x="60" y="280" width="760" height="148" rx="8" fill="#111111" stroke="#444" stroke-width="1"/>
+  <text x="440" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">OOM 예방 전략</text>
+
+  <rect x="80" y="314" width="170" height="96" rx="6" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="165" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">메모리 한도 설정</text>
+  <text x="165" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">cgroup memory.limit</text>
+  <text x="165" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">ulimit -v</text>
+  <text x="165" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">컨테이너 --memory</text>
+  <text x="165" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888"></text>
+
+  <rect x="264" y="314" width="170" height="96" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="349" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">Swap 공간 확보</text>
+  <text x="349" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">OOM 발생 시간 지연</text>
+  <text x="349" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">zswap으로 압축 swap</text>
+  <text x="349" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">swapfile로 유연하게</text>
+
+  <rect x="448" y="314" width="170" height="96" rx="6" fill="#2e2a1a" stroke="#e0a050" stroke-width="1"/>
+  <text x="533" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e0a050">overcommit 조정</text>
+  <text x="533" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">vm.overcommit_memory</text>
+  <text x="533" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">0=경험적 허용</text>
+  <text x="533" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">2=비율 제한</text>
+
+  <rect x="632" y="314" width="168" height="96" rx="6" fill="#2e1a1a" stroke="#e05555" stroke-width="1"/>
+  <text x="716" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">earlyoom 데몬</text>
+  <text x="716" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">OOM 전에 미리 종료</text>
+  <text x="716" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">커널보다 더 스마트한</text>
+  <text x="716" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">선택 알고리즘</text>
+</svg>

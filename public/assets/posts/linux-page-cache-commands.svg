@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Page Cache 모니터링 &amp; 제어</text>
+
+  <!-- Block 1: monitoring -->
+  <rect x="60" y="64" width="370" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 페이지 캐시 상태 확인</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">free</text>
+  <text x="114" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -h</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># buff/cache: 페이지 캐시+버퍼</text>
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># /proc/meminfo 상세</text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">grep</text>
+  <text x="116" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -E 'Cached|Dirty|Writeback' \</text>
+  <text x="76" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  /proc/meminfo</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 특정 파일의 캐시 상태</text>
+  <text x="76" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">vmtouch</text>
+  <text x="148" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> /var/lib/mysql/ib_data1</text>
+  <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># dirty 페이지 비율</text>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">cat</text>
+  <text x="106" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> /proc/vmstat | grep dirty</text>
+
+  <!-- Block 2: control -->
+  <rect x="450" y="64" width="370" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="466" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 캐시 강제 드롭 (유지보수용)</text>
+  <text x="466" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 먼저 sync로 dirty 페이지 플러시</text>
+  <text x="466" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">sync</text>
+  <text x="508" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> &amp;&amp; echo 3 | sudo tee /proc/sys/vm/drop_caches</text>
+  <text x="466" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># drop_caches 값 의미</text>
+  <text x="466" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">1</text>
+  <text x="482" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"> = pagecache만 드롭</text>
+  <text x="466" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">2</text>
+  <text x="482" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"> = dentries+inodes 드롭</text>
+  <text x="466" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">3</text>
+  <text x="482" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"> = 모두 드롭 (벤치마크 전)</text>
+  <text x="466" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># dirty writeback 튜닝</text>
+  <text x="466" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">sysctl</text>
+  <text x="530" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> vm.dirty_ratio=20</text>
+  <text x="466" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">sysctl</text>
+  <text x="530" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> vm.dirty_writeback_centisecs=500</text>
+
+  <!-- sysctl params table -->
+  <rect x="60" y="300" width="760" height="145" rx="8" fill="#111111" stroke="#444" stroke-width="1"/>
+  <text x="440" y="322" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">vm.dirty_* 파라미터 요약</text>
+
+  <text x="76" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">dirty_ratio</text>
+  <text x="176" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">전체 메모리의 N% 초과 → 프로세스가 직접 writeback (기본 20)</text>
+
+  <text x="76" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">dirty_background_ratio</text>
+  <text x="256" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">N% 초과 → 백그라운드 writeback 시작 (기본 10)</text>
+
+  <text x="76" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">dirty_expire_centisecs</text>
+  <text x="260" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">N센티초 이상 된 dirty 페이지는 반드시 플러시 (기본 3000 = 30초)</text>
+
+  <text x="76" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">dirty_writeback_centisecs</text>
+  <text x="276" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">writeback 데몬 실행 간격 (기본 500 = 5초). 0 = 비활성</text>
+
+  <text x="76" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">⚠ 프로덕션에서 drop_caches는 성능 급락을 유발할 수 있음 — 벤치마크 전에만 사용</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e0a050"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ltrace 동작 원리 — 라이브러리 호출 추적</text>
+
+  <!-- User Process box -->
+  <rect x="60" y="90" width="200" height="70" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="160" y="119" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">사용자 프로세스</text>
+  <text x="160" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">printf("hello") 호출</text>
+
+  <!-- ltrace intercept box -->
+  <rect x="330" y="90" width="220" height="70" rx="8" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="119" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">ltrace 인터셉터</text>
+  <text x="440" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">LD_PRELOAD / ptrace</text>
+
+  <!-- libc box -->
+  <rect x="620" y="90" width="200" height="70" rx="8" fill="#2e1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="720" y="119" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">공유 라이브러리</text>
+  <text x="720" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">libc.so / libm.so 등</text>
+
+  <!-- Arrow 1: process -> ltrace -->
+  <line x1="260" y1="125" x2="328" y2="125" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="294" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">호출</text>
+
+  <!-- Arrow 2: ltrace -> libc -->
+  <line x1="550" y1="125" x2="618" y2="125" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="584" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">전달</text>
+
+  <!-- ltrace output box -->
+  <rect x="280" y="210" width="320" height="55" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">ltrace 로그 출력</text>
+  <text x="440" y="252" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">printf("hello") = 5</text>
+
+  <!-- Arrow: ltrace -> output -->
+  <line x1="440" y1="160" x2="440" y2="208" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+  <text x="460" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">기록</text>
+
+  <!-- vs strace comparison -->
+  <text x="440" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">strace vs ltrace 비교</text>
+
+  <!-- strace box -->
+  <rect x="60" y="330" width="350" height="140" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="235" y="355" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">strace</text>
+  <text x="235" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">커널 시스템 콜 추적</text>
+  <text x="235" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">open(), read(), write() 등</text>
+  <text x="235" y="418" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ptrace(PTRACE_SYSCALL) 사용</text>
+  <text x="235" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">커널-유저 경계에서 추적</text>
+  <text x="235" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">오버헤드 높음</text>
+
+  <!-- ltrace box -->
+  <rect x="470" y="330" width="350" height="140" rx="8" fill="#1a2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="645" y="355" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">ltrace</text>
+  <text x="645" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">라이브러리 함수 호출 추적</text>
+  <text x="645" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">printf(), malloc(), fopen() 등</text>
+  <text x="645" y="418" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">PLT(Procedure Linkage Table) 후킹</text>
+  <text x="645" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">라이브러리-앱 경계에서 추적</text>
+  <text x="645" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">상대적 오버헤드 낮음</text>
+
+  <!-- kernel layer -->
+  <rect x="60" y="486" width="760" height="22" rx="4" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
+  <text x="440" y="502" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Linux Kernel (system call interface)</text>
+</svg>

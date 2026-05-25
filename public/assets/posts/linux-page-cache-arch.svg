@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Page Cache 아키텍처 — 메모리와 디스크 사이</text>
+
+  <!-- Application layer -->
+  <rect x="60" y="68" width="760" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">사용자 프로세스 (User Process)</text>
+  <text x="440" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">read() / write() / mmap() 시스템 콜</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="128" x2="440" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- VFS layer -->
+  <rect x="200" y="154" width="480" height="44" rx="6" fill="#1a2e2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="181" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">VFS (Virtual File System)</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="198" x2="440" y2="222" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Page Cache -->
+  <rect x="60" y="224" width="760" height="120" rx="8" fill="#1a2e1a" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#55c555">Page Cache (페이지 캐시)</text>
+  <text x="440" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파일 데이터를 4KB 단위(Page) 메모리 캐시</text>
+  <text x="440" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">LRU 방식으로 관리 / 메모리 부족 시 회수</text>
+
+  <!-- Cache hit path -->
+  <rect x="80" y="302" width="220" height="32" rx="6" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="190" y="322" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">캐시 히트 → 즉시 반환</text>
+
+  <!-- Cache miss path -->
+  <rect x="580" y="302" width="220" height="32" rx="6" fill="#3a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="690" y="322" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">캐시 미스 → 디스크 읽기</text>
+
+  <!-- Arrow from cache to disk -->
+  <line x1="440" y1="344" x2="440" y2="368" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-blue)"/>
+  <text x="460" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">미스 시</text>
+
+  <!-- Block Layer -->
+  <rect x="200" y="370" width="480" height="44" rx="6" fill="#2e2a1a" stroke="#e0a050" stroke-width="1.5"/>
+  <text x="440" y="397" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e0a050">Block Layer (I/O 스케줄러)</text>
+
+  <!-- Arrow to disk -->
+  <line x1="440" y1="414" x2="440" y2="438" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Storage -->
+  <rect x="200" y="440" width="480" height="50" rx="6" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">물리 스토리지 (HDD/SSD/NVMe)</text>
+  <text x="440" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">μs ~ ms 단위 레이턴시</text>
+
+  <!-- dirty page note -->
+  <text x="60" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">쓰기:</text>
+  <text x="100" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">dirty page</text>
+  <text x="170" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">= 캐시에 수정됐지만 디스크에 미반영 / </text>
+  <text x="508" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">writeback</text>
+  <text x="575" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888"> 데몬이 주기적으로 플러시</text>
+</svg>
