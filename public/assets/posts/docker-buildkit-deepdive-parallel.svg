@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">BuildKit 병렬 멀티 스테이지 빌드</text>
+
+  <!-- Stage: base -->
+  <rect x="340" y="70" width="200" height="60" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">base</text>
+  <text x="440" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">FROM node:20 AS base</text>
+
+  <!-- Stage: deps (parallel) -->
+  <rect x="100" y="180" width="200" height="60" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="200" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">deps</text>
+  <text x="200" y="227" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">npm ci (prod)</text>
+
+  <!-- Stage: test (parallel) -->
+  <rect x="580" y="180" width="200" height="60" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="680" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">test</text>
+  <text x="680" y="227" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">npm ci &amp;&amp; npm test</text>
+
+  <!-- Stage: builder -->
+  <rect x="340" y="180" width="200" height="60" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">builder</text>
+  <text x="440" y="227" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">npm run build</text>
+
+  <!-- Stage: production -->
+  <rect x="340" y="290" width="200" height="60" rx="8" fill="#0a1a0a" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="317" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">production</text>
+  <text x="440" y="337" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">최소 이미지 (deps + dist)</text>
+
+  <!-- Arrows from base -->
+  <line x1="380" y1="130" x2="220" y2="178" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <line x1="440" y1="130" x2="440" y2="178" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <line x1="500" y1="130" x2="660" y2="178" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Arrows to production -->
+  <line x1="200" y1="240" x2="380" y2="288" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="440" y1="240" x2="440" y2="288" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Parallel label -->
+  <text x="440" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">병렬 실행 (BuildKit)</text>
+
+  <!-- Bottom code -->
+  <rect x="60" y="375" width="760" height="36" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 특정 스테이지만 빌드</text>
+  <text x="250" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker build --target deps -t myapp:deps .</text>
+</svg>

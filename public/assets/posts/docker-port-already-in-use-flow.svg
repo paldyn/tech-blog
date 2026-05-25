@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Port Already in Use 진단 흐름</text>
+
+  <!-- Port 8080 occupied -->
+  <rect x="60" y="80" width="760" height="60" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">docker run -p 8080:80 nginx</text>
+  <text x="440" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" text-anchor="middle">Error: bind: address already in use — 포트 8080이 이미 점유됨</text>
+
+  <!-- Diagnosis code block -->
+  <rect x="60" y="170" width="360" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 점유 프로세스 확인 (Linux)</text>
+  <text x="76" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ss</text>
+  <text x="100" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -tlnp | grep :8080</text>
+  <text x="76" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 또는</text>
+  <text x="76" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">lsof</text>
+  <text x="114" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -i :8080</text>
+  <text x="76" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Docker 컨테이너 점유 확인</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker ps --format \</text>
+  <text x="76" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  "{{.Ports}}" | grep 8080</text>
+
+  <!-- Solution 1: kill process -->
+  <rect x="460" y="170" width="360" height="80" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="197" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">방법 1: 점유 프로세스 종료</text>
+  <rect x="476" y="208" width="328" height="30" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">kill -9 $(lsof -ti :8080)</text>
+
+  <!-- Solution 2: different port -->
+  <rect x="460" y="270" width="360" height="60" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="295" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">방법 2: 다른 호스트 포트 사용</text>
+  <rect x="476" y="306" width="328" height="14" rx="2" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="317" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff" xml:space="preserve">docker run -p 8081:80 nginx</text>
+
+  <!-- macOS diagnosis -->
+  <rect x="60" y="360" width="760" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># macOS 점유 프로세스 확인</text>
+  <text x="76" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">lsof</text>
+  <text x="114" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -nP -iTCP:8080 -sTCP:LISTEN</text>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Windows PowerShell</text>
+  <text x="76" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">netstat -ano | findstr :8080</text>
+</svg>

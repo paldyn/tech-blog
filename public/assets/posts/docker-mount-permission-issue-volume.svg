@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Named Volume 권한 초기화 패턴</text>
+
+  <!-- Problem -->
+  <rect x="60" y="70" width="360" height="140" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">문제: 볼륨이 root 소유로 생성됨</text>
+  <rect x="76" y="108" width="328" height="90" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># docker-compose.yml</text>
+  <text x="92" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">volumes:</text>
+  <text x="92" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  - data:/app/data  # root 소유!</text>
+  <text x="92" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve"># appuser(999)가 쓰기 불가</text>
+
+  <!-- Solution -->
+  <rect x="460" y="70" width="360" height="140" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">해결: ENTRYPOINT에서 권한 수정</text>
+  <rect x="476" y="108" width="328" height="90" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># entrypoint.sh</text>
+  <text x="492" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">chown</text>
+  <text x="540" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> -R appuser:appgroup /app/data</text>
+  <text x="492" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">exec</text>
+  <text x="534" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> gosu appuser "$@"</text>
+  <text x="492" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># gosu: sudo 없이 UID 전환</text>
+
+  <!-- Bind mount fix table -->
+  <rect x="60" y="240" width="760" height="116" rx="8" fill="#0d1117" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="265" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Bind Mount 권한 빠른 해결책 비교</text>
+
+  <text x="120" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">방법</text>
+  <text x="440" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">명령</text>
+  <text x="730" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">주의</text>
+
+  <text x="120" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">디렉터리 소유권 변경</text>
+  <text x="440" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">sudo chown -R 999 ./data</text>
+  <text x="730" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">호스트 파일 소유자 변경</text>
+
+  <text x="120" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">컨테이너 UID 지정</text>
+  <text x="440" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">--user $(id -u):$(id -g)</text>
+  <text x="730" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">루트 권한 필요 앱 불가</text>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">OOM Kill 발생 메커니즘</text>
+
+  <!-- Memory limit box -->
+  <rect x="60" y="70" width="760" height="60" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">docker run --memory=512m nginx</text>
+  <text x="440" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cgroup이 컨테이너 메모리를 512MB로 제한</text>
+
+  <!-- Memory bar -->
+  <rect x="60" y="160" width="760" height="40" rx="6" fill="#1a1a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <rect x="60" y="160" width="608" height="40" rx="6" fill="#e05555"/>
+  <rect x="668" y="160" width="152" height="40" rx="6" fill="#2a2a2a"/>
+  <text x="364" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">사용 중: 480MB (94%)</text>
+  <text x="744" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">여유: 32MB</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="200" x2="440" y2="238" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- OOM Kill -->
+  <rect x="260" y="240" width="360" height="70" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#e05555" text-anchor="middle">OOM Killer 발동</text>
+  <text x="440" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">exit code 137 (SIGKILL) — 컨테이너 강제 종료</text>
+
+  <!-- Left code: diagnosis -->
+  <rect x="60" y="340" width="360" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># OOM Kill 진단</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker inspect &lt;ctn&gt; \</text>
+  <text x="76" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  --format='{{.State.OOMKilled}}'</text>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">true</text>
+  <text x="76" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># exit code 137 확인</text>
+
+  <!-- Right code: fix -->
+  <rect x="460" y="340" width="360" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 메모리 제한 늘리기</text>
+  <text x="476" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">docker</text>
+  <text x="522" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> run --memory=1g \</text>
+  <text x="476" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  --memory-swap=1g myapp</text>
+  <text x="476" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Compose: mem_limit: 1g</text>
+  <text x="476" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 또는 앱 JVM 힙 조정</text>
+</svg>

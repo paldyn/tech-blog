@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">빌드 캐시 문제 유형과 해결</text>
+
+  <!-- Type 1: stale cache -->
+  <rect x="60" y="70" width="360" height="120" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="95" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">유형 1: 낡은 캐시 사용</text>
+  <text x="240" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">소스는 바뀌었는데 COPY 전 캐시가 쓰임</text>
+  <rect x="76" y="126" width="328" height="52" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 캐시 무효화 후 재빌드</text>
+  <text x="92" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker build --no-cache -t myapp .</text>
+
+  <!-- Type 2: corrupt cache -->
+  <rect x="460" y="70" width="360" height="120" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="95" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">유형 2: 손상된 캐시</text>
+  <text x="640" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">디스크 부족 등으로 캐시가 중간에 깨짐</text>
+  <rect x="476" y="126" width="328" height="52" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 빌드 캐시 전체 제거</text>
+  <text x="492" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker builder prune --all -f</text>
+
+  <!-- Type 3: package cache issue -->
+  <rect x="60" y="220" width="360" height="120" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">유형 3: 패키지 캐시 오염</text>
+  <text x="240" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">apt/apk 캐시가 오래돼서 설치 실패</text>
+  <rect x="76" y="276" width="328" height="52" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 특정 단계부터 캐시 무효화</text>
+  <text x="92" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">--build-arg BUST=$(date +%s)</text>
+
+  <!-- Type 4: network issue during build -->
+  <rect x="460" y="220" width="360" height="120" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">유형 4: 네트워크 오류 캐시됨</text>
+  <text x="640" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">이전 실패 결과가 캐시에 저장됨</text>
+  <rect x="476" y="276" width="328" height="52" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 상세 로그로 원인 파악</text>
+  <text x="492" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker build --progress=plain .</text>
+
+  <!-- Cache bust pattern -->
+  <rect x="60" y="370" width="760" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Dockerfile: ARG CACHEBUST로 특정 레이어부터 무효화</text>
+  <text x="76" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ARG</text>
+  <text x="110" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> CACHEBUST=1</text>
+  <text x="76" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">RUN</text>
+  <text x="110" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> echo $CACHEBUST &amp;&amp; apt-get update &amp;&amp; apt-get install -y curl</text>
+  <text x="76" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># docker build --build-arg CACHEBUST=$(date +%s) .</text>
+  <text x="76" y="472" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve"># CACHEBUST 값이 바뀌면 해당 RUN부터 이후 모든 레이어가 재실행</text>
+</svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Docker 네트워크 서브넷 충돌 구조</text>
+
+  <!-- Before: conflict -->
+  <text x="220" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555" text-anchor="middle">충돌 발생</text>
+
+  <!-- Corporate network -->
+  <rect x="60" y="100" width="320" height="80" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="220" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">회사 네트워크 (VPN)</text>
+  <text x="220" y="149" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">172.17.0.0/16</text>
+  <text x="220" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">라우팅 테이블에 이미 존재</text>
+
+  <!-- Docker default network -->
+  <rect x="60" y="210" width="320" height="80" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="220" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Docker 기본 bridge</text>
+  <text x="220" y="259" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">172.17.0.0/16</text>
+  <text x="220" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker0 인터페이스 기본값</text>
+
+  <!-- Conflict marker -->
+  <text x="220" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="18" font-weight="700" fill="#e05555" text-anchor="middle">⚡ 충돌!</text>
+
+  <!-- After: fixed -->
+  <text x="660" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555" text-anchor="middle">해결 후</text>
+
+  <rect x="500" y="100" width="320" height="80" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="660" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">회사 네트워크 (VPN)</text>
+  <text x="660" y="149" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">172.17.0.0/16</text>
+  <text x="660" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">변경 없음</text>
+
+  <rect x="500" y="210" width="320" height="80" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="660" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Docker 브릿지 (변경)</text>
+  <text x="660" y="259" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">192.168.100.0/24</text>
+  <text x="660" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">daemon.json bip 설정</text>
+
+  <!-- Code block -->
+  <rect x="60" y="320" width="360" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 현재 라우팅 테이블 확인</text>
+  <text x="76" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">ip route show</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Docker 네트워크 목록</text>
+  <text x="76" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker network ls</text>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">docker network inspect bridge</text>
+  <text x="76" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">  | grep Subnet</text>
+
+  <!-- Fix code -->
+  <rect x="460" y="320" width="360" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// /etc/docker/daemon.json</text>
+  <text x="476" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">{</text>
+  <text x="476" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  "bip": "192.168.100.1/24",</text>
+  <text x="476" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  "default-address-pools": [{</text>
+  <text x="476" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">    "base":"192.168.0.0/16","size":24</text>
+  <text x="476" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  }]}</text>
+</svg>

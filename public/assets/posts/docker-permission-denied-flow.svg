@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Permission Denied 에러 발생 흐름</text>
+
+  <!-- User box -->
+  <rect x="60" y="80" width="180" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="150" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">일반 사용자</text>
+  <text x="150" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker run nginx</text>
+
+  <!-- Arrow: user → socket -->
+  <line x1="240" y1="110" x2="318" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="279" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">요청</text>
+
+  <!-- Docker socket box -->
+  <rect x="320" y="80" width="220" height="60" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="430" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Docker Socket</text>
+  <text x="430" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">/var/run/docker.sock</text>
+
+  <!-- Permission check box -->
+  <rect x="320" y="200" width="220" height="60" rx="8" fill="#1a1a2e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="430" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">권한 확인</text>
+  <text x="430" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">docker 그룹 멤버인가?</text>
+
+  <!-- Arrow: socket → permission check -->
+  <line x1="430" y1="140" x2="430" y2="198" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Error box -->
+  <rect x="60" y="200" width="220" height="60" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="170" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">Permission Denied</text>
+  <text x="170" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">그룹 미포함 시 에러</text>
+
+  <!-- Arrow: permission → error (NO) -->
+  <line x1="320" y1="230" x2="282" y2="230" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="301" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">NO</text>
+
+  <!-- Success box -->
+  <rect x="580" y="200" width="220" height="60" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="690" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Daemon 전달</text>
+  <text x="690" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">dockerd 소켓 수신</text>
+
+  <!-- Arrow: permission → success (YES) -->
+  <line x1="540" y1="230" x2="578" y2="230" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="559" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">YES</text>
+
+  <!-- Code block: socket permission -->
+  <rect x="60" y="310" width="360" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 소켓 권한 확인</text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">$ ls -la /var/run/docker.sock</text>
+  <text x="76" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">srw-rw---- 1 root docker ...</text>
+  <text x="76" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 현재 그룹 확인</text>
+  <text x="76" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">$ groups</text>
+  <text x="76" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">user adm sudo  &lt;-- docker 없음!</text>
+
+  <!-- Code block: fix -->
+  <rect x="460" y="310" width="360" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># docker 그룹에 사용자 추가</text>
+  <text x="476" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">sudo</text>
+  <text x="528" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> usermod -aG docker $USER</text>
+  <text x="476" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 세션 재시작 없이 적용</text>
+  <text x="476" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">newgrp</text>
+  <text x="534" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> docker</text>
+  <text x="476" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 확인</text>
+  <text x="476" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">$ docker run hello-world</text>
+</svg>
