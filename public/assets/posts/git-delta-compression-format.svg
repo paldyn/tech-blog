@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Delta 오브젝트 내부 포맷</text>
+
+  <defs>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr3" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <!-- Delta format header -->
+  <text x="60" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">Delta 오브젝트 데이터 구조</text>
+
+  <!-- Base size field -->
+  <rect x="60" y="108" width="150" height="50" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="135" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">source size</text>
+  <text x="135" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Base 원본 크기</text>
+
+  <!-- Target size field -->
+  <rect x="230" y="108" width="150" height="50" rx="6" fill="#1a2a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="305" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">target size</text>
+  <text x="305" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">복원 후 크기</text>
+
+  <!-- Instructions block -->
+  <rect x="400" y="108" width="420" height="50" rx="6" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="610" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">delta instructions (반복)</text>
+  <text x="610" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">COPY + INSERT 명령어 시퀀스</text>
+
+  <!-- Arrow down to instructions detail -->
+  <line x1="610" y1="158" x2="610" y2="188" stroke="#7777cc" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <!-- COPY instruction -->
+  <rect x="60" y="195" width="370" height="90" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="245" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">COPY 명령</text>
+  <text x="245" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">Base 오브젝트에서 N바이트 복사</text>
+  <text x="245" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">offset + length 인코딩</text>
+  <text x="245" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">변경 없는 영역에 사용 → 극소 크기</text>
+
+  <!-- INSERT instruction -->
+  <rect x="450" y="195" width="370" height="90" rx="8" fill="#111122" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="635" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#ce9178">INSERT 명령</text>
+  <text x="635" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">새로운 데이터 직접 삽입</text>
+  <text x="635" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">length + raw bytes</text>
+  <text x="635" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ce9178">실제 변경 내용만 삽입</text>
+
+  <!-- Code box: verify-pack output -->
+  <rect x="60" y="308" width="760" height="140" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># verify-pack 으로 delta 체인 확인</text>
+  <text xml:space="preserve" x="80" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">git verify-pack</text><text xml:space="preserve" x="229" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> -v .git/objects/pack/pack-*.idx</text>
+  <text xml:space="preserve" x="80" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># SHA              type  원본크기 압축크기 오프셋 depth base-SHA</text>
+  <text xml:space="preserve" x="80" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">abc123</text><text xml:space="preserve" x="136" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> blob  12000  9000  1024</text>
+  <text xml:space="preserve" x="80" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">def456</text><text xml:space="preserve" x="136" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> blob  12050   850 10024 </text><text xml:space="preserve" x="572" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">1 abc123</text>
+  <text xml:space="preserve" x="80" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">ghi789</text><text xml:space="preserve" x="136" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> blob  12100   220 10874 </text><text xml:space="preserve" x="572" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">2 def456</text>
+</svg>

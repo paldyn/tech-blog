@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">git hash-object: 오브젝트 생성 과정</text>
+
+  <defs>
+    <marker id="arrhash" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: Raw content -->
+  <rect x="60" y="80" width="180" height="80" rx="8" fill="#111111" stroke="#888" stroke-width="2"/>
+  <text x="150" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8e8e8">파일 내용</text>
+  <text x="150" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">hello world\n</text>
+  <text x="150" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#666">12 bytes</text>
+
+  <!-- Arrow 1 -->
+  <line x1="240" y1="120" x2="300" y2="120" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrhash)"/>
+  <text x="270" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">헤더 추가</text>
+
+  <!-- Step 2: Header + content -->
+  <rect x="300" y="80" width="220" height="80" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="2"/>
+  <text x="410" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">헤더 + 내용</text>
+  <text x="410" y="130" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e8e8e8">blob 12\0hello world</text>
+  <text x="410" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">type + space + size + NUL + data</text>
+
+  <!-- Arrow 2 -->
+  <line x1="520" y1="120" x2="580" y2="120" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrhash)"/>
+  <text x="550" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">SHA-1</text>
+
+  <!-- Step 3: SHA-1 -->
+  <rect x="580" y="80" width="240" height="80" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+  <text x="700" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">SHA-1 해시</text>
+  <text x="700" y="130" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">8ab686e8a729f4b0ccd0</text>
+  <text x="700" y="150" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e8e8e8">4e3176f26c78fbf00dcc</text>
+
+  <!-- Down arrow to file storage -->
+  <line x1="700" y1="160" x2="700" y2="210" stroke="#55c555" stroke-width="2" marker-end="url(#arrhash)"/>
+  <text x="720" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">-w 옵션</text>
+
+  <!-- Storage path box -->
+  <rect x="500" y="214" width="340" height="60" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">.git/objects/ 저장</text>
+  <text x="670" y="262" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">8a/ b686e8a729f4b0ccd0...</text>
+
+  <!-- Code examples -->
+  <rect x="60" y="300" width="760" height="120" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="80" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># SHA 계산만 (저장 안 함)</text>
+  <text xml:space="preserve" x="80" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">git hash-object</text><text xml:space="preserve" x="218" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> file.txt</text>
+  <text xml:space="preserve" x="80" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># SHA 계산 + objects 저장</text>
+  <text xml:space="preserve" x="80" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">git hash-object</text><text xml:space="preserve" x="218" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> -w file.txt</text>
+  <text xml:space="preserve" x="80" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># stdin 에서 읽기</text>
+  <text xml:space="preserve" x="80" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">                                      </text>
+</svg>
