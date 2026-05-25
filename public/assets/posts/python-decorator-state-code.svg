@@ -1,0 +1,25 @@
+<svg width="880" height="400" viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">rate_limit 데코레이터: 상태 활용 예시</text>
+  <!-- Code block -->
+  <rect x="60" y="66" width="760" height="298" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="94" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">time</tspan><tspan fill="#ffffff">; </tspan><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">functools </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">wraps</tspan></text>
+  <text x="76" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">rate_limit(calls=5, period=1.0):</tspan></text>
+  <text x="76" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">decorator(func):</tspan></text>
+  <text x="76" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        history = []</tspan><tspan fill="#9aa4b8">  # 호출 시각 기록</tspan></text>
+  <text x="76" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7777cc">@wraps(func)</tspan></text>
+  <text x="76" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">wrapper(*args, **kwargs):</tspan></text>
+  <text x="76" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">            now = time.monotonic()</tspan></text>
+  <text x="76" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">            history[:] = [t </tspan><tspan fill="#7ec8e3" font-weight="600">for </tspan><tspan fill="#ffffff">t </tspan><tspan fill="#7ec8e3" font-weight="600">in </tspan><tspan fill="#ffffff">history </tspan><tspan fill="#7ec8e3" font-weight="600">if </tspan><tspan fill="#ffffff">now-t &lt; period]</tspan></text>
+  <text x="76" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">            if </tspan><tspan fill="#ffffff">len(history) &gt;= calls:</tspan></text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">                </tspan><tspan fill="#7ec8e3" font-weight="600">raise </tspan><tspan fill="#ffffff">RuntimeError(</tspan><tspan fill="#ce9178">"Rate limit"</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">            history.append(now)</tspan></text>
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">            </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">func(*args, **kwargs)</tspan></text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">wrapper</tspan></text>
+  <text x="76" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">decorator</tspan></text>
+  <text x="76" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">history 리스트는 wrapper 클로저에 캡처됨 — 모든 호출 간에 공유</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg width="880" height="420" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">중첩 데코레이터 적용 순서</text>
+  <!-- Left: syntax + application order -->
+  <rect x="60" y="70" width="340" height="190" fill="#0d0d20" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="230" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">적용 순서 (아래 → 위)</text>
+  <rect x="76" y="106" width="308" height="136" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="90" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@A</tspan><tspan fill="#9aa4b8">  # 마지막 적용 (바깥)</tspan></text>
+  <text x="90" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@B</tspan><tspan fill="#9aa4b8">  # 두 번째 적용</tspan></text>
+  <text x="90" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@C</tspan><tspan fill="#9aa4b8">  # 첫 번째 적용 (안쪽)</tspan></text>
+  <text x="90" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">func(): ...</tspan></text>
+  <text x="90" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># = A(B(C(func)))</tspan></text>
+  <text x="230" y="246" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">함수에서 가장 가까운 @C부터 적용</text>
+  <!-- Right: execution order -->
+  <rect x="480" y="70" width="340" height="190" fill="#0d1a0d" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">실행 순서 (위 → 아래)</text>
+  <!-- Execution flow boxes -->
+  <rect x="530" y="108" width="240" height="32" fill="#1a0d00" rx="4" stroke="#e05555" stroke-width="1"/>
+  <text x="650" y="128" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">A wrapper 전처리</text>
+  <line x1="650" y1="140" x2="650" y2="156" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="530" y="158" width="240" height="32" fill="#1a1a00" rx="4" stroke="#7777cc" stroke-width="1"/>
+  <text x="650" y="178" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">B wrapper 전처리</text>
+  <line x1="650" y1="190" x2="650" y2="206" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="530" y="208" width="240" height="32" fill="#051005" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="228" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">C wrapper → func() 실행</text>
+  <text x="650" y="262" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">C→B→A 순으로 후처리 반환</text>
+  <!-- Bottom: practical example -->
+  <rect x="60" y="280" width="760" height="110" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@log_call</tspan><tspan fill="#9aa4b8">   # 2nd: 바깥 — 먼저 실행</tspan></text>
+  <text x="76" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@timer</tspan><tspan fill="#9aa4b8">      # 1st: 안쪽 — 나중 실행</tspan></text>
+  <text x="76" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">process(data): ...</tspan></text>
+  <text x="76" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># = log_call(timer(process))  →  log→timer→process 순 실행</tspan></text>
+  <!-- bottom note -->
+  <text x="440" y="404" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">적용(wrap) 순서와 실행 순서가 반대 — 안쪽 데코레이터가 원본에 더 가깝다</text>
+</svg>

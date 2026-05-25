@@ -1,0 +1,55 @@
+<svg width="880" height="400" viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">타입 힌트와 데코레이터: Callable vs ParamSpec</text>
+  <!-- Left: Basic Callable -->
+  <rect x="40" y="70" width="370" height="280" fill="#0d0d20" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="225" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">기본: Callable 사용</text>
+  <rect x="56" y="106" width="338" height="216" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="70" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">typing </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">Callable, TypeVar</tspan></text>
+  <text x="70" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">F = TypeVar(</tspan><tspan fill="#ce9178">'F'</tspan><tspan fill="#ffffff">, bound=Callable)</tspan></text>
+  <text x="70" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">log(func: F) -&gt; F:</tspan></text>
+  <text x="70" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7777cc">@wraps(func)</tspan></text>
+  <text x="70" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">wrapper(*a, **k):</tspan></text>
+  <text x="70" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        print(func.__name__)</tspan></text>
+  <text x="70" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">func(*a, **k)</tspan></text>
+  <text x="70" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">wrapper  </tspan><tspan fill="#9aa4b8"># type: ignore</tspan></text>
+  <text x="225" y="308" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">파라미터 타입 정보 손실됨</text>
+  <text x="225" y="328" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">타입 체커가 완전히 추론 불가</text>
+  <!-- Right: ParamSpec -->
+  <rect x="470" y="70" width="370" height="280" fill="#0d1a0d" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="655" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">권장: ParamSpec 사용 (3.10+)</text>
+  <rect x="486" y="106" width="338" height="216" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="500" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">typing </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">ParamSpec, TypeVar</tspan></text>
+  <text x="500" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">P = ParamSpec(</tspan><tspan fill="#ce9178">'P'</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="500" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">R = TypeVar(</tspan><tspan fill="#ce9178">'R'</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="500" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">log(func: Callable[P,R]) -&gt; Callable[P,R]:</tspan></text>
+  <text x="500" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7777cc">@wraps(func)</tspan></text>
+  <text x="500" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">wrapper(*a: P.args, **k: P.kwargs) -&gt; R:</tspan></text>
+  <text x="500" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        print(func.__name__)</tspan></text>
+  <text x="500" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">func(*a, **k)</tspan></text>
+  <text x="655" y="308" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">파라미터 타입 완벽 보존</text>
+  <text x="655" y="328" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">IDE 자동완성 + mypy 완전 지원</text>
+  <!-- VS -->
+  <text x="440" y="218" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="18" font-weight="700" fill="#888">vs</text>
+  <!-- bottom note -->
+  <text x="440" y="375" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Python 3.9 이하: typing_extensions.ParamSpec 으로 backport 가능</text>
+</svg>

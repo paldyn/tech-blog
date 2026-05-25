@@ -1,0 +1,71 @@
+<svg width="880" height="420" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">상태 저장 데코레이터 세 가지 방법</text>
+  <!-- Column 1: function attribute -->
+  <rect x="40" y="70" width="240" height="300" fill="#0d0d20" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="160" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">① 함수 속성</text>
+  <rect x="56" y="106" width="208" height="200" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">count(func):</tspan></text>
+  <text x="66" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7777cc">    @wraps(func)</tspan></text>
+  <text x="66" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    def </tspan><tspan fill="#ffffff">w(*a, **k):</tspan></text>
+  <text x="66" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">        w.calls += </tspan><tspan fill="#b5cea8">1</tspan></text>
+  <text x="66" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">        return </tspan><tspan fill="#ffffff">func(*a,**k)</tspan></text>
+  <text x="66" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    w.calls = </tspan><tspan fill="#b5cea8">0</tspan></text>
+  <text x="66" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    return </tspan><tspan fill="#ffffff">w</tspan></text>
+  <text x="66" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8"># func.calls 로 접근</tspan></text>
+  <text x="160" y="336" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">간단, 외부 접근 쉬움</text>
+  <text x="160" y="354" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">wrapper 공유 위험</text>
+  <!-- Column 2: closure + list -->
+  <rect x="320" y="70" width="240" height="300" fill="#0d1a0d" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② 클로저 (리스트 활용)</text>
+  <rect x="336" y="106" width="208" height="200" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="346" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">count(func):</tspan></text>
+  <text x="346" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    state = [</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">]</tspan><tspan fill="#9aa4b8">  # 가변</tspan></text>
+  <text x="346" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7777cc">    @wraps(func)</tspan></text>
+  <text x="346" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    def </tspan><tspan fill="#ffffff">w(*a, **k):</tspan></text>
+  <text x="346" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">        state[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">] += </tspan><tspan fill="#b5cea8">1</tspan></text>
+  <text x="346" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">        return </tspan><tspan fill="#ffffff">func(*a,**k)</tspan></text>
+  <text x="346" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    return </tspan><tspan fill="#ffffff">w</tspan></text>
+  <text x="346" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8"># state[0] 으로 접근</tspan></text>
+  <text x="440" y="336" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">순수 클로저, 외부 비공개</text>
+  <text x="440" y="354" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">nonlocal 없이 가변 상태</text>
+  <!-- Column 3: class -->
+  <rect x="600" y="70" width="240" height="300" fill="#1a0d00" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="720" y="94" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ 클래스 (권장)</text>
+  <rect x="616" y="106" width="208" height="200" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="626" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">class </tspan><tspan fill="#ffffff">Count:</tspan></text>
+  <text x="626" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    def </tspan><tspan fill="#ffffff">__init__(self, f):</tspan></text>
+  <text x="626" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">        update_wrapper(self,f)</tspan></text>
+  <text x="626" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">        self.f=f; self.calls=</tspan><tspan fill="#b5cea8">0</tspan></text>
+  <text x="626" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    def </tspan><tspan fill="#ffffff">__call__(self,*a,**k):</tspan></text>
+  <text x="626" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">        self.calls+=</tspan><tspan fill="#b5cea8">1</tspan></text>
+  <text x="626" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">        return </tspan><tspan fill="#ffffff">self.f(*a,**k)</tspan></text>
+  <text x="626" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8"># func.calls 로 접근</tspan></text>
+  <text x="720" y="336" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">상태 명시적, 확장 쉬움</text>
+  <text x="720" y="354" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">메서드 추가 가능</text>
+  <!-- Bottom note -->
+  <text x="440" y="394" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">상태가 단순하면 ①, 외부 노출 불필요면 ②, 복잡한 상태/인터페이스면 ③ 선택</text>
+</svg>

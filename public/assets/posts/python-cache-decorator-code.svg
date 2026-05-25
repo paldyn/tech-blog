@@ -1,0 +1,23 @@
+<svg width="880" height="420" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">lru_cache 활용 패턴</text>
+  <!-- Code block -->
+  <rect x="60" y="66" width="760" height="320" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="94" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">functools </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">lru_cache, cache</tspan></text>
+  <text x="76" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># 피보나치: 캐시 없이 O(2^n) → 캐시로 O(n)</tspan></text>
+  <text x="76" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@cache</tspan><tspan fill="#9aa4b8">                         # maxsize=None, 무제한</tspan></text>
+  <text x="76" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">fib(n: int) -&gt; int:</tspan></text>
+  <text x="76" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">if </tspan><tspan fill="#ffffff">n &lt; </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">n</tspan></text>
+  <text x="76" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    return </tspan><tspan fill="#ffffff">fib(n - </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">) + fib(n - </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># API 응답 캐시: 최근 128개만 유지</tspan></text>
+  <text x="76" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7777cc">@lru_cache(maxsize=</tspan><tspan fill="#b5cea8">128</tspan><tspan fill="#7777cc">)</tspan></text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">fetch_user(user_id: int) -&gt; dict:</tspan></text>
+  <text x="76" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#9aa4b8"># DB 쿼리 (비용이 큰 작업)</tspan></text>
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">db.query(</tspan><tspan fill="#ce9178">"SELECT..."</tspan><tspan fill="#ffffff">, user_id)</tspan></text>
+  <text x="76" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">info = fetch_user.</tspan><tspan fill="#ffffff">cache_info()</tspan></text>
+  <text x="76" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># CacheInfo(hits=42, misses=8, maxsize=128, currsize=8)</tspan></text>
+  <text x="76" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">fetch_user.cache_clear()</tspan><tspan fill="#9aa4b8">  # 캐시 전체 비우기</tspan></text>
+</svg>

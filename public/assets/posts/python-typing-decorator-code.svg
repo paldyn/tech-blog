@@ -1,0 +1,26 @@
+<svg width="880" height="400" viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">완전한 타입 힌트 데코레이터 예시</text>
+  <!-- Code block -->
+  <rect x="60" y="66" width="760" height="298" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="94" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">collections.abc </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">Callable</tspan></text>
+  <text x="76" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">typing </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">ParamSpec, TypeVar, overload</tspan></text>
+  <text x="76" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from </tspan><tspan fill="#ffffff">functools </tspan><tspan fill="#7ec8e3" font-weight="600">import </tspan><tspan fill="#ffffff">wraps</tspan></text>
+  <text x="76" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">P = ParamSpec(</tspan><tspan fill="#ce9178">"P"</tspan><tspan fill="#ffffff">); R = TypeVar(</tspan><tspan fill="#ce9178">"R"</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">retry(</tspan></text>
+  <text x="76" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    func: Callable[P, R],</tspan></text>
+  <text x="76" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    *, times: int = </tspan><tspan fill="#b5cea8">3</tspan></text>
+  <text x="76" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">) -&gt; Callable[P, R]:</tspan></text>
+  <text x="76" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7777cc">@wraps(func)</tspan></text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">def </tspan><tspan fill="#ffffff">wrapper(*args: P.args, **kwargs: P.kwargs) -&gt; R:</tspan></text>
+  <text x="76" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7ec8e3" font-weight="600">for </tspan><tspan fill="#ffffff">i </tspan><tspan fill="#7ec8e3" font-weight="600">in </tspan><tspan fill="#ffffff">range(times):</tspan></text>
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">            </tspan><tspan fill="#7ec8e3" font-weight="600">try</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">func(*args, **kwargs)</tspan></text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">            </tspan><tspan fill="#7ec8e3" font-weight="600">except </tspan><tspan fill="#ffffff">Exception: </tspan><tspan fill="#7ec8e3" font-weight="600">pass</tspan></text>
+  <text x="76" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">        </tspan><tspan fill="#7ec8e3" font-weight="600">raise </tspan><tspan fill="#ffffff">RuntimeError(</tspan><tspan fill="#ce9178">"All retries failed"</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return </tspan><tspan fill="#ffffff">wrapper</tspan></text>
+  <text x="76" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">P가 func의 파라미터 타입을 캡처 → wrapper가 동일한 시그니처로 타입 체크됨</text>
+</svg>
