@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">GIL 영향: CPU 바운드 vs I/O 바운드</text>
+
+  <!-- Timeline header -->
+  <text x="440" y="74" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">시간 →</text>
+
+  <!-- CPU-bound section -->
+  <text x="120" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">CPU 바운드 (멀티스레드)</text>
+
+  <!-- Thread 1 timeline - CPU bound -->
+  <text x="84" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T1</text>
+  <rect x="120" y="114" width="200" height="20" rx="3" fill="#7ec8e3"/>
+  <rect x="340" y="114" width="10" height="20" rx="2" fill="#444"/>
+  <rect x="370" y="114" width="200" height="20" rx="3" fill="#444" opacity="0.4"/>
+  <text x="220" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#0a0a0a">GIL 보유 — 실행 중</text>
+
+  <!-- Thread 2 timeline - CPU bound -->
+  <text x="84" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T2</text>
+  <rect x="120" y="144" width="200" height="20" rx="3" fill="#444" opacity="0.4"/>
+  <rect x="340" y="144" width="10" height="20" rx="2" fill="#444"/>
+  <rect x="370" y="144" width="200" height="20" rx="3" fill="#7777cc" opacity="0.7"/>
+  <text x="470" y="157" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#ffffff">GIL 대기 후 실행</text>
+
+  <text x="240" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">→ T1, T2 교대 실행 (병렬 X) — 멀티코어 활용 안 됨</text>
+
+  <!-- IO-bound section -->
+  <text x="120" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">I/O 바운드 (멀티스레드)</text>
+
+  <!-- Thread 1 timeline - IO bound -->
+  <text x="84" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T1</text>
+  <rect x="120" y="224" width="60" height="20" rx="3" fill="#7ec8e3"/>
+  <rect x="180" y="224" width="120" height="20" rx="3" fill="#888" opacity="0.4"/>
+  <text x="240" y="237" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#ffffff">I/O 대기(GIL 해제)</text>
+  <rect x="300" y="224" width="60" height="20" rx="3" fill="#7ec8e3"/>
+
+  <!-- Thread 2 timeline - IO bound -->
+  <text x="84" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T2</text>
+  <rect x="120" y="254" width="60" height="20" rx="3" fill="#444" opacity="0.4"/>
+  <rect x="180" y="254" width="120" height="20" rx="3" fill="#55c555" opacity="0.8"/>
+  <text x="240" y="267" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#0a0a0a">T1 대기 중 T2 실행</text>
+  <rect x="300" y="254" width="60" height="20" rx="3" fill="#444" opacity="0.4"/>
+
+  <text x="240" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">→ I/O 대기 중 GIL 해제 → 다른 스레드 실행 — 효과적 동시성</text>
+
+  <!-- Summary table -->
+  <rect x="60" y="314" width="760" height="100" rx="8" fill="#1a1a1a" stroke="#888" stroke-width="1.5"/>
+  <text x="440" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">작업 유형별 권장 도구</text>
+
+  <text x="200" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">CPU 바운드</text>
+  <text x="200" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">multiprocessing, ProcessPoolExecutor</text>
+  <text x="200" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">각 프로세스마다 독립된 GIL</text>
+
+  <line x1="420" y1="348" x2="420" y2="408" stroke="#444" stroke-width="1"/>
+
+  <text x="640" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">I/O 바운드</text>
+  <text x="640" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">threading, asyncio, ThreadPoolExecutor</text>
+  <text x="640" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">I/O 대기 시간에 다른 작업 진행</text>
+</svg>

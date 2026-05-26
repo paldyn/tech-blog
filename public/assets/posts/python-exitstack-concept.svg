@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ExitStack — 동적 컨텍스트 매니저 스택</text>
+
+  <!-- Push order -->
+  <text x="160" y="78" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">enter_context() 순서</text>
+
+  <rect x="60" y="88" width="200" height="46" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="111" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">ctx_a.enter_context(A)</text>
+  <text x="160" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">① 첫 번째 등록</text>
+
+  <line x1="160" y1="134" x2="160" y2="162" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="60" y="170" width="200" height="46" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="193" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">ctx_a.enter_context(B)</text>
+  <text x="160" y="209" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">② 두 번째 등록</text>
+
+  <line x1="160" y1="216" x2="160" y2="244" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="60" y="252" width="200" height="46" rx="6" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="275" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">ctx_a.enter_context(C)</text>
+  <text x="160" y="291" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">③ 세 번째 등록</text>
+
+  <!-- Stack representation -->
+  <rect x="330" y="88" width="220" height="210" rx="8" fill="#1a1a1a" stroke="#888" stroke-width="1.5"/>
+  <text x="440" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">내부 스택 상태</text>
+
+  <rect x="350" y="120" width="180" height="36" rx="4" fill="#1a2e0d" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="143" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">C (top)</text>
+
+  <rect x="350" y="162" width="180" height="36" rx="4" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="185" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">B</text>
+
+  <rect x="350" y="204" width="180" height="36" rx="4" fill="#2b1a0d" stroke="#ce9178" stroke-width="1"/>
+  <text x="440" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ce9178">A (bottom)</text>
+
+  <text x="440" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">LIFO 순서로 해제</text>
+  <text x="440" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(C → B → A)</text>
+
+  <!-- Exit order -->
+  <text x="700" y="78" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">with 블록 종료 시 해제 순서</text>
+
+  <rect x="620" y="88" width="200" height="46" rx="6" fill="#2b0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="720" y="111" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">C.__exit__() 호출</text>
+  <text x="720" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">① 가장 나중 등록 → 먼저 해제</text>
+
+  <line x1="720" y1="134" x2="720" y2="162" stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+
+  <rect x="620" y="170" width="200" height="46" rx="6" fill="#2b0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="720" y="193" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">B.__exit__() 호출</text>
+  <text x="720" y="209" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">② 중간 해제</text>
+
+  <line x1="720" y1="216" x2="720" y2="244" stroke="#e05555" stroke-width="2" marker-end="url(#arrr)"/>
+
+  <rect x="620" y="252" width="200" height="46" rx="6" fill="#2b0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="720" y="275" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">A.__exit__() 호출</text>
+  <text x="720" y="291" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">③ 마지막 해제</text>
+
+  <!-- Key benefits -->
+  <rect x="60" y="328" width="760" height="130" rx="8" fill="#1a1a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc">ExitStack 의 핵심 장점</text>
+
+  <text x="170" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">동적 개수</text>
+  <text x="170" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">런타임에 결정된 수의</text>
+  <text x="170" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">컨텍스트 매니저 관리</text>
+
+  <line x1="300" y1="370" x2="300" y2="440" stroke="#444" stroke-width="1"/>
+
+  <text x="440" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">callback 등록</text>
+  <text x="440" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">callback(fn) 으로 임의</text>
+  <text x="440" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">정리 함수 등록 가능</text>
+
+  <line x1="580" y1="370" x2="580" y2="440" stroke="#444" stroke-width="1"/>
+
+  <text x="720" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">예외 안전</text>
+  <text x="720" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">하나가 실패해도</text>
+  <text x="720" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">나머지 __exit__ 실행</text>
+</svg>

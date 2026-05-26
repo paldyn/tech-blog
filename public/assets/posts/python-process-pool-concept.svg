@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ProcessPoolExecutor 작업 분배 구조</text>
+
+  <!-- Caller -->
+  <rect x="60" y="64" width="200" height="50" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">메인 프로세스</text>
+  <text x="160" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">submit() / map()</text>
+
+  <!-- Arrow to executor -->
+  <line x1="260" y1="89" x2="330" y2="89" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Executor box -->
+  <rect x="330" y="64" width="220" height="50" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">ProcessPoolExecutor</text>
+  <text x="440" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">max_workers=4</text>
+
+  <!-- Arrow to workers -->
+  <line x1="550" y1="89" x2="620" y2="89" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Worker processes -->
+  <rect x="620" y="64" width="220" height="50" rx="8" fill="#0d2b1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="730" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Worker 프로세스 풀</text>
+  <text x="730" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">P1, P2, P3, P4</text>
+
+  <!-- Future explanation -->
+  <rect x="60" y="140" width="760" height="80" rx="8" fill="#1a1a1a" stroke="#888" stroke-width="1.5"/>
+  <text x="440" y="164" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Future 객체</text>
+  <text x="440" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">submit()은 즉시 Future 를 반환 — 아직 완료되지 않은 계산의 핸들</text>
+  <text x="440" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">future.result() → 완료 대기 후 결과 반환 / future.done() → 완료 여부 확인</text>
+
+  <!-- map vs submit -->
+  <rect x="60" y="244" width="380" height="100" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="250" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">executor.map(fn, iterable)</text>
+  <text x="250" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이터러블을 자동 분배</text>
+  <text x="250" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">입력 순서대로 결과 반환</text>
+  <text x="250" y="324" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">순서 중요할 때 사용</text>
+
+  <rect x="460" y="244" width="360" height="100" rx="8" fill="#0d2b1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">executor.submit(fn, *args)</text>
+  <text x="640" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">개별 Future 반환</text>
+  <text x="640" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">as_completed()로 완료 순 처리</text>
+  <text x="640" y="324" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">유연한 제어가 필요할 때</text>
+
+  <!-- chunksize note -->
+  <rect x="60" y="366" width="760" height="70" rx="8" fill="#2b1a0d" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="440" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178">chunksize 튜닝</text>
+  <text x="440" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">map(fn, data, chunksize=N) — 작업을 N 개씩 묶어서 프로세스에 전달</text>
+  <text x="440" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">작업 수 많고 작업 단위가 작을수록 chunksize 크게 → IPC 오버헤드 감소</text>
+</svg>

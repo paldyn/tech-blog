@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">비동기 컨텍스트 매니저 프로토콜</text>
+
+  <!-- Sync vs Async comparison -->
+  <!-- Left: sync -->
+  <rect x="60" y="64" width="370" height="50" rx="8" fill="#0d1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="245" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">동기 컨텍스트 매니저</text>
+  <text x="245" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">with cm: / __enter__ + __exit__</text>
+
+  <!-- Right: async -->
+  <rect x="450" y="64" width="370" height="50" rx="8" fill="#1a0d2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="635" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">비동기 컨텍스트 매니저</text>
+  <text x="635" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">async with cm: / __aenter__ + __aexit__</text>
+
+  <!-- Sync protocol -->
+  <rect x="60" y="134" width="370" height="60" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="245" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">def __enter__(self):</text>
+  <text x="245" y="174" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">블로킹, 즉시 반환</text>
+  <text x="245" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">동기 코드만 실행 가능</text>
+
+  <rect x="60" y="206" width="370" height="60" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="245" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">def __exit__(self, *exc):</text>
+  <text x="245" y="246" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">블로킹, 즉시 실행</text>
+  <text x="245" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">동기 정리 코드</text>
+
+  <!-- Async protocol -->
+  <rect x="450" y="134" width="370" height="60" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="635" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">async def __aenter__(self):</text>
+  <text x="635" y="174" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">await 가능 — 비동기 자원 획득</text>
+  <text x="635" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">예: await db.connect()</text>
+
+  <rect x="450" y="206" width="370" height="60" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="635" y="227" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">async def __aexit__(self, *exc):</text>
+  <text x="635" y="246" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">await 가능 — 비동기 자원 해제</text>
+  <text x="635" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">예: await conn.close()</text>
+
+  <!-- Usage -->
+  <rect x="60" y="288" width="370" height="50" rx="6" fill="#0d2b1a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">with cm as x:</text>
+  <text x="245" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">일반 함수 또는 코루틴 내</text>
+
+  <rect x="450" y="288" width="370" height="50" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="635" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">async with cm as x:</text>
+  <text x="635" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">반드시 async def 함수 내에서만</text>
+
+  <!-- asynccontextmanager -->
+  <rect x="160" y="360" width="560" height="72" rx="8" fill="#1a1a1a" stroke="#888" stroke-width="1.5"/>
+  <text x="440" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">@asynccontextmanager</text>
+  <text x="440" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">contextlib.asynccontextmanager 데코레이터 — @contextmanager 의 비동기 버전</text>
+  <text x="440" y="422" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">async def 제너레이터 함수에 적용, async with 에서 사용</text>
+</svg>
