@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">VSchema — Vitess 샤딩 설계</text>
+
+  <!-- VSchema code -->
+  <rect x="60" y="68" width="760" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// VSchema (JSON 설정): 샤딩 키 지정</text>
+  <text x="76" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">{ </tspan><tspan fill="#ce9178">"sharded"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"vindexes"</tspan><tspan fill="#ffffff">: {</tspan>
+  </text>
+  <text x="76" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#ce9178">"hash"</tspan><tspan fill="#ffffff">: { </tspan><tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"hash"</tspan><tspan fill="#ffffff"> }  </tspan><tspan fill="#9aa4b8">// user_id 해시 샤딩</tspan>
+  </text>
+  <text x="76" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}, </tspan><tspan fill="#ce9178">"tables"</tspan><tspan fill="#ffffff">: {</tspan>
+  </text>
+  <text x="76" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#ce9178">"users"</tspan><tspan fill="#ffffff">: {</tspan>
+  </text>
+  <text x="76" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan><tspan fill="#ce9178">"column_vindexes"</tspan><tspan fill="#ffffff">: [{ </tspan><tspan fill="#ce9178">"column"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"user_id"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"name"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"hash"</tspan><tspan fill="#ffffff"> }]</tspan>
+  </text>
+  <text x="76" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  },</tspan>
+  </text>
+  <text x="76" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#ce9178">"orders"</tspan><tspan fill="#ffffff">: {</tspan>
+  </text>
+  <text x="76" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan><tspan fill="#ce9178">"column_vindexes"</tspan><tspan fill="#ffffff">: [{ </tspan><tspan fill="#ce9178">"column"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"user_id"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"name"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"hash"</tspan><tspan fill="#ffffff"> }] </tspan><tspan fill="#9aa4b8">// user_id 기준</tspan>
+  </text>
+  <text x="76" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  }</tspan>
+  </text>
+  <text x="76" y="290" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}}</tspan>
+  </text>
+
+  <!-- Notes -->
+  <rect x="60" y="310" width="360" height="56" rx="6" fill="#0d0d0d" stroke="#333" stroke-width="1"/>
+  <text x="240" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">샤딩 키 포함 쿼리 → 단일 샤드 라우팅</text>
+  <text x="240" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" text-anchor="middle">WHERE user_id = 42  →  Shard A만</text>
+
+  <rect x="460" y="310" width="360" height="56" rx="6" fill="#0d0d0d" stroke="#333" stroke-width="1"/>
+  <text x="640" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">샤딩 키 없는 쿼리 → 스캐터 모드</text>
+  <text x="640" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" text-anchor="middle">SELECT * (샤딩 키 없음) → 모든 샤드</text>
+</svg>

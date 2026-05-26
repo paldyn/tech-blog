@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">스타 스키마 DDL과 분석 쿼리</text>
+
+  <!-- DDL code -->
+  <rect x="60" y="65" width="760" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="87" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 팩트 테이블 (측정값 + FK들)</text>
+  <text x="76" y="107" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">CREATE TABLE</tspan><tspan fill="#ffffff"> fact_sales (</tspan>
+  </text>
+  <text x="76" y="127" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    date_key     </tspan><tspan fill="#7ec8e3" font-weight="600">INT</tspan><tspan fill="#ffffff">  REFERENCES dim_date(date_key),</tspan>
+  </text>
+  <text x="76" y="147" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    product_key  </tspan><tspan fill="#7ec8e3" font-weight="600">INT</tspan><tspan fill="#ffffff">  REFERENCES dim_product(product_key),</tspan>
+  </text>
+  <text x="76" y="167" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    customer_key </tspan><tspan fill="#7ec8e3" font-weight="600">INT</tspan><tspan fill="#ffffff">  REFERENCES dim_customer(customer_key),</tspan>
+  </text>
+  <text x="76" y="187" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    amount       </tspan><tspan fill="#7ec8e3" font-weight="600">DECIMAL</tspan><tspan fill="#ffffff">(12,2),</tspan>
+  </text>
+  <text x="76" y="207" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    qty          </tspan><tspan fill="#7ec8e3" font-weight="600">INT</tspan>
+  </text>
+  <text x="76" y="227" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="247" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 스타 스키마 분석 쿼리</text>
+  <text x="76" y="267" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> d.year, d.quarter, p.category, </tspan><tspan fill="#7ec8e3" font-weight="600">SUM</tspan><tspan fill="#ffffff">(f.amount) revenue</tspan>
+  </text>
+
+  <!-- Analysis query continued -->
+  <rect x="60" y="295" width="760" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="317" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff">   fact_sales f</tspan>
+  </text>
+  <text x="76" y="337" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">JOIN</tspan><tspan fill="#ffffff">   dim_date     d </tspan><tspan fill="#7ec8e3" font-weight="600">ON</tspan><tspan fill="#ffffff"> f.date_key = d.date_key</tspan>
+  </text>
+  <text x="76" y="357" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">JOIN</tspan><tspan fill="#ffffff">   dim_product  p </tspan><tspan fill="#7ec8e3" font-weight="600">ON</tspan><tspan fill="#ffffff"> f.product_key = p.product_key</tspan>
+  </text>
+  <text x="76" y="377" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff">  d.year = </tspan><tspan fill="#b5cea8">2026</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">GROUP BY</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">ORDER BY</tspan><tspan fill="#ffffff"> revenue </tspan><tspan fill="#7ec8e3" font-weight="600">DESC</tspan><tspan fill="#ffffff">;</tspan>
+  </text>
+</svg>

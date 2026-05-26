@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CockroachDB 아키텍처</text>
+
+  <!-- SQL Layer -->
+  <rect x="200" y="68" width="480" height="52" rx="8" fill="#12213a" stroke="#3a6ea8" stroke-width="2"/>
+  <text x="440" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">SQL Layer (PostgreSQL 호환 SQL 파서)</text>
+  <text x="440" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">쿼리 파싱 / 옵티마이저 / 실행 계획</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="120" x2="440" y2="148" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Transaction Layer -->
+  <rect x="200" y="148" width="480" height="52" rx="8" fill="#1a1020" stroke="#5a3080" stroke-width="2"/>
+  <text x="440" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#9977cc" text-anchor="middle">Transaction Layer (Serializable MVCC)</text>
+  <text x="440" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">HLC(하이브리드 논리 클럭) 기반 타임스탬프 순서 보장</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="200" x2="440" y2="228" stroke="#9977cc" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Distribution Layer -->
+  <rect x="200" y="228" width="480" height="52" rx="8" fill="#1a2010" stroke="#4a6020" stroke-width="2"/>
+  <text x="440" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#88cc44" text-anchor="middle">Distribution Layer (Range 분산)</text>
+  <text x="440" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">64MB Range 단위 자동 분할 · 재균형 · 리더 선출</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="280" x2="440" y2="308" stroke="#88cc44" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Replication Layer -->
+  <rect x="200" y="308" width="480" height="52" rx="8" fill="#1a1510" stroke="#6a4a10" stroke-width="2"/>
+  <text x="440" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e09055" text-anchor="middle">Replication Layer (Raft Consensus)</text>
+  <text x="440" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Range마다 Raft 그룹 · 과반수 쓰기 후 커밋</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="360" x2="440" y2="388" stroke="#e09055" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Storage -->
+  <rect x="200" y="388" width="480" height="52" rx="8" fill="#101010" stroke="#404040" stroke-width="2"/>
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#888" text-anchor="middle">Storage Layer (RocksDB / Pebble)</text>
+  <text x="440" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">LSM-Tree 기반 · 각 노드 로컬 SSD</text>
+
+  <!-- Node labels on side -->
+  <text x="60" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">모든 노드</text>
+  <text x="60" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">동일 코드 실행</text>
+  <text x="60" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">(Symmetric)</text>
+
+  <line x1="150" y1="220" x2="200" y2="220" stroke="#888" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Right: Range distribution -->
+  <text x="700" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Range</text>
+  <rect x="700" y="270" width="60" height="24" rx="4" fill="#0e2010" stroke="#3a6020" stroke-width="1"/>
+  <text x="730" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#88cc44" text-anchor="middle">0–64MB</text>
+  <rect x="770" y="270" width="60" height="24" rx="4" fill="#0e2010" stroke="#3a6020" stroke-width="1"/>
+  <text x="800" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#88cc44" text-anchor="middle">64–128MB</text>
+
+  <text x="760" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">각 Range = 3~5 복제본</text>
+</svg>

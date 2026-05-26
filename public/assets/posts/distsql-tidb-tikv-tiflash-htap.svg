@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">TiDB OLTP vs OLAP 분리 실행</text>
+
+  <!-- OLTP side -->
+  <rect x="60" y="68" width="360" height="46" rx="8" fill="#1a1208" stroke="#6a4010" stroke-width="2"/>
+  <text x="240" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e09055" text-anchor="middle">OLTP (TiKV — 행 스토리지)</text>
+  <text x="240" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">포인트 조회 / 단건 UPDATE / 낮은 지연</text>
+
+  <!-- OLAP side -->
+  <rect x="460" y="68" width="360" height="46" rx="8" fill="#0a1a0a" stroke="#2a6a2a" stroke-width="2"/>
+  <text x="640" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">OLAP (TiFlash — 열 스토리지)</text>
+  <text x="640" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">집계 / 범위 스캔 / 높은 처리량</text>
+
+  <!-- OLTP code -->
+  <rect x="60" y="132" width="360" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="154" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 주문 삽입 (TiKV 자동 선택)</text>
+  <text x="76" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">INSERT INTO</tspan><tspan fill="#ffffff"> orders</tspan>
+  </text>
+  <text x="76" y="194" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  (user_id, amount, status)</tspan>
+  </text>
+  <text x="76" y="214" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">VALUES</tspan><tspan fill="#ffffff"> (42, </tspan><tspan fill="#b5cea8">9900</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">'PENDING'</tspan><tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 지연: &lt;5ms (행 스토리지 포인트 쓰기)</text>
+  <text x="76" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- TiFlash로 비동기 복제됨</text>
+
+  <!-- OLAP code -->
+  <rect x="460" y="132" width="360" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="154" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 분석 집계 (TiFlash 강제 힌트)</text>
+  <text x="476" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">SELECT</tspan>
+  </text>
+  <text x="476" y="194" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  /*+ READ_FROM_STORAGE(TIFLASH[orders]) */</tspan>
+  </text>
+  <text x="476" y="214" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  date_trunc(</tspan><tspan fill="#ce9178">'day'</tspan><tspan fill="#ffffff">, created_at),</tspan>
+  </text>
+  <text x="476" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  SUM</tspan><tspan fill="#ffffff">(amount) </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> orders</tspan>
+  </text>
+  <text x="476" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  GROUP BY</tspan><tspan fill="#ffffff"> 1;</tspan>
+  </text>
+
+  <!-- Comparison table -->
+  <text x="60" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">TiDB vs CockroachDB 비교</text>
+
+  <rect x="60" y="304" width="360" height="52" rx="6" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="240" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">TiDB 강점</text>
+  <text x="240" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#c8c8c8" text-anchor="middle">HTAP / TiFlash 열 스토리지 / MySQL 호환</text>
+
+  <rect x="460" y="304" width="360" height="52" rx="6" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="640" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">CockroachDB 강점</text>
+  <text x="640" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#c8c8c8" text-anchor="middle">멀티 리전 / PostgreSQL 호환 / 강한 일관성</text>
+
+  <text x="440" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">TiFlash는 TiKV에서 Raft Learner로 비동기 복제 — OLTP 쓰기 성능에 영향 없음</text>
+</svg>

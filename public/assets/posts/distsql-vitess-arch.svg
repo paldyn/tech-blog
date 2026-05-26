@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Vitess 아키텍처 — MySQL 위의 수평 샤딩</text>
+
+  <!-- Application -->
+  <rect x="330" y="65" width="220" height="46" rx="8" fill="#12213a" stroke="#3a6ea8" stroke-width="2"/>
+  <text x="440" y="93" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Application (MySQL 드라이버)</text>
+
+  <!-- VTGate -->
+  <line x1="440" y1="111" x2="440" y2="138" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <rect x="280" y="138" width="320" height="52" rx="8" fill="#1a1520" stroke="#5a3060" stroke-width="2"/>
+  <text x="440" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#cc77aa" text-anchor="middle">VTGate</text>
+  <text x="440" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">MySQL 프로토콜 게이트웨이 / 쿼리 라우터</text>
+
+  <!-- VTTablet shard A -->
+  <line x1="380" y1="190" x2="220" y2="248" stroke="#cc77aa" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <rect x="60" y="248" width="320" height="52" rx="8" fill="#12213a" stroke="#3a6ea8" stroke-width="1.5"/>
+  <text x="220" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">VTTablet (Shard A: user_id 0–999999)</text>
+  <text x="220" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">MySQL Primary + 쿼리 처리</text>
+
+  <!-- VTTablet shard B -->
+  <line x1="500" y1="190" x2="660" y2="248" stroke="#cc77aa" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <rect x="500" y="248" width="320" height="52" rx="8" fill="#12213a" stroke="#3a6ea8" stroke-width="1.5"/>
+  <text x="660" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">VTTablet (Shard B: user_id 1M+)</text>
+  <text x="660" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">MySQL Primary + 쿼리 처리</text>
+
+  <!-- MySQL instances -->
+  <rect x="60" y="324" width="140" height="46" rx="6" fill="#0a1a0a" stroke="#2a6a2a" stroke-width="1"/>
+  <text x="130" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">MySQL Primary</text>
+
+  <rect x="214" y="324" width="140" height="46" rx="6" fill="#0a1a0a" stroke="#2a4010" stroke-width="1"/>
+  <text x="284" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">MySQL Replica</text>
+
+  <rect x="500" y="324" width="140" height="46" rx="6" fill="#0a1a0a" stroke="#2a6a2a" stroke-width="1"/>
+  <text x="570" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">MySQL Primary</text>
+
+  <rect x="654" y="324" width="140" height="46" rx="6" fill="#0a1a0a" stroke="#2a4010" stroke-width="1"/>
+  <text x="724" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">MySQL Replica</text>
+
+  <!-- Topo server -->
+  <rect x="280" y="398" width="320" height="52" rx="8" fill="#101010" stroke="#404040" stroke-width="1.5"/>
+  <text x="440" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888" text-anchor="middle">Topology Server (etcd / ZooKeeper)</text>
+  <text x="440" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">샤드 맵 / 라우팅 정보 / 클러스터 메타데이터</text>
+
+  <!-- Code note -->
+  <text x="440" y="474" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">애플리케이션은 기존 MySQL 드라이버 그대로 — VTGate가 샤드로 라우팅</text>
+</svg>

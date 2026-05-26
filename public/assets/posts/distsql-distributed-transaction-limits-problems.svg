@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e09055"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">분산 트랜잭션의 4가지 핵심 한계</text>
+
+  <!-- Card 1: Network latency -->
+  <rect x="60" y="68" width="370" height="100" rx="8" fill="#1a1010" stroke="#6e2020" stroke-width="1.5"/>
+  <text x="86" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">① 네트워크 지연 증폭</text>
+  <text x="86" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">2PC는 라운드트립 최소 2회 필요.</text>
+  <text x="86" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">WAN 환경(RTT 100ms)이면 커밋 혼자</text>
+  <text x="86" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">200ms+ 소요 → 처리량 급감</text>
+
+  <!-- Card 2: Coordinator failure -->
+  <rect x="450" y="68" width="370" height="100" rx="8" fill="#1a1010" stroke="#6e2020" stroke-width="1.5"/>
+  <text x="476" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">② Coordinator 단일 장애점</text>
+  <text x="476" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">Coordinator 다운 → 참여자들 in-doubt</text>
+  <text x="476" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">글로벌 락 점유 상태로 정지.</text>
+  <text x="476" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">복구까지 전체 서비스 블로킹</text>
+
+  <!-- Card 3: Partial failure -->
+  <rect x="60" y="186" width="370" height="100" rx="8" fill="#1a150a" stroke="#6e4a10" stroke-width="1.5"/>
+  <text x="86" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e09055">③ 부분 실패 처리 복잡성</text>
+  <text x="86" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">노드 A는 커밋, 네트워크 절단 후</text>
+  <text x="86" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">노드 B는 커밋 메시지 수신 불가.</text>
+  <text x="86" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">수동 개입 또는 멱등 재시도 필요</text>
+
+  <!-- Card 4: Scalability -->
+  <rect x="450" y="186" width="370" height="100" rx="8" fill="#1a150a" stroke="#6e4a10" stroke-width="1.5"/>
+  <text x="476" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e09055">④ 수평 확장 제약</text>
+  <text x="476" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">참여 노드 증가 = 락 유지 시간 증가.</text>
+  <text x="476" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">10노드 2PC vs 100노드 2PC는</text>
+  <text x="476" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#c8c8c8">지연·잠금경합이 선형 이상으로 증가</text>
+
+  <!-- Practical strategies title -->
+  <text x="60" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">실무 대응 전략</text>
+
+  <!-- Strategy boxes -->
+  <rect x="60" y="330" width="174" height="56" rx="6" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="147" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Outbox Pattern</text>
+  <text x="147" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">로컬 DB + 이벤트 발행</text>
+
+  <rect x="246" y="330" width="174" height="56" rx="6" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="333" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">멱등 키</text>
+  <text x="333" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">중복 처리 방지</text>
+
+  <rect x="432" y="330" width="174" height="56" rx="6" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="519" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">보상 트랜잭션</text>
+  <text x="519" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">SAGA 역순 취소</text>
+
+  <rect x="618" y="330" width="202" height="56" rx="6" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="719" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">최종 일관성 수용</text>
+  <text x="719" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">비즈니스 규칙으로 처리</text>
+
+  <!-- Code block -->
+  <rect x="60" y="404" width="760" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="424" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- Outbox: 로컬 트랜잭션 + 이벤트를 같은 DB에 기록 (원자성 보장)</text>
+  <text x="76" y="444" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">BEGIN</tspan><tspan fill="#ffffff">; </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">INSERT INTO</tspan><tspan fill="#ffffff"> orders ...</tspan><tspan fill="#ffffff">; </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">INSERT INTO</tspan><tspan fill="#ffffff"> outbox ...</tspan><tspan fill="#ffffff">; </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">COMMIT</tspan><tspan fill="#ffffff">;</tspan>
+  </text>
+  <text x="76" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- CDC/Relay가 outbox 폴링 후 메시지 브로커로 발행 → 분산 전파</text>
+</svg>

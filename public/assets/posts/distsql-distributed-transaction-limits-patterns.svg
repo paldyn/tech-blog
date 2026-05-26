@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Outbox 패턴: 로컬 원자성으로 분산 전파 보장</text>
+
+  <!-- Service -->
+  <rect x="60" y="70" width="200" height="56" rx="8" fill="#12213a" stroke="#3a6ea8" stroke-width="1.5"/>
+  <text x="160" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Order Service</text>
+  <text x="160" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">비즈니스 로직</text>
+
+  <!-- Local DB with orders + outbox -->
+  <rect x="60" y="160" width="200" height="100" rx="8" fill="#101820" stroke="#2a4060" stroke-width="1.5"/>
+  <text x="160" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Local DB</text>
+  <rect x="76" y="196" width="168" height="26" rx="4" fill="#0e1c30" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="160" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">orders 테이블</text>
+  <rect x="76" y="228" width="168" height="26" rx="4" fill="#0e2a0e" stroke="#3a8a3a" stroke-width="1"/>
+  <text x="160" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">outbox 테이블</text>
+
+  <!-- Arrow: Service -> Local DB -->
+  <line x1="160" y1="126" x2="160" y2="160" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="168" y="147" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">BEGIN/COMMIT</text>
+
+  <!-- CDC Relay -->
+  <rect x="340" y="185" width="200" height="56" rx="8" fill="#1a1a0a" stroke="#6e6e10" stroke-width="1.5"/>
+  <text x="440" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e855" text-anchor="middle">CDC / Relay</text>
+  <text x="440" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">outbox 폴링 또는 WAL 감시</text>
+
+  <!-- Arrow: outbox -> CDC -->
+  <line x1="260" y1="241" x2="340" y2="213" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="290" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">이벤트 읽기</text>
+
+  <!-- Message Broker -->
+  <rect x="620" y="185" width="200" height="56" rx="8" fill="#1a1020" stroke="#5a3080" stroke-width="1.5"/>
+  <text x="720" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#9977cc" text-anchor="middle">Message Broker</text>
+  <text x="720" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Kafka / RabbitMQ</text>
+
+  <!-- Arrow: CDC -> Broker -->
+  <line x1="540" y1="213" x2="620" y2="213" stroke="#e8e855" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="570" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e855">발행</text>
+
+  <!-- Downstream services -->
+  <rect x="620" y="300" width="200" height="52" rx="8" fill="#0d1a0d" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="720" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Inventory Service</text>
+  <text x="720" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">이벤트 구독 → 재고 차감</text>
+
+  <!-- Arrow: Broker -> Inventory -->
+  <line x1="720" y1="241" x2="720" y2="300" stroke="#9977cc" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="728" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9977cc">구독</text>
+
+  <!-- Idempotency key code -->
+  <rect x="60" y="300" width="520" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 멱등 키: 중복 처리 방지</text>
+  <text x="76" y="342" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">CREATE TABLE</tspan><tspan fill="#ffffff"> processed_events (</tspan>
+  </text>
+  <text x="76" y="362" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    event_id  </tspan><tspan fill="#7ec8e3" font-weight="600">UUID PRIMARY KEY</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="76" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    processed_at </tspan><tspan fill="#7ec8e3" font-weight="600">TIMESTAMP</tspan>
+  </text>
+  <text x="76" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">); </tspan><tspan fill="#9aa4b8">-- INSERT OR IGNORE → 중복 이벤트 무시</tspan>
+  </text>
+
+  <!-- Legend -->
+  <text x="440" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">로컬 트랜잭션 원자성 + 비동기 이벤트 = 분산 트랜잭션 없이 정합성 달성</text>
+</svg>
