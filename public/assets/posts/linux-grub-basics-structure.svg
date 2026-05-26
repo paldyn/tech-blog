@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">GRUB2 구조와 파일 배치</text>
+
+  <!-- Left: BIOS/Legacy -->
+  <rect x="60" y="80" width="360" height="380" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">BIOS / Legacy 방식</text>
+
+  <rect x="80" y="124" width="320" height="50" rx="6" fill="#2a1010" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="147" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">MBR (첫 512 bytes)</text>
+  <text x="240" y="165" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">GRUB stage 1 (446 bytes)</text>
+
+  <line x1="240" y1="174" x2="240" y2="196" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="80" y="196" width="320" height="50" rx="6" fill="#2a1010" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="219" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">MBR gap (63 sectors)</text>
+  <text x="240" y="237" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">GRUB core.img (BIOS Boot Partition)</text>
+
+  <line x1="240" y1="246" x2="240" y2="268" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="80" y="268" width="320" height="50" rx="6" fill="#2a1010" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="291" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">/boot/grub/ (stage 2)</text>
+  <text x="240" y="309" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">grub.cfg, modules/*.mod</text>
+
+  <rect x="80" y="340" width="320" height="100" rx="6" fill="#1a0808" stroke="#444" stroke-width="1"/>
+  <text x="96" y="362"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">/boot/grub/grub.cfg → 부팅 메뉴</text>
+  <text x="96" y="382"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">/etc/default/grub → 사용자 설정</text>
+  <text x="96" y="402"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">/etc/grub.d/ → 설정 생성 스크립트</text>
+  <text x="96" y="422"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">/boot/vmlinuz-* → 커널 이미지</text>
+
+  <!-- Right: UEFI -->
+  <rect x="460" y="80" width="360" height="380" rx="8" fill="#001a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">UEFI 방식</text>
+
+  <rect x="480" y="124" width="320" height="50" rx="6" fill="#002a18" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="147" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">EFI System Partition (ESP)</text>
+  <text x="640" y="165" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">FAT32, /boot/efi/ 마운트</text>
+
+  <line x1="640" y1="174" x2="640" y2="196" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="480" y="196" width="320" height="50" rx="6" fill="#002a18" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="219" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">/boot/efi/EFI/ubuntu/grubx64.efi</text>
+  <text x="640" y="237" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">UEFI 펌웨어가 직접 로드</text>
+
+  <line x1="640" y1="246" x2="640" y2="268" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="480" y="268" width="320" height="50" rx="6" fill="#002a18" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="291" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">/boot/grub/grub.cfg 참조</text>
+  <text x="640" y="309" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">또는 ESP 내부 grub.cfg</text>
+
+  <rect x="480" y="340" width="320" height="100" rx="6" fill="#001a08" stroke="#444" stroke-width="1"/>
+  <text x="496" y="362"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">efibootmgr -v → 부팅 순서</text>
+  <text x="496" y="382"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">grub-install --target=x86_64-efi</text>
+  <text x="496" y="402"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Secure Boot → 서명된 shim.efi 필요</text>
+  <text x="496" y="422"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">update-grub → grub.cfg 재생성</text>
+</svg>

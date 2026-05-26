@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">initramfs 동작 원리</text>
+
+  <!-- Phase 1: Kernel loads initramfs -->
+  <rect x="60" y="80" width="180" height="70" rx="8" fill="#002010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="150" y="107" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">커널</text>
+  <text x="150" y="127" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">vmlinuz 압축 해제</text>
+  <text x="150" y="141" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">initramfs 메모리 로드</text>
+
+  <line x1="240" y1="115" x2="310" y2="115"
+        stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="275" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">cpio+gz</text>
+
+  <!-- Phase 2: initramfs tmpfs -->
+  <rect x="310" y="70" width="240" height="290" rx="8" fill="#001a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="430" y="98" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">initramfs (tmpfs)</text>
+  <text x="430" y="116" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">메모리에 압축 해제된 임시 루트</text>
+
+  <rect x="326" y="128" width="208" height="30" rx="5" fill="#002a18" stroke="#55c555" stroke-width="0.8"/>
+  <text x="430" y="148" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">/init (또는 /sbin/init)</text>
+
+  <rect x="326" y="164" width="208" height="24" rx="5" fill="#002a18" stroke="#444" stroke-width="0.8"/>
+  <text x="430" y="181" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/bin, /sbin 기본 도구</text>
+
+  <rect x="326" y="194" width="208" height="24" rx="5" fill="#002a18" stroke="#444" stroke-width="0.8"/>
+  <text x="430" y="211" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/lib/modules/ 드라이버</text>
+
+  <rect x="326" y="224" width="208" height="24" rx="5" fill="#002a18" stroke="#444" stroke-width="0.8"/>
+  <text x="430" y="241" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/etc/udev 규칙</text>
+
+  <rect x="326" y="254" width="208" height="24" rx="5" fill="#002a18" stroke="#444" stroke-width="0.8"/>
+  <text x="430" y="271" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">LVM / LUKS / RAID 도구</text>
+
+  <rect x="326" y="284" width="208" height="24" rx="5" fill="#002a18" stroke="#444" stroke-width="0.8"/>
+  <text x="430" y="301" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/proc, /sys, /dev</text>
+
+  <rect x="326" y="316" width="208" height="30" rx="5" fill="#1a1a00" stroke="#e8c040" stroke-width="0.8"/>
+  <text x="430" y="336" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c040">실제 루트 마운트 → pivot_root</text>
+
+  <!-- Arrow to real root -->
+  <line x1="550" y1="230" x2="618" y2="230"
+        stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="584" y="222" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">pivot_root</text>
+
+  <!-- Phase 3: Real root filesystem -->
+  <rect x="618" y="140" width="200" height="200" rx="8" fill="#12123a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="718" y="166" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">실제 루트 파일시스템</text>
+  <text x="718" y="186" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/dev/sda2, LVM, LUKS...</text>
+
+  <rect x="636" y="198" width="164" height="28" rx="5" fill="#1a1a4a" stroke="#7777cc" stroke-width="0.8"/>
+  <text x="718" y="217" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">/sbin/init → systemd</text>
+
+  <rect x="636" y="232" width="164" height="24" rx="5" fill="#1a1a4a" stroke="#444" stroke-width="0.8"/>
+  <text x="718" y="249" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/usr, /home, /var ...</text>
+
+  <rect x="636" y="262" width="164" height="24" rx="5" fill="#1a1a4a" stroke="#444" stroke-width="0.8"/>
+  <text x="718" y="279" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">영구 저장소 (ext4/xfs)</text>
+
+  <rect x="636" y="292" width="164" height="28" rx="5" fill="#002010" stroke="#55c555" stroke-width="0.8"/>
+  <text x="718" y="311" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">systemd 서비스 시작</text>
+
+  <!-- rd.break annotation -->
+  <rect x="60" y="396" width="760" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="422" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 커널 파라미터 rd.break → initramfs에서 멈춤 (패스워드 복구)</text>
+  <text x="80" y="442" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">switch_root</text>
+  <text x="80" y="462" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> /sysroot /sbin/init  # initramfs → 실제 루트 전환</text>
+  <text x="80" y="482" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">dracut</text>
+  <text x="80" y="502" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> -f  # RHEL 계열 initramfs 재생성</text>
+</svg>
