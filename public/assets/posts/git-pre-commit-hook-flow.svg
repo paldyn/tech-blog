@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">pre-commit 훅 실행 흐름</text>
+
+  <!-- git commit -->
+  <rect x="340" y="74" width="200" height="52" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">git commit</text>
+
+  <line x1="440" y1="126" x2="440" y2="156" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- pre-commit hook -->
+  <rect x="280" y="158" width="320" height="52" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">pre-commit 훅 실행</text>
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">lint / format / test / secret scan ...</text>
+
+  <!-- Branch: exit 0 / exit 1 -->
+  <line x1="280" y1="184" x2="176" y2="184" stroke="#55c555" stroke-width="2"/>
+  <line x1="176" y1="184" x2="176" y2="268" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="100" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">exit 0</text>
+
+  <line x1="600" y1="184" x2="704" y2="184" stroke="#e05555" stroke-width="2"/>
+  <line x1="704" y1="184" x2="704" y2="268" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="780" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">exit 1</text>
+
+  <!-- Success -->
+  <rect x="60" y="270" width="232" height="64" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="176" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">커밋 진행</text>
+  <text x="176" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">commit-msg 훅 → 커밋 완료</text>
+
+  <!-- Fail -->
+  <rect x="588" y="270" width="232" height="64" rx="8" fill="#1f1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="704" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">커밋 중단</text>
+  <text x="704" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">오류 메시지 표시 후 종료</text>
+
+  <!-- Code block -->
+  <rect x="60" y="358" width="760" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">#!/bin/sh</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># .githooks/pre-commit</text>
+  <text x="76" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">set</tspan> -e       <tspan fill="#9aa4b8"># 명령 실패 시 즉시 종료</tspan></text>
+  <text x="76" y="442" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">npm <tspan fill="#7ec8e3" font-weight="600">run</tspan> lint   <tspan fill="#9aa4b8"># 린트 실패 → exit 1 → 커밋 취소</tspan></text>
+  <text x="76" y="462" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">npm <tspan fill="#7ec8e3" font-weight="600">run</tspan> format:check</text>
+  <text x="76" y="482" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">exit</tspan> <tspan fill="#b5cea8">0</tspan>      <tspan fill="#9aa4b8"># 모두 통과 → 커밋 진행</tspan></text>
+</svg>

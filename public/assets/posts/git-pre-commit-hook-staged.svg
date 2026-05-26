@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">staged 파일만 검사하는 패턴 &amp; lint-staged</text>
+
+  <!-- Problem: full lint is slow -->
+  <rect x="60" y="72" width="360" height="70" rx="8" fill="#1f1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">전체 린트: 느리다</text>
+  <text x="240" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파일 수천 개에 ESLint 전체 실행</text>
+  <text x="240" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">pre-commit 10~30초 이상 → 개발자 불만</text>
+
+  <!-- Solution: staged only -->
+  <rect x="460" y="72" width="360" height="70" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">staged 파일만: 빠르다</text>
+  <text x="640" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이번 커밋에 포함되는 파일만 검사</text>
+  <text x="640" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">1~3초 내 완료 → 개발 흐름 유지</text>
+
+  <!-- Code block -->
+  <rect x="60" y="162" width="760" height="194" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 셸 훅에서 staged 파일 추출</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">STAGED_JS=<tspan fill="#ce9178">$(git diff --cached --name-only --diff-filter=ACMR | grep '\.js$')</tspan></text>
+  <text x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">if</tspan> [ -n <tspan fill="#ce9178">"$STAGED_JS"</tspan> ]; <tspan fill="#7ec8e3" font-weight="600">then</tspan></text>
+  <text x="76" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    npx eslint $STAGED_JS</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">fi</tspan></text>
+  <text x="76" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># lint-staged 사용 (권장, package.json 설정)</text>
+  <text x="76" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># "lint-staged": { "*.{js,ts}": ["eslint --fix", "git add"] }</text>
+  <text x="76" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># .husky/pre-commit:</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">npx lint-staged</text>
+</svg>
