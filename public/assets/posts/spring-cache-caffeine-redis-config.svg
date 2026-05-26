@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 580">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="580" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Caffeine &amp; Redis CacheManager 설정 예시</text>
+
+  <!-- Left: Caffeine config -->
+  <text x="230" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">Caffeine — 로컬 캐시</text>
+
+  <!-- Caffeine code block -->
+  <rect x="60" y="100" width="360" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="76" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Bean</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> CacheManager caffeineCacheManager() {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  CaffeineCacheManager mgr =</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> CaffeineCacheManager();</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  mgr.setCaffeine(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    Caffeine.newBuilder()</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">      .maximumSize(500)</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">      .expireAfterWrite(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">        10, TimeUnit.MINUTES));</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> mgr;</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Arrow: Caffeine config -> Spring Cache -->
+  <line x1="420" y1="220" x2="455" y2="220" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Center: Spring Cache Abstraction -->
+  <rect x="460" y="188" width="200" height="64" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+  <text x="560" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Spring Cache</text>
+  <text x="560" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">추상화 레이어</text>
+  <text x="560" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">@Cacheable / @CacheEvict</text>
+
+  <!-- Right: Redis config -->
+  <text x="650" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">Redis — 분산 캐시</text>
+
+  <!-- Defs for Redis arrow -->
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Arrow: Redis config -> Spring Cache -->
+  <line x1="460" y1="220" x2="420" y2="220" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <!-- Redis code block - placeholder, will be right side -->
+  <!-- Actually let me rethink the layout. Let me put Redis config to the right -->
+
+  <!-- Redis config block -->
+  <rect x="460" y="290" width="360" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="476" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="476" dy="0" fill="#7ec8e3" font-weight="600">@Bean</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> RedisCacheManager redisCacheManager(</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    RedisConnectionFactory factory) {</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  RedisCacheConfig cfg =</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    RedisCacheConfig.defaultCacheConfig()</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">      .entryTtl(Duration.ofMinutes(30))</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">      .serializeValuesWith(</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">        RedisSerializationContext</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">          .SerializationPair.fromSerializer(</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">            new GenericJackson2JsonRedisSerializer()));</tspan>
+  </text>
+
+  <!-- Caffeine properties block -->
+  <rect x="60" y="360" width="360" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="240" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">application.yml (Caffeine)</text>
+  <text xml:space="preserve" x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">spring</tspan><tspan fill="#ffffff">:</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">  cache</tspan><tspan fill="#ffffff">:</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">type</tspan><tspan fill="#ffffff">: caffeine</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">caffeine</tspan><tspan fill="#ffffff">:</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">spec</tspan><tspan fill="#ffffff">: maximumSize=500,expireAfterWrite=10m</tspan>
+  </text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="510" width="760" height="50" rx="6" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="440" y="531" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">&#128161; 두 공급자는 동일한 @Cacheable / @CacheEvict / @CachePut 어노테이션으로 동작한다.</text>
+  <text x="440" y="551" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">CacheManager 빈만 교체하면 비즈니스 코드 수정 없이 공급자를 전환할 수 있다.</text>
+</svg>

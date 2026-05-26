@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520">
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ThreadPoolTaskExecutor 설정 코드</text>
+
+  <!-- Left: Executor config -->
+  <text x="240" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Executor 빈 설정</text>
+
+  <rect x="60" y="92" width="380" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="76" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Configuration</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">@EnableAsync</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> AsyncConfig {</tspan>
+    <tspan x="76" dy="22" fill="#7ec8e3" font-weight="600">  @Bean</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">  public</tspan><tspan fill="#ffffff"> Executor taskExecutor() {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ThreadPoolTaskExecutor ex =</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ThreadPoolTaskExecutor();</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ex.setCorePoolSize(10);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ex.setMaxPoolSize(50);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ex.setQueueCapacity(100);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ex.setThreadNamePrefix(</tspan>
+    <tspan x="76" dy="18" fill="#ce9178">      "async-task-");</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ex.setRejectedExecutionHandler(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> CallerRunsPolicy());</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    ex.initialize();</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> ex;</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Right: Usage -->
+  <text x="650" y="82" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">@Async 사용 예시</text>
+
+  <rect x="460" y="92" width="360" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="476" dy="0" fill="#7ec8e3" font-weight="600">@Service</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> MailService {</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">  // void 반환: fire-and-forget</tspan>
+    <tspan x="476" dy="16" fill="#7ec8e3" font-weight="600">  @Async</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> sendWelcomeMail(</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">      String email) {</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    mailClient.send(email);</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">  // 결과가 필요할 때</tspan>
+    <tspan x="476" dy="16" fill="#7ec8e3" font-weight="600">  @Async</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">  public</tspan><tspan fill="#ffffff"> CompletableFuture&lt;Report&gt;</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">      buildReport(Long userId) {</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    Report r = heavyCalc(userId);</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> CompletableFuture</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">             .completedFuture(r);</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Bottom: Pool sizing guide -->
+  <rect x="60" y="390" width="760" height="110" rx="8" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="440" y="413" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">스레드풀 크기 산정 공식</text>
+
+  <!-- CPU bound -->
+  <rect x="76" y="424" width="300" height="66" rx="6" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="226" y="443" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">CPU 바운드 작업</text>
+  <text x="226" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" text-anchor="middle">코어 = CPU 코어 수 + 1</text>
+  <text x="226" y="481" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">컨텍스트 전환 최소화</text>
+
+  <!-- IO bound -->
+  <rect x="504" y="424" width="300" height="66" rx="6" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="654" y="443" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">I/O 바운드 작업</text>
+  <text x="654" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">코어 = CPU × (1 + 대기시간/연산시간)</text>
+  <text x="654" y="481" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">I/O 대기 비율이 높을수록 더 많은 스레드</text>
+</svg>

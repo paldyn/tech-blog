@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 560">
+  <!-- Background -->
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">@Scheduled 실행 간격 옵션 비교</text>
+
+  <!-- fixedRate vs fixedDelay vs cron header -->
+  <rect x="60" y="62" width="240" height="44" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="180" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">fixedRate</text>
+
+  <rect x="320" y="62" width="240" height="44" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">fixedDelay</text>
+
+  <rect x="580" y="62" width="240" height="44" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="700" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">cron</text>
+
+  <!-- fixedRate description -->
+  <rect x="60" y="116" width="240" height="80" rx="6" fill="#111" stroke="#2a2a3a" stroke-width="1"/>
+  <text x="180" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">이전 실행 시작 시점 기준</text>
+  <text x="180" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">고정 간격으로 재실행</text>
+  <text x="180" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">작업 시간 &gt; 간격 이면 동시 실행 가능</text>
+
+  <!-- fixedDelay description -->
+  <rect x="320" y="116" width="240" height="80" rx="6" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="440" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">이전 실행 완료 시점 기준</text>
+  <text x="440" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">지연 후 재실행</text>
+  <text x="440" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">순차 실행 보장 (중복 없음)</text>
+
+  <!-- cron description -->
+  <rect x="580" y="116" width="240" height="80" rx="6" fill="#111" stroke="#3a2a2a" stroke-width="1"/>
+  <text x="700" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">특정 시각·요일에 실행</text>
+  <text x="700" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8" text-anchor="middle">(Cron 표현식)</text>
+  <text x="700" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">정해진 시간 기반 배치 작업</text>
+
+  <!-- Code examples -->
+  <rect x="60" y="212" width="760" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="76" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Component</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> ScheduledTasks {</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">  // 5초마다 (직전 실행 시작 기준)</tspan>
+    <tspan x="76" dy="16" fill="#7ec8e3" font-weight="600">  @Scheduled</tspan><tspan fill="#ffffff">(fixedRate = 5000)</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> heartbeat() { ... }</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">  // 완료 후 10초 지연</tspan>
+    <tspan x="76" dy="16" fill="#7ec8e3" font-weight="600">  @Scheduled</tspan><tspan fill="#ffffff">(fixedDelay = 10_000, initialDelay = 3_000)</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> cleanupTempFiles() { ... }</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">  // 매일 새벽 2시 0분 0초 (Cron)</tspan>
+    <tspan x="76" dy="16" fill="#7ec8e3" font-weight="600">  @Scheduled</tspan><tspan fill="#ffffff">(cron = </tspan><tspan fill="#ce9178">"0 0 2 * * *"</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">             zone = </tspan><tspan fill="#ce9178">"Asia/Seoul"</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> dailyReport() { ... }</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Warning: single thread -->
+  <rect x="60" y="468" width="760" height="72" rx="8" fill="#111" stroke="#3a4a2a" stroke-width="1"/>
+  <text x="440" y="490" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">⚠ 기본 스케줄러는 단일 스레드 — 장기 실행 작업이 다음 스케줄을 블로킹한다</text>
+  <text x="440" y="510" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">@EnableScheduling + ThreadPoolTaskScheduler 빈을 등록해 멀티 스레드 스케줄러로 전환하거나,</text>
+  <text x="440" y="528" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">@Scheduled 메서드에 @Async를 함께 붙여 스케줄러 스레드를 즉시 해방할 수 있다.</text>
+</svg>
