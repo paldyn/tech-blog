@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Buildah 스크립트 빌드 — 레이어 세밀 제어</text>
+
+  <!-- Code block: full buildah script -->
+  <rect x="60" y="66" width="760" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">#!/bin/bash  # buildah-script.sh</text>
+
+  <text x="76" y="112" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 1. 베이스 이미지에서 작업 컨테이너 생성</text>
+  <text x="76" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">CTR=$(buildah <tspan fill="#7ec8e3" font-weight="600">from</tspan> <tspan fill="#ce9178">ubuntu:22.04</tspan>)</text>
+
+  <text x="76" y="154" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 2. 마운트 포인트 확보 (파일 직접 조작)</text>
+  <text x="76" y="172" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">MNT=$(buildah <tspan fill="#7ec8e3" font-weight="600">mount</tspan> $CTR)</text>
+  <text x="76" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">cp -r ./app <tspan fill="#55c555">$MNT</tspan>/opt/app  <tspan fill="#9aa4b8"># 마운트에 직접 복사</tspan></text>
+  <text x="76" y="208" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">buildah <tspan fill="#7ec8e3" font-weight="600">umount</tspan> $CTR</text>
+
+  <text x="76" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 3. 패키지 설치 (run 명령)</text>
+  <text x="76" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">buildah <tspan fill="#7ec8e3" font-weight="600">run</tspan> $CTR -- apt-get install -y nginx</text>
+
+  <text x="76" y="274" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 4. 메타데이터 설정 후 커밋</text>
+  <text x="76" y="292" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">buildah <tspan fill="#7ec8e3" font-weight="600">config</tspan> --cmd <tspan fill="#ce9178">"/usr/sbin/nginx -g 'daemon off;'"</tspan> $CTR</text>
+  <text x="76" y="310" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">buildah <tspan fill="#7ec8e3" font-weight="600">commit</tspan> $CTR myapp:<tspan fill="#b5cea8">latest</tspan></text>
+
+  <text x="76" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 5. OCI 레지스트리에 push</text>
+  <text x="76" y="352" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">buildah <tspan fill="#7ec8e3" font-weight="600">push</tspan> myapp:latest <tspan fill="#ce9178">docker://</tspan>myregistry.io/myapp:latest</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">buildah mount로 마운트에 직접 접근 → 별도 RUN 레이어 없이 파일 조작 → 최소 레이어 이미지 생성 가능</text>
+</svg>

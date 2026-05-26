@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-grn" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">OverlayFS 레이어 공유 — 다중 컨테이너 효율</text>
+
+  <!-- Shared Image Layers box -->
+  <rect x="300" y="68" width="280" height="100" rx="6" fill="#0d1117" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">공유 이미지 레이어 (lowerdir)</text>
+  <text x="440" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">node:20 — /usr, /lib, /bin</text>
+  <text x="440" y="131" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">읽기 전용 · 모든 컨테이너 공유</text>
+  <text x="440" y="151" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">디스크 한 번만 저장 (중복 없음)</text>
+
+  <!-- Container A upperdir -->
+  <rect x="60" y="230" width="220" height="80" rx="6" fill="#0a1628" stroke="#e05555" stroke-width="1.5"/>
+  <text x="170" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">Container A (upperdir)</text>
+  <text x="170" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">변경: /app/server.js 수정</text>
+  <text x="170" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">크기: ~2MB (차이만)</text>
+
+  <!-- Container B upperdir -->
+  <rect x="330" y="230" width="220" height="80" rx="6" fill="#0a1628" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Container B (upperdir)</text>
+  <text x="440" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">변경: /etc/nginx.conf 추가</text>
+  <text x="440" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">크기: ~4KB (차이만)</text>
+
+  <!-- Container C upperdir -->
+  <rect x="600" y="230" width="220" height="80" rx="6" fill="#0a1628" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="710" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#b5cea8" text-anchor="middle">Container C (upperdir)</text>
+  <text x="710" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">변경 없음 (empty)</text>
+  <text x="710" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">크기: 0 (완전 공유)</text>
+
+  <!-- Arrows from shared to containers -->
+  <line x1="380" y1="168" x2="230" y2="230" stroke="#55c555" stroke-width="2" marker-end="url(#arr-grn)"/>
+  <line x1="440" y1="168" x2="440" y2="230" stroke="#55c555" stroke-width="2" marker-end="url(#arr-grn)"/>
+  <line x1="500" y1="168" x2="660" y2="230" stroke="#55c555" stroke-width="2" marker-end="url(#arr-grn)"/>
+
+  <!-- Code block: overlay2 directory structure -->
+  <rect x="60" y="338" width="760" height="86" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="360" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># overlay2 디렉터리 구조 확인</text>
+  <text x="76" y="378" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ls /var/lib/docker/overlay2/</text>
+  <text x="76" y="396" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># diff=upperdir, link=레이어ID, lower=하위 레이어 목록</text>
+  <text x="76" y="414" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">docker inspect --format <tspan fill="#ce9178">'{{json .GraphDriver}}'</tspan> mycontainer</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">이미지 레이어 공유로 디스크 절약 — 1GB 이미지 10개 컨테이너 = 디스크 1GB (+ 각 upperdir 차이)</text>
+</svg>

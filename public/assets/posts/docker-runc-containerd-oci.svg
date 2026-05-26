@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">OCI 번들 구조 — runc가 받는 입력</text>
+
+  <!-- OCI Bundle box -->
+  <rect x="60" y="68" width="320" height="300" rx="6" fill="#0d1117" stroke="#ce9178" stroke-width="2"/>
+  <text x="220" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#ce9178" text-anchor="middle">OCI 번들 디렉터리</text>
+
+  <rect x="80" y="104" width="280" height="50" rx="5" fill="#0a1628" stroke="#55c555" stroke-width="1.5"/>
+  <text x="220" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" text-anchor="middle">config.json</text>
+  <text x="220" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">OCI 런타임 스펙 (프로세스/마운트/네임스페이스)</text>
+
+  <rect x="80" y="164" width="280" height="50" rx="5" fill="#0a1628" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="220" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" text-anchor="middle">rootfs/</text>
+  <text x="220" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">컨테이너 루트 파일시스템 (OverlayFS merged)</text>
+
+  <!-- config.json content -->
+  <rect x="80" y="224" width="280" height="130" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="244" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// config.json 주요 항목</text>
+  <text x="96" y="262" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">{</text>
+  <text x="96" y="280" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  <tspan fill="#7ec8e3">"ociVersion"</tspan>: <tspan fill="#ce9178">"1.1.0"</tspan>,</text>
+  <text x="96" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  <tspan fill="#7ec8e3">"process"</tspan>: {<tspan fill="#ce9178">"args"</tspan>: [...]},</text>
+  <text x="96" y="316" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  <tspan fill="#7ec8e3">"linux"</tspan>: {<tspan fill="#ce9178">"namespaces"</tspan>: [...]}</text>
+  <text x="96" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">}</text>
+
+  <!-- Right: runc lifecycle -->
+  <rect x="430" y="68" width="400" height="300" rx="6" fill="#0d1117" stroke="#e05555" stroke-width="2"/>
+  <text x="630" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">runc 컨테이너 생성 순서</text>
+
+  <!-- Steps -->
+  <rect x="450" y="106" width="360" height="36" rx="4" fill="#0a1628" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="630" y="129" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">1. clone(CLONE_NEWPID|NET|MNT|...) — Namespace 생성</text>
+
+  <line x1="630" y1="142" x2="630" y2="158" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="450" y="158" width="360" height="36" rx="4" fill="#0a1628" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="630" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">2. mounts 적용 — OverlayFS, proc, sys, dev</text>
+
+  <line x1="630" y1="194" x2="630" y2="210" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="450" y="210" width="360" height="36" rx="4" fill="#0a1628" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="630" y="233" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">3. pivot_root — 루트 파일시스템 교체</text>
+
+  <line x1="630" y1="246" x2="630" y2="262" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="450" y="262" width="360" height="36" rx="4" fill="#0a1628" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="630" y="285" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">4. cgroup 설정 — CPU/Memory 제한 적용</text>
+
+  <line x1="630" y1="298" x2="630" y2="314" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="450" y="314" width="360" height="40" rx="4" fill="#0a1628" stroke="#55c555" stroke-width="1.5"/>
+  <text x="630" y="337" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">5. execve — 컨테이너 프로세스 시작 (PID 1)</text>
+  <text x="630" y="351" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">runc 자체는 종료, shim이 PID 감시 승계</text>
+
+  <!-- Arrow from bundle to runc -->
+  <line x1="380" y1="218" x2="430" y2="218" stroke="#ce9178" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="390" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ce9178">runc run</text>
+
+  <!-- Bottom code block -->
+  <rect x="60" y="384" width="760" height="28" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="403" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">runc run mycontainer  <tspan fill="#9aa4b8"># OCI 번들 경로에서 실행</tspan></text>
+
+  <!-- Bottom label -->
+  <text x="440" y="415" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">containerd → shim → runc → Linux syscall — 각 계층이 역할 분담으로 격리 환경 구성</text>
+</svg>

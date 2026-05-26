@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-grn" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">cgroups — 컨테이너 자원 제한 구조</text>
+
+  <!-- cgroup v2 Hierarchy -->
+  <!-- Root -->
+  <rect x="340" y="72" width="200" height="54" rx="6" fill="#0a1628" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="95" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">/ (root cgroup)</text>
+  <text x="440" y="115" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cgroup v2 unified hierarchy</text>
+
+  <!-- system.slice -->
+  <rect x="140" y="162" width="170" height="50" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="225" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">system.slice</text>
+  <text x="225" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">systemd 서비스</text>
+
+  <!-- docker.service (user.slice style) -->
+  <rect x="340" y="162" width="200" height="50" rx="6" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">docker.service</text>
+  <text x="440" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Docker 데몬 프로세스</text>
+
+  <!-- user.slice -->
+  <rect x="570" y="162" width="170" height="50" rx="6" fill="#0d1117" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="655" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#b5cea8" text-anchor="middle">user.slice</text>
+  <text x="655" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">사용자 세션</text>
+
+  <!-- Lines root -> slices -->
+  <line x1="390" y1="126" x2="225" y2="162" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)" opacity="0.7"/>
+  <line x1="440" y1="126" x2="440" y2="162" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)" opacity="0.7"/>
+  <line x1="490" y1="126" x2="655" y2="162" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)" opacity="0.7"/>
+
+  <!-- Container A -->
+  <rect x="80" y="252" width="200" height="80" rx="6" fill="#0a1628" stroke="#e05555" stroke-width="1.5"/>
+  <text x="180" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">container_A</text>
+  <text x="180" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cpu.max: 50000/100000</text>
+  <text x="180" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">memory.max: 512m</text>
+
+  <!-- Container B -->
+  <rect x="310" y="252" width="200" height="80" rx="6" fill="#0a1628" stroke="#f5c542" stroke-width="1.5"/>
+  <text x="410" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#f5c542" text-anchor="middle">container_B</text>
+  <text x="410" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cpu.max: max (unlimited)</text>
+  <text x="410" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">memory.max: 2g</text>
+
+  <!-- Lines docker.service -> containers -->
+  <line x1="380" y1="212" x2="200" y2="252" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-grn)" opacity="0.7"/>
+  <line x1="440" y1="212" x2="410" y2="252" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-grn)" opacity="0.7"/>
+
+  <!-- cgroup controllers panel -->
+  <rect x="560" y="248" width="280" height="160" rx="6" fill="#0d1117" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="700" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">cgroup v2 컨트롤러</text>
+
+  <rect x="576" y="284" width="112" height="28" rx="4" fill="#1a2035" stroke="#55c555" stroke-width="1"/>
+  <text x="632" y="303" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">cpu (CFS 기반)</text>
+
+  <rect x="700" y="284" width="124" height="28" rx="4" fill="#1a2035" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="762" y="303" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">memory (limit+OOM)</text>
+
+  <rect x="576" y="320" width="112" height="28" rx="4" fill="#1a2035" stroke="#ce9178" stroke-width="1"/>
+  <text x="632" y="339" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178" text-anchor="middle">io (blkio)</text>
+
+  <rect x="700" y="320" width="124" height="28" rx="4" fill="#1a2035" stroke="#b5cea8" stroke-width="1"/>
+  <text x="762" y="339" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8" text-anchor="middle">pids (최대 PID 수)</text>
+
+  <rect x="576" y="356" width="112" height="28" rx="4" fill="#1a2035" stroke="#f5c542" stroke-width="1"/>
+  <text x="632" y="375" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#f5c542" text-anchor="middle">cpuset (CPU 핀)</text>
+
+  <rect x="700" y="356" width="124" height="28" rx="4" fill="#1a2035" stroke="#7777cc" stroke-width="1"/>
+  <text x="762" y="375" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">net_cls (TC 분류)</text>
+
+  <!-- Code block -->
+  <rect x="60" y="356" width="480" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="378" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># cgroup v2 파일 시스템 확인</text>
+  <text x="76" y="396" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">cat /proc/mounts | grep cgroup2</text>
+  <text x="76" y="414" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 컨테이너 메모리 한도 직접 확인</text>
+  <text x="76" y="432" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">cat /sys/fs/cgroup/docker/<tspan fill="#ce9178">CID</tspan>/memory.max</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="468" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">cgroup v2 — 단일 계층 구조로 CPU·메모리·IO 자원을 컨테이너별 독립 제어</text>
+</svg>

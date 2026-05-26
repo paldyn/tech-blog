@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">OverlayFS — 컨테이너 레이어 구조</text>
+
+  <!-- Left side: layers stack -->
+  <!-- Container Layer (upperdir) -->
+  <rect x="60" y="74" width="360" height="60" rx="6" fill="#0a1628" stroke="#e05555" stroke-width="2"/>
+  <text x="240" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">Container Layer (upperdir)</text>
+  <text x="240" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">읽기/쓰기 — 실제 변경사항 저장</text>
+
+  <!-- Image Layer 3 -->
+  <rect x="60" y="150" width="360" height="56" rx="6" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Image Layer 3 (lowerdir)</text>
+  <text x="240" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">RUN npm install → node_modules/</text>
+
+  <!-- Image Layer 2 -->
+  <rect x="60" y="222" width="360" height="56" rx="6" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Image Layer 2 (lowerdir)</text>
+  <text x="240" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">COPY . /app → /app/src/</text>
+
+  <!-- Image Layer 1 -->
+  <rect x="60" y="294" width="360" height="56" rx="6" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="240" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Image Layer 1 (lowerdir)</text>
+  <text x="240" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">FROM node:20 → /bin, /lib, /usr/</text>
+
+  <!-- Base Layer -->
+  <rect x="60" y="366" width="360" height="56" rx="6" fill="#0d1117" stroke="#888" stroke-width="1.5"/>
+  <text x="240" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888" text-anchor="middle">Base Layer (lowerdir)</text>
+  <text x="240" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">scratch → 완전 빈 파일시스템</text>
+
+  <!-- Read Only label -->
+  <text x="80" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">읽기 전용 (lowerdir)</text>
+  <rect x="78" y="150" width="4" height="278" rx="2" fill="#3a4a6e"/>
+
+  <!-- Right side: overlay mount + CoW -->
+  <rect x="460" y="74" width="360" height="106" rx="6" fill="#0a1628" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">OverlayFS 마운트 구성</text>
+  <text x="476" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">lowerdir=L3:L2:L1:Base</text>
+  <text x="476" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">upperdir=/var/lib/docker/overlay2/</text>
+  <text x="476" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  CID/diff</text>
+  <text x="476" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">merged = 통합 마운트 뷰</text>
+
+  <!-- CoW explanation -->
+  <rect x="460" y="196" width="360" height="140" rx="6" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">Copy-on-Write (CoW)</text>
+  <text x="476" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">1. 컨테이너가 /app/config.json 수정 요청</text>
+  <text x="476" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">2. lowerdir에서 upperdir로 파일 복사</text>
+  <text x="476" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">3. upperdir 복사본을 수정</text>
+  <text x="476" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">4. merged 뷰에서는 upperdir 버전 우선</text>
+  <text x="476" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">→ lowerdir(이미지) 원본 불변 유지</text>
+
+  <!-- Whiteout -->
+  <rect x="460" y="352" width="360" height="90" rx="6" fill="#0d1117" stroke="#f5c542" stroke-width="1.5"/>
+  <text x="640" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#f5c542" text-anchor="middle">파일 삭제 — Whiteout 파일</text>
+  <text x="476" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">삭제 시 upperdir에 .wh.&lt;filename&gt; 마커 생성</text>
+  <text x="476" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">merged 뷰에서 해당 파일 숨김 처리</text>
+  <text x="476" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">lowerdir 원본은 그대로 존재</text>
+
+  <!-- Label bottom -->
+  <text x="440" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">OverlayFS: 이미지 레이어를 읽기 전용으로 공유 → 컨테이너마다 변경 사항만 upperdir에 기록</text>
+</svg>
