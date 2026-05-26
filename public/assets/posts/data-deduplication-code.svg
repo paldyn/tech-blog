@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420"
+     font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">중복 제거 코드 예시</text>
+  <text x="440" y="72" text-anchor="middle" font-size="13" fill="#888">Fuzzy Matching + Semantic Dedup</text>
+
+  <!-- Left: RapidFuzz -->
+  <text x="80" y="102" font-size="13" font-weight="600" fill="#55c555">RapidFuzz — 퍼지 문자열 매칭</text>
+  <rect x="60" y="114" width="370" height="196" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">from</text>
+  <text x="112" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve"> rapidfuzz </text>
+  <text x="196" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="238" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve"> fuzz, process</text>
+
+  <text x="76" y="160" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># 두 문자열 유사도 점수 (0~100)</text>
+  <text x="76" y="180" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">score = fuzz.token_sort_ratio(</text>
+  <text x="76" y="198" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">    "홍길동 서울"</text>
+  <text x="76" y="216" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">    "서울 홍길동"</text>
+  <text x="76" y="234" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">)  </text>
+  <text x="100" y="234" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># → 100</text>
+
+  <text x="76" y="258" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># 목록에서 가장 유사한 항목 찾기</text>
+  <text x="76" y="278" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">matches = process.extract(</text>
+  <text x="76" y="296" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">    "Samsung Electronics"</text>
+  <text x="76" y="296" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">                          </text>
+  <text x="76" y="314" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">    choices=company_list,</text>
+  <text x="76" y="332" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">    limit=</text>
+  <text x="130" y="332" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#b5cea8" xml:space="preserve">3</text>
+  <text x="138" y="332" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">, score_cutoff=</text>
+  <text x="248" y="332" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#b5cea8" xml:space="preserve">80</text>
+  <text x="262" y="332" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">)</text>
+
+  <!-- Right: Semantic Dedup with embeddings -->
+  <text x="456" y="102" font-size="13" font-weight="600" fill="#e05555">임베딩 기반 시맨틱 중복 제거</text>
+  <rect x="440" y="114" width="380" height="196" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="456" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">from</text>
+  <text x="492" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve"> sentence_transformers </text>
+  <text x="661" y="136" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="456" y="154" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">    SentenceTransformer, util</text>
+  <text x="456" y="178" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">model = SentenceTransformer(</text>
+  <text x="456" y="196" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">    'paraphrase-multilingual-mpnet'</text>
+  <text x="456" y="214" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">)</text>
+
+  <text x="456" y="238" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">embeddings = model.encode(</text>
+  <text x="456" y="256" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">    sentences, convert_to_tensor=</text>
+  <text x="656" y="256" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">True</text>
+  <text x="684" y="256" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">)</text>
+
+  <text x="456" y="278" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># 코사인 유사도 행렬 계산</text>
+  <text x="456" y="298" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">cosine_scores = util.cos_sim(</text>
+  <text x="456" y="316" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">    embeddings, embeddings)</text>
+
+  <!-- Step boxes -->
+  <text x="60" y="340" font-size="14" font-weight="600" fill="#e8e8e8">대규모 데이터 중복 제거 전략</text>
+
+  <defs>
+    <marker id="deduparr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect x="60" y="354" width="150" height="42" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="135" y="372" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">① 블로킹</text>
+  <text x="135" y="388" text-anchor="middle" font-size="11" fill="#888">후보 쌍 압축</text>
+
+  <line x1="210" y1="375" x2="244" y2="375" stroke="#7777cc" stroke-width="2" marker-end="url(#deduparr)"/>
+
+  <rect x="244" y="354" width="150" height="42" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="319" y="372" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">② 정확 매칭</text>
+  <text x="319" y="388" text-anchor="middle" font-size="11" fill="#888">해시 비교</text>
+
+  <line x1="394" y1="375" x2="428" y2="375" stroke="#7777cc" stroke-width="2" marker-end="url(#deduparr)"/>
+
+  <rect x="428" y="354" width="150" height="42" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="503" y="372" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">③ 퍼지 매칭</text>
+  <text x="503" y="388" text-anchor="middle" font-size="11" fill="#888">편집 거리</text>
+
+  <line x1="578" y1="375" x2="612" y2="375" stroke="#7777cc" stroke-width="2" marker-end="url(#deduparr)"/>
+
+  <rect x="612" y="354" width="208" height="42" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="716" y="372" text-anchor="middle" font-size="12" font-weight="600" fill="#7777cc">④ 시맨틱 매칭</text>
+  <text x="716" y="388" text-anchor="middle" font-size="11" fill="#888">임베딩 코사인 유사도</text>
+
+  <text x="60" y="412" font-size="12" fill="#555">* 블로킹: 후보 쌍을 같은 버킷(예: 이름 앞 2글자, 우편번호)으로 그룹화해 비교 쌍 수를 O(n²)→O(n) 수준으로 줄임</text>
+</svg>
