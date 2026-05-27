@@ -1,159 +1,200 @@
 ---
-title: "컬럼 제약 조건 — NOT NULL · DEFAULT · CHECK"
-description: "NOT NULL로 빈 값을 막고, DEFAULT로 기본값을 설정하고, CHECK로 범위를 검증하는 세 가지 컬럼 제약 조건의 동작 원리와 실전 패턴을 정리합니다."
+title: "SQL 제약조건 — NOT NULL, DEFAULT, CHECK 완전 정복"
+description: "NOT NULL로 데이터 품질을 지키는 법, DEFAULT로 보일러플레이트를 없애는 법, CHECK 제약의 한계(MySQL 버그, NULL 통과 문제), NULL의 3값 논리를 완전 정복합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-29"
-archiveOrder: 1
+pubDate: "2026-05-28"
+archiveOrder: 9
 type: "knowledge"
 category: "SQL"
-tags: ["sql", "constraint", "not-null", "default", "check", "ddl", "3vl", "제약조건"]
+tags: ["NOT NULL", "DEFAULT", "CHECK제약", "NULL", "3값논리", "데이터무결성", "제약조건", "MySQL CHECK버그"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-datetime/)에서 DATE, TIMESTAMP 같은 날짜·시간 타입을 살펴봤다. 이번에는 컬럼 정의에 붙이는 세 가지 기본 제약 조건 — NOT NULL, DEFAULT, CHECK — 을 다룬다. 테이블 설계의 첫 번째 방어선이다.
+[지난 글](/posts/sql-data-types-datetime/)에서 날짜/시간 타입을 다뤘다. 타입을 골랐다면 이제 **제약조건(Constraint)**을 설정할 차례다. 제약조건은 DBMS가 데이터 품질을 자동으로 지켜주는 안전망이다. 이번 글에서는 `NOT NULL`, `DEFAULT`, `CHECK` 세 가지를 집중 해부한다.
 
----
+## 제약조건의 목적
 
-## 왜 제약 조건이 필요한가
+제약조건은 **애플리케이션 레이어의 검증을 보완**한다. 애플리케이션이 아무리 잘 검증해도 직접 SQL을 실행하거나, 버그가 있거나, 새 서비스가 추가되면 데이터 품질이 깨진다. DB 수준 제약조건은 **마지막 방어선**이다.
 
-데이터베이스는 "믿을 수 있는 데이터"를 보장해야 한다. 애플리케이션 레이어에서 검증하더라도, DB가 직접 규칙을 강제하지 않으면 잘못된 데이터가 스며드는 경로는 수없이 많다 — 마이그레이션 스크립트, 직접 SQL, 레거시 배치 등. 제약 조건은 **데이터가 어떤 경로로 들어오든 규칙을 지키게** 만드는 안전망이다.
+## NOT NULL — "없음"을 금지한다
 
-![컬럼 제약 조건 개요](/assets/posts/sql-constraints-not-null-default-check-overview.svg)
-
----
-
-## NOT NULL
-
-`NOT NULL`은 컬럼에 NULL을 저장할 수 없게 막는다. INSERT 또는 UPDATE 시 해당 컬럼이 NULL이면 오류가 발생한다.
+![NOT NULL · DEFAULT · CHECK 제약조건](/assets/posts/sql-constraints-three-types.svg)
 
 ```sql
-CREATE TABLE members (
-    member_id  INTEGER      NOT NULL,
-    email      VARCHAR(255) NOT NULL,
-    nickname   VARCHAR(50)  -- NULL 허용
+-- NOT NULL 선언
+CREATE TABLE users (
+    user_id   INT         PRIMARY KEY,           -- PK는 암묵적 NOT NULL
+    email     VARCHAR(254) NOT NULL,             -- 반드시 값 있어야 함
+    nickname  VARCHAR(50),                       -- NULL 허용 (선택 필드)
+    phone     VARCHAR(20)                        -- NULL 허용
 );
+
+-- NOT NULL 컬럼에 NULL 삽입 시 오류
+INSERT INTO users (user_id, email) VALUES (1, NULL);
+-- ORA-01400: cannot insert NULL into ("users"."email")
+-- PG: null value in column "email" violates not-null constraint
 ```
 
-`nickname`처럼 선택 항목은 NULL을 허용하고, `email`처럼 필수 항목은 NOT NULL로 막는 것이 일반적인 패턴이다.
+### 언제 NOT NULL을 써야 하나?
 
-### NULL의 의미
+- 비즈니스 로직상 **반드시 있어야 하는 데이터**: 주문 금액, 사용자 이메일, 생성 일시
+- **참조 무결성이 필요한 FK** 컬럼 (NULL 허용 FK는 선택적 관계를 표현할 때만)
+- **계산 결과에 포함될 컬럼** — NULL이 포함되면 집계함수가 무시하거나 결과가 NULL이 됨
 
-NULL은 "값이 없음"을 나타내며, 빈 문자열(`''`)이나 0과는 다르다. `NULL = NULL`은 FALSE가 아니라 UNKNOWN이다. 이 세 값 논리(Three-Valued Logic, 3VL)를 이해하면 이후 CHECK 동작도 자연스럽게 이해된다.
+실무 권장: **가능한 한 NOT NULL을 사용**하고, NULL이 필요한 경우에만 허용 컬럼으로 열어두는 것이 좋다.
 
----
-
-## DEFAULT
-
-`DEFAULT`는 INSERT 시 값을 생략했을 때 자동으로 채워 넣을 기본값을 지정한다.
+## DEFAULT — 기본값으로 보일러플레이트를 없앤다
 
 ```sql
 CREATE TABLE orders (
-    order_id   INTEGER,
-    status     VARCHAR(20)  DEFAULT 'PENDING',
-    created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN      DEFAULT FALSE
+    order_id    INT            PRIMARY KEY,
+    status      VARCHAR(20)    NOT NULL DEFAULT 'PENDING',
+    created_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_deleted  BOOLEAN        NOT NULL DEFAULT FALSE,
+    quantity    INT            NOT NULL DEFAULT 1,
+    discount    DECIMAL(5,2)   NOT NULL DEFAULT 0.00
 );
 
--- status, created_at, is_deleted를 생략해도 기본값이 들어간다
+-- DEFAULT가 있으면 INSERT에서 컬럼 생략 가능
 INSERT INTO orders (order_id) VALUES (1001);
+-- status='PENDING', created_at=NOW(), is_deleted=FALSE, ... 자동 입력
 ```
 
-기본값으로 리터럴 상수 외에 `CURRENT_TIMESTAMP`, `CURRENT_DATE`, `CURRENT_USER` 같은 함수도 사용할 수 있다(DBMS마다 지원 범위가 다르다).
+### 함수를 DEFAULT로 사용하기
+
+```sql
+-- PostgreSQL: 다양한 함수 DEFAULT 가능
+id          UUID     DEFAULT gen_random_uuid(),
+created_at  TIMESTAMPTZ DEFAULT NOW(),
+updated_at  TIMESTAMPTZ DEFAULT NOW(),
+
+-- MySQL: 표현식 DEFAULT (8.0.13+)
+expire_date DATE DEFAULT (CURRENT_DATE + INTERVAL 30 DAY),
+
+-- Oracle: 표현식 DEFAULT
+hire_date   DATE DEFAULT SYSDATE,
+emp_code    VARCHAR2(10) DEFAULT 'EMP-' || TO_CHAR(SYSDATE, 'YYYYMMDD')
+```
 
 ### DEFAULT와 NOT NULL의 조합
 
 ```sql
--- DEFAULT만 있으면: 생략 시 기본값, 명시적으로 NULL 삽입 가능
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- NOT NULL + DEFAULT = 가장 안전한 패턴
+status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE'
 
--- DEFAULT + NOT NULL: 생략 시 기본값, 명시적 NULL 삽입도 거부
-created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- NULL 허용 + DEFAULT NULL = 명시적이지만 중복
+note   TEXT DEFAULT NULL  -- 그냥 note TEXT로도 동일
+
+-- NOT NULL만 + DEFAULT 없음 = INSERT에서 반드시 값 제공
+name   VARCHAR(100) NOT NULL  -- 삽입 시 name 생략 불가
 ```
 
-감사 컬럼(created_at, updated_at)처럼 항상 값이 있어야 한다면 `NOT NULL DEFAULT`를 함께 쓰는 것이 안전하다.
-
----
-
-## CHECK
-
-`CHECK`는 불리언 표현식을 지정하고, 결과가 FALSE면 삽입·수정을 거부한다.
+## CHECK — 조건식으로 값 범위를 제한한다
 
 ```sql
 CREATE TABLE employees (
-    emp_id  INTEGER,
-    salary  NUMERIC(12,2) CHECK (salary > 0),
-    age     INTEGER       CHECK (age BETWEEN 18 AND 65),
-    grade   CHAR(1)       CHECK (grade IN ('A','B','C','D','F'))
+    emp_id    INT     PRIMARY KEY,
+    name      VARCHAR(100) NOT NULL,
+    age       SMALLINT NOT NULL,
+    salary    DECIMAL(12,2) NOT NULL,
+    gender    CHAR(1) NOT NULL,
+    email     VARCHAR(254) NOT NULL,
+
+    -- 컬럼 수준 CHECK
+    CONSTRAINT chk_age    CHECK (age BETWEEN 15 AND 80),
+    CONSTRAINT chk_salary CHECK (salary >= 0),
+    CONSTRAINT chk_gender CHECK (gender IN ('M', 'F', 'N')),
+    CONSTRAINT chk_email  CHECK (email LIKE '%@%')
 );
 ```
 
-### CHECK와 NULL — 반드시 알아야 할 함정
-
-![NULL 처리와 세 값 논리](/assets/posts/sql-constraints-not-null-default-check-null-behavior.svg)
-
-CHECK는 표현식이 **FALSE일 때만** 거부한다. NULL이 포함된 비교는 UNKNOWN을 반환하고, UNKNOWN은 거부되지 않는다.
+### MySQL CHECK 버그 주의
 
 ```sql
--- salary 컬럼에 NOT NULL 없이 CHECK만 있다면:
-INSERT INTO employees (salary) VALUES (NULL);
--- NULL > 0 → UNKNOWN → 통과! (의도와 다를 수 있음)
+-- MySQL 8.0.16 이전: CHECK 선언은 되지만 실제 검사 안 함!
+-- MySQL 8.0.16+: CHECK 제대로 동작
 
--- NULL도 막으려면 NOT NULL을 함께 사용
-salary NUMERIC(12,2) NOT NULL CHECK (salary > 0)
+-- 버전 확인
+SELECT VERSION();
+
+-- MySQL 5.7, 8.0.15 이하에서는 TRIGGER로 대체해야 함
+DELIMITER //
+CREATE TRIGGER before_emp_insert
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+    IF NEW.age < 15 OR NEW.age > 80 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = '나이는 15~80 사이여야 합니다';
+    END IF;
+END//
+DELIMITER ;
 ```
 
-이 동작은 버그가 아니라 SQL 표준의 의도된 설계다. NULL은 "알 수 없는 값"이므로 규칙을 위반한다고 단정할 수 없다는 논리다. 그러나 실무에서는 의도치 않은 NULL 허용으로 이어지기 쉬우니, 범위 제약이 필요한 컬럼은 NOT NULL을 함께 붙이는 습관을 들이는 게 좋다.
+## NULL의 3값 논리 (Three-Valued Logic)
 
-### 테이블 수준 CHECK
+![NULL 3값 논리와 제약조건 패턴](/assets/posts/sql-constraints-null-logic.svg)
 
-여러 컬럼을 교차 검증할 때는 컬럼이 아닌 테이블 수준에 CHECK를 선언한다.
+NULL은 "값이 없음/알 수 없음"을 뜻하는 특수 표식이다. SQL에서 NULL은 TRUE도 FALSE도 아닌 **UNKNOWN**이다.
 
 ```sql
-CREATE TABLE reservations (
-    start_date DATE NOT NULL,
-    end_date   DATE NOT NULL,
-    CONSTRAINT chk_date_range CHECK (end_date >= start_date)
-);
+-- NULL 비교의 함정
+SELECT * FROM users WHERE phone = NULL;     -- 항상 0행! (UNKNOWN)
+SELECT * FROM users WHERE phone IS NULL;    -- 올바른 NULL 검사
+SELECT * FROM users WHERE phone IS NOT NULL; -- NULL 제외
+
+-- NULL 전파
+SELECT 1 + NULL;          -- NULL
+SELECT 'hello' || NULL;   -- NULL (일부 DB)
+SELECT COALESCE(NULL, 0); -- 0 (NULL 대체)
+
+-- CHECK와 NULL
+-- CHECK (age >= 0)이 있어도, age가 NULL이면 CHECK 통과!
+-- NULL에 대한 비교는 UNKNOWN → 제약 위반으로 처리 안 됨
+-- 해결: NOT NULL + CHECK 함께 사용
 ```
+
+### 집계 함수와 NULL
+
+```sql
+-- COUNT(*): NULL 포함 전체 행 수
+-- COUNT(col): NULL 제외 행 수
+SELECT
+    COUNT(*)        AS total_rows,    -- NULL 있어도 카운트
+    COUNT(phone)    AS has_phone,     -- phone IS NOT NULL인 행만
+    AVG(salary)     AS avg_salary,    -- NULL 제외 평균
+    SUM(bonus)      AS total_bonus    -- NULL은 0으로 취급 (SUM)
+FROM employees;
+```
+
+## 제약조건에 이름 붙이기
+
+```sql
+-- 이름 없는 제약 → 오류 메시지가 불명확
+CHECK (salary >= 0)
+
+-- 이름 있는 제약 → 오류에서 무엇이 위반됐는지 즉시 파악
+CONSTRAINT chk_salary_positive CHECK (salary >= 0)
+
+-- 이름 있는 제약은 나중에 삭제도 가능
+ALTER TABLE employees DROP CONSTRAINT chk_salary_positive;
+```
+
+## 정리
+
+- **NOT NULL**: 비즈니스상 필수 값에 적용, 가능한 한 기본 사용 권장
+- **DEFAULT**: 생략 가능한 컬럼에 초기값 설정, 함수/표현식 사용 가능
+- **CHECK**: 값 범위·패턴 제한 — MySQL 8.0.16 이전 버전은 실제 동작 안 함
+- **NULL = 3값 논리**: `=`로 NULL 비교 불가, 반드시 `IS NULL` / `IS NOT NULL` 사용
+- **CHECK + NOT NULL 조합**: CHECK만으로는 NULL을 막지 못하므로 함께 사용
 
 ---
 
-## 제약 조건 이름 지정
+**지난 글:** [SQL 날짜/시간 데이터 타입 — DATE, TIMESTAMP, 시간대 처리](/posts/sql-data-types-datetime/)
 
-이름을 지정하면 에러 메시지가 명확해지고, 나중에 ALTER TABLE로 제약을 수정·삭제할 때 편리하다.
-
-```sql
-CREATE TABLE products (
-    price  NUMERIC(12,2)
-        CONSTRAINT nn_products_price     NOT NULL
-        CONSTRAINT chk_products_price    CHECK (price >= 0),
-    status VARCHAR(20)
-        CONSTRAINT df_products_status    DEFAULT 'ACTIVE'
-        CONSTRAINT chk_products_status   CHECK (status IN ('ACTIVE','INACTIVE'))
-);
-```
-
-이름 규칙은 팀마다 다르지만 `{타입}_{테이블}_{컬럼}` 형식이 흔히 쓰인다.
-
----
-
-## 실전 체크리스트
-
-| 상황 | 권장 |
-|---|---|
-| 반드시 값이 있어야 하는 컬럼 | `NOT NULL` |
-| 값 없이도 의미 있는 컬럼 | NULL 허용 |
-| 삽입 시 자주 생략되는 컬럼 | `DEFAULT` |
-| 기본값도 있고 NULL도 막아야 | `NOT NULL DEFAULT` |
-| 값의 범위·목록 제한 | `CHECK` |
-| CHECK 대상 컬럼에 NULL도 불허 | `NOT NULL CHECK` |
-
-NOT NULL, DEFAULT, CHECK는 PRIMARY KEY나 FOREIGN KEY에 비해 단순해 보이지만, 데이터 품질을 지키는 가장 직접적인 수단이다. 다음 글에서는 테이블의 식별자 역할을 하는 PRIMARY KEY를 설계하는 방법을 다룬다.
-
----
-
-**다음 글:** [기본 키 설계 — PRIMARY KEY의 본질과 전략](/posts/sql-primary-key-design/)
+**다음 글:** [기본 키(Primary Key) 설계 — 자연 키 vs 대리 키, 복합 키](/posts/sql-primary-key-design/)
 
 <br>
 읽어주셔서 감사합니다. 😊

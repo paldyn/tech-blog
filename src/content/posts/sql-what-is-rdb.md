@@ -1,101 +1,112 @@
 ---
-title: "데이터베이스란 무엇인가 — 파일 시스템과의 차이"
-description: "파일 시스템과 데이터베이스를 비교하며 DBMS가 왜 필요한지, ANSI/SPARC 3단계 아키텍처가 어떻게 데이터 독립성을 보장하는지 설명합니다."
+title: "관계형 데이터베이스(RDB)란 무엇인가"
+description: "관계형 데이터베이스의 개념, 테이블·행·열·기본키·외래키의 의미, SQL 질의 처리 흐름, NoSQL과의 차이를 그림과 예제로 완전 정복합니다."
 author: "PALDYN Team"
-pubDate: "2026-04-26"
+pubDate: "2026-05-28"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
-tags: ["sql", "rdb", "dbms", "파일시스템", "데이터베이스"]
+tags: ["RDB", "관계형데이터베이스", "SQL기초", "테이블", "기본키", "외래키", "NoSQL비교"]
 featured: false
 draft: false
 ---
 
-## 왜 데이터베이스가 필요할까?
+데이터베이스라는 단어를 처음 접하면 으레 엑셀 스프레드시트를 떠올린다. 그 직관은 완전히 틀리지 않았다. 1970년 에드거 F. 코드(Edgar F. Codd)가 IBM 연구소에서 발표한 논문 *"A Relational Model of Data for Large Shared Data Banks"*는 데이터를 **수학적 집합인 릴레이션(relation)**으로 표현하자는 제안이었고, 현대 RDB는 그 아이디어를 그대로 구현한 시스템이다.
 
-1990년대 초 한 유통 회사가 있었다고 상상해 보세요. 상품 목록은 `products.csv`, 고객 정보는 `customers.txt`, 주문은 `orders.dat`. 세 팀이 각자의 파일을 담당했고, 매달 말 정산 보고서를 만들려면 개발자가 직접 파이썬 스크립트를 돌려 파일 세 개를 합쳐야 했습니다. 그러던 어느 날 두 팀이 동시에 `customers.txt`에 쓰기를 시도했고, 파일이 절반만 갱신된 채 망가졌습니다.
+## RDB의 핵심 구조
 
-이것이 **파일 시스템 기반 데이터 관리의 한계**입니다. 데이터베이스 관리 시스템(DBMS)은 이런 문제를 구조적으로 해결하기 위해 탄생했습니다.
+관계형 데이터베이스는 데이터를 **테이블(Table)** 단위로 저장한다. 테이블은 행(Row, 튜플)과 열(Column, 속성)로 구성된 2차원 격자 구조이며, 수학에서의 릴레이션과 대응된다.
 
-## 파일 시스템의 다섯 가지 문제
+![RDB 구조와 테이블 간 관계](/assets/posts/sql-what-is-rdb-concept.svg)
 
-![파일 시스템 vs 데이터베이스 비교](/assets/posts/sql-what-is-rdb-filesystem-vs-db.svg)
+각 테이블의 핵심 요소를 정리하면 다음과 같다.
 
-### 1. 데이터 중복과 불일치
+| 요소 | 설명 |
+|------|------|
+| **행 (Row / Tuple)** | 하나의 개체(entity)를 표현하는 데이터 묶음 |
+| **열 (Column / Attribute)** | 개체의 속성, 데이터 타입을 갖는다 |
+| **기본 키 (PK)** | 행을 유일하게 식별. NULL 불가, 중복 불가 |
+| **외래 키 (FK)** | 다른 테이블의 PK를 참조해 관계를 표현 |
+| **스키마** | 테이블 구조 정의(열 이름, 타입, 제약 조건) |
 
-파일 시스템에서는 각 애플리케이션이 독립적인 파일을 갖습니다. 고객 이름이 `customers.csv`에도, `invoices.csv`에도 있습니다. 한쪽만 고치면 두 파일 사이에 불일치가 생깁니다. DBMS는 **하나의 테이블에 한 번만 저장**하고, 참조(외래 키)로 연결해 중복을 제거합니다.
+### 기본 키와 외래 키의 역할
 
-### 2. 동시 접근 제어 불가
-
-파일 잠금(file lock)은 너무 거칩니다. 파일 전체를 잠그거나, 잠금이 없거나 둘 중 하나입니다. DBMS는 **행 수준 잠금(row-level locking)**과 **트랜잭션 격리 수준**으로 수천 개의 동시 요청을 안전하게 처리합니다.
-
-### 3. 장애 시 데이터 손상
-
-파일에 절반만 쓰다가 전원이 나가면 파일은 망가집니다. DBMS는 **WAL(Write-Ahead Log)**을 통해 트랜잭션 단위로 원자적(atomic)으로 쓰고, 장애 후 재시작 시 자동으로 복구합니다.
-
-### 4. 보안 제어의 어려움
-
-파일 시스템 권한은 디렉터리·파일 단위입니다. DBMS는 **테이블, 컬럼, 심지어 행 수준**까지 접근을 제한할 수 있습니다(`GRANT`, `REVOKE`, Row-Level Security).
-
-### 5. 데이터와 프로그램의 결합
-
-파일 구조가 바뀌면 그 파일을 읽는 모든 프로그램을 수정해야 합니다. DBMS는 아래의 3단계 아키텍처로 이 문제를 해결합니다.
-
-## ANSI/SPARC 3단계 아키텍처
-
-![ANSI/SPARC 3단계 아키텍처](/assets/posts/sql-what-is-rdb-three-schema.svg)
-
-1970년대 ANSI/SPARC 위원회가 제안한 이 구조는 오늘날 모든 RDBMS의 기본 뼈대입니다.
-
-| 단계 | 역할 | 독립성 |
-|------|------|--------|
-| **외부 단계** | 사용자·앱별 맞춤 뷰 | 논리적 독립성 ↕ |
-| **개념 단계** | 전체 DB 논리 구조 (스키마) | — |
-| **내부 단계** | 실제 파일·인덱스·블록 | 물리적 독립성 ↕ |
-
-- **논리적 독립성**: 개념 스키마(테이블 구조)가 바뀌어도 앱의 외부 뷰는 유지됩니다.
-- **물리적 독립성**: 디스크를 SSD로 교체하거나 인덱스를 추가해도 SQL 쿼리는 그대로 동작합니다.
-
-## DBMS가 제공하는 핵심 기능
+`users` 테이블의 `user_id`가 기본 키(PK)라면, `orders` 테이블의 `user_id`는 `users`를 참조하는 외래 키(FK)다. 이 외래 키 연결이 RDB를 "관계형"으로 만드는 핵심 메커니즘이다. 외래 키는 **참조 무결성(Referential Integrity)**을 강제하여, 존재하지 않는 `user_id`를 가진 주문이 생길 수 없도록 막는다.
 
 ```sql
--- 1. 선언형 질의 — "어떻게"가 아니라 "무엇을" 기술
-SELECT c.name, COUNT(o.id) AS order_count
-FROM   customers c
-JOIN   orders o ON o.customer_id = c.id
-WHERE  o.created_at >= '2026-01-01'
-GROUP  BY c.name
-ORDER  BY order_count DESC;
+-- 테이블 구조 정의 예시
+CREATE TABLE users (
+    user_id  INT         PRIMARY KEY,
+    name     VARCHAR(50) NOT NULL,
+    email    VARCHAR(100) UNIQUE
+);
 
--- 2. 트랜잭션 — 원자성 보장
-BEGIN;
-  UPDATE accounts SET balance = balance - 100 WHERE id = 1;
-  UPDATE accounts SET balance = balance + 100 WHERE id = 2;
-COMMIT; -- 둘 다 성공하거나 둘 다 실패
-
--- 3. 제약 조건 — DBMS가 무결성 보장
-ALTER TABLE orders
-  ADD CONSTRAINT fk_customer
-  FOREIGN KEY (customer_id) REFERENCES customers(id);
+CREATE TABLE orders (
+    order_id  INT     PRIMARY KEY,
+    user_id   INT     NOT NULL,
+    amount    DECIMAL(10,2),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 ```
 
-파일 시스템으로는 위 세 가지를 구현하려면 수천 줄의 애플리케이션 코드가 필요합니다. DBMS는 이를 커널 수준에서 처리합니다.
+## SQL 질의 처리 흐름
 
-## 데이터베이스 vs DBMS vs RDBMS
+SQL(Structured Query Language)은 RDB에 데이터를 묻고 조작하는 **선언형(Declarative) 언어**다. "어떤 결과를 원한다"는 것만 기술하면 엔진이 최적 실행 경로를 결정한다.
 
-헷갈리기 쉬운 용어를 정리합니다.
+![SQL 질의 처리 흐름](/assets/posts/sql-what-is-rdb-sql-example.svg)
 
-- **데이터베이스(Database)**: 체계적으로 조직된 데이터의 집합체.
-- **DBMS(Database Management System)**: 데이터베이스를 생성·관리·조작하는 소프트웨어 시스템. Oracle, PostgreSQL, MySQL이 DBMS입니다.
-- **RDBMS(Relational DBMS)**: 관계형 모델(테이블·행·열·관계)을 기반으로 하는 DBMS. 현재 엔터프라이즈 환경의 90% 이상이 RDBMS입니다.
+질의가 데이터베이스 내부에서 처리되는 순서는 다음과 같다.
+
+1. **파서(Parser)**: SQL 문자열을 읽어 구문 분석 후 추상 구문 트리(AST) 생성
+2. **옵티마이저(Optimizer)**: 가능한 실행 계획 목록 생성, 통계 기반으로 최저 비용 선택
+3. **실행 엔진(Execution Engine)**: 선택된 계획대로 스토리지 레이어에서 데이터 획득
+4. **결과 반환**: 클라이언트에게 결과 집합(Result Set) 전송
+
+```sql
+-- users와 orders를 JOIN해 고액 주문 조회
+SELECT u.name, o.amount
+FROM   users u
+JOIN   orders o ON u.user_id = o.user_id
+WHERE  o.amount > 40000
+ORDER BY o.amount DESC;
+```
+
+## RDB vs NoSQL
+
+RDB가 만능은 아니다. 적합한 상황이 있다.
+
+| 기준 | RDB | NoSQL |
+|------|-----|-------|
+| 스키마 | 고정(강한 구조) | 유연(스키마리스) |
+| 트랜잭션 | ACID 완전 지원 | BASE (대부분) |
+| 수평 확장 | 제한적 | 설계상 용이 |
+| 복잡한 쿼리 | JOIN, 집계 강점 | 키-값 패턴에 최적 |
+| 적합 케이스 | 금융, ERP, CRM | 캐시, 로그, SNS |
+
+핵심은 **트랜잭션 일관성이 중요하고 데이터 간 관계가 복잡**할수록 RDB가 유리하고, **단순 키-값 조회나 대규모 수평 확장**이 필요할 때 NoSQL이 유리하다는 것이다.
+
+## 주요 RDB 제품
+
+현재 시장에서 널리 쓰이는 RDB는 크게 세 가지로 나뉜다.
+
+```text
+오픈소스: PostgreSQL · MySQL · MariaDB · SQLite
+상용    : Oracle Database · SQL Server (MSSQL) · IBM Db2
+클라우드: Amazon Aurora · Google Cloud Spanner · Azure SQL
+```
+
+이 시리즈에서는 SQL 표준 문법을 중심으로 다루며, 주요 제품별 차이가 있는 부분은 별도로 표기한다.
 
 ## 정리
 
-파일 시스템은 단순한 데이터 저장에는 충분하지만, **동시성·무결성·복구·보안** 측면에서 근본적인 한계를 가집니다. DBMS는 ANSI/SPARC 3단계 아키텍처를 통해 데이터 독립성을 확보하고, SQL이라는 표준 선언형 언어로 복잡한 저수준 처리를 추상화합니다. 다음 글에서는 관계형 모델의 이론적 근거인 **관계·튜플·속성** 개념을 깊이 들여다봅니다.
+- RDB는 데이터를 **테이블(릴레이션) 집합**으로 표현하는 데이터베이스 모델이다
+- **기본 키(PK)**로 행을 식별하고, **외래 키(FK)**로 테이블 간 관계를 표현한다
+- SQL은 "무엇을 원하는지"만 기술하는 **선언형 언어**이며, 실행 방법은 옵티마이저가 결정한다
+- 트랜잭션 일관성과 복잡한 관계 질의에서 RDB가 NoSQL 대비 강점을 갖는다
 
 ---
 
-**다음 글:** [관계형 모델 이론 — 관계·튜플·속성](/posts/sql-relational-model/)
+**다음 글:** [관계형 모델 이론 — 릴레이션, 튜플, 속성의 수학적 기초](/posts/sql-relational-model/)
 
 <br>
 읽어주셔서 감사합니다. 😊
