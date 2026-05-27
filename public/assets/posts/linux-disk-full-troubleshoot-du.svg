@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">df / du 실전 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">파티션 → 디렉터리 → 파일 단계 좁히기</text>
+
+  <!-- Code block -->
+  <rect x="60" y="88" width="760" height="262" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="76" y="112" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">## Step 1: 파티션 현황</text>
+  <text x="76" y="132" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">df</tspan><tspan fill="#ffffff"> -h          </tspan><tspan fill="#9aa4b8"># 용량 기준</tspan></text>
+  <text x="76" y="152" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">df</tspan><tspan fill="#ffffff"> -i          </tspan><tspan fill="#9aa4b8"># inode 기준 (IUse% 확인)</tspan></text>
+
+  <text x="76" y="178" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">## Step 2: 루트부터 단계적 축소</text>
+  <text x="76" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">du</tspan><tspan fill="#ffffff"> -sh /* 2&gt;/dev/null | sort -rh | head -15</tspan></text>
+  <text x="76" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">du</tspan><tspan fill="#ffffff"> -sh /var/* 2&gt;/dev/null | sort -rh</tspan></text>
+  <text x="76" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">du</tspan><tspan fill="#ffffff"> -sh /var/log/* | sort -rh | head -10</tspan></text>
+
+  <text x="76" y="264" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">## Step 3: 숨겨진 대용량 파일</text>
+  <text x="76" y="284" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">find</tspan><tspan fill="#ffffff"> /var -size +100M -ls 2&gt;/dev/null</tspan></text>
+  <text x="76" y="304" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#9aa4b8"># 삭제됐지만 프로세스가 FD 잡고 있는 파일</tspan></text>
+  <text x="76" y="324" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">lsof</tspan><tspan fill="#ffffff"> +L1 | grep -v "^COMMAND"   </tspan><tspan fill="#9aa4b8"># deleted 파일</tspan></text>
+  <text x="76" y="344" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 프로세스 재시작하면 공간 해제됨</text>
+</svg>

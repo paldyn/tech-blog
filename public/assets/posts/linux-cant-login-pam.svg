@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PAM 인증 흐름과 주요 진단 명령</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">/etc/pam.d/ 설정이 잘못되면 로그인 차단</text>
+
+  <!-- PAM flow -->
+  <rect x="60" y="90" width="180" height="44" rx="6" fill="#1a1a2a" stroke="#5a5a9a" stroke-width="1"/>
+  <text x="150" y="117" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">auth (인증)</text>
+
+  <rect x="60" y="154" width="180" height="44" rx="6" fill="#1a1a2a" stroke="#5a5a9a" stroke-width="1"/>
+  <text x="150" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">account (계정 유효성)</text>
+
+  <rect x="60" y="218" width="180" height="44" rx="6" fill="#1a1a2a" stroke="#5a5a9a" stroke-width="1"/>
+  <text x="150" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">session (세션 설정)</text>
+
+  <rect x="60" y="282" width="180" height="44" rx="6" fill="#1a1a2a" stroke="#5a5a9a" stroke-width="1"/>
+  <text x="150" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">password (변경)</text>
+
+  <!-- vertical flow -->
+  <line x1="150" y1="134" x2="150" y2="154" stroke="#5a5a9a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="150" y1="198" x2="150" y2="218" stroke="#5a5a9a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="150" y1="262" x2="150" y2="282" stroke="#5a5a9a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Right: code block -->
+  <rect x="280" y="90" width="560" height="266" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="296" y="114" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 계정 상태 확인</text>
+  <text x="296" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">passwd</tspan><tspan fill="#ffffff"> -S username</tspan></text>
+  <text x="296" y="154" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># user P 2026-05-28 0 99999 7 -1 (PS=잠금)</text>
+
+  <text x="296" y="180" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 계정 잠금 해제</text>
+  <text x="296" y="200" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">usermod</tspan><tspan fill="#ffffff"> -U username</tspan></text>
+  <text x="296" y="220" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">faillock</tspan><tspan fill="#ffffff"> --user username --reset</tspan></text>
+
+  <text x="296" y="246" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 쉘 확인 및 변경</text>
+  <text x="296" y="266" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">getent passwd</tspan><tspan fill="#ffffff"> username    </tspan><tspan fill="#9aa4b8"># 마지막 필드=쉘</tspan></text>
+  <text x="296" y="286" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">chsh</tspan><tspan fill="#ffffff"> -s /bin/bash username</tspan></text>
+
+  <text x="296" y="312" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 인증 로그 확인 (원인 찾기)</text>
+  <text x="296" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">journalctl</tspan><tspan fill="#ffffff"> -u sshd --since today -n 30</tspan></text>
+  <text x="296" y="352" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">tail</tspan><tspan fill="#ffffff"> -f /var/log/auth.log</tspan></text>
+</svg>
