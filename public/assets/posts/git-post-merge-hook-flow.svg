@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-y" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8c84a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">post-merge 훅 실행 흐름</text>
+
+  <!-- git merge / git pull -->
+  <rect x="300" y="72" width="280" height="52" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="99" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">git merge / git pull</text>
+  <text x="440" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">머지 성공 후 실행</text>
+
+  <line x1="440" y1="124" x2="440" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- post-merge hook -->
+  <rect x="240" y="154" width="400" height="64" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">post-merge 훅 (.git/hooks/post-merge)</text>
+  <text x="440" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">$1 = 0 (일반 머지) / 1 (squash 머지)</text>
+
+  <!-- Three arrows down -->
+  <line x1="300" y1="218" x2="180" y2="260" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <line x1="440" y1="218" x2="440" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="580" y1="218" x2="700" y2="260" stroke="#e8c84a" stroke-width="2" marker-end="url(#arr-y)"/>
+
+  <!-- Action box 1: deps -->
+  <rect x="60" y="262" width="220" height="72" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">의존성 설치</text>
+  <text x="170" y="307" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">package.json 변경 감지</text>
+  <text x="170" y="323" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ npm install 자동 실행</text>
+
+  <!-- Action box 2: build -->
+  <rect x="320" y="262" width="240" height="72" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">빌드 / 코드 생성</text>
+  <text x="440" y="307" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">마이그레이션 실행</text>
+  <text x="440" y="323" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ npm run build:gen</text>
+
+  <!-- Action box 3: notify -->
+  <rect x="600" y="262" width="220" height="72" rx="8" fill="#1f1a00" stroke="#e8c84a" stroke-width="1.5"/>
+  <text x="710" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8c84a">알림 / 후처리</text>
+  <text x="710" y="307" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">캐시 무효화</text>
+  <text x="710" y="323" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ Slack / 로그 기록</text>
+
+  <!-- Note -->
+  <rect x="180" y="374" width="520" height="64" rx="8" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="440" y="398" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">주의 사항</text>
+  <text x="440" y="418" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">exit 1로 훅이 실패해도 이미 완료된 머지는 되돌려지지 않음</text>
+  <text x="440" y="434" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">→ post-merge는 정보·자동화 용도. 머지 차단에는 pre-merge-commit 사용</text>
+</svg>

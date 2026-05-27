@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">서버 사이드 훅 실행 순서</text>
+
+  <!-- client push -->
+  <rect x="330" y="68" width="220" height="52" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">클라이언트 git push</text>
+  <text x="440" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">로컬 커밋 → 원격 서버</text>
+
+  <line x1="440" y1="120" x2="440" y2="148" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- pre-receive -->
+  <rect x="180" y="150" width="520" height="74" rx="8" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="175" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">① pre-receive</text>
+  <text x="440" y="196" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">stdin: &lt;old-sha&gt; &lt;new-sha&gt; &lt;ref&gt;  (여러 줄)</text>
+  <text x="440" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">exit 1 → push 전체 거부</text>
+
+  <!-- exit 1 branch -->
+  <line x1="180" y1="187" x2="100" y2="187" stroke="#e05555" stroke-width="2"/>
+  <line x1="100" y1="187" x2="100" y2="440" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="55" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">거부</text>
+
+  <line x1="440" y1="224" x2="440" y2="252" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- update -->
+  <rect x="180" y="254" width="520" height="74" rx="8" fill="#111" stroke="#e8c84a" stroke-width="1.5"/>
+  <text x="440" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8c84a">② update</text>
+  <text x="440" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">$1=ref-name  $2=old-sha  $3=new-sha  (ref마다 1회)</text>
+  <text x="440" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8c84a">exit 1 → 해당 ref만 거부</text>
+
+  <line x1="440" y1="328" x2="440" y2="356" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- post-receive -->
+  <rect x="180" y="358" width="520" height="74" rx="8" fill="#111" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="383" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">③ post-receive</text>
+  <text x="440" y="404" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">stdin: &lt;old-sha&gt; &lt;new-sha&gt; &lt;ref&gt;  (여러 줄)</text>
+  <text x="440" y="422" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">exit 1 무시 — 이미 push 완료</text>
+
+  <!-- post-receive arrow down -->
+  <line x1="440" y1="432" x2="440" y2="460" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- CI/CD notify -->
+  <rect x="320" y="462" width="240" height="42" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.2"/>
+  <text x="440" y="488" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">CI 트리거 / 배포 알림 / 이슈 닫기</text>
+</svg>
