@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrB" viewBox="0 0 21 14" refX="19" refY="7" markerUnits="userSpaceOnUse" markerWidth="21" markerHeight="14" orient="auto">
+      <polygon points="0,0 21,7 0,14" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 21 14" refX="19" refY="7" markerUnits="userSpaceOnUse" markerWidth="21" markerHeight="14" orient="auto">
+      <polygon points="0,0 21,7 0,14" fill="#e05555"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 21 14" refX="19" refY="7" markerUnits="userSpaceOnUse" markerWidth="21" markerHeight="14" orient="auto">
+      <polygon points="0,0 21,7 0,14" fill="#55c555"/>
+    </marker>
+    <marker id="arrP" viewBox="0 0 21 14" refX="19" refY="7" markerUnits="userSpaceOnUse" markerWidth="21" markerHeight="14" orient="auto">
+      <polygon points="0,0 21,7 0,14" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">@Async 예외 처리 경로 비교</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="56" x2="440" y2="492" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ======== LEFT: void return ======== -->
+  <text x="220" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">① void 반환 메서드</text>
+
+  <!-- Box 1: Caller Thread -->
+  <rect x="60" y="80" width="320" height="60" rx="8" fill="#0d1f35" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="220" y="104" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">호출 스레드 (Caller)</text>
+  <text x="220" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">asyncVoidMethod() 호출 후 즉시 반환</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="220" y1="140" x2="220" y2="168" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+
+  <!-- Box 2: @Async Method -->
+  <rect x="60" y="170" width="320" height="60" rx="8" fill="#0d1f35" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="220" y="194" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">@Async 메서드 실행</text>
+  <text x="220" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">별도 스레드풀에서 실행, void 반환</text>
+
+  <!-- Arrow 2→3 (red, exception) -->
+  <line x1="220" y1="230" x2="220" y2="258" stroke="#e05555" stroke-width="2" marker-end="url(#arrR)"/>
+  <text x="234" y="249"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">예외</text>
+
+  <!-- Box 3: RuntimeException -->
+  <rect x="60" y="260" width="320" height="60" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="220" y="284" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">RuntimeException 발생</text>
+  <text x="220" y="302" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">void 반환 — 예외 캡슐화 불가</text>
+
+  <!-- Arrow 3→4 (purple dashed) -->
+  <line x1="220" y1="320" x2="220" y2="348" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrP)"/>
+
+  <!-- Box 4: AsyncUncaughtExceptionHandler -->
+  <rect x="60" y="350" width="320" height="60" rx="8" fill="#130b1f" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="220" y="374" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">AsyncUncaughtExceptionHandler</text>
+  <text x="220" y="392" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">handleUncaughtException() 직접 호출</text>
+
+  <!-- Note left -->
+  <rect x="60" y="424" width="320" height="36" rx="6" fill="#1a1a1a" stroke="#333"/>
+  <text x="220" y="447" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">구현 없으면 예외 로그도 없이 무시 ✗</text>
+
+  <!-- ======== RIGHT: CompletableFuture ======== -->
+  <text x="660" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">② CompletableFuture&lt;T&gt; 반환</text>
+
+  <!-- Box 1: Caller Thread -->
+  <rect x="500" y="80" width="320" height="60" rx="8" fill="#091a09" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="660" y="104" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">호출 스레드 (Caller)</text>
+  <text x="660" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">cf = asyncMethod(); cf.get() 로 수신</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="660" y1="140" x2="660" y2="168" stroke="#55c555" stroke-width="2" marker-end="url(#arrG)"/>
+
+  <!-- Box 2: @Async Method -->
+  <rect x="500" y="170" width="320" height="60" rx="8" fill="#0d1f35" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="660" y="194" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">@Async 메서드 실행</text>
+  <text x="660" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">CompletableFuture&lt;T&gt; 반환</text>
+
+  <!-- Arrow 2→3 (red, exception) -->
+  <line x1="660" y1="230" x2="660" y2="258" stroke="#e05555" stroke-width="2" marker-end="url(#arrR)"/>
+  <text x="674" y="249"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">예외</text>
+
+  <!-- Box 3: CF stores exception -->
+  <rect x="500" y="260" width="320" height="60" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="660" y="284" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">예외 → CF 내부 저장</text>
+  <text x="660" y="302" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">completeExceptionally(exception)</text>
+
+  <!-- Arrow 3→4 (green dashed, cf.get()) -->
+  <line x1="660" y1="320" x2="660" y2="348" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrG)"/>
+  <text x="674" y="340"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">cf.get()</text>
+
+  <!-- Box 4: ExecutionException at caller -->
+  <rect x="500" y="350" width="320" height="60" rx="8" fill="#061406" stroke="#55c555" stroke-width="1.5"/>
+  <text x="660" y="374" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">ExecutionException 처리 가능</text>
+  <text x="660" y="392" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">catch (ExecutionException e) { ... }</text>
+
+  <!-- Note right -->
+  <rect x="500" y="424" width="320" height="36" rx="6" fill="#1a1a1a" stroke="#333"/>
+  <text x="660" y="447" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">호출자에서 직접 예외 처리 가능 ✓</text>
+</svg>

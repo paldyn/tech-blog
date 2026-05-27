@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">@Async 예외 처리 설정 코드</text>
+  <text x="440" y="62" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">void 반환 시 핸들러 등록 / CompletableFuture 반환 패턴</text>
+
+  <!-- ====== Left panel: AsyncUncaughtExceptionHandler ====== -->
+  <rect x="46" y="78" width="370" height="294" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="68" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">① void 반환 — 핸들러 등록</text>
+
+  <rect x="62" y="110" width="338" height="246" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="78" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="78" dy="0"><tspan fill="#7777cc" font-weight="600">@Configuration</tspan><tspan fill="#7ec8e3" font-weight="600"> @EnableAsync</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> AsyncConfig</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">implements</tspan><tspan fill="#ffffff"> AsyncConfigurer {</tspan></tspan>
+    <tspan x="78" dy="18"></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">  </tspan><tspan fill="#7777cc" font-weight="600">@Override</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> AsyncUncaughtExceptionHandler</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">      getAsyncUncaughtExceptionHandler() {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> (ex, method, params) -&gt; {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">      log.error(</tspan><tspan fill="#ce9178">"[ERR] {}: {}"</tspan><tspan fill="#ffffff">,</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">          method.getName(),</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">          ex.getMessage());</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    };</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+  </text>
+
+  <!-- ====== Right panel: CompletableFuture ====== -->
+  <rect x="464" y="78" width="370" height="294" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="486" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② CF 반환 — 호출자 처리 패턴</text>
+
+  <rect x="480" y="110" width="338" height="246" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="496" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="496" dy="0"><tspan fill="#7777cc" font-weight="600">@Async</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> CompletableFuture&lt;String&gt;</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    fetchData(Long id) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">try</tspan><tspan fill="#ffffff"> {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> CompletableFuture</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">        .completedFuture(api.call(id));</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  } </tspan><tspan fill="#7ec8e3" font-weight="600">catch</tspan><tspan fill="#ffffff"> (Exception e) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> CompletableFuture</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">        .failedFuture(e);</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+    <tspan x="496" dy="18"></tspan>
+    <tspan x="496" dy="18"><tspan fill="#9aa4b8">// 호출자: exceptionally 로 복구</tspan></tspan>
+  </text>
+</svg>

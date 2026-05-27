@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ApplicationEvent 구현 패턴</text>
+  <text x="440" y="62" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">이벤트 정의 / 발행 / 리스너 — 실전 코드</text>
+
+  <!-- ====== Left panel: Event + Publisher ====== -->
+  <rect x="46" y="78" width="370" height="334" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="68" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① 이벤트 정의 &amp; 발행</text>
+
+  <rect x="62" y="110" width="338" height="286" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="78" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="78" dy="0"><tspan fill="#9aa4b8">// Spring 4.2+ POJO 이벤트 (권장)</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">public record</tspan><tspan fill="#ffffff"> OrderCreatedEvent(</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    Long orderId,</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    String customerEmail) {}</tspan></tspan>
+    <tspan x="78" dy="18"></tspan>
+    <tspan x="78" dy="18"><tspan fill="#9aa4b8">// 발행자 (서비스 레이어)</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7777cc" font-weight="600">@Service</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> OrderService {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">  private final</tspan><tspan fill="#ffffff"> ApplicationEventPublisher pub;</tspan></tspan>
+    <tspan x="78" dy="18"></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public</tspan><tspan fill="#ffffff"> Order createOrder(OrderRequest req) {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    Order order = orderRepo.save(req.toEntity());</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    pub.publishEvent(</tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> OrderCreatedEvent(</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">        order.getId(), req.email()));</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> order;</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+  </text>
+
+  <!-- ====== Right panel: Listener ====== -->
+  <rect x="464" y="78" width="370" height="334" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="486" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② 이벤트 리스너</text>
+
+  <rect x="480" y="110" width="338" height="286" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="496" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="496" dy="0"><tspan fill="#7777cc" font-weight="600">@Component</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> NotificationListener {</tspan></tspan>
+    <tspan x="496" dy="18"></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @EventListener</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @Order</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">)</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> sendEmail(</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      OrderCreatedEvent event) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    mailService.send(event.customerEmail());</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="496" dy="18"></tspan>
+    <tspan x="496" dy="18"><tspan fill="#9aa4b8">  // 비동기 처리: @Async 추가</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @Async</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @EventListener</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @Order</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">)</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> updateStats(</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      OrderCreatedEvent event) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    statsService.record(event.orderId());</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+  </text>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">@TransactionalEventListener 실전 코드</text>
+  <text x="440" y="62" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">커밋 후 외부 호출 분리 / 롤백 보상 처리</text>
+
+  <!-- Left panel: AFTER_COMMIT 이메일 발송 -->
+  <rect x="46" y="78" width="370" height="314" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="68" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">① AFTER_COMMIT — 이메일 발송</text>
+
+  <rect x="62" y="110" width="338" height="266" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="78" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="78" dy="0"><tspan fill="#7777cc" font-weight="600">@Component</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> OrderMailListener {</tspan></tspan>
+    <tspan x="78" dy="18"></tspan>
+    <tspan x="78" dy="18"><tspan fill="#9aa4b8">  // 기본값: AFTER_COMMIT</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7777cc" font-weight="600">  @TransactionalEventListener</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> onOrderCreated(</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">      OrderCreatedEvent event) {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#9aa4b8">    // 트랜잭션 커밋 확정 후 실행</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#9aa4b8">    // DB에 데이터가 존재하는 시점</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    mail.sendConfirmation(</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">        event.customerEmail(),</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">        event.orderId());</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+  </text>
+
+  <!-- Right panel: AFTER_ROLLBACK 보상 + DB 쓰기 -->
+  <rect x="464" y="78" width="370" height="314" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="486" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">② AFTER_ROLLBACK + DB 쓰기</text>
+
+  <rect x="480" y="110" width="338" height="266" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="496" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="496" dy="0"><tspan fill="#7777cc" font-weight="600">@Component</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> FailureListener {</tspan></tspan>
+    <tspan x="496" dy="18"></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @TransactionalEventListener</tspan><tspan fill="#ffffff">(</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    phase = TransactionPhase</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">                .AFTER_ROLLBACK)</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#9aa4b8">  // 새 트랜잭션 필수 — 기존 건 롤백됨</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @Transactional</tspan><tspan fill="#ffffff">(propagation =</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      Propagation.REQUIRES_NEW)</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> onOrderFailed(</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      OrderCreatedEvent event) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    failureLog.save(</tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">        FailureRecord(event.orderId()));</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+  </text>
+</svg>

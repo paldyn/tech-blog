@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Spring Kafka — Producer &amp; Consumer 코드</text>
+  <text x="440" y="62" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">KafkaTemplate 발행 / @KafkaListener 소비 / 수동 커밋</text>
+
+  <!-- Left panel: Producer -->
+  <rect x="46" y="78" width="370" height="334" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="68" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① KafkaTemplate — 메시지 발행</text>
+
+  <rect x="62" y="110" width="338" height="286" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="78" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="78" dy="0"><tspan fill="#7777cc" font-weight="600">@Service</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> OrderProducer {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">  private final</tspan><tspan fill="#ffffff"> KafkaTemplate&lt;String,</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">                  OrderEvent&gt; kafka;</tspan></tspan>
+    <tspan x="78" dy="18"></tspan>
+    <tspan x="78" dy="18"><tspan fill="#9aa4b8">  // 키로 파티션 고정 (주문ID 기반)</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> publish(OrderEvent event) {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">    kafka.send(</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">        </tspan><tspan fill="#ce9178">"orders"</tspan><tspan fill="#ffffff">,</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">        event.orderId().toString(),</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">        event)</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">      .whenComplete((r, ex) -&gt; {</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#7ec8e3" font-weight="600">        if</tspan><tspan fill="#ffffff"> (ex != </tspan><tspan fill="#7ec8e3" font-weight="600">null</tspan><tspan fill="#ffffff">)</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">          log.error(</tspan><tspan fill="#ce9178">"send fail"</tspan><tspan fill="#ffffff">, ex);</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">      });</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="78" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+  </text>
+
+  <!-- Right panel: Consumer -->
+  <rect x="464" y="78" width="370" height="334" rx="8" fill="#0a0a0a" stroke="#2a2a2a"/>
+  <text x="486" y="100"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② @KafkaListener — 메시지 소비</text>
+
+  <rect x="480" y="110" width="338" height="286" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text xml:space="preserve" x="496" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="496" dy="0"><tspan fill="#7777cc" font-weight="600">@Component</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">public class</tspan><tspan fill="#ffffff"> OrderConsumer {</tspan></tspan>
+    <tspan x="496" dy="18"></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7777cc" font-weight="600">  @KafkaListener</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    (topics = </tspan><tspan fill="#ce9178">"orders"</tspan><tspan fill="#ffffff">,</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">     groupId = </tspan><tspan fill="#ce9178">"order-svc"</tspan><tspan fill="#ffffff">,</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">     concurrency = </tspan><tspan fill="#ce9178">"3"</tspan><tspan fill="#ffffff">)</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">  public void</tspan><tspan fill="#ffffff"> consume(</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      OrderEvent event,</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      Acknowledgment ack) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#7ec8e3" font-weight="600">    try</tspan><tspan fill="#ffffff"> {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      orderService.process(event);</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      ack.acknowledge(); </tspan><tspan fill="#9aa4b8">// 수동 커밋</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    } </tspan><tspan fill="#7ec8e3" font-weight="600">catch</tspan><tspan fill="#ffffff"> (Exception e) {</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#9aa4b8">      // 재시도 or DLT 이동</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">throw</tspan><tspan fill="#ffffff"> e;</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">    }</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="496" dy="18"><tspan fill="#ffffff">}</tspan></tspan>
+  </text>
+</svg>
