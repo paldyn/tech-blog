@@ -1,106 +1,100 @@
 ---
-title: "Python의 역사: Guido van Rossum부터 현재까지"
-description: "Python이 어떻게 탄생하고 발전해 왔는지 역사를 정리합니다. ABC 언어의 영향, Python 3의 출현, TIOBE 1위까지의 여정을 살펴봅니다."
+title: "Python의 역사 — 탄생부터 현재까지"
+description: "1989년 귀도 반 로섬이 크리스마스 연휴에 시작한 Python이 어떻게 세계에서 가장 인기 있는 언어가 됐는지 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-05-19"
+pubDate: "2026-05-28"
 archiveOrder: 2
 type: "knowledge"
 category: "Python"
-tags: ["Python", "역사", "GuidoVanRossum", "Python3", "버전"]
+tags: ["Python", "역사", "귀도 반 로섬", "Python 3"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-what-is-python/)에서 Python이 어떤 언어인지 개략적으로 살펴봤다. 언어를 더 깊이 이해하려면 그 언어가 왜 만들어졌는지, 어떤 고민으로 설계됐는지를 알 필요가 있다. Python의 역사는 단순한 연표가 아니라, 언어 설계 철학이 실제로 어떻게 형성되는지를 보여주는 이야기다.
+[지난 글](/posts/python-what-is-python/)에서 Python이 어떤 언어인지 살펴봤습니다. 이번에는 그 언어가 어떻게 탄생하고 발전해 왔는지 역사를 따라가 봅니다. 언어의 역사를 알면 설계 결정의 이유와 버전 간 차이가 훨씬 명확하게 이해됩니다.
 
-## 시작: 크리스마스 휴가의 사이드 프로젝트
+## 1989년 — 크리스마스 프로젝트
 
-1989년 12월, 네덜란드 CWI(수학·컴퓨터 과학 연구소)의 연구원 **Guido van Rossum**은 크리스마스 연휴 기간 동안 개인 프로젝트를 시작했다. 목표는 당시 자신이 작업하던 **ABC 언어**의 후계자를 만드는 것이었다.
+Python의 탄생은 우연에 가깝습니다. 네덜란드 프로그래머 **귀도 반 로섬(Guido van Rossum)**은 1989년 크리스마스 연휴 동안 취미 삼아 새로운 언어를 만들기 시작했습니다. 당시 그가 일하던 CWI(네덜란드 수학·컴퓨터 과학 연구소)에서 ABC 언어 프로젝트에 참여했던 경험이 직접적인 영감이 됐습니다.
 
-ABC 언어는 교육용으로 설계된 언어였다. 읽기 쉽고 배우기 쉬웠지만, 치명적인 단점이 있었다. 확장성이 없었다. 사용자가 직접 모듈을 추가하거나 OS 시스템 콜을 사용하기 어려웠다. Guido는 ABC의 장점(가독성, 간결함)을 유지하면서 확장성과 예외 처리를 갖춘 언어를 만들고 싶었다.
+ABC는 교육용 언어로 읽기 쉬운 문법을 목표로 했지만 확장성이 부족했습니다. 귀도는 ABC의 장점을 취하면서 운영체제와 더 잘 연동되고, 확장 모듈을 쉽게 작성할 수 있는 언어를 구상했습니다. 언어 이름은 그가 좋아하던 영국 코미디 그룹 **Monty Python's Flying Circus**에서 따왔습니다.
 
-이름은 당시 BBC에서 방영하던 코미디 쇼 **Monty Python's Flying Circus**에서 따왔다. Python이라는 이름이 실제 뱀과 관계없다는 점은 잘 알려진 사실이다.
+## 1991년 — 최초 공개
 
-```python
-# Guido의 초기 설계 철학: 읽기 쉬운 코드
-# ABC에서 영향받은 들여쓰기 기반 블록 구조
-numbers = [1, 2, 3, 4, 5]
-for n in numbers:
-    if n % 2 == 0:
-        print(f"{n}은 짝수")
-```
+1991년 Python 0.9.0이 Usenet 뉴스그룹에 공개되었습니다. 이 버전에는 이미 클래스, 예외 처리, 핵심 자료구조(list, dict)가 포함되어 있었습니다. 귀도는 개발을 혼자 시작했지만 공개 직후 빠르게 커뮤니티가 형성됐습니다.
 
-## Python 1.x: 공개와 성장 (1991~2000)
+![Python 역사 타임라인](/assets/posts/python-history-timeline.svg)
 
-1991년 2월, Guido는 Python 0.9.0을 Usenet 뉴스그룹에 공개했다. 이미 초기 버전부터 클래스, 예외 처리, 함수, 리스트/딕셔너리 등 핵심 기능이 포함돼 있었다.
+## 1994년 — Python 1.0
 
-**1994년 Python 1.0** 출시 때는 `lambda`, `map()`, `filter()`, `reduce()` 같은 함수형 프로그래밍 도구가 추가됐다. 흥미롭게도 Guido는 나중에 이 기능들이 Python의 복잡성을 높인다며 Python 3에서 `reduce()`를 `functools`로 옮기기도 했다.
-
-## Python 2.x: 주류가 되다 (2000~2020)
-
-**2000년 Python 2.0** 출시는 Python 역사에서 중요한 전환점이었다. 이 버전에서 **리스트 컴프리헨션**이 도입됐고, 쓰레기 수집(garbage collection) 방식이 개선됐다. 개발 방식도 Sourceforge를 통한 오픈소스 커뮤니티 방식으로 전환됐다.
-
-2008년까지 Python 2는 2.7 버전으로 발전하면서 폭넓은 사용자 기반을 확보했다. Django(2005), NumPy, SQLAlchemy 등 생태계를 구성하는 핵심 라이브러리들이 이 시기에 탄생했다.
-
-![Python 주요 역사 타임라인](/assets/posts/python-history-timeline.svg)
-
-## Python 3.0: 파괴적 혁신 (2008)
-
-**2008년 Python 3.0**은 역사상 가장 논쟁적인 릴리스였다. Guido와 코어 팀은 Python 2의 설계 결함을 고치기 위해 **하위 호환성을 포기**하는 결단을 내렸다.
-
-주요 변화는 다음과 같다.
+Python 1.0에는 함수형 프로그래밍 도구인 `lambda`, `map`, `filter`, `reduce`가 추가됐습니다. 이 시점부터 Python은 단순한 스크립트 언어를 넘어 범용 언어로 자리 잡기 시작했습니다.
 
 ```python
-# Python 2 → Python 3 대표적 차이
-# 1. print: 문(statement) → 함수(function)
-print "hello"       # Python 2
-print("hello")      # Python 3
-
-# 2. 정수 나누기
-5 / 2   # Python 2: 2  (정수 나누기)
-5 / 2   # Python 3: 2.5 (실수 나누기)
-5 // 2  # Python 3: 2  (명시적 정수 나누기)
-
-# 3. str과 bytes 분리
-"hello"   # Python 3: 유니코드 str
-b"hello"  # Python 3: bytes (명시적 구분)
+# Python 1.0 시대의 코드 (지금도 동작)
+squares = list(map(lambda x: x**2, [1, 2, 3, 4, 5]))
+print(squares)  # [1, 4, 9, 16, 25]
 ```
 
-이 변화는 옳은 방향이었지만, 거대한 코드베이스를 가진 기업들의 마이그레이션에 수년이 걸렸다. Python 2와 3이 10년 넘게 공존하는 이례적인 상황이 벌어졌다. Python 2.7은 원래 2015년에 지원 종료 예정이었지만, 커뮤니티의 요청으로 2020년 1월 1일까지 연장됐다.
+## 2000년 — Python 2.0과 커뮤니티 전환
 
-## Python 3의 성숙: 3.5에서 3.12까지
+Python 2.0은 **리스트 컴프리헨션**과 **가비지 컬렉터(garbage collector)**를 도입했습니다. 동시에 개발 방식도 바뀌어 PEP(Python Enhancement Proposal) 프로세스가 공식화됐습니다. 새 기능을 추가하려면 공개적으로 제안서를 작성하고 커뮤니티 리뷰를 거치는 방식입니다.
 
-Python 3은 느린 시작 이후 빠르게 발전했다.
+Python 2는 이후 10년 넘게 산업 표준으로 쓰였고, Django, NumPy 등 주요 생태계가 이 기반 위에 자랐습니다.
 
-**3.5 (2015)**: `async`/`await` 문법이 도입됐다. 비동기 프로그래밍이 Python의 일급 기능이 됐다.
+## 2008년 — Python 3.0과 분열
 
-**3.6 (2016)**: **f-string**이 도입됐다. `f"Hello, {name}!"` 형태의 문자열 포매팅은 즉시 커뮤니티의 표준이 됐다.
+2008년 발표된 Python 3.0은 역사적으로 가장 논쟁적인 릴리즈입니다. Python 2와의 **하위 호환성을 의도적으로 포기**하고 언어의 여러 일관성 문제를 한꺼번에 해결했습니다.
 
-**3.10 (2021)**: `match-case` 구문이 추가됐다. 구조적 패턴 매칭이 가능해졌고, 오류 메시지도 크게 개선됐다.
+핵심 변경 사항:
+- `print` 문이 `print()` 함수로 변경
+- `str`이 기본적으로 유니코드 처리
+- `//` 정수 나눗셈 명시적 구분
+- 많은 함수가 리스트 대신 이터레이터 반환
 
-**3.11 (2022)**: CPython 인터프리터가 대규모로 최적화되어 평균 **25% 이상** 실행 속도가 향상됐다.
+```python
+# Python 2 vs Python 3
+# Python 2: print "hello"
+# Python 3:
+print("hello")
 
-**3.12~3.13**: 추가 성능 향상과 함께 실험적인 GIL(전역 인터프리터 락) 제거 옵션이 도입됐다.
+# Python 2: 3/2 == 1
+# Python 3: 3/2 == 1.5, 3//2 == 1
+print(3 / 2)   # 1.5
+print(3 // 2)  # 1
+```
 
-![Python 3.x 주요 버전 변화](/assets/posts/python-history-versions.svg)
+이로 인해 2008년부터 2015년까지 Python 2와 3가 공존하는 긴 과도기가 이어졌습니다.
 
-## BDFL에서 커뮤니티로
+## 2020년 — Python 2의 종료
 
-Guido는 2018년, Python 3.8의 `walrus operator` 논쟁 이후 **BDFL(자비로운 종신 독재자)** 직위에서 사임했다. 이후 Python은 **5인으로 구성된 운영 위원회(Steering Council)** 방식으로 거버넌스가 바뀌었다. 언어의 미래를 특정 개인이 아닌 커뮤니티가 결정하는 구조가 됐다.
+2020년 1월 1일, Python 2의 공식 지원이 종료됐습니다. 거의 12년 동안 이어진 마이그레이션이 마무리된 것입니다. 이제 모든 주요 라이브러리가 Python 3 전용으로 전환됐고, 새 프로젝트에서 Python 2를 쓸 이유는 없습니다.
 
-Guido는 현재 Microsoft에서 근무하며 Python 성능 개선 프로젝트에 기여하고 있다.
+## Python 3의 진화
 
-## 현재: TIOBE 1위
+![Python 3 버전별 마일스톤](/assets/posts/python-history-versions.svg)
 
-2023년 이후 Python은 **TIOBE 프로그래밍 언어 인기 지수** 1위를 유지하고 있다. AI/ML 분야의 폭발적 성장이 Python 수요를 더욱 높였다. TensorFlow, PyTorch, Hugging Face 등 AI 생태계의 사실상 표준이 모두 Python 기반이다.
+Python 3 출시 이후에도 언어는 계속 발전했습니다.
 
-이 역사는 언어 설계에서 중요한 교훈을 준다. 단기적 호환성보다 장기적으로 올바른 설계를 선택하는 것이 결국 더 큰 성공으로 이어질 수 있다는 것, 그리고 오픈소스 커뮤니티의 힘이 언어의 성장을 이끈다는 것이다.
+- **3.5**: `async/await` 문법으로 비동기 프로그래밍 표준화
+- **3.6**: f-string 도입으로 문자열 포매팅 혁신
+- **3.8**: 바다코끼리 연산자(`:=`) 추가
+- **3.10**: `match/case` 패턴 매칭 도입
+- **3.11**: 인터프리터 속도 25% 개선
+- **3.13**: 실험적 JIT 컴파일러, 선택적 GIL 해제(free-threaded 모드)
+
+## BDFL과 운영 체계
+
+귀도 반 로섬은 2018년까지 **BDFL(Benevolent Dictator For Life, 자비로운 종신 독재자)**이라는 비공식 직함으로 Python을 이끌었습니다. 2018년 PEP 572(왈러스 연산자) 논쟁 이후 그는 BDFL 자리에서 물러났고, 이후 Python은 선출된 5명의 운영 위원회가 이끌고 있습니다.
+
+## 정리
+
+Python은 1989년 한 프로그래머의 크리스마스 프로젝트로 시작해, 오늘날 세계에서 가장 많이 쓰이는 언어 중 하나로 성장했습니다. 2에서 3으로의 험난한 전환을 거쳐 이제 Python 3가 확고한 표준이 됐습니다. 다음 글에서는 Python 2와 3의 실질적인 차이점을 코드 수준에서 비교해 봅니다.
 
 ---
 
-**지난 글:** [Python이란 무엇인가: 언어의 핵심 개념 이해](/posts/python-what-is-python/)
+**지난 글:** [Python이란 무엇인가? — 언어의 본질과 설계 철학](/posts/python-what-is-python/)
 
-**다음 글:** [CPython vs PyPy: Python 구현체의 세계](/posts/python-implementations-cpython-pypy/)
+**다음 글:** [Python 2 vs 3 — 무엇이 얼마나 달라졌나](/posts/python-2-vs-3/)
 
 <br>
 읽어주셔서 감사합니다. 😊

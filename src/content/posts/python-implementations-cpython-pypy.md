@@ -1,131 +1,118 @@
 ---
-title: "CPython vs PyPy: Python 구현체의 세계"
-description: "CPython, PyPy, Jython, IronPython 등 Python 구현체들의 차이를 설명합니다. JIT 컴파일이 무엇인지, 언제 PyPy를 써야 하는지 다룹니다."
+title: "CPython, PyPy — Python 구현체 완전 비교"
+description: "Python 표준 구현체 CPython의 작동 원리와 JIT 기반 PyPy의 차이, 언제 어떤 구현체를 선택해야 하는지 살펴봅니다."
 author: "PALDYN Team"
-pubDate: "2026-05-19"
+pubDate: "2026-05-28"
 archiveOrder: 4
 type: "knowledge"
 category: "Python"
-tags: ["Python", "CPython", "PyPy", "JIT", "구현체"]
+tags: ["Python", "CPython", "PyPy", "인터프리터", "JIT"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-2-vs-3/)에서 Python 2와 3의 코드 레벨 차이를 살펴봤다. 그런데 "Python을 실행한다"는 말은 정확히 무슨 뜻일까? Python 언어 명세를 실제로 실행하는 소프트웨어가 **구현체(implementation)**다. Python에는 공식 표준 구현체인 CPython 외에도 여러 구현체가 존재한다.
+[지난 글](/posts/python-2-vs-3/)에서 Python 2와 3의 차이를 살펴봤습니다. 보통 "Python을 설치한다"고 하면 python.org에서 받는 CPython을 의미하지만, Python 언어 자체는 하나의 명세(specification)이고 여러 구현체가 존재합니다. 이 글에서는 주요 구현체를 비교합니다.
 
-## CPython: 레퍼런스 구현체
+## Python은 언어이고, CPython은 구현체
 
-가장 흔히 쓰이는 Python 구현체는 **CPython**이다. `python3` 명령을 실행하면 대부분 CPython이 동작한다. C 언어로 작성됐기 때문에 이름 앞에 'C'가 붙었다.
-
-CPython의 실행 흐름은 다음과 같다.
+Python이 JavaScript와 다른 점은 공식 언어 명세와 구현체가 분리되어 있다는 점입니다. 같은 Python 코드를 다른 엔진으로 실행할 수 있습니다.
 
 ```python
-# CPython이 이 코드를 실행하는 과정
-# 1단계: 소스 코드 파싱 → AST(추상 구문 트리) 생성
-# 2단계: AST → 바이트코드 (.pyc) 컴파일
-# 3단계: PVM(Python Virtual Machine)이 바이트코드 해석 실행
+import sys
+print(sys.implementation.name)  # 'cpython', 'pypy', 'micropython' 등
+print(sys.version)               # 버전 정보
+```
 
+## CPython — 표준 구현체
+
+CPython은 C 언어로 작성된 Python의 공식 구현체입니다. 우리가 가장 흔히 쓰는 `python` 명령이 바로 CPython입니다.
+
+![CPython 실행 파이프라인](/assets/posts/python-implementations-cpython-arch.svg)
+
+실행 과정은 크게 네 단계입니다.
+
+1. **파싱**: 소스 코드를 AST(추상 구문 트리)로 변환
+2. **컴파일**: AST를 바이트코드로 변환 (`.pyc` 파일로 캐싱)
+3. **PVM 실행**: Python Virtual Machine이 바이트코드 해석 및 실행
+
+`dis` 모듈로 바이트코드를 직접 볼 수 있습니다.
+
+```python
 import dis
 
 def add(a, b):
     return a + b
 
-# 바이트코드 확인
 dis.dis(add)
-# LOAD_FAST  'a'
-# LOAD_FAST  'b'
-# BINARY_OP  +
+# LOAD_FAST   0 (a)
+# LOAD_FAST   1 (b)
+# BINARY_OP   0 (+)
 # RETURN_VALUE
 ```
 
-CPython은 **GIL(Global Interpreter Lock)**을 가지고 있다. GIL은 한 시점에 하나의 스레드만 Python 바이트코드를 실행할 수 있도록 하는 잠금 장치다. I/O 중심 작업에서는 큰 문제가 없지만, CPU 집약적인 병렬 계산에서는 병목이 된다.
+CPython의 핵심 제약은 **GIL(Global Interpreter Lock)**입니다. 한 번에 하나의 스레드만 Python 바이트코드를 실행할 수 있어, CPU 집약 작업을 멀티스레드로 병렬화하기 어렵습니다.
 
-## PyPy: JIT 컴파일의 힘
+## PyPy — JIT 컴파일러 구현체
 
-**PyPy**는 Python으로(정확히는 RPython이라는 Python의 제한된 서브셋으로) 작성된 Python 구현체다. 핵심 차이는 **JIT(Just-In-Time) 컴파일**이다.
+PyPy는 Python으로 작성된 Python 구현체입니다(RPython이라는 Python 서브셋으로 작성). 핵심 차별점은 **JIT(Just-In-Time) 컴파일러**입니다.
 
-CPython은 바이트코드를 매번 인터프리터로 해석한다. PyPy는 실행 중 "핫스팟(자주 실행되는 코드)"을 감지해서 기계어로 컴파일한다. 두 번째 실행부터는 이미 컴파일된 기계어가 바로 실행된다.
+PyPy는 코드를 실행하면서 자주 호출되는 "핫 경로(hot path)"를 감지하고, 해당 코드를 실시간으로 기계어로 컴파일합니다. 결과적으로 반복이 많은 코드에서 CPython 대비 5~10배 빠른 속도를 냅니다.
 
 ```python
-# PyPy가 효과적인 경우: 반복 루프가 많은 코드
-import time
+# 이런 루프에서 PyPy가 압도적으로 빠름
+total = 0
+for i in range(100_000_000):
+    total += i
+print(total)
 
-def heavy_loop():
-    total = 0
-    for i in range(10_000_000):
-        total += i
-    return total
-
-start = time.time()
-result = heavy_loop()
-print(f"결과: {result}, 시간: {time.time() - start:.3f}초")
-
-# CPython: 약 0.8초
-# PyPy:    약 0.08초 (약 10배 빠름)
+# CPython: ~5초
+# PyPy:    ~0.5초 (JIT 웜업 후)
 ```
 
-반면 PyPy가 느려지는 경우도 있다. JIT 컴파일 자체에 초기 오버헤드가 있어서 프로그램이 짧게 실행되면 오히려 더 느리다. 또한 NumPy, C 확장 모듈 등 CPython 특화 라이브러리는 PyPy에서 작동하지 않거나 느릴 수 있다.
+단, PyPy는 C 확장 모듈(CPython C API 기반) 호환성이 제한적입니다. NumPy, Pandas 같은 라이브러리는 CPython 환경에서 더 안정적으로 동작합니다.
 
-![CPython vs PyPy 실행 흐름](/assets/posts/python-implementations-cpython-pypy-arch.svg)
+![Python 구현체 비교](/assets/posts/python-implementations-overview.svg)
 
-## 언제 PyPy를 쓸까
+## 기타 구현체
 
-PyPy를 사용하면 이득을 볼 수 있는 상황이 있다.
+**Jython**은 JVM 위에서 실행되는 Python 구현체입니다. Java 라이브러리를 Python 코드에서 직접 호출할 수 있지만, 현재 Python 2.7 기반에 머물러 있어 활용이 제한됩니다.
 
-```python
-# PyPy 적합: 순수 Python 루프, 알고리즘, 시뮬레이션
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+**IronPython**은 .NET CLR 위에서 실행됩니다. C# 코드와의 상호 운용이 필요한 Windows 환경에서 쓰입니다.
 
-# CPython 부적합: 이런 반복이 수백만 번 실행되면 PyPy가 유리
-
-# PyPy 부적합: NumPy, pandas, TensorFlow 등 C 확장 의존 코드
-import numpy as np  # PyPy에서 느리거나 미지원
-arr = np.array([1, 2, 3, 4, 5])
-```
-
-PyPy를 쓰면 이득인 상황은 다음과 같다. 수치 계산이나 시뮬레이션처럼 순수 Python 루프가 수백만 번 반복되는 경우, 장시간 실행되는 서버 프로세스나 데이몬 프로세스, C 확장에 의존하지 않는 범용 Python 코드다.
-
-## 그 밖의 구현체들
-
-![Python 구현체 비교](/assets/posts/python-implementations-cpython-pypy-compare.svg)
-
-**Jython**은 JVM(Java Virtual Machine) 위에서 동작하는 Python 구현체다. Java 클래스와 직접 상호운용할 수 있어서 Java 생태계와 Python을 연결해야 할 때 유용하다. 다만 현재 Python 3를 지원하지 않아 2.7까지만 동작한다.
-
-**IronPython**은 .NET CLR(Common Language Runtime) 위에서 동작한다. C# 라이브러리를 Python 코드에서 직접 사용할 수 있다. GIL이 없어서 진정한 멀티스레딩이 가능하다.
-
-**MicroPython**은 마이크로컨트롤러와 임베디드 환경에 최적화된 경량 구현체다. Raspberry Pi Pico, ESP32 같은 소형 하드웨어에서 Python을 실행할 수 있게 해준다.
+**MicroPython**은 마이크로컨트롤러를 위한 최소화된 Python 구현체입니다. ESP32, Raspberry Pi Pico 같은 장치에서 256KB 수준의 RAM으로도 동작합니다.
 
 ```python
-# MicroPython 예: 마이크로컨트롤러 제어
+# MicroPython — Raspberry Pi Pico 예시
 from machine import Pin
 import time
 
 led = Pin(25, Pin.OUT)
-
 while True:
     led.toggle()
-    time.sleep(0.5)  # 0.5초마다 LED 깜박임
+    time.sleep(0.5)
 ```
 
-**Cython**은 조금 결이 다르다. Cython은 Python 문법을 C 코드로 컴파일하는 도구다. NumPy처럼 성능이 중요한 Python 패키지의 핵심 부분을 C로 변환하는 데 사용된다.
+**Cython**은 Python 코드를 C로 변환하는 컴파일러입니다. 성능 병목이 되는 함수를 Cython으로 작성하면 CPython 환경에서도 C에 가까운 속도를 낼 수 있습니다.
 
-## 어떤 구현체를 선택할까
+## 어떤 구현체를 선택할까?
 
-대부분의 경우 **CPython이 정답**이다. 생태계 호환성이 가장 높고, 모든 파이썬 패키지가 CPython을 기준으로 동작한다. NumPy, Pandas, TensorFlow, Django 등 인기 라이브러리 모두 CPython을 기준으로 만들어져 있다.
+| 상황 | 권장 구현체 |
+|---|---|
+| 일반 개발, 데이터 과학 | CPython (기본) |
+| 장기 실행 CPU 집약 서버 | PyPy |
+| Java 생태계와 연동 | Jython |
+| 마이크로컨트롤러 / IoT | MicroPython |
+| 성능 병목 C 최적화 | Cython |
 
-**PyPy**는 C 확장에 의존하지 않는 순수 Python 알고리즘 코드의 성능을 높여야 할 때 고려한다.
+대부분의 경우 CPython이 정답입니다. PyPy를 고려할 시점은 프로파일링으로 CPU 바운드 병목을 확인한 후입니다.
 
-나머지 구현체들은 특정 생태계(JVM, .NET)와의 통합이나 임베디드 환경처럼 명확한 이유가 있을 때만 선택한다.
+## 정리
 
-이 시리즈에서 다루는 모든 코드는 CPython 기준이다. 다음 편에서는 CPython을 시스템에 설치하고 여러 버전을 관리하는 방법을 살펴본다.
+Python은 단일 구현체가 아니라 여러 엔진이 존재하는 언어 생태계입니다. CPython은 호환성, PyPy는 성능, MicroPython은 임베디드 환경에 특화되어 있습니다. 다음 글에서는 실제로 Python을 개발 환경에 설치하고 pyenv로 여러 버전을 관리하는 방법을 다룹니다.
 
 ---
 
-**지난 글:** [Python의 역사: Guido van Rossum부터 현재까지](/posts/python-history/)
+**지난 글:** [Python 2 vs 3 — 무엇이 얼마나 달라졌나](/posts/python-2-vs-3/)
 
 **다음 글:** [pyenv로 Python 버전 관리하기](/posts/python-install-pyenv/)
 
