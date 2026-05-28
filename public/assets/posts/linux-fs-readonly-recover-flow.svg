@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">파일 시스템 읽기 전용 복구 흐름</text>
+
+  <!-- Start -->
+  <rect x="240" y="60" width="340" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="410" y="84" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Read-only file system 에러</text>
+  <text x="410" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파일 쓰기/생성/삭제 실패</text>
+
+  <line x1="410" y1="120" x2="410" y2="144" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 1: dmesg -->
+  <rect x="240" y="146" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① dmesg — 디스크 오류 확인</text>
+  <text x="410" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">I/O error · EXT4-fs error 메시지</text>
+  <line x1="580" y1="176" x2="628" y2="176" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">I/O 오류</text>
+  <rect x="630" y="152" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">하드웨어 문제</text>
+  <text x="730" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">SMART 점검 / 케이블 확인</text>
+
+  <line x1="410" y1="206" x2="410" y2="230" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: mount -o ro -->
+  <rect x="240" y="232" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="256" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② mount — 마운트 옵션 확인</text>
+  <text x="410" y="278" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">mount | grep "(ro)" 확인</text>
+  <line x1="580" y1="262" x2="628" y2="262" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="584" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">(ro) 확인됨</text>
+  <rect x="630" y="238" width="200" height="48" rx="6" fill="#0f1525" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="730" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">remount 시도</text>
+  <text x="730" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">mount -o remount,rw /</text>
+
+  <line x1="410" y1="292" x2="410" y2="316" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: fsck -->
+  <rect x="240" y="318" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ fsck — 파일 시스템 점검</text>
+  <text x="410" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">언마운트 후 또는 복구 모드에서 실행</text>
+  <line x1="580" y1="348" x2="628" y2="348" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="341" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">오류 발견</text>
+  <rect x="630" y="324" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">자동 수정</text>
+  <text x="730" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">fsck -y /dev/sda1</text>
+
+  <line x1="410" y1="378" x2="410" y2="402" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: fstab -->
+  <rect x="240" y="404" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="428" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">④ /etc/fstab 옵션 확인</text>
+  <text x="410" y="450" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ro 옵션이 명시되어 있지 않은지 확인</text>
+  <line x1="580" y1="434" x2="628" y2="434" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">ro 발견</text>
+  <rect x="630" y="410" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">fstab 수정</text>
+  <text x="730" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ro → defaults 변경 후 재부팅</text>
+
+  <line x1="410" y1="464" x2="410" y2="488" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- End -->
+  <rect x="240" y="490" width="340" height="40" rx="8" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="410" y="514" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">파일 시스템 쓰기 가능 복구</text>
+</svg>

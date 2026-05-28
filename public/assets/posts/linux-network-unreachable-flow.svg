@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 580" width="880" height="580">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="580" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Network Unreachable 트러블슈팅 흐름</text>
+
+  <!-- Start -->
+  <rect x="240" y="60" width="340" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="410" y="84" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">네트워크 연결 불가 보고</text>
+  <text x="410" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ping / curl / ssh 실패 확인</text>
+
+  <line x1="410" y1="120" x2="410" y2="144" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 1 -->
+  <rect x="240" y="146" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① ping 127.0.0.1 (loopback)</text>
+  <text x="410" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">TCP/IP 스택 정상 동작 확인</text>
+  <line x1="580" y1="176" x2="628" y2="176" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="588" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">실패</text>
+  <rect x="630" y="152" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">커널 TCP/IP 스택 문제</text>
+  <text x="730" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">네트워킹 서비스 재시작</text>
+
+  <line x1="410" y1="206" x2="410" y2="230" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="422" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">성공</text>
+
+  <!-- Step 2 -->
+  <rect x="240" y="232" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="256" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② ip addr show</text>
+  <text x="410" y="278" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">인터페이스 UP 상태 · IP 할당 확인</text>
+  <line x1="580" y1="262" x2="628" y2="262" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">DOWN/없음</text>
+  <rect x="630" y="238" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">인터페이스 DOWN</text>
+  <text x="730" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ip link set eth0 up / DHCP</text>
+
+  <line x1="410" y1="292" x2="410" y2="316" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="422" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">UP+IP 있음</text>
+
+  <!-- Step 3 -->
+  <rect x="240" y="318" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ ip route show</text>
+  <text x="410" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">default 게이트웨이 경로 존재 여부</text>
+  <line x1="580" y1="348" x2="628" y2="348" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="341" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">경로 없음</text>
+  <rect x="630" y="324" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">기본 경로 누락</text>
+  <text x="730" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ip route add default via GW</text>
+
+  <line x1="410" y1="378" x2="410" y2="402" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="422" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">경로 있음</text>
+
+  <!-- Step 4 -->
+  <rect x="240" y="404" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="428" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">④ ping 게이트웨이 IP</text>
+  <text x="410" y="450" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">L3 라우팅 도달 가능성 검증</text>
+  <line x1="580" y1="434" x2="628" y2="434" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="592" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">실패</text>
+  <rect x="630" y="410" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">L2/물리 계층 문제</text>
+  <text x="730" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">케이블·스위치·VLAN 점검</text>
+
+  <line x1="410" y1="464" x2="410" y2="488" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="422" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">성공</text>
+
+  <!-- End -->
+  <rect x="240" y="490" width="340" height="60" rx="8" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="410" y="514" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">L3 외부 연결 확인 완료</text>
+  <text x="410" y="536" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">DNS / 방화벽 단계로 진행</text>
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">종료 실패 진단 및 조치 명령어</text>
+
+  <!-- Left -->
+  <text x="220" y="76" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">진단</text>
+
+  <rect x="50" y="88" width="360" height="192" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="66" y="116" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 종료 로그 실시간 확인</text>
+  <text x="66" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan font-weight="600" fill="#7ec8e3">journalctl</tspan><tspan fill="#ffffff"> -xe -f</tspan></text>
+  <text x="66" y="152" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 이전 부팅 로그</text>
+  <text x="66" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan font-weight="600" fill="#7ec8e3">journalctl</tspan><tspan fill="#ffffff"> -b -1</tspan></text>
+  <text x="66" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 종료 대기 서비스 확인</text>
+  <text x="66" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan font-weight="600" fill="#7ec8e3">systemctl</tspan><tspan fill="#ffffff"> list-jobs</tspan></text>
+  <text x="66" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># D 상태 프로세스 확인</text>
+  <text x="66" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ps aux | awk '$8=="D"'</text>
+  <text x="66" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ps -o pid,stat,wchan,comm ax</text>
+
+  <!-- Right -->
+  <text x="660" y="76" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">조치</text>
+
+  <rect x="470" y="88" width="360" height="192" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="486" y="116" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 서비스 강제 종료</text>
+  <text x="486" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan font-weight="600" fill="#7ec8e3">systemctl</tspan><tspan fill="#ffffff"> kill myservice</tspan></text>
+  <text x="486" y="156" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># TimeoutStopSec 조정</text>
+  <text x="486" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sudo systemctl edit myservice</text>
+  <text x="486" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 전역 타임아웃 단축</text>
+  <text x="486" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># /etc/systemd/system.conf</text>
+  <text x="486" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">DefaultTimeoutStopSec=15s</text>
+  <text x="486" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># Magic SysRq 강제 재부팅</text>
+  <text x="486" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">echo b &gt; /proc/sysrq-trigger</text>
+
+  <!-- Bottom tip -->
+  <rect x="50" y="298" width="780" height="70" rx="8" fill="#0f1525" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="322" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Magic SysRq REISUB 안전 재부팅 순서</text>
+  <text x="440" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">R(Raw) E(Term all) I(Kill all) S(Sync) U(Unmount) B(reboot)</text>
+  <text x="440" y="362" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">각 단계 사이 1-2초 대기 — 데이터 손실 최소화</text>
+</svg>

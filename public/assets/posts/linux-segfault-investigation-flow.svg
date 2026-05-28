@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Segmentation Fault 조사 흐름</text>
+
+  <!-- Start -->
+  <rect x="240" y="60" width="340" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="410" y="84" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Segmentation Fault (SIGSEGV)</text>
+  <text x="410" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">프로세스 비정상 종료 / 크래시</text>
+
+  <line x1="410" y1="120" x2="410" y2="144" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 1: dmesg -->
+  <rect x="240" y="146" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① dmesg 커널 로그 확인</text>
+  <text x="410" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">segfault at 주소 · ip · sp · error 코드</text>
+  <line x1="580" y1="176" x2="628" y2="176" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="586" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">주소 분석</text>
+  <rect x="630" y="152" width="200" height="48" rx="6" fill="#1a0a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="730" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">NULL 접근 or</text>
+  <text x="730" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">메모리 범위 초과</text>
+
+  <line x1="410" y1="206" x2="410" y2="230" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: core dump -->
+  <rect x="240" y="232" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="256" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② 코어 덤프 생성 확인</text>
+  <text x="410" y="278" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ulimit -c / /proc/sys/kernel/core_pattern</text>
+  <line x1="580" y1="262" x2="628" y2="262" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">size=0</text>
+  <rect x="630" y="238" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">코어 덤프 활성화</text>
+  <text x="730" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">ulimit -c unlimited</text>
+
+  <line x1="410" y1="292" x2="410" y2="316" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="422" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">core 파일 있음</text>
+
+  <!-- Step 3: gdb -->
+  <rect x="240" y="318" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ gdb로 백트레이스 분석</text>
+  <text x="410" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">gdb ./binary core → bt full</text>
+  <line x1="580" y1="348" x2="628" y2="348" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="584" y="341" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">스택 확인</text>
+  <rect x="630" y="324" width="200" height="48" rx="6" fill="#1a0a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="730" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">함수 호출 스택</text>
+  <text x="730" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">충돌 위치 소스 확인</text>
+
+  <line x1="410" y1="378" x2="410" y2="402" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Valgrind/ASAN -->
+  <rect x="240" y="404" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="428" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">④ Valgrind / AddressSanitizer</text>
+  <text x="410" y="450" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">메모리 오류 상세 추적</text>
+  <line x1="580" y1="434" x2="628" y2="434" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="584" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">결과</text>
+  <rect x="630" y="410" width="200" height="48" rx="6" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="730" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">원인 코드 위치</text>
+  <text x="730" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">NULL deref / OOB / UAF</text>
+
+  <line x1="410" y1="464" x2="410" y2="488" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- End -->
+  <rect x="240" y="490" width="340" height="44" rx="8" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="410" y="514" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">충돌 원인 코드 수정 및 재빌드</text>
+</svg>

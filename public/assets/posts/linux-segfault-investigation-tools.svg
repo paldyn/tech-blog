@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Segfault 조사 핵심 명령어</text>
+
+  <!-- Left: 진단 -->
+  <text x="220" y="76" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">진단 명령</text>
+
+  <rect x="50" y="88" width="360" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="66" y="116" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 커널 로그에서 segfault 찾기</text>
+  <text x="66" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">dmesg | grep segfault</text>
+  <text x="66" y="156" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 코어 덤프 한도</text>
+  <text x="66" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ulimit -c unlimited</text>
+  <text x="66" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 코어 덤프 위치 확인</text>
+  <text x="66" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">cat /proc/sys/kernel/core_pattern</text>
+  <text x="66" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># gdb 분석</text>
+  <text x="66" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">gdb ./binary core</text>
+  <text x="66" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(gdb) bt full</text>
+  <text x="66" y="286" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(gdb) info locals</text>
+
+  <!-- Right: 도구 -->
+  <text x="660" y="76" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7777cc">심층 분석 도구</text>
+
+  <rect x="470" y="88" width="360" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="486" y="116" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># Valgrind 메모리 검사</text>
+  <text x="486" y="134" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan font-weight="600" fill="#7ec8e3">valgrind</tspan><tspan fill="#ffffff"> --leak-check=full \</tspan></text>
+  <text x="486" y="152" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  ./binary args</text>
+  <text x="486" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># AddressSanitizer 빌드</text>
+  <text x="486" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">gcc -fsanitize=address \</text>
+  <text x="486" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">     -g -o binary main.c</text>
+  <text x="486" y="232" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># strace로 syscall 추적</text>
+  <text x="486" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan font-weight="600" fill="#7ec8e3">strace</tspan><tspan fill="#ffffff"> -f ./binary args</tspan></text>
+  <text x="486" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 라이브러리 의존성 확인</text>
+  <text x="486" y="286" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ldd ./binary</text>
+
+  <!-- Bottom tip -->
+  <rect x="50" y="316" width="780" height="72" rx="8" fill="#0f1525" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="340" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">dmesg segfault 로그 해독</text>
+  <text x="440" y="360" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">myapp[1234]: segfault at 0 ip 00401a3c sp 7ffed3...</text>
+  <text x="440" y="378" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">at 0 = NULL 포인터 접근 / ip = 충돌 발생 명령 주소 / sp = 스택 포인터</text>
+</svg>

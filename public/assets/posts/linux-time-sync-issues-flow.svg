@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">시간 동기화 문제 트러블슈팅</text>
+
+  <!-- Start -->
+  <rect x="240" y="60" width="340" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="410" y="84" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">시스템 시각 오류 / 인증 실패</text>
+  <text x="410" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">TLS 인증서 오류 · 로그 타임스탬프 불일치</text>
+
+  <line x1="410" y1="120" x2="410" y2="144" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 1: timedatectl -->
+  <rect x="240" y="146" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">① timedatectl — 기본 상태 확인</text>
+  <text x="410" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">NTP 활성화 여부 · 타임존 · 오프셋</text>
+  <line x1="580" y1="176" x2="628" y2="176" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">NTP 비활성</text>
+  <rect x="630" y="152" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">NTP 활성화</text>
+  <text x="730" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">timedatectl set-ntp true</text>
+
+  <line x1="410" y1="206" x2="410" y2="230" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: chrony -->
+  <rect x="240" y="232" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="256" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② chronyc tracking / sources</text>
+  <text x="410" y="278" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">NTP 서버 동기화 상태 · 오프셋 확인</text>
+  <line x1="580" y1="262" x2="628" y2="262" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">서버 미응답</text>
+  <rect x="630" y="238" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">NTP 서버 변경</text>
+  <text x="730" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">/etc/chrony.conf 수정</text>
+
+  <line x1="410" y1="292" x2="410" y2="316" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: offset large -->
+  <rect x="240" y="318" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ 오프셋 크기 확인</text>
+  <text x="410" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">1000초 이상이면 즉각 보정 필요</text>
+  <line x1="580" y1="348" x2="628" y2="348" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="341" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">1000초 이상</text>
+  <rect x="630" y="324" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="344" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">강제 동기화</text>
+  <text x="730" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">chronyc makestep</text>
+
+  <line x1="410" y1="378" x2="410" y2="402" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: timezone -->
+  <rect x="240" y="404" width="340" height="60" rx="8" fill="#0f1f30" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="410" y="428" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">④ 타임존 설정 확인</text>
+  <text x="410" y="450" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">timedatectl / TZ 환경변수</text>
+  <line x1="580" y1="434" x2="628" y2="434" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="584" y="427" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">잘못된 TZ</text>
+  <rect x="630" y="410" width="200" height="48" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="730" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">타임존 변경</text>
+  <text x="730" y="448" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">timedatectl set-timezone</text>
+
+  <line x1="410" y1="464" x2="410" y2="488" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- End -->
+  <rect x="240" y="490" width="340" height="20" rx="6" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="410" y="504" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">시간 동기화 정상 확인</text>
+</svg>
