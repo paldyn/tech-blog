@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <!-- Background -->
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">spring-amqp 핵심 코드 패턴</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Queue/Exchange 선언 · 발행 · 소비</text>
+
+  <!-- Left: Config code -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">① Bean 설정 (Queue · Exchange · Binding)</text>
+
+  <rect x="60" y="116" width="360" height="158" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Bean</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">Queue </tspan><tspan fill="#ce9178">orderQueue</tspan><tspan fill="#ffffff">() {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">return new</tspan><tspan fill="#ffffff"> Queue(</tspan><tspan fill="#ce9178">"order.queue"</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+    <tspan x="76" dy="20" fill="#7ec8e3" font-weight="600">@Bean</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">TopicExchange </tspan><tspan fill="#ce9178">exchange</tspan><tspan fill="#ffffff">() {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">return new</tspan><tspan fill="#ffffff"> TopicExchange(</tspan><tspan fill="#ce9178">"orders"</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Left: Producer code -->
+  <text x="60" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">② 메시지 발행</text>
+
+  <rect x="60" y="314" width="360" height="138" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Autowired</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">RabbitTemplate </tspan><tspan fill="#ce9178">rabbit</tspan><tspan fill="#ffffff">;</tspan>
+    <tspan x="76" dy="20" fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">send</tspan><tspan fill="#ffffff">(OrderEvent e) {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  rabbit.</tspan><tspan fill="#ce9178">convertAndSend</tspan><tspan fill="#ffffff">(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    </tspan><tspan fill="#ce9178">"orders"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"order.created"</tspan><tspan fill="#ffffff">, e);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Right: Consumer code -->
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">③ 메시지 소비 (@RabbitListener)</text>
+
+  <rect x="460" y="116" width="360" height="158" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" dy="0" fill="#7ec8e3" font-weight="600">@Component</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> OrderConsumer {</tspan>
+    <tspan x="476" dy="20" fill="#7ec8e3" font-weight="600">  @RabbitListener</tspan><tspan fill="#ffffff">(</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    queues = </tspan><tspan fill="#ce9178">"order.queue"</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">  void</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">handle</tspan><tspan fill="#ffffff">(OrderEvent e) {</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    process(e);</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Right: Retry config -->
+  <text x="460" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">④ Retry 설정 (application.yml)</text>
+
+  <rect x="460" y="314" width="360" height="138" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="334" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" dy="0" fill="#ce9178">spring.rabbitmq</tspan><tspan fill="#ffffff">:</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  </tspan><tspan fill="#ce9178">host</tspan><tspan fill="#ffffff">: localhost</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  </tspan><tspan fill="#ce9178">listener.simple</tspan><tspan fill="#ffffff">:</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    </tspan><tspan fill="#ce9178">retry.enabled</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    </tspan><tspan fill="#ce9178">retry.max-attempts</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#b5cea8">3</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    </tspan><tspan fill="#ce9178">acknowledge-mode</tspan><tspan fill="#ffffff">: manual</tspan>
+  </text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="472" width="760" height="16" rx="4" fill="none"/>
+  <text x="440" y="484" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">acknowledge-mode: manual → channel.basicAck() / basicNack() 직접 호출 필요</text>
+</svg>

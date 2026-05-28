@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JUnit 5 + AssertJ 실전 코드</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">@ParameterizedTest · 예외 검증 · 소프트 단언</text>
+
+  <!-- Left: Parameterized test -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">① @ParameterizedTest + @CsvSource</text>
+
+  <rect x="60" y="116" width="380" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@ParameterizedTest</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">@CsvSource</tspan><tspan fill="#ffffff">({</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#ce9178">"CREATED, true"</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#ce9178">"CANCELLED, false"</tspan><tspan fill="#ffffff">,</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#ce9178">"COMPLETED, true"</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">})</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> isActive(String status, </tspan><tspan fill="#7ec8e3" font-weight="600">boolean</tspan><tspan fill="#ffffff"> expected) {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  assertThat(Order.isActive(status))</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    .isEqualTo(expected);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Right: Exception assertion -->
+  <text x="460" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">② 예외 검증</text>
+
+  <rect x="460" y="116" width="380" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" dy="0" fill="#7ec8e3" font-weight="600">@Test</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> throwsWhenNotFound() {</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">  // assertThrows</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  assertThatThrownBy(() -&gt;</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">      orderService.find(</tspan><tspan fill="#b5cea8">-1L</tspan><tspan fill="#ffffff">))</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    .isInstanceOf(OrderNotFoundException.</tspan><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    .hasMessageContaining(</tspan><tspan fill="#ce9178">"not found"</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    .hasFieldOrPropertyWithValue(</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">        </tspan><tspan fill="#ce9178">"orderId"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">-1L</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Bottom left: Soft assertions -->
+  <text x="60" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">③ SoftAssertions — 모두 모아 실패</text>
+
+  <rect x="60" y="320" width="380" height="148" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Test</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> multipleAssertions() {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  Order o = orderService.find(</tspan><tspan fill="#b5cea8">1L</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  SoftAssertions.assertSoftly(softly -&gt; {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    softly.assertThat(o.getStatus())</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">          .isEqualTo(</tspan><tspan fill="#ce9178">"CREATED"</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    softly.assertThat(o.getAmount())</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">          .isGreaterThan(BigDecimal.ZERO);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  });</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Bottom right: @Nested -->
+  <text x="460" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">④ @Nested — 시나리오 구조화</text>
+
+  <rect x="460" y="320" width="380" height="148" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" dy="0" fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> OrderServiceTest {</tspan>
+    <tspan x="476" dy="22" fill="#7ec8e3" font-weight="600">  @Nested</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">  class</tspan><tspan fill="#ffffff"> WhenPlacing {</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">@Test</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> success() {}</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">@Test</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> failsWhenOutOfStock() {}</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="476" dy="22" fill="#7ec8e3" font-weight="600">  @Nested</tspan>
+    <tspan x="476" dy="18" fill="#7ec8e3" font-weight="600">  class</tspan><tspan fill="#ffffff"> WhenCancelling {</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">@Test</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> refundIssued() {}</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  }</tspan>
+  </text>
+
+  <text x="440" y="486" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">SoftAssertions: 첫 번째 실패에서 멈추지 않고 모든 단언을 평가 후 한 번에 보고</text>
+</svg>

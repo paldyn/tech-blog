@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Spring EDA 구현 — 이벤트 발행·처리·아웃박스</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">ApplicationEvent · @EventListener · Outbox Pattern</text>
+
+  <!-- Left: Event class + publisher -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">① 이벤트 클래스 &amp; 발행</text>
+
+  <rect x="60" y="116" width="370" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#9aa4b8">// 이벤트 정의</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">public record</tspan><tspan fill="#ffffff"> OrderCreatedEvent(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    Long orderId, String status) {}</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">// 이벤트 발행</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">@Service</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> OrderService {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">final</tspan><tspan fill="#ffffff"> ApplicationEventPublisher pub;</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> place(Order o) {</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">    save(o); pub.publishEvent(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> OrderCreatedEvent(o.getId(),</tspan><tspan fill="#ce9178">"CREATED"</tspan><tspan fill="#ffffff">));</tspan>
+  </text>
+
+  <!-- Right: Listener -->
+  <text x="450" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">② 이벤트 리스너</text>
+
+  <rect x="450" y="116" width="370" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="466" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="466" dy="0" fill="#7ec8e3" font-weight="600">@Component</tspan>
+    <tspan x="466" dy="18" fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> NotificationHandler {</tspan>
+    <tspan x="466" dy="22" fill="#7ec8e3" font-weight="600">  @EventListener</tspan>
+    <tspan x="466" dy="18" fill="#9aa4b8">  // 동기 처리 (기본)</tspan>
+    <tspan x="466" dy="18" fill="#7ec8e3" font-weight="600">  void</tspan><tspan fill="#ffffff"> onOrder(OrderCreatedEvent e) {</tspan>
+    <tspan x="466" dy="18" fill="#ffffff">    notifySms(e.orderId());</tspan>
+    <tspan x="466" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="466" dy="22" fill="#7ec8e3" font-weight="600">  @Async</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">@EventListener</tspan>
+    <tspan x="466" dy="18" fill="#9aa4b8">  // 비동기 처리</tspan>
+    <tspan x="466" dy="18" fill="#7ec8e3" font-weight="600">  void</tspan><tspan fill="#ffffff"> onOrderAsync(OrderCreatedEvent e) {}</tspan>
+  </text>
+
+  <!-- Bottom left: TransactionalEventListener -->
+  <text x="60" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">③ 트랜잭션 완료 후 이벤트</text>
+
+  <rect x="60" y="318" width="370" height="134" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@TransactionalEventListener</tspan><tspan fill="#ffffff">(</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  phase = </tspan><tspan fill="#ce9178">AFTER_COMMIT</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="76" dy="18" fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> afterCommit(OrderCreatedEvent e) {</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">  // DB commit 이후 실행</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">  // 메시지 브로커 발행 적합</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  messageBroker.publish(e);</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Bottom right: Outbox pattern -->
+  <text x="450" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">④ Outbox 패턴 (At-Least-Once)</text>
+
+  <rect x="450" y="318" width="370" height="134" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="466" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="466" dy="0" fill="#9aa4b8">// 1. 비즈니스 + 아웃박스 저장 (동일 TX)</tspan>
+    <tspan x="466" dy="18" fill="#ffffff">orderRepo.save(order);</tspan>
+    <tspan x="466" dy="18" fill="#ffffff">outboxRepo.save(</tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> OutboxEvent(e));</tspan>
+    <tspan x="466" dy="20" fill="#9aa4b8">// 2. 폴링 발행자 (별도 스레드)</tspan>
+    <tspan x="466" dy="18" fill="#7ec8e3" font-weight="600">@Scheduled</tspan><tspan fill="#ffffff">(fixedDelay = </tspan><tspan fill="#b5cea8">1000</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="466" dy="18" fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> relay() {</tspan>
+    <tspan x="466" dy="18" fill="#ffffff">  outbox.findUnpublished().forEach(</tspan>
+    <tspan x="466" dy="18" fill="#ffffff">    e -&gt; { broker.send(e); e.markSent(); });</tspan>
+  </text>
+
+  <!-- Bottom note -->
+  <text x="440" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">Outbox: DB와 메시지 브로커 간 원자성 보장 — 2PC 없이 At-Least-Once 달성</text>
+</svg>

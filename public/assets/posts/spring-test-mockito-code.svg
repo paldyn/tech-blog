@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Mockito 실전 패턴</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">BDDMockito · ArgumentCaptor · @Spy · 예외 스터빙</text>
+
+  <!-- Left: BDDMockito -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">① BDDMockito (권장 스타일)</text>
+
+  <rect x="60" y="116" width="380" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#9aa4b8">// BDDMockito static import</tspan>
+    <tspan x="76" dy="18" fill="#9aa4b8">// import static o.mockito.BDDMockito.*;</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">// Given — 스터빙</tspan>
+    <tspan x="76" dy="18" fill="#ce9178">given</tspan><tspan fill="#ffffff">(orderRepo.findById(</tspan><tspan fill="#b5cea8">1L</tspan><tspan fill="#ffffff">))</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  .willReturn(Optional.of(order));</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">// When — 실행</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">Order result = sut.find(</tspan><tspan fill="#b5cea8">1L</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">// Then — 검증</tspan>
+    <tspan x="76" dy="18" fill="#ce9178">then</tspan><tspan fill="#ffffff">(orderRepo).should().</tspan><tspan fill="#ce9178">findById</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">1L</tspan><tspan fill="#ffffff">);</tspan>
+  </text>
+
+  <!-- Right: Exception stubbing -->
+  <text x="460" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">② 예외 스터빙 &amp; void 메서드</text>
+
+  <rect x="460" y="116" width="380" height="164" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" dy="0" fill="#9aa4b8">// 예외 던지기</tspan>
+    <tspan x="476" dy="18" fill="#ce9178">given</tspan><tspan fill="#ffffff">(repo.findById(</tspan><tspan fill="#b5cea8">-1L</tspan><tspan fill="#ffffff">))</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  .willThrow(</tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> NotFoundException());</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">// void 메서드 스터빙</tspan>
+    <tspan x="476" dy="18" fill="#ce9178">willDoNothing</tspan><tspan fill="#ffffff">().</tspan><tspan fill="#ce9178">given</tspan><tspan fill="#ffffff">(emailSvc)</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  .send(</tspan><tspan fill="#ce9178">anyString</tspan><tspan fill="#ffffff">());</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">// void 메서드 예외</tspan>
+    <tspan x="476" dy="18" fill="#ce9178">willThrow</tspan><tspan fill="#ffffff">(IOException.</tspan><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff">)</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  .</tspan><tspan fill="#ce9178">given</tspan><tspan fill="#ffffff">(emailSvc).send(</tspan><tspan fill="#ce9178">any</tspan><tspan fill="#ffffff">());</tspan>
+  </text>
+
+  <!-- Bottom left: ArgumentCaptor -->
+  <text x="60" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">③ ArgumentCaptor</text>
+
+  <rect x="60" y="320" width="380" height="148" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="76" dy="0" fill="#7ec8e3" font-weight="600">@Captor</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">ArgumentCaptor&lt;Order&gt; captor;</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">// 실행 후 캡처</tspan>
+    <tspan x="76" dy="18" fill="#ce9178">then</tspan><tspan fill="#ffffff">(orderRepo).should()</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">  .save(captor.capture());</tspan>
+    <tspan x="76" dy="22" fill="#9aa4b8">// 캡처된 값 단언</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">Order saved = captor.getValue();</tspan>
+    <tspan x="76" dy="18" fill="#ffffff">assertThat(saved.getStatus()).isEqualTo(</tspan><tspan fill="#ce9178">"CREATED"</tspan><tspan fill="#ffffff">);</tspan>
+  </text>
+
+  <!-- Bottom right: Spy -->
+  <text x="460" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">④ @Spy — 실제 객체 일부 스터빙</text>
+
+  <rect x="460" y="320" width="380" height="148" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan x="476" dy="0" fill="#7ec8e3" font-weight="600">@Spy</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">OrderValidator validator =</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> OrderValidator();</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">// 일부 메서드만 스터빙</tspan>
+    <tspan x="476" dy="18" fill="#ce9178">doReturn</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">).when(validator)</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">  .isSpecialCase(</tspan><tspan fill="#ce9178">any</tspan><tspan fill="#ffffff">());</tspan>
+    <tspan x="476" dy="22" fill="#9aa4b8">// 나머지 메서드는 실제 구현 실행</tspan>
+    <tspan x="476" dy="18" fill="#ffffff">validator.validate(order);</tspan>
+  </text>
+
+  <text x="440" y="488" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">@Spy는 실제 구현이 있는 경우에만 — 인터페이스에는 @Mock 사용</text>
+</svg>
