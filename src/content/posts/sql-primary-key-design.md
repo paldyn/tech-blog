@@ -1,164 +1,183 @@
 ---
-title: "기본 키(Primary Key) 설계 — 자연 키 vs 대리 키, 복합 키"
-description: "자연 키와 대리 키의 차이, BIGINT vs UUID vs ULID vs Snowflake ID 선택 기준, 복합 기본 키의 장단점, B-Tree 단편화 문제를 예제와 함께 완전 정복합니다."
+title: "기본 키 설계 전략 — 자연키 vs 대리키, UUID vs BIGINT"
+description: "자연 키와 대리 키의 차이, BIGINT AUTO INCREMENT와 UUID의 장단점, 그리고 복합 기본 키 설계 기준을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-28"
+pubDate: "2026-05-29"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
-tags: ["기본키", "PrimaryKey", "자연키", "대리키", "UUID", "ULID", "Snowflake", "복합키", "B-Tree단편화"]
+tags: ["SQL", "기본 키", "PK 설계", "UUID", "BIGINT", "자연키"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-constraints-not-null-default-check/)에서 NOT NULL, DEFAULT, CHECK 제약조건을 살펴봤다. 이번 글에서는 테이블 설계에서 가장 중요한 결정 중 하나인 **기본 키(Primary Key) 설계**를 다룬다. 단순히 "고유 식별자"를 넘어, 성능과 유지보수성에 직결되는 선택이다.
+[지난 글](/posts/sql-constraints-not-null-default-check/)에서 NOT NULL·DEFAULT·CHECK 제약조건과 NULL의 3값 논리를 살펴봤습니다. 이번에는 테이블 설계에서 가장 중요한 결정 중 하나인 **기본 키(Primary Key) 설계 전략**을 다룹니다. 잘못된 PK 선택은 나중에 마이그레이션 비용이 매우 크므로 처음부터 신중하게 결정해야 합니다.
 
 ## 기본 키의 조건
 
-기본 키가 만족해야 하는 세 가지 조건:
+기본 키는 두 가지 성질을 반드시 만족해야 합니다.
 
-1. **유일성(Uniqueness)**: 같은 값을 가진 행이 두 개 이상 존재할 수 없다
-2. **NULL 불가**: 기본 키 컬럼에는 NULL이 들어갈 수 없다
-3. **최소성(Minimality)**: 복합 키라면, 일부 컬럼을 제거해도 유일성이 유지되면 안 된다
+1. **유일성(Uniqueness)**: 테이블 내 모든 행에서 값이 달라야 합니다.
+2. **NOT NULL**: 기본 키 컬럼은 NULL을 가질 수 없습니다.
 
 ```sql
--- 기본 키 선언 방식 1: 인라인
-CREATE TABLE orders (
-    order_id BIGINT NOT NULL PRIMARY KEY,
-    ...
-);
-
--- 방식 2: 테이블 제약 (복합 키 필수)
-CREATE TABLE order_items (
-    order_id    BIGINT NOT NULL,
-    product_id  BIGINT NOT NULL,
-    quantity    INT    NOT NULL DEFAULT 1,
-    PRIMARY KEY (order_id, product_id)  -- 복합 PK
+-- 기본 키 선언의 효과
+-- 1. UNIQUE 인덱스 자동 생성
+-- 2. NOT NULL 강제
+-- 3. 외래 키의 참조 대상으로 사용 가능
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,  -- UNIQUE + NOT NULL 자동 적용
+    name       VARCHAR(200) NOT NULL
 );
 ```
 
 ## 자연 키 vs 대리 키
 
-![자연 키 vs 대리 키 비교](/assets/posts/sql-primary-key-natural-vs-surrogate.svg)
+![기본 키 설계 전략 비교](/assets/posts/sql-primary-key-design-comparison.svg)
 
-**자연 키(Natural Key)**는 비즈니스 세계에 실제로 존재하는 식별자다. 주민등록번호, 사원번호, 이메일 주소, ISBN이 그 예다.
+### 자연 키(Natural Key)
 
-**대리 키(Surrogate Key)**는 시스템이 자동으로 생성하는 의미 없는 식별자다. 순차 정수(AUTO_INCREMENT), UUID, ULID 등이 해당된다.
-
-### 왜 대리 키가 권장되는가?
+업무적으로 의미가 있는 값을 PK로 사용합니다.
 
 ```sql
--- 자연 키의 문제: 변경 시 CASCADE 전파
--- 사원번호 체계가 변경되면...
-UPDATE employees SET emp_no = 'EMP-2026-001' WHERE emp_no = 'EMP-001';
--- → 이 emp_no를 FK로 참조하는 모든 테이블에 연쇄 UPDATE 필요
--- → 잠금 경합, 성능 저하, 데이터 정합성 위험
+-- 자연 키 예시: 국가 코드 (변경 가능성 낮음)
+CREATE TABLE countries (
+    country_code CHAR(2)     PRIMARY KEY,  -- 'KR', 'US', 'JP'
+    name         VARCHAR(100) NOT NULL
+);
 
--- 대리 키의 해결책: 비즈니스 변경과 무관
--- emp_id(BIGINT)는 절대 바뀌지 않음
--- emp_no(사원번호)는 UNIQUE로 별도 관리
-CREATE TABLE employees (
-    emp_id  BIGINT  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    emp_no  VARCHAR(20) NOT NULL UNIQUE,  -- 자연 키를 UNIQUE로 별도 관리
-    name    VARCHAR(100) NOT NULL
+-- 자연 키 예시: 이메일 (변경 가능 → 나중에 문제)
+-- ✗ 권장하지 않음
+CREATE TABLE users (
+    email    VARCHAR(320) PRIMARY KEY,
+    username VARCHAR(50)  NOT NULL
 );
 ```
 
-## 대리 키 전략 비교
+자연 키는 값이 변경될 때 그 키를 참조하는 모든 외래 키도 함께 변경해야 하는 부담이 있습니다. 이메일이나 전화번호 같은 변경 가능한 값은 자연 키로 피하는 것이 좋습니다.
 
-![대리 키 전략 비교](/assets/posts/sql-primary-key-strategies.svg)
+### 대리 키(Surrogate Key) — BIGINT
 
-### BIGINT (순차 정수) — 단일 DB의 최선택
-
-```sql
--- PostgreSQL
-emp_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-
--- MySQL
-emp_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
-
--- Oracle
-emp_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-
--- SQL Server
-emp_id BIGINT IDENTITY(1,1) PRIMARY KEY
-```
-
-BIGINT는 약 922경(9.2 × 10^18)까지 지원해 사실상 고갈 위험이 없다. JOIN 성능이 UUID보다 훨씬 빠르고, 저장 공간도 8 bytes로 효율적이다.
-
-### UUID v4 — 분산 환경의 선택, 단 단편화 주의
+DB가 자동으로 생성하는 순차 숫자 ID입니다. 가장 일반적인 선택입니다.
 
 ```sql
--- PostgreSQL: 내장 함수
-emp_id UUID DEFAULT gen_random_uuid() PRIMARY KEY
-
--- MySQL 8.0+
-emp_id CHAR(36) DEFAULT (UUID()) PRIMARY KEY
--- 또는 BINARY(16)에 바이너리로 저장 (성능 우수)
-emp_id BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)) PRIMARY KEY
-```
-
-**UUID v4의 B-Tree 단편화 문제**: UUID v4는 완전 랜덤이라 새 UUID가 기존 B-Tree의 임의 위치에 삽입된다. MySQL InnoDB의 클러스터드 인덱스는 PK 순서로 데이터를 저장하기 때문에, 랜덤 UUID는 **페이지 분할(Page Split)**을 빈번하게 일으켜 INSERT 성능을 떨어뜨린다.
-
-### UUID v7 / ULID — 분산 + 정렬 가능
-
-```sql
--- UUID v7: 앞 48비트가 타임스탬프 → 시간순 정렬 가능
--- PostgreSQL 17+: gen_random_uuid() 대신 UUID v7 지원 예정
--- 현재는 확장 기능 사용
-
--- ULID 예시 (Universally Unique Lexicographically Sortable Identifier)
--- 26자 Base32: 01ARZ3NDEKTSV4RRFFQ69G5FAV
--- 앞 10자 = 타임스탬프, 뒤 16자 = 랜덤
-```
-
-UUID v7과 ULID는 앞부분이 타임스탬프로 시작해 **생성 시간순으로 정렬**된다. B-Tree 단편화 문제가 UUID v4보다 훨씬 적다.
-
-## 복합 기본 키 — 관계 테이블의 표준 패턴
-
-```sql
--- Many-to-Many 중간 테이블은 복합 PK가 자연스럽다
-CREATE TABLE user_roles (
-    user_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
-    granted_at TIMESTAMPTZ DEFAULT NOW(),
-    PRIMARY KEY (user_id, role_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (role_id) REFERENCES roles(role_id)
+-- SQL:2003 표준 (PostgreSQL 10+, Oracle 12c+)
+CREATE TABLE orders (
+    order_id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_id INT   NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- 조회 패턴에 따라 인덱스 방향을 고려
--- (user_id, role_id): user_id로 자주 검색할 때 유리
--- 반대로 role_id 기준 검색이 많다면 별도 인덱스 추가
-CREATE INDEX idx_user_roles_role ON user_roles (role_id);
+-- MySQL / MariaDB
+CREATE TABLE orders (
+    order_id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT   NOT NULL
+);
+
+-- PostgreSQL 전통 방식 (내부적으로 SEQUENCE + DEFAULT)
+CREATE TABLE orders (
+    order_id   BIGSERIAL PRIMARY KEY,
+    customer_id INT NOT NULL
+);
 ```
 
-복합 PK에서는 **컬럼 순서가 성능에 영향**을 준다. 가장 자주 검색하는 조건의 컬럼을 앞에 배치한다.
+순차 BIGINT는 B-Tree 인덱스에 최적화되어 있고(항상 오른쪽 끝에 삽입), 크기가 작아(8 bytes) JOIN에서 빠릅니다. 단, 노출된 URL에서 `?id=1234` 같은 순번 예측이 가능하다는 보안 취약점이 있습니다.
 
-## 기본 키 선택 체크리스트
+### 대리 키 — UUID
 
-```text
-기본 키 설계 체크리스트:
-[ ] 대리 키(BIGINT/UUID) 사용 — 자연 키는 UNIQUE로 별도 관리
-[ ] 단일 DB → BIGINT AUTO_INCREMENT/IDENTITY
-[ ] 분산 시스템, 외부 노출 → UUID v7 또는 ULID
-[ ] MySQL InnoDB → UUID v4 사용 시 BINARY(16) 또는 UUID v7 권장
-[ ] 복합 PK → 자주 검색하는 컬럼을 앞에 배치
-[ ] PK 컬럼 이름: {테이블명}_id 규칙 통일 (팀 컨벤션)
+전 세계적으로 유일한 128비트 랜덤 ID입니다.
+
+```sql
+-- PostgreSQL: UUID v4 (랜덤)
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE sessions (
+    session_id UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id    BIGINT      NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- PostgreSQL 17+ / pgcrypto: UUID v7 (시간순, 인덱스 친화적)
+-- SELECT gen_random_uuid() -- v4
+-- uuidv7() 함수 (확장 필요)
+```
+
+UUID v4는 완전 랜덤이라 B-Tree 인덱스에서 **페이지 분열(page split)** 이 자주 발생해 삽입 성능이 나쁩니다. UUID v7이나 ULID는 앞부분에 타임스탬프가 들어가 시간순 정렬이 유지되어 이 문제를 해결합니다.
+
+![기본 키 정의 패턴 — DBMS별](/assets/posts/sql-primary-key-design-code.svg)
+
+## 복합 기본 키(Composite Primary Key)
+
+두 개 이상의 열을 합쳐 PK를 구성합니다. 연결 테이블(교차 테이블)에서 자주 사용됩니다.
+
+```sql
+-- 많이 쓰이는 패턴: user_id와 product_id 조합이 유일
+CREATE TABLE wishlist (
+    user_id    INT NOT NULL REFERENCES users(user_id),
+    product_id INT NOT NULL REFERENCES products(product_id),
+    added_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT pk_wishlist PRIMARY KEY (user_id, product_id)
+);
+
+-- 조회 시 두 컬럼 모두 WHERE에 사용해야 인덱스 효율적
+SELECT * FROM wishlist WHERE user_id = 123 AND product_id = 456;
+SELECT * FROM wishlist WHERE user_id = 123;  -- user_id가 앞에 있어 OK
+SELECT * FROM wishlist WHERE product_id = 456;  -- product_id만 쓰면 비효율적
+```
+
+복합 PK 대신 단순 대리 키 + UNIQUE 제약을 쓰는 방법도 있습니다.
+
+```sql
+-- 대안: 대리 키 + UNIQUE 제약
+CREATE TABLE wishlist (
+    id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id    INT NOT NULL REFERENCES users(user_id),
+    product_id INT NOT NULL REFERENCES products(product_id),
+    added_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_wishlist UNIQUE (user_id, product_id)
+);
+```
+
+## PK 선택 가이드
+
+| 상황 | 권장 PK |
+|------|---------|
+| 단일 DB, 내부 시스템 | `BIGINT GENERATED ALWAYS AS IDENTITY` |
+| 분산 DB, 마이크로서비스 | UUID v7 / ULID |
+| 공개 API (ID 노출 불가) | UUID v4 또는 v7 |
+| 작은 참조 테이블 (국가, 카테고리) | 자연 키(`CHAR(2)`, `VARCHAR(20)`) |
+| 다대다 연결 테이블 | 복합 PK 또는 대리 키 + UNIQUE |
+
+## 실수하기 쉬운 패턴
+
+```sql
+-- ✗ 이메일을 PK로 사용 — 변경 시 모든 FK 갱신 필요
+CREATE TABLE users (email VARCHAR(320) PRIMARY KEY);
+
+-- ✗ INT(4바이트)를 PK로 사용 — 20억건 초과 시 오버플로
+CREATE TABLE events (id INT PRIMARY KEY);  -- 대규모 로그 테이블에 위험
+
+-- ✓ 올바른 선택
+CREATE TABLE events (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+);
 ```
 
 ## 정리
 
-- **기본 키 조건**: 유일성, NOT NULL, 최소성
-- **대리 키 권장**: 비즈니스 변경에 무관, 성능 우수
-- **BIGINT**: 단일 DB에서 가장 빠른 선택
-- **UUID v4**: 분산 환경 안전하지만 B-Tree 단편화 주의 — MySQL InnoDB에서는 BINARY(16) 또는 UUID v7 사용
-- **UUID v7 / ULID**: 분산 + 정렬 가능 — UUID v4의 단편화 문제 해결
-- **복합 PK**: Many-to-Many 관계 테이블에서 사용, 컬럼 순서가 성능에 영향
+- PK는 유일성 + NOT NULL이 보장되어야 합니다.
+- 대부분의 경우 **`BIGINT GENERATED ALWAYS AS IDENTITY`** 가 가장 적합합니다.
+- 분산 환경이나 ID 노출을 피해야 한다면 **UUID v7** 또는 **ULID**를 사용합니다.
+- 자연 키는 변경 가능성이 없는 외부 표준 코드(ISO 국가 코드 등)에만 사용합니다.
+- 복합 PK에서는 열 순서가 인덱스 활용에 영향을 줍니다.
+
+이것으로 SQL 완전 정복 시리즈의 기초 10편을 마칩니다. 다음 편에서는 외래 키와 참조 무결성을 본격적으로 살펴봅니다.
 
 ---
 
-**지난 글:** [SQL 제약조건 — NOT NULL, DEFAULT, CHECK 완전 정복](/posts/sql-constraints-not-null-default-check/)
+**지난 글:** [NOT NULL·DEFAULT·CHECK 제약조건 완전 정복](/posts/sql-constraints-not-null-default-check/)
+
+**다음 글:** [외래 키와 참조 무결성 — ON DELETE·ON UPDATE 옵션](/posts/sql-foreign-key-referential-integrity/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,123 +1,115 @@
 ---
-title: "SQL의 역사와 표준 — SQL-86부터 SQL:2023까지"
-description: "SEQUEL에서 시작된 SQL의 탄생 배경, ANSI/ISO 표준 버전별 주요 기능, 그리고 Oracle·MySQL·PostgreSQL이 표준을 어떻게 확장·변형했는지 완전 정복합니다."
+title: "SQL 역사와 표준 — SQL-86부터 SQL:2023까지"
+description: "SQL의 탄생 배경부터 ISO 표준 SQL-86, SQL-92, SQL:1999, SQL:2003, SQL:2023까지의 진화를 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-28"
+pubDate: "2026-05-29"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
-tags: ["SQL역사", "SQL표준", "ANSI", "SQL-92", "SQL2003", "윈도우함수", "CTE", "SQL방언"]
+tags: ["SQL", "SQL 표준", "SQL 역사", "ANSI SQL"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-relational-model/)에서 관계형 모델의 수학적 기초를 다뤘다. 이번 글에서는 그 이론이 어떻게 실제 언어로 구현되었는지, SQL이 어떤 역사적 흐름을 거쳐 현재의 모습이 되었는지를 살펴본다.
+[지난 글](/posts/sql-relational-model/)에서 관계형 모델의 수학적 기반을 살펴봤습니다. 이번에는 그 이론이 어떻게 현실의 SQL 언어로 발전했는지, 표준화 역사를 짚어봅니다. "SQL:2003에서 생긴 기능"이라는 말을 종종 보게 되는데, 각 표준이 어떤 기능을 추가했는지 파악하면 문서를 읽을 때 맥락이 잡힙니다.
 
-## SQL의 탄생: SEQUEL에서 SQL로
+## 탄생: SEQUEL에서 SQL로
 
-1974년 IBM 연구소의 도널드 체임벌린(Donald D. Chamberlin)과 레이먼드 보이스(Raymond F. Boyce)는 코드의 관계형 모델을 구현하기 위한 언어 **SEQUEL(Structured English Query Language)**을 발표했다. 상표권 문제로 이름을 SQL(Structured Query Language)로 바꾸어 IBM의 시스템 R 프로젝트에 적용했다.
+1970년 IBM 연구소의 에드거 코드가 관계형 모델 논문을 발표한 뒤, IBM은 1973년부터 **System R**이라는 실험적 RDBMS를 개발하기 시작했습니다. 이 프로젝트에서 코드의 이론을 실제로 구현하는 질의 언어가 필요했고, 1974년 **SEQUEL(Structured English Query Language)** 이 만들어졌습니다. 상표권 문제로 이름이 **SQL**로 바뀌었고, 이것이 오늘날 우리가 쓰는 SQL의 기원입니다.
 
-1979년 오라클(당시 Relational Software Inc.)이 최초의 상용 SQL 데이터베이스를 출시했고, IBM도 1981년 SQL/DS, 1983년 DB2를 릴리즈하며 SQL은 관계형 데이터베이스의 사실상 표준 언어로 자리 잡았다.
+![SQL 표준 역사 타임라인](/assets/posts/sql-history-and-standard-timeline.svg)
+
+## 표준화: ANSI/ISO SQL
+
+SQL이 여러 제품에 구현되면서 방언(dialect) 차이가 커졌고, 1986년 **ANSI**가, 이듬해 **ISO**가 SQL 표준을 발표했습니다.
+
+### SQL-86 (SQL-87)
+최초 표준. 기본 SELECT·INSERT·UPDATE·DELETE, 기본 조인, 간단한 서브쿼리를 포함했습니다. 지금 기준으로는 매우 기능이 적었습니다.
+
+### SQL-92 (SQL2)
+가장 많이 인용되는 표준. 현재도 "SQL-92 호환"이라는 표현을 씁니다.
 
 ```sql
--- SQL의 핵심 철학: 선언형(Declarative)
--- "어떻게"가 아닌 "무엇을"만 기술
-SELECT dept, AVG(salary) AS avg_sal
-FROM   employees
-WHERE  hire_date >= '2020-01-01'
-GROUP  BY dept
-HAVING AVG(salary) > 50000;
+-- SQL-92에서 추가된 OUTER JOIN 예시
+SELECT c.name, o.amount
+FROM   customers c
+LEFT OUTER JOIN orders o ON c.customer_id = o.customer_id;
 ```
 
-## ANSI/ISO SQL 표준 역사
+SQL-92 주요 추가 사항: `OUTER JOIN`, `CASE` 표현식, `CAST()`, 다양한 문자열 함수, 서브쿼리 확장, 스키마 정보 뷰(`INFORMATION_SCHEMA`).
 
-![SQL 표준 역사 타임라인](/assets/posts/sql-history-timeline.svg)
-
-### SQL-86 (SQL1): 첫 번째 ANSI 표준
-
-1986년 ANSI가 처음으로 SQL을 표준으로 채택했다. 기본적인 DDL(`CREATE TABLE`, `DROP TABLE`)과 DML(`SELECT`, `INSERT`, `UPDATE`, `DELETE`)이 정의되었다. 당시 표준은 매우 제한적이어서 각 벤더가 자체 확장을 추가했고, 방언(Dialect) 문제가 심각해졌다.
-
-### SQL-92 (SQL2): 현대 SQL의 기준선
-
-1992년 개정된 표준이 사실상 현대 SQL의 기준선이다. `OUTER JOIN`, `CASE` 표현식, `CAST`, 서브쿼리 표준화, 트랜잭션 격리 수준이 이때 정의되었다. 대부분의 DBMS가 SQL-92를 기본 지원한다.
-
-### SQL:1999 (SQL3): 절차적 확장과 CTE
+### SQL:1999 (SQL3)
+객체-관계형 확장과 함께 개발자들이 많이 쓰는 기능이 다수 추가되었습니다.
 
 ```sql
--- SQL:1999에서 추가된 WITH 절(비재귀 CTE)
-WITH dept_stats AS (
-    SELECT dept_id, AVG(salary) AS avg_sal
+-- SQL:1999에서 추가된 재귀 CTE
+WITH RECURSIVE org_tree AS (
+    SELECT employee_id, manager_id, name, 0 AS depth
     FROM   employees
-    GROUP  BY dept_id
+    WHERE  manager_id IS NULL
+    UNION ALL
+    SELECT e.employee_id, e.manager_id, e.name, t.depth + 1
+    FROM   employees e
+    JOIN   org_tree t ON e.manager_id = t.employee_id
 )
-SELECT d.dept_name, s.avg_sal
-FROM   departments d
-JOIN   dept_stats s ON d.dept_id = s.dept_id;
+SELECT * FROM org_tree ORDER BY depth;
 ```
 
-재귀 CTE, BOOLEAN 타입, 사용자 정의 타입(UDT), 트리거, OLAP 확장이 추가되었다. 또한 객체지향 개념이 부분적으로 도입되었다.
+SQL:1999 주요 추가 사항: `WITH RECURSIVE`(재귀 CTE), `ROLLUP`/`CUBE`/`GROUPING SETS`, 트리거, 사용자 정의 타입(UDT), 저장 프로시저 표준.
 
-### SQL:2003: 윈도우 함수의 표준화
+### SQL:2003
+윈도우 함수와 MERGE가 이 버전에서 표준화되었습니다.
 
 ```sql
--- SQL:2003 윈도우 함수
-SELECT name, dept, salary,
-       RANK() OVER (PARTITION BY dept ORDER BY salary DESC) AS dept_rank,
-       SUM(salary) OVER (ORDER BY hire_date ROWS UNBOUNDED PRECEDING) AS cum_sal
+-- SQL:2003에서 추가된 윈도우 함수
+SELECT name, salary,
+       RANK() OVER (PARTITION BY dept_id ORDER BY salary DESC) AS rnk
 FROM   employees;
 ```
 
-`OVER()` 절을 이용한 윈도우 함수, `MERGE` 문(UPSERT), `SEQUENCE`, XML 타입이 이 버전에서 정의되었다. 윈도우 함수는 현재 분석 쿼리에서 가장 중요한 기능 중 하나다.
+SQL:2003 주요 추가 사항: `OVER (PARTITION BY ...)` 윈도우 함수, `MERGE`(UPSERT), `IDENTITY` 열, XML 타입.
 
-### SQL:2016과 SQL:2023: 현대적 확장
-
-![SQL 버전별 주요 기능](/assets/posts/sql-history-standards-table.svg)
-
-SQL:2016은 JSON 처리 함수(`JSON_VALUE`, `JSON_QUERY`, `JSON_TABLE`)를 표준화하여 NoSQL과의 경계를 일부 허물었다. SQL:2023은 그래프 쿼리 확장(GQL), `ANY_VALUE` 집계 함수, `UNIQUE NULLS DISTINCT` 등 최신 데이터 처리 패턴을 반영했다.
-
-## 표준과 방언(Dialect)의 현실
-
-표준이 있어도 각 DBMS는 독자적인 확장을 제공한다. 이를 **SQL 방언(Dialect)**이라 한다.
-
-| 기능 | SQL 표준 | Oracle | PostgreSQL | MySQL |
-|------|---------|--------|-----------|-------|
-| 페이지 처리 | `FETCH FIRST n ROWS` | `ROWNUM` / `FETCH` | `LIMIT/OFFSET` | `LIMIT` |
-| 문자열 연결 | `\|\|` | `\|\|` | `\|\|` | `CONCAT()` |
-| 날짜 차이 | `TIMESTAMPDIFF` | `날짜 빼기` | `DATE_PART` | `DATEDIFF` |
-| 자동 증가 | `GENERATED ALWAYS AS IDENTITY` | `SEQUENCE` + 기본값 | `SERIAL` / `IDENTITY` | `AUTO_INCREMENT` |
-| NULL 처리 | `COALESCE` | `NVL` / `COALESCE` | `COALESCE` | `IFNULL` / `COALESCE` |
+### SQL:2016 ~ SQL:2023
 
 ```sql
--- 동일한 결과, 다른 문법 (상위 5개 조회)
--- SQL 표준
-SELECT * FROM employees FETCH FIRST 5 ROWS ONLY;
--- MySQL/PostgreSQL
-SELECT * FROM employees LIMIT 5;
--- Oracle 구버전
-SELECT * FROM employees WHERE ROWNUM <= 5;
+-- SQL:2016 JSON 경로 함수 (PostgreSQL 구현 예)
+SELECT json_column -> 'address' ->> 'city' AS city
+FROM   customers;
 ```
 
-## 실무에서 알아야 할 것
+- **SQL:2016**: JSON 지원(`JSON_VALUE`, `JSON_QUERY`, `JSON_TABLE`), 행 패턴 매칭(`MATCH_RECOGNIZE`)
+- **SQL:2019**: 멀티 디멘셔널 배열
+- **SQL:2023**: 그래프 테이블(Property Graph), `LISTAGG`, `GREATEST`/`LEAST` 표준화
 
-1. **SQL-92 + SQL:1999(CTE) + SQL:2003(윈도우 함수)**를 마스터하면 현업 대부분의 쿼리를 작성할 수 있다
-2. 사용하는 DBMS의 공식 문서에서 해당 버전이 어느 SQL 표준을 지원하는지 확인한다
-3. 팀 내 다수의 DBMS를 사용한다면 가능한 한 표준 문법을 우선 사용해 이식성을 높인다
-4. 방언을 써야 할 때는 주석으로 명시하거나 추상화 레이어(ORM)를 활용한다
+![주요 RDBMS 표준 준수 현황](/assets/posts/sql-history-and-standard-vendors.svg)
+
+## 방언(Dialect)의 존재
+
+표준이 있다고 모든 제품이 완전히 같지는 않습니다.
+
+| 제품 | 방언 특성 | 비표준 예시 |
+|------|-----------|-------------|
+| Oracle | PL/SQL, 독자 함수 | `ROWNUM`, `CONNECT BY` |
+| PostgreSQL | 표준 준수율 높음 | 배열, JSONB, `COPY` |
+| MySQL | 일부 표준 미준수 | `LIMIT n`, `GROUP BY` 완화 |
+| SQL Server | T-SQL | `TOP n`, `APPLY` |
+
+이 시리즈는 **표준 SQL을 기준**으로 설명하고, 제품별 차이는 Oracle·PostgreSQL·MySQL·SQL Server 섹션에서 별도로 다룹니다.
 
 ## 정리
 
-- SQL은 1974년 IBM의 **SEQUEL**에서 출발, 1986년 ANSI 표준화
-- **SQL-92**: JOIN·서브쿼리 표준화 — 현재 기준선
-- **SQL:1999**: CTE(WITH 절), 재귀 쿼리 — 복잡한 계층 쿼리 가능
-- **SQL:2003**: 윈도우 함수(OVER/PARTITION BY) — 분석 쿼리 혁신
-- **SQL:2016+**: JSON, 그래프 — 현대 데이터 형식 지원
-- 표준과 방언은 공존하며, DBMS마다 지원 범위가 다르다
+- SQL은 1974년 IBM의 SEQUEL에서 출발해 1986년 ANSI/ISO 표준이 되었습니다.
+- SQL-92는 현재도 기준점으로 인용됩니다.
+- SQL:1999에서 재귀 CTE, SQL:2003에서 윈도우 함수·MERGE가 표준화되었습니다.
+- 모든 주요 RDBMS는 표준 핵심을 구현하되, 고유 방언과 확장 기능을 가집니다.
+
+다음 글에서는 클라이언트가 DBMS와 통신하는 방식, 즉 **클라이언트-서버 프로토콜**을 살펴봅니다.
 
 ---
 
-**지난 글:** [관계형 모델 이론 — 릴레이션, 튜플, 속성의 수학적 기초](/posts/sql-relational-model/)
+**지난 글:** [관계형 모델 이론 — 릴레이션, 튜플, 관계 대수](/posts/sql-relational-model/)
 
-**다음 글:** [DB 클라이언트-서버 프로토콜 — 연결부터 결과 반환까지](/posts/sql-client-server-protocol/)
+**다음 글:** [클라이언트-서버 프로토콜 — SQL 실행의 여정](/posts/sql-client-server-protocol/)
 
 <br>
 읽어주셔서 감사합니다. 😊

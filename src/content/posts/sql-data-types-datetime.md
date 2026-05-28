@@ -1,195 +1,169 @@
 ---
-title: "SQL 날짜/시간 데이터 타입 — DATE, TIMESTAMP, 시간대 처리"
-description: "DATE, TIME, TIMESTAMP, TIMESTAMPTZ, DATETIME, INTERVAL의 차이, MySQL 2038년 문제, 시간대 저장 전략, 날짜 연산 함수 패턴을 완전 정복합니다."
+title: "SQL 데이터 타입 — 날짜와 시간"
+description: "SQL의 DATE·TIME·TIMESTAMP·INTERVAL 타입과 타임존 처리 방법, TIMESTAMPTZ vs TIMESTAMP의 차이를 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-28"
+pubDate: "2026-05-29"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
-tags: ["DATE", "TIMESTAMP", "TIMESTAMPTZ", "시간대", "2038년문제", "날짜타입", "INTERVAL", "UTC"]
+tags: ["SQL", "데이터 타입", "TIMESTAMP", "DATE", "타임존"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 숫자·문자·논리 타입을 다뤘다. 이번 글에서는 날짜와 시간 타입을 집중적으로 살펴본다. 날짜/시간은 타입 선택을 잘못하면 **시간대 버그, 2038년 오버플로우, 써머타임 오류** 같은 숨겨진 문제가 생기는 영역이다.
+[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 숫자·문자열·불리언 타입을 살펴봤습니다. 이번에는 날짜와 시간 타입을 다룹니다. 시간 데이터는 타임존 처리를 잘못하면 글로벌 서비스에서 심각한 버그가 생기므로 특히 주의가 필요합니다.
 
-## 날짜/시간 타입 전체 비교
+## 기본 타입 네 가지
 
-![날짜/시간 타입 비교](/assets/posts/sql-data-types-datetime-comparison.svg)
+![SQL 날짜·시간 타입 비교](/assets/posts/sql-data-types-datetime-types.svg)
 
-각 타입을 언제 써야 하는지 직관적으로 정리하면:
+| 타입 | 저장 내용 | 크기 | 사용 예 |
+|------|-----------|------|---------|
+| `DATE` | 연-월-일 | 3~4 bytes | 생일, 입사일, 만료일 |
+| `TIME` | 시-분-초(±마이크로초) | 3~8 bytes | 영업 시간, 알람 |
+| `TIMESTAMP` | 날짜+시간 (타임존 없음) | 8 bytes | 로컬 기록 |
+| `TIMESTAMPTZ` | 날짜+시간 (UTC 내부 저장) | 8 bytes | 이벤트 로그, 생성 시각 |
 
-- **DATE**: 날짜만 필요할 때 (생년월일, 계약일, 공휴일)
-- **TIME**: 시간만 필요할 때 (영업 시작 시간, 알람)
-- **TIMESTAMP**: 이벤트 발생 시각 (created_at, updated_at) — UTC 저장
-- **TIMESTAMPTZ** (PostgreSQL): 시간대 정보 포함 — 다국가 서비스에서 권장
-- **DATETIME** (MySQL): 시간대 없는 로컬 날짜+시간
-- **INTERVAL**: 기간 표현 (30일 후, 3개월)
+## DATE
 
-## Oracle의 DATE 타입 함정
-
-Oracle의 `DATE` 타입은 SQL 표준과 다르다. Oracle `DATE`는 **년월일 + 시분초**를 포함한다. 날짜만 저장하려면 시분초가 `00:00:00`인 DATE를 사용하거나, 비교 시 `TRUNC()` 함수로 시간 부분을 잘라야 한다.
+날짜만 필요한 경우에 사용합니다. 시간 정보가 필요 없으므로 저장 공간이 작고 계산이 간단합니다.
 
 ```sql
--- Oracle: DATE에 시간 포함
-SELECT SYSDATE FROM DUAL;  -- 2026-05-28 14:30:22
-
--- 날짜만 비교할 때
-WHERE TRUNC(created_date) = DATE '2026-05-28'
-
--- Oracle에서 날짜+시간은 TIMESTAMP 사용 권장
-created_at TIMESTAMP(6) DEFAULT SYSTIMESTAMP
-```
-
-## MySQL TIMESTAMP vs DATETIME
-
-MySQL에서 가장 많이 혼동하는 부분이다.
-
-```sql
--- TIMESTAMP: UTC 저장, 조회 시 세션 time_zone으로 변환
--- 2038-01-19 이후 오버플로우 (32비트 한계)
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-           ON UPDATE CURRENT_TIMESTAMP,
-
--- DATETIME: 로컬 시간 그대로 저장, time_zone 영향 없음
--- 범위: 1000-01-01 ~ 9999-12-31
-scheduled_at DATETIME
-```
-
-```sql
--- MySQL time_zone 확인 및 설정
-SELECT @@time_zone, @@global.time_zone;
-SET time_zone = 'Asia/Seoul';
-
--- TIMESTAMP는 time_zone에 따라 조회 결과가 달라진다!
--- 같은 데이터여도 서울 세션 vs UTC 세션이 다른 값을 반환
-```
-
-**결론**: MySQL에서는 장기 데이터는 `DATETIME`, 이벤트 기록은 `TIMESTAMP`를 사용하되 2038년 이후 데이터가 있을 수 있다면 `DATETIME`을 선택한다.
-
-## 시간대 처리의 황금률: UTC로 저장
-
-글로벌 서비스나 다국가 서비스를 개발할 때의 원칙:
-
-```text
-1. DB 서버 시간대를 UTC로 설정
-2. 모든 시각 데이터를 UTC로 저장
-3. 표시 시 클라이언트의 시간대로 변환
-```
-
-```sql
--- PostgreSQL: TIMESTAMPTZ 사용 (UTC 저장 + TZ 인식)
-CREATE TABLE orders (
-    order_id   INT PRIMARY KEY,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
+-- DATE 사용 예
+CREATE TABLE employees (
+    employee_id  INT   PRIMARY KEY,
+    birth_date   DATE  NOT NULL,
+    hire_date    DATE  NOT NULL,
+    resign_date  DATE             -- NULL 허용: 재직 중
 );
 
--- 서울 시간으로 조회
-SELECT created_at AT TIME ZONE 'Asia/Seoul' AS seoul_time
-FROM orders;
-
--- MySQL: UTC_TIMESTAMP()로 명시적 UTC 저장
-INSERT INTO orders (created_at) VALUES (UTC_TIMESTAMP());
-
--- 조회 시 변환
-SELECT CONVERT_TZ(created_at, '+00:00', '+09:00') AS kst
-FROM orders;
+-- DATE 연산 (PostgreSQL)
+SELECT hire_date,
+       hire_date + INTERVAL '1 year' AS one_year_later,
+       CURRENT_DATE - hire_date      AS days_employed
+FROM   employees;
 ```
 
-## 날짜 연산 패턴
+## TIMESTAMP vs TIMESTAMPTZ
 
-![날짜/시간 연산 패턴](/assets/posts/sql-data-types-datetime-ops.svg)
+이 둘의 차이가 가장 중요합니다.
+
+![TIMESTAMP vs TIMESTAMPTZ 타임존 함정](/assets/posts/sql-data-types-datetime-tz.svg)
 
 ```sql
--- 표준 날짜 함수
+-- ✗ TIMESTAMP: 타임존 없음, 해석이 서버 설정에 의존
+created_at  TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+-- ✓ TIMESTAMPTZ: 항상 UTC 기준으로 저장, 조회 시 세션 타임존으로 변환
+created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+```
+
+```sql
+-- PostgreSQL: 세션 타임존 변경으로 출력 확인
+SET TIME ZONE 'Asia/Seoul';
+SELECT created_at FROM events;  -- KST(+9)로 출력
+
+SET TIME ZONE 'UTC';
+SELECT created_at FROM events;  -- UTC로 출력
+-- 저장된 값은 동일, 표현만 다름
+```
+
+## DBMS별 타임스탬프 타입
+
+| DBMS | 타임존 없음 | 타임존 있음 |
+|------|-----------|------------|
+| PostgreSQL | `TIMESTAMP` | `TIMESTAMPTZ` (`TIMESTAMP WITH TIME ZONE`) |
+| Oracle | `DATE` (초 포함), `TIMESTAMP` | `TIMESTAMP WITH TIME ZONE` |
+| MySQL | `DATETIME` | `TIMESTAMP` (내부 UTC 저장) |
+| SQL Server | `DATETIME2` | `DATETIMEOFFSET` |
+
+MySQL의 `TIMESTAMP` 컬럼은 실제로 UTC로 저장하므로 타임존 안전합니다. 반면 `DATETIME`은 그냥 텍스트처럼 입력된 값을 그대로 저장합니다.
+
+## INTERVAL — 시간 간격
+
+```sql
+-- PostgreSQL INTERVAL 사용 예
 SELECT
-    CURRENT_DATE,           -- 오늘 날짜
-    CURRENT_TIME,           -- 현재 시간
-    CURRENT_TIMESTAMP,      -- 현재 날짜+시간
-    EXTRACT(YEAR FROM CURRENT_DATE),   -- 연도 추출
-    EXTRACT(MONTH FROM CURRENT_DATE);  -- 월 추출
+    CURRENT_DATE + INTERVAL '3 months'    AS three_months_later,
+    CURRENT_TIMESTAMP - INTERVAL '7 days' AS one_week_ago,
+    AGE(CURRENT_DATE, hire_date)          AS tenure  -- years/months/days 형태
+FROM   employees;
 
--- 날짜 포맷팅 (DBMS별 차이)
--- PostgreSQL
-SELECT TO_CHAR(NOW(), 'YYYY-MM-DD HH24:MI:SS');
--- MySQL
-SELECT DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s');
--- Oracle
-SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') FROM DUAL;
--- SQL Server
-SELECT FORMAT(GETDATE(), 'yyyy-MM-dd HH:mm:ss');
+-- 구독 만료일 계산
+SELECT user_id,
+       start_date,
+       start_date + duration AS expire_date
+FROM   subscriptions;
+-- duration 컬럼이 INTERVAL '1 month', '1 year' 등을 저장
 ```
 
-### 날짜 차이 계산
+MySQL에는 `INTERVAL` 타입이 없으므로 `DATE_ADD(date, INTERVAL n unit)` 함수를 사용합니다.
+
+## 날짜·시간 함수
 
 ```sql
--- 두 날짜의 차이 (일수)
--- PostgreSQL
-SELECT '2026-12-31'::DATE - '2026-01-01'::DATE AS days;  -- 364
+-- 현재 날짜/시간
+SELECT CURRENT_DATE,          -- 날짜만
+       CURRENT_TIME,          -- 시간만
+       CURRENT_TIMESTAMP,     -- 날짜+시간 (표준)
+       now();                 -- PostgreSQL 단축형
 
--- MySQL
-SELECT DATEDIFF('2026-12-31', '2026-01-01') AS days;
+-- 날짜 요소 추출
+SELECT EXTRACT(YEAR  FROM hire_date) AS hire_year,
+       EXTRACT(MONTH FROM hire_date) AS hire_month,
+       EXTRACT(DOW   FROM hire_date) AS day_of_week  -- 0=일요일
+FROM   employees;
 
--- Oracle
-SELECT DATE '2026-12-31' - DATE '2026-01-01' AS days FROM DUAL;
+-- 날짜 형식 변환 (PostgreSQL)
+SELECT TO_CHAR(CURRENT_DATE, 'YYYY년 MM월 DD일') AS formatted;
 
--- 만료일 계산 (30일 후)
--- PostgreSQL
-SELECT CURRENT_DATE + INTERVAL '30 days';
--- MySQL
-SELECT DATE_ADD(CURDATE(), INTERVAL 30 DAY);
--- Oracle
-SELECT SYSDATE + 30 FROM DUAL;  -- 숫자를 더하면 일(day)
-```
-
-### 범위 쿼리 — 인덱스 활용을 위한 패턴
-
-```sql
--- 올바른 범위 쿼리 (인덱스 사용)
+-- 날짜 범위 조건
 SELECT * FROM orders
-WHERE  created_at >= '2026-01-01'
-  AND  created_at  < '2026-02-01';
-
--- 피해야 할 패턴 (함수 사용 시 인덱스 비효율)
--- WHERE YEAR(created_at) = 2026 AND MONTH(created_at) = 1
--- 위는 전체 스캔 발생 (MySQL에서 함수 기반 인덱스 없을 때)
+WHERE  created_at >= '2026-01-01'::DATE
+  AND  created_at <  '2026-02-01'::DATE;
 ```
 
-## CREATE TABLE에서 날짜 컬럼 설계
+## 자주 하는 실수
 
+**실수 1**: 날짜를 `VARCHAR`로 저장
 ```sql
-CREATE TABLE audit_log (
-    log_id      BIGINT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    table_name  VARCHAR(60) NOT NULL,
-    action      CHAR(1)     NOT NULL CHECK (action IN ('I','U','D')),
-    occurred_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,  -- TIMESTAMPTZ
-    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
+-- ✗ 잘못된 방법
+date_str VARCHAR(10) DEFAULT '2026-05-29'  -- 정렬·계산 불가
 
--- MySQL 버전
-CREATE TABLE audit_log (
-    log_id      BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    table_name  VARCHAR(60)  NOT NULL,
-    action      CHAR(1)      NOT NULL,
-    occurred_at DATETIME     DEFAULT UTC_TIMESTAMP(),
-    created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- ✓ 올바른 방법
+event_date DATE NOT NULL
+```
+
+**실수 2**: `created_at`에 `TIMESTAMP` 대신 `TIMESTAMPTZ` 미사용
+```sql
+-- ✓ 감사 컬럼 모범 예
+created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+```
+
+**실수 3**: 날짜 비교에 `BETWEEN` 사용 시 시간 부분 무시
+```sql
+-- ✗ 2026-01-31 23:59:59.999 제외될 수 있음
+WHERE created_at BETWEEN '2026-01-01' AND '2026-01-31'
+
+-- ✓ 반열린 구간 사용
+WHERE created_at >= '2026-01-01' AND created_at < '2026-02-01'
 ```
 
 ## 정리
 
-- **DATE**: 날짜만 / **TIME**: 시간만 / **TIMESTAMP**: 날짜+시간 (UTC 저장)
-- **MySQL TIMESTAMP**: 2038년 오버플로우 주의 → 장기 데이터는 `DATETIME`
-- **Oracle DATE**: 시분초 포함 — SQL 표준과 다름, 비교 시 `TRUNC()` 필요
-- **시간대 황금률**: UTC 저장 → 표시 시 변환 (TIMESTAMPTZ 권장)
-- **범위 쿼리**: 날짜 컬럼에 함수 적용 금지 → `>=` `<` 패턴 사용
+- `DATE`는 날짜만, `TIMESTAMP`/`TIMESTAMPTZ`는 날짜+시간에 사용합니다.
+- 글로벌 서비스에서는 `TIMESTAMPTZ`를 기본으로 사용하고, 내부적으로 UTC를 유지합니다.
+- 날짜를 문자열로 저장하지 말고 항상 전용 날짜/시간 타입을 사용합니다.
+- MySQL에서는 `TIMESTAMP`가 UTC 저장, `DATETIME`은 입력 그대로임에 주의합니다.
+
+다음 글에서는 `NOT NULL`, `DEFAULT`, `CHECK` 같은 **열 제약조건**을 깊이 있게 살펴봅니다.
 
 ---
 
-**지난 글:** [SQL 데이터 타입 완전 정복 — 숫자, 문자, 논리형](/posts/sql-data-types-numeric-string-bool/)
+**지난 글:** [SQL 데이터 타입 — 숫자·문자열·불리언](/posts/sql-data-types-numeric-string-bool/)
 
-**다음 글:** [SQL 제약조건 — NOT NULL, DEFAULT, CHECK 완전 정복](/posts/sql-constraints-not-null-default-check/)
+**다음 글:** [NOT NULL·DEFAULT·CHECK 제약조건 완전 정복](/posts/sql-constraints-not-null-default-check/)
 
 <br>
 읽어주셔서 감사합니다. 😊

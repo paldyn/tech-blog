@@ -1,112 +1,88 @@
 ---
-title: "관계형 데이터베이스(RDB)란 무엇인가"
-description: "관계형 데이터베이스의 개념, 테이블·행·열·기본키·외래키의 의미, SQL 질의 처리 흐름, NoSQL과의 차이를 그림과 예제로 완전 정복합니다."
+title: "RDB란 무엇인가 — 관계형 데이터베이스의 세계로"
+description: "관계형 데이터베이스(RDB)의 핵심 개념인 테이블·행·열·기본 키·외래 키를 파일 시스템과 비교하며 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-28"
+pubDate: "2026-05-29"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
-tags: ["RDB", "관계형데이터베이스", "SQL기초", "테이블", "기본키", "외래키", "NoSQL비교"]
+tags: ["SQL", "RDB", "데이터베이스", "기초"]
 featured: false
 draft: false
 ---
 
-데이터베이스라는 단어를 처음 접하면 으레 엑셀 스프레드시트를 떠올린다. 그 직관은 완전히 틀리지 않았다. 1970년 에드거 F. 코드(Edgar F. Codd)가 IBM 연구소에서 발표한 논문 *"A Relational Model of Data for Large Shared Data Banks"*는 데이터를 **수학적 집합인 릴레이션(relation)**으로 표현하자는 제안이었고, 현대 RDB는 그 아이디어를 그대로 구현한 시스템이다.
+데이터를 저장하고 조회하는 가장 성숙한 기술, 관계형 데이터베이스(Relational Database, RDB)는 1970년대에 등장한 이후 반세기가 지난 지금도 대부분의 서비스에서 핵심 저장소로 사용됩니다. 이 시리즈의 첫 글에서는 "RDB가 정확히 무엇인가"라는 질문에 파일 시스템과의 비교를 통해 답합니다.
 
-## RDB의 핵심 구조
+## 파일 시스템의 한계
 
-관계형 데이터베이스는 데이터를 **테이블(Table)** 단위로 저장한다. 테이블은 행(Row, 튜플)과 열(Column, 속성)로 구성된 2차원 격자 구조이며, 수학에서의 릴레이션과 대응된다.
+초기 애플리케이션은 데이터를 그냥 파일로 저장했습니다. CSV, 텍스트 파일, 독자적인 바이너리 포맷 등이 그 예입니다. 편리하지만 데이터가 늘어나면 문제가 생깁니다.
 
-![RDB 구조와 테이블 간 관계](/assets/posts/sql-what-is-rdb-concept.svg)
+- **데이터 중복**: 고객의 주소가 여러 파일에 흩어져 있으면, 주소가 바뀌었을 때 모든 파일을 동기화해야 합니다.
+- **참조 무결성 없음**: `orders.csv`에 존재하지 않는 고객 ID를 기록해도 아무도 막지 않습니다.
+- **동시 접근 문제**: 두 프로세스가 동시에 같은 파일을 수정하면 데이터가 깨집니다.
+- **표준 질의 언어 없음**: 파일에서 "서울 사는 고객의 총 주문금액"을 구하려면 직접 파싱 로직을 짜야 합니다.
 
-각 테이블의 핵심 요소를 정리하면 다음과 같다.
+![RDB vs 파일 시스템](/assets/posts/sql-what-is-rdb-comparison.svg)
 
-| 요소 | 설명 |
-|------|------|
-| **행 (Row / Tuple)** | 하나의 개체(entity)를 표현하는 데이터 묶음 |
-| **열 (Column / Attribute)** | 개체의 속성, 데이터 타입을 갖는다 |
-| **기본 키 (PK)** | 행을 유일하게 식별. NULL 불가, 중복 불가 |
-| **외래 키 (FK)** | 다른 테이블의 PK를 참조해 관계를 표현 |
-| **스키마** | 테이블 구조 정의(열 이름, 타입, 제약 조건) |
+## 관계형 모델의 답
 
-### 기본 키와 외래 키의 역할
+1970년 IBM의 에드거 코드(Edgar F. Codd)는 수학적인 **관계(Relation)** 개념을 기반으로 데이터를 저장하는 방법을 제안했습니다. 핵심 아이디어는 세 가지입니다.
 
-`users` 테이블의 `user_id`가 기본 키(PK)라면, `orders` 테이블의 `user_id`는 `users`를 참조하는 외래 키(FK)다. 이 외래 키 연결이 RDB를 "관계형"으로 만드는 핵심 메커니즘이다. 외래 키는 **참조 무결성(Referential Integrity)**을 강제하여, 존재하지 않는 `user_id`를 가진 주문이 생길 수 없도록 막는다.
+1. **데이터를 2차원 테이블로 표현한다.** 행(Row, 튜플)은 하나의 레코드, 열(Column, 속성)은 그 레코드의 특성입니다.
+2. **각 테이블에는 행을 유일하게 식별하는 기본 키(Primary Key)가 있다.** `customer_id = 1`이라는 값은 오직 한 고객을 가리킵니다.
+3. **다른 테이블의 기본 키를 참조하는 외래 키(Foreign Key)로 테이블 간 관계를 표현한다.** 이 참조가 항상 유효하다는 보장이 **참조 무결성**입니다.
 
 ```sql
--- 테이블 구조 정의 예시
-CREATE TABLE users (
-    user_id  INT         PRIMARY KEY,
-    name     VARCHAR(50) NOT NULL,
-    email    VARCHAR(100) UNIQUE
+-- 기본 키와 외래 키 정의 예시
+CREATE TABLE customers (
+    customer_id  INT PRIMARY KEY,
+    name         VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE orders (
-    order_id  INT     PRIMARY KEY,
-    user_id   INT     NOT NULL,
-    amount    DECIMAL(10,2),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    order_id     INT PRIMARY KEY,
+    customer_id  INT NOT NULL REFERENCES customers(customer_id),
+    amount       NUMERIC(12, 2)
 );
 ```
 
-## SQL 질의 처리 흐름
+![관계형 데이터베이스 구조](/assets/posts/sql-what-is-rdb-structure.svg)
 
-SQL(Structured Query Language)은 RDB에 데이터를 묻고 조작하는 **선언형(Declarative) 언어**다. "어떤 결과를 원한다"는 것만 기술하면 엔진이 최적 실행 경로를 결정한다.
+## RDB의 네 가지 특성
 
-![SQL 질의 처리 흐름](/assets/posts/sql-what-is-rdb-sql-example.svg)
+| 특성 | 설명 |
+|------|------|
+| **독립성** | 물리적 저장 방식이 바뀌어도 질의 방식은 동일 |
+| **무결성** | 제약조건(NOT NULL, UNIQUE, FK 등)으로 데이터 정확성 유지 |
+| **보안** | 테이블·행·열 단위 접근 권한 제어 |
+| **트랜잭션** | ACID(원자성·일관성·격리성·지속성) 보장 |
 
-질의가 데이터베이스 내부에서 처리되는 순서는 다음과 같다.
+## SQL이란
 
-1. **파서(Parser)**: SQL 문자열을 읽어 구문 분석 후 추상 구문 트리(AST) 생성
-2. **옵티마이저(Optimizer)**: 가능한 실행 계획 목록 생성, 통계 기반으로 최저 비용 선택
-3. **실행 엔진(Execution Engine)**: 선택된 계획대로 스토리지 레이어에서 데이터 획득
-4. **결과 반환**: 클라이언트에게 결과 집합(Result Set) 전송
+RDB를 조작하는 표준 언어가 **SQL(Structured Query Language)** 입니다. ISO/IEC 9075 표준으로 정의되며, Oracle·PostgreSQL·MySQL·SQL Server 등 거의 모든 RDBMS가 이 표준을 구현합니다. 이 시리즈 전체가 바로 SQL을 중심으로 전개됩니다.
 
 ```sql
--- users와 orders를 JOIN해 고액 주문 조회
-SELECT u.name, o.amount
-FROM   users u
-JOIN   orders o ON u.user_id = o.user_id
-WHERE  o.amount > 40000
-ORDER BY o.amount DESC;
+-- 가장 기본적인 SQL 질의
+SELECT name, amount
+FROM   customers
+JOIN   orders USING (customer_id)
+WHERE  amount > 30000
+ORDER BY amount DESC;
 ```
 
-## RDB vs NoSQL
-
-RDB가 만능은 아니다. 적합한 상황이 있다.
-
-| 기준 | RDB | NoSQL |
-|------|-----|-------|
-| 스키마 | 고정(강한 구조) | 유연(스키마리스) |
-| 트랜잭션 | ACID 완전 지원 | BASE (대부분) |
-| 수평 확장 | 제한적 | 설계상 용이 |
-| 복잡한 쿼리 | JOIN, 집계 강점 | 키-값 패턴에 최적 |
-| 적합 케이스 | 금융, ERP, CRM | 캐시, 로그, SNS |
-
-핵심은 **트랜잭션 일관성이 중요하고 데이터 간 관계가 복잡**할수록 RDB가 유리하고, **단순 키-값 조회나 대규모 수평 확장**이 필요할 때 NoSQL이 유리하다는 것이다.
-
-## 주요 RDB 제품
-
-현재 시장에서 널리 쓰이는 RDB는 크게 세 가지로 나뉜다.
-
-```text
-오픈소스: PostgreSQL · MySQL · MariaDB · SQLite
-상용    : Oracle Database · SQL Server (MSSQL) · IBM Db2
-클라우드: Amazon Aurora · Google Cloud Spanner · Azure SQL
-```
-
-이 시리즈에서는 SQL 표준 문법을 중심으로 다루며, 주요 제품별 차이가 있는 부분은 별도로 표기한다.
+데이터베이스를 처음 접하는 분이라면 지금 당장 위 쿼리를 이해하지 않아도 됩니다. 시리즈를 따라가다 보면 자연스럽게 읽힐 것입니다.
 
 ## 정리
 
-- RDB는 데이터를 **테이블(릴레이션) 집합**으로 표현하는 데이터베이스 모델이다
-- **기본 키(PK)**로 행을 식별하고, **외래 키(FK)**로 테이블 간 관계를 표현한다
-- SQL은 "무엇을 원하는지"만 기술하는 **선언형 언어**이며, 실행 방법은 옵티마이저가 결정한다
-- 트랜잭션 일관성과 복잡한 관계 질의에서 RDB가 NoSQL 대비 강점을 갖는다
+- RDB는 **데이터를 테이블(행+열)로 표현**하고, **기본 키**로 식별하며, **외래 키**로 테이블을 연결합니다.
+- 파일 시스템과 달리 중복 제거·참조 무결성·동시성 제어·트랜잭션을 기본 제공합니다.
+- SQL은 이 모든 기능을 다루는 표준 언어입니다.
+
+다음 글에서는 코드가 제안한 **관계형 모델의 수학적 이론** — 릴레이션, 튜플, 속성, 관계 대수 — 를 살펴봅니다.
 
 ---
 
-**다음 글:** [관계형 모델 이론 — 릴레이션, 튜플, 속성의 수학적 기초](/posts/sql-relational-model/)
+**다음 글:** [관계형 모델 이론 — 릴레이션, 튜플, 관계 대수](/posts/sql-relational-model/)
 
 <br>
 읽어주셔서 감사합니다. 😊
