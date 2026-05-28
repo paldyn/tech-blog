@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-o" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+    <marker id="arr-v" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">OpenAI Function Calling (Tool Use) 흐름</text>
+
+  <!-- Step 1: 사용자 -->
+  <rect x="30" y="76" width="130" height="64" rx="8" fill="#0a1020" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="95" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">1. 요청</text>
+  <text x="95" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">user message</text>
+  <text x="95" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">+ tools 정의</text>
+
+  <line x1="160" y1="108" x2="210" y2="108" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: GPT 모델 -->
+  <rect x="210" y="76" width="160" height="64" rx="8" fill="#1a0a1a" stroke="#6e3a6e" stroke-width="1.5"/>
+  <text x="290" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">2. GPT 모델</text>
+  <text x="290" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">finish_reason:</text>
+  <text x="290" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">"tool_calls"</text>
+
+  <line x1="370" y1="108" x2="420" y2="108" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+  <text x="395" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">tool_calls[]</text>
+
+  <!-- Step 3: 함수 실행 -->
+  <rect x="420" y="76" width="160" height="64" rx="8" fill="#0f1a0f" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="500" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">3. 함수 실행</text>
+  <text x="500" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">로컬 함수 호출</text>
+  <text x="500" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">결과 수집</text>
+
+  <line x1="580" y1="108" x2="630" y2="108" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Step 4: 결과 전달 -->
+  <rect x="630" y="76" width="210" height="64" rx="8" fill="#1a0f0a" stroke="#6e5a3a" stroke-width="1.5"/>
+  <text x="735" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">4. 결과 → GPT 재호출</text>
+  <text x="735" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">role: "tool" 메시지 추가</text>
+  <text x="735" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">tool_call_id 매핑</text>
+
+  <!-- 최종 응답 화살표 (아래) -->
+  <line x1="735" y1="140" x2="735" y2="168" stroke="#ce9178" stroke-width="2"/>
+  <line x1="735" y1="168" x2="95" y2="168" stroke="#ce9178" stroke-width="1.5"/>
+  <line x1="95" y1="168" x2="95" y2="190" stroke="#ce9178" stroke-width="2" marker-end="url(#arr-o)"/>
+  <text x="415" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">최종 자연어 응답 반환</text>
+
+  <!-- 최종 응답 박스 -->
+  <rect x="30" y="190" width="130" height="40" rx="6" fill="#0f1a0f" stroke="#3a6e3a" stroke-width="1.5"/>
+  <text x="95" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">5. 최종 응답</text>
+
+  <!-- 코드 블록: Function Calling 예시 -->
+  <rect x="30" y="248" width="820" height="292" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="50" y="269" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"
+        ># Function Calling 예시</text>
+
+  <text x="50" y="289" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">tools = [{</tspan><tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"function"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"function"</tspan><tspan fill="#ffffff">: {</tspan>
+  </text>
+
+  <text x="50" y="309" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan><tspan fill="#ce9178">"name"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"get_weather"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+
+  <text x="50" y="329" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan><tspan fill="#ce9178">"parameters"</tspan><tspan fill="#ffffff">: {</tspan><tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"object"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+
+  <text x="50" y="349" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      </tspan><tspan fill="#ce9178">"properties"</tspan><tspan fill="#ffffff">: {</tspan><tspan fill="#ce9178">"city"</tspan><tspan fill="#ffffff">: {</tspan><tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"string"</tspan><tspan fill="#ffffff">}},</tspan>
+  </text>
+
+  <text x="50" y="369" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      </tspan><tspan fill="#ce9178">"required"</tspan><tspan fill="#ffffff">: [</tspan><tspan fill="#ce9178">"city"</tspan><tspan fill="#ffffff">]}}]}</tspan>
+  </text>
+
+  <text x="50" y="389" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">resp = client.chat.completions.create(model=</tspan><tspan fill="#ce9178">"gpt-4o"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+
+  <text x="50" y="409" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    messages=messages, tools=tools)</tspan>
+  </text>
+
+  <text x="50" y="429" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> resp.choices[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">].finish_reason == </tspan><tspan fill="#ce9178">"tool_calls"</tspan><tspan fill="#ffffff">:</tspan>
+  </text>
+
+  <text x="50" y="449" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    tc = resp.choices[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">].message.tool_calls[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">]</tspan>
+  </text>
+
+  <text x="50" y="469" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    result = get_weather(**json.loads(tc.function.arguments))</tspan>
+  </text>
+
+  <text x="50" y="489" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    messages.append({</tspan><tspan fill="#ce9178">"role"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"tool"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"tool_call_id"</tspan><tspan fill="#ffffff">: tc.id,</tspan>
+  </text>
+
+  <text x="50" y="509" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">                    </tspan><tspan fill="#ce9178">"content"</tspan><tspan fill="#ffffff">: json.dumps(result)})</tspan>
+  </text>
+
+  <text x="50" y="529" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">
+    <tspan># 재호출 → 최종 자연어 응답 획득</tspan>
+  </text>
+
+</svg>
