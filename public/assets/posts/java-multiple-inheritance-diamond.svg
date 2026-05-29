@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-gray" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#888"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">다이아몬드 문제 — 다중 상속의 충돌</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">두 경로에서 동일 메서드가 내려올 때 Java가 선택하는 우선순위</text>
+
+  <!-- ── 다이아몬드 다이어그램 ── -->
+
+  <!-- 최상위: Animal -->
+  <rect x="330" y="90" width="220" height="52" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="112" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc">interface Animal</text>
+  <text x="440" y="130" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">default void speak() { ... }</text>
+
+  <!-- 중간 좌: Flyable -->
+  <rect x="130" y="220" width="220" height="52" rx="6" fill="#0d1a1a" stroke="#2d5a5a" stroke-width="1.5"/>
+  <text x="240" y="242" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">interface Flyable</text>
+  <text x="240" y="260" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">default void speak() { ... }</text>
+
+  <!-- 중간 우: Swimmable -->
+  <rect x="530" y="220" width="220" height="52" rx="6" fill="#0d1a0d" stroke="#2d5a2d" stroke-width="1.5"/>
+  <text x="640" y="242" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">interface Swimmable</text>
+  <text x="640" y="260" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">default void speak() { ... }</text>
+
+  <!-- 최하위: Duck -->
+  <rect x="330" y="360" width="220" height="52" rx="6" fill="#2e1a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="382" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">class Duck</text>
+  <text x="440" y="400" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">implements Flyable, Swimmable</text>
+
+  <!-- 화살표: Animal -> Flyable -->
+  <line x1="380" y1="142" x2="286" y2="220"
+        stroke="#888" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- 화살표: Animal -> Swimmable -->
+  <line x1="500" y1="142" x2="594" y2="220"
+        stroke="#888" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- 화살표: Flyable -> Duck -->
+  <line x1="286" y1="272" x2="380" y2="360"
+        stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- 화살표: Swimmable -> Duck -->
+  <line x1="594" y1="272" x2="500" y2="360"
+        stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- 충돌 표시 -->
+  <text x="440" y="320" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">⚡ 충돌: speak() 어느 것?</text>
+
+  <!-- ── 우측: 해결 규칙 ── -->
+  <text x="50" y="450"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Java 해결 우선순위</text>
+
+  <!-- 규칙 1 -->
+  <rect x="50" y="460" width="248" height="44" rx="6" fill="#0d1a0d" stroke="#2d5a2d" stroke-width="1"/>
+  <text x="62" y="478"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">1. 클래스 &gt; 인터페이스</text>
+  <text x="62" y="496"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">구체 클래스 메서드가 항상 우선</text>
+
+  <!-- 규칙 2 -->
+  <rect x="316" y="460" width="248" height="44" rx="6" fill="#0d1a1a" stroke="#2d5a5a" stroke-width="1"/>
+  <text x="328" y="478"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">2. 더 구체적인 인터페이스 우선</text>
+  <text x="328" y="496"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">하위 인터페이스가 상위 인터페이스보다 우선</text>
+
+  <!-- 규칙 3 -->
+  <rect x="582" y="460" width="248" height="44" rx="6" fill="#2e1a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="594" y="478"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">3. 명시적 재정의 필수</text>
+  <text x="594" y="496"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">동순위 충돌 시 컴파일 에러</text>
+
+</svg>
