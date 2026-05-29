@@ -1,184 +1,146 @@
 ---
-title: "SQL 데이터 타입 — 숫자·문자열·불리언"
-description: "SQL의 숫자(INT, NUMERIC, FLOAT), 문자열(CHAR, VARCHAR, TEXT), 불리언 타입을 비교하고 적합한 선택 기준을 설명합니다."
+title: "숫자·문자·불리언 데이터 타입 완전 정복"
+description: "INT vs BIGINT, NUMERIC vs FLOAT, CHAR vs VARCHAR, BOOLEAN의 차이를 실무 기준으로 명확하게 정리합니다. 잘못된 타입 선택이 낳는 오버플로우·부동소수 오차·인덱스 문제까지 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-05-29"
+pubDate: "2026-05-30"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "데이터 타입", "NUMERIC", "VARCHAR", "BOOLEAN"]
+tags: ["SQL", "데이터 타입", "숫자 타입", "문자열 타입", "NUMERIC", "VARCHAR"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-create-table-basics/)에서 `CREATE TABLE`의 기본 문법을 배웠습니다. 테이블을 올바르게 설계하려면 각 열에 맞는 데이터 타입을 선택해야 합니다. 잘못된 타입 선택은 데이터 손실, 계산 오류, 성능 저하로 이어집니다. 이번 글에서는 숫자·문자열·불리언 타입을 깊이 있게 살펴봅니다.
+[지난 글](/posts/sql-create-table-basics/)에서 `CREATE TABLE`의 전체 구조를 살펴봤습니다. 이번 글에서는 열 정의의 핵심인 **데이터 타입**을 집중적으로 다룹니다. 타입 선택은 단순히 "어떤 값을 저장하느냐"를 넘어 저장 공간, 인덱스 효율, 연산 정확도에 직접 영향을 줍니다.
 
 ## 숫자 타입
 
-### 정수 타입
+### 정수형 선택 기준
 
-| 타입 | 크기 | 범위 | 사용 예 |
-|------|------|------|---------|
-| `SMALLINT` | 2 bytes | -32,768 ~ 32,767 | 작은 코드 값 |
-| `INTEGER` / `INT` | 4 bytes | ±2,147,483,647 | 일반 ID, 수량 |
-| `BIGINT` | 8 bytes | ±9.2 × 10¹⁸ | 대용량 PK, 타임스탬프 |
+![숫자 데이터 타입 비교](/assets/posts/sql-data-types-numeric-string-bool-numeric.svg)
+
+실무에서 가장 흔한 실수는 `INT`를 PK로 사용하다 오버플로우가 발생하는 것입니다. 약 21억(2^31 - 1)을 넘는 순간 에러가 납니다. 하루 수만 건 이상 삽입하는 서비스라면 처음부터 `BIGINT`를 사용합니다.
 
 ```sql
--- 자동 증가 ID (DBMS별 차이)
--- SQL:2003 표준
-CREATE TABLE orders (
-    order_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-);
+-- 위험한 설계: 대규모 서비스에서 21억 초과 시 오버플로우
+id INT PRIMARY KEY
 
--- PostgreSQL 단축형
-CREATE TABLE orders (order_id BIGSERIAL PRIMARY KEY);
-
--- MySQL
-CREATE TABLE orders (order_id BIGINT AUTO_INCREMENT PRIMARY KEY);
-
--- Oracle
-CREATE SEQUENCE orders_seq START WITH 1 INCREMENT BY 1;
+-- 안전한 설계
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
 ```
 
-### 정밀 소수: NUMERIC(p, s)
+### NUMERIC vs FLOAT
 
-금융·회계 데이터에는 반드시 `NUMERIC` 또는 `DECIMAL`을 사용해야 합니다. `FLOAT`·`DOUBLE`은 IEEE 754 부동소수점이라 이진 표현에서 오차가 생깁니다.
+**금액, 재고, 세금 등 정확도가 필요한 값에는 반드시 `NUMERIC`(또는 `DECIMAL`)을 사용합니다.**
+
+`FLOAT`과 `DOUBLE`은 IEEE 754 이진 부동소수점이라 십진수 0.1을 정확히 표현하지 못합니다.
 
 ```sql
--- 금액 컬럼
-salary       NUMERIC(14, 2),  -- 최대 999,999,999,999.99
-tax_rate     NUMERIC(5, 4),   -- 0.0000 ~ 9.9999
-unit_price   DECIMAL(10, 2)   -- DECIMAL = NUMERIC (동의어)
+-- 부동소수점 오차 실험 (PostgreSQL)
+SELECT 0.1 + 0.2 = 0.3;        -- false (이진 부동소수)
+SELECT 0.1::NUMERIC + 0.2::NUMERIC = 0.3::NUMERIC;  -- true
+
+-- 실무 금액 타입
+price NUMERIC(12, 2)   -- 최대 999,999,999.99원
+tax   NUMERIC(8, 4)    -- 세율 0.1234
 ```
 
-**p(precision)**: 전체 유효 자릿수. **s(scale)**: 소수점 이하 자릿수.  
-`NUMERIC(8, 2)` → 최대 `999999.99`.
-
-### 근사 소수: FLOAT / DOUBLE
-
-과학 계산, 좌표, 통계 값처럼 **약간의 오차가 허용되는 경우**에만 사용합니다.
-
-```sql
--- ✓ 사용 가능한 경우
-latitude   DOUBLE PRECISION,  -- GPS 위도
-score      REAL               -- 머신러닝 점수
-
--- ✗ 절대 사용 금지
-price      FLOAT  -- 0.1 + 0.2 = 0.30000000000000004 오류 발생!
-```
-
-![숫자/문자열/불리언 타입 정리](/assets/posts/sql-data-types-numeric-string-bool-chart.svg)
+`NUMERIC(p, s)`에서 p는 **전체 유효 자릿수**, s는 **소수점 이하 자릿수**입니다. `NUMERIC(5, 2)`에 `1000.00`을 넣으면 전체 7자리가 필요하므로 오류가 납니다.
 
 ## 문자열 타입
 
-### CHAR(n) vs VARCHAR(n)
+![문자열 · 불리언 타입](/assets/posts/sql-data-types-numeric-string-bool-string.svg)
 
-`CHAR(n)`은 **고정 길이**: 저장 값이 n보다 짧으면 공백으로 패딩합니다.  
-`VARCHAR(n)`은 **가변 길이**: 실제 문자 수만큼만 저장합니다.
+### CHAR vs VARCHAR
+
+`CHAR(n)`은 고정 길이입니다. `CHAR(10)`에 `'abc'`를 저장하면 내부적으로 `'abc       '`(공백 7개 패딩)로 저장됩니다. 비교 시 공백이 무시되는 경우가 많지만 DBMS마다 동작이 다릅니다.
+
+`VARCHAR(n)`은 가변 길이입니다. 실제 길이만큼만 저장합니다. **일반적으로 VARCHAR를 기본으로 선택하고, 정말 고정 길이인 값(ISO 국가코드 `CHAR(2)` 등)에만 CHAR를 씁니다.**
+
+| 비교 항목 | CHAR(n) | VARCHAR(n) |
+|---|---|---|
+| 저장 공간 | 항상 n 바이트 | 실제 길이 + 오버헤드 |
+| 조회 속도 | 약간 빠를 수 있음 | 동등 또는 비슷 |
+| 사용 예 | 국가 코드, 고정 코드 | 이름, 이메일, URL |
+
+### TEXT와 길이 제한
+
+PostgreSQL의 `TEXT` 타입은 `VARCHAR(n)`과 성능 차이가 없고 길이 제한이 없습니다. 애플리케이션 레이어에서 길이 제한을 하거나, DB에서도 제한이 필요하면 `CHECK (LENGTH(column) <= 200)`을 추가합니다.
 
 ```sql
--- 코드 값처럼 항상 고정 길이인 경우
-country_code CHAR(2)    NOT NULL,  -- 'KR', 'US'
-gender       CHAR(1)    NOT NULL,  -- 'M', 'F'
-
--- 가변 길이 문자열 (대부분의 경우)
-name         VARCHAR(100) NOT NULL,
-email        VARCHAR(320) NOT NULL,  -- 이메일 최대 320자
-description  VARCHAR(2000)
+-- PostgreSQL에서 TEXT + CHECK는 VARCHAR(200)과 동일 효과
+content TEXT CHECK (LENGTH(content) <= 2000)
 ```
 
-![NUMERIC vs FLOAT 정밀도, CHAR vs VARCHAR 비교](/assets/posts/sql-data-types-numeric-string-bool-precision.svg)
+### 문자 집합(charset)과 콜레이션
 
-### TEXT / CLOB
-
-길이 제한 없는 텍스트가 필요할 때 사용합니다.
+한국어 데이터를 저장할 때는 반드시 UTF-8을 확인합니다.
 
 ```sql
--- PostgreSQL
-body         TEXT,
-
--- Oracle (4000바이트 초과 시)
-content      CLOB,
-
--- MySQL
-description  LONGTEXT
-```
-
-> **VARCHAR 길이 기준**: UTF-8에서 한글 한 글자는 3바이트이지만, `VARCHAR(100)`의 `100`은 **바이트가 아닌 문자 수**입니다 (표준 SQL 기준). 단, 일부 구버전 MySQL은 바이트 기준이었으니 주의하세요.
-
-### 문자 집합(Charset)과 콜레이션(Collation)
-
-```sql
--- MySQL: 테이블 생성 시 문자 집합 지정
+-- MySQL: 테이블 또는 열 단위로 지정 가능
 CREATE TABLE posts (
-    content TEXT
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
--- utf8mb4: 이모지 포함 4바이트 유니코드 완전 지원
--- utf8(3바이트)은 이모지 저장 불가 — MySQL에서는 utf8mb4 사용 권장
+    title VARCHAR(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+);
+
+-- PostgreSQL: 데이터베이스 생성 시 지정
+CREATE DATABASE mydb ENCODING 'UTF8' LC_COLLATE 'ko_KR.UTF-8';
 ```
+
+MySQL에서 `utf8` 대신 `utf8mb4`를 사용해야 이모지(4바이트 문자)가 깨지지 않습니다.
 
 ## 불리언 타입
 
 ```sql
--- PostgreSQL: 표준 BOOLEAN
+-- ANSI 표준 BOOLEAN (PostgreSQL, SQLite)
 is_active    BOOLEAN NOT NULL DEFAULT TRUE,
 is_deleted   BOOLEAN NOT NULL DEFAULT FALSE
 
--- Oracle: NUMBER(1) 관례 (1=TRUE, 0=FALSE)
-is_active    NUMBER(1) DEFAULT 1 CHECK (is_active IN (0, 1))
-
--- MySQL: TINYINT(1) 사용 관례 (또는 BOOL/BOOLEAN = TINYINT(1))
-is_active    TINYINT(1) NOT NULL DEFAULT 1
+-- MySQL: BOOLEAN = TINYINT(1)  (0=FALSE, 1=TRUE, NULL 가능)
+-- Oracle: BOOLEAN 타입 없음 → NUMBER(1) CHECK(col IN (0,1)) 또는 CHAR(1) IN ('Y','N')
 ```
+
+주의해야 할 점은 `BOOLEAN`도 NULL을 가질 수 있어 세 가지 값(TRUE/FALSE/NULL)이 존재한다는 것입니다. "아직 알 수 없는 상태"와 "거짓"을 구별할 필요가 있으면 NULL을 허용하고, 그렇지 않으면 `NOT NULL DEFAULT FALSE`를 씁니다.
+
+## 타입 변환(CAST)
 
 ```sql
--- PostgreSQL: 불리언 값 표현 방법
-SELECT * FROM users WHERE is_active = TRUE;
-SELECT * FROM users WHERE is_active;          -- 단축형
-SELECT * FROM users WHERE NOT is_deleted;
+-- 명시적 변환
+SELECT CAST('2026-05-30' AS DATE);
+SELECT CAST(3.14 AS NUMERIC(5,2));
+
+-- PostgreSQL 단축 문법
+SELECT '2026-05-30'::DATE;
+SELECT '3.14'::NUMERIC(5,2);
 ```
 
-## 이진 타입
-
-파일·이미지 등 바이너리 데이터 저장이 꼭 필요한 경우에 사용합니다. 일반적으로는 파일을 스토리지(S3 등)에 두고 DB에는 경로만 저장하는 편이 낫습니다.
+암묵적 변환은 DBMS가 자동으로 타입을 바꾸는 것으로, 인덱스를 무력화할 수 있습니다.
 
 ```sql
--- PostgreSQL
-thumbnail    BYTEA,
+-- 위험: VARCHAR 컬럼에 INT 비교 → 암묵적 변환으로 인덱스 미사용 가능
+WHERE phone_number = 1012345678   -- phone_number가 VARCHAR라면
 
--- MySQL
-thumbnail    MEDIUMBLOB,
-
--- Oracle
-thumbnail    BLOB
+-- 안전: 타입 일치
+WHERE phone_number = '01012345678'
 ```
-
-## 데이터 타입 선택 요약
-
-| 상황 | 권장 타입 |
-|------|-----------|
-| 자동 증가 PK | `INT` / `BIGINT` + IDENTITY/SERIAL |
-| 금액·환율 | `NUMERIC(p, s)` |
-| 과학적 수치 | `DOUBLE PRECISION` |
-| 짧은 고정 코드 | `CHAR(n)` |
-| 가변 문자열 | `VARCHAR(n)` |
-| 긴 텍스트 | `TEXT` / `CLOB` |
-| 참/거짓 플래그 | `BOOLEAN` (가능한 DBMS) |
 
 ## 정리
 
-- 정수는 `SMALLINT` < `INT` < `BIGINT` 순으로 범위와 크기가 커집니다.
-- 금액·정밀 계산에는 반드시 `NUMERIC(p, s)`, 근사치에는 `FLOAT`/`DOUBLE`을 사용합니다.
-- `CHAR`는 고정 코드 값에, `VARCHAR`는 나머지 모든 문자열에 사용합니다.
-- MySQL에서 한국어·이모지를 위해서는 `utf8mb4`를 사용해야 합니다.
+| 상황 | 권장 타입 |
+|---|---|
+| 대규모 서비스 ID | `BIGINT` |
+| 금액, 세율 | `NUMERIC(p, s)` |
+| 과학 계산 피처 | `FLOAT` / `DOUBLE` |
+| 일반 텍스트 | `VARCHAR(n)` |
+| 무제한 텍스트 (PG) | `TEXT` |
+| 불리언 플래그 | `BOOLEAN NOT NULL DEFAULT FALSE` |
 
-다음 글에서는 **날짜와 시간 타입** — `DATE`, `TIME`, `TIMESTAMP`, `INTERVAL` — 을 살펴봅니다.
+다음 글에서는 날짜와 시간 타입을 다룹니다. 타임존 처리와 함께 실무에서 가장 많이 틀리는 부분 중 하나입니다.
 
 ---
 
-**지난 글:** [CREATE TABLE 기초 — 테이블 설계의 시작](/posts/sql-create-table-basics/)
+**지난 글:** [CREATE TABLE 기초 — 테이블을 만드는 방법](/posts/sql-create-table-basics/)
 
-**다음 글:** [SQL 데이터 타입 — 날짜와 시간](/posts/sql-data-types-datetime/)
+**다음 글:** [날짜와 시간 데이터 타입](/posts/sql-data-types-datetime/)
 
 <br>
 읽어주셔서 감사합니다. 😊

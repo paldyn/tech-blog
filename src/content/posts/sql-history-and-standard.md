@@ -1,115 +1,86 @@
 ---
-title: "SQL 역사와 표준 — SQL-86부터 SQL:2023까지"
-description: "SQL의 탄생 배경부터 ISO 표준 SQL-86, SQL-92, SQL:1999, SQL:2003, SQL:2023까지의 진화를 정리합니다."
+title: "SQL의 역사와 표준 — ANSI/ISO SQL이 만들어진 이유"
+description: "1970년 Codd 논문부터 최신 SQL:2023까지, SQL이 어떻게 표준화되었고 각 DBMS가 어떤 방언을 사용하는지 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-29"
+pubDate: "2026-05-30"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "SQL 표준", "SQL 역사", "ANSI SQL"]
+tags: ["SQL", "SQL 표준", "ANSI SQL", "SQL 역사", "방언"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-relational-model/)에서 관계형 모델의 수학적 기반을 살펴봤습니다. 이번에는 그 이론이 어떻게 현실의 SQL 언어로 발전했는지, 표준화 역사를 짚어봅니다. "SQL:2003에서 생긴 기능"이라는 말을 종종 보게 되는데, 각 표준이 어떤 기능을 추가했는지 파악하면 문서를 읽을 때 맥락이 잡힙니다.
+[지난 글](/posts/sql-relational-model/)에서 관계형 모델의 수학적 토대를 살펴봤습니다. 이번 글은 그 이론이 실제 언어인 SQL로 어떻게 구체화되었는지, 그리고 왜 "표준 SQL"이 존재하는지를 역사적 맥락에서 짚어봅니다.
 
-## 탄생: SEQUEL에서 SQL로
+## SEQUEL에서 SQL로
 
-1970년 IBM 연구소의 에드거 코드가 관계형 모델 논문을 발표한 뒤, IBM은 1973년부터 **System R**이라는 실험적 RDBMS를 개발하기 시작했습니다. 이 프로젝트에서 코드의 이론을 실제로 구현하는 질의 언어가 필요했고, 1974년 **SEQUEL(Structured English Query Language)** 이 만들어졌습니다. 상표권 문제로 이름이 **SQL**로 바뀌었고, 이것이 오늘날 우리가 쓰는 SQL의 기원입니다.
+1970년 Edgar F. Codd가 IBM 연구소에서 관계형 모델을 제안한 이후, IBM 연구팀은 이 이론을 구현하는 언어를 개발하기 시작합니다. 1974년 Donald Chamberlin과 Raymond Boyce는 **SEQUEL(Structured English QUEry Language)**을 발표합니다. 상표권 문제로 이름이 **SQL**로 바뀌었지만 발음은 아직도 두 가지가 혼용됩니다.
 
-![SQL 표준 역사 타임라인](/assets/posts/sql-history-and-standard-timeline.svg)
+1979년 Relational Software Inc.(후의 Oracle)가 최초로 상용 RDBMS를 출시하면서 SQL은 사실상 업계 표준으로 자리잡기 시작합니다. IBM도 같은 해 DB2 전신인 System R을 출시합니다.
 
-## 표준화: ANSI/ISO SQL
+## ANSI/ISO 표준화 역사
 
-SQL이 여러 제품에 구현되면서 방언(dialect) 차이가 커졌고, 1986년 **ANSI**가, 이듬해 **ISO**가 SQL 표준을 발표했습니다.
+![SQL 역사 타임라인](/assets/posts/sql-history-and-standard-timeline.svg)
 
-### SQL-86 (SQL-87)
-최초 표준. 기본 SELECT·INSERT·UPDATE·DELETE, 기본 조인, 간단한 서브쿼리를 포함했습니다. 지금 기준으로는 매우 기능이 적었습니다.
+각 표준의 핵심 기여를 정리하면 다음과 같습니다.
 
-### SQL-92 (SQL2)
-가장 많이 인용되는 표준. 현재도 "SQL-92 호환"이라는 표현을 씁니다.
+**SQL-86 (SQL1)**: ANSI가 처음으로 채택한 표준. SELECT, INSERT, UPDATE, DELETE 기본 구문을 정의했습니다. 현재 기준으로는 매우 제한적이었습니다.
 
-```sql
--- SQL-92에서 추가된 OUTER JOIN 예시
-SELECT c.name, o.amount
-FROM   customers c
-LEFT OUTER JOIN orders o ON c.customer_id = o.customer_id;
-```
+**SQL-92 (SQL2)**: 가장 폭넓게 구현된 표준입니다. JOIN의 명시적 문법(`INNER JOIN`, `LEFT OUTER JOIN`), 서브쿼리, `CASE` 표현식, `CAST`, 문자열 함수가 추가되었습니다. 지금도 "SQL"이라고 하면 많은 사람이 이 버전을 떠올립니다.
 
-SQL-92 주요 추가 사항: `OUTER JOIN`, `CASE` 표현식, `CAST()`, 다양한 문자열 함수, 서브쿼리 확장, 스키마 정보 뷰(`INFORMATION_SCHEMA`).
+**SQL:1999 (SQL3)**: 패러다임을 바꾼 버전입니다. `WITH` 절(CTE), 재귀 쿼리, 윈도우 함수, 사용자 정의 타입, 트리거, 저장 프로시저가 표준에 포함됩니다.
 
-### SQL:1999 (SQL3)
-객체-관계형 확장과 함께 개발자들이 많이 쓰는 기능이 다수 추가되었습니다.
+**SQL:2003**: `MERGE`, `SEQUENCE`, XML 지원, `ROW_NUMBER()` 등이 추가됩니다.
 
-```sql
--- SQL:1999에서 추가된 재귀 CTE
-WITH RECURSIVE org_tree AS (
-    SELECT employee_id, manager_id, name, 0 AS depth
-    FROM   employees
-    WHERE  manager_id IS NULL
-    UNION ALL
-    SELECT e.employee_id, e.manager_id, e.name, t.depth + 1
-    FROM   employees e
-    JOIN   org_tree t ON e.manager_id = t.employee_id
-)
-SELECT * FROM org_tree ORDER BY depth;
-```
+**SQL:2016 이후**: JSON 함수, 행 패턴 인식(`MATCH_RECOGNIZE`), 다형적 테이블 함수가 추가되며 현재까지 이어집니다.
 
-SQL:1999 주요 추가 사항: `WITH RECURSIVE`(재귀 CTE), `ROLLUP`/`CUBE`/`GROUPING SETS`, 트리거, 사용자 정의 타입(UDT), 저장 프로시저 표준.
+## 방언(Dialect): 표준을 벗어나는 확장
 
-### SQL:2003
-윈도우 함수와 MERGE가 이 버전에서 표준화되었습니다.
+표준이 있어도 각 DBMS는 표준을 부분적으로만 구현하고, 독자적인 확장을 추가합니다. 이를 **SQL 방언**이라 부릅니다.
+
+![SQL 방언 비교](/assets/posts/sql-history-and-standard-dialect.svg)
+
+자주 마주치는 방언 차이를 예시로 보면 다음과 같습니다.
 
 ```sql
--- SQL:2003에서 추가된 윈도우 함수
-SELECT name, salary,
-       RANK() OVER (PARTITION BY dept_id ORDER BY salary DESC) AS rnk
-FROM   employees;
+-- 상위 3행 가져오기
+-- ANSI SQL:2008+
+SELECT * FROM products ORDER BY price FETCH FIRST 3 ROWS ONLY;
+
+-- MySQL / MariaDB
+SELECT * FROM products ORDER BY price LIMIT 3;
+
+-- SQL Server (T-SQL)
+SELECT TOP 3 * FROM products ORDER BY price;
+
+-- Oracle (12c 이전)
+SELECT * FROM (
+    SELECT * FROM products ORDER BY price
+) WHERE ROWNUM <= 3;
 ```
 
-SQL:2003 주요 추가 사항: `OVER (PARTITION BY ...)` 윈도우 함수, `MERGE`(UPSERT), `IDENTITY` 열, XML 타입.
+같은 결과를 얻는데 문법이 네 가지입니다. 이 때문에 ORM이나 마이그레이션 도구가 방언 추상화를 맡는 경우가 많습니다.
 
-### SQL:2016 ~ SQL:2023
+## 표준을 배워야 하는 이유
 
-```sql
--- SQL:2016 JSON 경로 함수 (PostgreSQL 구현 예)
-SELECT json_column -> 'address' ->> 'city' AS city
-FROM   customers;
-```
+방언 차이가 크더라도 표준 SQL을 먼저 익히는 것이 중요합니다.
 
-- **SQL:2016**: JSON 지원(`JSON_VALUE`, `JSON_QUERY`, `JSON_TABLE`), 행 패턴 매칭(`MATCH_RECOGNIZE`)
-- **SQL:2019**: 멀티 디멘셔널 배열
-- **SQL:2023**: 그래프 테이블(Property Graph), `LISTAGG`, `GREATEST`/`LEAST` 표준화
+1. **이식성**: 표준 문법은 어떤 DBMS에서도 동작하거나 최소한 해석 가능합니다.
+2. **이해력**: 방언을 이해하려면 표준이 기준점이 되어야 합니다.
+3. **미래 대비**: DBMS들은 시간이 지나면서 표준 쪽으로 수렴하는 경향이 있습니다(예: MySQL 8.0의 윈도우 함수 지원).
 
-![주요 RDBMS 표준 준수 현황](/assets/posts/sql-history-and-standard-vendors.svg)
-
-## 방언(Dialect)의 존재
-
-표준이 있다고 모든 제품이 완전히 같지는 않습니다.
-
-| 제품 | 방언 특성 | 비표준 예시 |
-|------|-----------|-------------|
-| Oracle | PL/SQL, 독자 함수 | `ROWNUM`, `CONNECT BY` |
-| PostgreSQL | 표준 준수율 높음 | 배열, JSONB, `COPY` |
-| MySQL | 일부 표준 미준수 | `LIMIT n`, `GROUP BY` 완화 |
-| SQL Server | T-SQL | `TOP n`, `APPLY` |
-
-이 시리즈는 **표준 SQL을 기준**으로 설명하고, 제품별 차이는 Oracle·PostgreSQL·MySQL·SQL Server 섹션에서 별도로 다룹니다.
+이 시리즈는 특정 DBMS에 치우치지 않고 표준 SQL을 기반으로 설명하되, 벤더별 차이가 중요한 지점에서는 명시적으로 표기합니다.
 
 ## 정리
 
-- SQL은 1974년 IBM의 SEQUEL에서 출발해 1986년 ANSI/ISO 표준이 되었습니다.
-- SQL-92는 현재도 기준점으로 인용됩니다.
-- SQL:1999에서 재귀 CTE, SQL:2003에서 윈도우 함수·MERGE가 표준화되었습니다.
-- 모든 주요 RDBMS는 표준 핵심을 구현하되, 고유 방언과 확장 기능을 가집니다.
-
-다음 글에서는 클라이언트가 DBMS와 통신하는 방식, 즉 **클라이언트-서버 프로토콜**을 살펴봅니다.
+SQL은 이론(관계형 모델) → 실험적 구현(SEQUEL) → 상용화 → 표준화의 경로를 거쳐 지금에 이르렀습니다. 표준은 50년에 걸쳐 꾸준히 확장되었고, 각 DBMS는 표준을 부분 구현하면서 독자 기능을 추가했습니다. 다음 글에서는 클라이언트가 SQL을 DBMS로 전달하는 프로토콜 계층을 살펴봅니다.
 
 ---
 
-**지난 글:** [관계형 모델 이론 — 릴레이션, 튜플, 관계 대수](/posts/sql-relational-model/)
+**지난 글:** [관계형 모델의 핵심 — 테이블, 키, 그리고 관계](/posts/sql-relational-model/)
 
-**다음 글:** [클라이언트-서버 프로토콜 — SQL 실행의 여정](/posts/sql-client-server-protocol/)
+**다음 글:** [클라이언트-서버 프로토콜 — SQL이 전달되는 방식](/posts/sql-client-server-protocol/)
 
 <br>
 읽어주셔서 감사합니다. 😊

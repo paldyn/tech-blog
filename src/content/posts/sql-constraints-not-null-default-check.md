@@ -1,190 +1,174 @@
 ---
-title: "NOT NULL·DEFAULT·CHECK 제약조건 완전 정복"
-description: "SQL 제약조건 NOT NULL·DEFAULT·CHECK의 의미와 동작 방식, NULL의 3값 논리, 그리고 CHECK 조건에서 NULL 처리 주의사항을 설명합니다."
+title: "NOT NULL, DEFAULT, CHECK 제약 — 데이터 품질을 DB에서 보장하는 방법"
+description: "NOT NULL, DEFAULT, CHECK 제약의 정확한 동작 방식과 NULL의 세값 논리, 제약에 이름을 붙여야 하는 이유를 실무 예시와 함께 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-29"
+pubDate: "2026-05-30"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "제약조건", "NOT NULL", "DEFAULT", "CHECK", "NULL"]
+tags: ["SQL", "NOT NULL", "DEFAULT", "CHECK 제약", "NULL", "데이터 무결성"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-datetime/)에서 날짜·시간 타입을 살펴봤습니다. 이번에는 열에 저장되는 값의 유효성을 보장하는 세 가지 제약조건 — `NOT NULL`, `DEFAULT`, `CHECK` — 을 깊이 있게 살펴봅니다. 그리고 SQL에서 가장 많은 혼란을 일으키는 개념 중 하나인 **NULL의 3값 논리**도 함께 다룹니다.
+[지난 글](/posts/sql-data-types-datetime/)에서 날짜/시간 타입을 살펴봤습니다. 이번에는 열 제약 중 가장 기본이자 가장 많이 오용되는 `NOT NULL`, `DEFAULT`, `CHECK`를 자세히 다룹니다. 이 세 가지 제약을 제대로 이해하면 "애플리케이션에서 검증하면 되지 않나요?"라는 질문에 답할 수 있게 됩니다.
 
-## NOT NULL — NULL 저장 금지
+## 왜 DB에서 제약을 걸어야 하나
 
-`NOT NULL`은 해당 열에 `NULL` 값이 들어오는 것을 막습니다. `INSERT` 또는 `UPDATE` 시 값을 명시하지 않거나 `NULL`을 직접 넣으려 하면 에러가 발생합니다.
+애플리케이션 레이어에서도 데이터를 검증하지만, DB 제약이 별도로 필요한 이유가 있습니다.
+
+1. **다중 진입점**: API, 배치 잡, 마이그레이션 스크립트, 관리 도구 등 데이터가 들어오는 경로는 하나가 아닙니다.
+2. **버그 방어선**: 애플리케이션 버그로 검증이 누락되어도 DB가 마지막 방어선 역할을 합니다.
+3. **자체 문서화**: 스키마를 보면 어떤 값이 허용되는지 바로 알 수 있습니다.
+
+![열 제약의 역할과 검사 시점](/assets/posts/sql-constraints-not-null-default-check-overview.svg)
+
+## NOT NULL
+
+`NOT NULL`은 해당 열에 NULL 값이 들어오는 것을 차단합니다.
 
 ```sql
 CREATE TABLE users (
-    user_id    INT         NOT NULL,
-    email      VARCHAR(320) NOT NULL,  -- 이메일은 반드시 있어야 함
-    nickname   VARCHAR(50)             -- NULL 허용: 미설정 가능
+    id         BIGINT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email      VARCHAR(200) NOT NULL,         -- 필수
+    name       VARCHAR(100) NOT NULL,         -- 필수
+    bio        TEXT,                          -- 선택 (NULL 허용)
+    login_count INT         NOT NULL DEFAULT 0  -- 필수, 기본값 0
 );
-
--- ✗ NOT NULL 위반
-INSERT INTO users (user_id, email) VALUES (1, NULL);
--- ERROR: null value in column "email"
-
--- ✓ 정상
-INSERT INTO users (user_id, email) VALUES (1, 'user@example.com');
 ```
 
-**NOT NULL이 성능에도 영향을 준다**: DBMS 옵티마이저는 NOT NULL 열에서 NULL 체크를 생략할 수 있어 인덱스 활용과 조인 계획이 개선됩니다.
+**"이 열이 항상 값을 가져야 하는가?"** — YES라면 `NOT NULL`. NO라면 NULL 허용(기본값).
 
-![NOT NULL·DEFAULT·CHECK 제약조건](/assets/posts/sql-constraints-not-null-default-check-types.svg)
+NULL을 허용하는 열은 `IS NULL`, `IS NOT NULL`로 쿼리하고, `COALESCE`로 기본값을 제공합니다.
 
-## DEFAULT — 기본값 설정
+```sql
+SELECT name, COALESCE(bio, '소개 없음') AS bio
+FROM users;
+```
 
-`DEFAULT`는 `INSERT` 시 해당 열 값을 생략하면 자동으로 채워지는 값을 지정합니다. `NULL`을 명시적으로 삽입하면 DEFAULT가 아닌 `NULL`이 들어갑니다.
+## NULL의 세값 논리 (가장 중요한 함정)
+
+SQL의 NULL은 "값 없음"이 아니라 "알 수 없음(UNKNOWN)"입니다. NULL과의 비교 결과는 항상 UNKNOWN이므로, 일반 비교 연산자(=, !=, <)로는 NULL을 찾을 수 없습니다.
+
+![NULL의 세값 논리](/assets/posts/sql-constraints-not-null-default-check-null3val.svg)
+
+```sql
+-- 잘못된 쿼리: 항상 0행 반환
+SELECT * FROM orders WHERE deleted_at = NULL;
+SELECT * FROM orders WHERE deleted_at != NULL;
+
+-- 올바른 쿼리
+SELECT * FROM orders WHERE deleted_at IS NULL;
+SELECT * FROM orders WHERE deleted_at IS NOT NULL;
+```
+
+`WHERE` 절에서 UNKNOWN은 행을 제외합니다. 이 때문에 NULL이 있는 열에 인덱스를 사용할 때도 주의가 필요합니다.
+
+## DEFAULT
+
+`DEFAULT`는 INSERT 시 해당 열의 값이 생략되면 자동으로 지정한 값을 사용합니다.
 
 ```sql
 CREATE TABLE orders (
-    order_id    INT          NOT NULL,
-    status      VARCHAR(20)  NOT NULL DEFAULT 'pending',   -- 문자열 기본값
-    quantity    INT          NOT NULL DEFAULT 1,            -- 숫자 기본값
-    created_at  TIMESTAMPTZ  NOT NULL DEFAULT now(),        -- 함수 기본값
-    is_gift     BOOLEAN      NOT NULL DEFAULT FALSE
+    status     VARCHAR(20) NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    retry_count INT        NOT NULL DEFAULT 0,
+    is_active  BOOLEAN     NOT NULL DEFAULT TRUE
 );
 
--- status, quantity, created_at, is_gift 생략 시 DEFAULT 값 자동 사용
-INSERT INTO orders (order_id) VALUES (1001);
-
--- DEFAULT를 명시적으로 사용
-INSERT INTO orders (order_id, status) VALUES (1002, DEFAULT);
+-- created_at, status, is_active 생략 가능
+INSERT INTO orders (customer_id, total) VALUES (1, 50000);
 ```
 
-```sql
--- ALTER TABLE로 기존 테이블에 DEFAULT 추가
-ALTER TABLE products ALTER COLUMN stock SET DEFAULT 0;
+DEFAULT 값으로 다음을 사용할 수 있습니다.
 
--- DEFAULT 제거
-ALTER TABLE products ALTER COLUMN stock DROP DEFAULT;
-```
+| 유형 | 예시 |
+|---|---|
+| 리터럴 | `DEFAULT 0`, `DEFAULT 'pending'`, `DEFAULT TRUE` |
+| 함수 | `DEFAULT now()`, `DEFAULT gen_random_uuid()` |
+| 표현식 | `DEFAULT CURRENT_DATE + INTERVAL '30 days'` |
 
-## CHECK — 조건 기반 유효성
+주의: DEFAULT는 열 값이 명시적으로 **생략**될 때만 적용됩니다. `INSERT INTO t (col) VALUES (NULL)`처럼 명시적으로 NULL을 넣으면 NOT NULL 제약을 위반합니다.
 
-`CHECK`는 삽입·수정 시 지정한 조건이 `TRUE`인 경우에만 허용합니다.
+## CHECK
+
+`CHECK`는 임의의 불리언 표현식으로 허용 값을 제한합니다. 표준 SQL에서 지원하며 대부분의 DBMS가 구현합니다.
 
 ```sql
 CREATE TABLE products (
-    product_id  INT           NOT NULL,
-    name        VARCHAR(200)  NOT NULL,
-    price       NUMERIC(12,2) NOT NULL CHECK (price >= 0),
-    discount    NUMERIC(5,2)           CHECK (discount BETWEEN 0 AND 100),
-    status      CHAR(1)       NOT NULL CHECK (status IN ('A','I','D')),
-    start_date  DATE          NOT NULL,
-    end_date    DATE,
-    -- 여러 열을 참조하는 CHECK는 테이블 제약조건으로
-    CONSTRAINT chk_dates CHECK (end_date IS NULL OR end_date >= start_date)
+    id      BIGINT  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name    VARCHAR(200) NOT NULL,
+    price   NUMERIC(12,2) NOT NULL CHECK (price >= 0),
+    stock   INT           NOT NULL DEFAULT 0 CHECK (stock >= 0),
+    rating  NUMERIC(3,1)           CHECK (rating BETWEEN 0 AND 5),
+    status  VARCHAR(20)   NOT NULL
+            CHECK (status IN ('draft', 'published', 'archived'))
 );
 ```
 
-```sql
--- ✗ CHECK 위반
-UPDATE products SET price = -100 WHERE product_id = 1;
--- ERROR: new row violates check constraint "products_price_check"
+체크 제약에 이름을 붙이면 오류 추적이 쉬워집니다.
 
--- 제약조건 이름을 붙이면 에러 메시지가 명확
+```sql
+-- 이름 없는 제약: 오류 메시지 "check constraint violated"
+-- 이름 있는 제약: 오류 메시지 "check_price_non_negative violated"
+CONSTRAINT check_price_non_negative CHECK (price >= 0)
 ```
 
-## NULL의 의미와 3값 논리
+### 테이블 제약으로 여러 열 조합 검증
 
-SQL에서 NULL은 **"알 수 없음(Unknown)"** 을 의미합니다. 0이나 빈 문자열과는 다릅니다.
-
-![NULL의 의미와 3값 논리](/assets/posts/sql-constraints-not-null-default-check-null.svg)
-
-SQL의 비교 연산은 `TRUE` / `FALSE` 두 값이 아니라 **TRUE / FALSE / UNKNOWN** 세 값으로 동작합니다.
+열 제약은 해당 열 하나만 참조할 수 있습니다. 여러 열을 조합해 검증해야 할 때는 테이블 제약을 사용합니다.
 
 ```sql
--- NULL 관련 비교의 결과
-SELECT
-    NULL = NULL,      -- NULL (UNKNOWN)
-    NULL != NULL,     -- NULL (UNKNOWN)
-    NULL > 0,         -- NULL (UNKNOWN)
-    NULL IS NULL,     -- TRUE  ← 올바른 NULL 체크
-    NULL IS NOT NULL; -- FALSE
-
--- WHERE에서 UNKNOWN은 행을 제외시킴
-SELECT * FROM employees WHERE phone = NULL;   -- 항상 0건!
-SELECT * FROM employees WHERE phone IS NULL;  -- 전화번호 미등록 직원
-```
-
-| 조건 | 결과 | WHERE 영향 |
-|------|------|-----------|
-| `값 = NULL` | UNKNOWN | 행 제외 |
-| `NULL = NULL` | UNKNOWN | 행 제외 |
-| `값 IS NULL` | TRUE 또는 FALSE | 정상 동작 |
-
-## CHECK와 NULL
-
-**중요**: CHECK 조건 결과가 `UNKNOWN`(NULL 관련)이면 조건이 통과됩니다. `FALSE`일 때만 거부합니다.
-
-```sql
--- discount 컬럼이 NULL이면 CHECK (discount BETWEEN 0 AND 100)은 UNKNOWN → 통과
--- discount에 NOT NULL이 없으면 NULL 값도 저장 가능
-
--- 명시적으로 NULL 제외하려면 NOT NULL을 함께 사용
-discount  NUMERIC(5,2) NOT NULL CHECK (discount BETWEEN 0 AND 100)
-```
-
-## 제약조건 나중에 추가·삭제
-
-```sql
--- NOT NULL 추가 (기존 데이터가 NULL이면 에러)
-ALTER TABLE employees ALTER COLUMN phone SET NOT NULL;
-
--- DEFAULT 추가
-ALTER TABLE employees ALTER COLUMN status SET DEFAULT 'active';
-
--- CHECK 추가
-ALTER TABLE employees
-ADD CONSTRAINT chk_salary CHECK (salary >= 0);
-
--- 제약조건 삭제
-ALTER TABLE employees DROP CONSTRAINT chk_salary;
-
--- 제약조건 임시 비활성화 (PostgreSQL, 데이터 마이그레이션 시)
-ALTER TABLE employees DISABLE TRIGGER ALL;
--- 또는
-SET session_replication_role = 'replica';  -- FK 체크 비활성화
-```
-
-## 실무 권장 패턴
-
-```sql
--- 모범 예: 완전한 사용자 테이블
-CREATE TABLE users (
-    user_id     BIGINT       GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    email       VARCHAR(320) NOT NULL,
-    username    VARCHAR(50)  NOT NULL,
-    status      VARCHAR(20)  NOT NULL DEFAULT 'pending'
-                             CHECK (status IN ('pending','active','suspended')),
-    age         SMALLINT     CHECK (age IS NULL OR age BETWEEN 0 AND 150),
-    created_at  TIMESTAMPTZ  NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMPTZ  NOT NULL DEFAULT now(),
-    CONSTRAINT uq_email UNIQUE (email),
-    CONSTRAINT uq_username UNIQUE (username)
+CREATE TABLE discount_rules (
+    id         INT PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date   DATE NOT NULL,
+    discount   NUMERIC(5,2) NOT NULL,
+    CONSTRAINT check_date_range   CHECK (end_date > start_date),
+    CONSTRAINT check_discount_pct CHECK (discount > 0 AND discount <= 100)
 );
 ```
+
+## ALTER TABLE로 제약 추가/제거
+
+기존 테이블에 제약을 추가하거나 제거할 수 있습니다.
+
+```sql
+-- 제약 추가
+ALTER TABLE products
+    ADD CONSTRAINT check_stock_non_negative CHECK (stock >= 0);
+
+ALTER TABLE users
+    ALTER COLUMN name SET NOT NULL;
+
+ALTER TABLE orders
+    ALTER COLUMN status SET DEFAULT 'pending';
+
+-- 제약 제거
+ALTER TABLE products
+    DROP CONSTRAINT check_stock_non_negative;
+
+ALTER TABLE users
+    ALTER COLUMN bio DROP NOT NULL;
+```
+
+대규모 테이블에서 `NOT NULL` 추가는 기존 NULL 값을 먼저 업데이트해야 하므로 주의가 필요합니다.
 
 ## 정리
 
-- `NOT NULL`은 필수 입력 필드를 보장하고 인덱스 효율도 높입니다.
-- `DEFAULT`는 자주 쓰이는 초기값을 자동으로 채워 INSERT를 단순화합니다.
-- `CHECK`로 도메인 무결성을 DB 레벨에서 강제합니다.
-- NULL은 "알 수 없음"이며 `=` 연산이 아닌 `IS NULL`로 비교해야 합니다.
-- CHECK 조건에서 NULL은 UNKNOWN → 통과되므로, NULL도 막으려면 NOT NULL을 함께 사용합니다.
+| 제약 | 목적 | 핵심 규칙 |
+|---|---|---|
+| `NOT NULL` | NULL 차단 | `IS NULL` / `IS NOT NULL`으로 비교 |
+| `DEFAULT` | 기본값 자동 삽입 | 생략 시만 적용, 명시적 NULL에는 적용 안 됨 |
+| `CHECK` | 값 범위·패턴 검증 | 이름 부여 권장, 다중 열은 테이블 제약 |
 
-다음 글에서는 **기본 키(Primary Key) 설계**의 실무적인 전략을 살펴봅니다.
+다음 글에서는 기본 키 설계의 원칙과 자연 키 vs 대리 키 논쟁을 다룹니다.
 
 ---
 
-**지난 글:** [SQL 데이터 타입 — 날짜와 시간](/posts/sql-data-types-datetime/)
+**지난 글:** [날짜와 시간 데이터 타입 — TIMESTAMP, DATE, INTERVAL 완전 정복](/posts/sql-data-types-datetime/)
 
-**다음 글:** [기본 키 설계 전략 — 자연키 vs 대리키, UUID vs BIGINT](/posts/sql-primary-key-design/)
+**다음 글:** [기본 키 설계 원칙](/posts/sql-primary-key-design/)
 
 <br>
 읽어주셔서 감사합니다. 😊
