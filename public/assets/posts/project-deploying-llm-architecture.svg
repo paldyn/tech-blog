@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 540" style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <defs>
+    <marker id="arr" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto">
+      <path d="M1,1 L10,5 L1,9 Z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr2" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto">
+      <path d="M1,1 L10,5 L1,9 Z" fill="#7777cc"/>
+    </marker>
+    <marker id="arr3" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto">
+      <path d="M1,1 L10,5 L1,9 Z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">LLM 프로덕션 배포 아키텍처</text>
+  <text x="440" y="68" text-anchor="middle" font-size="13" fill="#888">Client → nginx → FastAPI → LLM Backend + Redis + Prometheus</text>
+
+  <!-- CLIENT box -->
+  <rect x="60" y="210" width="120" height="60" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="120" y="236" text-anchor="middle" font-size="13" fill="#888">클라이언트</text>
+  <text x="120" y="256" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">Client</text>
+
+  <!-- Arrow: Client → nginx -->
+  <line x1="180" y1="240" x2="238" y2="240" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="209" y="230" text-anchor="middle" font-size="11" fill="#7ec8e3">HTTPS</text>
+
+  <!-- NGINX box -->
+  <rect x="242" y="190" width="136" height="100" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="310" y="215" text-anchor="middle" font-size="13" fill="#888">로드 밸런서</text>
+  <text x="310" y="237" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">nginx</text>
+  <text x="310" y="257" text-anchor="middle" font-size="11" fill="#7777cc">:443 / :80</text>
+  <text x="310" y="278" text-anchor="middle" font-size="11" fill="#888">upstream 라운드로빈</text>
+
+  <!-- Arrow: nginx → FastAPI 1 -->
+  <line x1="378" y1="222" x2="454" y2="197" stroke="#7777cc" stroke-width="2" marker-end="url(#arr2)"/>
+  <!-- Arrow: nginx → FastAPI 2 -->
+  <line x1="378" y1="258" x2="454" y2="283" stroke="#7777cc" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- FastAPI Instance 1 -->
+  <rect x="458" y="140" width="150" height="100" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="533" y="163" text-anchor="middle" font-size="12" fill="#888">API 서버 #1</text>
+  <text x="533" y="183" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">FastAPI</text>
+  <text x="533" y="203" text-anchor="middle" font-size="11" fill="#7777cc">:8001</text>
+  <text x="533" y="222" text-anchor="middle" font-size="11" fill="#888">스트리밍 · 큐 · 레이트리밋</text>
+
+  <!-- FastAPI Instance 2 -->
+  <rect x="458" y="260" width="150" height="100" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="533" y="283" text-anchor="middle" font-size="12" fill="#888">API 서버 #2</text>
+  <text x="533" y="303" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">FastAPI</text>
+  <text x="533" y="323" text-anchor="middle" font-size="11" fill="#7777cc">:8002</text>
+  <text x="533" y="342" text-anchor="middle" font-size="11" fill="#888">스트리밍 · 큐 · 레이트리밋</text>
+
+  <!-- Arrow: FastAPI → LLM Backend -->
+  <line x1="608" y1="190" x2="664" y2="205" stroke="#55c555" stroke-width="2" marker-end="url(#arr3)"/>
+  <line x1="608" y1="310" x2="664" y2="295" stroke="#55c555" stroke-width="2" marker-end="url(#arr3)"/>
+
+  <!-- LLM Backend box -->
+  <rect x="668" y="176" width="148" height="116" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="742" y="200" text-anchor="middle" font-size="12" fill="#888">LLM 백엔드</text>
+  <text x="742" y="222" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">GPU Server</text>
+  <text x="742" y="244" text-anchor="middle" font-size="11" fill="#55c555">vLLM / TGI</text>
+  <text x="742" y="264" text-anchor="middle" font-size="11" fill="#888">:8080</text>
+  <text x="742" y="283" text-anchor="middle" font-size="11" fill="#888">NVIDIA A100 / H100</text>
+
+  <!-- Redis box -->
+  <rect x="458" y="400" width="150" height="80" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="533" y="425" text-anchor="middle" font-size="12" fill="#888">캐시 · 레이트리밋</text>
+  <text x="533" y="447" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">Redis</text>
+  <text x="533" y="468" text-anchor="middle" font-size="11" fill="#e05555">:6379</text>
+
+  <!-- Arrow: FastAPI → Redis (dashed) -->
+  <line x1="533" y1="360" x2="533" y2="397" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="548" y="382" font-size="11" fill="#e05555">rate limit</text>
+
+  <!-- Prometheus box -->
+  <rect x="668" y="400" width="148" height="80" rx="8" fill="#1a1200" stroke="#e8a000" stroke-width="1.5"/>
+  <text x="742" y="425" text-anchor="middle" font-size="12" fill="#888">메트릭 수집</text>
+  <text x="742" y="447" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">Prometheus</text>
+  <text x="742" y="468" text-anchor="middle" font-size="11" fill="#e8a000">:9090  /metrics</text>
+
+  <!-- Arrow: FastAPI → Prometheus (dashed) -->
+  <line x1="608" y1="190" x2="742" y2="397" stroke="#e8a000" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Legend -->
+  <rect x="60" y="420" width="360" height="90" rx="6" fill="#111111" stroke="#333" stroke-width="1"/>
+  <text x="80" y="443" font-size="13" font-weight="600" fill="#e8e8e8">범례</text>
+  <line x1="80" y1="462" x2="110" y2="462" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="118" y="466" font-size="12" fill="#888">사용자 요청 흐름</text>
+  <line x1="80" y1="484" x2="110" y2="484" stroke="#55c555" stroke-width="2" marker-end="url(#arr3)"/>
+  <text x="118" y="488" font-size="12" fill="#888">LLM 추론 요청</text>
+  <line x1="200" y1="462" x2="230" y2="462" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="238" y="466" font-size="12" fill="#888">레이트리밋 체크</text>
+  <line x1="200" y1="484" x2="230" y2="484" stroke="#e8a000" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="238" y="488" font-size="12" fill="#888">메트릭 스크레이핑</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="522" text-anchor="middle" font-size="12" fill="#555">2개의 FastAPI 인스턴스가 GPU 백엔드를 공유하며 Redis로 레이트리밋을 동기화</text>
+</svg>

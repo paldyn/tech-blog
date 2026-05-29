@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 560" style="background:#0a0a0a">
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr-up" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+    <marker id="arr-down" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CUDA 메모리 계층 구조</text>
+
+  <!-- Column headers -->
+  <text x="244" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">메모리 계층</text>
+  <text x="480" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">속도 / 용량</text>
+  <text x="716" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">접근 범위 (CUDA scope)</text>
+
+  <!-- Separator -->
+  <line x1="60" y1="84" x2="820" y2="84" stroke="#222" stroke-width="1"/>
+  <line x1="360" y1="84" x2="360" y2="500" stroke="#222" stroke-width="1"/>
+  <line x1="600" y1="84" x2="600" y2="500" stroke="#222" stroke-width="1"/>
+
+  <!-- ===== Level 1: Register ===== -->
+  <!-- pyramid piece - widest at bottom, narrowest at top -->
+  <rect x="180" y="96" width="128" height="62" rx="6" fill="#2a1a4e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="244" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">Register File</text>
+  <text x="244" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">스레드 전용 레지스터</text>
+  <text x="244" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">컴파일러 자동 할당</text>
+
+  <text x="480" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" text-anchor="middle" font-weight="600">~수 사이클</text>
+  <text x="480" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">최고속 / 수십KB</text>
+  <text x="480" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">(스레드당 255개 한도)</text>
+
+  <text x="716" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Thread (스레드)</text>
+  <text x="716" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">해당 스레드만 접근 가능</text>
+  <text x="716" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">수명: 커널 실행 중</text>
+
+  <line x1="244" y1="158" x2="244" y2="172" stroke="#7777cc" stroke-width="2"/>
+
+  <!-- ===== Level 2: Shared Memory / L1 Cache ===== -->
+  <rect x="150" y="172" width="188" height="70" rx="6" fill="#1e2a1e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="244" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">Shared Memory / L1</text>
+  <text x="244" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">__shared__ 로 명시적 할당</text>
+  <text x="244" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">SM 내 스레드 블록 공유</text>
+
+  <text x="480" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" text-anchor="middle" font-weight="600">~수 사이클</text>
+  <text x="480" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">고속 / 48–128KB / SM</text>
+  <text x="480" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">Bank conflict 주의</text>
+
+  <text x="716" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Block (스레드 블록)</text>
+  <text x="716" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">같은 블록 스레드만 공유</text>
+  <text x="716" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">__syncthreads() 동기화</text>
+
+  <line x1="244" y1="242" x2="244" y2="256" stroke="#55c555" stroke-width="2"/>
+
+  <!-- ===== Level 3: L2 Cache ===== -->
+  <rect x="118" y="256" width="252" height="66" rx="6" fill="#1a2020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="244" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">L2 Cache</text>
+  <text x="244" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">자동 관리 — 명시적 접근 불가</text>
+  <text x="244" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">GPU 전체 SM이 공유</text>
+
+  <text x="480" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8a800" text-anchor="middle" font-weight="600">~수십 사이클</text>
+  <text x="480" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">중속 / 40–80MB</text>
+  <text x="480" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">Global Memory 접근 필터</text>
+
+  <text x="716" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Device (GPU 전체)</text>
+  <text x="716" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">모든 SM · Kernel 공유</text>
+  <text x="716" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">하드웨어 자동 관리</text>
+
+  <line x1="244" y1="322" x2="244" y2="336" stroke="#7ec8e3" stroke-width="2"/>
+
+  <!-- ===== Level 4: Global Memory (DRAM / HBM) ===== -->
+  <rect x="80" y="336" width="328" height="70" rx="6" fill="#1a1810" stroke="#e05555" stroke-width="1.5"/>
+  <text x="244" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">Global Memory (HBM / DRAM)</text>
+  <text x="244" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cudaMalloc / torch.Tensor 할당 공간</text>
+  <text x="244" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">코얼리싱(coalescing) 접근 중요</text>
+
+  <text x="480" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle" font-weight="600">~수백~수천 사이클</text>
+  <text x="480" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">저속(상대적) / 8–80GB</text>
+  <text x="480" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">대역폭 1–2TB/s (HBM3)</text>
+
+  <text x="716" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Device (GPU 전체)</text>
+  <text x="716" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">모든 스레드 읽기/쓰기</text>
+  <text x="716" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">cudaMemcpy로 Host↔Device</text>
+
+  <line x1="244" y1="406" x2="244" y2="420" stroke="#e05555" stroke-width="2"/>
+
+  <!-- ===== Level 5: Host RAM ===== -->
+  <rect x="60" y="420" width="368" height="60" rx="6" fill="#1a1015" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="244" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888" text-anchor="middle">Host RAM (CPU 메모리)</text>
+  <text x="244" y="464" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">PCIe / NVLink 경유 → 병목 주의</text>
+
+  <text x="480" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#555" text-anchor="middle">PCIe: ~32GB/s</text>
+  <text x="480" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#555" text-anchor="middle">수십~수백GB</text>
+  <text x="480" y="476" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#444" text-anchor="middle">(NVLink: ~900GB/s)</text>
+
+  <text x="716" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888" text-anchor="middle">Host (CPU)</text>
+  <text x="716" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">GPU에서 직접 접근 불가</text>
+  <text x="716" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">(Unified Memory 예외)</text>
+
+  <!-- Speed/size gradient label on right of pyramid -->
+  <text x="60" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">빠름</text>
+  <text x="60" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">느림</text>
+  <line x1="60" y1="140" x2="60" y2="440" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Bottom tip label -->
+  <text x="244" y="516" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">위로 갈수록 빠르고 작다 — 캐시 미스 줄이기가 GPU 최적화의 핵심</text>
+
+  <!-- PyTorch code hint -->
+  <rect x="468" y="426" width="344" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="484" y="447" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># PyTorch: Host → Device 이동</tspan></text>
+  <text x="484" y="465" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">x = x.</tspan><tspan fill="#7ec8e3" font-weight="600">to</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">'cuda'</tspan><tspan fill="#ffffff">)  </tspan><tspan fill="#9aa4b8"># PCIe 경유</tspan></text>
+  <text x="484" y="483" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">x = x.</tspan><tspan fill="#7ec8e3" font-weight="600">to</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">'cpu'</tspan><tspan fill="#ffffff">)  </tspan><tspan fill="#9aa4b8"># GPU→CPU 복사</tspan></text>
+</svg>

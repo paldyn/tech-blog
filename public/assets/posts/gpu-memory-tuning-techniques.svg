@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <!-- Background -->
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">GPU 메모리 최적화 기법 비교</text>
+  <text x="440" y="68" font-size="13" fill="#888" text-anchor="middle">메모리 절감 효과 · 속도 영향 · 적용 대상 컴포넌트</text>
+
+  <!-- ═══ Card 1: Gradient Checkpointing ═══ -->
+  <rect x="60" y="90" width="370" height="172" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <rect x="60" y="90" width="370" height="4" rx="2" fill="#7777cc"/>
+
+  <text x="84" y="118" font-size="16" font-weight="600" fill="#e8e8e8">① Gradient Checkpointing</text>
+  <text x="84" y="138" font-size="12" fill="#888">컴퓨트를 메모리와 교환 (backward 시 재계산)</text>
+
+  <text x="84" y="162" font-size="12" fill="#888">메모리 절감</text>
+  <rect x="170" y="150" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="170" y="150" width="160" height="16" rx="4" fill="#55c555"/>
+  <text x="376" y="163" font-size="11" fill="#55c555" font-weight="600">80%↓ Activations</text>
+
+  <text x="84" y="192" font-size="12" fill="#888">속도 영향</text>
+  <rect x="170" y="180" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="170" y="180" width="60" height="16" rx="4" fill="#e05555"/>
+  <text x="376" y="193" font-size="11" fill="#e05555">~20–30% 느림</text>
+
+  <text x="84" y="218" font-size="12" fill="#888">대상</text>
+  <rect x="120" y="206" width="90" height="22" rx="11" fill="#7777cc" opacity="0.25" stroke="#7777cc" stroke-width="1"/>
+  <text x="165" y="221" font-size="11" fill="#7777cc" text-anchor="middle">Activations</text>
+
+  <text x="84" y="247" font-size="11" fill="#555">torch.utils.checkpoint.checkpoint_sequential()</text>
+
+  <!-- ═══ Card 2: Mixed Precision ═══ -->
+  <rect x="450" y="90" width="370" height="172" rx="8" fill="#111" stroke="#7ec8e3" stroke-width="1.5"/>
+  <rect x="450" y="90" width="370" height="4" rx="2" fill="#7ec8e3"/>
+
+  <text x="474" y="118" font-size="16" font-weight="600" fill="#e8e8e8">② Mixed Precision (FP16/BF16)</text>
+  <text x="474" y="138" font-size="12" fill="#888">FP16 연산 + FP32 master copy 별도 유지</text>
+
+  <text x="474" y="162" font-size="12" fill="#888">메모리 절감</text>
+  <rect x="560" y="150" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="560" y="150" width="100" height="16" rx="4" fill="#55c555"/>
+  <text x="766" y="163" font-size="11" fill="#55c555" font-weight="600">50%↓ Params+Grads</text>
+
+  <text x="474" y="192" font-size="12" fill="#888">속도 영향</text>
+  <rect x="560" y="180" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="560" y="180" width="170" height="16" rx="4" fill="#55c555"/>
+  <text x="766" y="193" font-size="11" fill="#55c555">1.5–2× 빠름 (Tensor Core)</text>
+
+  <text x="474" y="218" font-size="12" fill="#888">대상</text>
+  <rect x="510" y="206" width="56" height="22" rx="11" fill="#e05555" opacity="0.25" stroke="#e05555" stroke-width="1"/>
+  <text x="538" y="221" font-size="11" fill="#e05555" text-anchor="middle">Params</text>
+  <rect x="572" y="206" width="52" height="22" rx="11" fill="#e05555" opacity="0.25" stroke="#e05555" stroke-width="1"/>
+  <text x="598" y="221" font-size="11" fill="#e05555" text-anchor="middle">Grads</text>
+
+  <text x="474" y="247" font-size="11" fill="#555">torch.cuda.amp.autocast() + GradScaler()</text>
+
+  <!-- ═══ Card 3: Gradient Accumulation ═══ -->
+  <rect x="60" y="282" width="370" height="172" rx="8" fill="#111" stroke="#e08040" stroke-width="1.5"/>
+  <rect x="60" y="282" width="370" height="4" rx="2" fill="#e08040"/>
+
+  <text x="84" y="310" font-size="16" font-weight="600" fill="#e8e8e8">③ Gradient Accumulation</text>
+  <text x="84" y="330" font-size="12" fill="#888">소배치를 누적 → 가상 대배치 효과</text>
+
+  <text x="84" y="354" font-size="12" fill="#888">메모리 절감</text>
+  <rect x="170" y="342" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="170" y="342" width="90" height="16" rx="4" fill="#55c555"/>
+  <text x="376" y="355" font-size="11" fill="#55c555" font-weight="600">배치 크기 N배 절감</text>
+
+  <text x="84" y="384" font-size="12" fill="#888">속도 영향</text>
+  <rect x="170" y="372" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="170" y="372" width="200" height="16" rx="4" fill="#888" opacity="0.4"/>
+  <text x="376" y="385" font-size="11" fill="#aaa">거의 없음</text>
+
+  <text x="84" y="414" font-size="12" fill="#888">대상</text>
+  <rect x="120" y="402" width="80" height="22" rx="11" fill="#55c555" opacity="0.25" stroke="#55c555" stroke-width="1"/>
+  <text x="160" y="417" font-size="11" fill="#55c555" text-anchor="middle">Batch Data</text>
+
+  <text x="84" y="439" font-size="11" fill="#555">loss.backward() × N steps → optimizer.step()</text>
+
+  <!-- ═══ Card 4: CPU Offload / ZeRO-3 ═══ -->
+  <rect x="450" y="282" width="370" height="172" rx="8" fill="#111" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="450" y="282" width="370" height="4" rx="2" fill="#55c555"/>
+
+  <text x="474" y="310" font-size="16" font-weight="600" fill="#e8e8e8">④ CPU Offload (DeepSpeed ZeRO-3)</text>
+  <text x="474" y="330" font-size="12" fill="#888">Optimizer States / Params를 CPU RAM으로 이동</text>
+
+  <text x="474" y="354" font-size="12" fill="#888">메모리 절감</text>
+  <rect x="560" y="342" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="560" y="342" width="190" height="16" rx="4" fill="#55c555"/>
+  <text x="766" y="355" font-size="11" fill="#55c555" font-weight="600">최대 ~90% GPU VRAM 절감</text>
+
+  <text x="474" y="384" font-size="12" fill="#888">속도 영향</text>
+  <rect x="560" y="372" width="200" height="16" rx="4" fill="#222"/>
+  <rect x="560" y="372" width="100" height="16" rx="4" fill="#e05555"/>
+  <text x="766" y="385" font-size="11" fill="#e05555">~30–60% 느림 (PCIe 대역폭)</text>
+
+  <text x="474" y="414" font-size="12" fill="#888">대상</text>
+  <rect x="510" y="402" width="104" height="22" rx="11" fill="#e08040" opacity="0.25" stroke="#e08040" stroke-width="1"/>
+  <text x="562" y="417" font-size="11" fill="#e08040" text-anchor="middle">Optimizer States</text>
+
+  <text x="474" y="439" font-size="11" fill="#555">deepspeed ZeRO stage 3, --offload_optimizer</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="478" font-size="12" fill="#555" text-anchor="middle">속도 막대: 초록 = 빠름 / 빨강 = 느림 / 회색 = 중립  |  막대 길이 = 효과 크기 (상대적)</text>
+</svg>

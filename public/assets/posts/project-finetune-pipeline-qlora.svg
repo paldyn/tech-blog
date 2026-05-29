@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500">
+  <defs>
+    <marker id="arrow-gray" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#555"/>
+    </marker>
+    <marker id="arrow-green" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#55c555"/>
+    </marker>
+    <marker id="arrow-red" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#e05555"/>
+    </marker>
+    <marker id="arrow-info" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">QLoRA 메모리 구조 &amp; 그래디언트 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">4-bit 동결 Base + FP16 LoRA 어댑터 — 그래디언트는 어댑터만 통과</text>
+
+  <!-- ── LEFT: QLoRA Architecture ── -->
+  <!-- Base Model frozen block -->
+  <rect x="60" y="100" width="260" height="130" rx="10" fill="#111" stroke="#555" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="190" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#888">Base Model (동결)</text>
+  <rect x="80" y="138" width="220" height="36" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="190" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" font-weight="600">W  (4-bit NF4 양자화)</text>
+  <text x="190" y="167" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">requires_grad = False</text>
+  <text x="190" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">bitsandbytes load_in_4bit=True</text>
+  <text x="190" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">NF4 + double quantization</text>
+
+  <!-- LoRA Adapters block -->
+  <rect x="60" y="252" width="260" height="110" rx="10" fill="#0d1a10" stroke="#55c555" stroke-width="2"/>
+  <text x="190" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">LoRA Adapters (학습)</text>
+  <rect x="80" y="290" width="96" height="34" rx="6" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="128" y="305" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="700">A</text>
+  <text x="128" y="319" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">d×r  FP16</text>
+  <rect x="184" y="290" width="96" height="34" rx="6" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="232" y="305" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="700">B</text>
+  <text x="232" y="319" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">r×d  FP16</text>
+  <text x="190" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">requires_grad = True  |  rank r ≪ d</text>
+
+  <!-- Gradient flow arrow (green, upward from adapters) -->
+  <line x1="190" y1="252" x2="190" y2="238" stroke="#55c555" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="195" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">∇ gradient</text>
+
+  <!-- Blocked gradient (red X on base model) -->
+  <line x1="190" y1="230" x2="190" y2="214" stroke="#e05555" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="200" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">✕ 역전파 차단</text>
+
+  <!-- Output -->
+  <rect x="80" y="385" width="220" height="40" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="190" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">출력: W·x + BA·x</text>
+  <text x="190" y="416" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">기존 가중치 + 어댑터 보정치</text>
+  <line x1="190" y1="362" x2="190" y2="383" stroke="#555" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+  <!-- ── RIGHT: Memory Comparison ── -->
+  <text x="560" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e8e8e8">메모리 비교 (7B 모델 기준)</text>
+
+  <!-- Full Fine-tuning bar -->
+  <text x="360" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Full Fine-tuning</text>
+  <rect x="360" y="137" width="420" height="32" rx="4" fill="#e05555" opacity="0.85"/>
+  <text x="574" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#fff">~112 GB  (FP32 기준)</text>
+
+  <!-- LoRA bar -->
+  <text x="360" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">LoRA (BF16 base)</text>
+  <rect x="360" y="199" width="220" height="32" rx="4" fill="#7777cc" opacity="0.85"/>
+  <text x="472" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#fff">~18 GB</text>
+
+  <!-- QLoRA bar -->
+  <text x="360" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="600">QLoRA (4-bit base)</text>
+  <rect x="360" y="262" width="90" height="32" rx="4" fill="#55c555" opacity="0.9"/>
+  <text x="402" y="283" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#000">~6 GB</text>
+
+  <!-- Scale labels -->
+  <line x1="360" y1="308" x2="780" y2="308" stroke="#333" stroke-width="1"/>
+  <text x="360" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">0</text>
+  <text x="465" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">25 GB</text>
+  <text x="565" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">50 GB</text>
+  <text x="665" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">75 GB</text>
+  <text x="750" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#555">100 GB+</text>
+
+  <!-- Savings annotations -->
+  <text x="460" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="700">QLoRA: ~95% 메모리 절감</text>
+  <text x="460" y="370" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">소비자 GPU(RTX 3090·4090)에서 7B 학습 가능</text>
+
+  <!-- Config box -->
+  <rect x="360" y="390" width="420" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="376" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># QLoRA 핵심 설정</text>
+  <text x="376" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">bnb_config = BitsAndBytesConfig(</text>
+  <text x="376" y="448" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    load_in_4bit=</text><text x="509" y="448" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">True</text><text x="539" y="448" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">, bnb_4bit_quant_type=</text><text x="729" y="448" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"nf4"</text>
+  <text x="376" y="465" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    bnb_4bit_use_double_quant=</text><text x="606" y="465" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">True</text><text x="636" y="465" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">, bnb_4bit_compute_dtype=torch.bfloat16)</text>
+
+  <!-- Divider -->
+  <line x1="340" y1="95" x2="340" y2="440" stroke="#222" stroke-width="1.5"/>
+  <text x="340" y="455" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#333">|</text>
+</svg>

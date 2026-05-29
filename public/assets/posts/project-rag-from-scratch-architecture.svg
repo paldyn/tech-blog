@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 580" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <defs>
+    <!-- Arrow: blue (indexing path) -->
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <!-- Arrow: green (query path) -->
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <!-- Arrow: orange (generation) -->
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e08040"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="580" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">RAG 시스템 전체 파이프라인</text>
+  <text x="440" y="66" font-size="13" fill="#888" text-anchor="middle">인덱싱 경로 (파란색) vs 쿼리 경로 (초록색)</text>
+
+  <!-- ═══════════════════════════════════════════
+       INDEXING PATH (top lane)
+       ═══════════════════════════════════════════ -->
+
+  <!-- Lane label -->
+  <rect x="60" y="88" width="126" height="24" rx="12" fill="#7ec8e3" opacity="0.15" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="123" y="104" font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">인덱싱 경로</text>
+
+  <!-- Box: Documents -->
+  <rect x="60" y="124" width="120" height="56" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="120" y="147" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Documents</text>
+  <text x="120" y="164" font-size="11" fill="#888" text-anchor="middle">PDF / TXT / Web</text>
+
+  <!-- Arrow → Chunker -->
+  <line x1="180" y1="152" x2="224" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Box: Chunker -->
+  <rect x="224" y="124" width="120" height="56" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="284" y="147" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Chunker</text>
+  <text x="284" y="164" font-size="11" fill="#888" text-anchor="middle">512 tokens</text>
+
+  <!-- Arrow → Embedder -->
+  <line x1="344" y1="152" x2="388" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Box: Embedder (shared) -->
+  <rect x="388" y="124" width="130" height="56" rx="6" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="453" y="144" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Embedder</text>
+  <text x="453" y="160" font-size="11" fill="#7ec8e3" text-anchor="middle">sentence-transformers</text>
+  <text x="453" y="174" font-size="10" fill="#888" text-anchor="middle">(인덱싱 · 쿼리 공유)</text>
+
+  <!-- Arrow → Vector Store -->
+  <line x1="518" y1="152" x2="562" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Box: Vector Store FAISS -->
+  <rect x="562" y="124" width="130" height="56" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="627" y="147" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Vector Store</text>
+  <text x="627" y="164" font-size="11" fill="#888" text-anchor="middle">FAISS Index</text>
+
+  <!-- ═══════════════════════════════════════════
+       QUERY PATH (bottom lane)
+       ═══════════════════════════════════════════ -->
+
+  <!-- Lane label -->
+  <rect x="60" y="240" width="114" height="24" rx="12" fill="#55c555" opacity="0.15" stroke="#55c555" stroke-width="1"/>
+  <text x="117" y="256" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">쿼리 경로</text>
+
+  <!-- Box: Query -->
+  <rect x="60" y="276" width="120" height="56" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="120" y="299" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Query</text>
+  <text x="120" y="316" font-size="11" fill="#888" text-anchor="middle">사용자 질문</text>
+
+  <!-- Arrow → Embedder (shared, vertical down then right) -->
+  <!-- Query → up to embedder row, then right to Embedder box -->
+  <line x1="180" y1="304" x2="388" y2="304" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="388" y1="304" x2="388" y2="176" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+
+  <!-- Arrow from Embedder down → Retriever -->
+  <line x1="453" y1="180" x2="453" y2="276" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Box: Retriever -->
+  <rect x="388" y="276" width="130" height="56" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="453" y="299" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Retriever</text>
+  <text x="453" y="316" font-size="11" fill="#888" text-anchor="middle">k-NN Search</text>
+
+  <!-- Retriever ↔ Vector Store (k-NN lookup) -->
+  <line x1="562" y1="180" x2="562" y2="304" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="562" y1="304" x2="522" y2="304" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+
+  <!-- Arrow → Context Builder -->
+  <line x1="518" y1="304" x2="562" y2="304" stroke="none"/>
+  <line x1="518" y1="304" x2="562" y2="304" stroke="none"/>
+
+  <!-- ═══════════════════════════════════════════
+       GENERATION PATH
+       ═══════════════════════════════════════════ -->
+
+  <!-- Context Builder -->
+  <rect x="562" y="276" width="130" height="56" rx="6" fill="#1a1a0a" stroke="#e08040" stroke-width="1.5"/>
+  <text x="627" y="299" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Context Builder</text>
+  <text x="627" y="316" font-size="11" fill="#888" text-anchor="middle">Prompt 조립</text>
+
+  <!-- Arrow → LLM -->
+  <line x1="692" y1="304" x2="726" y2="304" stroke="#e08040" stroke-width="2" marker-end="url(#arr-orange)"/>
+
+  <!-- Box: LLM -->
+  <rect x="726" y="276" width="94" height="56" rx="6" fill="#1a1a0a" stroke="#e08040" stroke-width="1.5"/>
+  <text x="773" y="299" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">LLM</text>
+  <text x="773" y="316" font-size="11" fill="#888" text-anchor="middle">API 호출</text>
+
+  <!-- Arrow LLM → Answer -->
+  <line x1="773" y1="332" x2="773" y2="378" stroke="#e08040" stroke-width="2" marker-end="url(#arr-orange)"/>
+
+  <!-- Box: Answer -->
+  <rect x="726" y="378" width="94" height="56" rx="6" fill="#2a1a0a" stroke="#e08040" stroke-width="2"/>
+  <text x="773" y="401" font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Answer</text>
+  <text x="773" y="418" font-size="11" fill="#e08040" text-anchor="middle">최종 답변</text>
+
+  <!-- ═══════════════════════════════════════════
+       CODE BOX — bottom
+       ═══════════════════════════════════════════ -->
+  <rect x="60" y="452" width="660" height="104" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="474" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"># 핵심 흐름 요약</text>
+  <text x="76" y="492" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">chunks</tspan> = chunker.split(documents)</text>
+  <text x="76" y="510" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">index = faiss_store.<tspan fill="#7ec8e3" font-weight="600">build</tspan>(embedder.<tspan fill="#7ec8e3" font-weight="600">encode</tspan>(chunks))</text>
+  <text x="76" y="528" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">hits  = index.<tspan fill="#7ec8e3" font-weight="600">search</tspan>(embedder.<tspan fill="#7ec8e3" font-weight="600">encode</tspan>(query), k=<tspan fill="#b5cea8">5</tspan>)</text>
+  <text x="76" y="546" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve">answer = llm.<tspan fill="#7ec8e3" font-weight="600">generate</tspan>(build_prompt(query, hits))</text>
+
+  <!-- Legend -->
+  <line x1="730" y1="468" x2="760" y2="468" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="766" y="472" font-size="11" fill="#7ec8e3">인덱싱</text>
+  <line x1="730" y1="488" x2="760" y2="488" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="766" y="492" font-size="11" fill="#55c555">쿼리</text>
+  <line x1="730" y1="508" x2="760" y2="508" stroke="#e08040" stroke-width="2"/>
+  <text x="766" y="512" font-size="11" fill="#e08040">생성</text>
+
+  <!-- Retriever → Context Builder arrow (horizontal in query lane) -->
+  <line x1="518" y1="304" x2="562" y2="304" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Query → Retriever direct label -->
+  <text x="180" y="298" font-size="11" fill="#888">쿼리 임베딩</text>
+
+  <text x="440" y="560" font-size="12" fill="#555" text-anchor="middle">Embedder는 인덱싱·쿼리 경로에서 동일한 모델을 공유해 임베딩 공간 일관성 유지</text>
+</svg>

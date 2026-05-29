@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 560" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="560" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">GPU 메모리 구성 요소 &amp; 최적화 효과</text>
+  <text x="440" y="70" font-size="13" fill="#888" text-anchor="middle">24 GB VRAM 기준 — 각 최적화 기법이 줄여주는 컴포넌트</text>
+
+  <!-- ═══ BASELINE BAR ═══ -->
+  <text x="60" y="108" font-size="13" font-weight="600" fill="#e8e8e8">Baseline (최적화 없음)</text>
+
+  <!-- Params 6 GB → 150px -->
+  <rect x="60" y="118" width="150" height="44" rx="4" fill="#7777cc"/>
+  <text x="135" y="136" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Model Params</text>
+  <text x="135" y="153" font-size="11" fill="#ccc" text-anchor="middle">~6 GB</text>
+
+  <!-- Gradients 6 GB → 150px -->
+  <rect x="214" y="118" width="150" height="44" rx="4" fill="#e05555"/>
+  <text x="289" y="136" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Gradients</text>
+  <text x="289" y="153" font-size="11" fill="#ccc" text-anchor="middle">~6 GB</text>
+
+  <!-- Optimizer States 12 GB → 200px -->
+  <rect x="368" y="118" width="200" height="44" rx="4" fill="#e08040"/>
+  <text x="468" y="136" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Optimizer States (AdamW)</text>
+  <text x="468" y="153" font-size="11" fill="#ccc" text-anchor="middle">~12 GB (2×params×2)</text>
+
+  <!-- Activations 4–8 GB → 130px -->
+  <rect x="572" y="118" width="130" height="44" rx="4" fill="#7ec8e3"/>
+  <text x="637" y="136" font-size="12" font-weight="600" fill="#0a0a0a" text-anchor="middle">Activations</text>
+  <text x="637" y="153" font-size="11" fill="#0a0a0a" text-anchor="middle">~4–8 GB</text>
+
+  <!-- Batch 1–2 GB → 90px -->
+  <rect x="706" y="118" width="114" height="44" rx="4" fill="#55c555"/>
+  <text x="763" y="136" font-size="12" font-weight="600" fill="#0a0a0a" text-anchor="middle">Batch Data</text>
+  <text x="763" y="153" font-size="11" fill="#0a0a0a" text-anchor="middle">~1–2 GB</text>
+
+  <text x="60" y="182" font-size="12" fill="#e05555" font-weight="600">총 ~29–34 GB → 24 GB GPU에서 OOM 발생!</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="200" x2="820" y2="200" stroke="#2a2a2a" stroke-width="1"/>
+
+  <!-- ─── Row 1: Mixed Precision ─── -->
+  <text x="60" y="226" font-size="13" font-weight="600" fill="#7ec8e3">① Mixed Precision (FP16/BF16) — Params + Grads 50% 절감</text>
+
+  <rect x="60" y="236" width="75" height="38" rx="4" fill="#7777cc" opacity="0.75"/>
+  <text x="97" y="251" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Params</text>
+  <text x="97" y="267" font-size="10" fill="#ccc" text-anchor="middle">3 GB</text>
+
+  <rect x="139" y="236" width="75" height="38" rx="4" fill="#e05555" opacity="0.75"/>
+  <text x="176" y="251" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Grads</text>
+  <text x="176" y="267" font-size="10" fill="#ccc" text-anchor="middle">3 GB</text>
+
+  <rect x="218" y="236" width="200" height="38" rx="4" fill="#e08040"/>
+  <text x="318" y="251" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Optimizer States (FP32 유지)</text>
+  <text x="318" y="267" font-size="10" fill="#ccc" text-anchor="middle">~12 GB</text>
+
+  <rect x="422" y="236" width="65" height="38" rx="4" fill="#7ec8e3" opacity="0.75"/>
+  <text x="454" y="251" font-size="11" font-weight="600" fill="#0a0a0a" text-anchor="middle">Act.</text>
+  <text x="454" y="267" font-size="10" fill="#0a0a0a" text-anchor="middle">2–4 GB</text>
+
+  <rect x="491" y="236" width="65" height="38" rx="4" fill="#55c555" opacity="0.75"/>
+  <text x="523" y="251" font-size="11" font-weight="600" fill="#0a0a0a" text-anchor="middle">Batch</text>
+  <text x="523" y="267" font-size="10" fill="#0a0a0a" text-anchor="middle">1–2 GB</text>
+
+  <text x="568" y="249" font-size="13" fill="#55c555" font-weight="600">→ ~21–24 GB</text>
+  <text x="568" y="266" font-size="11" fill="#888">Params+Grads 합계 50% 절감</text>
+
+  <!-- Divider thin -->
+  <line x1="60" y1="290" x2="820" y2="290" stroke="#1e1e1e" stroke-width="1"/>
+
+  <!-- ─── Row 2: Gradient Checkpointing ─── -->
+  <text x="60" y="316" font-size="13" font-weight="600" fill="#7ec8e3">② Gradient Checkpointing — Activations 80% 절감</text>
+
+  <rect x="60" y="326" width="150" height="38" rx="4" fill="#7777cc"/>
+  <text x="135" y="341" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Model Params</text>
+  <text x="135" y="357" font-size="10" fill="#ccc" text-anchor="middle">~6 GB (유지)</text>
+
+  <rect x="214" y="326" width="150" height="38" rx="4" fill="#e05555"/>
+  <text x="289" y="341" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Gradients</text>
+  <text x="289" y="357" font-size="10" fill="#ccc" text-anchor="middle">~6 GB (유지)</text>
+
+  <rect x="368" y="326" width="200" height="38" rx="4" fill="#e08040"/>
+  <text x="468" y="341" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Optimizer States</text>
+  <text x="468" y="357" font-size="10" fill="#ccc" text-anchor="middle">~12 GB (유지)</text>
+
+  <!-- Activations drastically reduced -->
+  <rect x="572" y="326" width="38" height="38" rx="4" fill="#7ec8e3"/>
+  <text x="591" y="341" font-size="10" font-weight="600" fill="#0a0a0a" text-anchor="middle">Act.</text>
+  <text x="591" y="357" font-size="10" fill="#0a0a0a" text-anchor="middle">0.8G</text>
+
+  <rect x="614" y="326" width="70" height="38" rx="4" fill="#55c555" opacity="0.75"/>
+  <text x="649" y="341" font-size="11" font-weight="600" fill="#0a0a0a" text-anchor="middle">Batch</text>
+  <text x="649" y="357" font-size="10" fill="#0a0a0a" text-anchor="middle">1–2 GB</text>
+
+  <text x="700" y="341" font-size="13" fill="#55c555" font-weight="600">→ ~26 GB</text>
+  <text x="700" y="358" font-size="11" fill="#888">Act. 80% 절감</text>
+
+  <!-- Divider thin -->
+  <line x1="60" y1="380" x2="820" y2="380" stroke="#1e1e1e" stroke-width="1"/>
+
+  <!-- ─── Row 3: Combined ─── -->
+  <text x="60" y="406" font-size="13" font-weight="600" fill="#55c555">③ Mixed Precision + Checkpointing + Grad Accumulation 동시 적용</text>
+
+  <rect x="60" y="416" width="75" height="38" rx="4" fill="#7777cc" opacity="0.75"/>
+  <text x="97" y="431" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Params</text>
+  <text x="97" y="447" font-size="10" fill="#ccc" text-anchor="middle">3 GB</text>
+
+  <rect x="139" y="416" width="75" height="38" rx="4" fill="#e05555" opacity="0.75"/>
+  <text x="176" y="431" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Grads</text>
+  <text x="176" y="447" font-size="10" fill="#ccc" text-anchor="middle">3 GB</text>
+
+  <rect x="218" y="416" width="200" height="38" rx="4" fill="#e08040"/>
+  <text x="318" y="431" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Optimizer States (FP32)</text>
+  <text x="318" y="447" font-size="10" fill="#ccc" text-anchor="middle">~12 GB</text>
+
+  <rect x="422" y="416" width="30" height="38" rx="4" fill="#7ec8e3"/>
+  <text x="437" y="431" font-size="10" font-weight="600" fill="#0a0a0a" text-anchor="middle">A.</text>
+  <text x="437" y="447" font-size="10" fill="#0a0a0a" text-anchor="middle">0.8G</text>
+
+  <rect x="456" y="416" width="55" height="38" rx="4" fill="#55c555" opacity="0.75"/>
+  <text x="483" y="431" font-size="10" font-weight="600" fill="#0a0a0a" text-anchor="middle">Batch</text>
+  <text x="483" y="447" font-size="10" fill="#0a0a0a" text-anchor="middle">0.5G</text>
+
+  <!-- Result highlight -->
+  <rect x="522" y="412" width="196" height="46" rx="6" fill="#55c555" opacity="0.12" stroke="#55c555" stroke-width="1"/>
+  <text x="620" y="431" font-size="14" fill="#55c555" font-weight="700" text-anchor="middle">→ ~19–20 GB</text>
+  <text x="620" y="449" font-size="11" fill="#aaa" text-anchor="middle">24 GB GPU 안정 훈련 가능!</text>
+
+  <!-- Legend -->
+  <rect x="60" y="488" width="14" height="14" rx="2" fill="#7777cc"/>
+  <text x="80" y="500" font-size="12" fill="#888">Model Params</text>
+  <rect x="190" y="488" width="14" height="14" rx="2" fill="#e05555"/>
+  <text x="210" y="500" font-size="12" fill="#888">Gradients</text>
+  <rect x="295" y="488" width="14" height="14" rx="2" fill="#e08040"/>
+  <text x="315" y="500" font-size="12" fill="#888">Optimizer States</text>
+  <rect x="450" y="488" width="14" height="14" rx="2" fill="#7ec8e3"/>
+  <text x="470" y="500" font-size="12" fill="#888">Activations</text>
+  <rect x="555" y="488" width="14" height="14" rx="2" fill="#55c555"/>
+  <text x="575" y="500" font-size="12" fill="#888">Batch Data</text>
+
+  <text x="440" y="535" font-size="12" fill="#555" text-anchor="middle">* 수치는 7B 파라미터 모델 FP32 기준 추정치 (실제 모델·배치 크기에 따라 다름)</text>
+</svg>

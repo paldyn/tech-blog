@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <defs>
+    <marker id="arr" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto">
+      <path d="M1,1 L10,5 L1,9 Z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto">
+      <path d="M1,1 L10,5 L1,9 Z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">SSE 스트리밍 응답 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-size="13" fill="#888">Server-Sent Events 기반 토큰 스트리밍: 첫 토큰까지 지연을 최소화</text>
+
+  <!-- Step 1: Client Request -->
+  <rect x="60" y="100" width="160" height="76" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="126" text-anchor="middle" font-size="12" fill="#888">① 클라이언트 요청</text>
+  <text x="140" y="148" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">POST /chat</text>
+  <text x="140" y="167" text-anchor="middle" font-size="11" fill="#7ec8e3">Accept: text/event-stream</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="220" y1="138" x2="278" y2="138" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: FastAPI StreamingResponse -->
+  <rect x="282" y="100" width="190" height="76" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="377" y="126" text-anchor="middle" font-size="12" fill="#888">② 스트리밍 시작</text>
+  <text x="377" y="148" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">StreamingResponse</text>
+  <text x="377" y="167" text-anchor="middle" font-size="11" fill="#7777cc">async generator 생성</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="472" y1="138" x2="528" y2="138" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: LLM Inference -->
+  <rect x="532" y="100" width="160" height="76" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="612" y="126" text-anchor="middle" font-size="12" fill="#888">③ LLM 추론</text>
+  <text x="612" y="148" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">GPU 토큰 생성</text>
+  <text x="612" y="167" text-anchor="middle" font-size="11" fill="#55c555">stream=True</text>
+
+  <!-- Streaming tokens row label -->
+  <text x="60" y="222" font-size="14" font-weight="600" fill="#e8e8e8">④ 토큰 스트리밍 (SSE 포맷)</text>
+
+  <!-- SSE code box -->
+  <rect x="60" y="238" width="760" height="106" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="82" y="264" font-size="13" font-family="'JetBrains Mono',monospace" fill="#9aa4b8"># Server-Sent Events 포맷</text>
+  <text x="82" y="286" font-size="13" font-family="'JetBrains Mono',monospace">
+    <tspan fill="#7ec8e3" font-weight="600">data:</tspan>
+    <tspan fill="#ffffff"> {"token": "안녕"}</tspan>
+    <tspan fill="#9aa4b8">\n\n</tspan>
+  </text>
+  <text x="82" y="308" font-size="13" font-family="'JetBrains Mono',monospace">
+    <tspan fill="#7ec8e3" font-weight="600">data:</tspan>
+    <tspan fill="#ffffff"> {"token": "하세요"}</tspan>
+    <tspan fill="#9aa4b8">\n\n</tspan>
+  </text>
+  <text x="82" y="330" font-size="13" font-family="'JetBrains Mono',monospace">
+    <tspan fill="#7ec8e3" font-weight="600">data:</tspan>
+    <tspan fill="#ffffff"> [DONE]</tspan>
+    <tspan fill="#9aa4b8">                                             \n\n  ← 스트림 종료 신호</tspan>
+  </text>
+
+  <!-- Token bubbles flowing to client -->
+  <text x="60" y="386" font-size="14" font-weight="600" fill="#e8e8e8">⑤ 클라이언트 점진 렌더링</text>
+
+  <!-- Token badges -->
+  <rect x="60" y="400" width="68" height="32" rx="16" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="94" y="421" text-anchor="middle" font-size="13" fill="#55c555">"안녕"</text>
+
+  <line x1="132" y1="416" x2="158" y2="416" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <rect x="164" y="400" width="86" height="32" rx="16" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="207" y="421" text-anchor="middle" font-size="13" fill="#55c555">"하세요"</text>
+
+  <line x1="254" y1="416" x2="280" y2="416" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <rect x="286" y="400" width="56" height="32" rx="16" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="314" y="421" text-anchor="middle" font-size="13" fill="#55c555">"저는"</text>
+
+  <line x1="346" y1="416" x2="372" y2="416" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <rect x="378" y="400" width="56" height="32" rx="16" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="406" y="421" text-anchor="middle" font-size="13" fill="#55c555">"AI"</text>
+
+  <line x1="438" y1="416" x2="464" y2="416" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <rect x="470" y="400" width="56" height="32" rx="16" fill="#111827" stroke="#444" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="498" y="421" text-anchor="middle" font-size="13" fill="#555">...</text>
+
+  <!-- Benefit note -->
+  <rect x="560" y="394" width="280" height="44" rx="6" fill="#111111" stroke="#333" stroke-width="1"/>
+  <text x="700" y="413" text-anchor="middle" font-size="12" fill="#888">TTFT (Time To First Token) 최소화</text>
+  <text x="700" y="430" text-anchor="middle" font-size="12" fill="#7ec8e3">전체 응답 대기 없이 즉시 렌더링</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="466" text-anchor="middle" font-size="12" fill="#555">StreamingResponse + async generator로 메모리 효율적 스트리밍 구현</text>
+</svg>
