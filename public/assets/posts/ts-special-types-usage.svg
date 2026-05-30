@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" style="background:#0a0a0a">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">특수 타입 실전 사용 패턴</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" fill="#888" text-anchor="middle">어떤 상황에서 어떤 특수 타입을 선택해야 하는가</text>
+
+  <!-- Decision flow -->
+  <!-- Question box -->
+  <rect x="300" y="96" width="280" height="50" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="127" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">타입 불확실한 값이 있다</text>
+
+  <!-- Arrow down -->
+  <defs>
+    <marker id="sp" viewBox="0 0 14 14" refX="7" refY="12" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 7 13 L 14 0 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Branch: unknown vs any -->
+  <line x1="370" y1="146" x2="220" y2="186" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#sp)"/>
+  <text x="270" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">타입 검사 유지</text>
+
+  <line x1="510" y1="146" x2="660" y2="186" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#sp)"/>
+  <text x="580" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">빠른 임시 우회</text>
+
+  <!-- unknown box -->
+  <rect x="60" y="190" width="320" height="120" rx="8" fill="#001a0d" stroke="#007e4e" stroke-width="1.5"/>
+  <text x="220" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="16" font-weight="700" fill="#55c555" text-anchor="middle">unknown 사용</text>
+  <rect x="80" y="228" width="280" height="62" rx="4" fill="#000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> parse(data: </tspan><tspan fill="#55c555">unknown</tspan><tspan fill="#ffffff">) {</tspan></text>
+  <text x="96" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (Array.isArray(data)) { ... }</tspan></text>
+  <text x="80" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">API 응답, JSON 파싱에 적합</text>
+
+  <!-- any box -->
+  <rect x="500" y="190" width="320" height="120" rx="8" fill="#1a0d00" stroke="#8e6e00" stroke-width="1.5"/>
+  <text x="660" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="16" font-weight="700" fill="#b5cea8" text-anchor="middle">any 사용 (주의)</text>
+  <rect x="520" y="228" width="280" height="62" rx="4" fill="#000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="536" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#9aa4b8">// JS to TS 마이그레이션</tspan></text>
+  <text x="536" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3" font-weight="600">let</tspan><tspan fill="#ffffff"> legacy: </tspan><tspan fill="#b5cea8">any</tspan><tspan fill="#ffffff"> = getOldData();</tspan></text>
+  <text x="520" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">임시 사용 후 타입 교체 권장</text>
+
+  <!-- Section 2: never and void -->
+  <text x="76" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">함수 반환 타입 선택</text>
+
+  <rect x="60" y="366" width="370" height="80" rx="8" fill="#0a0a1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">void — 정상 종료, 반환값 없음</text>
+  <rect x="80" y="400" width="330" height="36" rx="4" fill="#000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> saveUser(user: User): </tspan><tspan fill="#7ec8e3">void</tspan><tspan fill="#ffffff"> { ... }</tspan></text>
+
+  <rect x="450" y="366" width="370" height="80" rx="8" fill="#1a001a" stroke="#6e006e" stroke-width="1"/>
+  <text x="470" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">never — 절대 정상 종료되지 않음</text>
+  <rect x="470" y="400" width="330" height="36" rx="4" fill="#000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="486" y="424" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> fail(msg: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff">): </tspan><tspan fill="#7777cc">never</tspan><tspan fill="#ffffff"> { throw ... }</tspan></text>
+
+  <!-- Bottom rule -->
+  <text x="440" y="466" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555" text-anchor="middle">원칙: unknown &gt; any / void &gt; never 순으로 먼저 시도, 정말 필요한 경우에만 하위 타입 사용</text>
+</svg>
