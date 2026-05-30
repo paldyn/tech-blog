@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">커스텀 HealthIndicator 구현 코드</text>
+
+  <!-- LEFT: Simple HealthIndicator -->
+  <text x="210" y="80" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">단순 HealthIndicator</text>
+  <rect x="40" y="92" width="355" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="56" y="117" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@Component</text>
+  <text x="56" y="135" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">public class ExternalApiHealthIndicator</text>
+  <text x="56" y="153" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    implements HealthIndicator {</text>
+  <text x="56" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> </text>
+  <text x="56" y="189" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  @Override</text>
+  <text x="56" y="207" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  public Health health() {</text>
+  <text x="56" y="225" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    try {</text>
+  <text x="56" y="243" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">      apiClient.ping();</text>
+  <text x="56" y="261" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">      return Health.up()</text>
+  <text x="56" y="279" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">          .withDetail("url", apiUrl)</text>
+  <text x="56" y="297" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">          .build();</text>
+  <text x="56" y="315" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    } catch (Exception e) {</text>
+  <text x="56" y="333" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">      return Health.down(e).build();</text>
+  <text x="56" y="351" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    }</text>
+  <text x="56" y="369" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  } }</text>
+
+  <!-- RIGHT: Composite HealthContributor -->
+  <text x="668" y="80" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">CompositeHealthContributor</text>
+  <rect x="485" y="92" width="355" height="280" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="501" y="117" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@Component("externalApis")</text>
+  <text x="501" y="135" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">public class ExternalApisHealth</text>
+  <text x="501" y="153" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    implements CompositeHealthContributor {</text>
+  <text x="501" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> </text>
+  <text x="501" y="189" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  private final Map&lt;String,</text>
+  <text x="501" y="207" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">      HealthContributor&gt; contributors</text>
+  <text x="501" y="225" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    = new LinkedHashMap&lt;&gt;();</text>
+  <text x="501" y="243" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  // 생성자에서 개별 API 등록</text>
+  <text x="501" y="261" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  // → /health/externalApis/payment</text>
+  <text x="501" y="279" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  //   /health/externalApis/shipping</text>
+  <text x="501" y="297" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> </text>
+  <text x="501" y="315" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  @Override</text>
+  <text x="501" y="333" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  public Iterator&lt;Entry&lt;...&gt;&gt;</text>
+  <text x="501" y="351" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    iterator() {</text>
+  <text x="501" y="369" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    return contributors.entrySet().iterator();</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="396" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">Bean 이름이 엔드포인트 경로가 됨: @Component("externalApi") → /health/externalApi</text>
+</svg>

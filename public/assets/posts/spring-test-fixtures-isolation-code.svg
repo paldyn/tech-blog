@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">테스트 픽스처 격리 패턴 코드</text>
+
+  <!-- LEFT: @Transactional + @Rollback -->
+  <text x="220" y="80" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">@Transactional + @Rollback 패턴</text>
+  <rect x="40" y="92" width="370" height="258" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="56" y="117" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@DataJpaTest</text>
+  <text x="56" y="135" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@Transactional</text>
+  <text x="56" y="153" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">class UserRepoTest {</text>
+  <text x="56" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  @Autowired</text>
+  <text x="56" y="189" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  UserRepository repo;</text>
+  <text x="56" y="207" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> </text>
+  <text x="56" y="225" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  @Test // 테스트 후 자동 롤백</text>
+  <text x="56" y="243" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  void saveAndFind() {</text>
+  <text x="56" y="261" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    repo.save(new User("Alice"));</text>
+  <text x="56" y="279" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    // 롤백 → DB 오염 없음</text>
+  <text x="56" y="297" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  }</text>
+  <text x="56" y="315" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+
+  <!-- RIGHT: @Sql pattern -->
+  <text x="660" y="80" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#c5c555">@Sql 픽스처 패턴</text>
+  <rect x="470" y="92" width="370" height="258" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="486" y="117" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@SpringBootTest</text>
+  <text x="486" y="135" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@Sql(scripts = {</text>
+  <text x="486" y="153" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  "/sql/init.sql",</text>
+  <text x="486" y="171" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  "/sql/users.sql"</text>
+  <text x="486" y="189" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">}, executionPhase = BEFORE_EACH)</text>
+  <text x="486" y="207" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">@Sql("/sql/cleanup.sql",</text>
+  <text x="486" y="225" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">    executionPhase = AFTER_EACH)</text>
+  <text x="486" y="243" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">class OrderIntegrationTest {</text>
+  <text x="486" y="261" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  // 매 테스트 전 SQL 실행</text>
+  <text x="486" y="279" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  // 매 테스트 후 정리 SQL</text>
+  <text x="486" y="297" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="370" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">@Sql scripts는 src/test/resources 경로 기준</text>
+</svg>
