@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">API Server 요청 처리 흐름</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">인증 → 인가 → Admission Control → etcd 저장</text>
+
+  <!-- Step 1: 요청 수신 -->
+  <rect x="60" y="100" width="130" height="70" rx="8" fill="#0f0f0f" stroke="#444" stroke-width="1.5"/>
+  <text x="125" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#888">HTTP 요청</text>
+  <text x="125" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">kubectl /</text>
+  <text x="125" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">SDK / CI</text>
+
+  <line x1="192" y1="135" x2="218" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: 인증 -->
+  <rect x="220" y="100" width="130" height="70" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="285" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7ec8e3">인증</text>
+  <text x="285" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Authentication</text>
+  <text x="285" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">TLS / Token / OIDC</text>
+  <text x="285" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">401 → Unauthorized</text>
+
+  <line x1="352" y1="135" x2="378" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: 인가 -->
+  <rect x="380" y="100" width="130" height="70" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="445" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">인가</text>
+  <text x="445" y="140" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Authorization</text>
+  <text x="445" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">RBAC / ABAC</text>
+  <text x="445" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">403 → Forbidden</text>
+
+  <line x1="512" y1="135" x2="538" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Admission -->
+  <rect x="540" y="100" width="140" height="70" rx="8" fill="#1a0d1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="610" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7777cc">Admission</text>
+  <text x="610" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Mutating Webhook</text>
+  <text x="610" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Validating Webhook</text>
+  <text x="610" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">422 → Invalid</text>
+
+  <line x1="682" y1="135" x2="708" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5: etcd -->
+  <rect x="710" y="100" width="110" height="70" rx="8" fill="#1a100d" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="765" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#ce9178">etcd 저장</text>
+  <text x="765" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">상태 영속화</text>
+  <text x="765" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">200 → OK</text>
+
+  <!-- Rejection arrows (down) -->
+  <line x1="285" y1="172" x2="285" y2="210" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="285" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555">401 Unauthorized</text>
+
+  <line x1="445" y1="172" x2="445" y2="210" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="445" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555">403 Forbidden</text>
+
+  <line x1="610" y1="172" x2="610" y2="210" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="610" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555">422 Unprocessable</text>
+
+  <!-- Admission detail boxes -->
+  <rect x="60" y="260" width="760" height="190" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="440" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8e8e8">Admission Controller 상세</text>
+
+  <rect x="80" y="298" width="280" height="130" rx="6" fill="#0d1a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="220" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7777cc">Mutating Webhook</text>
+  <text x="220" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">요청 오브젝트를 변경(수정)할 수 있음</text>
+  <text x="220" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예: 기본 리소스 요청값 주입</text>
+  <text x="220" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예: 사이드카 자동 주입 (Istio)</text>
+  <text x="220" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예: 레이블 자동 추가</text>
+  <text x="220" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">Mutating → Validating 순서로 실행</text>
+
+  <rect x="500" y="298" width="300" height="130" rx="6" fill="#0d1a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">Validating Webhook</text>
+  <text x="650" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">요청을 검증만 (변경 불가)</text>
+  <text x="650" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">거부 시 422 응답 반환</text>
+  <text x="650" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예: 이미지 레지스트리 정책</text>
+  <text x="650" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">예: 필수 레이블 강제</text>
+  <text x="650" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">OPA Gatekeeper / Kyverno</text>
+</svg>

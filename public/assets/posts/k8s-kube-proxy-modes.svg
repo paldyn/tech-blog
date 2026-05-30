@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">kube-proxy 동작 모드 비교</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">iptables / IPVS / eBPF(Cilium) 세 가지 접근법</text>
+
+  <!-- iptables -->
+  <rect x="60" y="96" width="240" height="240" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="180" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">iptables 모드</text>
+  <text x="180" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Linux 커널 netfilter</text>
+  <text x="180" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">DNAT로 패킷 변환</text>
+  <text x="180" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">규칙 수 = 파드 수 비례</text>
+  <text x="180" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">장점: 안정적, 기본값</text>
+  <text x="180" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">단점: 서비스 수천 개 시 성능 저하</text>
+  <text x="180" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">O(n) 순차 매칭</text>
+  <text x="180" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">로드밸런싱: 무작위(random)</text>
+  <text x="180" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">소규모 클러스터에 적합</text>
+  <text x="180" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">K8s 기본 모드</text>
+  <text x="180" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#9aa4b8">--proxy-mode=iptables</text>
+
+  <!-- IPVS -->
+  <rect x="320" y="96" width="240" height="240" rx="8" fill="#111" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">IPVS 모드</text>
+  <text x="440" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Linux 커널 LVS</text>
+  <text x="440" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">해시 테이블 기반</text>
+  <text x="440" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">O(1) 룩업</text>
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">장점: 대규모 고성능</text>
+  <text x="440" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">다양한 LB 알고리즘 지원</text>
+  <text x="440" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">RR, LC, SH, DH ...</text>
+  <text x="440" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">단점: 커널 모듈 필요</text>
+  <text x="440" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">서비스 수천 개 이상에 권장</text>
+  <text x="440" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">ipvs 커널 모듈 로드 필요</text>
+  <text x="440" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#9aa4b8">--proxy-mode=ipvs</text>
+
+  <!-- eBPF / Cilium -->
+  <rect x="580" y="96" width="240" height="240" rx="8" fill="#111" stroke="#55c555" stroke-width="1.5"/>
+  <text x="700" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555">eBPF 모드 (Cilium)</text>
+  <text x="700" y="144" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">kube-proxy 대체</text>
+  <text x="700" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">커널 수준 eBPF 프로그램</text>
+  <text x="700" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">iptables/IPVS 우회</text>
+  <text x="700" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">장점: 최고 성능</text>
+  <text x="700" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">네트워크 정책 고급 기능</text>
+  <text x="700" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">가시성(observability) 탁월</text>
+  <text x="700" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">단점: 리눅스 커널 5.4+ 필요</text>
+  <text x="700" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">클라우드 네이티브 차세대 표준</text>
+  <text x="700" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Cilium CNI 설치 필요</text>
+  <text x="700" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#9aa4b8">kube-proxy 없이 실행 가능</text>
+</svg>
