@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">ClickHouse DDL &amp; 분석 쿼리 패턴</text>
+
+  <!-- Left: DDL -->
+  <text x="210" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">MergeTree 테이블 생성</text>
+  <rect x="40" y="78" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="98" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">CREATE TABLE</text>
+  <text x="56" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  events</text>
+  <text x="56" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(</text>
+  <text x="56" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  event_ts  </text>
+  <text x="174" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DateTime</text>
+  <text x="56" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  user_id   </text>
+  <text x="174" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">UInt64</text>
+  <text x="56" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  action    </text>
+  <text x="174" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">LowCardinality</text>
+  <text x="56" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  cnt       </text>
+  <text x="174" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">UInt32</text>
+  <text x="56" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">) </text>
+  <text x="72" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ENGINE</text>
+  <text x="120" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> = </text>
+  <text x="138" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">MergeTree</text>
+  <text x="56" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">PARTITION BY</text>
+  <text x="174" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> toYYYYMM(event_ts)</text>
+  <text x="56" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ORDER BY</text>
+  <text x="138" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (user_id, event_ts)</text>
+  <text x="56" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SETTINGS</text>
+  <text x="138" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> index_granularity=</text>
+  <text x="298" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">8192</text>
+  <text x="324" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">;</text>
+
+  <!-- Right: Analytics Query -->
+  <text x="670" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">실시간 집계 쿼리</text>
+  <rect x="480" y="78" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="98" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 초당 이벤트 수 집계</text>
+  <text x="496" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
+  <text x="496" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  toStartOfMinute(event_ts)</text>
+  <text x="496" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    AS minute</text>
+  <text x="496" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  , action</text>
+  <text x="496" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  , </text>
+  <text x="524" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">count</text>
+  <text x="558" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">()   AS hits</text>
+  <text x="496" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  , </text>
+  <text x="524" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">uniqHLL12</text>
+  <text x="608" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(user_id)</text>
+  <text x="496" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
+  <text x="532" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> events</text>
+  <text x="496" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">WHERE</text>
+  <text x="540" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> event_ts &gt;= now() - </text>
+  <text x="680" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">3600</text>
+  <text x="496" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">GROUP BY</text>
+  <text x="562" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> minute, action</text>
+  <text x="496" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ORDER BY</text>
+  <text x="562" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> minute;</text>
+
+  <!-- Characteristics -->
+  <rect x="40" y="318" width="360" height="96" rx="6" fill="#111"/>
+  <text x="220" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">ClickHouse 강점</text>
+  <text x="220" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">초당 수억 행 INSERT 처리 (배치)</text>
+  <text x="220" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">1억 행 집계 쿼리 &lt; 1초 응답</text>
+  <text x="220" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">벡터화 실행 + SIMD 연산</text>
+  <text x="220" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">LowCardinality / Nullable 타입 최적화</text>
+
+  <rect x="480" y="318" width="360" height="96" rx="6" fill="#111"/>
+  <text x="660" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">ClickHouse 제약</text>
+  <text x="660" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">단건 UPDATE/DELETE 매우 느림</text>
+  <text x="660" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">트랜잭션 미지원 (v22 이전)</text>
+  <text x="660" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">복잡한 JOIN은 상대적으로 느림</text>
+  <text x="660" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">OLTP 용도 부적합</text>
+</svg>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">Type 2 SCD — 구현 패턴</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">서로게이트 키 + 유효 기간 + is_current 플래그</text>
+
+  <!-- Left: DDL -->
+  <text x="220" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">테이블 정의 (DDL)</text>
+
+  <rect x="40" y="104" width="360" height="188" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">CREATE TABLE</text>
+  <text x="56" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  dim_customer (</text>
+  <text x="56" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  cust_sk    </text>
+  <text x="196" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">BIGINT</text>
+  <text x="244" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">PRIMARY KEY</text>
+  <text x="56" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  cust_id    </text>
+  <text x="196" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">INT</text>
+  <text x="56" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  region     </text>
+  <text x="196" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">VARCHAR</text>
+  <text x="258" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(100)</text>
+  <text x="56" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  eff_from   </text>
+  <text x="196" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DATE</text>
+  <text x="56" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  eff_to     </text>
+  <text x="196" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DATE</text>
+  <text x="56" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  is_current </text>
+  <text x="196" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">BOOLEAN</text>
+  <text x="56" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+
+  <!-- Right: UPDATE query -->
+  <text x="660" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">변경 처리 (SQL)</text>
+
+  <rect x="480" y="104" width="360" height="188" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 1. 기존 행 만료</text>
+  <text x="496" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">UPDATE</text>
+  <text x="572" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> dim_customer</text>
+  <text x="496" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SET</text>
+  <text x="526" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> eff_to = :chg_dt - 1</text>
+  <text x="496" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    , is_current = </text>
+  <text x="640" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FALSE</text>
+  <text x="496" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">WHERE</text>
+  <text x="544" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> cust_id = :id</text>
+  <text x="496" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  AND</text>
+  <text x="540" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> is_current = </text>
+  <text x="648" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">TRUE</text>
+  <text x="496" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 2. 신규 행 삽입</text>
+  <text x="496" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">INSERT INTO</text>
+  <text x="596" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> dim_customer</text>
+  <text x="496" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">VALUES (:new_sk, :id, :new_region</text>
+  <text x="496" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">       , :chg_dt, </text>
+  <text x="620" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'9999-12-31'</text>
+  <text x="714" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">, </text>
+  <text x="726" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">TRUE</text>
+  <text x="760" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+
+  <!-- Arrow between DDL and SQL -->
+  <defs>
+    <marker id="arrRight" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="407" y1="198" x2="472" y2="198" stroke="#7777cc" stroke-width="2" marker-end="url(#arrRight)"/>
+
+  <!-- Key insight boxes -->
+  <rect x="40" y="314" width="246" height="56" rx="6" fill="#0d1520"/>
+  <text x="163" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">서로게이트 키 (cust_sk)</text>
+  <text x="163" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">비즈니스 키와 독립된 불변 PK</text>
+  <text x="163" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">팩트 테이블이 참조하는 대상</text>
+
+  <rect x="317" y="314" width="246" height="56" rx="6" fill="#0d1520"/>
+  <text x="440" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">유효 기간 (eff_from / eff_to)</text>
+  <text x="440" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">점-인-타임 쿼리 지원</text>
+  <text x="440" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">eff_to = '9999-12-31' → 현재 행</text>
+
+  <rect x="594" y="314" width="246" height="56" rx="6" fill="#0d1520"/>
+  <text x="717" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">is_current 플래그</text>
+  <text x="717" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">인덱스와 함께 현재 행 빠른 조회</text>
+  <text x="717" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">eff_to 조건 중복 방지</text>
+
+  <!-- Pit-in-time query example -->
+  <text x="440" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">점-인-타임 조회</text>
+  <rect x="200" y="412" width="480" height="64" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="216" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
+  <text x="264" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> * </text>
+  <text x="282" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
+  <text x="318" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> dim_customer</text>
+  <text x="216" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">WHERE</text>
+  <text x="264" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> cust_id = </text>
+  <text x="352" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">1001</text>
+  <text x="378" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600"> AND</text>
+  <text x="414" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> eff_from &lt;= </text>
+  <text x="510" y="450" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'2025-01-01'</text>
+  <text x="216" y="468" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  AND</text>
+  <text x="254" y="468" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> eff_to   &gt;= </text>
+  <text x="350" y="468" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">'2025-01-01'</text>
+  <text x="446" y="468" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">;</text>
+</svg>

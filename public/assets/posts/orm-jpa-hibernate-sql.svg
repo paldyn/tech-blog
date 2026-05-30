@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460">
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">Hibernate가 생성하는 SQL 패턴</text>
+
+  <!-- Inheritance SINGLE_TABLE -->
+  <text x="210" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">JOIN FETCH (N+1 해결)</text>
+  <rect x="40" y="78" width="360" height="182" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="98" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// JPQL JOIN FETCH</text>
+  <text x="56" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">@Query</text>
+  <text x="100" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(</text>
+  <text x="56" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  "SELECT o FROM Order o"</text>
+  <text x="56" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  +" JOIN FETCH o.customer c"</text>
+  <text x="56" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">  +" WHERE o.status = :status"</text>
+  <text x="56" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">)</text>
+  <text x="56" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 발행 SQL (1회):         </text>
+  <text x="56" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
+  <text x="104" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> o.*, c.*</text>
+  <text x="56" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  FROM</text>
+  <text x="104" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> orders o </text>
+  <text x="56" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> </text>
+
+  <!-- Right: Batch insert example -->
+  <text x="670" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">배치 Insert / Update</text>
+  <rect x="480" y="78" width="360" height="182" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="98" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// application.properties</text>
+  <text x="496" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">hibernate.jdbc.batch_size=</text>
+  <text x="740" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#b5cea8">50</text>
+  <text x="496" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">hibernate.order_inserts=</text>
+  <text x="728" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">true</text>
+  <text x="496" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">hibernate.order_updates=</text>
+  <text x="728" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">true</text>
+  <text x="496" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// batch_size=50 설정 시:</text>
+  <text x="496" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 50개 INSERT를 1번의 JDBC</text>
+  <text x="496" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// executeBatch() 호출로 묶음</text>
+  <text x="496" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// → N개 INSERT → N/50 라운드트립</text>
+  <text x="496" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// IDENTITY 전략과 충돌 주의</text>
+
+  <!-- SQL logging and Dirty Checking explanation -->
+  <rect x="40" y="282" width="800" height="148" rx="8" fill="#111"/>
+  <text x="440" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Dirty Checking — 변경 감지 동작 원리</text>
+  <rect x="56" y="312" width="756" height="106" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 엔티티 조회 시 스냅샷 저장</text>
+  <text x="72" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">Order order = em.find(Order.class, </text>
+  <text x="418" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#b5cea8">1L</text>
+  <text x="430" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">); </text>
+  <text x="460" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 스냅샷: {status="PENDING",...}</text>
+  <text x="72" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">order.setStatus(</text>
+  <text x="198" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178">"PAID"</text>
+  <text x="240" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">); </text>
+  <text x="270" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// SQL 없음 — 아직 변경만 기록</text>
+  <text x="72" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// flush 시: 스냅샷 vs 현재 비교 → 변경된 status만 UPDATE</text>
+  <text x="72" y="404" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 발행: UPDATE orders SET status='PAID' WHERE id=1</text>
+</svg>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">Redshift DDL — 분산·정렬 키 설계</text>
+
+  <!-- Left: Fact table DDL -->
+  <text x="210" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">팩트 테이블 (KEY 분산)</text>
+  <rect x="40" y="78" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="98" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">CREATE TABLE</text>
+  <text x="56" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  fact_orders</text>
+  <text x="56" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(</text>
+  <text x="56" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  order_id   </text>
+  <text x="174" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">BIGINT</text>
+  <text x="220" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> ENCODE az64</text>
+  <text x="56" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  cust_sk    </text>
+  <text x="174" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">INT</text>
+  <text x="56" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  order_dt   </text>
+  <text x="174" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DATE</text>
+  <text x="218" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> ENCODE az64</text>
+  <text x="56" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  amount     </text>
+  <text x="174" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">NUMERIC</text>
+  <text x="234" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(18,2)</text>
+  <text x="56" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">)</text>
+  <text x="56" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DISTSTYLE KEY</text>
+  <text x="56" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DISTKEY</text>
+  <text x="120" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (cust_sk)</text>
+  <text x="56" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">SORTKEY</text>
+  <text x="122" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (order_dt);</text>
+
+  <!-- Right: Dimension table DDL -->
+  <text x="670" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">디멘전 테이블 (ALL 분산)</text>
+  <rect x="480" y="78" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="98" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">CREATE TABLE</text>
+  <text x="496" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  dim_customer</text>
+  <text x="496" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(</text>
+  <text x="496" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  cust_sk   </text>
+  <text x="608" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">INT</text>
+  <text x="634" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600"> NOT NULL</text>
+  <text x="496" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  name      </text>
+  <text x="608" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">VARCHAR</text>
+  <text x="666" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(200)</text>
+  <text x="496" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  region    </text>
+  <text x="608" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">VARCHAR</text>
+  <text x="666" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(100)</text>
+  <text x="496" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  segment   </text>
+  <text x="608" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">VARCHAR</text>
+  <text x="666" y="206" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(50)</text>
+  <text x="496" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">)</text>
+  <text x="496" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">DISTSTYLE ALL</text>
+  <text x="496" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 소규모 디멘전: 전체 복사</text>
+  <text x="496" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- Broadcast Join 효과</text>
+
+  <!-- VACUUM and ANALYZE -->
+  <rect x="40" y="318" width="800" height="96" rx="8" fill="#111"/>
+  <text x="440" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">유지보수 명령</text>
+  <rect x="60" y="348" width="356" height="52" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 정렬 키 기준 블록 재정렬</text>
+  <text x="76" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">VACUUM</text>
+  <text x="136" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> SORT ONLY fact_orders;</text>
+  <rect x="464" y="348" width="356" height="52" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 통계 수집 (옵티마이저용)</text>
+  <text x="480" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">ANALYZE</text>
+  <text x="540" y="386" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> fact_orders;</text>
+</svg>

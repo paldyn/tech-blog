@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520">
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Amazon Redshift MPP 아키텍처</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Leader Node + Compute Nodes + 분산 스토리지</text>
+
+  <!-- Leader Node -->
+  <rect x="280" y="82" width="320" height="58" rx="8" fill="#12182a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">Leader Node</text>
+  <text x="440" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">SQL 파싱 · 실행 계획 생성 · Compute Node 조율 · 결과 집계</text>
+
+  <!-- Arrows to compute nodes -->
+  <defs>
+    <marker id="ar1" viewBox="0 0 14 14" refX="7" refY="12"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 7 13 L 14 0 z" fill="#555"/>
+    </marker>
+  </defs>
+  <line x1="340" y1="140" x2="190" y2="190" stroke="#555" stroke-width="2" marker-end="url(#ar1)"/>
+  <line x1="440" y1="140" x2="440" y2="190" stroke="#555" stroke-width="2" marker-end="url(#ar1)"/>
+  <line x1="540" y1="140" x2="690" y2="190" stroke="#555" stroke-width="2" marker-end="url(#ar1)"/>
+
+  <!-- Compute Nodes (3 for illustration) -->
+  <rect x="80" y="190" width="220" height="100" rx="8" fill="#0e1a12" stroke="#55c555" stroke-width="1.5"/>
+  <text x="190" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Compute Node 1</text>
+  <text x="190" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Slice 1 | Slice 2</text>
+  <text x="190" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CPU + 메모리 + 로컬 스토리지</text>
+  <text x="190" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">각 슬라이스: 독립 쿼리 실행</text>
+  <text x="190" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">로컬 데이터만 처리</text>
+
+  <rect x="330" y="190" width="220" height="100" rx="8" fill="#0e1a12" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Compute Node 2</text>
+  <text x="440" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Slice 3 | Slice 4</text>
+  <text x="440" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CPU + 메모리 + 로컬 스토리지</text>
+  <text x="440" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">각 슬라이스: 독립 쿼리 실행</text>
+  <text x="440" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">로컬 데이터만 처리</text>
+
+  <rect x="580" y="190" width="220" height="100" rx="8" fill="#0e1a12" stroke="#55c555" stroke-width="1.5"/>
+  <text x="690" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Compute Node 3</text>
+  <text x="690" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Slice 5 | Slice 6</text>
+  <text x="690" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CPU + 메모리 + 로컬 스토리지</text>
+  <text x="690" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">각 슬라이스: 독립 쿼리 실행</text>
+  <text x="690" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">로컬 데이터만 처리</text>
+
+  <!-- Shuffle (redistribute) for JOIN -->
+  <text x="440" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">JOIN 시 데이터 재분배 (Redistribute / Broadcast)</text>
+  <line x1="190" y1="302" x2="330" y2="302" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="330" y1="302" x2="440" y2="302" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="440" y1="302" x2="580" y2="302" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="580" y1="302" x2="690" y2="302" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Distribution styles -->
+  <text x="440" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">분산 스타일(DISTSTYLE) 선택</text>
+
+  <rect x="40" y="360" width="185" height="76" rx="6" fill="#111"/>
+  <text x="133" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">KEY</text>
+  <text x="133" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">지정 컬럼 해시값으로 분산</text>
+  <text x="133" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">JOIN 컬럼과 일치 시</text>
+  <text x="133" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">재분배 비용 제거</text>
+
+  <rect x="238" y="360" width="185" height="76" rx="6" fill="#111"/>
+  <text x="331" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">EVEN</text>
+  <text x="331" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">라운드-로빈으로 균등 분산</text>
+  <text x="331" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">JOIN 없이 집계 전용</text>
+  <text x="331" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">로드 밸런스 최적</text>
+
+  <rect x="436" y="360" width="185" height="76" rx="6" fill="#111"/>
+  <text x="529" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc" text-anchor="middle">ALL</text>
+  <text x="529" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">모든 노드에 전체 복사</text>
+  <text x="529" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">소형 디멘전 테이블에</text>
+  <text x="529" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Broadcast Join 효과</text>
+
+  <rect x="634" y="360" width="206" height="76" rx="6" fill="#111"/>
+  <text x="737" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">AUTO</text>
+  <text x="737" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Redshift가 자동 결정</text>
+  <text x="737" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">통계 기반 동적 변경</text>
+  <text x="737" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">신규 테이블 기본값</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">Redshift Serverless: 노드 관리 없이 RPU 단위 자동 확장 (2022+)</text>
+</svg>

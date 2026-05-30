@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ClickHouse MergeTree 엔진 구조</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">INSERT → 파트 생성 → 백그라운드 Merge → Primary Index Pruning</text>
+
+  <!-- Insert layer -->
+  <rect x="340" y="82" width="200" height="40" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">INSERT (배치 단위)</text>
+
+  <defs>
+    <marker id="arr2" viewBox="0 0 14 14" refX="7" refY="12"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 7 13 L 14 0 z" fill="#555"/>
+    </marker>
+    <marker id="arr2u" viewBox="0 0 14 14" refX="7" refY="2"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 14 L 7 1 L 14 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="440" y1="122" x2="440" y2="148" stroke="#555" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- Data Parts row -->
+  <text x="440" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">각 INSERT마다 새 파트(Part) 생성</text>
+
+  <rect x="44" y="174" width="130" height="70" rx="6" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="109" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">Part 20250101_1</text>
+  <text x="109" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">열 파일 (.bin)</text>
+  <text x="109" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스 (.idx)</text>
+  <text x="109" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">마크 파일 (.mrk)</text>
+
+  <rect x="190" y="174" width="130" height="70" rx="6" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="255" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">Part 20250101_2</text>
+  <text x="255" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">열 파일 (.bin)</text>
+  <text x="255" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스 (.idx)</text>
+  <text x="255" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">마크 파일 (.mrk)</text>
+
+  <rect x="336" y="174" width="130" height="70" rx="6" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="401" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">Part 20250102_1</text>
+  <text x="401" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">열 파일 (.bin)</text>
+  <text x="401" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스 (.idx)</text>
+  <text x="401" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">마크 파일 (.mrk)</text>
+
+  <rect x="482" y="174" width="130" height="70" rx="6" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="547" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">Part 20250103_1</text>
+  <text x="547" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">열 파일 (.bin)</text>
+  <text x="547" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스 (.idx)</text>
+  <text x="547" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">마크 파일 (.mrk)</text>
+
+  <rect x="628" y="174" width="130" height="70" rx="6" fill="#111" stroke="#2a3a2a" stroke-width="1"/>
+  <text x="693" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">Part 20250103_2</text>
+  <text x="693" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">열 파일 (.bin)</text>
+  <text x="693" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스 (.idx)</text>
+  <text x="693" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">마크 파일 (.mrk)</text>
+
+  <!-- Merge arrow -->
+  <text x="440" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">백그라운드 Merge (파트 통합·정렬 유지)</text>
+  <line x1="109" y1="256" x2="440" y2="288" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr2u)"/>
+  <line x1="255" y1="256" x2="440" y2="288" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr2u)"/>
+  <line x1="401" y1="256" x2="440" y2="288" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr2u)"/>
+  <line x1="547" y1="256" x2="440" y2="288" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr2u)"/>
+  <line x1="693" y1="256" x2="440" y2="288" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr2u)"/>
+
+  <!-- Merged Part -->
+  <rect x="280" y="296" width="320" height="56" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">Merged Part (20250101_20250103)</text>
+  <text x="440" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ORDER BY 기준으로 정렬 · 압축 · 인덱스 재생성</text>
+
+  <!-- Key Concepts -->
+  <rect x="44" y="372" width="246" height="86" rx="6" fill="#111"/>
+  <text x="167" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">Sparse Primary Index</text>
+  <text x="167" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">8192행마다 인덱스 1개 (Granule)</text>
+  <text x="167" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인덱스 메모리 상주</text>
+  <text x="167" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">관련 Granule만 읽는 Pruning</text>
+  <text x="167" y="454" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">B-Tree 없음 (정렬로 대체)</text>
+
+  <rect x="317" y="372" width="246" height="86" rx="6" fill="#111"/>
+  <text x="440" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">열 지향 압축</text>
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">LZ4 (속도) / ZSTD (압축률)</text>
+  <text x="440" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">T64 (숫자) / Delta (시계열)</text>
+  <text x="440" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">DoubleDelta (단조 증가)</text>
+  <text x="440" y="454" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Gorilla (부동소수점)</text>
+
+  <rect x="590" y="372" width="246" height="86" rx="6" fill="#111"/>
+  <text x="713" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">MergeTree 계열 엔진</text>
+  <text x="713" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">ReplacingMergeTree: 중복 제거</text>
+  <text x="713" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">SummingMergeTree: 집계 자동화</text>
+  <text x="713" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">AggregatingMergeTree: AggState</text>
+  <text x="713" y="454" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CollapsingMergeTree: 삭제 추적</text>
+</svg>

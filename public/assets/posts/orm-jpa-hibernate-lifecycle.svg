@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JPA 엔티티 생명주기와 SQL 발행 시점</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">영속성 컨텍스트(1차 캐시)가 SQL 발행을 지연·최적화한다</text>
+
+  <!-- States -->
+  <defs>
+    <marker id="arrState" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrStateGray" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Transient -->
+  <rect x="44" y="86" width="160" height="64" rx="8" fill="#111" stroke="#555" stroke-width="1.5"/>
+  <text x="124" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#888" text-anchor="middle">Transient</text>
+  <text x="124" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">new Order()</text>
+  <text x="124" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">DB와 무관, 추적 안 됨</text>
+
+  <!-- persist() arrow -->
+  <line x1="204" y1="118" x2="278" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrState)"/>
+  <text x="241" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">persist()</text>
+
+  <!-- Managed -->
+  <rect x="280" y="86" width="200" height="64" rx="8" fill="#0e1a12" stroke="#55c555" stroke-width="2"/>
+  <text x="380" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Managed (영속)</text>
+  <text x="380" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">영속성 컨텍스트에 등록</text>
+  <text x="380" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">변경 감지(Dirty Checking) 활성</text>
+
+  <!-- merge() / find() arrow -->
+  <line x1="380" y1="150" x2="380" y2="178" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrState)"/>
+  <text x="440" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">flush()/commit()</text>
+
+  <!-- detach() arrow -->
+  <line x1="480" y1="118" x2="554" y2="118" stroke="#555" stroke-width="2" marker-end="url(#arrStateGray)"/>
+  <text x="517" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">detach()</text>
+
+  <!-- Detached -->
+  <rect x="556" y="86" width="160" height="64" rx="8" fill="#111" stroke="#555" stroke-width="1.5"/>
+  <text x="636" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#888" text-anchor="middle">Detached</text>
+  <text x="636" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">영속성 컨텍스트 이탈</text>
+  <text x="636" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">변경 감지 중단</text>
+
+  <!-- remove() arrow -->
+  <line x1="380" y1="150" x2="750" y2="150" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Removed -->
+  <rect x="722" y="86" width="118" height="64" rx="8" fill="#2a1414" stroke="#e05555" stroke-width="1.5"/>
+  <text x="781" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">Removed</text>
+  <text x="781" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">삭제 예약됨</text>
+  <text x="781" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">flush 시 DELETE</text>
+
+  <!-- SQL generation in managed state -->
+  <rect x="280" y="182" width="200" height="118" rx="6" fill="#0e1a12" stroke="#55c555" stroke-width="1"/>
+  <text x="380" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">flush 시 SQL 발행</text>
+  <text x="380" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">persist() → INSERT</text>
+  <text x="380" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">필드 변경 → UPDATE</text>
+  <text x="380" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">remove() → DELETE</text>
+  <text x="380" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">1차 캐시 히트 → SELECT 생략</text>
+  <text x="380" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-size,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">같은 TX 내 중복 변경 → 1회 발행</text>
+
+  <!-- N+1 box -->
+  <rect x="44" y="330" width="370" height="130" rx="8" fill="#111"/>
+  <text x="229" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">N+1 문제 원인과 해결</text>
+  <rect x="60" y="360" width="338" height="88" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// LAZY 로딩: 접근 시마다 SELECT</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">orders.forEach(o -&gt; {</text>
+  <text x="76" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  o.getCustomer().getName();</text>
+  <text x="76" y="426" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">}); // N번 추가 SELECT 발생</text>
+  <text x="76" y="442" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 해결: JOIN FETCH / @BatchSize</text>
+
+  <!-- Flush modes -->
+  <rect x="466" y="330" width="374" height="130" rx="8" fill="#111"/>
+  <text x="653" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">성능 최적화 포인트</text>
+  <text x="480" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">쓰기 지연: 여러 INSERT를 한 번에 배치</text>
+  <text x="480" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Dirty Checking: snapshot 비교 → 변경된 필드만 UPDATE</text>
+  <text x="480" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">1차 캐시: 동일 TX 내 동일 PK → DB 미조회</text>
+  <text x="480" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">batch_size: IN절로 묶어서 조회 (N+1 완화)</text>
+  <text x="480" y="454" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">FlushMode.MANUAL: 읽기 전용 TX 최적화</text>
+</svg>
