@@ -1,10 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">mmap: 메모리 맵 파일로 대용량 처리</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="412" viewBox="0 0 880 412">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="11" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 1 1 L 12 7 L 1 13 z" fill="#8a93a8"/>
+    </marker>
+  </defs>
+  <rect width="880" height="412" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">mmap: 메모리 맵으로 파일 직접 수정</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">슬라이스처럼 쓰고 flush() 로 디스크에 반영한다</text>
+
+  <!-- LEFT: code -->
+  <rect x="60" y="100" width="400" height="270" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">쓰기 가능한 mmap 패턴</text>
+
+  <rect x="76" y="142" width="368" height="212" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">with</tspan><tspan fill="#ffffff"> open(</tspan><tspan fill="#ce9178">"img.png"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"r+b"</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> f:</tspan></text>
+  <text x="92" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm = mmap.mmap(f.fileno(), </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="92" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm[</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">] = </tspan><tspan fill="#b5cea8">0x89</tspan><tspan fill="#9aa4b8">        # 바이트 수정</tspan></text>
+  <text x="92" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm[</tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff">:</tspan><tspan fill="#b5cea8">8</tspan><tspan fill="#ffffff">] = </tspan><tspan fill="#ce9178">b"\r\n\x1a\n"</tspan><tspan fill="#9aa4b8">  # 슬라이스</tspan></text>
+  <text x="92" y="266" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm.seek(</tspan><tspan fill="#b5cea8">16</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="92" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm.write(</tspan><tspan fill="#ce9178">b"DATA"</tspan><tspan fill="#ffffff">)     </tspan><tspan fill="#9aa4b8"># 포인터 쓰기</tspan></text>
+  <text x="92" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm.flush()           </tspan><tspan fill="#9aa4b8"># 디스크 반영</tspan></text>
+  <text x="92" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    mm.close()</tspan></text>
+
+  <!-- RIGHT: mem <-> disk -->
+  <text x="650" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888" text-anchor="middle">메모리 ↔ 디스크</text>
+
+  <rect x="500" y="146" width="300" height="78" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="650" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">프로세스 가상 메모리 (mmap 뷰)</text>
+  <text x="650" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">mm[i] 를 직접 읽고 쓴다</text>
+
+  <!-- flush down -->
+  <line x1="580" y1="224" x2="580" y2="296" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="565" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" text-anchor="end">flush()</text>
+  <text x="565" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="end">메모리→디스크</text>
+
+  <!-- mmap up -->
+  <line x1="720" y1="296" x2="720" y2="228" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="735" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" text-anchor="start">mmap()</text>
+  <text x="735" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="start">디스크→메모리</text>
+
+  <rect x="500" y="300" width="300" height="64" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">디스크 파일  img.png</text>
+  <text x="650" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">실제 저장된 바이트</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">flush() 를 호출해야 변경이 디스크에 기록된다 — close() 시에도 자동 flush</text>
 </svg>

@@ -1,10 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">제어 컴포넌트와 비제어 컴포넌트 — 폼 상태 관리 전략</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">제어 vs 비제어 컴포넌트</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">누가 폼 상태를 소유하는가 — RHF 는 비제어로 리렌더를 줄인다</text>
+
+  <!-- TOP LEFT: 제어 -->
+  <rect x="60" y="100" width="380" height="170" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">제어 컴포넌트 (controlled)</text>
+  <rect x="76" y="146" width="348" height="82" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [v, setV] = useState(</tspan><tspan fill="#ce9178">''</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="92" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">&lt;input value={v} onChange=</tspan></text>
+  <text x="92" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  {e =&gt; setV(e.target.value)}/&gt;</tspan></text>
+  <text x="80" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">입력마다 리렌더 · React 가 상태 소유</text>
+
+  <!-- TOP RIGHT: 비제어 -->
+  <rect x="460" y="100" width="380" height="170" rx="10" fill="#14101a" stroke="#7777cc" stroke-width="1"/>
+  <text x="480" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc">비제어 컴포넌트 (uncontrolled)</text>
+  <rect x="476" y="146" width="348" height="82" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> ref = useRef(</tspan><tspan fill="#7ec8e3" font-weight="600">null</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="492" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">&lt;input ref={ref}</tspan></text>
+  <text x="492" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  defaultValue=</tspan><tspan fill="#ce9178">"kim"</tspan><tspan fill="#ffffff"> /&gt;</tspan></text>
+  <text x="480" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">DOM 이 상태 소유 · 제출 때 ref 로 읽음</text>
+
+  <!-- BOTTOM: RHF -->
+  <rect x="60" y="288" width="780" height="130" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">React Hook Form — 비제어 기반 하이브리드</text>
+  <rect x="76" y="334" width="748" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> { register, handleSubmit, formState: { errors } } = useForm()</tspan></text>
+  <text x="92" y="379" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">&lt;input {...register(</tspan><tspan fill="#ce9178">'name'</tspan><tspan fill="#ffffff">, { required: </tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">, minLength: </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff"> })} /&gt;</tspan></text>
+  <text x="80" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ref 로 등록 → 입력마다 리렌더 없음, 검증 시 errors 만 갱신</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">제어는 매 입력 리렌더, 비제어는 제출 때만 읽기 — RHF 가 둘의 절충안</text>
 </svg>

@@ -1,10 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">Docker 레이어 캐싱 전략과 실전 팁</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="436" viewBox="0 0 880 436">
+  <rect width="880" height="436" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">CI 레이어 캐시 전략</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">러너·파이프라인 간에 빌드 레이어 캐시를 공유하는 두 방법</text>
+
+  <!-- Card 1: GitHub Actions -->
+  <rect x="60" y="100" width="380" height="170" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">GitHub Actions · type=gha</text>
+  <rect x="76" y="146" width="348" height="64" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">cache-from:</tspan><tspan fill="#ce9178"> type=gha</tspan></text>
+  <text x="92" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">cache-to:</tspan><tspan fill="#ce9178"> type=gha,mode=max</tspan></text>
+  <text x="80" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Actions 캐시 저장소 사용 · 설정 두 줄</text>
+
+  <!-- Card 2: Registry cache -->
+  <rect x="460" y="100" width="380" height="170" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">레지스트리 캐시 · type=registry</text>
+  <rect x="476" y="146" width="348" height="64" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">--cache-to</tspan><tspan fill="#ce9178"> type=registry,</tspan></text>
+  <text x="492" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ce9178">  ref=ghcr.io/org/app:cache</tspan></text>
+  <text x="480" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">어떤 CI·로컬에서도 캐시 공유</text>
+
+  <!-- Chip 1: mode=max -->
+  <rect x="60" y="290" width="380" height="88" rx="10" fill="#14101a" stroke="#7777cc" stroke-width="1"/>
+  <text x="80" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="14" font-weight="600" fill="#7777cc">mode=max</text>
+  <text x="80" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">모든 중간 레이어를 캐시에 저장</text>
+  <text x="80" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">최대 히트율 · 저장 공간 더 사용</text>
+
+  <!-- Chip 2: mode=min -->
+  <rect x="460" y="290" width="380" height="88" rx="10" fill="#1a100d" stroke="#e05555" stroke-width="1"/>
+  <text x="480" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="14" font-weight="600" fill="#e05555">mode=min</text>
+  <text x="480" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">최종 이미지 레이어만 저장</text>
+  <text x="480" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">공간 절약 · 중간 캐시 미보관</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">type=gha 는 GitHub 전용, type=registry 는 어디서나 — mode 로 저장 범위 조절</text>
 </svg>

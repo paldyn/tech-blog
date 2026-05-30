@@ -1,10 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">write·flush·버퍼: 파일 쓰기의 내부 동작</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="11" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 1 1 L 12 7 L 1 13 z" fill="#8a93a8"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">파일 쓰기 버퍼링 레이어</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">f.write() 한 데이터가 디스크에 닿기까지 거치는 경로</text>
+
+  <!-- entry -->
+  <text x="175" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" text-anchor="middle">f.write(data)</text>
+  <line x1="175" y1="130" x2="175" y2="156" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- Box 1: Python buffer -->
+  <rect x="70" y="158" width="210" height="120" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="175" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">Python io 버퍼</text>
+  <text x="175" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">메모리 · 기본 8KB</text>
+  <text x="175" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">묶어서 OS로 전달</text>
+
+  <!-- Box 2: OS page cache -->
+  <rect x="335" y="158" width="210" height="120" rx="10" fill="#14101a" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">OS 페이지 캐시</text>
+  <text x="440" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">커널 메모리</text>
+  <text x="440" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">쓰기를 일시 보류</text>
+
+  <!-- Box 3: Disk -->
+  <rect x="600" y="158" width="210" height="120" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="705" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">디스크</text>
+  <text x="705" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">영구 저장</text>
+  <text x="705" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">실제 기록 완료</text>
+
+  <!-- Arrow 1->2 (flush) -->
+  <line x1="280" y1="218" x2="331" y2="218" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="307" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">flush()</text>
+
+  <!-- Arrow 2->3 (fsync) -->
+  <line x1="545" y1="218" x2="596" y2="218" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="570" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" text-anchor="middle">fsync()</text>
+
+  <!-- transition captions -->
+  <text x="307" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">버퍼 → OS 캐시</text>
+  <text x="570" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">캐시 → 디스크 (또는 OS 판단)</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">write() 는 버퍼까지만 — flush() 로 OS 캐시, fsync() 로 디스크까지 보장</text>
 </svg>

@@ -83,7 +83,26 @@
 - `markerWidth/Height ≥ 14` — 11 이하는 작아서 화살촉 거의 안 보임
 - `refX=tip`, `refY=center`, `orient="auto"`로 path 끝에서 자동 회전
 
-## 브라우저 시각 검증 (필수)
+## XML 유효성 검증 (반드시 먼저)
+
+`preview_screenshot` 전에 **`xmllint --noout` 통과**부터 확인. LLM이 생성한 SVG는 자주 다음 오류를 만든다 — 통과 못 하면 브라우저에서 이미지가 아예 렌더링되지 않는다 (`naturalWidth=0`).
+
+```bash
+xmllint --noout public/assets/posts/{파일명}.svg
+# 에러 메시지가 있으면 fix 후 재실행. 0건 출력될 때까지 반복.
+```
+
+자주 나오는 오류와 fix:
+- `Opening and ending tag mismatch: text ... tspan` — `<text>X</tspan></text>` 잘못된 닫기. `<tspan>` 안 열었으면 그냥 `</text>` 사용.
+- `Opening and ending tag mismatch: ... font` — `</font>`는 SVG 태그 아님. `</text>` 또는 `</tspan>`으로 교체.
+- `xmlParseEntityRef: no name` 또는 `EntityRef: expecting ';'` — 본문에 `&` 가 escape 안 됨. `&amp;`로.
+- `Entity 'nbsp' not defined` — XML은 `&nbsp;` 모름. 공백 또는 `&#160;`.
+- `StartTag: invalid element name` — 본문 내 `<` 가 escape 안 됨 (코드 예제에서 자주). `&lt;` 로.
+- `Attribute x redefined` / `font-family redefined` — `<text>` 안에 같은 속성 두 번. 하나만 남길 것.
+- `Double hyphen within comment` — `<!-- foo -- bar -->` 의 중간 `--` 는 불가. `—` 나 다른 문자로.
+- `Char 0x0 out of allowed range` — NULL 바이트 들어감. 제거.
+
+## 브라우저 시각 검증 (XML 통과 후)
 
 1. `mcp__Claude_Preview__preview_start({name:"blog"})`
 2. `preview_eval` → `window.location.href = 'http://localhost:4321/assets/posts/{파일명}.svg'`
@@ -101,4 +120,4 @@
 - [ ] **화살촉 비례**: 화살촉이 shaft 두께 대비 과도하게 크지 않음 (userSpaceOnUse 빠지면 거대해짐)
 - [ ] **박스-화살표 연결**: 화살표 끝점이 박스 가장자리에 정확히 닿음 (안쪽 침범·gap 없음)
 
-4. 결함 발견 시 수정 후 2번부터 재검증.
+4. 결함 발견 시 수정 후 XML 검증부터 다시.

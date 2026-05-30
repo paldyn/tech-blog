@@ -1,10 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">PostgreSQL 스트리밍 복제 — WAL 기반 고가용성</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="438" viewBox="0 0 880 438">
+  <rect width="880" height="438" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">스트리밍 복제 핵심 설정</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Primary 가 WAL 을 보내고 Standby 가 적용 — 양쪽 설정과 동기화 수준</text>
+
+  <!-- LEFT: Primary -->
+  <rect x="60" y="100" width="380" height="170" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">Primary · postgresql.conf</text>
+  <rect x="76" y="146" width="348" height="88" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">wal_level</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#ce9178">replica</tspan></text>
+  <text x="92" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">max_wal_senders</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#b5cea8">10</tspan></text>
+  <text x="92" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">synchronous_commit</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#ce9178">on</tspan></text>
+  <text x="80" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">WAL 송신 활성화 · 슬롯으로 WAL 보존</text>
+
+  <!-- RIGHT: Standby -->
+  <rect x="460" y="100" width="380" height="170" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">Standby</text>
+  <rect x="476" y="146" width="348" height="88" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">primary_conninfo</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">'host=...'</tspan></text>
+  <text x="492" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ce9178">standby.signal</tspan><tspan fill="#9aa4b8">   # 신호 파일</tspan></text>
+  <text x="492" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">hot_standby</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#ce9178">on</tspan></text>
+  <text x="480" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-R 로 자동 생성 · 읽기 쿼리 처리</text>
+
+  <!-- Sync mode chips -->
+  <rect x="60" y="290" width="240" height="88" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="80" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" font-weight="600" fill="#55c555">on</text>
+  <text x="80" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">RPO 0 · 데이터 무손실</text>
+  <text x="80" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">쓰기 지연 ↑</text>
+
+  <rect x="320" y="290" width="240" height="88" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="340" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" font-weight="600" fill="#7ec8e3">remote_write</text>
+  <text x="340" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">RPO ≈ 0 · 손실 낮음</text>
+  <text x="340" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">지연 중간</text>
+
+  <rect x="580" y="290" width="240" height="88" rx="10" fill="#1a100d" stroke="#e05555" stroke-width="1"/>
+  <text x="600" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" font-weight="600" fill="#e05555">off</text>
+  <text x="600" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">지연 거의 없음</text>
+  <text x="600" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">수 ms 손실 가능</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">synchronous_commit 으로 무손실(on)과 처리량(off) 사이를 조절한다</text>
 </svg>

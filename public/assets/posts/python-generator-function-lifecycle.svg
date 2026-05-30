@@ -1,10 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">제너레이터 함수: yield로 만드는 지연 이터레이터</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="11" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 1 1 L 12 7 L 1 13 z" fill="#8a93a8"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">제너레이터 생명주기</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">next() 호출과 yield로 전환되는 네 가지 상태</text>
+
+  <!-- A: 생성됨 -->
+  <rect x="60" y="148" width="170" height="92" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="145" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">생성됨</text>
+  <text x="145" y="201" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">GEN_CREATED</text>
+  <text x="145" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">함수 호출 직후, 아직 미실행</text>
+
+  <!-- B: 실행 중 -->
+  <rect x="355" y="148" width="170" height="92" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">실행 중</text>
+  <text x="440" y="201" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">GEN_RUNNING</text>
+  <text x="440" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">본문 코드 실행 중</text>
+
+  <!-- C: 일시 정지 -->
+  <rect x="650" y="148" width="170" height="92" rx="10" fill="#14101a" stroke="#7777cc" stroke-width="1"/>
+  <text x="735" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc" text-anchor="middle">일시 정지</text>
+  <text x="735" y="201" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">GEN_SUSPENDED</text>
+  <text x="735" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">yield 지점에서 멈춤</text>
+
+  <!-- D: 종료 / 닫힘 -->
+  <rect x="355" y="320" width="170" height="92" rx="10" fill="#1a100d" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">종료 / 닫힘</text>
+  <text x="440" y="373" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">GEN_CLOSED</text>
+  <text x="440" y="393" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">더 이상 재개 불가</text>
+
+  <!-- A -> B -->
+  <line x1="230" y1="194" x2="351" y2="194" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="290" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">next() 첫 호출</text>
+
+  <!-- B -> C (yield) -->
+  <line x1="525" y1="182" x2="646" y2="182" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="587" y="173" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">yield 값 반환</text>
+
+  <!-- C -> B (resume) -->
+  <line x1="650" y1="206" x2="529" y2="206" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="587" y="223" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">next() 재개</text>
+
+  <!-- B -> D (return) -->
+  <line x1="440" y1="240" x2="440" y2="316" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="450" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="start">return · 예외</text>
+
+  <!-- C -> D (close) -->
+  <path d="M 735 240 L 735 366 L 529 366" fill="none" stroke="#8a93a8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="632" y="357" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8" text-anchor="middle">close() · GC</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">inspect.getgeneratorstate(gen) 로 현재 상태를 확인할 수 있다</text>
 </svg>

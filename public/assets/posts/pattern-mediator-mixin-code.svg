@@ -1,10 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">미디에이터·믹스인 패턴 — 협력과 조합</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">미디에이터 · 믹스인 구현 패턴</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">통신을 한 곳에 모으는 EventBus와 기능을 합성하는 서브클래스 팩토리</text>
+
+  <!-- LEFT: Mediator / EventBus -->
+  <rect x="60" y="100" width="380" height="290" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">미디에이터 · EventBus</text>
+  <rect x="76" y="146" width="348" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> EventBus {</tspan></text>
+  <text x="92" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  on(event, fn) {</tspan></text>
+  <text x="92" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    (this.m[event] ??= []).push(fn)</tspan></text>
+  <text x="92" y="233" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  }</tspan></text>
+  <text x="92" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  emit(event, data) {</tspan></text>
+  <text x="92" y="275" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    this.m[event]?.forEach(</tspan></text>
+  <text x="92" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">      fn =&gt; fn(data))</tspan></text>
+  <text x="92" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  }</tspan></text>
+  <text x="92" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">}</tspan></text>
+
+  <!-- RIGHT: Mixin / subclass factory -->
+  <rect x="460" y="100" width="380" height="290" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">믹스인 · 서브클래스 팩토리</text>
+  <rect x="476" y="146" width="348" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> Timestamped =</tspan></text>
+  <text x="492" y="191" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  (Base) =&gt; </tspan><tspan fill="#7ec8e3" font-weight="600">class extends</tspan><tspan fill="#ffffff"> Base {</tspan></text>
+  <text x="492" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    #at = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> Date()</tspan></text>
+  <text x="492" y="233" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    touch() { this.#at = now }</tspan></text>
+  <text x="492" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  }</tspan></text>
+  <text x="492" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> User </tspan><tspan fill="#7ec8e3" font-weight="600">extends</tspan></text>
+  <text x="492" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">  Timestamped(</tspan><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> {}) {}</tspan></text>
+
+  <!-- Bottom note -->
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">미디에이터는 통신을 한 곳에 모으고, 믹스인은 여러 기능을 한 클래스에 합성한다</text>
 </svg>

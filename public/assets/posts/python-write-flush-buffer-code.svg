@@ -1,10 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 200">
-  <rect width="880" height="200" rx="12" fill="#0a0a0a"/>
-  <rect x="60" y="60" width="760" height="80" rx="8" fill="#1a1f35" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="440" y="98" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="16" font-weight="600" fill="#e8e8e8">write·flush·버퍼: 파일 쓰기의 내부 동작</text>
-  <text x="440" y="124" text-anchor="middle"
-        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">이미지 준비 중 — 다시 생성 예정</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450">
+  <rect width="880" height="450" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">write · flush 실전 패턴</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">버퍼를 제어해 로그와 출력을 제때 보이게 하기</text>
+
+  <!-- Card 1: 실시간 출력 -->
+  <rect x="60" y="100" width="360" height="148" rx="10" fill="#0d141a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">실시간 출력</text>
+  <rect x="76" y="144" width="328" height="62" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="181" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">print(</tspan><tspan fill="#ce9178">f"{i}%"</tspan><tspan fill="#ffffff">, flush=</tspan><tspan fill="#7ec8e3" font-weight="600">True</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="80" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">진행률·라이브 출력 — 버퍼 건너뜀</text>
+
+  <!-- Card 2: 줄 버퍼 로그 -->
+  <rect x="460" y="100" width="360" height="148" rx="10" fill="#0d1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="480" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">줄 버퍼 로그</text>
+  <rect x="476" y="144" width="328" height="62" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="181" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">open(</tspan><tspan fill="#ce9178">"app.log"</tspan><tspan fill="#ffffff">, buffering=</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="480" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">\n 만날 때마다 자동 flush</text>
+
+  <!-- Card 3: 디스크까지 보장 -->
+  <rect x="60" y="264" width="360" height="148" rx="10" fill="#14101a" stroke="#7777cc" stroke-width="1"/>
+  <text x="80" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7777cc">디스크까지 보장</text>
+  <rect x="76" y="308" width="328" height="62" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">f.flush()</tspan></text>
+  <text x="92" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">os.fsync(f.fileno())</tspan></text>
+  <text x="80" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">OS 페이지 캐시 → 디스크 강제 동기화</text>
+
+  <!-- Card 4: 컨테이너 · CI -->
+  <rect x="460" y="264" width="360" height="148" rx="10" fill="#1a100d" stroke="#e05555" stroke-width="1"/>
+  <text x="480" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">컨테이너 · CI</text>
+  <rect x="476" y="308" width="328" height="62" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#666666">$ </tspan><tspan fill="#ffffff">python </tspan><tspan fill="#b5cea8">-u</tspan><tspan fill="#ffffff"> app.py</tspan></text>
+  <text x="492" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">PYTHONUNBUFFERED=</tspan><tspan fill="#b5cea8">1</tspan></text>
+  <text x="480" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파이프 블록버퍼링으로 멈춘 로그 방지</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">close() 와 with 블록 종료 시 flush 는 자동 — 실시간성이 필요할 때만 수동 flush</text>
 </svg>
