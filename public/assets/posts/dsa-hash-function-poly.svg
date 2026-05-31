@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">다항식 해싱 — 문자열 해시 함수</text>
+  <text x="440" y="66" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">h = c0*p^(n-1) + c1*p^(n-2) + ... + cn-1  (mod M)</text>
+
+  <!-- formula box -->
+  <rect x="60" y="82" width="760" height="70" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// hash("hello"), p=31, M=10^9+7</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">h = (<tspan fill="#7ec8e3" font-weight="600">104</tspan>*31⁴ + <tspan fill="#7ec8e3" font-weight="600">101</tspan>*31³ + <tspan fill="#7ec8e3" font-weight="600">108</tspan>*31² + <tspan fill="#7ec8e3" font-weight="600">108</tspan>*31 + <tspan fill="#7ec8e3" font-weight="600">111</tspan>) % (10⁹+7)</text>
+  <text x="76" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">// 104=ord('h'), 101=ord('e'), 108=ord('l'), 111=ord('o')</text>
+
+  <!-- Horner's method -->
+  <text x="60" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">호너의 방법 (Horner's Method) — O(n)</text>
+  <rect x="60" y="184" width="760" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// h = (...((c0*p + c1)*p + c2)*p + ... + cn-1) % M</text>
+  <text x="76" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">def</text>
+  <text x="112" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"> poly_hash(s, p=31, M=10**9+7):</text>
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">    h = 0</text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">    for</text>
+  <text x="112" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"> c in s:</text>
+  <text x="76" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">        h = (h * p + ord(c)) % M</text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return</text>
+  <text x="130" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve"> h</text>
+
+  <!-- p choice and M choice -->
+  <rect x="60" y="302" width="360" height="98" rx="8" fill="#0d1020" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="240" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">p 선택 기준</text>
+  <text x="76" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">• 소수(prime)를 사용 — 분포 균등화</text>
+  <text x="76" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">• 소문자 영문: p=31, 알파벳 전체: p=53</text>
+  <text x="76" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">• 32비트 해시: p=1000000007 (10⁹+7)</text>
+
+  <rect x="446" y="302" width="374" height="98" rx="8" fill="#0d1020" stroke="#2a3a5e" stroke-width="1"/>
+  <text x="633" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">롤링 해시 활용</text>
+  <text x="462" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">슬라이딩 창 이동 시 O(1) 재계산</text>
+  <text x="462" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">h_new = (h_old - c_out*p^(k-1))*p</text>
+  <text x="462" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">         + c_in  (Rabin-Karp)</text>
+</svg>
