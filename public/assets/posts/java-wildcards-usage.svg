@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">와일드카드 실전 — 타입 포함 관계</text>
+
+  <!-- Covariance / invariance explanation -->
+  <rect x="40" y="68" width="800" height="88" fill="#111111" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">제네릭은 불공변(Invariant) — 와일드카드로 유연성 확보</text>
+  <text x="56" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Integer</tspan><tspan fill="#ffffff">&gt; ints = List.of(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="400" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Number</tspan><tspan fill="#ffffff">&gt; nums = ints; </tspan><tspan fill="#e05555">// 컴파일 오류!</tspan></text>
+  <text x="56" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;? </tspan><tspan fill="#7ec8e3" font-weight="600">extends</tspan><tspan fill="#ffffff"> Number&gt; nums = ints; </tspan><tspan fill="#55c555">// OK — 와일드카드로 허용</tspan></text>
+
+  <!-- Left: Upper bound real example -->
+  <rect x="40" y="176" width="380" height="148" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">? extends — 읽기 전용 처리</text>
+  <text x="56" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">static double</tspan><tspan fill="#ffffff"> sumList(</tspan></text>
+  <text x="56" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    List&lt;? </tspan><tspan fill="#7ec8e3" font-weight="600">extends</tspan><tspan fill="#ffffff"> Number&gt; list) {</tspan></text>
+  <text x="56" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> list.stream()</tspan></text>
+  <text x="56" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">      .mapToDouble(Number::doubleValue).sum();</tspan></text>
+  <text x="56" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8">// sumList(integers) sumList(doubles) 모두 OK</tspan></text>
+
+  <!-- Right: Lower bound real example -->
+  <rect x="460" y="176" width="380" height="148" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">? super — 쓰기 전용 처리</text>
+  <text x="476" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">static void</tspan><tspan fill="#ffffff"> addNumbers(</tspan></text>
+  <text x="476" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    List&lt;? </tspan><tspan fill="#7ec8e3" font-weight="600">super</tspan><tspan fill="#ffffff"> Integer&gt; list) {</tspan></text>
+  <text x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  for</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> i = </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">; i &lt;= </tspan><tspan fill="#b5cea8">5</tspan><tspan fill="#ffffff">; i++) list.add(i);</tspan></text>
+  <text x="476" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="476" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Number</tspan><tspan fill="#ffffff">&gt; ns = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList&lt;&gt;();</tspan></text>
+  <text x="476" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">addNumbers(ns); </tspan><tspan fill="#9aa4b8">// Number super Integer → OK</tspan></text>
+
+  <text x="440" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">extends = 읽기(Producer), super = 쓰기(Consumer) — PECS 원칙의 핵심</text>
+</svg>

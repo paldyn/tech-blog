@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">브리지 메서드 &amp; @SuppressWarnings 올바른 사용</text>
+
+  <!-- Left: Bridge method -->
+  <rect x="40" y="64" width="380" height="280" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">브리지 메서드 — 컴파일러가 자동 생성</text>
+  <text x="56" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">interface</tspan><tspan fill="#ffffff"> Comparable&lt;</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">&gt; {</tspan></text>
+  <text x="56" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  int</tspan><tspan fill="#ffffff"> compareTo(</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff"> o);</tspan></text>
+  <text x="56" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> Counter </tspan><tspan fill="#7ec8e3" font-weight="600">implements</tspan><tspan fill="#ffffff"> Comparable&lt;Counter&gt; {</tspan></text>
+  <text x="56" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">public int</tspan><tspan fill="#ffffff"> compareTo(Counter o) { </tspan><tspan fill="#9aa4b8">/*...*/</tspan><tspan fill="#ffffff"> }</tspan></text>
+  <text x="56" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">  // 컴파일러가 bridge 메서드 생성:</tspan></text>
+  <text x="56" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">  // int compareTo(Object o) {</tspan></text>
+  <text x="56" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">  //   return compareTo((Counter) o);</tspan></text>
+  <text x="56" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">  // }</tspan></text>
+  <text x="56" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">erasure 후 인터페이스 compareTo(Object)를</text>
+  <text x="56" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">구현하기 위해 자동 추가됨</text>
+
+  <!-- Right: SuppressWarnings -->
+  <rect x="460" y="64" width="380" height="280" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">@SuppressWarnings 올바른 사용법</text>
+  <text x="476" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// NG: 메서드 전체에 적용 — 너무 광범위</tspan></text>
+  <text x="476" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#e05555">@SuppressWarnings("unchecked")</tspan></text>
+  <text x="476" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#e05555">public &lt;T&gt; T[] toArray(T[] a) { ... }</tspan></text>
+  <text x="476" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// OK: 경고 발생 줄에만 최소 범위 적용</tspan></text>
+  <text x="476" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> &lt;</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">&gt; </tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">[] toArray(</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">[] a) {</tspan></text>
+  <text x="476" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#55c555">  @SuppressWarnings("unchecked")</tspan></text>
+  <text x="476" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#55c555">  </tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">[] result = (</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">[]) </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> Object[a.length];</tspan></text>
+  <text x="476" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> result;</tspan></text>
+  <text x="476" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">}</text>
+  <text x="476" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">경고 억제 전 반드시 타입 안전성 검증</text>
+  <text x="476" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">후 코드에 주석으로 이유 명시 권장</text>
+
+  <text x="440" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">제네릭 경고를 억제할 땐 항상 타입 안전성을 직접 증명할 수 있어야 함</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PECS — Collections.copy 분석</text>
+
+  <!-- The method signature -->
+  <rect x="40" y="64" width="800" height="68" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">java.util.Collections.copy 시그니처</text>
+  <text x="56" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">public static</tspan><tspan fill="#ffffff"> &lt;</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">&gt; </tspan><tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> copy(List&lt;? </tspan><tspan fill="#7ec8e3" font-weight="600">super</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">&gt; dest, List&lt;? </tspan><tspan fill="#7ec8e3" font-weight="600">extends</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">&gt; src)</tspan></text>
+
+  <!-- Annotation arrows -->
+  <text x="230" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Consumer (dest)</text>
+  <text x="230" y="173" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">T를 받으므로 super T</text>
+  <text x="640" y="155" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Producer (src)</text>
+  <text x="640" y="173" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">T를 제공하므로 extends T</text>
+
+  <!-- Usage code -->
+  <rect x="40" y="194" width="800" height="148" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">실제 사용 — T = Integer 추론</text>
+  <text x="56" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Integer</tspan><tspan fill="#ffffff">&gt; src  = List.of(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff">); </tspan><tspan fill="#9aa4b8">// Producer</tspan></text>
+  <text x="56" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">Number</tspan><tspan fill="#ffffff">&gt;  dest = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList&lt;&gt;(Arrays.asList(</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">));</tspan></text>
+  <text x="56" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">                              </tspan><tspan fill="#9aa4b8">// Consumer: ? super Integer</tspan></text>
+  <text x="56" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">Collections.copy(dest, src); </tspan><tspan fill="#9aa4b8">// dest에 src 내용 복사</tspan></text>
+  <text x="56" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// dest는 Number 리스트 — Integer 상위 타입이므로 쓰기 가능</tspan></text>
+  <text x="56" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// src는  Integer 리스트 — Integer 하위 타입이므로 읽기 가능</tspan></text>
+
+  <text x="440" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">PECS는 API 설계 원칙 — 사용자가 더 다양한 타입을 전달할 수 있게 함</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">타입 소거 — 컴파일 전후 비교</text>
+
+  <!-- Stage labels -->
+  <text x="190" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">소스 코드 (컴파일 전)</text>
+  <text x="690" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">바이트코드 (런타임)</text>
+
+  <!-- Arrow in middle -->
+  <defs>
+    <marker id="arr-mid" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="430" y1="200" x2="460" y2="200" stroke="#7777cc" stroke-width="3" marker-end="url(#arr-mid)"/>
+  <text x="445" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">javac</text>
+  <text x="445" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc" text-anchor="middle">erasure</text>
+
+  <!-- Before erasure code -->
+  <rect x="40" y="98" width="380" height="220" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="56" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">제네릭 타입 파라미터 명시</text>
+  <text x="56" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> Box&lt;</tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff">&gt; {</tspan></text>
+  <text x="56" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">private</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff"> value;</tspan></text>
+  <text x="56" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#55c555">T</tspan><tspan fill="#ffffff"> get() { </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> value; }</tspan></text>
+  <text x="56" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="56" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">Box</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff">&gt; box = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> Box&lt;&gt;();</tspan></text>
+  <text x="56" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff"> s = box.get();</tspan></text>
+  <text x="56" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// T = String — 컴파일러가 알고 있음</tspan></text>
+  <text x="56" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// 자동 캐스팅 코드 삽입됨</tspan></text>
+
+  <!-- After erasure code -->
+  <rect x="470" y="98" width="370" height="220" fill="#000000" rx="6" stroke="#e05555" stroke-width="1"/>
+  <text x="486" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">T → Object 치환 (상한 없을 때)</text>
+  <text x="486" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> Box {  </tspan><tspan fill="#9aa4b8">// T 사라짐</tspan></text>
+  <text x="486" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">private</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">Object</tspan><tspan fill="#ffffff"> value;</tspan></text>
+  <text x="486" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">public Object</tspan><tspan fill="#ffffff"> get() { </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> value; }</tspan></text>
+  <text x="486" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+  <text x="486" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">Box</tspan><tspan fill="#ffffff"> box = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> Box();</tspan></text>
+  <text x="486" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff"> s = (</tspan><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff">) box.get(); </tspan><tspan fill="#9aa4b8">// 캐스팅 삽입</tspan></text>
+  <text x="486" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// 런타임: Box.class 하나만 존재</tspan></text>
+  <text x="486" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// Box&lt;String&gt;.class == Box&lt;Integer&gt;.class</tspan></text>
+
+  <text x="440" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">결론: 제네릭 타입 정보는 런타임에 존재하지 않는다</text>
+  <text x="440" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">하위 호환성 유지 (Java 5 이전 바이트코드와 동일한 .class 파일)</text>
+</svg>

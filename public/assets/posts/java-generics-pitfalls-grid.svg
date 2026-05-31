@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">제네릭 실수 모음 — 자주 틀리는 패턴</text>
+
+  <!-- 1: Raw type -->
+  <rect x="40" y="68" width="380" height="154" fill="#111111" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="56" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">① Raw Type 사용</text>
+  <rect x="56" y="104" width="348" height="80" fill="#000000" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="68" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#e05555">List list = new ArrayList(); // NG</tspan></text>
+  <text x="68" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8">// @SuppressWarnings("unchecked") 남발</tspan></text>
+  <text x="68" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#55c555">List&lt;String&gt; list = new ArrayList&lt;&gt;(); // OK</tspan></text>
+  <text x="68" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8">// 다이아몬드 연산자 &lt;&gt; 활용</tspan></text>
+  <text x="56" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Raw type은 컴파일 경고 발생, 타입 안전 보장 없음</text>
+
+  <!-- 2: Heap pollution -->
+  <rect x="460" y="68" width="380" height="154" fill="#111111" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="476" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">② Heap Pollution (힙 오염)</text>
+  <rect x="476" y="104" width="348" height="80" fill="#000000" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="488" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff">&gt; strs = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList&lt;&gt;();</tspan></text>
+  <text x="488" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff"> raw = strs; </tspan><tspan fill="#9aa4b8">// unchecked 경고</tspan></text>
+  <text x="488" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">raw.add(</tspan><tspan fill="#b5cea8">42</tspan><tspan fill="#ffffff">); </tspan><tspan fill="#9aa4b8">// Integer 삽입!</tspan></text>
+  <text x="488" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">String</tspan><tspan fill="#ffffff"> s = strs.get(</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">); </tspan><tspan fill="#e05555">// ClassCastException!</tspan></text>
+  <text x="476" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Raw type 혼용 시 런타임 ClassCastException 가능</text>
+
+  <!-- 3: Comparable bound -->
+  <rect x="40" y="242" width="380" height="142" fill="#111111" rx="8" stroke="#e8e8e8" stroke-width="1"/>
+  <text x="56" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">③ 경계 없는 T 비교</text>
+  <rect x="56" y="278" width="348" height="80" fill="#000000" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="68" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#e05555">static &lt;T&gt; T max(T a, T b) {</tspan></text>
+  <text x="68" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#e05555">  return a.compareTo(b) &gt; 0 ? a : b; // 오류!</tspan></text>
+  <text x="68" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#55c555">static &lt;T extends Comparable&lt;T&gt;&gt; T max(T a, T b)</tspan></text>
+  <text x="68" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#55c555">// T에 Comparable 경계 필수</tspan></text>
+  <text x="56" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">T 에 메서드를 호출하려면 반드시 경계를 지정해야 함</text>
+
+  <!-- 4: Wildcard capture -->
+  <rect x="460" y="242" width="380" height="142" fill="#111111" rx="8" stroke="#e8e8e8" stroke-width="1"/>
+  <text x="476" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">④ 와일드카드에 add 시도</text>
+  <rect x="476" y="278" width="348" height="80" fill="#000000" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="488" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> add(List&lt;? </tspan><tspan fill="#7ec8e3" font-weight="600">extends</tspan><tspan fill="#ffffff"> Number&gt; list) {</tspan></text>
+  <text x="488" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  list.add(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">); </tspan><tspan fill="#e05555">// 컴파일 오류!</tspan></text>
+  <text x="488" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8">// extends = 읽기 전용</tspan></text>
+  <text x="488" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#9aa4b8">// 쓰기엔 ? super Number 사용</tspan></text>
+  <text x="476" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">? extends = Producer (읽기), ? super = Consumer (쓰기)</text>
+
+  <text x="440" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" text-anchor="middle">제네릭 컴파일 경고는 무시하지 말고 원인을 파악할 것</text>
+</svg>
