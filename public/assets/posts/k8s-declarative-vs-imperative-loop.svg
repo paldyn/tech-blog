@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="13" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="13" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">컨트롤 루프 (Reconciliation Loop)</text>
+
+  <!-- Desired State box -->
+  <rect x="60" y="80" width="220" height="80" rx="8" fill="#0d2d0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="170" y="116" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Desired State</text>
+  <text x="170" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">YAML (etcd 저장)</text>
+
+  <!-- Current State box -->
+  <rect x="600" y="80" width="220" height="80" rx="8" fill="#2d1a0a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="710" y="116" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178">Current State</text>
+  <text x="710" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">실제 클러스터 상태</text>
+
+  <!-- Controller -->
+  <rect x="320" y="196" width="240" height="80" rx="8" fill="#1e1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="230" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Controller</text>
+  <text x="440" y="254" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">diff(desired, current)</text>
+
+  <!-- Arrows: Desired → Controller -->
+  <line x1="280" y1="140" x2="370" y2="196" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="290" y="172"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Watch</text>
+
+  <!-- Arrows: Current → Controller -->
+  <line x1="600" y1="140" x2="510" y2="196" stroke="#ce9178" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="548" y="172"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Observe</text>
+
+  <!-- Decision diamond -->
+  <polygon points="440,310 510,354 440,398 370,354" fill="#1a1a1a" stroke="#888" stroke-width="1.5"/>
+  <text x="440" y="358" text-anchor="middle" dominant-baseline="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">일치?</text>
+  <line x1="440" y1="276" x2="440" y2="310" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Yes: No action -->
+  <line x1="510" y1="354" x2="620" y2="354" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="555" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Yes</text>
+  <rect x="620" y="330" width="160" height="48" rx="6" fill="#0d2d0d" stroke="#55c555" stroke-width="1"/>
+  <text x="700" y="358" text-anchor="middle" dominant-baseline="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">No-op (안정)</text>
+
+  <!-- No: Act -->
+  <line x1="370" y1="354" x2="200" y2="354" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="290" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">No</text>
+  <rect x="60" y="330" width="140" height="48" rx="6" fill="#2d0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="130" y="354" text-anchor="middle" dominant-baseline="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">조정(Act)</text>
+
+  <!-- Act → Current State (update) -->
+  <path d="M 130 378 Q 130 430 710 430 Q 820 430 820 120 Q 820 80 710 80"
+        fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="420" y="424"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">상태 반영 후 재관찰 (무한 루프)</text>
+</svg>
