@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">제어 컴포넌트(Controlled Input) 동작 원리</text>
+
+  <!-- Flow diagram -->
+  <!-- User types -->
+  <rect x="60" y="80" width="160" height="56" rx="8" fill="#0a1628" stroke="#1e3a5f" stroke-width="1.5"/>
+  <text x="140" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">사용자 입력</text>
+  <text x="140" y="124" text-anchor="middle" font-size="12" fill="#888">키보드 입력</text>
+
+  <!-- Arrow 1: onChange event -->
+  <line x1="226" y1="108" x2="285" y2="108" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="256" y="100" text-anchor="middle" font-size="10" fill="#7777cc">onChange</text>
+
+  <!-- onChange handler -->
+  <rect x="293" y="80" width="180" height="56" rx="8" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="383" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">onChange 핸들러</text>
+  <text x="383" y="122" text-anchor="middle" font-size="11" fill="#888">e.target.value 수신</text>
+
+  <!-- Arrow 2: setState -->
+  <line x1="479" y1="108" x2="535" y2="108" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="507" y="100" text-anchor="middle" font-size="10" fill="#7777cc">setState</text>
+
+  <!-- State -->
+  <rect x="543" y="80" width="140" height="56" rx="8" fill="#0f2a0f" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="613" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">React state</text>
+  <text x="613" y="122" text-anchor="middle" font-size="11" fill="#55c555">value = "입력값"</text>
+
+  <!-- Arrow 3: re-render -->
+  <line x1="693" y1="108" x2="745" y2="108" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="719" y="100" text-anchor="middle" font-size="10" fill="#7777cc">리렌더</text>
+
+  <!-- Input element -->
+  <rect x="753" y="80" width="110" height="56" rx="8" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="808" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">input DOM</text>
+  <text x="808" y="122" text-anchor="middle" font-size="11" fill="#888">value 갱신</text>
+
+  <!-- Cycle arrow back -->
+  <path d="M 808 136 Q 808 170 440 170 Q 80 170 80 136" fill="none" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="440" y="188" text-anchor="middle" font-size="11" fill="#7777cc">단방향 데이터 흐름 (UI = f(state))</text>
+
+  <!-- Code example -->
+  <text x="440" y="220" text-anchor="middle" font-size="14" font-weight="600" fill="#e8e8e8">제어 컴포넌트 예시</text>
+  <rect x="60" y="232" width="760" height="160" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <rect x="76" y="244" width="728" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="92" y="264" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> LoginForm() {</tspan>
+    <tspan x="92" dy="18" fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> [email, setEmail] = useState(</tspan><tspan fill="#ce9178">''</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="92" dy="18" fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> [pw, setPw] = useState(</tspan><tspan fill="#ce9178">''</tspan><tspan fill="#ffffff">);</tspan>
+    <tspan x="92" dy="18" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> (</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">    </tspan><tspan fill="#ce9178">&lt;form</tspan><tspan fill="#ffffff"> onSubmit={handleSubmit}&gt;</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">      </tspan><tspan fill="#ce9178">&lt;input</tspan><tspan fill="#7ec8e3" font-weight="600"> value</tspan><tspan fill="#ffffff">={email}</tspan><tspan fill="#7ec8e3" font-weight="600"> onChange</tspan><tspan fill="#ffffff">={e =&gt; setEmail(e.target.value)} /&gt;</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">      </tspan><tspan fill="#ce9178">&lt;input</tspan><tspan fill="#ffffff"> type=</tspan><tspan fill="#ce9178">"password"</tspan><tspan fill="#7ec8e3" font-weight="600"> value</tspan><tspan fill="#ffffff">={pw}</tspan><tspan fill="#7ec8e3" font-weight="600"> onChange</tspan><tspan fill="#ffffff">={e =&gt; setPw(e.target.value)} /&gt;</tspan>
+  </text>
+
+  <!-- Bottom key point -->
+  <text x="440" y="410" text-anchor="middle" font-size="13" fill="#7ec8e3" font-weight="600">핵심: value와 onChange를 함께 제공해야 제어 컴포넌트</text>
+  <text x="440" y="430" text-anchor="middle" font-size="12" fill="#888">value만 있고 onChange가 없으면 읽기 전용(read-only) — onChange 없이 수정하면 React 경고</text>
+  <text x="440" y="448" text-anchor="middle" font-size="12" fill="#888">value={undefined} 또는 value 없음 → 비제어(uncontrolled) 컴포넌트 — DOM이 값 관리</text>
+</svg>

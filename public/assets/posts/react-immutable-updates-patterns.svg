@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">객체와 배열 불변 업데이트 패턴</text>
+
+  <!-- Object patterns (left) -->
+  <text x="220" y="74" text-anchor="middle" font-size="15" font-weight="600" fill="#7ec8e3">객체 업데이트</text>
+  <rect x="60" y="84" width="360" height="350" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <rect x="76" y="96" width="328" height="330" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="11" xml:space="preserve">
+    <tspan x="92" y="114" fill="#9aa4b8">// 필드 하나 업데이트</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">setObj(prev =&gt; ({ ...prev, name: </tspan><tspan fill="#ce9178">'Bob'</tspan><tspan fill="#ffffff"> }))</tspan>
+    <tspan x="92" dy="22" fill="#9aa4b8">// 중첩 객체 업데이트</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">setUser(prev =&gt; ({</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">  ...prev,</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">  address: {</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">    ...prev.address,</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">    city: </tspan><tspan fill="#ce9178">'Seoul'</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">  }</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">}))</tspan>
+    <tspan x="92" dy="22" fill="#9aa4b8">// 키 삭제 (구조 분해로 제외)</tspan>
+    <tspan x="92" dy="16" fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> del = key =&gt; setObj(prev =&gt; {</tspan>
+    <tspan x="92" dy="16" fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> { [key]: _, ...rest } = prev;</tspan>
+    <tspan x="92" dy="16" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> rest;</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">})</tspan>
+  </text>
+
+  <!-- Array patterns (right) -->
+  <text x="660" y="74" text-anchor="middle" font-size="15" font-weight="600" fill="#7ec8e3">배열 업데이트</text>
+  <rect x="460" y="84" width="360" height="350" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <rect x="476" y="96" width="328" height="330" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="11" xml:space="preserve">
+    <tspan x="492" y="114" fill="#9aa4b8">// 항목 추가</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">setList(prev =&gt; [...prev, newItem])</tspan>
+    <tspan x="492" dy="22" fill="#9aa4b8">// 항목 제거 (filter)</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">setList(prev =&gt;</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">  prev.filter(item =&gt; item.id !== id)</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">)</tspan>
+    <tspan x="492" dy="22" fill="#9aa4b8">// 항목 수정 (map)</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">setList(prev =&gt; prev.map(item =&gt;</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">  item.id === id</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">    ? { ...item, done: </tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff"> }</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">    : item</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">))</tspan>
+    <tspan x="492" dy="22" fill="#9aa4b8">// 정렬 (새 배열 복사 후)</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">setList(prev =&gt; [...prev].sort(...))</tspan>
+  </text>
+
+  <!-- Footer note -->
+  <text x="440" y="454" text-anchor="middle" font-size="12" fill="#888">push/pop/shift/splice/sort는 원본 배열을 변경(mutation) — React 상태에서 사용 금지</text>
+  <text x="440" y="472" text-anchor="middle" font-size="12" fill="#7ec8e3">Immer의 produce(prev, draft =&gt; { draft.push(x) })를 쓰면 mutation 문법으로 불변 업데이트 가능</text>
+</svg>

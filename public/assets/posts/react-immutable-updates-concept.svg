@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">불변성: 왜 직접 수정하면 안 되나</text>
+
+  <!-- Mutable (wrong) -->
+  <text x="220" y="74" text-anchor="middle" font-size="15" font-weight="600" fill="#e05555">❌ 직접 수정 (Mutation)</text>
+  <rect x="60" y="84" width="360" height="200" rx="10" fill="#1a0f0f" stroke="#4a2a2a" stroke-width="1.5"/>
+  <rect x="76" y="96" width="328" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="92" y="116" fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [user, setUser] = useState({</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">  name: </tspan><tspan fill="#ce9178">'Alice'</tspan><tspan fill="#ffffff">, age: </tspan><tspan fill="#b5cea8">25</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">});</tspan>
+    <tspan x="92" dy="18" fill="#9aa4b8">// 직접 수정 — React가 감지 못함!</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">user.age = </tspan><tspan fill="#b5cea8">26</tspan><tspan fill="#ffffff">;</tspan>
+    <tspan x="92" dy="18" fill="#e05555">setUser(user);</tspan><tspan fill="#9aa4b8"> // 같은 참조 → 리렌더 없음</tspan>
+    <tspan x="92" dy="18" fill="#9aa4b8">// user === user (참조 동일)</tspan>
+    <tspan x="92" dy="18" fill="#e05555">// React: "변경 없음 — 스킵"</tspan>
+    <tspan x="92" dy="18" fill="#e05555">// UI 업데이트 안 됨!</tspan>
+  </text>
+
+  <!-- Immutable (correct) -->
+  <text x="660" y="74" text-anchor="middle" font-size="15" font-weight="600" fill="#55c555">✓ 새 객체 생성 (Immutable)</text>
+  <rect x="460" y="84" width="360" height="200" rx="10" fill="#0f1a0f" stroke="#2a4a2a" stroke-width="1.5"/>
+  <rect x="476" y="96" width="328" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="492" y="116" fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [user, setUser] = useState({</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">  name: </tspan><tspan fill="#ce9178">'Alice'</tspan><tspan fill="#ffffff">, age: </tspan><tspan fill="#b5cea8">25</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">});</tspan>
+    <tspan x="492" dy="18" fill="#9aa4b8">// 새 객체 생성 (스프레드)</tspan>
+    <tspan x="492" dy="18" fill="#55c555">setUser({ ...user, age: 26 });</tspan>
+    <tspan x="492" dy="18" fill="#9aa4b8">// 새 참조 → React 감지!</tspan>
+    <tspan x="492" dy="18" fill="#9aa4b8">// newUser !== user</tspan>
+    <tspan x="492" dy="18" fill="#55c555">// React: "변경 감지 → 리렌더"</tspan>
+    <tspan x="492" dy="18" fill="#55c555">// UI 정상 업데이트 ✓</tspan>
+  </text>
+
+  <!-- How React detects -->
+  <rect x="60" y="300" width="760" height="60" rx="8" fill="#0a1628" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="440" y="322" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">React의 변경 감지 방식: 얕은 참조 비교 (Object.is)</text>
+  <text x="440" y="342" text-anchor="middle" font-size="12" fill="#888">Object.is(prevState, nextState) → true면 리렌더 생략</text>
+  <text x="440" y="358" text-anchor="middle" font-size="12" fill="#888">객체·배열은 참조(주소)로 비교 — 내부 값이 달라도 같은 참조면 "변경 없음"으로 판단</text>
+
+  <!-- Warning -->
+  <text x="440" y="398" text-anchor="middle" font-size="13" fill="#e05555" font-weight="600">직접 수정(mutation)은 버그를 만든다 — 항상 새 객체/배열을 반환해야 한다</text>
+  <text x="440" y="418" text-anchor="middle" font-size="12" fill="#888">push(), splice(), sort() 등 원본을 바꾸는 메서드 대신 map(), filter(), concat(), spread 사용</text>
+  <text x="440" y="438" text-anchor="middle" font-size="12" fill="#888">Immer 라이브러리를 쓰면 draft 객체를 직접 수정하는 것처럼 코드를 쓰면서 내부적으로 불변 업데이트가 된다</text>
+</svg>
