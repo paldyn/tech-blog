@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">IP 단편화 (Fragmentation) 과정</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">패킷이 링크 MTU보다 크면 라우터가 분할 — 목적지에서만 재조립</text>
+
+  <defs>
+    <marker id="frag1" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Original packet -->
+  <text x="80" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" font-weight="600">원본 IP 패킷 (4000 bytes, MTU=1500)</text>
+  <rect x="80" y="112" width="100" height="36" rx="4" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="130" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" text-anchor="middle">IP 헤더</text>
+  <rect x="186" y="112" width="534" height="36" rx="4" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="453" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888" text-anchor="middle">데이터 3980 bytes</text>
+  <text x="80" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">IP 헤더: 20 bytes   |   총 4000 bytes</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="174" x2="440" y2="210" stroke="#7ec8e3" stroke-width="2" marker-end="url(#frag1)"/>
+  <text x="500" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">MTU=1500 링크 통과 → 단편화</text>
+
+  <!-- Fragment 1 -->
+  <text x="80" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" font-weight="600">단편 1 (1500 bytes) — Offset=0, MF=1</text>
+  <rect x="80" y="236" width="80" height="30" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="120" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#55c555" text-anchor="middle">헤더 20B</text>
+  <rect x="166" y="236" width="334" height="30" rx="4" fill="#0f1a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="333" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">데이터 1480 bytes</text>
+
+  <!-- Fragment 2 -->
+  <text x="80" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" font-weight="600">단편 2 (1500 bytes) — Offset=185 (1480/8), MF=1</text>
+  <rect x="80" y="296" width="80" height="30" rx="4" fill="#0f0f1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="120" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#7777cc" text-anchor="middle">헤더 20B</text>
+  <rect x="166" y="296" width="334" height="30" rx="4" fill="#0f0f1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="333" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">데이터 1480 bytes</text>
+
+  <!-- Fragment 3 -->
+  <text x="80" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" font-weight="600">단편 3 (1040 bytes) — Offset=370 (2960/8), MF=0 (마지막)</text>
+  <rect x="80" y="356" width="80" height="30" rx="4" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="120" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#e05555" text-anchor="middle">헤더 20B</text>
+  <rect x="166" y="356" width="226" height="30" rx="4" fill="#1a0f0f" stroke="#e05555" stroke-width="1"/>
+  <text x="279" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#888" text-anchor="middle">데이터 1020 bytes</text>
+
+  <!-- Code box -->
+  <rect x="60" y="404" width="760" height="56" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="428" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">IP 헤더 단편화 관련 필드:</text>
+  <text x="80" y="448" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">Identification(16b) | DF(1b) | MF(1b) | Fragment Offset(13b, ×8 bytes)</text>
+</svg>
