@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">세션 고정(Session Fixation) 공격 흐름</text>
+
+  <!-- Actors -->
+  <rect x="30" y="85" width="90" height="60" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="75" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">공격자</text>
+  <text x="75" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Attacker</text>
+
+  <rect x="390" y="85" width="100" height="60" rx="6" fill="#0a1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">피해자</text>
+  <text x="440" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Victim</text>
+
+  <rect x="730" y="85" width="120" height="60" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="790" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">서버</text>
+  <text x="790" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Web Server</text>
+
+  <!-- Step 1: Attacker gets session ID -->
+  <line x1="790" y1="145" x2="790" y2="185" stroke="#3a4a6e" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="75" y1="145" x2="75" y2="185" stroke="#3a4a6e" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="440" y1="145" x2="440" y2="185" stroke="#3a4a6e" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Step 1 -->
+  <rect x="30" y="175" width="830" height="42" rx="4" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="60" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e05555">Step 1.</text>
+  <line x1="120" y1="196" x2="728" y2="196" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="430" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">공격자가 서버에 접속 → 세션 ID 획득: SID=ABC123</text>
+
+  <!-- Step 2: Attacker sends link to victim -->
+  <rect x="30" y="235" width="830" height="42" rx="4" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="60" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e05555">Step 2.</text>
+  <line x1="120" y1="256" x2="388" y2="256" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="254" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">피해자에게 조작된 링크 전송</text>
+  <text x="254" y="265" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#e05555" text-anchor="middle">?session_id=ABC123</text>
+
+  <!-- Step 3: Victim logs in with fixed session -->
+  <rect x="30" y="295" width="830" height="42" rx="4" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="60" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e8c55a">Step 3.</text>
+  <line x1="490" y1="316" x2="728" y2="316" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="609" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">피해자가 SID=ABC123으로 로그인</text>
+  <text x="609" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c55a" text-anchor="middle">서버가 세션 재발급 없이 그대로 사용!</text>
+
+  <!-- Step 4: Attacker hijacks session -->
+  <rect x="30" y="355" width="830" height="42" rx="4" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="60" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e05555">Step 4.</text>
+  <line x1="728" y1="376" x2="122" y2="376" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="430" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">공격자가 SID=ABC123으로 요청 → 피해자로 인증됨!</text>
+
+  <!-- Defense box -->
+  <rect x="60" y="420" width="760" height="58" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">방어: 로그인 성공 후 반드시 새 세션 ID 발급</text>
+  <text x="440" y="465" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">기존 세션 삭제 → 새 세션 생성 → 새 ID 쿠키 전달</text>
+</svg>

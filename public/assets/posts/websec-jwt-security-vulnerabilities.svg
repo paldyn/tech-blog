@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="490" viewBox="0 0 880 490">
+  <rect width="880" height="490" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JWT 주요 취약점과 방어</text>
+
+  <!-- Vuln 1: alg:none -->
+  <rect x="50" y="68" width="380" height="110" rx="8" fill="#100a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="90" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">① alg:none 공격</text>
+  <text x="70" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178">{ "alg": "none" }</text>
+  <text x="70" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">서명 없이 토큰을 위조해 서버가 수락하게 함</text>
+  <text x="70" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">방어: 허용 알고리즘 화이트리스트 명시 (alg whitelist)</text>
+  <text x="70" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7ec8e3">jwt.decode(token, key, algorithms=["HS256"])</text>
+
+  <!-- Vuln 2: Algorithm confusion -->
+  <rect x="450" y="68" width="380" height="110" rx="8" fill="#100a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="490" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">② 알고리즘 혼동 공격</text>
+  <text x="470" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">RS256 서버에 alg=HS256, 공개키를 비밀키로 서명</text>
+  <text x="470" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">서버가 공개키로 HMAC 검증 → 위조 성공</text>
+  <text x="470" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">방어: alg를 토큰에서 읽지 말고 서버에서 강제 지정</text>
+  <text x="470" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7ec8e3">algorithms=["RS256"]  # 하드코딩 필수</text>
+
+  <!-- Vuln 3: Weak secret -->
+  <rect x="50" y="195" width="380" height="110" rx="8" fill="#1a1000" stroke="#e08855" stroke-width="1.5"/>
+  <text x="90" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e08855">③ 약한 서명 키</text>
+  <text x="70" y="243" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178">secret = "secret"  # 취약</text>
+  <text x="70" y="263" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">오프라인 브루트 포스로 비밀키 추측 가능</text>
+  <text x="70" y="283" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">방어: 최소 256비트 이상 무작위 키 사용</text>
+  <text x="70" y="297" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7ec8e3">secret = secrets.token_hex(32)</text>
+
+  <!-- Vuln 4: No expiry -->
+  <rect x="450" y="195" width="380" height="110" rx="8" fill="#1a1000" stroke="#e08855" stroke-width="1.5"/>
+  <text x="490" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e08855">④ 만료 시간 미설정</text>
+  <text x="470" y="243" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178">{ "sub": "user1" }  # exp 없음</text>
+  <text x="470" y="263" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">토큰 탈취 시 영구적으로 유효</text>
+  <text x="470" y="283" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">방어: 짧은 만료 + Refresh Token 패턴</text>
+  <text x="470" y="297" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7ec8e3">exp: datetime.utcnow() + timedelta(minutes=15)</text>
+
+  <!-- Vuln 5: Sensitive data in payload -->
+  <rect x="50" y="322" width="380" height="100" rx="8" fill="#181808" stroke="#888" stroke-width="1.5"/>
+  <text x="90" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">⑤ Payload 민감 정보 포함</text>
+  <text x="70" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178">{ "password": "abc123" }  # 절대 금지</text>
+  <text x="70" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Payload는 누구나 디코딩 가능 (암호화 아님)</text>
+  <text x="70" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">방어: sub, roles, exp 정도만 포함 (최소화)</text>
+
+  <!-- Vuln 6: Token revocation -->
+  <rect x="450" y="322" width="380" height="100" rx="8" fill="#181808" stroke="#888" stroke-width="1.5"/>
+  <text x="490" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">⑥ 토큰 취소 불가</text>
+  <text x="470" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">서버가 상태를 저장하지 않으므로 로그아웃/취소 어려움</text>
+  <text x="470" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">탈취된 토큰은 만료 전까지 유효</text>
+  <text x="470" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">방어: 짧은 Access Token + Redis 블랙리스트</text>
+
+  <text x="440" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Access Token(15분) + Refresh Token(7일) + Rotation 패턴이 현대적 표준</text>
+  <text x="440" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">Stateless JWT와 Stateful 세션의 트레이드오프를 이해하고 선택할 것</text>
+</svg>
