@@ -203,7 +203,5 @@ helm push mychart-0.1.0.tgz oci://registry.example.com/charts
 
 **지난 글:** [쿠버네티스 Namespace로 클러스터 격리하기](/posts/k8s-namespace/)
 
-**다음 글:** [Docker CI 기초 — 컨테이너로 빌드 파이프라인 구성하기](/posts/docker-ci-basics/)
-
 <br>
 읽어주셔서 감사합니다. 😊

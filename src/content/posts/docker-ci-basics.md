@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-helm-overview/)에서 Helm으로 쿠버네티스 배포를 패키지화하는 방법을 다뤘다. 배포하기 전에 이미지를 어떻게 만들고 검증하는지가 중요하다. **CI(Continuous Integration)**는 코드가 푸시될 때마다 자동으로 빌드·테스트·패키징하는 과정이며, Docker는 이 과정의 환경 일관성 문제를 깔끔하게 해결한다.
+[지난 글](/posts/docker-debug-dns/)에서 컨테이너 네트워크·DNS 문제를 진단하는 방법을 살펴봤다. 디버깅까지 익혔다면 이제 빌드·배포를 자동화할 차례다. **CI(Continuous Integration)**는 코드가 푸시될 때마다 자동으로 빌드·테스트·패키징하는 과정이며, Docker는 이 과정의 환경 일관성 문제를 깔끔하게 해결한다.
 
 ## 왜 컨테이너 기반 CI인가
 
@@ -215,7 +215,7 @@ docker compose -f docker-compose.test.yml down -v
 
 ---
 
-**지난 글:** [Helm으로 쿠버네티스 패키지 관리하기](/posts/k8s-helm-overview/)
+**지난 글:** [컨테이너 DNS 문제 진단과 수정](/posts/docker-debug-dns/)
 
 **다음 글:** [GitHub Actions로 Docker 이미지 빌드 자동화하기](/posts/docker-github-actions-build/)
 

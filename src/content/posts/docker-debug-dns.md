@@ -169,7 +169,7 @@ sudo systemctl restart docker
 
 **지난 글:** [컨테이너 네트워크 연결 문제 디버깅](/posts/docker-debug-networking/)
 
-**다음 글:** [Kubernetes vs Docker Compose: 무엇을 선택해야 할까?](/posts/k8s-vs-docker-compose/)
+**다음 글:** [Docker CI 기초 — 컨테이너로 빌드 파이프라인 구성하기](/posts/docker-ci-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊
