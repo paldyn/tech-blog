@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">세션 관리 구현 (FastAPI + Redis)</text>
+
+  <!-- Left: Session creation -->
+  <text x="80" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">세션 생성 및 쿠키 설정</text>
+  <rect x="60" y="88" width="380" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text x="122" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> secrets, json</text>
+  <text x="76" y="140" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">async def</text>
+  <text x="146" y="140" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> create_session(user_id, response):</text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # CSPRNG으로 세션 ID 생성</text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    session_id = secrets.token_hex(</text>
+  <text x="336" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">32</text>
+  <text x="350" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">)</text>
+  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # Redis에 세션 저장</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    data = {</text>
+  <text x="76" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">        "user_id"</text>
+  <text x="176" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">: user_id,</text>
+  <text x="76" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">        "created_at"</text>
+  <text x="191" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">: time.time()</text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    }</text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    await</text>
+  <text x="126" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> r.setex(</text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        f</text>
+  <text x="90" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">"session:{session_id}"</text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        </text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        </text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">        1800</text>
+  <text x="136" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">, json.dumps(data)</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    )</text>
+  <text x="76" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 보안 속성 쿠키 설정</text>
+
+  <!-- Right: Cookie settings -->
+  <text x="480" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">보안 쿠키 및 로그아웃</text>
+  <rect x="460" y="88" width="380" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    response.set_cookie(</text>
+  <text x="476" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">        key=</text>
+  <text x="520" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">"session_id"</text>
+  <text x="476" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        value=session_id,</text>
+  <text x="476" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">        # JS 접근 불가</text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        httponly=</text>
+  <text x="576" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">True</text>
+  <text x="476" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">        # HTTPS 전용</text>
+  <text x="476" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        secure=</text>
+  <text x="556" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">True</text>
+  <text x="476" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">        # CSRF 방어</text>
+  <text x="476" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        samesite=</text>
+  <text x="566" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">"strict"</text>
+  <text x="476" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        max_age=</text>
+  <text x="556" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">1800</text>
+  <text x="596" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">,</text>
+  <text x="476" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 로그아웃: 서버 + 클라이언트 모두</text>
+  <text x="476" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">async def</text>
+  <text x="546" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> logout(session_id):</text>
+  <text x="476" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 서버에서 세션 삭제</text>
+  <text x="476" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    await</text>
+  <text x="526" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> r.delete(f</text>
+  <text x="606" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">"session:{session_id}"</text>
+
+  <text x="440" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">세션 ID는 URL에 절대 포함하지 말 것 — 로그, 히스토리, 리퍼러에 노출된다</text>
+</svg>

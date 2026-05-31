@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">세션 하이재킹 방어 구현</text>
+
+  <!-- Left: Session validation -->
+  <text x="80" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">세션 유효성 검증 강화</text>
+  <rect x="60" y="88" width="380" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">async def</text>
+  <text x="146" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> validate_session(sid, req):</text>
+  <text x="76" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    s = </text>
+  <text x="108" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">await</text>
+  <text x="148" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> get_session(sid)</text>
+  <text x="76" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    if not</text>
+  <text x="136" y="152" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> s:</text>
+  <text x="76" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">        return None</text>
+  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # User-Agent 일관성 검사</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    ua = req.headers.get(</text>
+  <text x="76" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">        "user-agent"</text>
+  <text x="76" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    )</text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    if</text>
+  <text x="106" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> s.get(</text>
+  <text x="146" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">"ua_hash"</text>
+  <text x="206" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">) != hash_ua(ua):</text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">        # 탈취 의심</text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">        await</text>
+  <text x="136" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> delete_session(sid)</text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">        return None</text>
+  <text x="76" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text x="126" y="368" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> s</text>
+
+  <!-- Right: Concurrent session management -->
+  <text x="480" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">동시 세션 탐지</text>
+  <rect x="460" y="88" width="380" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 같은 사용자의 복수 세션 추적</text>
+  <text x="476" y="140" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">async def</text>
+  <text x="546" y="140" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> create_session(user_id, ip):</text>
+  <text x="476" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    sid = secrets.token_hex(</text>
+  <text x="686" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">32</text>
+  <text x="698" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">)</text>
+  <text x="476" y="188" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 사용자별 세션 목록 관리</text>
+  <text x="476" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    await</text>
+  <text x="526" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> r.sadd(</text>
+  <text x="476" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">        f"user_sessions:{user_id}"</text>
+  <text x="476" y="248" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        , sid)</text>
+  <text x="476" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 의심스러우면 전체 세션 무효화</text>
+  <text x="476" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">async def</text>
+  <text x="546" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> revoke_all(user_id):</text>
+  <text x="476" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    sids = </text>
+  <text x="536" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">await</text>
+  <text x="576" y="316" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> r.smembers(</text>
+  <text x="476" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">        f"user_sessions:{user_id}"</text>
+  <text x="476" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    )</text>
+  <text x="476" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    for</text>
+  <text x="506" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> sid </text>
+  <text x="536" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">in</text>
+  <text x="556" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> sids:</text>
+
+  <text x="440" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">이상 행동 탐지 시 사용자 알림 + 전체 기기 세션 강제 로그아웃</text>
+</svg>

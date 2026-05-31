@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="490" viewBox="0 0 880 490">
+  <rect width="880" height="490" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">JWT 구조와 검증 흐름</text>
+
+  <!-- JWT token display -->
+  <rect x="60" y="65" width="760" height="56" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</text>
+  <text x="466" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">.</text>
+  <text x="476" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555">eyJzdWIiOiJ1c2VyMTIzIiwiaWF0IjoxNjE0MDg3MjAwfQ</text>
+  <text x="760" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">.</text>
+  <text x="770" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3">abc...</text>
+  <text x="80" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">Header</text>
+  <text x="476" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Payload</text>
+  <text x="770" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">Signature</text>
+
+  <!-- 3 parts detail -->
+  <!-- Header -->
+  <rect x="60" y="140" width="240" height="100" rx="7" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="180" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">Header (헤더)</text>
+  <text x="76" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">{</text>
+  <text x="76" y="203" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  "alg": "HS256",</text>
+  <text x="76" y="221" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  "typ": "JWT"</text>
+  <text x="76" y="231" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">}</text>
+
+  <!-- Payload -->
+  <rect x="320" y="140" width="240" height="100" rx="7" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Payload (페이로드)</text>
+  <text x="336" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">{</text>
+  <text x="336" y="203" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  "sub": "user123",</text>
+  <text x="336" y="221" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  "exp": 1614090800</text>
+  <text x="336" y="231" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">}</text>
+
+  <!-- Signature -->
+  <rect x="580" y="140" width="260" height="100" rx="7" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="710" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">Signature (서명)</text>
+  <text x="596" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">HMAC-SHA256(</text>
+  <text x="596" y="203" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">  base64(header) +</text>
+  <text x="596" y="221" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">  "." + base64(payload),</text>
+  <text x="596" y="239" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">  secret_key)</text>
+
+  <!-- Important notes -->
+  <rect x="60" y="262" width="760" height="80" rx="8" fill="#1a1400" stroke="#e8c55a" stroke-width="1.5"/>
+  <text x="440" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8c55a" text-anchor="middle">중요: Payload는 단순 Base64 인코딩 — 암호화 아님!</text>
+  <text x="440" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">누구나 Payload를 디코딩해서 내용을 볼 수 있다</text>
+  <text x="440" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">민감 정보(비밀번호, 주민번호 등)를 Payload에 절대 포함하지 말 것</text>
+
+  <!-- Verification flow -->
+  <text x="440" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8" text-anchor="middle">서버 검증 절차</text>
+  <rect x="60" y="392" width="145" height="50" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="133" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">서명 검증</text>
+  <line x1="205" y1="417" x2="248" y2="417" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="250" y="392" width="145" height="50" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="323" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">만료 확인 (exp)</text>
+  <line x1="395" y1="417" x2="438" y2="417" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="440" y="392" width="145" height="50" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="513" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">발급자 확인 (iss)</text>
+  <line x1="585" y1="417" x2="628" y2="417" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="630" y="392" width="190" height="50" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="725" y="415" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">알고리즘 명시적</text>
+  <text x="725" y="433" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">검증 (alg whitelist)</text>
+
+  <text x="440" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">JWT는 상태를 서버에 저장하지 않아 수평 확장에 유리 — 단, 로그아웃/토큰 취소 구현이 복잡</text>
+</svg>
