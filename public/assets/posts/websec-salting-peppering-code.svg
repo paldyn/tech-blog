@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">솔트 + 페퍼 완전 구현</text>
+
+  <rect x="60" y="60" width="760" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="82" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="129" y="82" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> os, hmac, hashlib</text>
+  <text x="80" y="102" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">from</text>
+  <text x="114" y="102" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> argon2 import PasswordHasher</text>
+  <text x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 페퍼: 환경변수에서만 로드 (DB에 저장 금지)</text>
+  <text x="80" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">PEPPER</text>
+  <text x="136" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = os.environ[</text>
+  <text x="250" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">"APP_PEPPER"</text>
+  <text x="358" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">].encode()</text>
+  <text x="80" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">ph</text>
+  <text x="101" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = PasswordHasher(time_cost=</text>
+  <text x="283" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">2</text>
+  <text x="294" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">, memory_cost=</text>
+  <text x="409" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">19456</text>
+  <text x="452" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">)</text>
+  <text x="80" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def</text>
+  <text x="109" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> _apply_pepper(password: str) -&gt; str:</text>
+  <text x="80" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # HMAC으로 페퍼 적용 (단순 연결보다 안전)</text>
+  <text x="80" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return</text>
+  <text x="149" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> hmac.new(</text>
+  <text x="80" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        PEPPER, password.encode(), hashlib.sha256</text>
+  <text x="80" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    ).hexdigest()</text>
+  <text x="80" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def</text>
+  <text x="109" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> hash_with_pepper(password: str) -&gt; str:</text>
+  <text x="80" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    peppered = _apply_pepper(password)</text>
+  <text x="80" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # argon2가 솔트를 자동 생성/내장</text>
+  <text x="80" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return</text>
+  <text x="149" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> ph.hash(peppered)</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="376" width="760" height="34" rx="6" fill="#0a2010" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">결과: DB 유출(솔트 노출)되더라도 페퍼 없이는 크랙 불가. 페퍼 유출만 별도 관리하면 된다.</text>
+</svg>

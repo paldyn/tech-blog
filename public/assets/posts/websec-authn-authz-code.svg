@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">인증/인가 혼용 실수 — Before vs After</text>
+
+  <!-- Vulnerable: Only authentication checked -->
+  <text x="210" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">취약: 인증만 확인 (인가 없음)</text>
+
+  <rect x="60" y="86" width="360" height="220" rx="6" fill="#000000" stroke="#993333" stroke-width="1"/>
+  <text x="80" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">@app.route</text>
+  <text x="165" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">("/orders/&lt;int:order_id&gt;")</text>
+  <text x="80" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">@login_required</text>
+  <text x="80" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def</text>
+  <text x="109" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get_order(order_id):</text>
+  <text x="80" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # 로그인 여부만 확인</text>
+  <text x="80" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">    order = Order.get(order_id)</text>
+  <text x="80" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return</text>
+  <text x="149" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> order.to_dict()</text>
+  <text x="80" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve"># 공격: /orders/99999 →</text>
+  <text x="80" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve"># 타인 주문 열람 가능!</text>
+  <text x="80" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve"># IDOR 취약점</text>
+
+  <!-- Secure: Both authentication and authorization -->
+  <text x="660" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">안전: 인증 + 인가 모두 확인</text>
+
+  <rect x="460" y="86" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">@app.route</text>
+  <text x="565" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">("/orders/&lt;int:order_id&gt;")</text>
+  <text x="480" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">@login_required</text>
+  <text x="480" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def</text>
+  <text x="509" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get_order(order_id):</text>
+  <text x="480" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">    order = Order.get(order_id)</text>
+  <text x="480" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # 소유자 검증 (인가)</text>
+  <text x="480" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    if</text>
+  <text x="509" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> order.user_id != current_user.id:</text>
+  <text x="480" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">        abort</text>
+  <text x="545" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">(403)</text>
+  <text x="480" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return</text>
+  <text x="549" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> order.to_dict()</text>
+  <text x="480" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve"># 403 Forbidden → IDOR 차단</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="328" width="760" height="54" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="440" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">인가 체크는 모든 데이터 접근마다 독립적으로 수행해야 한다</text>
+  <text x="440" y="370" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">미들웨어의 인증 확인 ≠ 개별 자원에 대한 인가. 두 단계는 항상 별도로 구현한다.</text>
+</svg>

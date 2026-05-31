@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arrw" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8e8e8"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8">CIA 트레이드오프와 실제 코드</text>
+
+  <!-- Code block: Confidentiality example -->
+  <rect x="60" y="65" width="360" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="85" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 기밀성 강화</text>
+  <text x="80" y="105" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">from</text>
+  <text x="125" y="105" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> cryptography.fernet import Fernet</text>
+  <text x="80" y="125" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">key = Fernet.generate_key()</text>
+  <text x="80" y="145" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">cipher = Fernet(key)</text>
+  <text x="80" y="165" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 저장 전 암호화</text>
+  <text x="80" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">token = cipher.encrypt(data.encode())</text>
+  <text x="80" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 읽을 때 복호화 → 성능 비용 발생</text>
+
+  <!-- Code block: Integrity example -->
+  <rect x="460" y="65" width="360" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="85" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 무결성 검증 (HMAC)</text>
+  <text x="480" y="105" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">import</text>
+  <text x="529" y="105" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> hmac, hashlib</text>
+  <text x="480" y="125" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def</text>
+  <text x="509" y="125" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> sign(data: bytes, key: bytes):</text>
+  <text x="480" y="145" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return</text>
+  <text x="549" y="145" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> hmac.new(</text>
+  <text x="480" y="165" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        key, data, hashlib.sha256</text>
+  <text x="480" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    ).hexdigest()</text>
+  <text x="480" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 서명 검증: hmac.compare_digest</text>
+
+  <!-- Tradeoff matrix -->
+  <text x="440" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">실전 트레이드오프</text>
+
+  <!-- Row headers -->
+  <rect x="60" y="270" width="220" height="40" rx="6" fill="#0d1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="170" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">시나리오</text>
+
+  <rect x="295" y="270" width="180" height="40" rx="6" fill="#0a1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="385" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">기밀성</text>
+
+  <rect x="490" y="270" width="180" height="40" rx="6" fill="#0a2010" stroke="#55c555" stroke-width="1"/>
+  <text x="580" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">무결성</text>
+
+  <rect x="685" y="270" width="135" height="40" rx="6" fill="#12081a" stroke="#7777cc" stroke-width="1"/>
+  <text x="752" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">가용성</text>
+
+  <!-- Row 1: CDN Cache -->
+  <rect x="60" y="318" width="220" height="34" rx="4" fill="#111" stroke="#222" stroke-width="1"/>
+  <text x="170" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">CDN 캐시 사용</text>
+  <rect x="295" y="318" width="180" height="34" rx="4" fill="#1a0a0a" stroke="#222" stroke-width="1"/>
+  <text x="385" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">▼ 낮음</text>
+  <rect x="490" y="318" width="180" height="34" rx="4" fill="#111" stroke="#222" stroke-width="1"/>
+  <text x="580" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">보통</text>
+  <rect x="685" y="318" width="135" height="34" rx="4" fill="#0a2010" stroke="#222" stroke-width="1"/>
+  <text x="752" y="340" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▲ 높음</text>
+
+  <!-- Row 2: E2E encryption -->
+  <rect x="60" y="358" width="220" height="34" rx="4" fill="#111" stroke="#222" stroke-width="1"/>
+  <text x="170" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">종단간 암호화</text>
+  <rect x="295" y="358" width="180" height="34" rx="4" fill="#0a2010" stroke="#222" stroke-width="1"/>
+  <text x="385" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▲ 높음</text>
+  <rect x="490" y="358" width="180" height="34" rx="4" fill="#0a1520" stroke="#222" stroke-width="1"/>
+  <text x="580" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">높음</text>
+  <rect x="685" y="358" width="135" height="34" rx="4" fill="#1a0a0a" stroke="#222" stroke-width="1"/>
+  <text x="752" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">▼ 낮음</text>
+
+  <!-- Row 3: Backup -->
+  <rect x="60" y="398" width="220" height="34" rx="4" fill="#111" stroke="#222" stroke-width="1"/>
+  <text x="170" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">오프사이트 백업</text>
+  <rect x="295" y="398" width="180" height="34" rx="4" fill="#111" stroke="#222" stroke-width="1"/>
+  <text x="385" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">보통</text>
+  <rect x="490" y="398" width="180" height="34" rx="4" fill="#0a2010" stroke="#222" stroke-width="1"/>
+  <text x="580" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▲ 높음</text>
+  <rect x="685" y="398" width="135" height="34" rx="4" fill="#0a2010" stroke="#222" stroke-width="1"/>
+  <text x="752" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">▲ 높음</text>
+</svg>
