@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 9
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "kubelet", "probe", "liveness", "readiness", "static-pod", "cri"]
 featured: false
 draft: false

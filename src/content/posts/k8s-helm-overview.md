@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-25"
 archiveOrder: 1
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "helm", "chart", "패키지관리", "배포"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-24"
 archiveOrder: 10
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "namespace", "rbac", "resourcequota", "격리"]
 featured: false
 draft: false

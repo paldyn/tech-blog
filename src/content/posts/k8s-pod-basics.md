@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-24"
 archiveOrder: 5
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "pod", "sidecar", "init-container", "lifecycle"]
 featured: false
 draft: false

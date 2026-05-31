@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-24"
 archiveOrder: 8
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "ingress", "nginx", "tls", "routing", "네트워크"]
 featured: false
 draft: false

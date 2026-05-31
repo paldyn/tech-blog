@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-24"
 archiveOrder: 9
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "configmap", "secret", "configuration", "security"]
 featured: false
 draft: false

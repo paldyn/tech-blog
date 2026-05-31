@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-24"
 archiveOrder: 6
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["kubernetes", "k8s", "deployment", "replicaset", "rolling-update", "rollback"]
 featured: false
 draft: false

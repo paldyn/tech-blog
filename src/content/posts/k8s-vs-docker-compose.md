@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-24"
 archiveOrder: 4
 type: "knowledge"
-category: "Docker"
+category: "Kubernetes"
 tags: ["docker", "kubernetes", "k8s", "compose", "orchestration", "비교"]
 featured: false
 draft: false
