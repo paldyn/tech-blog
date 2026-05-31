@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Graceful Shutdown — 설정 &amp; SmartLifecycle 코드</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">application.yml 설정과 SmartLifecycle 구현 패턴</text>
+
+  <!-- Left: application.yml -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">application.yml</text>
+
+  <rect x="60" y="110" width="360" height="170" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">server:</text>
+  <text xml:space="preserve" x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  shutdown: </text>
+  <text xml:space="preserve" x="196" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">graceful</text>
+  <text xml:space="preserve" x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  # immediate (기본값) 도 가능</text>
+  <text xml:space="preserve" x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">spring:</text>
+  <text xml:space="preserve" x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  lifecycle:</text>
+  <text xml:space="preserve" x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    timeout-per-shutdown-phase: </text>
+  <text xml:space="preserve" x="76" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">      30s</text>
+  <text xml:space="preserve" x="76" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 종료 단계당 최대 대기 시간</text>
+
+  <!-- Right: SmartLifecycle -->
+  <text x="460" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">SmartLifecycle 커스텀 종료 훅</text>
+
+  <rect x="460" y="110" width="360" height="170" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">@Component</text>
+  <text xml:space="preserve" x="476" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">class QueueConsumerLifecycle</text>
+  <text xml:space="preserve" x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    : SmartLifecycle {</text>
+  <text xml:space="preserve" x="476" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  override fun stop(callback:</text>
+  <text xml:space="preserve" x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      Runnable) {</text>
+  <text xml:space="preserve" x="476" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    // 큐 컨슈머 중단</text>
+  <text xml:space="preserve" x="476" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    consumer.stop()</text>
+  <text xml:space="preserve" x="476" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    callback.run()  }</text>
+
+  <!-- Bottom: Actuator endpoint -->
+  <text x="60" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Actuator 종료 엔드포인트 (운영 주의)</text>
+
+  <rect x="60" y="318" width="760" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="76" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># /actuator/shutdown 활성화 (기본: 비활성)</text>
+  <text xml:space="preserve" x="76" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">management:</text>
+  <text xml:space="preserve" x="76" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  endpoint:</text>
+  <text xml:space="preserve" x="76" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    shutdown: {enabled: </text>
+  <text xml:space="preserve" x="268" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">true</text>
+  <text xml:space="preserve" x="298" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Key points -->
+  <rect x="60" y="418" width="360" height="56" rx="6" fill="#111827" stroke="#3a5a8e" stroke-width="1"/>
+  <text x="240" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">SmartLifecycle.getPhase()</text>
+  <text x="240" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">숫자 클수록 늦게 시작, 먼저 종료</text>
+  <text x="240" y="470" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">기본값: Integer.MAX_VALUE</text>
+
+  <rect x="460" y="418" width="360" height="56" rx="6" fill="#111827" stroke="#3a5a8e" stroke-width="1"/>
+  <text x="640" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">K8s preStop Hook 필수</text>
+  <text x="640" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">LB가 트래픽 제거하기 전</text>
+  <text x="640" y="470" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">sleep 5~10초 삽입 권장</text>
+</svg>

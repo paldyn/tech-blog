@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">멀티 모듈 프로젝트 구조 &amp; 의존성 방향</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">계층 분리와 허용/금지 의존성 흐름</text>
+
+  <!-- Module boxes -->
+  <!-- api module -->
+  <rect x="340" y="90" width="200" height="60" rx="8" fill="#1a2535" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">:api</text>
+  <text x="440" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Controller, DTO, OpenAPI</text>
+
+  <!-- application module -->
+  <rect x="340" y="192" width="200" height="60" rx="8" fill="#111827" stroke="#e8d44d" stroke-width="2"/>
+  <text x="440" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8d44d" text-anchor="middle">:application</text>
+  <text x="440" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">UseCase, Service, Port 정의</text>
+
+  <!-- domain module -->
+  <rect x="340" y="294" width="200" height="60" rx="8" fill="#111827" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555" text-anchor="middle">:domain</text>
+  <text x="440" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Entity, Value Object, 도메인 규칙</text>
+
+  <!-- infra module (left) -->
+  <rect x="80" y="294" width="200" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="180" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc" text-anchor="middle">:infra-db</text>
+  <text x="180" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">JPA 구현, Repository</text>
+
+  <!-- infra-external module (right) -->
+  <rect x="600" y="294" width="200" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="700" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc" text-anchor="middle">:infra-external</text>
+  <text x="700" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">외부 API, Kafka, S3</text>
+
+  <!-- bootstrap module -->
+  <rect x="340" y="396" width="200" height="60" rx="8" fill="#0d1117" stroke="#888" stroke-width="1.5"/>
+  <text x="440" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#888" text-anchor="middle">:bootstrap</text>
+  <text x="440" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#666" text-anchor="middle">main() 진입점, 전체 모듈 조합</text>
+
+  <!-- Arrows: api → application -->
+  <line x1="440" y1="150" x2="440" y2="191" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Arrows: application → domain -->
+  <line x1="440" y1="252" x2="440" y2="293" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Arrows: infra-db → domain -->
+  <line x1="280" y1="324" x2="339" y2="324" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Arrows: infra-external → domain -->
+  <line x1="600" y1="324" x2="541" y2="324" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- bootstrap → infra-db -->
+  <path d="M 390 456 Q 180 480 180 355" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-b)"/>
+
+  <!-- bootstrap → api -->
+  <line x1="440" y1="396" x2="440" y2="151" stroke="#888" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-b)"/>
+
+  <!-- Forbidden arrow (domain → infra) -->
+  <path d="M 540 324 Q 620 270 600 310" fill="none" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-r)"/>
+  <text x="605" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">금지!</text>
+  <text x="596" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">domain→infra</text>
+
+  <!-- Legend -->
+  <rect x="60" y="474" width="760" height="46" rx="6" fill="#0d1117" stroke="#3a4a6e" stroke-width="1"/>
+  <line x1="80" y1="498" x2="120" y2="498" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+  <text x="128" y="502" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">허용 의존성 방향</text>
+  <line x1="260" y1="498" x2="300" y2="498" stroke="#888" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-b)"/>
+  <text x="308" y="502" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">bootstrap 조립 (런타임)</text>
+  <line x1="490" y1="498" x2="530" y2="498" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-r)"/>
+  <text x="538" y="502" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">금지 의존성 (역방향)</text>
+</svg>
