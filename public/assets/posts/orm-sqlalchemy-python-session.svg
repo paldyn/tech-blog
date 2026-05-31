@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQLAlchemy 2.0 — ORM vs Core 쿼리</text>
+
+  <!-- ORM style -->
+  <rect x="60" y="66" width="370" height="340" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ORM 스타일 (2.0 select())</text>
+  <text x="80" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> sqlalchemy.orm </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> Session</tspan>
+  </text>
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> sqlalchemy </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> select</tspan>
+  </text>
+  <text x="80" y="158" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">with</tspan><tspan fill="#ffffff"> Session(engine) </tspan><tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> session:</tspan>
+  </text>
+  <text x="80" y="178" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  stmt = (</tspan>
+  </text>
+  <text x="80" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    select(User)</tspan>
+  </text>
+  <text x="80" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    .where(User.is_active == </tspan><tspan fill="#7ec8e3" font-weight="600">True</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    .order_by(User.name)</tspan>
+  </text>
+  <text x="80" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    .limit(</tspan><tspan fill="#b5cea8">20</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  )</tspan>
+  </text>
+  <text x="80" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  users = session.scalars(stmt).all()</tspan>
+  </text>
+  <text x="80" y="326" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # INSERT + flush + commit</text>
+  <text x="80" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  new_user = User(name=</tspan><tspan fill="#ce9178">"철수"</tspan><tspan fill="#ffffff">, ...)</tspan>
+  </text>
+  <text x="80" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  session.add(new_user)</tspan>
+  </text>
+  <text x="80" y="386" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  session.commit()  </tspan><tspan fill="#9aa4b8"># autoflush</tspan>
+  </text>
+
+  <!-- Core style -->
+  <rect x="450" y="66" width="370" height="340" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="470" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># Core 스타일 (텍스트 SQL)</text>
+  <text x="470" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> sqlalchemy </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> text</tspan>
+  </text>
+  <text x="470" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> sqlalchemy </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> insert, update</tspan>
+  </text>
+  <text x="470" y="158" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">with</tspan><tspan fill="#ffffff"> engine.connect() </tspan><tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> conn:</tspan>
+  </text>
+  <text x="470" y="178" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # 텍스트 Raw SQL</text>
+  <text x="470" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  rows = conn.execute(</tspan>
+  </text>
+  <text x="470" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    text(</tspan><tspan fill="#ce9178">"SELECT * FROM users"</tspan>
+  </text>
+  <text x="470" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">         </tspan><tspan fill="#ce9178">" WHERE is_active = :active"</tspan><tspan fill="#ffffff">),</tspan>
+  </text>
+  <text x="470" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    {</tspan><tspan fill="#ce9178">"active"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#7ec8e3" font-weight="600">True</tspan><tspan fill="#ffffff">}</tspan>
+  </text>
+  <text x="470" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  ).fetchall()</tspan>
+  </text>
+  <text x="470" y="306" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">  # Core INSERT (bulk)</text>
+  <text x="470" y="326" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  conn.execute(</tspan>
+  </text>
+  <text x="470" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    insert(user_table),</tspan>
+  </text>
+  <text x="470" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    [{</tspan><tspan fill="#ce9178">"name"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"A"</tspan><tspan fill="#ffffff">}, {</tspan><tspan fill="#ce9178">"name"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"B"</tspan><tspan fill="#ffffff">}]</tspan>
+  </text>
+  <text x="470" y="386" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  )</tspan>
+  </text>
+</svg>

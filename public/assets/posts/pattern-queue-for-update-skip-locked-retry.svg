@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">재시도 및 Dead Letter Queue 처리</text>
+
+  <rect x="60" y="66" width="760" height="270" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 작업 처리 완료 / 실패 처리</text>
+  <text x="80" y="118" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">-- 성공 시</tspan>
+  </text>
+  <text x="80" y="138" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">UPDATE</tspan><tspan fill="#ffffff"> job_queue </tspan><tspan fill="#7ec8e3" font-weight="600">SET</tspan><tspan fill="#ffffff"> status = </tspan><tspan fill="#ce9178">'done'</tspan><tspan fill="#ffffff">, completed_at = NOW() </tspan><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> id = :job_id;</tspan>
+  </text>
+  <text x="80" y="166" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">-- 실패 시: 재시도 카운트 증가, 지수 백오프</tspan>
+  </text>
+  <text x="80" y="186" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">UPDATE</tspan><tspan fill="#ffffff"> job_queue</tspan>
+  </text>
+  <text x="80" y="206" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">SET</tspan><tspan fill="#ffffff">    retry_count = retry_count + </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="226" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">       status = </tspan><tspan fill="#7ec8e3" font-weight="600">CASE</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">WHEN</tspan><tspan fill="#ffffff"> retry_count + </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff"> &gt;= </tspan><tspan fill="#b5cea8">3</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">THEN</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">'dead_letter'</tspan>
+  </text>
+  <text x="80" y="246" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">                  </tspan><tspan fill="#7ec8e3" font-weight="600">ELSE</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">'pending'</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">END</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="266" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">       next_run_at = NOW() + POWER(</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">, retry_count) * INTERVAL </tspan><tspan fill="#ce9178">'1 min'</tspan>
+  </text>
+  <text x="80" y="286" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff">  id = :job_id;</tspan>
+  </text>
+  <text x="80" y="314" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- next_run_at: 1분, 2분, 4분, 8분... 지수 백오프</text>
+  <text x="80" y="334" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 3회 실패 후 dead_letter로 이동 (수동 검토)</text>
+</svg>

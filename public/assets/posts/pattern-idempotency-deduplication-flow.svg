@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">멱등성 처리 흐름</text>
+
+  <!-- Client -->
+  <rect x="60" y="76" width="120" height="56" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="120" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">클라이언트</text>
+
+  <!-- Arrow: client to server -->
+  <line x1="180" y1="104" x2="238" y2="104" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="209" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#9aa4b8" text-anchor="middle">Idempotency-Key: abc</text>
+
+  <!-- API Server -->
+  <rect x="240" y="76" width="140" height="56" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="310" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">API 서버</text>
+
+  <!-- Arrow: server to cache check -->
+  <line x1="380" y1="104" x2="438" y2="104" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="409" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#9aa4b8" text-anchor="middle">키 존재 확인</text>
+
+  <!-- Cache/DB check -->
+  <rect x="440" y="76" width="160" height="56" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="520" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">멱등성 저장소</text>
+
+  <!-- Branch: Key exists? -->
+  <text x="640" y="60" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">키 없음</text>
+  <line x1="600" y1="104" x2="658" y2="104" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="660" y="76" width="160" height="56" rx="8" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="99" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#55c555" text-anchor="middle">신규 처리</text>
+  <text x="740" y="123" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">비즈니스 로직 실행</text>
+
+  <!-- Retry path -->
+  <text x="440" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">키 이미 존재 (재요청)</text>
+  <line x1="520" y1="132" x2="520" y2="190" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+
+  <rect x="440" y="192" width="160" height="56" rx="8" fill="#2a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="520" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">캐시된 응답</text>
+  <text x="520" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">동일 응답 반환</text>
+
+  <!-- Store result arrow -->
+  <line x1="740" y1="132" x2="740" y2="170" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <rect x="660" y="172" width="160" height="56" rx="8" fill="#111827" stroke="#55c555" stroke-width="1"/>
+  <text x="740" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">결과 저장</text>
+  <text x="740" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">key + result + TTL</text>
+
+  <!-- SQL: idempotency table -->
+  <rect x="60" y="278" width="760" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 멱등성 키 테이블</text>
+  <text x="80" y="322" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">CREATE TABLE</tspan><tspan fill="#ffffff"> idempotency_keys (</tspan>
+  </text>
+  <text x="80" y="342" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  idempotency_key  </tspan><tspan fill="#7ec8e3" font-weight="600">VARCHAR</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">255</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#7ec8e3" font-weight="600">PRIMARY KEY</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="362" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  request_hash     </tspan><tspan fill="#7ec8e3" font-weight="600">VARCHAR</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">64</tspan><tspan fill="#ffffff">),   </tspan><tspan fill="#9aa4b8">-- 요청 본문 해시</tspan>
+  </text>
+  <text x="80" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  response_body    </tspan><tspan fill="#7ec8e3" font-weight="600">JSONB</tspan><tspan fill="#ffffff">,              </tspan><tspan fill="#9aa4b8">-- 캐시된 응답</tspan>
+  </text>
+  <text x="80" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  status           </tspan><tspan fill="#7ec8e3" font-weight="600">VARCHAR</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">20</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#7ec8e3" font-weight="600">DEFAULT</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">'processing'</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="80" y="422" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  expires_at        </tspan><tspan fill="#7ec8e3" font-weight="600">TIMESTAMPTZ</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">NOT NULL</tspan>
+  </text>
+  <text x="80" y="442" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+</svg>

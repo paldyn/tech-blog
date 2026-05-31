@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">updated_at 자동 갱신 — 트리거 vs ORM</text>
+
+  <!-- Trigger approach -->
+  <rect x="60" y="66" width="370" height="290" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- PostgreSQL 트리거</text>
+  <text x="80" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">CREATE</tspan><tspan fill="#ffffff"> OR </tspan><tspan fill="#7ec8e3" font-weight="600">REPLACE FUNCTION</tspan>
+  </text>
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  set_updated_at()</tspan>
+  </text>
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">RETURNS TRIGGER</tspan><tspan fill="#ffffff"> LANGUAGE plpgsql</tspan>
+  </text>
+  <text x="80" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> $$</tspan>
+  </text>
+  <text x="80" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">BEGIN</tspan>
+  </text>
+  <text x="80" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  NEW.updated_at := NOW();</tspan>
+  </text>
+  <text x="80" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  RETURN</tspan><tspan fill="#ffffff"> NEW;</tspan>
+  </text>
+  <text x="80" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">END</tspan><tspan fill="#ffffff">; $$;</tspan>
+  </text>
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">CREATE TRIGGER</tspan><tspan fill="#ffffff"> trg_orders_updated_at</tspan>
+  </text>
+  <text x="80" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">BEFORE UPDATE ON</tspan><tspan fill="#ffffff"> orders</tspan>
+  </text>
+  <text x="80" y="318" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FOR EACH ROW EXECUTE FUNCTION</tspan>
+  </text>
+  <text x="80" y="338" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  set_updated_at();</tspan>
+  </text>
+
+  <!-- ORM approach -->
+  <rect x="450" y="66" width="370" height="290" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="470" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// SQLAlchemy 이벤트</text>
+  <text x="470" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> sqlalchemy </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> event</tspan>
+  </text>
+  <text x="470" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ffffff"> datetime </tspan><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> datetime, timezone</tspan>
+  </text>
+  <text x="470" y="158" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan><tspan fill="#ffffff"> TimestampMixin:</tspan>
+  </text>
+  <text x="470" y="178" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  created_at: Mapped[datetime]</tspan>
+  </text>
+  <text x="470" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    = mapped_column(</tspan>
+  </text>
+  <text x="470" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      default=datetime.now)</tspan>
+  </text>
+  <text x="470" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  updated_at: Mapped[datetime]</tspan>
+  </text>
+  <text x="470" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    = mapped_column(</tspan>
+  </text>
+  <text x="470" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      default=datetime.now,</tspan>
+  </text>
+  <text x="470" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">      onupdate=datetime.now)</tspan>
+  </text>
+  <text x="470" y="326" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// TypeORM: @UpdateDateColumn()</text>
+  <text x="470" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Prisma: @updatedAt</text>
+</svg>

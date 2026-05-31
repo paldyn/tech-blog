@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">오프셋 vs 커서 페이지네이션</text>
+
+  <!-- Offset pagination diagram -->
+  <rect x="60" y="66" width="360" height="36" rx="6" fill="#2a1e10" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">OFFSET 기반 (전통적)</text>
+
+  <!-- Table rows for offset -->
+  <rect x="60" y="114" width="360" height="200" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+
+  <!-- Page 1 highlight -->
+  <rect x="61" y="115" width="358" height="52" rx="5" fill="#1a2a3a"/>
+  <text x="80" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" font-weight="600">Page 1 (LIMIT 5 OFFSET 0)</text>
+  <text x="80" y="153" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11"
+        fill="#ffffff">Row 1, 2, 3, 4, 5</text>
+
+  <!-- Page 2 highlight -->
+  <rect x="61" y="167" width="358" height="52" rx="0" fill="#1a1a2a"/>
+  <text x="80" y="187" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" font-weight="600">Page 2 (LIMIT 5 OFFSET 5)</text>
+  <text x="80" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11"
+        fill="#ffffff">Row 6, 7, 8, 9, 10</text>
+
+  <!-- Insert row problem -->
+  <rect x="61" y="219" width="358" height="52" rx="0" fill="#2a0f0f"/>
+  <text x="80" y="239" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" font-weight="600">⚠ 신규 행 삽입 후 Page 2 재조회</text>
+  <text x="80" y="257" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11"
+        fill="#e05555">Row 5, 6, 7, 8, 9  ← Row 5 중복!</text>
+
+  <!-- Score label -->
+  <rect x="61" y="271" width="358" height="40" rx="0" fill="#0a0a0a"/>
+  <text x="240" y="287" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">• 전체 스캔(OFFSET N) → 데이터 많을수록 느림</text>
+  <text x="240" y="305" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">• 임의 페이지 이동 가능 (장점)</text>
+
+  <!-- Cursor pagination diagram -->
+  <rect x="460" y="66" width="360" height="36" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">커서 기반 (권장)</text>
+
+  <rect x="460" y="114" width="360" height="200" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+
+  <!-- Page 1 cursor -->
+  <rect x="461" y="115" width="358" height="52" rx="5" fill="#0a2a0a"/>
+  <text x="480" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" font-weight="600">Page 1 (WHERE id &gt; 0 LIMIT 5)</text>
+  <text x="480" y="153" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11"
+        fill="#ffffff">Row 1, 2, 3, 4, 5  ← cursor: 5</text>
+
+  <!-- Page 2 cursor -->
+  <rect x="461" y="167" width="358" height="52" rx="0" fill="#0a1a0a"/>
+  <text x="480" y="187" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" font-weight="600">Page 2 (WHERE id &gt; 5 LIMIT 5)</text>
+  <text x="480" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11"
+        fill="#ffffff">Row 6, 7, 8, 9, 10  ← cursor: 10</text>
+
+  <!-- Insert row - cursor stable -->
+  <rect x="461" y="219" width="358" height="52" rx="0" fill="#0a2a0a"/>
+  <text x="480" y="239" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" font-weight="600">✓ 신규 행 삽입 후 Page 2 재조회</text>
+  <text x="480" y="257" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11"
+        fill="#55c555">Row 6, 7, 8, 9, 10  ← 중복 없음!</text>
+
+  <rect x="461" y="271" width="358" height="40" rx="0" fill="#0a0a0a"/>
+  <text x="640" y="287" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">• 인덱스 seek → 일정한 성능</text>
+  <text x="640" y="305" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">• 임의 페이지 이동 불가 (단점)</text>
+
+  <!-- Code examples at bottom -->
+  <rect x="60" y="338" width="760" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="358" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 커서 기반 쿼리 (단방향)</text>
+  <text x="80" y="378" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> id, name, created_at</tspan>
+  </text>
+  <text x="80" y="398" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff">   posts</tspan>
+  </text>
+  <text x="80" y="418" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff">  id </tspan><tspan fill="#7ec8e3" font-weight="600">&lt;</tspan><tspan fill="#ffffff"> :cursor  </tspan><tspan fill="#9aa4b8">-- 역순일 때 &lt; 사용</tspan>
+  </text>
+  <text x="80" y="438" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">ORDER BY</tspan><tspan fill="#ffffff"> id </tspan><tspan fill="#7ec8e3" font-weight="600">DESC</tspan>
+  </text>
+  <text x="80" y="458" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">LIMIT</tspan><tspan fill="#ffffff">  :page_size</tspan><tspan fill="#b5cea8"> + 1</tspan><tspan fill="#9aa4b8">; -- +1로 다음 페이지 존재 확인</tspan>
+  </text>
+</svg>

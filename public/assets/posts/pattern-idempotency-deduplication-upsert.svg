@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">DB 레벨 중복 방지 패턴</text>
+
+  <!-- INSERT ... ON CONFLICT -->
+  <rect x="60" y="66" width="760" height="290" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- PostgreSQL: INSERT ... ON CONFLICT DO NOTHING (중복 무시)</text>
+  <text x="80" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">INSERT INTO</tspan><tspan fill="#ffffff"> payments (idempotency_key, user_id, amount)</tspan>
+  </text>
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">VALUES</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#ce9178">'key-abc'</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">10000</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">ON CONFLICT</tspan><tspan fill="#ffffff"> (idempotency_key) </tspan><tspan fill="#7ec8e3" font-weight="600">DO NOTHING</tspan><tspan fill="#ffffff">;</tspan>
+  </text>
+
+  <text x="80" y="178" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 중복 무시 + 기존 id 반환 (INSERT OR IGNORE + SELECT)</text>
+  <text x="80" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WITH</tspan><tspan fill="#ffffff"> inserted </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> (</tspan>
+  </text>
+  <text x="80" y="218" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">INSERT INTO</tspan><tspan fill="#ffffff"> payments (idempotency_key, user_id, amount)</tspan>
+  </text>
+  <text x="80" y="238" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">VALUES</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#ce9178">'key-abc'</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">10000</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">ON CONFLICT</tspan><tspan fill="#ffffff"> (idempotency_key) </tspan><tspan fill="#7ec8e3" font-weight="600">DO NOTHING</tspan>
+  </text>
+  <text x="80" y="278" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">RETURNING</tspan><tspan fill="#ffffff"> id</tspan>
+  </text>
+  <text x="80" y="298" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="318" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> id </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> inserted</tspan>
+  </text>
+  <text x="80" y="338" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">UNION ALL</tspan>
+    <tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan><tspan fill="#ffffff"> id </tspan><tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> payments </tspan><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> idempotency_key = </tspan><tspan fill="#ce9178">'key-abc'</tspan><tspan fill="#ffffff">;</tspan>
+  </text>
+</svg>

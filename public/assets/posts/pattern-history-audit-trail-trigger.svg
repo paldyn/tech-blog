@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">히스토리 자동 기록 — PostgreSQL 트리거</text>
+
+  <rect x="60" y="66" width="760" height="290" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="90" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 범용 감사 트리거 함수 (모든 테이블 재사용 가능)</text>
+  <text x="80" y="110" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">CREATE</tspan><tspan fill="#ffffff"> OR </tspan><tspan fill="#7ec8e3" font-weight="600">REPLACE FUNCTION</tspan><tspan fill="#ffffff"> audit_trigger_func()</tspan>
+  </text>
+  <text x="80" y="130" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">RETURNS TRIGGER</tspan><tspan fill="#ffffff"> LANGUAGE plpgsql </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> $$</tspan>
+  </text>
+  <text x="80" y="150" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">BEGIN</tspan>
+  </text>
+  <text x="80" y="170" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  INSERT INTO</tspan><tspan fill="#ffffff"> audit_log (</tspan>
+  </text>
+  <text x="80" y="190" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    table_name, action, old_data, new_data, changed_by</tspan>
+  </text>
+  <text x="80" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  ) </tspan><tspan fill="#7ec8e3" font-weight="600">VALUES</tspan><tspan fill="#ffffff"> (</tspan>
+  </text>
+  <text x="80" y="230" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    TG_TABLE_NAME,               </tspan><tspan fill="#9aa4b8">-- 테이블명 자동</tspan>
+  </text>
+  <text x="80" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    TG_OP,                        </tspan><tspan fill="#9aa4b8">-- INSERT/UPDATE/DELETE</tspan>
+  </text>
+  <text x="80" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    to_jsonb(OLD),               </tspan><tspan fill="#9aa4b8">-- 이전 값</tspan>
+  </text>
+  <text x="80" y="290" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    to_jsonb(NEW),               </tspan><tspan fill="#9aa4b8">-- 새 값</tspan>
+  </text>
+  <text x="80" y="310" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    current_setting(</tspan><tspan fill="#ce9178">'app.current_user'</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="80" y="330" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  );</tspan>
+  </text>
+  <text x="80" y="350" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  RETURN</tspan><tspan fill="#ffffff"> COALESCE(NEW, OLD);</tspan>
+  </text>
+</svg>
