@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">이벤트 처리 패턴</text>
+
+  <!-- Pattern 1: Inline vs separate -->
+  <rect x="60" y="64" width="360" height="160" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="240" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">핸들러 정의 방식</text>
+  <rect x="76" y="100" width="328" height="112" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="92" y="120" fill="#9aa4b8">// ❌ 인라인 — 렌더마다 새 함수 생성</tspan>
+    <tspan x="92" dy="16" fill="#ce9178">&lt;button</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">onClick</tspan><tspan fill="#ffffff">={() =&gt; doSomething()}</tspan><tspan fill="#ce9178">&gt;</tspan>
+    <tspan x="92" dy="16" fill="#9aa4b8">// ✅ 핸들러 분리 (권장)</tspan>
+    <tspan x="92" dy="16" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> handleClick() {</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">  doSomething();</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">}</tspan>
+    <tspan x="92" dy="16" fill="#ce9178">&lt;button</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">onClick</tspan><tspan fill="#ffffff">={handleClick}</tspan><tspan fill="#ce9178">&gt;</tspan>
+  </text>
+
+  <!-- Pattern 2: Event object -->
+  <rect x="460" y="64" width="360" height="160" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="640" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">SyntheticEvent 객체</text>
+  <rect x="476" y="100" width="328" height="112" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="492" y="120" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> handleSubmit(e) {</tspan>
+    <tspan x="492" dy="16" fill="#9aa4b8">  // 기본 동작 막기 (폼 제출)</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">  e.preventDefault();</tspan>
+    <tspan x="492" dy="16" fill="#9aa4b8">  // 이벤트 버블링 중단</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">  e.stopPropagation();</tspan>
+    <tspan x="492" dy="16" fill="#9aa4b8">  // target 정보 접근</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> val = e.target.value;</tspan>
+  </text>
+
+  <!-- Pattern 3: Passing args -->
+  <rect x="60" y="248" width="360" height="180" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="240" y="272" text-anchor="middle" font-size="14" font-weight="600" fill="#7777cc">핸들러에 인자 전달</text>
+  <rect x="76" y="284" width="328" height="132" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="92" y="304" fill="#9aa4b8">// 화살표 함수로 래핑</tspan>
+    <tspan x="92" dy="16" fill="#ce9178">&lt;button</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">onClick</tspan><tspan fill="#ffffff">={() =&gt; handleDelete(item.id)}</tspan><tspan fill="#ce9178">&gt;</tspan>
+    <tspan x="92" dy="16"> </tspan>
+    <tspan x="92" dy="16" fill="#9aa4b8">// 또는 커리 함수</tspan>
+    <tspan x="92" dy="16" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> handleDelete(id) {</tspan>
+    <tspan x="92" dy="16" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> () =&gt; deleteItem(id);</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">}</tspan>
+    <tspan x="92" dy="16" fill="#ce9178">&lt;button</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">onClick</tspan><tspan fill="#ffffff">={handleDelete(item.id)}</tspan><tspan fill="#ce9178">&gt;</tspan>
+  </text>
+
+  <!-- Pattern 4: Event delegation in React -->
+  <rect x="460" y="248" width="360" height="180" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="640" y="272" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">이벤트 위임 (React 내부)</text>
+  <rect x="476" y="284" width="328" height="132" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="492" y="304" fill="#9aa4b8">// 각 항목마다 핸들러 대신</tspan>
+    <tspan x="492" dy="16" fill="#9aa4b8">// 부모에서 data-* 속성으로 판단</tspan>
+    <tspan x="492" dy="16" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> handleClick(e) {</tspan>
+    <tspan x="492" dy="16" fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> id = e.target.dataset.id;</tspan>
+    <tspan x="492" dy="16" fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (id) deleteItem(id);</tspan>
+    <tspan x="492" dy="16" fill="#ffffff">}</tspan>
+    <tspan x="492" dy="16" fill="#ce9178">&lt;ul</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">onClick</tspan><tspan fill="#ffffff">={handleClick}</tspan><tspan fill="#ce9178">&gt;</tspan>
+  </text>
+</svg>

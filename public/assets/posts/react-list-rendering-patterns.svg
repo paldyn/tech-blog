@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">리스트 렌더링 패턴</text>
+
+  <!-- Empty state -->
+  <rect x="60" y="64" width="360" height="150" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="240" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">빈 배열 처리 (Empty State)</text>
+  <rect x="76" y="100" width="328" height="102" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve">
+    <tspan x="92" y="122" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> List({ items }) {</tspan>
+    <tspan x="92" dy="18" fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (items.length === </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">) {</tspan>
+    <tspan x="92" dy="18" fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">&lt;p&gt;</tspan><tspan fill="#ffffff">항목이 없습니다.</tspan><tspan fill="#ce9178">&lt;/p&gt;</tspan><tspan fill="#ffffff">;</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">  }</tspan>
+    <tspan x="92" dy="18" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">&lt;ul&gt;</tspan><tspan fill="#ffffff">{items.map(...)}</tspan><tspan fill="#ce9178">&lt;/ul&gt;</tspan><tspan fill="#ffffff">;</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Nested list -->
+  <rect x="460" y="64" width="360" height="150" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="640" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">중첩 리스트</text>
+  <rect x="476" y="100" width="328" height="102" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve">
+    <tspan x="492" y="122" fill="#ffffff">{categories.map(cat =&gt; (</tspan>
+    <tspan x="492" dy="18" fill="#ce9178">  &lt;section</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">key</tspan><tspan fill="#ffffff">={cat.id}</tspan><tspan fill="#ce9178">&gt;</tspan>
+    <tspan x="492" dy="18" fill="#ce9178">    &lt;h2&gt;</tspan><tspan fill="#ffffff">{cat.name}</tspan><tspan fill="#ce9178">&lt;/h2&gt;</tspan>
+    <tspan x="492" dy="18" fill="#ce9178">    &lt;ul&gt;</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">      {cat.items.map(item =&gt; (</tspan>
+    <tspan x="492" dy="18" fill="#ce9178">        &lt;li</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">key</tspan><tspan fill="#ffffff">={item.id}</tspan><tspan fill="#ce9178">&gt;</tspan><tspan fill="#ffffff">{item.name}</tspan><tspan fill="#ce9178">&lt;/li&gt;</tspan>
+  </text>
+
+  <!-- Key rules -->
+  <rect x="60" y="236" width="760" height="160" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="440" y="258" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">key 규칙 — 형제 사이에서만 고유하면 된다</text>
+  <rect x="76" y="270" width="348" height="112" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="92" y="290" fill="#9aa4b8">// ❌ 인덱스 key — 재정렬 시 버그</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">{items.map((item, i) =&gt; (</tspan>
+    <tspan x="92" dy="16" fill="#ce9178">  &lt;Item</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">key</tspan><tspan fill="#ffffff">={i} ... </tspan><tspan fill="#ce9178">/&gt;</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">))}</tspan>
+    <tspan x="92" dy="16" fill="#9aa4b8">// ✅ 고유 ID — 안정적</tspan>
+    <tspan x="92" dy="16" fill="#ffffff">{items.map(item =&gt; (</tspan>
+    <tspan x="92" dy="16" fill="#ce9178">  &lt;Item</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">key</tspan><tspan fill="#ffffff">={item.id} ... </tspan><tspan fill="#ce9178">/&gt;</tspan>
+  </text>
+  <rect x="440" y="270" width="368" height="112" rx="6" fill="#0f2a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="624" y="296" text-anchor="middle" font-size="13" fill="#55c555">key로 사용 가능한 값</text>
+  <text x="624" y="320" text-anchor="middle" font-size="12" fill="#888">데이터베이스 ID (가장 권장)</text>
+  <text x="624" y="342" text-anchor="middle" font-size="12" fill="#888">uuid(), crypto.randomUUID()</text>
+  <text x="624" y="364" text-anchor="middle" font-size="12" fill="#888">절대 변하지 않는 안정적 값</text>
+  <text x="624" y="382" text-anchor="middle" font-size="12" fill="#e05555">✕ 인덱스(순서 변경 시 버그)</text>
+</svg>

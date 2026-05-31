@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">객체와 배열 state 불변 업데이트</text>
+
+  <!-- Object update -->
+  <rect x="60" y="64" width="360" height="180" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="240" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#e05555">❌ 직접 수정 (안티패턴)</text>
+  <rect x="76" y="100" width="328" height="132" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve">
+    <tspan x="92" y="122" fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [user, setUser] = useState({</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">  name: </tspan><tspan fill="#ce9178">'Alice'</tspan><tspan fill="#ffffff">, age: </tspan><tspan fill="#b5cea8">29</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">});</tspan>
+    <tspan x="92" dy="18" fill="#9aa4b8">// ❌ 직접 변경 — 리렌더 안 됨</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">user.name = </tspan><tspan fill="#ce9178">'Bob'</tspan><tspan fill="#ffffff">; </tspan>
+    <tspan x="92" dy="18" fill="#ffffff">setUser(user); </tspan><tspan fill="#9aa4b8">// 같은 참조!</tspan>
+  </text>
+
+  <rect x="460" y="64" width="360" height="180" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="640" y="88" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">✅ 새 객체 생성 (올바른 방법)</text>
+  <rect x="476" y="100" width="328" height="132" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve">
+    <tspan x="492" y="122" fill="#9aa4b8">// ✅ 스프레드로 새 객체 생성</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">setUser(prev =&gt; ({</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">  ...prev,         </tspan><tspan fill="#9aa4b8">// 기존 필드 복사</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">  name: </tspan><tspan fill="#ce9178">'Bob'</tspan><tspan fill="#ffffff">   </tspan><tspan fill="#9aa4b8">// 변경할 필드만</tspan>
+    <tspan x="492" dy="18" fill="#ffffff">}));</tspan>
+    <tspan x="492" dy="18" fill="#9aa4b8">// 새 참조 → React가 변경 감지</tspan>
+  </text>
+
+  <!-- Array update -->
+  <rect x="60" y="264" width="760" height="180" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="440" y="288" text-anchor="middle" font-size="14" font-weight="600" fill="#7ec8e3">배열 state 불변 업데이트</text>
+  <rect x="76" y="302" width="728" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve">
+    <tspan x="92" y="322" fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [items, setItems] = useState([</tspan><tspan fill="#ce9178">'a'</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">'b'</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">'c'</tspan><tspan fill="#ffffff">]);</tspan>
+    <tspan x="92" dy="20"> </tspan>
+    <tspan x="92" dy="0" fill="#9aa4b8">// 추가: 스프레드</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">setItems(prev =&gt; [...prev, </tspan><tspan fill="#ce9178">'d'</tspan><tspan fill="#ffffff">]);</tspan>
+    <tspan x="92" dy="20" fill="#9aa4b8">// 삭제: filter</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">setItems(prev =&gt; prev.filter(item =&gt; item !== </tspan><tspan fill="#ce9178">'b'</tspan><tspan fill="#ffffff">));</tspan>
+    <tspan x="92" dy="20" fill="#9aa4b8">// 수정: map</tspan>
+    <tspan x="92" dy="18" fill="#ffffff">setItems(prev =&gt; prev.map(item =&gt; item === </tspan><tspan fill="#ce9178">'a'</tspan><tspan fill="#ffffff"> ? </tspan><tspan fill="#ce9178">'A'</tspan><tspan fill="#ffffff"> : item));</tspan>
+  </text>
+</svg>
