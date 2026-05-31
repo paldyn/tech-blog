@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8c44a"/>
+    </marker>
+    <marker id="arr-l" viewBox="0 0 14 14" refX="2" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 14 0 L 1 7 L 14 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-bcast" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ARP 동작 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">IP 주소 → MAC 주소 변환 과정</text>
+
+  <!-- PC-A -->
+  <rect x="60" y="100" width="140" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="130" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">PC-A</text>
+  <text x="130" y="146" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">IP: 192.168.1.10</text>
+
+  <!-- PC-B -->
+  <rect x="680" y="100" width="140" height="60" rx="8" fill="#0f1a14" stroke="#55c555" stroke-width="1.5"/>
+  <text x="750" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">PC-B</text>
+  <text x="750" y="146" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">IP: 192.168.1.20</text>
+
+  <!-- PC-C (3rd device) -->
+  <rect x="370" y="100" width="140" height="60" rx="8" fill="#1a0f0f" stroke="#555" stroke-width="1"/>
+  <text x="440" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#555">PC-C</text>
+  <text x="440" y="146" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#555">IP: 192.168.1.30</text>
+
+  <!-- Step 1: Broadcast -->
+  <text x="130" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" font-weight="600">① 브로드캐스트</text>
+  <line x1="200" y1="200" x2="668" y2="200" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-bcast)"/>
+  <text x="440" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">ARP Request: "192.168.1.20의 MAC이 뭐야?"</text>
+  <text x="440" y="215" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">목적지 MAC = FF:FF:FF:FF:FF:FF (전체 장치 수신)</text>
+
+  <!-- PC-C ignores -->
+  <line x1="440" y1="200" x2="440" y2="240" stroke="#555" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="440" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">PC-C: "내 IP 아님, 무시"</text>
+
+  <!-- Step 2: Unicast reply -->
+  <text x="750" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" font-weight="600">② 유니캐스트 응답</text>
+  <line x1="678" y1="310" x2="202" y2="310" stroke="#55c555" stroke-width="2" marker-end="url(#arr-l)"/>
+  <text x="440" y="298" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">ARP Reply: "나야! MAC = BB:BB:BB:BB:BB:BB"</text>
+  <text x="440" y="325" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">PC-A에게만 직접 전송</text>
+
+  <!-- ARP cache box -->
+  <rect x="60" y="355" width="360" height="80" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">③ ARP 캐시 저장</text>
+  <text x="80" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">192.168.1.20  →  BB:BB:BB:BB:BB:BB</text>
+  <text x="80" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">TTL: ~20분 (OS 설정에 따라 다름)</text>
+
+  <!-- result -->
+  <rect x="460" y="355" width="360" height="80" rx="8" fill="#0f1a14" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">④ 이후 통신</text>
+  <text x="480" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">캐시 있으면 ARP 불필요</text>
+  <text x="480" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">바로 이더넷 프레임 생성 후 전송</text>
+</svg>
