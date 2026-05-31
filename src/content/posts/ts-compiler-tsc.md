@@ -1,255 +1,148 @@
 ---
-title: "tsc 컴파일러 완전 이해: 파이프라인과 핵심 옵션"
-description: "TypeScript 컴파일러(tsc)가 .ts 파일을 .js로 변환하는 5단계 파이프라인, 자주 쓰는 컴파일러 옵션, watch 모드와 incremental 컴파일까지 깊이 다룹니다."
+title: "TypeScript 컴파일러 tsc 완전 해설"
+description: "tsc 컴파일러의 내부 처리 흐름, 주요 CLI 플래그, 출력 파일 종류(.js/.d.ts/.map)를 상세히 설명합니다. tsconfig와 CLI 옵션 우선순위도 함께 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
+pubDate: "2026-06-01"
 archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
-tags: ["tsc", "TypeScript컴파일러", "TypeScript완전정복", "tsconfig", "컴파일파이프라인"]
+tags: ["TypeScript", "tsc", "컴파일러", "tsconfig", "빌드"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-setup-install/)에서 TypeScript 개발 환경을 구성했다. 이번에는 매일 실행하는 `tsc` 명령어가 내부에서 어떤 일을 하는지 이해해보자. 컴파일러를 이해하면 오류 메시지를 더 잘 해석하고, tsconfig.json을 더 효과적으로 설정할 수 있다.
+[지난 글](/posts/ts-setup-install/)에서 TypeScript 설치와 기본 환경 설정을 완료했다. 이번에는 TypeScript 컴파일러 `tsc`가 어떻게 동작하는지, 어떤 옵션들이 있는지 더 깊이 들어가 본다.
 
-## tsc란 무엇인가
+## tsc가 하는 일
 
-`tsc`는 TypeScript Compiler의 줄임말이다. TypeScript 코드를 읽어 타입 검사를 수행하고, 순수한 JavaScript를 출력하는 도구다.
+`tsc`는 TypeScript 컴파일러다. 크게 두 가지 역할을 한다.
 
-```bash
-# 기본 사용법
-tsc                    # tsconfig.json 기반 전체 컴파일
-tsc file.ts            # 단일 파일 컴파일 (tsconfig 무시)
-tsc --watch            # 파일 변경 감지 자동 컴파일
-tsc --noEmit           # 타입 검사만 (파일 출력 없음)
-tsc --version          # 설치된 tsc 버전 확인
-```
+1. **타입 검사** — TypeScript 코드를 분석해 타입 오류를 찾는다
+2. **코드 변환** — TypeScript 코드를 JavaScript로 변환(방출)한다
 
-## tsc 내부 파이프라인
+중요한 점은 이 두 역할이 독립적이라는 것이다. `--noEmit` 플래그를 쓰면 타입 검사만 하고 파일을 출력하지 않는다. CI/CD 파이프라인에서 타입 검사를 별도 단계로 실행할 때 유용하다.
 
-TypeScript 컴파일러는 5단계를 거쳐 `.ts`를 `.js`로 변환한다.
+![tsc 내부 처리 흐름](/assets/posts/ts-compiler-tsc-pipeline.svg)
 
-![tsc 컴파일 파이프라인](/assets/posts/ts-compiler-tsc-flow.svg)
+## 내부 처리 단계
 
-### 1단계: Scanner (스캐너/렉서)
+`tsc`는 소스 파일을 다음 순서로 처리한다.
 
-소스 코드를 읽어 토큰(Token) 스트림으로 분해한다. `function`, `const`, `"hello"`, `42` 같은 기본 단위를 인식한다.
+**1. 설정 로드** — `tsconfig.json` 을 읽어 컴파일 옵션과 대상 파일 목록을 결정한다.
 
-```
-function greet(name: string): string {
-↓ 토큰화
-[keyword:function] [identifier:greet] [(] [identifier:name] [:] [keyword:string] [)] ...
-```
+**2. 파싱** — `.ts` 파일을 읽어 AST(Abstract Syntax Tree)를 만든다. 이 단계에서 문법 오류를 잡는다.
 
-### 2단계: Parser (파서)
+**3. 바인딩** — AST를 순회하며 심벌 테이블을 만든다. 변수, 함수, 클래스 등의 선언을 기록한다.
 
-토큰 스트림을 구문 분석해 AST(Abstract Syntax Tree, 추상 구문 트리)를 생성한다. AST는 코드의 구조를 트리 형태로 표현한 것이다.
+**4. 타입 검사** — 심벌 테이블과 AST를 바탕으로 타입 오류를 찾는다. 가장 많은 시간이 걸리는 단계다.
 
-```typescript
-// 이 코드의 AST (간략화)
-function add(a: number, b: number): number {
-  return a + b;
-}
+**5. 방출(Emit)** — 타입 정보를 제거하고 `.js` 파일을 생성한다. `--declaration` 옵션이 있으면 `.d.ts` 도 함께 생성한다.
 
-// AST 노드:
-// FunctionDeclaration
-//   name: Identifier (add)
-//   parameters: [
-//     Parameter (a: number),
-//     Parameter (b: number)
-//   ]
-//   returnType: TypeReference (number)
-//   body: Block
-//     ReturnStatement: BinaryExpression (a + b)
-```
+## 주요 CLI 플래그
 
-### 3단계: Binder (바인더)
-
-AST를 순회하며 심볼 테이블을 만든다. 각 변수, 함수, 클래스가 어떤 스코프에 속하는지 확인하고, 선언과 사용처를 연결한다.
-
-### 4단계: Checker (타입 검사기)
-
-TypeScript의 핵심이다. 바인더가 만든 심볼 테이블을 기반으로 타입 추론과 타입 호환성 검사를 수행한다. 타입 오류가 여기서 발견된다.
-
-```typescript
-function multiply(a: number, b: number): number {
-  return a + b;  // 타입적으로는 OK (number + number = number)
-}
-
-multiply("hello", 2);  // Checker가 오류 감지:
-// Error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'
-```
-
-### 5단계: Emitter (이미터)
-
-타입 검사를 통과한 코드에서 타입 어노테이션을 제거하고 JavaScript 파일을 생성한다. `declaration: true` 옵션이면 `.d.ts` 파일도 생성한다.
-
-## 자주 쓰는 tsconfig 옵션
-
-![tsc 주요 옵션](/assets/posts/ts-compiler-tsc-options.svg)
-
-### 출력 제어 옵션
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",     // 출력 JS 버전
-    "module": "commonjs",   // 모듈 시스템
-    "outDir": "./dist",     // 출력 디렉터리
-    "rootDir": "./src",     // 소스 루트
-    "declaration": true,    // .d.ts 생성
-    "declarationMap": true, // .d.ts 소스맵
-    "sourceMap": true,      // .js.map 생성
-    "removeComments": true  // 주석 제거
-  }
-}
-```
-
-### 엄격도 옵션
-
-```json
-{
-  "compilerOptions": {
-    "strict": true,                    // 아래 옵션 전체 활성화
-    "noImplicitAny": true,             // any 암묵 추론 금지
-    "strictNullChecks": true,          // null/undefined 분리
-    "strictFunctionTypes": true,       // 함수 파라미터 공변/반변
-    "noImplicitReturns": true,         // 모든 경로에서 반환 강제
-    "noFallthroughCasesInSwitch": true // switch 폴스루 금지
-  }
-}
-```
-
-### 모듈 해석 옵션
-
-```json
-{
-  "compilerOptions": {
-    "moduleResolution": "bundler",       // Vite/webpack 환경
-    "baseUrl": ".",                      // 절대 경로 기준점
-    "paths": {
-      "@/*": ["src/*"]                   // 경로 별칭
-    },
-    "esModuleInterop": true,             // CommonJS 호환 import
-    "allowSyntheticDefaultImports": true // default import 허용
-  }
-}
-```
-
-## Watch 모드
-
-개발 중 파일 변경마다 수동으로 `tsc`를 실행하는 건 번거롭다. Watch 모드를 사용하면 파일 변경 즉시 자동으로 재컴파일된다.
+`tsconfig.json` 에 설정하는 것과 동일한 옵션을 CLI에서 직접 지정할 수도 있다. CLI 인자는 `tsconfig.json` 보다 높은 우선순위를 갖는다.
 
 ```bash
-# Watch 모드 시작
+# 단일 파일 컴파일
+tsc src/index.ts
+
+# watch 모드 — 파일 변경 시 자동 재컴파일
 tsc --watch
-# 또는
-tsc -w
 
-# 출력 예시
-[11:23:45] Starting compilation in watch mode...
-[11:23:46] Found 0 errors. Watching for file changes.
-[11:23:52] File change detected. Starting incremental compilation...
-[11:23:53] Found 0 errors. Watching for file changes.
+# 타입 검사만 (파일 출력 없음)
+tsc --noEmit
+
+# 출력 버전 지정
+tsc --target ES2022
+
+# 출력 디렉터리 지정
+tsc --outDir dist
+
+# 다른 tsconfig 사용
+tsc --project tsconfig.prod.json
 ```
 
-## Incremental 컴파일
+![tsc 주요 플래그와 옵션](/assets/posts/ts-compiler-tsc-flags.svg)
 
-프로젝트가 커지면 전체 재컴파일이 느려진다. `incremental: true`로 이전 컴파일 결과를 캐시해 변경된 파일만 다시 컴파일한다.
+## 출력 파일 종류
+
+`tsc`가 생성하는 파일은 세 가지다.
+
+### .js — 실행 가능한 JavaScript
+
+기본 출력이다. TypeScript 문법이 제거된 순수 JavaScript다.
+
+```typescript
+// 입력: src/greeting.ts
+function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+export { greet };
+```
+
+```javascript
+// 출력: dist/greeting.js (ES2022 target)
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+export { greet };
+```
+
+### .d.ts — 타입 선언 파일
+
+`--declaration` 옵션을 켜면 생성된다. JavaScript 파일 사용자가 TypeScript에서 타입 정보를 활용할 수 있도록 타입만 추출한 파일이다. npm 패키지를 TypeScript로 배포할 때 필수다.
+
+```typescript
+// 생성: dist/greeting.d.ts
+declare function greet(name: string): string;
+export { greet };
+```
+
+### .js.map — 소스맵
+
+`--sourceMap` 옵션을 켜면 생성된다. 컴파일된 JS 코드와 원본 TS 코드의 줄 번호 매핑 정보를 담는다. 디버거에서 `.js` 파일을 실행할 때 원본 `.ts` 파일의 줄 번호를 보여 준다.
+
+## 타입 오류와 컴파일 관계
+
+기본적으로 타입 오류가 있으면 `tsc`는 `.js` 파일을 생성하지 않는다. 하지만 `noEmitOnError` 를 `false` 로 설정하면 오류가 있어도 JS를 출력한다.
 
 ```json
 {
   "compilerOptions": {
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"  // 캐시 파일 위치
+    "noEmitOnError": false
   }
 }
 ```
 
-```bash
-# 첫 컴파일: 전체 (느림)
-tsc  # 5초
+이 설정은 기존 JavaScript 프로젝트를 TypeScript로 점진적으로 전환할 때 유용하다. 일단 컴파일은 통과시키면서 타입 오류를 하나씩 해결할 수 있다.
 
-# 이후 컴파일: 변경분만 (빠름)
-tsc  # 0.3초
-```
+## tsconfig vs CLI 우선순위
 
-## tsc 오류 메시지 읽는 법
-
-TypeScript 오류는 처음에는 낯설지만, 패턴을 알면 쉽게 해석된다.
-
-```
-src/app.ts:15:3 - error TS2322: Type 'string' is not assignable to type 'number'.
-
-15     count = "hello";
-       ~~~~~
-
-   src/app.ts:12:7
-   12   let count: number = 0;
-            ~~~~~~~~~~~~~~~
-   'count' is declared here.
-```
-
-- `src/app.ts:15:3`: 파일명:줄번호:컬럼번호
-- `TS2322`: TypeScript 오류 코드 (검색 가능)
-- 오류 메시지: 무엇이 문제인지
-- 하위 줄: 관련 선언 위치
-
-오류 코드로 검색하면 자세한 설명과 해결책을 바로 찾을 수 있다. `TS2322 typescript`로 검색해보자.
-
-## 커맨드라인 옵션 vs tsconfig.json
-
-대부분의 옵션은 두 가지 방식으로 설정할 수 있다.
+같은 옵션이 tsconfig와 CLI 양쪽에 있을 때는 **CLI 인자가 우선** 한다.
 
 ```bash
-# 커맨드라인 플래그 (일회성)
-tsc --target ES2022 --strict --outDir dist src/index.ts
-
-# tsconfig.json (프로젝트 기본값 — 권장)
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "strict": true,
-    "outDir": "dist"
-  }
-}
+# tsconfig에 "target": "ES2015" 설정되어 있어도
+# 아래 명령은 ES2022로 컴파일
+tsc --target ES2022
 ```
 
-커맨드라인 플래그는 tsconfig.json 설정을 덮어쓴다. CI/CD에서 특정 옵션을 오버라이드할 때 유용하다.
+단, `--project` 또는 `-p` 플래그로 tsconfig 파일을 명시적으로 지정하면 해당 tsconfig의 설정이 사용된다.
 
-## 타입 선언 파일(.d.ts) 생성
+## 성능 팁
 
-라이브러리를 배포할 때는 `.d.ts` 파일이 필요하다. 이 파일은 JavaScript 구현 없이 타입 정보만 포함한다.
+큰 프로젝트에서 컴파일이 느리다면:
 
-```typescript
-// src/utils.ts
-export function add(a: number, b: number): number {
-  return a + b;
-}
-```
+- `--skipLibCheck` — `node_modules` 안의 `.d.ts` 타입 검사를 건너뜀. 빌드 시간을 크게 줄일 수 있다
+- `--incremental` — 이전 컴파일 결과를 캐시해 변경된 파일만 재컴파일
+- 프로젝트 참조(`references`) — 대규모 모노레포에서 부분 컴파일
 
-```bash
-tsc --declaration
-# dist/utils.js + dist/utils.d.ts 생성
-```
-
-```typescript
-// dist/utils.d.ts (자동 생성)
-export declare function add(a: number, b: number): number;
-```
-
-이 `.d.ts` 파일 덕분에 npm에 배포한 JavaScript 패키지도 TypeScript 사용자가 타입 정보를 활용할 수 있다.
-
-## 정리
-
-`tsc` 컴파일러는 Scanner → Parser → Binder → Checker → Emitter 5단계를 거쳐 `.ts`를 `.js`로 변환한다. Checker 단계가 TypeScript의 핵심이며, 여기서 타입 오류가 발견된다. Watch 모드와 Incremental 컴파일로 개발 속도를 높이고, tsconfig.json으로 프로젝트에 맞는 설정을 유지하자.
+다음 글에서는 설치 없이 브라우저에서 TypeScript를 바로 실험할 수 있는 TypeScript Playground를 소개한다.
 
 ---
 
-**지난 글:** [TypeScript 개발 환경 설치: Node.js부터 tsconfig까지](/posts/ts-setup-install/)
+**지난 글:** [TypeScript 설치와 환경 구성 완전 가이드](/posts/ts-setup-install/)
 
-**다음 글:** [TypeScript Playground: 설치 없이 브라우저에서 실험하기](/posts/ts-playground-repl/)
+**다음 글:** [TypeScript Playground — 브라우저에서 바로 실험하기](/posts/ts-playground-repl/)
 
 <br>
 읽어주셔서 감사합니다. 😊

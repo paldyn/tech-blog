@@ -1,203 +1,118 @@
 ---
-title: "TypeScript Playground: 설치 없이 브라우저에서 실험하기"
-description: "TypeScript Playground의 핵심 기능 6가지를 완전히 파악합니다. 실시간 타입 검사, JS 출력 확인, 컴파일러 옵션 조정, URL 공유 기능을 활용해 TypeScript 학습과 디버깅을 가속화하세요."
+title: "TypeScript Playground — 브라우저에서 바로 실험하기"
+description: "설치 없이 브라우저에서 TypeScript를 실험할 수 있는 공식 Playground 사용법을 안내합니다. 타입 실험, 버전 비교, 공유 기능까지 모두 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
+pubDate: "2026-06-01"
 archiveOrder: 6
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScriptPlayground", "TypeScript학습", "TypeScript완전정복", "타입실험"]
+tags: ["TypeScript", "Playground", "학습도구", "타입실험", "REPL"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-compiler-tsc/)에서 tsc 컴파일러의 내부 동작을 이해했다. 새로운 타입 개념을 배울 때마다 로컬 환경에서 파일 생성 → 컴파일 → 실행을 반복하는 건 번거롭다. TypeScript Playground를 사용하면 브라우저에서 즉시 실험할 수 있다.
+[지난 글](/posts/ts-compiler-tsc/)에서 `tsc` 컴파일러의 내부 동작을 살펴봤다. TypeScript를 처음 배울 때나 새로운 타입 문법을 실험할 때 매번 로컬에서 컴파일하기 번거롭다. TypeScript 공식 Playground를 사용하면 브라우저에서 바로 TypeScript를 작성하고 결과를 확인할 수 있다.
 
 ## TypeScript Playground란
 
-TypeScript Playground는 `typescriptlang.org/play`에서 접근할 수 있는 공식 온라인 편집기다. 별도 설치 없이 TypeScript 코드를 작성하고, 타입 검사 결과와 컴파일된 JavaScript를 실시간으로 확인할 수 있다.
+TypeScript Playground는 마이크로소프트가 제공하는 공식 온라인 REPL(Read-Eval-Print Loop) 환경이다. 브라우저에서 TypeScript 코드를 작성하면 실시간으로 JavaScript 출력을 보여 주고, 타입 오류가 있으면 즉시 표시해 준다.
 
-![TypeScript Playground 인터페이스](/assets/posts/ts-playground-repl-interface.svg)
+**접속 주소**: `typescriptlang.org/play`
 
-## 핵심 기능 6가지
+설치가 필요 없다. 계정 없이 바로 시작할 수 있다.
 
-![TypeScript Playground 기능](/assets/posts/ts-playground-repl-features.svg)
+![TypeScript Playground 주요 기능](/assets/posts/ts-playground-repl-ui.svg)
 
-### 1. 실시간 타입 검사
+## 핵심 기능
 
-코드를 입력하는 즉시 오류를 빨간 밑줄로 표시한다. 오류 위에 마우스를 올리면 상세 오류 메시지와 오류 코드(TS2xxx)가 나타난다.
+### 실시간 JS 변환
+
+TypeScript 코드를 입력하면 오른쪽 패널에 컴파일된 JavaScript가 실시간으로 표시된다. 타입 문법이 어떻게 제거되는지, 어떤 JavaScript로 변환되는지 바로 확인할 수 있다.
 
 ```typescript
-// 입력하면서 즉시 오류 확인
-interface User {
-  name: string;
-  age: number;
+// 입력한 TypeScript
+interface Config {
+  timeout: number;
+  retries?: number;
 }
 
-const user: User = {
-  name: "Alice",
-  age: "30"  // 빨간 밑줄 — Type 'string' is not assignable to type 'number'
-};
-```
-
-### 2. JavaScript 컴파일 결과 확인
-
-우측 패널에서 TypeScript가 어떤 JavaScript로 변환되는지 실시간으로 볼 수 있다.
-
-```typescript
-// TypeScript 입력
-class Animal {
-  constructor(private name: string) {}
-  
-  speak(): string {
-    return `${this.name}이(가) 울었습니다.`;
-  }
+function request(url: string, config: Config): Promise<Response> {
+  return fetch(url);
 }
 ```
 
-```javascript
-// JavaScript 출력 (ES2022 target)
-class Animal {
-  constructor(name) {
-    this.name = name;  // private 키워드 제거됨
-  }
-  speak() {
-    return `${this.name}이(가) 울었습니다.`;
-  }
+이 코드를 Playground에 입력하면 오른쪽에 `interface` 와 타입 정보가 제거된 JavaScript가 표시된다.
+
+### 타입 정보 호버
+
+코드 편집기에서 변수나 표현식 위에 마우스를 올리면 TypeScript가 추론한 타입을 툴팁으로 보여 준다. 복잡한 타입 추론 결과를 확인할 때 매우 유용하다.
+
+```typescript
+const items = [1, 2, 3];
+const doubled = items.map(x => x * 2);
+// doubled에 마우스 오버 → "const doubled: number[]" 표시
+```
+
+### TS 버전 선택
+
+상단 드롭다운에서 TypeScript 버전을 바꿀 수 있다. 버전별로 동작이 달라지는 기능을 비교하거나, nightly 빌드로 아직 릴리즈되지 않은 기능을 미리 실험할 수 있다.
+
+### URL 공유
+
+Playground에 코드를 입력하면 URL에 코드가 Base64 인코딩되어 포함된다. 이 URL을 공유하면 상대방이 같은 코드를 바로 열 수 있다. Stack Overflow 질문, GitHub 이슈, 팀 내 타입 문제 공유에 매우 유용하다.
+
+## 실습: 첫 번째 타입 실험
+
+Playground를 열고 다음 코드를 입력해 보자.
+
+```typescript
+// 타입 오류가 발생하는 코드
+function multiply(a: number, b: number): number {
+  return a * b;
 }
 
-// ES5 target으로 변경하면?
-var Animal = /** @class */ (function () {
-  function Animal(name) {
-    this.name = name;
-  }
-  // ... ES5 방식의 클래스 에뮬레이션
-});
+const result = multiply(5, "3"); // 여기에 빨간 밑줄이 표시됨
 ```
 
-`target` 옵션을 바꿔가며 출력 코드가 어떻게 달라지는지 비교해볼 수 있다.
+`multiply(5, "3")` 에 빨간 밑줄이 그어지고, 마우스를 올리면 `Argument of type 'string' is not assignable to parameter of type 'number'` 오류 메시지가 나타난다. 이것이 TypeScript의 정적 타입 검사다.
 
-### 3. 컴파일러 옵션 조정
+이번에는 `"3"` 을 `3` 으로 바꿔 보자. 빨간 밑줄이 사라지고 오류가 없어진다.
 
-Playground 상단의 설정 패널에서 `strict`, `target`, `noImplicitAny` 같은 옵션을 켜고 끌 수 있다.
+## 설정 패널 활용
 
-```typescript
-// strict: false 에서는 이게 허용됨
-let x;         // any 타입으로 추론
-x = 42;
-x = "hello";   // 오류 없음
+Playground 상단의 `TS Config` 탭을 클릭하면 컴파일러 옵션을 GUI로 변경할 수 있다.
 
-// strict: true 로 바꾸면 즉시 오류
-let x;         // Error: Variable 'x' implicitly has an 'any' type
-```
+- **strict** 체크박스를 끄고 켜면서 오류 변화 확인
+- **target** 을 ES5로 바꿔 화살표 함수가 일반 함수로 변환되는 것 확인
+- **noImplicitAny** 를 끄고 켜면서 암묵적 `any` 허용 여부 비교
 
-옵션을 바꿔가며 동작 차이를 직접 실험하는 건 타입 시스템을 이해하는 가장 좋은 방법이다.
+![Playground 활용 사례](/assets/posts/ts-playground-repl-usecases.svg)
 
-### 4. URL로 코드 공유
+## 유용한 단축키
 
-Playground의 가장 실용적인 기능이다. 작성한 코드가 URL에 인코딩되어 링크 하나로 공유할 수 있다.
+| 단축키 | 기능 |
+|---|---|
+| `Ctrl/Cmd + Enter` | 코드 실행(Logs 탭에서 console.log 결과 확인) |
+| `Ctrl/Cmd + S` | 현재 코드 URL 업데이트 |
+| 마우스 오버 | 타입 정보 툴팁 표시 |
 
-```
-https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAQwB7AgZzgMyhEcDkAJgHYBuAviAM...
-```
+## Playground의 한계
 
-GitHub 이슈 리포트, Stack Overflow 질문, 팀 슬랙 채널에서 코드를 공유할 때 매우 편리하다. 링크를 받은 사람이 클릭하면 완전히 동일한 코드와 설정이 로드된다.
+Playground는 학습과 실험에 최적화되어 있지만 몇 가지 한계가 있다.
 
-### 5. 타입 정의 확인
+- **파일 시스템 없음** — 여러 파일로 나눠 작성하기 어렵다
+- **npm 패키지 없음** — 외부 라이브러리를 import 할 수 없다 (일부 @types는 지원)
+- **실행 결과 제한** — console.log 결과는 Logs 탭에서 볼 수 있지만 DOM 조작 등은 불가
 
-심볼 위에 마우스를 올리면 TypeScript가 추론한 타입을 팝업으로 보여준다. 복잡한 제네릭 타입을 디버깅할 때 특히 유용하다.
+복잡한 코드를 실험하거나 실제 프로젝트를 개발할 때는 이전 글에서 설명한 로컬 환경을 사용한다.
 
-```typescript
-const users = [
-  { id: 1, name: "Alice", role: "admin" as const },
-  { id: 2, name: "Bob", role: "user" as const }
-];
-
-// users 위에 마우스를 올리면:
-// const users: { id: number; name: string; role: "admin"; }[]
-//            | { id: number; name: string; role: "user"; }[]
-// 라고 표시됨
-
-const firstUser = users[0];
-// firstUser 위에 마우스 → 추론된 정확한 타입 확인
-```
-
-### 6. 예제 코드 모음
-
-상단 메뉴의 "Examples"에서 TypeScript 공식 예제를 직접 불러와 실행해볼 수 있다. 제네릭, 유틸리티 타입, 데코레이터 등 다양한 예제가 있다.
-
-## Playground 활용 팁
-
-### 빠른 타입 실험
-
-새로운 타입 기능을 배울 때 Playground에서 먼저 실험해보자.
-
-```typescript
-// 조건부 타입 동작 확인
-type NonNullable<T> = T extends null | undefined ? never : T;
-
-type A = NonNullable<string | null | undefined>;
-// A 위에 마우스 → string 으로 표시됨
-// null | undefined가 never로 걸러짐
-```
-
-### 오류 재현
-
-동료나 커뮤니티에 질문할 때 오류를 Playground로 재현해서 공유하면 훨씬 정확한 도움을 받을 수 있다.
-
-```typescript
-// 이런 식으로 최소 재현 코드(MCVE)를 만들어 공유
-interface Repo<T> {
-  data: T;
-  loading: boolean;
-}
-
-function useRepo<T>(): Repo<T> {
-  // Error TS2741 발생 — 왜인지 모르겠어요
-  return { loading: false };  // 'data' 프로퍼티 누락
-}
-```
-
-### 버전별 동작 비교
-
-Playground는 TypeScript의 여러 버전을 선택할 수 있다. 특정 기능이 어느 버전부터 지원됐는지 확인하거나, 버전 업그레이드 전 호환성을 검증할 때 사용한다.
-
-## ts-node REPL (로컬 환경)
-
-Playground가 온라인 도구라면, 로컬에서 REPL(Read-Eval-Print-Loop)을 쓰고 싶을 때는 `ts-node`의 인터랙티브 모드를 사용한다.
-
-```bash
-# ts-node REPL 시작
-npx ts-node
-
-# 프롬프트에서 코드 입력
-> const arr: number[] = [1, 2, 3]
-> arr.map(x => x * 2)
-[2, 4, 6]
-> arr.push("hello")
-// Error: Argument of type 'string' is not assignable to parameter of type 'number'
-```
-
-## Playground vs 로컬 환경
-
-| 항목 | TypeScript Playground | 로컬 환경 (ts-node) |
-|------|----------------------|---------------------|
-| 설치 | 필요 없음 | Node.js + ts-node |
-| 공유 | URL 링크 한 줄 | 파일 첨부 필요 |
-| 파일 저장 | URL에 인코딩 | 파일 시스템 |
-| npm 패키지 | 일부 지원 | 완전 지원 |
-| IDE 통합 | 없음 | VS Code 등 |
-| 빠른 실험 | ✓ 최적 | 가능하지만 다소 번거로움 |
-
-## 정리
-
-TypeScript Playground는 학습, 디버깅, 공유 모두에 강력한 도구다. 새로운 개념을 배울 때는 Playground에서 먼저 실험하고, 동작을 이해한 뒤 로컬 프로젝트에 적용하는 워크플로우를 추천한다. 다음 글에서는 드디어 첫 번째 TypeScript 프로그램을 실제로 작성해본다.
+다음 글에서는 로컬 환경에서 TypeScript로 첫 번째 실용적인 프로그램을 작성한다.
 
 ---
 
-**지난 글:** [tsc 컴파일러 완전 이해: 파이프라인과 핵심 옵션](/posts/ts-compiler-tsc/)
+**지난 글:** [TypeScript 컴파일러 tsc 완전 해설](/posts/ts-compiler-tsc/)
 
-**다음 글:** [첫 번째 TypeScript 프로그램: Hello World부터 타입 추론까지](/posts/ts-first-program/)
+**다음 글:** [TypeScript로 첫 번째 프로그램 작성하기](/posts/ts-first-program/)
 
 <br>
 읽어주셔서 감사합니다. 😊
