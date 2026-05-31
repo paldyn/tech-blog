@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">이중 연결 리스트 — 중간 삭제 O(1)</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">노드 포인터만 있으면 prev 없이도 O(1)에 삭제 가능</text>
+
+  <defs>
+    <marker id="del-fwd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="del-bwd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+    <marker id="del-new" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Before delete -->
+  <text x="80" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">Before: 노드 B를 삭제</text>
+
+  <!-- Node A -->
+  <rect x="80" y="114" width="120" height="50" rx="6" fill="#0f1a2e" stroke="#3a6ea8" stroke-width="2"/>
+  <text x="140" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">A</text>
+  <!-- A.next → B -->
+  <line x1="200" y1="135" x2="280" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#del-fwd)"/>
+
+  <!-- Node B (to delete) -->
+  <rect x="280" y="114" width="120" height="50" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="2"/>
+  <text x="340" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="600" fill="#e05555" text-anchor="middle">B</text>
+  <text x="340" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">삭제 대상</text>
+  <!-- B.next → C -->
+  <line x1="400" y1="135" x2="480" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#del-fwd)"/>
+  <!-- B.prev → A -->
+  <line x1="280" y1="155" x2="200" y2="155" stroke="#ce9178" stroke-width="2" marker-end="url(#del-bwd)"/>
+
+  <!-- Node C -->
+  <rect x="480" y="114" width="120" height="50" rx="6" fill="#0f1a2e" stroke="#3a6ea8" stroke-width="2"/>
+  <text x="540" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">C</text>
+  <!-- C.prev → B -->
+  <line x1="480" y1="155" x2="400" y2="155" stroke="#ce9178" stroke-width="2" marker-end="url(#del-bwd)"/>
+
+  <!-- After delete -->
+  <text x="80" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">After: A ↔ C 연결, B 해제</text>
+
+  <!-- Node A -->
+  <rect x="80" y="234" width="120" height="50" rx="6" fill="#0f1a2e" stroke="#3a6ea8" stroke-width="2"/>
+  <text x="140" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">A</text>
+  <!-- A.next → C (new) -->
+  <line x1="200" y1="250" x2="480" y2="250" stroke="#55c555" stroke-width="2.5" marker-end="url(#del-new)"/>
+
+  <!-- Node C -->
+  <rect x="480" y="234" width="120" height="50" rx="6" fill="#0f1a2e" stroke="#3a6ea8" stroke-width="2"/>
+  <text x="540" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">C</text>
+  <!-- C.prev → A (new) -->
+  <line x1="480" y1="270" x2="200" y2="270" stroke="#55c555" stroke-width="2.5" marker-end="url(#del-new)"/>
+
+  <!-- Code -->
+  <rect x="60" y="312" width="760" height="90" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="336" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// node 포인터가 있으면 O(1) 삭제 (단일 연결 리스트는 O(n))</tspan>
+  </text>
+  <text x="76" y="356" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan>
+    <tspan fill="#ffffff"> delete_node(self, node):</tspan>
+  </text>
+  <text x="76" y="376" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">if</tspan>
+    <tspan fill="#ffffff"> node.prev: node.prev.next = node.next</tspan>
+  </text>
+  <text x="76" y="396" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">if</tspan>
+    <tspan fill="#ffffff"> node.next: node.next.prev = node.prev</tspan>
+  </text>
+</svg>

@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">동적 배열 확장과 분할 상환 분석</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">개별 연산은 O(n)이어도 전체 평균은 O(1)임을 보인다</text>
+
+  <!-- Step 1: capacity=1, push 1 element -->
+  <rect x="60" y="90" width="160" height="60" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="140" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">capacity: 1</text>
+  <rect x="80" y="124" width="40" height="20" rx="2" fill="#55c555"/>
+  <text x="100" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#000" text-anchor="middle">1</text>
+  <text x="140" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">push(1) → 1op</text>
+
+  <!-- Step 2: capacity=2, 2 elements -->
+  <rect x="240" y="90" width="160" height="60" rx="6" fill="#0f1000" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="320" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178" text-anchor="middle">capacity: 2</text>
+  <rect x="255" y="124" width="40" height="20" rx="2" fill="#ce9178"/>
+  <text x="275" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#000" text-anchor="middle">1</text>
+  <rect x="300" y="124" width="40" height="20" rx="2" fill="#55c555"/>
+  <text x="320" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#000" text-anchor="middle">2</text>
+  <text x="320" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">push(2): 복사1+삽입1=2op</text>
+
+  <!-- Step 3: capacity=4, 4 elements -->
+  <rect x="420" y="90" width="200" height="60" rx="6" fill="#0f1000" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="520" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178" text-anchor="middle">capacity: 4</text>
+  <rect x="430" y="124" width="35" height="20" rx="2" fill="#ce9178"/>
+  <text x="448" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#000" text-anchor="middle">1</text>
+  <rect x="468" y="124" width="35" height="20" rx="2" fill="#ce9178"/>
+  <text x="486" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#000" text-anchor="middle">2</text>
+  <rect x="506" y="124" width="35" height="20" rx="2" fill="#55c555"/>
+  <text x="524" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#000" text-anchor="middle">3</text>
+  <rect x="544" y="124" width="35" height="20" rx="2" fill="#444" stroke="#555"/>
+  <text x="562" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#666" text-anchor="middle">-</text>
+  <text x="520" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">push(3): 복사2+삽입1=3op</text>
+
+  <!-- Step 4: capacity=8 -->
+  <rect x="640" y="90" width="200" height="60" rx="6" fill="#0f1000" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="740" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178" text-anchor="middle">capacity: 8</text>
+  <rect x="648" y="124" width="24" height="20" rx="2" fill="#ce9178"/>
+  <rect x="675" y="124" width="24" height="20" rx="2" fill="#ce9178"/>
+  <rect x="702" y="124" width="24" height="20" rx="2" fill="#ce9178"/>
+  <rect x="729" y="124" width="24" height="20" rx="2" fill="#ce9178"/>
+  <rect x="756" y="124" width="24" height="20" rx="2" fill="#55c555"/>
+  <rect x="783" y="124" width="24" height="20" rx="2" fill="#444" stroke="#555"/>
+  <rect x="810" y="124" width="13" height="20" rx="2" fill="#444" stroke="#555"/>
+  <text x="740" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">push(5): 복사4+삽입1=5op</text>
+
+  <!-- Amortized analysis table -->
+  <rect x="60" y="190" width="760" height="240" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="214" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// n번 push 후 총 연산 횟수 계산</tspan>
+  </text>
+  <text x="76" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// 확장 비용: 1 + 2 + 4 + 8 + ... + n = 2n - 1</tspan>
+  </text>
+  <text x="76" y="254" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// 일반 push 비용: n번 각 1 = n</tspan>
+  </text>
+  <text x="76" y="280" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">총 비용 = (2n - </tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">) + n ≈ </tspan>
+    <tspan fill="#b5cea8">3</tspan>
+    <tspan fill="#ffffff">n</tspan>
+  </text>
+  <text x="76" y="306" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">분할 상환 비용 = 총 비용 / n = </tspan>
+    <tspan fill="#b5cea8">3</tspan>
+    <tspan fill="#ffffff">n / n = </tspan>
+    <tspan fill="#b5cea8">3</tspan>
+    <tspan fill="#ffffff"> = O(</tspan>
+    <tspan fill="#55c555">1</tspan>
+    <tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="76" y="332" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// 따라서 append는 amortized O(1)</tspan>
+  </text>
+  <text x="76" y="360" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// Python list.append() 가 왜 O(1) amortized인지</tspan>
+  </text>
+  <text x="76" y="380" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// Java ArrayList.add()도 동일</tspan>
+  </text>
+  <text x="76" y="406" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">결론</tspan>
+    <tspan fill="#ffffff">: 비싼 연산이 가끔 일어나면 전체 평균은 저렴</tspan>
+  </text>
+</svg>
