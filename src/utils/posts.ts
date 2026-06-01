@@ -113,7 +113,7 @@ export function thumbFor(post: Post): string {
 
 const CATEGORY_LOGOS: Record<string, string> = {
   JavaScript: '/assets/logos/javascript.jpeg',
-  AI: '/assets/logos/ai.png',
+  AI: '/assets/logos/ai.jpg',
   Nexacro: '/assets/logos/nexacro.png',
   Spring: '/assets/logos/spring.png',
   SQL: '/assets/logos/sql.png',
@@ -123,11 +123,11 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Docker: '/assets/logos/docker.png',
   Kubernetes: '/assets/logos/kubernetes.png',
   React: '/assets/logos/react.png',
-  Network: '/assets/logos/network.png',
-  Algorithm: '/assets/logos/algorithm.png',
-  'Next.js': '/assets/logos/nextjs.png',
-  Security: '/assets/logos/security.png',
-  Python: '/assets/logos/python.png',
+  Network: '/assets/logos/network.jpg',
+  Algorithm: '/assets/logos/algorithm.jpg',
+  'Next.js': '/assets/logos/nextjs.jpg',
+  Security: '/assets/logos/security.jpg',
+  Python: '/assets/logos/python.jpg',
   Team: '/assets/logo-symbol-dark.png',
 };
 
