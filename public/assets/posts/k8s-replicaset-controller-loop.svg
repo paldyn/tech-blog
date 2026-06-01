@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ReplicaSet 컨트롤 루프</text>
+  <text x="440" y="66" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">desired 상태와 actual 상태를 지속적으로 일치시키는 조정 루프</text>
+
+  <!-- Desired State box -->
+  <rect x="50" y="88" width="240" height="100" rx="8" fill="#121e38" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="170" y="114" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">Desired State</text>
+  <text x="170" y="136" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">replicas: 3</text>
+  <text x="170" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">selector: app=web</text>
+  <text x="170" y="174" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">etcd에 저장된 스펙</text>
+
+  <!-- Arrow: Desired → Controller -->
+  <line x1="292" y1="138" x2="358" y2="138" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- ReplicaSet Controller box (center) -->
+  <rect x="360" y="88" width="240" height="100" rx="8" fill="#1a2840" stroke="#7777cc" stroke-width="2"/>
+  <text x="480" y="114" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">ReplicaSet Controller</text>
+  <text x="480" y="136" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">reconcile 루프 상시 실행</text>
+  <text x="480" y="154" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">desired vs actual 비교</text>
+  <text x="480" y="172" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">diff 만큼 Pod 생성/삭제</text>
+
+  <!-- Arrow: Actual → Controller -->
+  <line x1="602" y1="138" x2="668" y2="138" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- Actual State box -->
+  <rect x="670" y="88" width="160" height="100" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="750" y="114" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">Actual State</text>
+  <text x="750" y="136" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">Running: 2</text>
+  <text x="750" y="154" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">Pod 1개 장애</text>
+  <text x="750" y="172" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">→ diff: +1 필요</text>
+
+  <!-- Action: create Pod -->
+  <rect x="330" y="230" width="300" height="48" rx="8" fill="#001a00" stroke="#55c555" stroke-width="2"/>
+  <text x="480" y="252" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">Pod 1개 신규 생성</text>
+  <text x="480" y="270" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">API 서버에 Pod 생성 요청 → 스케줄러 배치</text>
+
+  <!-- Arrow: Controller → Action -->
+  <line x1="480" y1="190" x2="480" y2="228" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Pod cluster -->
+  <rect x="100" y="320" width="150" height="60" rx="6" fill="#0d1828" stroke="#55c555" stroke-width="1.5"/>
+  <text x="175" y="346" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Pod 1</text>
+  <text x="175" y="366" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">Running</text>
+
+  <rect x="365" y="320" width="150" height="60" rx="6" fill="#0d1828" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="346" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Pod 2</text>
+  <text x="440" y="366" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">Running</text>
+
+  <rect x="630" y="320" width="150" height="60" rx="6" fill="#0d1828" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="705" y="346" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">Pod 3 (신규)</text>
+  <text x="705" y="366" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">Pending → Running</text>
+
+  <!-- Arrows from action to pods -->
+  <line x1="480" y1="280" x2="240" y2="318" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+  <line x1="480" y1="280" x2="440" y2="318" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+  <line x1="480" y1="280" x2="700" y2="318" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Bottom note -->
+  <rect x="50" y="402" width="780" height="76" rx="8" fill="#121e38" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="424" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">ReplicaSet의 자가 치유</text>
+  <text x="440" y="444" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">Pod 장애 → 컨트롤러가 감지 → 새 Pod 생성</text>
+  <text x="440" y="464" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">수동으로 Pod 삭제해도 즉시 재생성 · replicas 증가 시 Pod 추가 · 감소 시 초과분 제거</text>
+</svg>

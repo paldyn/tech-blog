@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Blue-Green 배포 구현 (Service selector 전환)</text>
+
+  <!-- Before: Blue active -->
+  <rect x="50" y="68" width="370" height="36" rx="6" fill="#121e38" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="235" y="91" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">전환 전 (Blue 활성)</text>
+
+  <!-- Service box -->
+  <rect x="130" y="118" width="210" height="54" rx="8" fill="#121e38" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="235" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">Service: web-svc</text>
+  <text x="235" y="158" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">selector: slot=blue</text>
+
+  <!-- Blue pods -->
+  <line x1="235" y1="174" x2="235" y2="218" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="80" y="220" width="310" height="60" rx="6" fill="#0d1828" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="235" y="244" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">Blue (v1 Deployment)</text>
+  <text x="235" y="264" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">labels: slot=blue, version=v1</text>
+
+  <!-- Green pods (idle) -->
+  <rect x="80" y="300" width="310" height="60" rx="6" fill="#0d1828" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="235" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Green (v2 Deployment, idle)</text>
+  <text x="235" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">labels: slot=green, version=v2</text>
+
+  <!-- After: Green active -->
+  <rect x="460" y="68" width="370" height="36" rx="6" fill="#0a1f0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="645" y="91" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">전환 후 (Green 활성)</text>
+
+  <!-- Service box (updated) -->
+  <rect x="540" y="118" width="210" height="54" rx="8" fill="#0a1f0a" stroke="#55c555" stroke-width="2"/>
+  <text x="645" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Service: web-svc</text>
+  <text x="645" y="158" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">selector: slot=green  ← 변경!</text>
+
+  <line x1="645" y1="174" x2="645" y2="298" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Blue pods (idle now) -->
+  <rect x="490" y="220" width="310" height="60" rx="6" fill="#0d1828" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="645" y="244" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Blue (v1, idle — 롤백 준비)</text>
+  <text x="645" y="264" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">labels: slot=blue, version=v1</text>
+
+  <!-- Green pods (active) -->
+  <rect x="490" y="300" width="310" height="60" rx="6" fill="#0a1f0a" stroke="#55c555" stroke-width="2"/>
+  <text x="645" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Green (v2, ACTIVE)</text>
+  <text x="645" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9aa4b8">labels: slot=green, version=v2</text>
+
+  <!-- Switchover code -->
+  <rect x="50" y="378" width="780" height="62" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="398"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 한 줄로 트래픽 전환 (다운타임 0)</text>
+  <text x="66" y="416"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="130" y="416"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> patch svc web-svc -p '{"spec":{"selector":{"slot":"green"}}}'</text>
+  <text x="66" y="432"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 롤백: selector를 blue로 되돌리기</text>
+</svg>

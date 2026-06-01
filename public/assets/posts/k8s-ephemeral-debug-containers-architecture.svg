@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Ephemeral Debug Container 구조</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">임시 디버그 컨테이너가 실행 중인 Pod에 붙는 방식</text>
+
+  <!-- Pod outer box (dashed) -->
+  <rect x="50" y="90" width="780" height="350" rx="10" fill="none"
+        stroke="#3a4a6e" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="70" y="112"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" font-weight="600">Pod: my-app-pod</text>
+
+  <!-- Shared namespace band -->
+  <rect x="70" y="120" width="740" height="38" rx="6" fill="#121e38" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="144" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">공유 Linux 네임스페이스: Network · IPC · (shareProcessNamespace: PID)</text>
+
+  <!-- App Container box -->
+  <rect x="70" y="175" width="290" height="240" rx="8" fill="#0d1828" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="215" y="200" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8">app-container</text>
+  <text x="215" y="220" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">image: gcr.io/distroless/base</text>
+
+  <!-- Crash status badge -->
+  <rect x="90" y="232" width="250" height="38" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="215" y="252" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">CrashLoopBackOff</text>
+  <text x="215" y="266" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">shell · 패키지 없음 / 디버깅 불가</text>
+
+  <!-- Port row -->
+  <rect x="90" y="282" width="250" height="30" rx="5" fill="#0a1120" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="215" y="301" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">containerPort: 8080</text>
+
+  <!-- Volume row -->
+  <rect x="90" y="322" width="250" height="30" rx="5" fill="#0a1120" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="215" y="341" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">volumeMount: /data</text>
+
+  <!-- Pid processes row -->
+  <rect x="90" y="362" width="250" height="30" rx="5" fill="#0a1120" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="215" y="381" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">PID 1: /app/server (shared)</text>
+
+  <!-- Arrow: app → ephemeral -->
+  <line x1="362" y1="295" x2="438" y2="295" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="400" y="286" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">공유</text>
+
+  <!-- Ephemeral Container box -->
+  <rect x="440" y="175" width="370" height="240" rx="8" fill="#0a1f0a" stroke="#55c555" stroke-width="2"/>
+  <text x="625" y="200" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">ephemeral-debug</text>
+  <text x="625" y="220" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">image: nicolaka/netshoot</text>
+
+  <!-- Running badge -->
+  <rect x="460" y="232" width="330" height="38" rx="6" fill="#001a00" stroke="#55c555" stroke-width="1.5"/>
+  <text x="625" y="252" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Running (임시 · 재시작 없음)</text>
+  <text x="625" y="266" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">exit 시 자동 제거, Pod spec에 영속 저장 안 됨</text>
+
+  <!-- targetContainerName row -->
+  <rect x="460" y="282" width="330" height="30" rx="5" fill="#001000" stroke="#55c555" stroke-width="1"/>
+  <text x="625" y="301" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">targetContainerName: app-container</text>
+
+  <!-- Capabilities row -->
+  <rect x="460" y="322" width="330" height="30" rx="5" fill="#001000" stroke="#55c555" stroke-width="1"/>
+  <text x="625" y="341" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">bash / curl / tcpdump 사용 가능</text>
+
+  <!-- /proc access row -->
+  <rect x="460" y="362" width="330" height="30" rx="5" fill="#001000" stroke="#55c555" stroke-width="1"/>
+  <text x="625" y="381" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">/proc/1/root → app 파일시스템 접근</text>
+
+  <!-- kubectl command at bottom (code box) -->
+  <rect x="50" y="456" width="780" height="48" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="70" y="476"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">$</text>
+  <text x="86" y="476"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> kubectl debug -it my-app-pod \</text>
+  <text x="70" y="494"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    --image=nicolaka/netshoot --target=app-container</text>
+</svg>

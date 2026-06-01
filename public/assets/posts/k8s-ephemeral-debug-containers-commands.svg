@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">kubectl debug 주요 사용 패턴</text>
+
+  <!-- Step 1 box -->
+  <rect x="50" y="75" width="370" height="80" rx="8" fill="#0d1828" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="235" y="100" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">① distroless / 충돌 Pod 디버그</text>
+  <text x="235" y="120" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">shell이 없는 컨테이너에 임시 컨테이너 투입</text>
+  <text x="235" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">--target: PID/Network 네임스페이스 공유</text>
+
+  <!-- Code block 1 -->
+  <rect x="50" y="167" width="370" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="187"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="130" y="187"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> debug -it &lt;pod&gt; \</text>
+  <text x="66" y="207"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  --image=busybox \</text>
+  <text x="66" y="225"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  --target=&lt;container&gt;</text>
+
+  <!-- Step 2 box -->
+  <rect x="460" y="75" width="370" height="80" rx="8" fill="#0d1828" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="645" y="100" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">② Pod 복사본으로 디버그</text>
+  <text x="645" y="120" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">원본 Pod를 건드리지 않고 복사본을 만들어 테스트</text>
+  <text x="645" y="140" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">--copy-to: 새 이름 / --set-image로 이미지 교체</text>
+
+  <!-- Code block 2 -->
+  <rect x="460" y="167" width="370" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="187"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="540" y="187"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> debug &lt;pod&gt; \</text>
+  <text x="476" y="207"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  --copy-to=debug-pod \</text>
+  <text x="476" y="225"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  --set-image=*=ubuntu</text>
+
+  <!-- Step 3 box -->
+  <rect x="50" y="262" width="370" height="80" rx="8" fill="#0d1828" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="235" y="287" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">③ 노드 디버그</text>
+  <text x="235" y="307" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">노드 자체에 권한 있는 디버그 Pod 투입</text>
+  <text x="235" y="327" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">hostNetwork, hostPID 자동 활성화</text>
+
+  <!-- Code block 3 -->
+  <rect x="50" y="354" width="370" height="54" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="374"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="130" y="374"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> debug node/node-1 \</text>
+  <text x="66" y="394"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  -it --image=ubuntu</text>
+
+  <!-- Step 4 box -->
+  <rect x="460" y="262" width="370" height="80" rx="8" fill="#0a1f0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="645" y="287" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">④ 한계 및 주의사항</text>
+  <text x="645" y="307" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Completed Pod에는 사용 불가</text>
+  <text x="645" y="327" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">resources / livenessProbe 미지원</text>
+
+  <!-- Notes box -->
+  <rect x="460" y="354" width="370" height="54" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="374"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># exit 후 자동 제거</text>
+  <text x="476" y="394"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Pod spec에 영속 저장 안 됨</text>
+
+  <!-- Arrow between columns (center) -->
+  <line x1="235" y1="247" x2="235" y2="260" stroke="#3a4a6e" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="645" y1="247" x2="645" y2="260" stroke="#3a4a6e" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Bottom note -->
+  <rect x="50" y="425" width="780" height="52" rx="8" fill="#0d1828" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="448" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" font-weight="600">EphemeralContainers feature gate</text>
+  <text x="440" y="466" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Kubernetes 1.23부터 GA · 별도 활성화 불필요. PodSecurityAdmission 정책에 따라 권한 제한될 수 있음</text>
+</svg>

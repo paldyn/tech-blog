@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ownerReferences 구조 &amp; 삭제 정책</text>
+
+  <!-- ownerReferences YAML -->
+  <rect x="50" y="68" width="380" height="36" rx="6" fill="#121e38" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="91" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">ownerReferences 필드 구조</text>
+
+  <rect x="50" y="112" width="380" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="132"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Pod metadata 안에 자동 추가됨</text>
+  <text x="66" y="150"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ownerReferences:</text>
+  <text x="66" y="168"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">- apiVersion: </text>
+  <text x="192" y="168"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">apps/v1</text>
+  <text x="66" y="186"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  kind: </text>
+  <text x="130" y="186"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">ReplicaSet</text>
+  <text x="66" y="204"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  name: </text>
+  <text x="130" y="204"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">web-7d9f8c</text>
+  <text x="66" y="222"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  uid: </text>
+  <text x="116" y="222"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">bbb-222-ccc</text>
+  <text x="66" y="240"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  controller: </text>
+  <text x="178" y="240"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">true</text>
+  <text x="66" y="258"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  blockOwnerDeletion: </text>
+  <text x="256" y="258"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">true</text>
+  <text x="66" y="300"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># uid로 cross-ns 참조 방지</text>
+
+  <!-- Deletion policies -->
+  <rect x="460" y="68" width="370" height="36" rx="6" fill="#121e38" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="645" y="91" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">삭제 정책 (propagationPolicy)</text>
+
+  <!-- Foreground -->
+  <rect x="460" y="112" width="370" height="80" rx="6" fill="#0d1828" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="134"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8">Foreground (기본값)</text>
+  <text x="480" y="154"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">하위 오브젝트 먼저 삭제 후 상위 삭제</text>
+  <text x="480" y="174"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">kubectl delete 시 상위가 deletionTimestamp 표시 후 대기</text>
+
+  <!-- Background -->
+  <rect x="460" y="202" width="370" height="80" rx="6" fill="#0d1828" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="224"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8">Background (빠른 삭제)</text>
+  <text x="480" y="244"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">상위 즉시 삭제, GC가 비동기로 하위 정리</text>
+  <text x="480" y="264"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">--cascade=background (kubectl 기본값)</text>
+
+  <!-- Orphan -->
+  <rect x="460" y="292" width="370" height="80" rx="6" fill="#0d1828" stroke="#e05555" stroke-width="1"/>
+  <text x="480" y="314"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">Orphan (고아 정책)</text>
+  <text x="480" y="334"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">상위만 삭제, 하위 오브젝트 남김</text>
+  <text x="480" y="354"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">--cascade=orphan 옵션 사용</text>
+
+  <!-- Commands -->
+  <rect x="50" y="328" width="380" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="348"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 연쇄 삭제 (기본)</text>
+  <text x="66" y="366"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="130" y="366"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> delete deployment web</text>
+  <text x="66" y="388"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 고아 정책 (Pod 남김)</text>
+  <text x="66" y="406"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="130" y="406"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> delete deployment web --cascade=orphan</text>
+  <text x="66" y="428"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># ownerReferences 확인</text>
+
+  <!-- Bottom note -->
+  <rect x="50" y="388" width="380" height="58" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="408"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># ownerReferences 확인</text>
+  <text x="66" y="426"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="130" y="426"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get pod web-xxx -o yaml \</text>
+  <text x="66" y="434"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff" xml:space="preserve">  | grep -A10 ownerReferences</text>
+</svg>

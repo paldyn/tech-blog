@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Kubernetes 배포 전략 비교</text>
+  <text x="440" y="66" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">가용성 · 리소스 · 위험도 트레이드오프</text>
+
+  <!-- Rolling Update -->
+  <rect x="50" y="84" width="380" height="170" rx="8" fill="#0d1828" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="240" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">Rolling Update (기본값)</text>
+  <text x="70" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">구 Pod → 순차 교체. 가용성 유지</text>
+  <rect x="66" y="140" width="348" height="26" rx="4" fill="#001a00" stroke="#55c555" stroke-width="1"/>
+  <text x="240" y="157" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">v1 v1 v1 v1 → v2 v1 v1 v1 → v2 v2 v1 v1 → ...</text>
+  <text x="70" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">가용성: ★★★★★ · 리소스: 중간 · 위험도: 낮음</text>
+  <text x="70" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">단점: 업데이트 중 v1/v2 혼재 · DB 스키마 변경 주의</text>
+  <text x="70" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">strategy: type: RollingUpdate (네이티브 지원)</text>
+  <text x="70" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">적합: 대부분의 무상태(stateless) 서비스</text>
+
+  <!-- Recreate -->
+  <rect x="450" y="84" width="380" height="170" rx="8" fill="#0d1828" stroke="#e05555" stroke-width="2"/>
+  <text x="640" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">Recreate (재생성)</text>
+  <text x="470" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">구 Pod 전체 종료 후 새 Pod 일괄 시작</text>
+  <rect x="466" y="140" width="348" height="26" rx="4" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="640" y="157" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">v1 v1 v1 v1 → (다운타임) → v2 v2 v2 v2</text>
+  <text x="470" y="186" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">가용성: ★☆☆☆☆ · 리소스: 낮음 · 위험도: 높음</text>
+  <text x="470" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">장점: v1/v2 혼재 없음 · 구현 단순</text>
+  <text x="470" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">strategy: type: Recreate (네이티브 지원)</text>
+  <text x="470" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">적합: 개발/스테이징 · 단일 인스턴스 · DB 마이그레이션</text>
+
+  <!-- Blue-Green -->
+  <rect x="50" y="270" width="380" height="170" rx="8" fill="#0d1828" stroke="#7777cc" stroke-width="2"/>
+  <text x="240" y="294" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc">Blue-Green</text>
+  <text x="70" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">두 환경 병렬 운영 후 트래픽을 순간 전환</text>
+  <rect x="66" y="326" width="348" height="26" rx="4" fill="#0a0a20" stroke="#7777cc" stroke-width="1"/>
+  <text x="240" y="343" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">Blue(v1) ── 100% 트래픽 → Green(v2) ── 100% 전환</text>
+  <text x="70" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">가용성: ★★★★★ · 리소스: 2배 · 롤백: 즉각</text>
+  <text x="70" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">단점: 비용 2배 · DB 스키마 동시 호환 필요</text>
+  <text x="70" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">구현: Service selector 전환 또는 Ingress weight</text>
+  <text x="70" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">적합: 즉각 롤백이 필수인 금융 · 결제 서비스</text>
+
+  <!-- Canary -->
+  <rect x="450" y="270" width="380" height="170" rx="8" fill="#0d1828" stroke="#55c555" stroke-width="2"/>
+  <text x="640" y="294" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">Canary</text>
+  <text x="470" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">일부 트래픽만 새 버전으로 단계적 전환</text>
+  <rect x="466" y="326" width="348" height="26" rx="4" fill="#001a00" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="343" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">v1 90% + v2 10% → 50% / 50% → v2 100%</text>
+  <text x="470" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">가용성: ★★★★★ · 리소스: 약간 추가 · 위험도: 최저</text>
+  <text x="470" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">단점: 복잡도 높음 · 메트릭 모니터링 필수</text>
+  <text x="470" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">구현: Ingress weight · Argo Rollouts · Flagger</text>
+  <text x="470" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">적합: 대규모 사용자 · 실험적 기능 점진적 출시</text>
+
+  <!-- Bottom note -->
+  <rect x="50" y="456" width="780" height="50" rx="8" fill="#121e38" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="477" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">Kubernetes 네이티브: Rolling Update · Recreate / 추가 도구 필요: Blue-Green · Canary</text>
+  <text x="440" y="496" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Argo Rollouts · Flagger · Istio + Argo CD로 고급 전략 구현</text>
+</svg>
