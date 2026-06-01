@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">렌더 프롭 vs children as function</text>
+
+  <rect x="60" y="72" width="370" height="290" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="245" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">render prop 방식</text>
+  <rect x="76" y="108" width="338" height="242" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="128" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve" fill="#ffffff">
+    <tspan x="92" dy="0"><tspan fill="#9aa4b8">// render prop 이름은 자유롭게</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> DataFetcher({ url, render }) {</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [data, setData] = useState(</tspan><tspan fill="#b5cea8">null</tspan><tspan fill="#ffffff">);</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [loading, setLoading] = useState(</tspan><tspan fill="#b5cea8">true</tspan><tspan fill="#ffffff">);</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">  useEffect(() =&gt; {</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">    fetch(url).then(r =&gt; r.json())</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">      .then(d =&gt; { setData(d); setLoading(</tspan><tspan fill="#b5cea8">false</tspan><tspan fill="#ffffff">); });</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">  }, [url]);</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> render({ data, loading });</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">}</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#9aa4b8">// 사용</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">&lt;DataFetcher url=</tspan><tspan fill="#ce9178">"/api/user"</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">  render={({ data, loading }) =&gt;</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">    loading ? &lt;Spinner /&gt; : &lt;UserCard user={data} /&gt;</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">  }</tspan></tspan>
+    <tspan x="92" dy="20"><tspan fill="#ffffff">/&gt;</tspan></tspan>
+  </text>
+
+  <rect x="450" y="72" width="370" height="290" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="635" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">children as function 방식</text>
+  <rect x="466" y="108" width="338" height="242" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="128" font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve" fill="#ffffff">
+    <tspan x="482" dy="0"><tspan fill="#9aa4b8">// children도 함수로 전달 가능</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> Toggle({ children }) {</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> [on, setOn] = useState(</tspan><tspan fill="#b5cea8">false</tspan><tspan fill="#ffffff">);</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> children({</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">    on,</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">    toggle: () =&gt; setOn(v =&gt; !v),</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">  });</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">}</tspan></tspan>
+    <tspan x="482" dy="20"> </tspan>
+    <tspan x="482" dy="20"><tspan fill="#9aa4b8">// 사용 — 더 자연스러운 JSX</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">&lt;Toggle&gt;</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">  {({ on, toggle }) =&gt; (</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">    &lt;&gt;</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">      &lt;button onClick={toggle}&gt;{on ? </tspan><tspan fill="#ce9178">'끄기'</tspan><tspan fill="#ffffff"> : </tspan><tspan fill="#ce9178">'켜기'</tspan><tspan fill="#ffffff">}&lt;/button&gt;</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">    &lt;/&gt;</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">  )}</tspan></tspan>
+    <tspan x="482" dy="20"><tspan fill="#ffffff">&lt;/Toggle&gt;</tspan></tspan>
+  </text>
+</svg>
