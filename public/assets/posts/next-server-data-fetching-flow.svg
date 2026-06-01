@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-right" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-left" viewBox="0 0 14 14" refX="2" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 14 0 L 1 7 L 14 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">서버 컴포넌트 데이터 패칭 흐름</text>
+
+  <!-- Browser -->
+  <rect x="50" y="80" width="160" height="60" rx="8" fill="#1e2d3d" stroke="#3a5a7e" stroke-width="1.5"/>
+  <text x="130" y="107" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">브라우저</text>
+  <text x="130" y="126" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">HTTP Request</text>
+
+  <!-- Arrow browser → server -->
+  <line x1="210" y1="110" x2="270" y2="110" stroke="#7ec8e3" stroke-width="2"
+        marker-end="url(#arr-right)"/>
+
+  <!-- Next.js Server -->
+  <rect x="270" y="68" width="340" height="250" rx="8" fill="#0d1f2d" stroke="#3a5a7e" stroke-width="2"/>
+  <text x="440" y="98" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">Next.js Server</text>
+
+  <!-- Server Component -->
+  <rect x="290" y="112" width="300" height="60" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="136" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">async Page() 실행</text>
+  <text x="440" y="155" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">await fetch(...)</text>
+
+  <!-- Fetch to external -->
+  <line x1="590" y1="142" x2="650" y2="142" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arr-right)"/>
+
+  <!-- fetch result -->
+  <line x1="650" y1="160" x2="590" y2="175" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4"
+        marker-end="url(#arr-left)"/>
+
+  <!-- Data Cache -->
+  <rect x="290" y="192" width="300" height="50" rx="6" fill="#1a1a0d" stroke="#5a5a2e" stroke-width="1"/>
+  <text x="440" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8d44d">Data Cache</text>
+  <text x="440" y="230" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">fetch 결과 캐시 (재요청 시 재사용)</text>
+
+  <!-- RSC Payload -->
+  <rect x="290" y="260" width="300" height="44" rx="6" fill="#1a0d1a" stroke="#5a2e5a" stroke-width="1"/>
+  <text x="440" y="280" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#cc77cc">RSC Payload 생성</text>
+  <text x="440" y="297" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">직렬화된 React 트리 + HTML</text>
+
+  <!-- External API / DB -->
+  <rect x="650" y="100" width="180" height="100" rx="8" fill="#111827" stroke="#374151" stroke-width="1"/>
+  <text x="740" y="130" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">외부 API / DB</text>
+  <text x="740" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">REST / GraphQL</text>
+  <text x="740" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">Prisma / Drizzle</text>
+
+  <!-- Arrow server → browser (response) -->
+  <line x1="270" y1="200" x2="210" y2="200" stroke="#55c555" stroke-width="2"
+        marker-end="url(#arr-left)"/>
+  <text x="240" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">HTML</text>
+
+  <!-- Code block -->
+  <rect x="50" y="360" width="780" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="66" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 서버 컴포넌트에서 직접 데이터 패칭</text>
+  <text x="66" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">export default async function</text>
+  <text x="66" y="418" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  Page() {</text>
+  <text x="66" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  const data = await fetch('https://api.example.com/items')</text>
+  <text x="66" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ffffff" xml:space="preserve">  return &lt;List items={await data.json()} /&gt; }</text>
+</svg>
