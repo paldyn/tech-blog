@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <!-- Title -->
+    <text x="440" y="44" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">LRU 캐시 동작 시퀀스 (용량=3)</text>
+    <text x="440" y="70" font-size="14" fill="#888" text-anchor="middle">get 시 MRU로 승격, 용량 초과 시 LRU 자동 제거</text>
+
+    <!-- Step labels -->
+    <text x="100" y="100" font-size="12" fill="#888" text-anchor="middle">put(A,1)</text>
+    <text x="100" y="112" font-size="12" fill="#888" text-anchor="middle">put(B,2)</text>
+    <text x="100" y="124" font-size="12" fill="#888" text-anchor="middle">put(C,3)</text>
+
+    <text x="260" y="100" font-size="12" fill="#55c555" text-anchor="middle">get(A)</text>
+    <text x="260" y="112" font-size="12" fill="#888" text-anchor="middle">→ A 승격</text>
+
+    <text x="420" y="100" font-size="12" fill="#e05555" text-anchor="middle">put(D,4)</text>
+    <text x="420" y="112" font-size="12" fill="#888" text-anchor="middle">용량 초과 → B 제거</text>
+
+    <text x="580" y="100" font-size="12" fill="#e05555" text-anchor="middle">get(B)</text>
+    <text x="580" y="112" font-size="12" fill="#888" text-anchor="middle">→ -1 (없음)</text>
+
+    <text x="740" y="100" font-size="12" fill="#7ec8e3" text-anchor="middle">put(E,5)</text>
+    <text x="740" y="112" font-size="12" fill="#888" text-anchor="middle">→ C 제거</text>
+
+    <!-- Step 1: after put(A), put(B), put(C) -->
+    <!-- MRU to LRU: C → B → A -->
+    <text x="100" y="148" font-size="11" fill="#7ec8e3" text-anchor="middle">상태:</text>
+    <!-- node C MRU -->
+    <rect x="56" y="155" width="52" height="34" fill="#0d2a1e" stroke="#55c555" stroke-width="1.5" rx="3"/>
+    <text x="82" y="177" font-size="12" fill="#55c555" text-anchor="middle">C(MRU)</text>
+    <!-- arrow -->
+    <line x1="108" y1="172" x2="118" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <!-- node B -->
+    <rect x="120" y="155" width="40" height="34" fill="#1a2544" stroke="#3a4a6e" stroke-width="1" rx="3"/>
+    <text x="140" y="177" font-size="12" fill="#e8e8e8" text-anchor="middle">B</text>
+    <!-- arrow -->
+    <line x1="160" y1="172" x2="170" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <!-- node A LRU -->
+    <rect x="172" y="155" width="52" height="34" fill="#2a1010" stroke="#e05555" stroke-width="1.5" rx="3"/>
+    <text x="198" y="177" font-size="12" fill="#e05555" text-anchor="middle">A(LRU)</text>
+
+    <!-- Step 2: after get(A) → A moves to front: A → C → B -->
+    <text x="260" y="148" font-size="11" fill="#7ec8e3" text-anchor="middle">상태:</text>
+    <rect x="220" y="155" width="52" height="34" fill="#0d2a1e" stroke="#55c555" stroke-width="1.5" rx="3"/>
+    <text x="246" y="177" font-size="12" fill="#55c555" text-anchor="middle">A(MRU)</text>
+    <line x1="272" y1="172" x2="282" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="284" y="155" width="40" height="34" fill="#1a2544" stroke="#3a4a6e" stroke-width="1" rx="3"/>
+    <text x="304" y="177" font-size="12" fill="#e8e8e8" text-anchor="middle">C</text>
+    <line x1="324" y1="172" x2="334" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="336" y="155" width="52" height="34" fill="#2a1010" stroke="#e05555" stroke-width="1.5" rx="3"/>
+    <text x="362" y="177" font-size="12" fill="#e05555" text-anchor="middle">B(LRU)</text>
+
+    <!-- Step 3: after put(D,4): B evicted, D at front: D → A → C -->
+    <text x="420" y="148" font-size="11" fill="#7ec8e3" text-anchor="middle">상태:</text>
+    <!-- B evicted note -->
+    <text x="420" y="145" font-size="10" fill="#e05555" text-anchor="middle">B 제거됨</text>
+    <rect x="392" y="155" width="52" height="34" fill="#0d2a1e" stroke="#55c555" stroke-width="1.5" rx="3"/>
+    <text x="418" y="177" font-size="12" fill="#55c555" text-anchor="middle">D(MRU)</text>
+    <line x1="444" y1="172" x2="454" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="456" y="155" width="40" height="34" fill="#1a2544" stroke="#3a4a6e" stroke-width="1" rx="3"/>
+    <text x="476" y="177" font-size="12" fill="#e8e8e8" text-anchor="middle">A</text>
+    <line x1="496" y1="172" x2="506" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="508" y="155" width="52" height="34" fill="#2a1010" stroke="#e05555" stroke-width="1.5" rx="3"/>
+    <text x="534" y="177" font-size="12" fill="#e05555" text-anchor="middle">C(LRU)</text>
+
+    <!-- Step 4: get(B) = -1 (not present) -->
+    <text x="620" y="148" font-size="11" fill="#7ec8e3" text-anchor="middle">상태 (불변):</text>
+    <rect x="564" y="155" width="52" height="34" fill="#0d2a1e" stroke="#55c555" stroke-width="1.5" rx="3"/>
+    <text x="590" y="177" font-size="12" fill="#55c555" text-anchor="middle">D(MRU)</text>
+    <line x1="616" y1="172" x2="626" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="628" y="155" width="40" height="34" fill="#1a2544" stroke="#3a4a6e" stroke-width="1" rx="3"/>
+    <text x="648" y="177" font-size="12" fill="#e8e8e8" text-anchor="middle">A</text>
+    <line x1="668" y1="172" x2="678" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="680" y="155" width="52" height="34" fill="#2a1010" stroke="#e05555" stroke-width="1.5" rx="3"/>
+    <text x="706" y="177" font-size="12" fill="#e05555" text-anchor="middle">C(LRU)</text>
+    <text x="620" y="204" font-size="11" fill="#e05555" text-anchor="middle">get(B) = -1</text>
+
+    <!-- Step 5: put(E,5): C evicted, E at front: E → D → A -->
+    <text x="780" y="148" font-size="11" fill="#7ec8e3" text-anchor="middle">상태:</text>
+    <text x="780" y="145" font-size="10" fill="#e05555" text-anchor="middle">C 제거됨</text>
+    <rect x="750" y="155" width="52" height="34" fill="#0d2a1e" stroke="#55c555" stroke-width="1.5" rx="3"/>
+    <text x="776" y="177" font-size="12" fill="#55c555" text-anchor="middle">E(MRU)</text>
+    <line x1="802" y1="172" x2="812" y2="172" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+    <rect x="814" y="155" width="40" height="34" fill="#1a2544" stroke="#3a4a6e" stroke-width="1" rx="3"/>
+    <text x="834" y="177" font-size="12" fill="#e8e8e8" text-anchor="middle">D</text>
+
+    <!-- Code block -->
+    <rect x="60" y="230" width="760" height="156" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+    <text x="80" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">from</text>
+    <text x="120" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> collections </text>
+    <text x="120" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">             import</text>
+    <text x="342" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> OrderedDict</text>
+    <text x="80" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"></text>
+    <text x="80" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">class</text>
+    <text x="120" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> LRUCache:</text>
+    <text x="80" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    def</text>
+    <text x="120" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> get(self, key):</text>
+    <text x="80" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">        if</text>
+    <text x="120" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> key </text>
+    <text x="120" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">             not in</text>
+    <text x="289" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> self.cache: </text>
+    <text x="289" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">                              return</text>
+    <text x="503" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve"> -1</text>
+    <text x="80" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        self.cache.move_to_end(key) </text>
+    <text x="80" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">                              # MRU로 승격</text>
+    <text x="80" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">        return</text>
+    <text x="136" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> self.cache[key]</text>
+  </g>
+</svg>

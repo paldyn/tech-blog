@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520">
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <!-- Title -->
+    <text x="440" y="44" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">일관된 해싱 (Consistent Hashing)</text>
+    <text x="440" y="70" font-size="14" fill="#888" text-anchor="middle">해시 공간을 원형 링으로 구성 — 노드 추가/제거 시 최소한의 키만 재배치</text>
+
+    <!-- Hash Ring circle -->
+    <circle cx="270" cy="295" r="160" fill="none" stroke="#2a3a5e" stroke-width="2"/>
+    <text x="270" y="110" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">해시 링 (0 ~ 2³²-1)</text>
+    <text x="270" y="128" font-size="11" fill="#555" text-anchor="middle">시계 방향으로 증가</text>
+
+    <!-- Node A at top (angle ~330deg from center = top-right) -->
+    <!-- Let's place 3 server nodes on the ring -->
+    <!-- Node A: angle 30deg (cos30=0.866, sin30=0.5) → (270+160*0.866, 295-160*0.5) = (409, 215) -->
+    <circle cx="409" cy="215" r="22" fill="#1a3a5e" stroke="#7ec8e3" stroke-width="2"/>
+    <text x="409" y="212" font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">노드</text>
+    <text x="409" y="226" font-size="11" fill="#7ec8e3" text-anchor="middle">A</text>
+
+    <!-- Node B: angle 150deg → (270+160*cos150, 295-160*sin150) = (270-138.6, 295-80) = (131, 215) -->
+    <circle cx="131" cy="215" r="22" fill="#1a3a5e" stroke="#55c555" stroke-width="2"/>
+    <text x="131" y="212" font-size="12" font-weight="700" fill="#55c555" text-anchor="middle">노드</text>
+    <text x="131" y="226" font-size="11" fill="#55c555" text-anchor="middle">B</text>
+
+    <!-- Node C: angle 270deg (bottom) → (270, 295+160) = (270, 455) -->
+    <circle cx="270" cy="455" r="22" fill="#1a3a5e" stroke="#ce9178" stroke-width="2"/>
+    <text x="270" y="452" font-size="12" font-weight="700" fill="#ce9178" text-anchor="middle">노드</text>
+    <text x="270" y="466" font-size="11" fill="#ce9178" text-anchor="middle">C</text>
+
+    <!-- Data keys on ring -->
+    <!-- key1 at angle 60deg: (270+160*cos60, 295-160*sin60)=(270+80, 295-138.6)=(350, 156) -->
+    <circle cx="350" cy="156" r="10" fill="#2a4a1e" stroke="#55c555" stroke-width="1.5"/>
+    <text x="350" y="149" font-size="10" fill="#55c555" text-anchor="middle">k1</text>
+    <!-- key2 at angle 120deg: (270+160*cos120, 295-160*sin120)=(270-80, 295-138.6)=(190, 156) -->
+    <circle cx="190" cy="156" r="10" fill="#2a4a1e" stroke="#55c555" stroke-width="1.5"/>
+    <text x="190" y="149" font-size="10" fill="#55c555" text-anchor="middle">k2</text>
+    <!-- key3 at angle 200deg: (270+160*cos200, 295-160*sin200)=(270-150.4, 295+54.7)=(120, 350) -->
+    <circle cx="120" cy="350" r="10" fill="#3a1a1e" stroke="#ce9178" stroke-width="1.5"/>
+    <text x="109" y="343" font-size="10" fill="#ce9178" text-anchor="middle">k3</text>
+    <!-- key4 at angle 320deg: (270+160*cos320, 295-160*sin320)=(270+122.6, 295+102.9)=(393, 398) -->
+    <circle cx="393" cy="398" r="10" fill="#3a1a1e" stroke="#ce9178" stroke-width="1.5"/>
+    <text x="407" y="398" font-size="10" fill="#ce9178" text-anchor="middle">k4</text>
+
+    <!-- Arrows from keys to responsible nodes -->
+    <!-- k1 → Node A (clockwise nearest) -->
+    <line x1="360" y1="163" x2="392" y2="207" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+    <!-- k2 → Node B -->
+    <line x1="180" y1="163" x2="145" y2="205" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+    <!-- k3 → Node C (clockwise) -->
+    <line x1="120" y1="360" x2="246" y2="448" stroke="#ce9178" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+    <!-- k4 → Node C -->
+    <line x1="386" y1="406" x2="295" y2="450" stroke="#ce9178" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+
+    <!-- Direction indicator -->
+    <path d="M 270 136 A 159 159 0 0 1 420 224" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr)"/>
+    <text x="380" y="148" font-size="10" fill="#555">시계 방향</text>
+
+    <!-- Right side: explanation -->
+    <text x="590" y="130" font-size="15" font-weight="600" fill="#e8e8e8" text-anchor="middle">배치 규칙</text>
+    <rect x="480" y="145" width="340" height="120" fill="#0f1a2e" stroke="#2a3a5e" stroke-width="1" rx="6"/>
+    <text x="500" y="168" font-size="13" fill="#e8e8e8">키를 해시하면 링 위의 한 점이 됨</text>
+    <text x="500" y="190" font-size="13" fill="#e8e8e8">그 점에서 <tspan fill="#7ec8e3" font-weight="600">시계 방향</tspan>으로</text>
+    <text x="500" y="210" font-size="13" fill="#e8e8e8">처음 만나는 노드가 담당</text>
+    <text x="500" y="232" font-size="12" fill="#888">= "consistent" 의 의미:</text>
+    <text x="500" y="250" font-size="12" fill="#888">  노드 변화가 인접 키만 영향</text>
+
+    <!-- Node removal scenario -->
+    <text x="590" y="295" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">노드 B 제거 시</text>
+    <rect x="480" y="308" width="340" height="90" fill="#2a1010" stroke="#e05555" stroke-width="1" rx="6"/>
+    <text x="500" y="330" font-size="13" fill="#e8e8e8">B가 담당하던 키들만</text>
+    <text x="500" y="350" font-size="13" fill="#e8e8e8"><tspan fill="#e05555">→ 다음 노드(A)로 이전</tspan></text>
+    <text x="500" y="375" font-size="12" fill="#888">다른 노드 간 키 이동 없음</text>
+
+    <!-- Virtual nodes note -->
+    <rect x="480" y="418" width="340" height="72" fill="#111827" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+    <text x="590" y="440" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">가상 노드 (Virtual Nodes)</text>
+    <text x="500" y="462" font-size="12" fill="#888">각 서버를 링 위에 여러 위치에 배치</text>
+    <text x="500" y="478" font-size="12" fill="#888">→ 부하 균등 분산 (수백 개 가상 노드 권장)</text>
+  </g>
+</svg>
