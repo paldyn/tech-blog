@@ -1,135 +1,186 @@
 ---
-title: "TypeScript vs JavaScript — 무엇이 다른가"
-description: "TypeScript와 JavaScript의 차이를 타입 시스템, 오류 감지 시점, 실행 환경, IDE 지원 관점에서 코드 예시와 함께 명확히 비교합니다."
+title: "TypeScript 완전 정복 ③: TypeScript vs JavaScript 실전 비교"
+description: "같은 코드를 JavaScript와 TypeScript로 작성했을 때 어떻게 다른지 코드로 직접 비교합니다. 타입 오류, 오타 감지, 반환 타입 등을 실제 예시로 확인합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
+pubDate: "2026-06-02"
 archiveOrder: 3
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "JavaScript", "비교", "정적타입", "동적타입"]
+tags: ["TypeScript", "JavaScript", "비교", "타입검사", "코드예시"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-why-typescript/)에서 TypeScript가 왜 지금 필요한지 데이터와 사례로 살펴봤다. 이번에는 TypeScript와 JavaScript가 구체적으로 무엇이 다른지, 그 차이가 실제 코드에서 어떻게 나타나는지 하나씩 짚어 본다.
+[지난 글](/posts/ts-why-typescript/)에서 TypeScript를 써야 하는 이유를 살펴봤다. 이번 글에서는 추상적인 설명 대신, **같은 시나리오를 JavaScript와 TypeScript로 각각 작성**해 두 언어가 실제로 어떻게 다른지 직접 확인한다.
 
-## 핵심 차이: 타입 시스템
+## 코드 대 코드 비교
 
-가장 근본적인 차이는 타입 시스템이다. JavaScript는 **동적 타입(dynamic typing)** 언어다. 변수의 타입이 런타임에 결정되고, 같은 변수에 다른 타입의 값을 대입할 수 있다.
+![TypeScript vs JavaScript 직접 비교](/assets/posts/ts-vs-javascript-comparison.svg)
 
-```javascript
-// JavaScript — 런타임에 타입이 바뀜
-let value = "hello";
-value = 42;        // 문제없음
-value = true;      // 문제없음
-value = null;      // 문제없음
-```
+### 비교 1: Null 안전성
 
-TypeScript는 **정적 타입(static typing)** 을 추가한다. 선언 시점에 타입을 지정하면 컴파일러가 그 타입을 강제한다.
+JavaScript에서 가장 흔한 런타임 오류는 `Cannot read properties of null`이다. TypeScript는 이를 컴파일 타임에 차단한다.
 
 ```typescript
-// TypeScript — 컴파일 타임에 타입 강제
-let value: string = "hello";
-value = 42;    // 오류: Type 'number' is not assignable to type 'string'
-value = true;  // 오류: Type 'boolean' is not assignable to type 'string'
-```
-
-![JavaScript vs TypeScript 비교](/assets/posts/ts-vs-javascript-diff.svg)
-
-## 오류 감지 시점
-
-JavaScript에서는 오류가 코드를 실제로 **실행해야** 드러난다. 이 말은 프로덕션 환경에서 사용자가 버그를 만날 수도 있다는 뜻이다.
-
-```javascript
-// JavaScript — 런타임에 TypeError 발생
-function getUserName(user) {
-  return user.profile.name; // user가 null이면 터짐
+// JavaScript 방식 (타입 없음)
+function getFullName(user) {
+  return user.firstName + " " + user.lastName; // user가 null이면 런타임 오류
 }
 
-getUserName(null); // 실행해야 알 수 있다: TypeError: Cannot read properties of null
-```
-
-TypeScript는 이 오류를 **코드를 작성하는 순간** 에 잡는다.
-
-```typescript
-// TypeScript — 컴파일 시점에 경고
+// TypeScript 방식
 interface User {
-  profile: { name: string };
+  firstName: string;
+  lastName: string;
 }
 
-function getUserName(user: User): string {
-  return user.profile.name;
+function getFullName(user: User): string {
+  return user.firstName + " " + user.lastName;
 }
 
-getUserName(null); // 오류: Argument of type 'null' is not assignable to parameter of type 'User'
+// null 안전 버전 (nullable 허용)
+function getFullNameSafe(user: User | null): string {
+  if (user === null) return "Anonymous";
+  return user.firstName + " " + user.lastName;
+}
 ```
 
-## JS와 TS의 포함 관계
+`user: User` 타입 어노테이션을 붙이면, `getFullName(null)` 호출 시 컴파일 오류가 발생한다. `null`을 허용하려면 `User | null`처럼 명시적으로 표현해야 한다.
 
-TypeScript는 JavaScript의 **슈퍼셋** 이다. 유효한 JavaScript 코드는 모두 유효한 TypeScript다. 반대로 TypeScript 코드는 타입 문법이 포함되어 있으므로 JavaScript 엔진이 바로 실행할 수 없다.
+### 비교 2: 오타와 존재하지 않는 프로퍼티
 
-![JS와 TS의 관계](/assets/posts/ts-vs-javascript-coexist.svg)
-
-이 포함 관계는 실용적으로 중요하다. 기존 JavaScript 프로젝트를 **점진적으로** TypeScript로 전환할 수 있다. `.js` 파일을 `.ts` 로 바꾸고, 오류가 생기는 곳에만 타입을 추가하면 된다. 한 번에 전체를 고칠 필요가 없다.
-
-## IDE 지원의 차이
-
-타입 정보가 있으면 IDE가 훨씬 정확하게 도움을 줄 수 있다.
+JavaScript의 객체는 존재하지 않는 프로퍼티를 접근해도 `undefined`를 반환하며 오류를 내지 않는다. 이 때문에 오타가 있어도 한참 후에야 발견된다.
 
 ```typescript
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  category: "electronics" | "clothing" | "food";
+// JavaScript
+const config = {
+  apiUrl: "https://api.example.com",
+  timeout: 5000,
+};
+console.log(config.apiURl); // undefined (오타지만 오류 없음)
+
+// TypeScript
+interface Config {
+  apiUrl: string;
+  timeout: number;
 }
 
-function formatProduct(p: Product): string {
-  return `${p.name} - ${p.price}원`; // p. 입력 시 id, name, price, category 정확하게 제안
-}
+const config2: Config = {
+  apiUrl: "https://api.example.com",
+  timeout: 5000,
+};
+// config2.apiURl; // 오류: Property 'apiURl' does not exist on type 'Config'
+//                  // Did you mean 'apiUrl'?
+console.log(config2.apiUrl); // 정확한 접근
 ```
 
-JavaScript에서도 IDE가 추론을 통해 자동완성을 제공하지만, 타입 정보가 없으면 추론의 한계가 있다. 특히 함수의 매개변수처럼 정보가 없는 경우 IDE의 도움을 거의 받지 못한다.
+TypeScript는 오타 수정 제안(`Did you mean 'apiUrl'?`)까지 제공한다.
 
-## 런타임 성능 차이는 없다
-
-자주 나오는 오해가 있다. "TypeScript가 더 느리지 않나요?" — 아니다. TypeScript는 컴파일되면 타입 정보가 완전히 제거되고, 결과물은 일반 JavaScript와 동일하다. 런타임에서 TypeScript 고유의 오버헤드는 없다.
+### 비교 3: 함수 인수 개수와 타입
 
 ```typescript
-// TypeScript 소스
-function add(a: number, b: number): number {
-  return a + b;
-}
-```
-
-```javascript
-// 컴파일된 JavaScript — 타입 제거됨
+// JavaScript: 인수를 더 넣거나 덜 넣어도 오류 없음
 function add(a, b) {
   return a + b;
 }
+add(1, 2, 3); // 3번째 인수 무시 (오류 없음)
+add(1);       // b는 undefined → NaN 반환 (오류 없음)
+
+// TypeScript: 정확한 인수 강제
+function addTS(a: number, b: number): number {
+  return a + b;
+}
+// addTS(1, 2, 3); // 오류: Expected 2 arguments, but got 3
+// addTS(1);       // 오류: Expected 2 arguments, but got 1
+addTS(1, 2);     // 정상
 ```
 
-컴파일 시간은 늘어나지만, 이는 일회성 빌드 비용이다. 실제 서비스 응답 시간이나 앱 실행 속도에는 영향이 없다.
-
-## 공존: TypeScript 파일에서 JS 라이브러리 사용
-
-TypeScript와 JavaScript는 같은 생태계를 공유한다. `npm install` 로 설치하는 JavaScript 라이브러리를 TypeScript 프로젝트에서 그대로 쓸 수 있다. 해당 라이브러리가 타입 정의 파일(`.d.ts`)을 제공하면 TypeScript의 타입 검사 혜택까지 누린다.
+### 비교 4: 배열 메서드 타입 추론
 
 ```typescript
-import axios from 'axios'; // axios는 내장 타입 정의 포함
+// JavaScript: 배열 내 객체 타입을 모름
+const products = [
+  { id: 1, name: "Apple", price: 1000 },
+  { id: 2, name: "Banana", price: 500 },
+];
+const expensive = products.filter(p => p.price > 700);
+// expensive의 타입을 에디터가 모름 — 자동완성 없음
 
-// 반환 타입이 자동으로 추론됨
-const response = await axios.get<{ users: User[] }>('/api/users');
-const users = response.data.users; // users: User[] — 자동 완성 동작
+// TypeScript: 타입 자동 추론
+type Product = { id: number; name: string; price: number };
+const productsTS: Product[] = [
+  { id: 1, name: "Apple", price: 1000 },
+  { id: 2, name: "Banana", price: 500 },
+];
+const expensiveTS = productsTS.filter(p => p.price > 700);
+// expensiveTS는 Product[] 타입으로 추론됨
+// expensiveTS[0]. 을 입력하면 id, name, price 자동완성 제공
 ```
 
-타입 정의가 없는 라이브러리는 `@types/패키지명` 으로 별도 설치하거나, 직접 `.d.ts` 파일을 작성한다. 다음 글에서는 TypeScript 환경을 실제로 설치하고 첫 번째 파일을 실행해 본다.
+### 비교 5: 유니온 타입과 분기
+
+TypeScript는 "이 변수가 여러 타입 중 하나일 수 있다"는 상황을 명확하게 표현한다.
+
+```typescript
+// TypeScript: 유니온 타입
+type Status = "pending" | "success" | "error";
+
+function handleStatus(status: Status) {
+  if (status === "pending") {
+    console.log("처리 중...");
+  } else if (status === "success") {
+    console.log("완료!");
+  } else {
+    // status는 여기서 자동으로 "error" 타입으로 좁혀짐
+    console.log("오류 발생:", status);
+  }
+}
+
+// handleStatus("loading"); // 오류: Argument '"loading"' is not assignable
+//                            // to parameter of type 'Status'
+```
+
+JavaScript라면 잘못된 status 값("loading")을 전달해도 런타임까지 발견되지 않는다.
+
+## 언제 무엇을 선택할까
+
+![언제 TypeScript / JavaScript를 선택할까](/assets/posts/ts-vs-javascript-tradeoffs.svg)
+
+## 컴파일 결과는 동일하다
+
+TypeScript를 컴파일하면 JavaScript가 된다. 아래를 보자.
+
+```typescript
+// 입력 (TypeScript)
+interface Point {
+  x: number;
+  y: number;
+}
+
+function distance(a: Point, b: Point): number {
+  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+}
+```
+
+```javascript
+// 출력 (컴파일된 JavaScript)
+function distance(a, b) {
+  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+}
+```
+
+`interface`와 타입 어노테이션은 완전히 제거된다. 런타임 성능 차이는 없다.
+
+## 정리
+
+TypeScript와 JavaScript의 본질적 차이는 "오류를 언제 발견하느냐"다. JavaScript는 유연하지만 런타임까지 오류가 숨어있다. TypeScript는 컴파일 타임에 오류를 잡아 개발 사이클을 단축한다. 두 언어 모두 브라우저와 Node.js에서 동일하게 실행된다.
+
+다음 글에서는 TypeScript를 직접 설치하고 환경을 구성하는 실습을 진행한다.
 
 ---
 
-**지난 글:** [TypeScript, 왜 지금 배워야 하는가](/posts/ts-why-typescript/)
+**지난 글:** [왜 TypeScript를 써야 하는가](/posts/ts-why-typescript/)
 
-**다음 글:** [TypeScript 설치와 환경 구성](/posts/ts-setup-install/)
+**다음 글:** [TypeScript 설치와 환경 설정](/posts/ts-setup-install/)
 
 <br>
 읽어주셔서 감사합니다. 😊

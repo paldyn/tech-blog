@@ -1,199 +1,255 @@
 ---
-title: "TypeScript 기본 타입 완전 정리"
-description: "TypeScript의 모든 기본 타입을 원시 타입, 특수 타입으로 분류해 설명합니다. const/let 타입 추론 차이, 대문자 래퍼 타입 주의사항, void/never 구분까지 코드 예시와 함께 정리합니다."
+title: "TypeScript 완전 정복 ⑩: 기본 타입들"
+description: "TypeScript의 원시 타입(string, number, boolean, bigint, symbol)부터 특수 타입(any, unknown, never, void), 배열, 튜플까지 기본 타입을 완전히 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
+pubDate: "2026-06-02"
 archiveOrder: 10
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "기본타입", "string", "number", "boolean", "never", "unknown"]
+tags: ["TypeScript", "기본타입", "string", "number", "boolean", "any", "unknown", "never"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-type-vs-value-space/)에서 타입 공간과 값 공간의 구분을 이해했다. 이번에는 TypeScript의 기본 타입 전체를 체계적으로 정리한다. 여기서 다루는 타입들이 TypeScript 타입 시스템의 기반이 된다.
+[지난 글](/posts/ts-type-vs-value-space/)에서 타입 공간과 값 공간의 구분을 이해했다. 이번 글에서는 TypeScript의 **기본 타입 전체**를 체계적으로 정리한다. 타입 시스템의 기초 블록이므로 확실하게 익혀두자.
 
-## 원시(Primitive) 타입
+## 타입 분류 개요
 
-JavaScript의 원시 값 7가지가 그대로 TypeScript 타입이 된다. 모두 **소문자** 로 표기한다.
+![TypeScript 타입 분류](/assets/posts/ts-basic-types-tree.svg)
+
+TypeScript의 타입은 크게 세 가지로 나뉜다: **원시 타입**, **객체 타입**, **특수 타입**. 각 타입을 하나씩 살펴본다.
+
+## 원시 타입 (Primitive Types)
+
+JavaScript의 7가지 원시값에 대응하는 TypeScript 타입들이다.
 
 ```typescript
-// string
-const name: string = "TypeScript";
-const greeting: string = `Hello, ${name}`;
+// string: 문자열
+let greeting: string = "Hello";
+let template: string = `Hello, ${greeting}`;
+let empty: string = "";
 
-// number — 정수와 부동소수점 구분 없음
-const age: number = 30;
-const pi: number = 3.14;
-const notANumber: number = NaN;
-
-// bigint — ES2020 이상
-const big: bigint = 9007199254740993n;
+// number: 모든 숫자 (정수, 소수, NaN, Infinity 포함)
+let integer: number = 42;
+let float: number = 3.14;
+let hex: number = 0xff;       // 255
+let binary: number = 0b1010;  // 10
+let octal: number = 0o17;     // 15
+let notANumber: number = NaN;         // NaN도 number!
+let infinite: number = Infinity;
 
 // boolean
-const isActive: boolean = true;
+let done: boolean = false;
+let active: boolean = true;
 
-// symbol
-const uniqueKey: symbol = Symbol("key");
+// bigint: 아주 큰 정수 (ES2020+)
+let huge: bigint = 9007199254740993n;
+let bigSum: bigint = 10n + 20n;
 
-// null과 undefined
-const nothing: null = null;
-let notDefined: undefined = undefined;
+// symbol: 유일한 값
+const key1: symbol = Symbol("key");
+const key2: symbol = Symbol("key");
+// key1 === key2 는 false (항상 유일)
 ```
 
-![TypeScript 기본 타입 분류](/assets/posts/ts-basic-types-overview.svg)
-
-### ⚠ 대문자 타입(String, Number, Boolean)은 사용하지 않는다
-
-`String`, `Number`, `Boolean` 은 JavaScript의 래퍼 객체(wrapper object) 타입이다. TypeScript에서는 소문자 원시 타입 대신 이것을 쓰면 예상치 못한 동작이 생긴다.
+### 중요: 소문자 타입을 사용할 것
 
 ```typescript
-// 잘못된 예
-const a: String = "hello"; // 래퍼 객체 타입 — 피해야 함
-const b: Number = 42;
+// 올바른 방법: 소문자 (원시 타입 키워드)
+let name: string = "Alice";
+let count: number = 42;
 
-// 올바른 예
-const c: string = "hello";
-const d: number = 42;
+// 잘못된 방법: 대문자 (박싱된 객체 타입 — 절대 사용 금지)
+let name2: String = "Alice";  // ESLint 경고
+let count2: Number = 42;       // ESLint 경고
 ```
 
-## const와 let의 타입 추론 차이
+대문자 `String`, `Number`, `Boolean`은 박싱된 객체 타입이다. 원시값과 호환되지 않는 경우가 있고 불필요하게 무겁다.
 
-명시적으로 타입을 쓰지 않아도 TypeScript는 할당된 값에서 타입을 추론한다. 이때 `const` 와 `let` 은 다르게 추론된다.
-
-![const vs let 타입 추론](/assets/posts/ts-basic-types-inference.svg)
-
-`const` 로 선언된 변수는 재할당이 불가능하므로 TypeScript가 **리터럴 타입** 으로 좁게 추론한다. `let` 은 재할당 가능하므로 더 넓은 타입으로 추론한다.
+## 배열 타입
 
 ```typescript
-const lang = "TypeScript"; // lang: "TypeScript" (리터럴 타입)
-let lang2 = "TypeScript";  // lang2: string (넓힘)
+// 두 가지 표기 방식 — number[]가 더 선호됨
+let numbers: number[] = [1, 2, 3];
+let names: Array<string> = ["Alice", "Bob"];
 
-// const를 쓰면 더 정확한 타입 정보가 유지됨
-function setLang(l: "TypeScript" | "JavaScript") { }
-setLang(lang);   // OK — "TypeScript" 리터럴 타입이 일치
-setLang(lang2);  // 오류 — string은 넓어서 안전하지 않음
+// 여러 타입 배열: 유니온 타입
+let mixed: (string | number)[] = ["hello", 42];
+
+// 읽기 전용 배열
+const constants: readonly number[] = [1, 2, 3];
+// constants.push(4); // 오류!
+
+// 비어 있는 배열
+let items: string[] = [];
+items.push("first");
 ```
 
-## 특수 타입
+## 튜플 타입
 
-### any — 타입 검사 탈출구
+```typescript
+// 고정 길이, 각 위치별 타입 지정
+let pair: [string, number] = ["Alice", 30];
+let triple: [string, number, boolean] = ["Bob", 25, true];
 
-`any` 는 모든 타입 검사를 비활성화한다. TypeScript의 장점을 포기하는 것이므로 최후 수단으로만 사용한다.
+// 튜플 구조분해
+const [name, age] = pair;
+// name: string, age: number 로 추론됨
+
+// 레이블이 있는 튜플 (가독성 향상)
+type Point = [x: number, y: number];
+const point: Point = [10, 20];
+
+// 옵셔널 튜플 요소
+type Response = [status: number, data?: string];
+const ok: Response = [200, "OK"];
+const err: Response = [404];  // data 생략 가능
+```
+
+## 객체 타입
+
+```typescript
+// 인라인 객체 타입
+let user: { name: string; age: number } = {
+  name: "Alice",
+  age: 30,
+};
+
+// 선택적 프로퍼티
+let config: { host: string; port?: number } = {
+  host: "localhost",
+  // port는 선택적이므로 생략 가능
+};
+
+// 읽기 전용 프로퍼티
+let point: { readonly x: number; readonly y: number } = {
+  x: 10,
+  y: 20,
+};
+// point.x = 100; // 오류!
+```
+
+## 특수 타입 (Special Types)
+
+![원시 타입과 특수 타입 예시](/assets/posts/ts-basic-types-examples.svg)
+
+### any: 타입 검사를 끈다
 
 ```typescript
 let value: any = "hello";
-value = 42;         // OK
-value = true;       // OK
-value.anything();   // OK — 런타임 오류 가능
+value = 42;           // 허용
+value = true;         // 허용
+value.foo.bar.baz;    // 허용 (런타임 오류 가능성)
 ```
 
-### unknown — 안전한 any
+`any`는 TypeScript의 타입 검사를 완전히 비활성화한다. 레거시 코드 마이그레이션이나 불가피한 경우에만 사용한다. `strict: true` 설정에서 암묵적 `any`는 오류로 처리된다.
 
-`unknown` 은 `any` 처럼 모든 타입을 대입할 수 있지만, 사용 전에 반드시 타입을 좁혀야 한다.
+### unknown: any의 안전한 버전
 
 ```typescript
-function processInput(input: unknown): string {
-  if (typeof input === "string") {
-    return input.toUpperCase(); // 좁힌 후 사용 — OK
-  }
-  if (typeof input === "number") {
-    return input.toString();
-  }
-  return String(input);
+let input: unknown = fetchUserData();
+
+// input을 바로 사용하려면 오류
+// input.name; // 오류: Object is of type 'unknown'
+
+// 검사 후 사용 가능
+if (typeof input === "string") {
+  console.log(input.toUpperCase()); // 안전
+}
+
+if (input !== null && typeof input === "object" && "name" in input) {
+  console.log((input as { name: unknown }).name);
 }
 ```
 
-외부 API 응답, JSON 파싱 결과 등 타입을 알 수 없는 데이터에는 `any` 대신 `unknown` 을 쓰자.
+외부 API 응답, `JSON.parse()` 결과 등 타입을 모르는 값에는 `any` 대신 `unknown`을 사용한다.
 
-### void — 반환값 없는 함수
-
-`void` 는 함수가 의미 있는 값을 반환하지 않음을 표현한다. 대부분 함수 반환 타입으로 사용한다.
+### void: 반환값 없음
 
 ```typescript
-function log(message: string): void {
-  console.log(message);
-  // 명시적으로 아무것도 return하지 않음
+function logMessage(msg: string): void {
+  console.log(msg);
+  // return 없거나 return;만 가능
+  // return "something"; // 오류!
 }
+
+// void 반환 함수를 변수에 할당할 때
+const log: (msg: string) => void = logMessage;
 ```
 
-### never — 도달할 수 없는 코드
-
-`never` 는 절대 발생하지 않는 값의 타입이다. 두 가지 상황에서 나타난다.
+### never: 절대 반환되지 않음
 
 ```typescript
-// 1. 항상 예외를 던지는 함수
+// 항상 예외를 던지는 함수
 function fail(message: string): never {
   throw new Error(message);
 }
 
-// 2. 무한 루프
-function loop(): never {
+// 무한 루프
+function forever(): never {
   while (true) {}
 }
 
-// 3. 타입 좁히기가 완전히 소진된 경우
-function handleStatus(status: "ok" | "error") {
-  if (status === "ok") {
-    return "성공";
-  } else if (status === "error") {
-    return "실패";
+// 타입 좁히기에서 도달 불가능한 분기
+function processValue(x: string | number) {
+  if (typeof x === "string") {
+    console.log(x.toUpperCase());
+  } else if (typeof x === "number") {
+    console.log(x.toFixed(2));
+  } else {
+    const _exhaustive: never = x; // x의 타입이 never가 됨
   }
-  // 여기서 status는 never — 모든 경우를 처리했으므로
-  const _exhaustive: never = status;
 }
 ```
 
-### object — 원시 타입이 아닌 모든 것
+### null과 undefined
 
 ```typescript
-let obj: object = { key: "value" };
-obj = [1, 2, 3];   // 배열도 object
-obj = () => {};    // 함수도 object
-obj = 42;          // 오류: number는 원시 타입
+// strictNullChecks: true 에서 null/undefined는 별도 타입
+let maybeNull: string | null = null;
+let maybeUndefined: number | undefined = undefined;
+
+// null 체크 후 사용
+if (maybeNull !== null) {
+  console.log(maybeNull.length); // 안전
+}
+
+// Optional chaining (?.): 안전한 접근
+const length = maybeNull?.length; // undefined (null이면)
+
+// Nullish coalescing (??): null/undefined 기본값
+const safeValue = maybeNull ?? "default";
 ```
 
-실제로는 구체적인 `interface` 나 `type` 을 쓰는 것이 권장된다.
-
-## 배열과 튜플
+## 타입 추론: 어노테이션을 생략해도 된다
 
 ```typescript
-// 배열 — 두 가지 문법
-const nums: number[] = [1, 2, 3];
-const strs: Array<string> = ["a", "b", "c"];
+// TypeScript가 오른쪽 값에서 타입을 자동 추론
+let name = "Alice";       // string으로 추론
+let count = 42;            // number로 추론
+let active = true;         // boolean으로 추론
+let numbers = [1, 2, 3];  // number[]로 추론
 
-// 튜플 — 각 위치의 타입이 고정
-const pair: [string, number] = ["Alice", 30];
-const rgb: [number, number, number] = [255, 128, 0];
+// 함수도 반환 타입이 추론됨
+function double(n: number) {
+  return n * 2;  // 반환 타입: number (추론)
+}
+
+// 명시적 어노테이션이 필요한 경우
+// 1. 함수 매개변수 (추론 불가)
+// 2. 빈 배열 초기화
+let items: string[] = [];  // []만 쓰면 never[]로 추론됨
+// 3. 타입이 여러 개일 때 의도를 명확히
+let value: string | number = Math.random() > 0.5 ? "text" : 42;
 ```
 
-## 함수 반환 타입
+## 정리
 
-함수 반환 타입도 명시할 수 있고, 타입 추론에 맡길 수도 있다.
-
-```typescript
-// 반환 타입 명시
-function add(a: number, b: number): number {
-  return a + b;
-}
-
-// 반환 타입 추론 (number로 자동 추론)
-function multiply(a: number, b: number) {
-  return a * b;
-}
-
-// 비동기 함수
-async function fetchData(url: string): Promise<string> {
-  const response = await fetch(url);
-  return response.text();
-}
-```
-
-다음 글에서는 원시 타입들을 더 깊이 파고들어 각 타입의 세부 동작과 주의사항을 살펴본다.
+TypeScript의 기본 타입은 JavaScript 원시 타입과 1:1로 대응하는 소문자 타입들(string, number, boolean, bigint, symbol)이 핵심이다. `unknown`을 `any` 대신 사용하고, `null`/`undefined`를 명시적으로 처리하는 습관을 들이자. 타입 추론을 활용하면 불필요한 어노테이션을 줄일 수 있다.
 
 ---
 
-**지난 글:** [타입 공간과 값 공간 — TypeScript의 두 세계](/posts/ts-type-vs-value-space/)
+**지난 글:** [타입 공간 vs 값 공간](/posts/ts-type-vs-value-space/)
 
 <br>
 읽어주셔서 감사합니다. 😊

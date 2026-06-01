@@ -1,191 +1,208 @@
 ---
-title: "타입 공간과 값 공간 — TypeScript의 두 세계"
-description: "TypeScript 코드에는 타입 공간과 값 공간이 공존합니다. 이 구분을 이해하면 컴파일 오류와 런타임 동작의 차이를 명확히 파악할 수 있습니다. typeof, class, enum의 이중 역할도 함께 설명합니다."
+title: "TypeScript 완전 정복 ⑨: 타입 공간 vs 값 공간"
+description: "TypeScript 코드의 두 층위, 타입 공간(컴파일 후 사라짐)과 값 공간(런타임에 존재)을 구분하는 법. typeof, class, enum의 이중적 성질을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
+pubDate: "2026-06-02"
 archiveOrder: 9
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "타입공간", "값공간", "typeof", "컴파일타임"]
+tags: ["TypeScript", "타입공간", "값공간", "typeof", "class", "이중성"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-editor-setup/)에서 VS Code 개발 환경을 최적화했다. 이제 TypeScript 타입 시스템을 본격적으로 배울 차례다. 첫 번째 핵심 개념은 **타입 공간과 값 공간의 구분** 이다. 이 개념을 이해하면 왜 어떤 코드는 컴파일 후 사라지고 어떤 코드는 남는지, `interface` 와 `class` 가 어떻게 다른지 명확해진다.
+[지난 글](/posts/ts-editor-setup/)에서 에디터 설정을 완료했다. 이제 TypeScript의 핵심 개념 중 하나인 **타입 공간(Type Space)과 값 공간(Value Space)의 분리**를 이해할 차례다. 이 개념을 이해하면 TypeScript의 많은 동작이 자연스럽게 이해된다.
 
-## 두 가지 공간
+## 두 개의 세계
 
-TypeScript 코드에는 두 개의 세계가 공존한다.
-
-**타입 공간(Type Space)** — 타입 정보만 담는다. 컴파일 후 완전히 제거된다. 런타임에는 존재하지 않는다.
-
-**값 공간(Value Space)** — 실제 데이터와 로직을 담는다. 컴파일 후 JavaScript로 남아 런타임에 실행된다.
-
-```typescript
-// 타입 공간 — 컴파일 후 사라짐
-type UserId = string;
-interface User {
-  id: UserId;
-  name: string;
-}
-
-// 값 공간 — 컴파일 후 JS로 남음
-const userId: UserId = "u_001"; // : UserId는 타입 공간, 나머지는 값 공간
-function greet(user: User) {    // : User는 타입 공간, 나머지는 값 공간
-  console.log(user.name);
-}
-```
+TypeScript 코드는 사실 두 개의 층위가 공존한다. **타입 공간**은 컴파일러가 타입 검사를 위해 사용하고 컴파일 후 완전히 사라지는 세계다. **값 공간**은 런타임에 실제로 실행되는 JavaScript 코드의 세계다.
 
 ![타입 공간 vs 값 공간](/assets/posts/ts-type-vs-value-space-diagram.svg)
 
-## 타입 공간에만 있는 것들
-
-이것들은 컴파일 후 JavaScript에 전혀 나타나지 않는다.
+가장 중요한 규칙: **타입 공간에 있는 것은 런타임에 사용할 수 없다.**
 
 ```typescript
-// type 별칭 — 타입 공간만
-type Status = "active" | "inactive";
+// 타입 공간에만 존재하는 것들
+type UserId = number;              // 타입 별칭
+interface User { name: string; }   // 인터페이스
+type Status = "active" | "inactive"; // 리터럴 유니온
 
-// interface — 타입 공간만
-interface Product {
-  id: number;
-  name: string;
-}
-
-// 타입 애너테이션 (: 뒤의 모든 것) — 타입 공간
-const x: number = 5;
-
-// 타입 파라미터 — 타입 공간
-function identity<T>(value: T): T {
-  return value;
-}
-
-// import type — 명시적 타입 공간 import
-import type { Product } from './types';
+// 이것들은 런타임에 없다!
+// console.log(typeof UserId);  // 오류: 'UserId' only refers to a type
+// const x = new User();        // 오류: 'User' only refers to a type
 ```
-
-컴파일 결과:
-```javascript
-// type, interface, : 뒤 타입, <T> 모두 제거됨
-const x = 5;
-function identity(value) {
-  return value;
-}
-```
-
-## 값 공간에만 있는 것들
-
-이것들은 컴파일 후 JavaScript에 남는다.
 
 ```typescript
-const name = "TypeScript";           // 변수
-function greet(s: string) { }        // 함수 (:string은 제거됨)
-const arr = [1, 2, 3];               // 배열 리터럴
-import { readFile } from 'fs';       // 런타임 모듈 로드
+// 값 공간에 존재하는 것들
+const userId = 42;                 // 변수
+function greet(name: string) {}    // 함수
+const user = { name: "Alice" };    // 객체 리터럴
 ```
 
-## 두 공간 모두에 존재하는 것들
-
-`class` 와 `enum` 은 특별하다. 이 둘은 타입 공간과 값 공간 **양쪽** 에 동시에 존재한다.
+## 타입 어노테이션은 타입 공간에 속한다
 
 ```typescript
-class Animal {
-  name: string;
-  constructor(name: string) {
-    this.name = name;
-  }
+// 콜론(:) 뒤는 타입 공간
+function add(a: number, b: number): number {
+//              ^^^^^^     ^^^^^^    ^^^^^^
+//          타입 공간   타입 공간  타입 공간 (런타임에 없음)
+  return a + b;  // a, b, return은 값 공간
 }
 
-// 값 공간: 생성자로 사용
-const dog = new Animal("Rex");
-
-// 타입 공간: 타입으로 사용
-function describe(a: Animal): string {
-  return a.name;
+// 컴파일 결과 (JS)
+function add(a, b) {
+  return a + b;
 }
-```
-
-`class` 는 컴파일 후 JavaScript 클래스로 남는다(값 공간). 동시에 TypeScript는 `Animal` 을 타입으로도 인식한다(타입 공간).
-
-`enum` 도 마찬가지다.
-
-```typescript
-enum Direction {
-  Up,
-  Down,
-  Left,
-  Right,
-}
-
-// 값 공간: 실제 값 사용
-const move = Direction.Up; // 컴파일 후 Direction.Up = 0
-
-// 타입 공간: 타입으로 사용
-function go(dir: Direction) { }
+// : number가 모두 사라짐
 ```
 
 ## typeof의 이중성
 
-`typeof` 는 위치에 따라 다른 공간에서 동작한다.
+`typeof`는 가장 대표적인 두 공간 걸치기 키워드다. 같은 키워드가 위치에 따라 완전히 다른 역할을 한다.
 
-![typeof의 두 가지 역할](/assets/posts/ts-type-vs-value-space-typeof.svg)
-
-**값 위치의 typeof** — JavaScript의 `typeof` 연산자. 런타임에 타입 이름 문자열을 반환한다.
-
-```typescript
-const x = 42;
-if (typeof x === "number") { // 런타임 검사 — JS에 남음
-  console.log("숫자입니다");
-}
-```
-
-**타입 위치의 typeof** — TypeScript 전용 타입 연산자. 컴파일 타임에 변수의 TypeScript 타입을 추출한다.
+![같은 키워드, 다른 공간: typeof와 class](/assets/posts/ts-type-vs-value-space-examples.svg)
 
 ```typescript
 const config = { host: "localhost", port: 3000 };
-type Config = typeof config; // 컴파일 타임 — Config = { host: string; port: number }
 
-function connect(cfg: typeof config): void { } // 타입으로만 사용
+// 타입 위치의 typeof: 컴파일 타임, 타입을 추출
+type Config = typeof config;  // { host: string; port: number }
+// Config는 타입 공간에만 존재
+
+// 값 위치의 typeof: 런타임, JS typeof 연산자
+const result = typeof config;  // "object"
+// result는 값 공간
 ```
 
-타입 위치의 `typeof` 는 컴파일 후 완전히 제거된다.
+## class: 두 공간 모두에 존재
+
+`class` 선언은 특별하다. 한 번 선언하면 타입 공간과 값 공간 양쪽에 동시에 이름을 만든다.
+
+```typescript
+class Animal {
+  name: string = "";
+  sound(): string { return ""; }
+}
+
+// Animal은 타입으로 쓸 수 있다 (타입 공간)
+const myDog: Animal = new Animal();
+//           ^^^^^^ 타입 공간에서의 Animal
+
+// Animal은 생성자 함수로 쓸 수 있다 (값 공간)
+const cat = new Animal();
+//          ^^^^^^^^^^^ 값 공간에서의 Animal
+
+// instanceof도 값 공간 (런타임)
+console.log(cat instanceof Animal);  // true
+```
+
+반면 `interface`는 타입 공간에만 존재한다.
+
+```typescript
+interface Flyable {
+  fly(): void;
+}
+
+// const x = new Flyable(); // 오류! interface는 값 공간에 없음
+// console.log(x instanceof Flyable); // 오류!
+```
+
+## enum: 타입이자 객체
+
+`enum`도 두 공간에 존재한다. 하지만 예상외로 런타임에 실제 JavaScript 객체가 된다.
+
+```typescript
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+}
+
+// 타입으로 사용
+function move(dir: Direction) { }
+
+// 값으로 사용 (런타임에 실제 객체)
+console.log(Direction.Up);        // "UP"
+console.log(Direction["Up"]);     // "UP"
+console.log(typeof Direction);    // "object"
+```
+
+컴파일 결과:
+
+```javascript
+var Direction;
+(function (Direction) {
+  Direction["Up"] = "UP";
+  Direction["Down"] = "DOWN";
+})(Direction || (Direction = {}));
+```
+
+`enum`은 런타임에 실제 JavaScript 객체로 변환된다. 이 때문에 `const enum`이나 리터럴 유니온 타입(`"UP" | "DOWN"`)을 선호하는 개발자들이 많다.
+
+## import type: 명확한 구분
+
+TypeScript 3.8에서 도입된 `import type`은 타입 공간에서만 사용되는 임포트임을 명시적으로 선언한다.
+
+```typescript
+// 타입만 임포트 (번들에 포함 안 됨)
+import type { User } from "./user";
+
+// 값과 타입 모두 임포트
+import { createUser } from "./user";
+
+// 하나의 import 문에서 구분
+import { createUser, type User } from "./user";
+```
+
+`import type`으로 가져온 것은 절대 값 공간에서 사용할 수 없다. 번들러가 이 파일을 제거할 수 있어서 트리 쉐이킹에 유리하다.
+
+## 타입 공간에서만 동작하는 연산자들
+
+```typescript
+interface User {
+  name: string;
+  age: number;
+  email: string;
+}
+
+// keyof: 타입의 키를 유니온으로 추출 (타입 공간)
+type UserKeys = keyof User;  // "name" | "age" | "email"
+
+// Partial: 모든 필드를 옵셔널로 (타입 공간)
+type PartialUser = Partial<User>;
+
+// 인덱스드 엑세스 타입 (타입 공간)
+type UserName = User["name"];  // string
+```
+
+이런 연산은 모두 타입 공간에서만 이루어지며 런타임에 흔적이 없다.
 
 ## 왜 이 구분이 중요한가
 
-이 구분을 모르면 다음과 같은 혼란이 생긴다.
-
 ```typescript
-interface Shape {
-  kind: string;
+interface Config {
+  debug: boolean;
 }
 
-// 런타임에 Shape 타입이 존재한다고 착각하는 코드
-function isShape(value: unknown): boolean {
-  return value instanceof Shape; // 오류: 'Shape' only refers to a type
+// 타입 가드: instanceof는 class에만 가능
+// Config는 interface이므로 instanceof 불가
+function isConfig(x: unknown): x is Config {
+  // instanceof Config; // 오류!
+  // 대신 구조적 검사 사용
+  return typeof x === "object" && x !== null && "debug" in x;
 }
 ```
 
-`interface` 는 타입 공간에만 있으므로 런타임에는 존재하지 않는다. `instanceof` 는 값 공간(클래스 생성자)을 대상으로 동작하는 런타임 연산이다.
+런타임에 인터페이스나 타입 별칭이 존재하지 않기 때문에, 런타임 타입 검사가 필요할 때는 타입 가드 함수를 직접 작성하거나 `class`를 사용해야 한다.
 
-올바른 방법은 런타임 검사 가능한 값 공간 요소를 사용하는 것이다.
+## 정리
 
-```typescript
-class ShapeImpl {
-  kind: string = "shape";
-}
-
-function isShape(value: unknown): boolean {
-  return value instanceof ShapeImpl; // OK: 클래스는 값 공간에 존재
-}
-```
-
-다음 글부터는 TypeScript의 기본 타입들을 하나씩 상세히 살펴본다.
+TypeScript 코드에는 항상 두 층위가 공존한다. 타입 공간(interface, type, 어노테이션)은 컴파일러만이 보는 세계이고, 값 공간(변수, 함수, class 실체)은 런타임에서 살아있는 세계다. `class`와 `enum`만이 두 공간 모두에 이름을 만든다.
 
 ---
 
-**지난 글:** [TypeScript 에디터 환경 최적화 — VS Code 완전 설정](/posts/ts-editor-setup/)
+**지난 글:** [에디터 설정: VS Code + TypeScript](/posts/ts-editor-setup/)
 
-**다음 글:** [TypeScript 기본 타입 완전 정리](/posts/ts-basic-types/)
+**다음 글:** [TypeScript 기본 타입들](/posts/ts-basic-types/)
 
 <br>
 읽어주셔서 감사합니다. 😊

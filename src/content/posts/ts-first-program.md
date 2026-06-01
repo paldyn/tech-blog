@@ -1,31 +1,30 @@
 ---
-title: "TypeScript로 첫 번째 프로그램 작성하기"
-description: "할 일 관리 앱을 예시로 TypeScript로 첫 번째 실용적인 프로그램을 단계별로 작성합니다. interface, 타입 애너테이션, 오류 메시지 읽기까지 실습 중심으로 설명합니다."
+title: "TypeScript 완전 정복 ⑦: 첫 TypeScript 프로그램 작성"
+description: "할 일 관리 앱을 TypeScript로 처음부터 작성하며 interface, class, 타입 어노테이션, 컴파일 오류를 직접 경험합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
+pubDate: "2026-06-02"
 archiveOrder: 7
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "첫프로그램", "interface", "실습", "타입애너테이션"]
+tags: ["TypeScript", "첫프로그램", "interface", "class", "타입어노테이션", "실습"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-playground-repl/)에서 TypeScript Playground로 코드를 실험하는 법을 배웠다. 이번에는 로컬 환경에서 TypeScript로 실제 프로그램을 처음부터 작성해 본다. 간단한 할 일 관리 앱을 예제로 삼아 TypeScript의 기본 개념을 모두 체험한다.
+[지난 글](/posts/ts-playground-repl/)에서 Playground를 통해 TypeScript를 실험해봤다. 이제 직접 TypeScript 프로젝트를 만들어보자. 할 일(Todo) 관리 앱을 처음부터 작성하면서 TypeScript의 핵심 기능을 자연스럽게 익힌다.
 
-## 프로젝트 초기화
-
-먼저 프로젝트를 만들고 TypeScript를 설치한다.
+## 프로젝트 준비
 
 ```bash
-mkdir todo-ts && cd todo-ts
+mkdir ts-todo
+cd ts-todo
 npm init -y
 npm install --save-dev typescript
 npx tsc --init
 mkdir src
 ```
 
-`tsconfig.json` 을 다음과 같이 편집한다.
+`tsconfig.json`에서 다음 옵션을 설정한다.
 
 ```json
 {
@@ -34,157 +33,185 @@ mkdir src
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true
-  },
-  "include": ["src"]
+    "strict": true,
+    "esModuleInterop": true
+  }
 }
 ```
 
-## 첫 번째 TypeScript 파일
+## interface로 데이터 구조 정의
 
-`src/index.ts` 를 만들고 할 일 앱의 핵심 로직을 작성한다.
+TypeScript를 처음 쓸 때 가장 먼저 배우는 것이 `interface`다. 데이터의 형태를 미리 선언해두면 TypeScript가 그 계약을 지키는지 검사한다.
 
 ```typescript
-// Task 데이터 구조 정의
-interface Task {
+// src/todo.ts
+interface Todo {
   id: number;
   title: string;
   done: boolean;
   createdAt: Date;
 }
 
-// 할 일 목록 상태 (순수 함수로 관리)
-function addTask(tasks: Task[], title: string): Task[] {
-  const newTask: Task = {
-    id: tasks.length + 1,
-    title,
-    done: false,
-    createdAt: new Date(),
-  };
-  return [...tasks, newTask];
+interface CreateTodoInput {
+  title: string;
 }
-
-function completeTask(tasks: Task[], id: number): Task[] {
-  return tasks.map(task =>
-    task.id === id ? { ...task, done: true } : task
-  );
-}
-
-function getPending(tasks: Task[]): Task[] {
-  return tasks.filter(task => !task.done);
-}
-
-// 실행
-let tasks: Task[] = [];
-tasks = addTask(tasks, "TypeScript 설치하기");
-tasks = addTask(tasks, "첫 번째 프로그램 작성하기");
-tasks = completeTask(tasks, 1);
-
-console.log("미완료 할 일:");
-getPending(tasks).forEach(task => {
-  console.log(`  [${task.id}] ${task.title}`);
-});
 ```
 
-![첫 번째 TypeScript 프로그램 구조](/assets/posts/ts-first-program-structure.svg)
+`interface`는 컴파일 후 완전히 사라진다. 순수한 타입 계약 도구다.
 
-## 컴파일과 실행
+## class로 로직 구현
+
+![첫 TypeScript 프로그램: 할 일 관리 앱](/assets/posts/ts-first-program-flow.svg)
+
+```typescript
+// src/todo.ts (계속)
+class TodoList {
+  private todos: Todo[] = [];
+  private nextId = 1;  // number로 자동 추론
+
+  add(input: CreateTodoInput): Todo {
+    const todo: Todo = {
+      id: this.nextId++,
+      title: input.title,
+      done: false,
+      createdAt: new Date(),
+    };
+    this.todos.push(todo);
+    return todo;
+  }
+
+  complete(id: number): boolean {
+    const todo = this.todos.find(t => t.id === id);
+    if (todo === undefined) return false;
+    todo.done = true;
+    return true;
+  }
+
+  delete(id: number): boolean {
+    const index = this.todos.findIndex(t => t.id === id);
+    if (index === -1) return false;
+    this.todos.splice(index, 1);
+    return true;
+  }
+
+  getAll(): Todo[] {
+    return [...this.todos];
+  }
+
+  getPending(): Todo[] {
+    return this.todos.filter(t => !t.done);
+  }
+
+  getCompleted(): Todo[] {
+    return this.todos.filter(t => t.done);
+  }
+}
+
+export { TodoList };
+export type { Todo };
+```
+
+`private` 접근 제한자를 쓰면 클래스 외부에서 `todos`와 `nextId`에 직접 접근할 수 없다. JavaScript의 프라이버시 관례(`_todos`)와 달리 TypeScript는 컴파일 타임에 이를 강제한다.
+
+## 진입점 작성
+
+```typescript
+// src/index.ts
+import { TodoList } from "./todo";
+
+const list = new TodoList();
+
+// 할 일 추가
+const todo1 = list.add({ title: "TypeScript 배우기" });
+const todo2 = list.add({ title: "첫 프로그램 작성" });
+const todo3 = list.add({ title: "타입 시스템 이해하기" });
+
+console.log("전체 할 일:", list.getAll());
+
+// 완료 처리
+list.complete(todo1.id);
+list.complete(todo2.id);
+
+console.log("미완료:", list.getPending());
+console.log("완료:", list.getCompleted());
+
+// 삭제
+list.delete(todo3.id);
+console.log("삭제 후:", list.getAll());
+```
+
+## TypeScript가 잡아주는 실수들
+
+![TypeScript가 잡아주는 일반적인 실수들](/assets/posts/ts-first-program-errors.svg)
+
+이 예시에서 발생하는 오류들을 직접 실험해보자.
+
+```typescript
+// 오류 1: id를 문자열로 전달
+list.complete("1"); // 오류: Argument of type 'string' is not assignable to parameter of type 'number'
+
+// 오류 2: 존재하지 않는 메서드
+list.remove(1); // 오류: Property 'remove' does not exist on type 'TodoList'
+
+// 오류 3: find()는 undefined를 반환할 수 있음
+const found: Todo = list.getAll().find(t => t.id === 1); // 오류!
+// find()의 반환 타입은 Todo | undefined
+// 올바른 방법:
+const found2 = list.getAll().find(t => t.id === 1);
+if (found2 !== undefined) {
+  console.log(found2.title); // 안전하게 접근
+}
+
+// 오류 4: 읽기 전용 스냅샷 오용
+const all = list.getAll(); // [...this.todos] 복사본
+// all을 변경해도 원본에 영향 없음 (의도된 설계)
+```
+
+## 컴파일하고 실행
 
 ```bash
-npx tsc            # TypeScript → JavaScript 컴파일
-node dist/index.js  # 실행
+# 컴파일
+npx tsc
+
+# 실행
+node dist/index.js
 ```
 
 출력:
+
 ```
-미완료 할 일:
-  [2] 첫 번째 프로그램 작성하기
+전체 할 일: [
+  { id: 1, title: 'TypeScript 배우기', done: false, createdAt: 2026-06-02T... },
+  { id: 2, title: '첫 프로그램 작성', done: false, createdAt: 2026-06-02T... },
+  { id: 3, title: '타입 시스템 이해하기', done: false, createdAt: 2026-06-02T... }
+]
+미완료: [ { id: 3, title: '타입 시스템 이해하기', done: false, ... } ]
+완료: [ { id: 1, title: 'TypeScript 배우기', done: true, ... }, ... ]
+삭제 후: [ { id: 1, ... }, { id: 2, ... } ]
 ```
 
-## 타입이 없으면 어떤 오류가 나오나
+## 타입 추론의 힘
 
-`addTask` 함수의 `title` 매개변수에서 타입을 제거해 보자.
+이 예제에서 명시적 타입 어노테이션 없이도 TypeScript가 타입을 추론하는 경우가 여럿 있다.
 
 ```typescript
-// strict 모드에서 타입 없는 매개변수는 오류
-function addTask(tasks: Task[], title) { // ← title에 빨간 밑줄
+const list = new TodoList();  // list: TodoList
+const todo1 = list.add({ title: "TypeScript 배우기" });  // todo1: Todo
+const all = list.getAll();  // all: Todo[]
+const pending = all.filter(t => !t.done);  // pending: Todo[]
 ```
 
-```
-error TS7006: Parameter 'title' implicitly has an 'any' type.
-```
+TypeScript는 할당 표현식, 함수 반환값, 배열 메서드 결과 등 대부분의 경우에서 타입을 자동으로 추론한다. 모든 변수에 타입을 직접 써야 한다는 것은 오해다.
 
-이것이 `strict: true` 가 켜졌을 때 TypeScript가 강제하는 규칙이다. 매개변수에 타입을 명시하지 않으면 컴파일을 거부한다.
+## 정리
 
-## 잘못된 타입 사용 실험
-
-`completeTask` 를 잘못 호출해 보자.
-
-```typescript
-tasks = completeTask(tasks, "1"); // id는 number인데 string 전달
-```
-
-```
-error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-```
-
-JavaScript라면 이 코드가 아무 오류 없이 실행되다가 나중에 `id === 1` 비교에서 `"1" === 1` 이 `false` 로 평가되어 완료 처리가 안 되는 조용한 버그가 생긴다. TypeScript는 이를 컴파일 시점에 잡아 준다.
-
-## 오류 메시지 읽는 법
-
-TypeScript 오류 메시지는 처음에 낯설어 보이지만 패턴이 있다.
-
-![TypeScript 오류 메시지 읽는 법](/assets/posts/ts-first-program-errors.svg)
-
-- **TS 오류 코드** (예: `TS2322`) — 어떤 종류의 오류인지 분류
-- **파일과 줄 번호** — 어디에서 오류가 났는지
-- **오류 메시지** — 무엇이 문제인지 설명
-
-처음에는 메시지가 길어 보이지만 핵심은 항상 "어떤 타입을 기대했는데 다른 타입이 들어왔다"는 내용이다.
-
-## interface vs 단순 객체
-
-JavaScript에서는 데이터 구조를 그냥 객체로 쓰는 경우가 많다. TypeScript에서는 `interface` 로 구조를 명시적으로 정의하는 것이 표준이다.
-
-```typescript
-// JavaScript 방식 — 구조 파악이 어려움
-function process(task) {
-  return task.done ? "완료" : task.title;
-}
-
-// TypeScript 방식 — 구조가 명확
-function process(task: Task): string {
-  return task.done ? "완료" : task.title;
-}
-```
-
-`interface` 로 정의된 `Task` 가 있으면 IDE가 `task.` 를 입력하는 순간 `id`, `title`, `done`, `createdAt` 을 자동 완성으로 제안한다.
-
-## package.json 스크립트 추가
-
-자주 쓰는 명령을 `package.json` 에 추가하면 편하다.
-
-```json
-{
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "tsc && node dist/index.js"
-  }
-}
-```
-
-```bash
-npm run dev  # 컴파일 후 바로 실행
-```
-
-첫 번째 TypeScript 프로그램이 완성됐다. 다음 글에서는 VS Code를 중심으로 TypeScript 개발에 최적화된 에디터 환경을 구성한다.
+첫 TypeScript 프로그램을 통해 `interface`, `class`, 접근 제한자, 반환 타입, 타입 추론의 기본을 경험했다. TypeScript는 잘못된 인수 타입, 존재하지 않는 메서드 호출, `undefined` 처리 누락 같은 실수를 코딩 중에 잡아준다. 다음 글에서는 TypeScript 개발 경험을 극대화하는 에디터 설정을 다룬다.
 
 ---
 
-**지난 글:** [TypeScript Playground — 브라우저에서 바로 실험하기](/posts/ts-playground-repl/)
+**지난 글:** [TypeScript Playground 활용](/posts/ts-playground-repl/)
 
-**다음 글:** [TypeScript 에디터 환경 최적화 — VS Code 설정](/posts/ts-editor-setup/)
+**다음 글:** [에디터 설정: VS Code + TypeScript](/posts/ts-editor-setup/)
 
 <br>
 읽어주셔서 감사합니다. 😊
