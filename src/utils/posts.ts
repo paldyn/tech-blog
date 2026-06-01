@@ -124,6 +124,9 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Kubernetes: '/assets/logos/kubernetes.png',
   React: '/assets/logos/react.png',
   Network: '/assets/logos/network.png',
+  Algorithm: '/assets/logos/algorithm.png',
+  'Next.js': '/assets/logos/nextjs.png',
+  Security: '/assets/logos/security.png',
   Python: '/assets/logos/python.png',
   Team: '/assets/logo-symbol-dark.png',
 };
