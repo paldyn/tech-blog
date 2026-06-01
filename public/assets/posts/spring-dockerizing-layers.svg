@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="620" viewBox="0 0 880 620">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="620" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Spring Boot Docker 이미지 레이어 구조</text>
+
+  <!-- 왼쪽: 단일 FAT JAR (비효율) -->
+  <text x="190" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555" text-anchor="middle">단일 FAT JAR (비효율)</text>
+
+  <!-- FAT JAR 레이어 박스들 -->
+  <rect x="60" y="108" width="260" height="52" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="190" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">app.jar (전체, ~80MB)</text>
+  <text x="190" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">의존성 + 클래스 + 리소스 혼재</text>
+
+  <rect x="60" y="168" width="260" height="44" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="190" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">JRE Base Image</text>
+
+  <!-- 변경 시 전체 재빌드 표시 -->
+  <rect x="60" y="228" width="260" height="36" rx="6" fill="#200a0a" stroke="#e05555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="190" y="251" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">코드 변경 시 80MB 전체 재전송</text>
+
+  <!-- 오른쪽: 레이어드 JAR (효율) -->
+  <text x="660" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555" text-anchor="middle">레이어드 JAR (효율적)</text>
+
+  <!-- 레이어별 박스 -->
+  <rect x="520" y="108" width="260" height="44" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">application (classes)</text>
+  <text x="650" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">~100KB · 매번 변경됨</text>
+
+  <rect x="520" y="160" width="260" height="44" rx="6" fill="#0a120a" stroke="#3a6a3a" stroke-width="1"/>
+  <text x="650" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" text-anchor="middle">resources</text>
+  <text x="650" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">~500KB · 가끔 변경</text>
+
+  <rect x="520" y="212" width="260" height="44" rx="6" fill="#0a100a" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="650" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc" text-anchor="middle">snapshot-dependencies</text>
+  <text x="650" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">SNAPSHOT 의존성</text>
+
+  <rect x="520" y="264" width="260" height="44" rx="6" fill="#080e08" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="650" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ce9178" text-anchor="middle">dependencies (~70MB)</text>
+  <text x="650" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">릴리즈 의존성 · 거의 변경 없음</text>
+
+  <rect x="520" y="316" width="260" height="36" rx="6" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="650" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">JRE Base Image</text>
+
+  <!-- 캐시 히트 표시 -->
+  <rect x="520" y="360" width="260" height="36" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="650" y="383" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">코드 변경 시 100KB만 재전송</text>
+
+  <!-- 중앙 화살표 구분 -->
+  <line x1="385" y1="200" x2="505" y2="200" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="445" y="192" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">레이어 분리</text>
+
+  <!-- 코드 박스: Dockerfile -->
+  <rect x="60" y="420" width="760" height="168" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="444" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># Dockerfile (멀티스테이지 + 레이어드)</text>
+  <text x="80" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
+  <text x="122" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> eclipse-temurin:21-jdk-alpine </text>
+  <text x="396" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">AS</text>
+  <text x="418" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178"> builder</text>
+  <text x="80" y="484" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">WORKDIR</text>
+  <text x="140" y="484" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> /app</text>
+  <text x="80" y="504" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">COPY</text>
+  <text x="116" y="504" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> build/libs/*.jar app.jar</text>
+  <text x="80" y="524" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">RUN</text>
+  <text x="108" y="524" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> java -Djarmode=layertools -jar app.jar extract</text>
+  <text x="80" y="544" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
+  <text x="122" y="544" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> eclipse-temurin:21-jre-alpine</text>
+  <text x="80" y="564" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">COPY</text>
+  <text x="116" y="564" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> --from=builder /app/dependencies/ ./</text>
+  <text x="80" y="584" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">COPY</text>
+  <text x="116" y="584" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> --from=builder /app/application/ ./</text>
+</svg>

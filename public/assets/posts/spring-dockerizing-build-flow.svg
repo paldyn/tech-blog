@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Spring Boot 도커 빌드 &amp; 배포 흐름</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="80" width="160" height="60" rx="8" fill="#0d1117" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="140" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">① 소스 코드</text>
+  <text x="140" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">src/main/java</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="220" y1="110" x2="268" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="270" y="80" width="160" height="60" rx="8" fill="#0d1117" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="350" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">② Gradle/Maven</text>
+  <text x="350" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">bootJar 태스크</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="430" y1="110" x2="478" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="480" y="80" width="160" height="60" rx="8" fill="#0d1117" stroke="#55c555" stroke-width="1.5"/>
+  <text x="560" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">③ docker build</text>
+  <text x="560" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">멀티스테이지</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="640" y1="110" x2="688" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="690" y="80" width="130" height="60" rx="8" fill="#0d1117" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="755" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">④ Registry</text>
+  <text x="755" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ECR / Docker Hub</text>
+
+  <!-- 코드 박스 1: .dockerignore -->
+  <rect x="60" y="180" width="360" height="150" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="204" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># .dockerignore</text>
+  <text x="80" y="224" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">.gradle</text>
+  <text x="80" y="244" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">.git</text>
+  <text x="80" y="264" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">src/test</text>
+  <text x="80" y="284" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">*.md</text>
+  <text x="80" y="304" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># build 산출물만 COPY로 전달</text>
+
+  <!-- 코드 박스 2: docker-compose -->
+  <rect x="460" y="180" width="360" height="150" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="204" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># docker-compose.yml (개발)</text>
+  <text x="480" y="224" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">services</text>
+  <text x="480" y="244" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  app:</text>
+  <text x="480" y="264" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    image: myapp:latest</text>
+  <text x="480" y="284" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ports: [</text>
+  <text x="480" y="304" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">      "8080:8080"]</text>
+
+  <!-- JVM 옵션 박스 -->
+  <rect x="60" y="360" width="760" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="384" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ENTRYPOINT JVM 튜닝 (Dockerfile)</text>
+  <text x="80" y="404" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">ENTRYPOINT</text>
+  <text x="180" y="404" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> ["java",</text>
+  <text x="80" y="424" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  "-XX:+UseContainerSupport",</text>
+  <text x="80" y="444" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">  "-XX:MaxRAMPercentage=75.0",</text>
+  <text x="80" y="464" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  "-jar", "app.jar"]</text>
+</svg>
