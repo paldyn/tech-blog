@@ -122,6 +122,8 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Linux: '/assets/logos/linux.png',
   Docker: '/assets/logos/docker.png',
   Kubernetes: '/assets/logos/kubernetes.png',
+  React: '/assets/logos/react.png',
+  Network: '/assets/logos/network.png',
   Python: '/assets/logos/python.png',
   Team: '/assets/logo-symbol-dark.png',
 };
