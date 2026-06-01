@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQL 인젝션 방어 레이어</text>
+
+  <!-- Layer 1 -->
+  <rect x="60" y="64" width="760" height="64" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="180" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">1순위 — 파라미터 바인딩 (Prepared Statement)</text>
+  <text x="180" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">모든 사용자 입력은 반드시 바인딩. 문자열 연결 쿼리 작성 금지.</text>
+  <text x="116" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="28" fill="#55c555" text-anchor="middle">①</text>
+
+  <!-- Layer 2 -->
+  <rect x="60" y="140" width="760" height="64" rx="6" fill="#1a2535" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="180" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">2순위 — ORM / 쿼리 빌더 사용</text>
+  <text x="180" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">JPA, MyBatis #{}, SQLAlchemy 등은 내부적으로 바인딩을 자동 처리.</text>
+  <text x="116" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="28" fill="#7ec8e3" text-anchor="middle">②</text>
+
+  <!-- Layer 3 -->
+  <rect x="60" y="216" width="760" height="64" rx="6" fill="#25201a" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="180" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#ce9178">3순위 — 최소 권한 DB 계정</text>
+  <text x="180" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">애플리케이션 계정에 SELECT/INSERT/UPDATE/DELETE만 부여. DROP·CREATE 금지.</text>
+  <text x="116" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="28" fill="#ce9178" text-anchor="middle">③</text>
+
+  <!-- Layer 4 -->
+  <rect x="60" y="292" width="760" height="64" rx="6" fill="#201a25" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="180" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">4순위 — 입력 검증 + WAF</text>
+  <text x="180" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">화이트리스트 유효성 검사, SQL 키워드 필터(보조). WAF는 보완책, 대체 불가.</text>
+  <text x="116" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="28" fill="#7777cc" text-anchor="middle">④</text>
+
+  <!-- Dynamic column/order note -->
+  <rect x="60" y="368" width="760" height="36" rx="6" fill="#111111" stroke="#444" stroke-width="1"/>
+  <text x="440" y="391" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">
+    ⚠ 동적 컬럼명·ORDER BY 방향은 바인딩 불가 → 화이트리스트 검증 후 문자열 조합
+  </text>
+</svg>

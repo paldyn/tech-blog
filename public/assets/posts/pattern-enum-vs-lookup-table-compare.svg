@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ENUM vs 룩업 테이블 — 코드성 데이터 설계</text>
+
+  <!-- Left: ENUM column -->
+  <rect x="60" y="68" width="360" height="38" rx="6" fill="#111820"/>
+  <text x="240" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">ENUM 컬럼</text>
+
+  <rect x="60" y="112" width="360" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- MySQL/PostgreSQL</text>
+  <text x="76" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">CREATE TABLE</tspan> orders (</text>
+  <text x="76" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  status <tspan font-weight="600" fill="#7ec8e3">ENUM</tspan>(</text>
+  <text x="76" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">    'PENDING','PAID',</text>
+  <text x="76" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178">    'SHIPPED','DONE'</text>
+  <text x="76" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  ) <tspan font-weight="600" fill="#7ec8e3">NOT NULL</tspan>);</text>
+
+  <!-- ENUM pros/cons -->
+  <text x="60" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">장점</text>
+  <text x="60" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 스키마에 허용값 명시</text>
+  <text x="60" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• JOIN 불필요 → 쿼리 단순</text>
+  <text x="60" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 스토리지 효율 (MySQL 1~2B)</text>
+
+  <text x="60" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">단점</text>
+  <text x="60" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 값 추가/삭제 → ALTER TABLE</text>
+  <text x="60" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 다국어 표시명 저장 불가</text>
+  <text x="60" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• ORM 매핑 번거로움</text>
+  <text x="60" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• PostgreSQL ENUM은 타입 변경 제한</text>
+
+  <!-- Right: Lookup table -->
+  <rect x="460" y="68" width="360" height="38" rx="6" fill="#111820"/>
+  <text x="640" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">룩업 테이블</text>
+
+  <rect x="460" y="112" width="360" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="134" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 공통 코드 테이블 방식</text>
+  <text x="476" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">CREATE TABLE</tspan> order_status (</text>
+  <text x="476" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  code    <tspan font-weight="600" fill="#7ec8e3">VARCHAR</tspan>(20) <tspan font-weight="600" fill="#7ec8e3">PK</tspan>,</text>
+  <text x="476" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  label   <tspan font-weight="600" fill="#7ec8e3">TEXT</tspan> <tspan font-weight="600" fill="#7ec8e3">NOT NULL</tspan>,</text>
+  <text x="476" y="208" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  sort_no <tspan font-weight="600" fill="#7ec8e3">INT</tspan></text>
+  <text x="476" y="226" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+
+  <!-- Lookup pros/cons -->
+  <text x="460" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">장점</text>
+  <text x="460" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• INSERT로 값 추가 (DDL 불필요)</text>
+  <text x="460" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 표시명·정렬·부가 속성 저장 가능</text>
+  <text x="460" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 런타임 유효값 변경 가능</text>
+
+  <text x="460" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">단점</text>
+  <text x="460" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 항상 JOIN 필요</text>
+  <text x="460" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 잘못된 코드 삽입 가능 (FK 설정 권장)</text>
+  <text x="460" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 스키마만 보고 허용값 파악 어려움</text>
+</svg>

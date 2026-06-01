@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-y" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#e0c050"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">슬로우 쿼리 진단 흐름</text>
+
+  <!-- Step 1 -->
+  <rect x="310" y="64" width="260" height="52" rx="8" fill="#1a2535" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="86" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">① 슬로우 쿼리 식별</text>
+  <text x="440" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">slow_query_log / pg_stat_statements</text>
+
+  <line x1="440" y1="116" x2="440" y2="138" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="310" y="140" width="260" height="52" rx="8" fill="#1a2535" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">② EXPLAIN 실행 계획 확인</text>
+  <text x="440" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">EXPLAIN (ANALYZE, BUFFERS) ...</text>
+
+  <line x1="440" y1="192" x2="440" y2="214" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="310" y="216" width="260" height="52" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">③ 인덱스 미사용 확인</text>
+  <text x="440" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Seq Scan vs Index Scan</text>
+
+  <!-- Branch left: index missing -->
+  <line x1="310" y1="242" x2="220" y2="242" stroke="#55c555" stroke-width="2" marker-end="url(#arr-y)"/>
+  <rect x="60" y="216" width="152" height="52" rx="8" fill="#20200a" stroke="#e0c050" stroke-width="1.5"/>
+  <text x="136" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e0c050" text-anchor="middle">인덱스 추가</text>
+  <text x="136" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CREATE INDEX</text>
+
+  <!-- Branch right: stats stale -->
+  <line x1="570" y1="242" x2="660" y2="242" stroke="#55c555" stroke-width="2" marker-end="url(#arr-y)"/>
+  <rect x="660" y="216" width="160" height="52" rx="8" fill="#20200a" stroke="#e0c050" stroke-width="1.5"/>
+  <text x="740" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e0c050" text-anchor="middle">통계 갱신</text>
+  <text x="740" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">ANALYZE / UPDATE STATISTICS</text>
+
+  <line x1="440" y1="268" x2="440" y2="290" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="310" y="292" width="260" height="52" rx="8" fill="#1a2535" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">④ 쿼리 로직 검토</text>
+  <text x="440" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">N+1 / 불필요 서브쿼리 / 함수 컬럼</text>
+
+  <line x1="440" y1="344" x2="440" y2="366" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5 -->
+  <rect x="310" y="368" width="260" height="52" rx="8" fill="#1a2535" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">⑤ 검증</text>
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">EXPLAIN ANALYZE 재실행 → 비교</text>
+
+  <line x1="440" y1="420" x2="440" y2="442" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Done -->
+  <rect x="330" y="444" width="220" height="40" rx="8" fill="#0f1a10" stroke="#55c555" stroke-width="2"/>
+  <text x="440" y="469" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">성능 개선 완료</text>
+</svg>

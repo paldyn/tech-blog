@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">공통 코드 테이블 설계 패턴</text>
+
+  <!-- Hierarchical code table -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">계층형 코드 테이블</text>
+
+  <rect x="60" y="88" width="380" height="176" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">CREATE TABLE</tspan> code_group (</text>
+  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  grp_id  <tspan font-weight="600" fill="#7ec8e3">VARCHAR</tspan>(20) <tspan font-weight="600" fill="#7ec8e3">PK</tspan>,</text>
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  grp_nm  <tspan font-weight="600" fill="#7ec8e3">TEXT</tspan> <tspan font-weight="600" fill="#7ec8e3">NOT NULL</tspan></text>
+  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">CREATE TABLE</tspan> code (</text>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  grp_id  <tspan font-weight="600" fill="#7ec8e3">VARCHAR</tspan>(20) <tspan font-weight="600" fill="#7ec8e3">REFERENCES</tspan> code_group,</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  code    <tspan font-weight="600" fill="#7ec8e3">VARCHAR</tspan>(20),</text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  label   <tspan font-weight="600" fill="#7ec8e3">TEXT</tspan>,  sort_no <tspan font-weight="600" fill="#7ec8e3">INT</tspan>,</text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan font-weight="600" fill="#7ec8e3">PRIMARY KEY</tspan> (grp_id, code));</text>
+
+  <!-- Data example -->
+  <text x="460" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">데이터 예시</text>
+
+  <rect x="460" y="88" width="360" height="176" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="108" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- code_group</text>
+  <text x="476" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">INSERT INTO</tspan> code_group</text>
+  <text x="476" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  <tspan font-weight="600" fill="#7ec8e3">VALUES</tspan> (<tspan fill="#ce9178">'ORDER_STATUS'</tspan>, <tspan fill="#ce9178">'주문상태'</tspan>);</text>
+  <text x="476" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- code</text>
+  <text x="476" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">INSERT INTO</tspan> code <tspan font-weight="600" fill="#7ec8e3">VALUES</tspan></text>
+  <text x="476" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  (<tspan fill="#ce9178">'ORDER_STATUS'</tspan>, <tspan fill="#ce9178">'PENDING'</tspan>, <tspan fill="#ce9178">'대기'</tspan>, 1),</text>
+  <text x="476" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  (<tspan fill="#ce9178">'ORDER_STATUS'</tspan>, <tspan fill="#ce9178">'PAID'</tspan>,    <tspan fill="#ce9178">'결제'</tspan>, 2),</text>
+  <text x="476" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  (<tspan fill="#ce9178">'ORDER_STATUS'</tspan>, <tspan fill="#ce9178">'DONE'</tspan>,    <tspan fill="#ce9178">'완료'</tspan>, 3);</text>
+
+  <!-- Decision guide -->
+  <text x="60" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">선택 기준</text>
+
+  <!-- ENUM suitable -->
+  <rect x="60" y="308" width="360" height="108" rx="6" fill="#0f1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">ENUM 적합</text>
+  <text x="76" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 값이 고정 (성별: M/F/U)</text>
+  <text x="76" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 코드 자체가 의미를 가짐</text>
+  <text x="76" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 다국어 표시 불필요</text>
+  <text x="76" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 간단한 프로토타입</text>
+
+  <!-- Lookup suitable -->
+  <rect x="460" y="308" width="360" height="108" rx="6" fill="#1a0f10" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">룩업 테이블 적합</text>
+  <text x="476" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 값이 가변 (관리자가 추가/삭제)</text>
+  <text x="476" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 다국어 표시명 필요</text>
+  <text x="476" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 정렬 순서·색상·아이콘 등 부가 정보</text>
+  <text x="476" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 여러 테이블에서 공유하는 코드 체계</text>
+</svg>

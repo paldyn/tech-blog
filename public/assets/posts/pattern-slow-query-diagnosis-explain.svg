@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">EXPLAIN ANALYZE 출력 읽기 — PostgreSQL</text>
+
+  <!-- Before: Seq Scan -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">개선 전 — Seq Scan (1.2초)</text>
+
+  <rect x="60" y="88" width="760" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">Seq Scan on orders  (cost=0.00..48920.00 rows=1 width=64)</text>
+  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">                    (actual time=<tspan fill="#e05555">1187.432</tspan>..1187.433 rows=1 loops=1)</text>
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  Filter: (user_id = 42)</text>
+  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  Rows Removed by Filter: 2450000</text>
+  <text x="76" y="182" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">Planning Time: 0.1 ms  Execution Time: <tspan fill="#e05555">1187.5 ms</tspan></text>
+
+  <!-- CREATE INDEX -->
+  <rect x="60" y="200" width="760" height="36" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="223" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan font-weight="600" fill="#7ec8e3">CREATE INDEX CONCURRENTLY</tspan> idx_orders_user_id <tspan font-weight="600" fill="#7ec8e3">ON</tspan> orders(user_id);</text>
+
+  <!-- After: Index Scan -->
+  <text x="60" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">개선 후 — Index Scan (0.08ms)</text>
+
+  <rect x="60" y="272" width="760" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555">Index Scan using idx_orders_user_id on orders</text>
+  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  (cost=0.43..8.45 rows=1 width=64)</text>
+  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  (actual time=<tspan fill="#55c555">0.072</tspan>..0.073 rows=1 loops=1)</text>
+  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  Index Cond: (user_id = 42)</text>
+  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">Planning Time: 0.1 ms  Execution Time: <tspan fill="#55c555">0.08 ms</tspan></text>
+
+  <!-- Performance gain note -->
+  <rect x="60" y="386" width="760" height="38" rx="6" fill="#0f1a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">
+    인덱스 추가로 1187ms → 0.08ms (약 15,000배 개선)
+  </text>
+</svg>

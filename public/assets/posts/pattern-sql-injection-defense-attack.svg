@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 2 L 12 7 L 0 12 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQL 인젝션 — 취약 코드 vs 안전 코드</text>
+
+  <!-- Vulnerable -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555">취약한 코드 (문자열 연결)</text>
+
+  <rect x="60" y="88" width="760" height="92" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- 사용자 입력: username = "admin' --"</text>
+  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">query = <tspan fill="#ce9178">"SELECT * FROM users WHERE username = '"</tspan></text>
+  <text x="76" y="146" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        + username + <tspan fill="#ce9178">"' AND password = '"</tspan> + password + <tspan fill="#ce9178">"'"</tspan></text>
+  <text x="76" y="164" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">-- 실제 실행: WHERE username = 'admin' --' AND password = '...'</text>
+
+  <!-- Attack result -->
+  <rect x="60" y="192" width="760" height="40" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="217" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">
+    -- 이후 모든 쿼리가 주석 처리 → 비밀번호 검증 없이 로그인 성공
+  </text>
+
+  <!-- Safe -->
+  <text x="60" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">안전한 코드 (파라미터 바인딩)</text>
+
+  <rect x="60" y="270" width="760" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">-- Java (JDBC PreparedStatement)</text>
+  <text x="76" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">String sql = <tspan fill="#ce9178">"SELECT * FROM users WHERE username = ? AND password = ?"</tspan>;</text>
+  <text x="76" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">PreparedStatement ps = conn.prepareStatement(sql);</text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ps.setString(<tspan fill="#b5cea8">1</tspan>, username);  <tspan fill="#9aa4b8">// ? 자리에 안전하게 바인딩</tspan></text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">ps.setString(<tspan fill="#b5cea8">2</tspan>, password);</text>
+
+  <!-- Safe result -->
+  <rect x="60" y="392" width="760" height="40" rx="6" fill="#081a08" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="417" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">
+    입력값이 SQL 구조가 아닌 데이터로만 처리 → 인젝션 불가
+  </text>
+</svg>
