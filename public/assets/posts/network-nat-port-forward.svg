@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="apf" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">포트 포워딩: 외부 → 사설망 서버 접근</text>
+
+  <!-- External client -->
+  <rect x="40" y="100" width="120" height="60" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="100" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">외부 클라이언트</text>
+  <text x="100" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#888" text-anchor="middle">8.8.8.8</text>
+
+  <!-- Arrow 1 -->
+  <line x1="160" y1="130" x2="240" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#apf)"/>
+  <text x="200" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">:443 요청</text>
+
+  <!-- NAT router -->
+  <rect x="240" y="90" width="180" height="80" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="330" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">NAT 라우터</text>
+  <text x="330" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">203.0.113.1:443</text>
+  <text x="330" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e8a030" text-anchor="middle">→ 192.168.0.80:443</text>
+
+  <!-- Arrow 2 -->
+  <line x1="420" y1="130" x2="510" y2="130" stroke="#55c555" stroke-width="2" marker-end="url(#apf)"/>
+  <text x="465" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">포워딩</text>
+
+  <!-- Web server -->
+  <rect x="510" y="100" width="120" height="60" rx="8" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="570" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">웹 서버</text>
+  <text x="570" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="10" fill="#888" text-anchor="middle">192.168.0.80</text>
+
+  <!-- iptables config -->
+  <rect x="40" y="200" width="760" height="150" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="60" y="222" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># Linux iptables로 NAT 설정</text>
+  <text x="60" y="244" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># MASQUERADE: 사설 → 인터넷 (SNAT)</text>
+  <text x="60" y="264" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">iptables -t nat -A POSTROUTING</text>
+  <text x="60" y="284" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  -o eth0 -j MASQUERADE</text>
+  <text x="60" y="304" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># DNAT: 인터넷 → 서버 (포트 포워딩)</text>
+  <text x="60" y="324" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">iptables -t nat -A PREROUTING</text>
+  <text x="60" y="344" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  -p tcp --dport 443 -j DNAT --to 192.168.0.80:443</text>
+</svg>
