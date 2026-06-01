@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">토큰 저장 구현 코드 (권장 패턴)</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Access = 메모리, Refresh = HttpOnly Cookie</text>
+
+  <rect x="60" y="92" width="760" height="320" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># FastAPI 예시: Refresh Token HttpOnly 쿠키 설정</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from</tspan> fastapi <tspan fill="#7ec8e3" font-weight="600">import</tspan> FastAPI, Response</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from</tspan> datetime <tspan fill="#7ec8e3" font-weight="600">import</tspan> timedelta</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"></text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def</tspan> set_tokens(response: Response, user_id: <tspan fill="#b5cea8">str</tspan>):</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # Access Token: 짧은 만료 (15분)</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    access = create_token(user_id, timedelta(minutes=<tspan fill="#b5cea8">15</tspan>))</text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # Refresh Token: 긴 만료, HttpOnly Cookie</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    refresh = create_token(user_id, timedelta(days=<tspan fill="#b5cea8">7</tspan>))</text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    response.set_cookie(</text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        key=<tspan fill="#ce9178">"refresh_token"</tspan>, value=refresh,</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        httponly=<tspan fill="#7ec8e3" font-weight="600">True</tspan>,   <tspan fill="#9aa4b8"># JS 접근 차단</tspan></text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        secure=<tspan fill="#7ec8e3" font-weight="600">True</tspan>,    <tspan fill="#9aa4b8"># HTTPS 전용</tspan></text>
+  <text x="76" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        samesite=<tspan fill="#ce9178">"strict"</tspan>, <tspan fill="#9aa4b8"># CSRF 방어</tspan></text>
+  <text x="76" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    )</text>
+  <text x="76" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return</tspan> {<tspan fill="#ce9178">"access_token"</tspan>: access}  <tspan fill="#9aa4b8"># 메모리에만 저장</tspan></text>
+</svg>

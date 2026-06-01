@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">SP 측 세션 검증 코드</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">IdP 토큰 검증 + SP 로컬 세션 분리</text>
+
+  <rect x="60" y="92" width="760" height="256" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># SP: IdP 토큰으로 로컬 세션 생성</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">async def</tspan> sp_callback(code: str, state: str, request: Request):</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # 1. IdP 토큰 교환 + 검증</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    tokens = <tspan fill="#7ec8e3" font-weight="600">await</tspan> exchange_code(code)</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    user = <tspan fill="#7ec8e3" font-weight="600">await</tspan> verify_id_token(tokens[<tspan fill="#ce9178">"id_token"</tspan>], ...)</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # 2. SP 로컬 세션 생성 (IdP 토큰 세션에 저장 안 함)</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    session_id = secrets.token_urlsafe(<tspan fill="#b5cea8">32</tspan>)</text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    db.create_session(session_id, {</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        <tspan fill="#ce9178">"user_id"</tspan>: user[<tspan fill="#ce9178">"sub"</tspan>],  <tspan fill="#9aa4b8"># sub로 식별</tspan></text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        <tspan fill="#ce9178">"idp_session"</tspan>: user[<tspan fill="#ce9178">"sid"</tspan>],  <tspan fill="#9aa4b8"># SLO용</tspan></text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        <tspan fill="#ce9178">"expires"</tspan>: time.time() + <tspan fill="#b5cea8">3600</tspan>})</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # 3. 쿠키에 세션 ID만 저장</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    response.set_cookie(<tspan fill="#ce9178">"session_id"</tspan>, session_id, httponly=<tspan fill="#7ec8e3" font-weight="600">True</tspan>)</text>
+</svg>

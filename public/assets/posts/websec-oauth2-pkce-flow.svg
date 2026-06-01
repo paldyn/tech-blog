@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">PKCE (Proof Key for Code Exchange)</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">code_verifier + code_challenge로 코드 가로채기 방어</text>
+
+  <!-- Participants -->
+  <rect x="60" y="100" width="140" height="48" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="130" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">클라이언트</text>
+
+  <rect x="680" y="100" width="140" height="48" rx="8" fill="#2a1a0a" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="750" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e0a055">인가 서버</text>
+
+  <!-- Step 1 -->
+  <text x="80" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">① code_verifier = random(43~128자)</text>
+  <text x="80" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">   code_challenge = BASE64URL(SHA256(verifier))</text>
+
+  <!-- Step 2 -->
+  <line x1="200" y1="218" x2="678" y2="218" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="212" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">② 인가 요청 + code_challenge + method=S256</text>
+
+  <!-- Step 3 -->
+  <line x1="678" y1="238" x2="200" y2="238" stroke="#e0a055" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="253" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e0a055">③ code (code_challenge 서버가 기억)</text>
+
+  <!-- Step 4 -->
+  <line x1="200" y1="272" x2="678" y2="272" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">④ code + code_verifier (원본) 제출</text>
+
+  <!-- Step 5 -->
+  <rect x="540" y="288" width="290" height="44" rx="6" fill="#1a1a0a" stroke="#e0a055" stroke-width="1"/>
+  <text x="685" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e0a055">⑤ SHA256(verifier) == challenge?</text>
+  <text x="685" y="324" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">일치하면 토큰 발급</text>
+
+  <!-- Attack scenario -->
+  <rect x="60" y="360" width="760" height="96" rx="8" fill="#111" stroke="#3a4a3e" stroke-width="1"/>
+  <text x="440" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8e8e8">PKCE가 막는 공격: 인가 코드 가로채기</text>
+  <text x="80" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">공격자가 code를 가로채도 code_verifier 없이는 토큰 교환 불가</text>
+  <text x="80" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">code_verifier는 클라이언트 메모리에만 존재 — 네트워크에 노출 없음</text>
+  <text x="80" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">SPA, 모바일 앱처럼 client_secret 보관 불가한 환경에서 필수</text>
+</svg>
