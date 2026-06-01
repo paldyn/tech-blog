@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">RBAC 권한 검사 구현</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">역할 → 권한 조회 + 미들웨어 적용</text>
+
+  <rect x="60" y="92" width="760" height="296" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># RBAC 권한 검사 (FastAPI)</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">from</tspan> functools <tspan fill="#7ec8e3" font-weight="600">import</tspan> wraps</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"></text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">ROLE_PERMISSIONS = {</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#ce9178">"admin"</tspan>:  {<tspan fill="#ce9178">"posts:read"</tspan>, <tspan fill="#ce9178">"posts:write"</tspan>, <tspan fill="#ce9178">"posts:delete"</tspan>, <tspan fill="#ce9178">"users:*"</tspan>},</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#ce9178">"editor"</tspan>: {<tspan fill="#ce9178">"posts:read"</tspan>, <tspan fill="#ce9178">"posts:write"</tspan>},</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#ce9178">"viewer"</tspan>: {<tspan fill="#ce9178">"posts:read"</tspan>},</text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"></text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def</tspan> require_permission(permission: str):</text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">async def</tspan> check(current_user = Depends(get_current_user)):</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        role = current_user[<tspan fill="#ce9178">"role"</tspan>]</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        allowed = ROLE_PERMISSIONS.get(role, set())</text>
+  <text x="76" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        <tspan fill="#7ec8e3" font-weight="600">if</tspan> permission <tspan fill="#7ec8e3" font-weight="600">not in</tspan> allowed:</text>
+  <text x="76" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">            <tspan fill="#7ec8e3" font-weight="600">raise</tspan> HTTPException(<tspan fill="#b5cea8">403</tspan>, <tspan fill="#ce9178">"권한 없음"</tspan>)</text>
+</svg>

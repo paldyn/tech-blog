@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">PKCE 구현 코드</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">code_verifier 생성 + challenge 계산</text>
+
+  <rect x="60" y="92" width="760" height="296" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># PKCE 생성 (Python)</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan> secrets, hashlib, base64</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"></text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def</tspan> generate_pkce():</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # verifier: 43~128자 랜덤 문자열</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    verifier = secrets.token_urlsafe(<tspan fill="#b5cea8">64</tspan>)  <tspan fill="#9aa4b8"># ~86자</tspan></text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # challenge = BASE64URL(SHA256(verifier))</text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    digest = hashlib.sha256(verifier.encode()).digest()</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    challenge = base64.urlsafe_b64encode(digest).rstrip(<tspan fill="#ce9178">b"="</tspan>).decode()</text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return</tspan> verifier, challenge</text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"></text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 사용 예시</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">verifier, challenge = generate_pkce()</text>
+  <text x="76" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">session[<tspan fill="#ce9178">"pkce_verifier"</tspan>] = verifier  <tspan fill="#9aa4b8"># 세션에 저장</tspan></text>
+  <text x="76" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># challenge는 인가 요청 URL에 포함</text>
+</svg>

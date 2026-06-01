@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arre" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Refresh Token Rotation 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">매번 교체 + 재사용 탐지로 토큰 탈취 감지</text>
+
+  <!-- Client box -->
+  <rect x="60" y="100" width="160" height="56" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="140" y="125" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">클라이언트</text>
+  <text x="140" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">RT_old 보유</text>
+
+  <!-- Server box -->
+  <rect x="660" y="100" width="160" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="125" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">서버</text>
+  <text x="740" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">RT DB 관리</text>
+
+  <!-- Step 1: Request -->
+  <line x1="220" y1="118" x2="658" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">① RT_old로 갱신 요청</text>
+
+  <!-- Step 2: Issue new -->
+  <line x1="658" y1="142" x2="220" y2="142" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="160" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">② AT_new + RT_new 발급 (RT_old 무효화)</text>
+
+  <!-- Normal flow box -->
+  <rect x="60" y="190" width="760" height="70" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">정상 흐름</text>
+  <text x="440" y="236" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">클라이언트가 RT_new 저장 → 다음 갱신 시 RT_new 사용</text>
+  <text x="440" y="252" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">매 요청마다 새 RT 발급 → 탈취 감지 창구 확보</text>
+
+  <!-- Attack flow box -->
+  <rect x="60" y="280" width="760" height="100" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="304" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">재사용 탐지 — 탈취 감지</text>
+  <text x="80" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">공격자가 RT_old를 탈취하여 먼저 사용 → 서버가 AT_new + RT_new 발급</text>
+  <text x="80" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 정상 클라이언트가 RT_old로 요청 → RT_old는 이미 사용됨 (무효)</text>
+  <text x="80" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">→ 서버: 재사용 탐지! 해당 사용자의 모든 RT 즉시 폐기 + 재로그인 요구</text>
+
+  <!-- DB diagram -->
+  <rect x="60" y="400" width="760" height="76" rx="8" fill="#111" stroke="#3a4a3e" stroke-width="1"/>
+  <text x="440" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">DB 상태 변화 (Rotation 적용)</text>
+  <text x="160" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">RT_old: used=true</text>
+  <text x="440" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">RT_new: used=false, parent=RT_old</text>
+  <text x="720" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">재사용 → 체인 전체 폐기</text>
+  <line x1="260" y1="450" x2="290" y2="450" stroke="#888" stroke-width="1"/>
+  <line x1="590" y1="450" x2="620" y2="450" stroke="#888" stroke-width="1"/>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">JWT 알고리즘 혼동 공격 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">공개 키를 HMAC 비밀키로 오용하는 취약점</text>
+
+  <rect x="60" y="110" width="160" height="56" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="140" y="133" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">공격자</text>
+  <text x="140" y="153" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">RS256 공개키 획득</text>
+
+  <rect x="280" y="110" width="200" height="56" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="380" y="133" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">위조 토큰 생성</text>
+  <text x="380" y="153" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">alg: HS256, key=공개키</text>
+
+  <rect x="620" y="110" width="200" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="720" y="133" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">서버 검증</text>
+  <text x="720" y="153" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">HMAC(공개키) = 서명 일치!</text>
+
+  <line x1="220" y1="138" x2="278" y2="138" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="480" y1="138" x2="618" y2="138" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="60" y="210" width="760" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 취약한 서버 측 검증 코드</text>
+  <text x="76" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan> jwt</text>
+  <text x="76" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 위험: 알고리즘을 토큰에서 읽어들임</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def</tspan> verify_token_vulnerable(token, public_key):</text>
+  <text x="76" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # alg 파라미터 신뢰 → 공격자 조작 가능</text>
+  <text x="76" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return</tspan> jwt.decode(token, public_key)</text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">    # HS256 위조 시 공개키로 서명 일치 &gt; 인증 우회!</text>
+
+  <rect x="60" y="412" width="760" height="56" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="436" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">핵심 원칙: 서버는 alg 파라미터를 절대 신뢰하지 않는다</text>
+  <text x="440" y="456" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">algorithms=["RS256"] 명시 필수 — HS256/none 허용 금지</text>
+</svg>
