@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Lazy Propagation 범위 업데이트 및 쿼리</text>
+
+  <!-- Left: range update -->
+  <rect x="50" y="60" width="380" height="285" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">범위 업데이트</text>
+  <text x="66" y="102" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> range_update(self, l, r, val):</tspan>
+  </text>
+  <text x="66" y="120" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self._ru(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">,self.n-</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,l,r,val)</tspan>
+  </text>
+  <text x="66" y="144" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> _ru(self,node,s,e,l,r,val):</tspan>
+  </text>
+  <text x="66" y="162" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan><tspan fill="#ffffff"> r&lt;s </tspan><tspan fill="#7ec8e3" font-weight="600">or</tspan><tspan fill="#ffffff"> e&lt;l: </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan>
+  </text>
+  <text x="66" y="180" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan><tspan fill="#ffffff"> l&lt;=s </tspan><tspan fill="#7ec8e3" font-weight="600">and</tspan><tspan fill="#ffffff"> e&lt;=r:     </tspan><tspan fill="#9aa4b8"># 완전 포함</tspan>
+  </text>
+  <text x="66" y="198" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.tree[node] += val*(e-s+</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="66" y="216" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        self.lazy[node] += val</tspan>
+  </text>
+  <text x="66" y="234" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan>
+  </text>
+  <text x="66" y="252" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self._push_down(node,s,e)    </tspan><tspan fill="#9aa4b8"># 전파 먼저</tspan>
+  </text>
+  <text x="66" y="270" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    mid=(s+e)//</tspan><tspan fill="#b5cea8">2</tspan>
+  </text>
+  <text x="66" y="288" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self._ru(</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">*node,s,mid,l,r,val)</tspan>
+  </text>
+  <text x="66" y="306" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self._ru(</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">*node+</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,mid+</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,e,l,r,val)</tspan>
+  </text>
+  <text x="66" y="324" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self.tree[node]=(self.tree[</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">*node]</tspan>
+  </text>
+  <text x="66" y="338" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12">
+    <tspan fill="#ffffff">                   +self.tree[</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">*node+</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">])</tspan>
+  </text>
+
+  <!-- Right: query with lazy -->
+  <rect x="460" y="60" width="370" height="285" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="645" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Lazy 고려 쿼리 및 초기화</text>
+  <text x="476" y="102" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> _lq(self,node,s,e,l,r): </tspan><tspan fill="#9aa4b8"># O(log n)</tspan>
+  </text>
+  <text x="476" y="120" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan><tspan fill="#ffffff"> r&lt;s </tspan><tspan fill="#7ec8e3" font-weight="600">or</tspan><tspan fill="#ffffff"> e&lt;l: </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#b5cea8">0</tspan>
+  </text>
+  <text x="476" y="138" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan><tspan fill="#ffffff"> l&lt;=s </tspan><tspan fill="#7ec8e3" font-weight="600">and</tspan><tspan fill="#ffffff"> e&lt;=r:</tspan>
+  </text>
+  <text x="476" y="156" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        return</tspan><tspan fill="#ffffff"> self.tree[node]</tspan>
+  </text>
+  <text x="476" y="174" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self._push_down(node,s,e)    </tspan><tspan fill="#9aa4b8"># 필수!</tspan>
+  </text>
+  <text x="476" y="192" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    mid=(s+e)//</tspan><tspan fill="#b5cea8">2</tspan>
+  </text>
+  <text x="476" y="210" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> (self._lq(</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">*node,s,mid,l,r)</tspan>
+  </text>
+  <text x="476" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">          + self._lq(</tspan><tspan fill="#b5cea8">2</tspan><tspan fill="#ffffff">*node+</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,mid+</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">,e,l,r))</tspan>
+  </text>
+  <text x="476" y="258" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> __init__(self, arr):</tspan>
+  </text>
+  <text x="476" y="276" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self.n = len(arr)</tspan>
+  </text>
+  <text x="476" y="294" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self.tree = [</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">] * </tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff"> * self.n</tspan>
+  </text>
+  <text x="476" y="312" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self.lazy = [</tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">] * </tspan><tspan fill="#b5cea8">4</tspan><tspan fill="#ffffff"> * self.n  </tspan><tspan fill="#9aa4b8"># 추가</tspan>
+  </text>
+  <text x="476" y="330" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    self._build(arr, </tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff">, self.n-</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+</svg>

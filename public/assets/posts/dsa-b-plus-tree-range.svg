@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <defs>
+    <marker id="arw" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arwr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">범위 검색 흐름 (WHERE key BETWEEN 15 AND 35)</text>
+
+  <!-- Step 1: root traversal -->
+  <text x="140" y="75" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">① O(log n) 검색</text>
+
+  <rect x="60" y="88" width="160" height="44" fill="#1a2a4a" rx="6" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="115" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#e8e8e8" text-anchor="middle">루트 내려가서</text>
+  <rect x="60" y="142" width="160" height="44" fill="#1a2a4a" rx="6" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#e8e8e8" text-anchor="middle">첫 리프(15) 탐색</text>
+
+  <line x1="140" y1="132" x2="140" y2="142" stroke="#7ec8e3" stroke-width="1.5"/>
+  <path d="M 220 165 L 258 165" stroke="#7ec8e3" stroke-width="2" fill="none" marker-end="url(#arwr)"/>
+
+  <!-- Step 2: leaf scan -->
+  <text x="490" y="75" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">② 리프 연결 리스트 선형 스캔 O(k)</text>
+
+  <!-- Leaf 1: 10,15,18 — start here -->
+  <rect x="260" y="88" width="140" height="56" fill="#0d2010" rx="6" stroke="#55c555" stroke-width="2"/>
+  <text x="330" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">10 | 15 | 18</text>
+  <text x="330" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">✓ 15, 18 수집</text>
+  <text x="330" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#aaa" text-anchor="middle">← 시작점</text>
+
+  <!-- Leaf 2: 20,25,28 -->
+  <rect x="430" y="88" width="150" height="56" fill="#0d2010" rx="6" stroke="#55c555" stroke-width="2"/>
+  <text x="505" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">20 | 25 | 28</text>
+  <text x="505" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">✓ 20, 25, 28 수집</text>
+  <text x="505" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#aaa" text-anchor="middle">← 계속</text>
+
+  <!-- Leaf 3: 30,35,40 -->
+  <rect x="610" y="88" width="150" height="56" fill="#0d2010" rx="6" stroke="#55c555" stroke-width="2"/>
+  <text x="685" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">30 | 35 | 40</text>
+  <text x="685" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">✓ 30, 35 수집</text>
+  <text x="685" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178" text-anchor="middle">← 종료 (40 &gt; 35)</text>
+
+  <!-- Leaf arrows -->
+  <path d="M 400 116 L 430 116" stroke="#55c555" stroke-width="2" fill="none" marker-end="url(#arw)"/>
+  <path d="M 580 116 L 610 116" stroke="#55c555" stroke-width="2" fill="none" marker-end="url(#arw)"/>
+
+  <!-- Result -->
+  <rect x="60" y="175" width="760" height="54" fill="#0f2a1a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="197" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">결과: [15, 18, 20, 25, 28, 30, 35] — 추가 랜덤 I/O 없음</text>
+  <text x="440" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">트리 탐색 O(log n) + 결과 스캔 O(k) → 총 O(log n + k)</text>
+
+  <!-- Code box -->
+  <rect x="60" y="244" width="760" height="100" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="266" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> range_search(tree, low, high):</tspan>
+  </text>
+  <text x="76" y="284" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    leaf = find_leaf(tree.root, low)  </tspan><tspan fill="#9aa4b8"># O(log n)</tspan>
+  </text>
+  <text x="76" y="302" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    result = []</tspan>
+  </text>
+  <text x="76" y="320" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    while</tspan><tspan fill="#ffffff"> leaf </tspan><tspan fill="#7ec8e3" font-weight="600">is not</tspan><tspan fill="#ffffff"> None:</tspan>
+  </text>
+  <text x="76" y="338" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        result += [k </tspan><tspan fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> k </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> leaf.keys </tspan><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> low &lt;= k &lt;= high]</tspan>
+  </text>
+</svg>
