@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">StatefulSet 스토리지 운영 명령어</text>
+  <text x="440" y="66" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">PVC 조회 · 스케일 · 데이터 마이그레이션</text>
+
+  <!-- Left: PVC management -->
+  <rect x="60" y="86" width="360" height="276" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="108"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># StatefulSet PVC 목록</text>
+  <text x="80" y="126"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="138" y="126"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get pvc -l app=web</text>
+  <text x="80" y="144"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 스케일 다운 (PVC 유지됨)</text>
+  <text x="80" y="162"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="138" y="162"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> scale sts web \</text>
+  <text x="80" y="180"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">  --replicas=1</text>
+  <text x="80" y="198"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 스케일 업 (기존 PVC 재연결)</text>
+  <text x="80" y="216"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="138" y="216"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> scale sts web \</text>
+  <text x="80" y="234"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">  --replicas=3</text>
+  <text x="80" y="252"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># StatefulSet 조회</text>
+  <text x="80" y="270"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="138" y="270"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get sts web -o wide</text>
+  <text x="80" y="288"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># Pod 순서 확인</text>
+  <text x="80" y="306"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="138" y="306"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get pods -l app=web \</text>
+  <text x="80" y="324"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  --sort-by=.metadata.name</text>
+
+  <!-- Right: PVC retention policy YAML -->
+  <rect x="460" y="86" width="360" height="276" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="480" y="108"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># PVC 보존 정책 설정</text>
+  <text x="480" y="126"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">spec:</text>
+  <text x="480" y="144"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  persistentVolumeClaimRetentionPolicy</text>
+  <text x="480" y="162"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    whenDeleted: Retain</text>
+  <text x="480" y="180"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    whenScaled: Delete</text>
+  <text x="480" y="198"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># PVC 수동 삭제 (데이터 삭제)</text>
+  <text x="480" y="216"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="538" y="216"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> delete pvc \</text>
+  <text x="480" y="234"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  data-web-2</text>
+  <text x="480" y="252"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 롤링 업데이트</text>
+  <text x="480" y="270"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="538" y="270"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> rollout status \</text>
+  <text x="480" y="288"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  sts/web</text>
+  <text x="480" y="306"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 롤아웃 이력</text>
+  <text x="480" y="324"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kubectl</text>
+  <text x="538" y="324"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> rollout history sts/web</text>
+
+  <!-- Bottom -->
+  <rect x="60" y="378" width="760" height="60" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="398" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">주의: StatefulSet 업데이트는 역순(web-2 → web-1 → web-0)으로 진행됩니다</text>
+  <text x="440" y="418" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">partition 설정으로 특정 인덱스 이상만 업데이트하는 카나리 방식도 가능합니다</text>
+</svg>

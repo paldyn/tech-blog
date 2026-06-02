@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Init Container YAML</text>
+  <text x="440" y="66" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">initContainers는 spec.containers와 독립적으로 정의합니다</text>
+
+  <!-- Left: initContainers definition -->
+  <rect x="60" y="86" width="360" height="312" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="108"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">apiVersion: v1</text>
+  <text x="80" y="126"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">kind</text>
+  <text x="116" y="126"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">: Pod</text>
+  <text x="80" y="144"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">spec:</text>
+  <text x="80" y="162"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  initContainers</text>
+  <text x="80" y="180"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  - name: wait-db</text>
+  <text x="80" y="198"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    image: busybox:1.35</text>
+  <text x="80" y="216"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    command:</text>
+  <text x="80" y="234"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">    - sh</text>
+  <text x="80" y="252"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">    - -c</text>
+  <text x="80" y="270"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">    - "until nc -z db 5432;</text>
+  <text x="80" y="288"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">       do sleep 2; done"</text>
+  <text x="80" y="306"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  - name: copy-config</text>
+  <text x="80" y="324"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    image: alpine:3.18</text>
+  <text x="80" y="342"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    command: ["cp", "/src/app.conf",</text>
+  <text x="80" y="360"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">              "/config/app.conf"]</text>
+
+  <!-- Right: containers + shared volume -->
+  <rect x="460" y="86" width="360" height="312" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="480" y="108"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  containers</text>
+  <text x="480" y="126"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  - name: app</text>
+  <text x="480" y="144"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    image: myapp:1.0</text>
+  <text x="480" y="162"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    volumeMounts:</text>
+  <text x="480" y="180"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    - name: config-vol</text>
+  <text x="480" y="198"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">      mountPath: /config</text>
+  <text x="480" y="216"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 공유 볼륨 정의</text>
+  <text x="480" y="234"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  volumes</text>
+  <text x="480" y="252"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  - name: config-vol</text>
+  <text x="480" y="270"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    emptyDir: {}</text>
+  <text x="480" y="288"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># initContainer도 동일 볼륨 마운트</text>
+  <text x="480" y="306"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    - name: config-vol</text>
+  <text x="480" y="324"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">      mountPath: /config</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="414" width="760" height="28" rx="6" fill="#121e38" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="432" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">Init Container는 livenessProbe/readinessProbe를 지원하지 않습니다 · startupProbe는 1.20+에서 지원</text>
+</svg>
