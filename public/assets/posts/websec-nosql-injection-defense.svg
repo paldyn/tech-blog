@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">NoSQL 인젝션 방어 — Mongoose 예제</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">타입 강제 · 스키마 검증 · 연산자 필터링의 3중 방어</text>
+
+  <rect x="60" y="94" width="760" height="312" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text xml:space="preserve" x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Mongoose 스키마로 타입 강제</text>
+  <text xml:space="preserve" x="80" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">const</text>
+  <text xml:space="preserve" x="124" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> loginSchema = </text>
+  <text xml:space="preserve" x="247" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">new</text>
+  <text xml:space="preserve" x="277" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> z.object({</text>
+  <text xml:space="preserve" x="80" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  username: z.string().min(</text>
+  <text xml:space="preserve" x="283" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">1</text>
+  <text xml:space="preserve" x="291" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">).max(</text>
+  <text xml:space="preserve" x="336" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">64</text>
+  <text xml:space="preserve" x="352" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">),</text>
+  <text xml:space="preserve" x="80" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  password: z.string().min(</text>
+  <text xml:space="preserve" x="289" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">8</text>
+  <text xml:space="preserve" x="297" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">).max(</text>
+  <text xml:space="preserve" x="342" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">128</text>
+  <text xml:space="preserve" x="366" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">),</text>
+  <text xml:space="preserve" x="80" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">});</text>
+
+  <text xml:space="preserve" x="80" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 연산자 필터링 미들웨어</text>
+  <text xml:space="preserve" x="80" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">function</text>
+  <text xml:space="preserve" x="144" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> sanitizeOperators(obj) {</text>
+  <text xml:space="preserve" x="80" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">  if</text>
+  <text xml:space="preserve" x="104" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> (typeof obj !== </text>
+  <text xml:space="preserve" x="238" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">'object'</text>
+  <text xml:space="preserve" x="298" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">) </text>
+  <text xml:space="preserve" x="320" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">return</text>
+  <text xml:space="preserve" x="368" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> obj;</text>
+  <text xml:space="preserve" x="80" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  Object.keys(obj).forEach(key =&gt; {</text>
+  <text xml:space="preserve" x="80" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    if</text>
+  <text xml:space="preserve" x="104" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> (key.startsWith(</text>
+  <text xml:space="preserve" x="238" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">'$'</text>
+  <text xml:space="preserve" x="268" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)) delete obj[key];</text>
+  <text xml:space="preserve" x="80" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    </text>
+  <text xml:space="preserve" x="97" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">else</text>
+  <text xml:space="preserve" x="127" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> sanitizeOperators(obj[key]);</text>
+  <text xml:space="preserve" x="80" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  });</text>
+  <text xml:space="preserve" x="80" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">  return</text>
+  <text xml:space="preserve" x="128" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> obj;</text>
+  <text xml:space="preserve" x="80" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}</text>
+
+  <!-- Footer -->
+  <rect x="60" y="420" width="760" height="6" rx="3" fill="#1a1a1a"/>
+</svg>

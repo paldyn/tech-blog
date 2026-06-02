@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">SSTI 방어 — 샌드박스와 안전한 렌더링</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Jinja2 SandboxedEnvironment · 입력 데이터 분리 · 자동 이스케이프</text>
+
+  <rect x="60" y="94" width="760" height="308" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text xml:space="preserve" x="80" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text xml:space="preserve" x="111" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> jinja2.sandbox </text>
+  <text xml:space="preserve" x="246" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="293" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> SandboxedEnvironment</text>
+
+  <text xml:space="preserve" x="80" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 방법 1: SandboxedEnvironment (사용자 템플릿 허용 시)</text>
+  <text xml:space="preserve" x="80" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">env = SandboxedEnvironment(autoescape=</text>
+  <text xml:space="preserve" x="393" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">True</text>
+  <text xml:space="preserve" x="425" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+  <text xml:space="preserve" x="80" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">template = env.from_string(user_template_string)</text>
+  <text xml:space="preserve" x="80" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">output = template.render(name=user_name, date=today)</text>
+
+  <text xml:space="preserve" x="80" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 방법 2: 사용자 입력은 데이터로만 전달 (권장)</text>
+  <text xml:space="preserve" x="80" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text xml:space="preserve" x="111" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> flask </text>
+  <text xml:space="preserve" x="157" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="204" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> render_template_string</text>
+
+  <text xml:space="preserve" x="80" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 템플릿은 코드베이스에, 사용자 값은 컨텍스트로만</text>
+  <text xml:space="preserve" x="80" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">SAFE_TEMPLATE = </text>
+  <text xml:space="preserve" x="215" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"안녕하세요, {{ user_name }}님! {{ message }}"</text>
+
+  <text xml:space="preserve" x="80" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text xml:space="preserve" x="110" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> render_greeting(user_name: str, message: str) -> str:</text>
+  <text xml:space="preserve" x="80" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    # user_name이 {{7*7}}이어도 데이터로만 표시됨</text>
+  <text xml:space="preserve" x="80" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text xml:space="preserve" x="138" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> render_template_string(</text>
+  <text xml:space="preserve" x="80" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        SAFE_TEMPLATE,</text>
+  <text xml:space="preserve" x="80" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        user_name=user_name, message=message)</text>
+
+  <!-- Footer note -->
+  <rect x="60" y="418" width="760" height="14" rx="4" fill="#111"/>
+</svg>

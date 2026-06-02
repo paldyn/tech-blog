@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">커맨드 인젝션 방어 코드</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">shell=False · allowlist · 라이브러리 대체 — 3단계 방어</text>
+
+  <rect x="60" y="94" width="760" height="330" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text xml:space="preserve" x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="131" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> subprocess, shlex, re</text>
+
+  <text xml:space="preserve" x="80" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ❌ 절대 금지: shell=True + 문자열 결합</text>
+  <text xml:space="preserve" x="80" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">subprocess.run(f"ping -c 1 {host}", shell=True)  # 위험!</text>
+
+  <text xml:space="preserve" x="80" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ✅ 방법 1: shell=False + 리스트 인자 (추천)</text>
+  <text xml:space="preserve" x="80" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text xml:space="preserve" x="110" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> safe_ping(host: str) -> str:</text>
+  <text xml:space="preserve" x="80" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    # 입력 검증: IP 주소 형식만 허용</text>
+  <text xml:space="preserve" x="80" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    if not</text>
+  <text xml:space="preserve" x="151" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> re.fullmatch(</text>
+  <text xml:space="preserve" x="273" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">r"\d{1,3}(\.\d{1,3}){3}"</text>
+  <text xml:space="preserve" x="462" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, host):</text>
+  <text xml:space="preserve" x="80" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">        raise</text>
+  <text xml:space="preserve" x="153" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> ValueError(</text>
+  <text xml:space="preserve" x="254" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"유효하지 않은 IP 주소"</text>
+  <text xml:space="preserve" x="402" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+  <text xml:space="preserve" x="80" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    # 리스트로 전달 — 쉘 메타문자 해석 불가</text>
+  <text xml:space="preserve" x="80" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    result = subprocess.run(</text>
+  <text xml:space="preserve" x="80" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        [</text>
+  <text xml:space="preserve" x="100" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"ping"</text>
+  <text xml:space="preserve" x="141" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, </text>
+  <text xml:space="preserve" x="158" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"-c"</text>
+  <text xml:space="preserve" x="190" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, </text>
+  <text xml:space="preserve" x="207" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"1"</text>
+  <text xml:space="preserve" x="232" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, host],</text>
+  <text xml:space="preserve" x="80" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        capture_output=</text>
+  <text xml:space="preserve" x="224" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">True</text>
+  <text xml:space="preserve" x="256" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, text=</text>
+  <text xml:space="preserve" x="310" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">True</text>
+  <text xml:space="preserve" x="342" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, timeout=</text>
+  <text xml:space="preserve" x="418" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">5</text>
+  <text xml:space="preserve" x="424" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">,</text>
+  <text xml:space="preserve" x="80" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        shell=</text>
+  <text xml:space="preserve" x="154" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">False</text>
+  <text xml:space="preserve" x="190" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+  <text xml:space="preserve" x="80" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text xml:space="preserve" x="138" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> result.stdout</text>
+</svg>
