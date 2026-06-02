@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">SQL 인젝션 공격 흐름</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Classic SQL Injection — 입력값이 쿼리에 직접 삽입될 때</text>
+
+  <!-- Attacker -->
+  <rect x="60" y="100" width="160" height="60" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="140" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">공격자</text>
+  <text x="140" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">' OR '1'='1' --</text>
+
+  <!-- Arrow -->
+  <line x1="220" y1="130" x2="290" y2="130" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Web App -->
+  <rect x="292" y="100" width="200" height="60" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="392" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">웹 애플리케이션</text>
+  <text x="392" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">입력을 쿼리에 직접 삽입</text>
+
+  <!-- Arrow -->
+  <line x1="492" y1="130" x2="562" y2="130" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- DB -->
+  <rect x="564" y="100" width="200" height="60" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="664" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">데이터베이스</text>
+  <text x="664" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">악성 쿼리 실행</text>
+
+  <!-- Query transformation -->
+  <text x="440" y="196" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">쿼리 변조 과정</text>
+
+  <!-- Intended query -->
+  <rect x="60" y="212" width="760" height="48" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">의도된 쿼리:</text>
+  <text x="80" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">SELECT * FROM users WHERE username='admin' AND password='secret'</text>
+
+  <!-- Injected query -->
+  <rect x="60" y="272" width="760" height="64" rx="6" fill="#000000" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">주입 후 (password = " ' OR '1'='1' -- "):</text>
+  <text x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">SELECT * FROM users WHERE username=</text>
+  <text x="494" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178">'admin'</text>
+  <text x="554" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff"> AND password=</text>
+  <text x="670" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">'' OR '1'='1' --</text>
+
+  <!-- Attack types -->
+  <text x="440" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">주요 공격 유형</text>
+
+  <rect x="60" y="382" width="175" height="62" rx="8" fill="#111" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="147" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">인증 우회</text>
+  <text x="147" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">OR 1=1로 로그인</text>
+  <text x="147" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">우회</text>
+
+  <rect x="251" y="382" width="175" height="62" rx="8" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="338" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">데이터 추출</text>
+  <text x="338" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">UNION SELECT로</text>
+  <text x="338" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">타 테이블 덤프</text>
+
+  <rect x="442" y="382" width="175" height="62" rx="8" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="529" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">데이터 파괴</text>
+  <text x="529" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">DROP TABLE /</text>
+  <text x="529" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">UPDATE 남용</text>
+
+  <rect x="633" y="382" width="175" height="62" rx="8" fill="#111" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="720" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e0a055">RCE (고급)</text>
+  <text x="720" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">xp_cmdshell /</text>
+  <text x="720" y="440" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">INTO OUTFILE</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">블라인드 SQL 인젝션 유형</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">에러 메시지 없이 참/거짓·시간 지연으로 데이터를 추출하는 기법</text>
+
+  <!-- Boolean-based -->
+  <rect x="60" y="100" width="360" height="180" rx="10" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#7ec8e3">Boolean-based Blind</text>
+  <text x="240" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">참/거짓 응답 차이로 데이터 추론</text>
+
+  <rect x="80" y="164" width="320" height="52" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="96" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># 첫 글자가 'a'이면 200, 아니면 404</text>
+  <text xml:space="preserve" x="96" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">?id=1 AND SUBSTRING(password,1,1)='a'</text>
+
+  <text x="240" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 글자당 최대 7번 쿼리 (이진 탐색)</text>
+  <text x="240" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">→ 32자 비밀번호 = 최대 224회 요청</text>
+  <text x="240" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">sqlmap이 자동화 (--level, --risk)</text>
+
+  <!-- Time-based -->
+  <rect x="460" y="100" width="360" height="180" rx="10" fill="#1a1a0f" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="640" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e0a055">Time-based Blind</text>
+  <text x="640" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">응답 시간 지연으로 데이터 추론</text>
+
+  <rect x="480" y="164" width="320" height="52" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="496" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#9aa4b8"># 참이면 5초 지연 (MySQL)</text>
+  <text xml:space="preserve" x="496" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ffffff">?id=1 AND SLEEP(5)-- (기본 탐지)</text>
+
+  <text x="640" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">응답 차이 없어도 동작 (완전 블라인드)</text>
+  <text x="640" y="258" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">SLEEP / WAITFOR DELAY / pg_sleep</text>
+  <text x="640" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e0a055">느리지만 응답 없는 엔드포인트에도 적용</text>
+
+  <!-- Out-of-band -->
+  <rect x="60" y="306" width="760" height="84" rx="10" fill="#1a0f1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="334" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#7777cc">Out-of-Band (OOB)</text>
+  <text x="440" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">DNS/HTTP 요청으로 데이터 외부 전송 — DNS 조회나 외부 서버 연결로 응답을 우회</text>
+  <text x="440" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">MySQL: LOAD_FILE/INTO OUTFILE | MSSQL: xp_dirtree | Oracle: UTL_HTTP</text>
+
+  <!-- Common defense -->
+  <rect x="60" y="410" width="760" height="50" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">방어: 블라인드 SQLi도 Prepared Statement로 100% 차단 — 탐지는 WAF + 속도 이상 모니터링</text>
+  <text x="440" y="452" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">OOB 방어: DB 서버의 외부 네트워크 접근 차단 (방화벽 whitelist)</text>
+</svg>

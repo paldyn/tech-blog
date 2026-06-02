@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">인젝션 방어 핵심 원칙 — 코드</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">입력 검증 · 파라미터 바인딩 · 출력 인코딩의 세 축</text>
+
+  <!-- Code block -->
+  <rect x="60" y="94" width="760" height="310" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text xml:space="preserve" x="80" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ① 입력 검증: 허용 목록(Allowlist) 방식</text>
+  <text xml:space="preserve" x="80" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="131" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> re</text>
+  <text xml:space="preserve" x="80" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text xml:space="preserve" x="110" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> validate_username(value: str) -> str:</text>
+  <text xml:space="preserve" x="80" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    if not</text>
+  <text xml:space="preserve" x="152" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> re.fullmatch(</text>
+  <text xml:space="preserve" x="277" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">r"[a-zA-Z0-9_]{3,32}"</text>
+  <text xml:space="preserve" x="462" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, value):</text>
+  <text xml:space="preserve" x="80" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">        raise</text>
+  <text xml:space="preserve" x="153" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> ValueError(</text>
+  <text xml:space="preserve" x="256" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"유효하지 않은 사용자명"</text>
+  <text xml:space="preserve" x="416" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">)</text>
+  <text xml:space="preserve" x="80" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text xml:space="preserve" x="138" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> value</text>
+
+  <text xml:space="preserve" x="80" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ② 파라미터 바인딩 (SQL 인젝션 방어)</text>
+  <text xml:space="preserve" x="80" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 위험</text>
+  <text xml:space="preserve" x="80" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">query = f</text>
+  <text xml:space="preserve" x="146" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"SELECT * FROM users WHERE id={user_id}"</text>
+  <text xml:space="preserve" x="80" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 안전</text>
+  <text xml:space="preserve" x="80" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">cursor.execute(</text>
+  <text xml:space="preserve" x="220" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"SELECT * FROM users WHERE id=%s"</text>
+  <text xml:space="preserve" x="526" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, (user_id,))</text>
+
+  <text xml:space="preserve" x="80" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># ③ 출력 인코딩 (XSS 방어)</text>
+  <text xml:space="preserve" x="80" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">from</text>
+  <text xml:space="preserve" x="111" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> markupsafe </text>
+  <text xml:space="preserve" x="230" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">import</text>
+  <text xml:space="preserve" x="276" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> escape</text>
+  <text xml:space="preserve" x="80" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">safe_output = escape(user_controlled_value)</text>
+</svg>

