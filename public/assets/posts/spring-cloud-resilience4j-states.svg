@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Circuit Breaker 상태 전이</text>
+  <text x="440" y="74" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" fill="#888">Resilience4j Circuit Breaker의 세 가지 상태와 전이 조건</text>
+
+  <!-- CLOSED state box -->
+  <rect x="80" y="162" width="200" height="116" rx="10" fill="#0e2010" stroke="#2d7a2d" stroke-width="2"/>
+  <text x="180" y="190" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="17" font-weight="700" fill="#55c555">CLOSED</text>
+  <text x="180" y="210" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">정상 상태 — 요청 통과</text>
+  <line x1="100" y1="220" x2="260" y2="220" stroke="#2d7a2d" stroke-width="1"/>
+  <text x="180" y="237" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">슬라이딩 윈도우로 실패율 집계</text>
+  <text x="180" y="253" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">임계치 미만이면 계속 통과</text>
+  <text x="180" y="269" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">slowCallRateThreshold도 감시</text>
+
+  <!-- OPEN state box -->
+  <rect x="600" y="162" width="200" height="116" rx="10" fill="#1e0808" stroke="#7a2d2d" stroke-width="2"/>
+  <text x="700" y="190" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="17" font-weight="700" fill="#e05555">OPEN</text>
+  <text x="700" y="210" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">차단 상태 — 즉시 폴백 반환</text>
+  <line x1="620" y1="220" x2="780" y2="220" stroke="#7a2d2d" stroke-width="1"/>
+  <text x="700" y="237" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e05555">모든 요청 → 즉시 CallNotPermittedException</text>
+  <text x="700" y="253" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">대기 시간 동안 서비스 회복 기다림</text>
+  <text x="700" y="269" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">fallbackMethod 호출됨</text>
+
+  <!-- HALF_OPEN state box -->
+  <rect x="340" y="350" width="200" height="100" rx="10" fill="#1e1a06" stroke="#7a6e2d" stroke-width="2"/>
+  <text x="440" y="376" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="17" font-weight="700" fill="#e0c055">HALF_OPEN</text>
+  <text x="440" y="396" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#888">시험 상태 — 제한 호출 허용</text>
+  <line x1="360" y1="406" x2="520" y2="406" stroke="#7a6e2d" stroke-width="1"/>
+  <text x="440" y="423" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e0c055">permittedCalls 수만큼 테스트 허용</text>
+  <text x="440" y="438" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">결과에 따라 CLOSED 또는 OPEN</text>
+
+  <!-- Arrow 1: CLOSED → OPEN (top horizontal) -->
+  <line x1="280" y1="213" x2="598" y2="213"
+    stroke="#e05555" stroke-width="2.5" marker-end="url(#arr-r)"/>
+  <text x="440" y="198" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e05555">실패율 ≥ failureRateThreshold (기본 50%)</text>
+
+  <!-- Arrow 2: OPEN → HALF_OPEN (diagonal down-left) -->
+  <line x1="680" y1="278" x2="542" y2="350"
+    stroke="#7ec8e3" stroke-width="2.5" marker-end="url(#arr-b)"/>
+  <text x="645" y="305" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">대기 시간 초과</text>
+  <text x="645" y="320" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">(waitDurationInOpenState)</text>
+
+  <!-- Arrow 3: HALF_OPEN → CLOSED (diagonal up-left) -->
+  <line x1="340" y1="375" x2="200" y2="278"
+    stroke="#55c555" stroke-width="2.5" marker-end="url(#arr-g)"/>
+  <text x="245" y="318" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">시험 호출 성공</text>
+  <text x="245" y="333" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">(실패율 임계치 미만)</text>
+
+  <!-- Arrow 4: HALF_OPEN → OPEN (diagonal up-right, dashed) -->
+  <line x1="540" y1="375" x2="703" y2="284"
+    stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-r)"/>
+  <text x="648" y="340" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#e05555">시험 호출 실패</text>
+  <text x="648" y="355" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">(재차단)</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="465" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">CLOSED → OPEN → HALF_OPEN → CLOSED/OPEN 순환으로 장애 격리와 자동 복구를 구현한다</text>
+</svg>

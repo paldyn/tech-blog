@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-s" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Spring Cloud Gateway 아키텍처</text>
+  <text x="440" y="74" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" fill="#888">단일 진입점(API Gateway)을 통한 요청 라우팅과 필터 체인 흐름</text>
+
+  <!-- Left box: External Clients -->
+  <rect x="40" y="120" width="170" height="220" rx="8" fill="#111118" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="125" y="146" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e8e8e8">외부 요청</text>
+
+  <rect x="58" y="162" width="134" height="36" rx="5" fill="#1a1a2e" stroke="#4a5568" stroke-width="1"/>
+  <text x="125" y="184" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" fill="#e8e8e8">Browser / Mobile</text>
+
+  <rect x="58" y="208" width="134" height="30" rx="4" fill="#0e1020" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="125" y="227" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">GET /api/users/**</text>
+
+  <rect x="58" y="246" width="134" height="30" rx="4" fill="#0e1020" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="125" y="265" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">POST /api/orders/**</text>
+
+  <rect x="58" y="284" width="134" height="30" rx="4" fill="#0e1020" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="125" y="303" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">GET /api/products/**</text>
+
+  <!-- Arrow: External → Gateway -->
+  <line x1="210" y1="230" x2="278" y2="230"
+    stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="244" y="215" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#7ec8e3">HTTP 요청</text>
+
+  <!-- Center box: Gateway -->
+  <rect x="280" y="90" width="320" height="290" rx="10" fill="#0f1929" stroke="#2d5a8e" stroke-width="2"/>
+  <text x="440" y="116" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="15" font-weight="700" fill="#7ec8e3">Spring Cloud Gateway</text>
+
+  <!-- Step 1: Predicate -->
+  <rect x="300" y="128" width="280" height="46" rx="6" fill="#162030" stroke="#2d5a8e" stroke-width="1"/>
+  <text x="440" y="147" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" font-weight="600" fill="#7ec8e3">① Route Predicate</text>
+  <text x="440" y="165" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">Path · Method · Header · Query 조건 매칭</text>
+
+  <!-- Step 2: Pre-Filter -->
+  <rect x="300" y="182" width="280" height="46" rx="6" fill="#162030" stroke="#2d5a8e" stroke-width="1"/>
+  <text x="440" y="201" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" font-weight="600" fill="#7777cc">② Pre-Filter 체인</text>
+  <text x="440" y="219" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">인증·인가 · Rate Limit · CORS · 헤더 추가</text>
+
+  <!-- Step 3: Load Balancer + Route -->
+  <rect x="300" y="236" width="280" height="46" rx="6" fill="#162030" stroke="#2d6e2d" stroke-width="1"/>
+  <text x="440" y="255" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" font-weight="600" fill="#55c555">③ 로드밸런서 라우팅</text>
+  <text x="440" y="273" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">lb://service-name → Eureka 조회 후 인스턴스 선택</text>
+
+  <!-- Step 4: Post-Filter -->
+  <rect x="300" y="290" width="280" height="46" rx="6" fill="#162030" stroke="#2d5a8e" stroke-width="1"/>
+  <text x="440" y="309" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="12" font-weight="600" fill="#7777cc">④ Post-Filter 체인</text>
+  <text x="440" y="327" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">응답 헤더 추가 · 로깅 · 에러 처리</text>
+
+  <!-- Arrow: Gateway → Services -->
+  <line x1="600" y1="230" x2="668" y2="230"
+    stroke="#55c555" stroke-width="2" marker-end="url(#arr-s)"/>
+  <text x="634" y="215" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#55c555">lb:// 라우팅</text>
+
+  <!-- Right box: Microservices -->
+  <rect x="670" y="100" width="170" height="270" rx="8" fill="#0e1c0e" stroke="#1e5c1e" stroke-width="1.5"/>
+  <text x="755" y="126" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e8e8e8">마이크로서비스</text>
+
+  <rect x="688" y="142" width="134" height="40" rx="5" fill="#162016" stroke="#2d6e2d" stroke-width="1"/>
+  <text x="755" y="162" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#55c555">user-service</text>
+  <text x="755" y="177" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">:8082</text>
+
+  <rect x="688" y="194" width="134" height="40" rx="5" fill="#162016" stroke="#2d6e2d" stroke-width="1"/>
+  <text x="755" y="214" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#55c555">order-service</text>
+  <text x="755" y="229" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">:8081</text>
+
+  <rect x="688" y="246" width="134" height="40" rx="5" fill="#162016" stroke="#2d6e2d" stroke-width="1"/>
+  <text x="755" y="266" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#55c555">product-service</text>
+  <text x="755" y="281" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">:8083</text>
+
+  <rect x="688" y="298" width="134" height="46" rx="5" fill="#0e1020" stroke="#1e5c1e" stroke-width="1"/>
+  <text x="755" y="318" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">Eureka에 등록된</text>
+  <text x="755" y="334" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="11" fill="#888">서비스 이름으로 통신</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="430" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">Gateway는 단일 진입점으로 횡단 관심사(인증, 로깅, Rate Limit)를 중앙에서 처리한다</text>
+</svg>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <rect width="880" height="560" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8">Resilience4j 핵심 어노테이션</text>
+  <text x="440" y="74" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" fill="#888">Circuit Breaker · Retry · RateLimiter · TimeLimiter 조합 실전 예제</text>
+
+  <!-- Left panel header -->
+  <rect x="40" y="94" width="390" height="34" rx="6" fill="#1e0808" stroke="#6e2d2d" stroke-width="1"/>
+  <text x="235" y="116" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#e05555">서비스 코드 (어노테이션)</text>
+
+  <!-- Left code box -->
+  <rect x="40" y="136" width="390" height="380" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text xml:space="preserve" x="56" y="157"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600">@Service</text>
+
+  <text xml:space="preserve" x="56" y="176"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan fill="#7ec8e3" font-weight="600">public class</tspan>
+    <tspan> UserServiceClient {</tspan>
+  </text>
+
+  <text xml:space="preserve" x="56" y="195"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8">  // CB + Retry + TimeLimiter 조합</text>
+
+  <text xml:space="preserve" x="56" y="214"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600">  @CircuitBreaker(name = "userSvc",</text>
+
+  <text xml:space="preserve" x="56" y="233"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600">    fallbackMethod = "userFallback")</text>
+
+  <text xml:space="preserve" x="56" y="252"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600">  @Retry(name = "userSvc")</text>
+
+  <text xml:space="preserve" x="56" y="271"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600">  @TimeLimiter(name = "userSvc")</text>
+
+  <text xml:space="preserve" x="56" y="290"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan fill="#7ec8e3" font-weight="600">  public</tspan>
+    <tspan> CompletableFuture&lt;UserDto&gt;</tspan>
+  </text>
+
+  <text xml:space="preserve" x="56" y="309"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">      getUser(Long id) {</text>
+
+  <text xml:space="preserve" x="56" y="328"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">return</tspan>
+    <tspan> CompletableFuture</tspan>
+  </text>
+
+  <text xml:space="preserve" x="56" y="347"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">      .supplyAsync(() -&gt;</text>
+
+  <text xml:space="preserve" x="56" y="366"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">        feignClient.findById(id));</text>
+
+  <text xml:space="preserve" x="56" y="385"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">  } </text>
+
+  <text xml:space="preserve" x="56" y="404"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8">  // 폴백: CB가 열리면 호출됨</text>
+
+  <text xml:space="preserve" x="56" y="423"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan fill="#7ec8e3" font-weight="600">  private</tspan>
+    <tspan> CompletableFuture&lt;UserDto&gt;</tspan>
+  </text>
+
+  <text xml:space="preserve" x="56" y="442"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">      userFallback(Long id, Throwable e) {</text>
+
+  <text xml:space="preserve" x="56" y="461"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">return</tspan>
+    <tspan> CompletableFuture</tspan>
+  </text>
+
+  <text xml:space="preserve" x="56" y="480"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>      .completedFuture(UserDto.empty(id)); }</tspan>
+  </text>
+
+  <text xml:space="preserve" x="56" y="499"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">} </text>
+
+  <!-- Divider -->
+  <line x1="444" y1="90" x2="444" y2="546" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Right panel header -->
+  <rect x="450" y="94" width="390" height="34" rx="6" fill="#0f1929" stroke="#2d5a8e" stroke-width="1"/>
+  <text x="645" y="116" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="14" font-weight="600" fill="#7ec8e3">application.yml (설정)</text>
+
+  <!-- Right code box -->
+  <rect x="450" y="136" width="390" height="380" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text xml:space="preserve" x="466" y="157"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#7ec8e3" font-weight="600">resilience4j:</text>
+
+  <text xml:space="preserve" x="466" y="176"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8">  # Circuit Breaker</text>
+
+  <text xml:space="preserve" x="466" y="195"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">  circuit-breaker:</text>
+
+  <text xml:space="preserve" x="466" y="214"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">    instances:</text>
+
+  <text xml:space="preserve" x="466" y="233"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>      userSvc:</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="252"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        sliding-window-size: </tspan>
+    <tspan fill="#b5cea8">10</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="271"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        failure-rate-threshold: </tspan>
+    <tspan fill="#b5cea8">50</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="290"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        wait-duration-in-open-state: </tspan>
+    <tspan fill="#ce9178">10s</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="309"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        permitted-calls-in-half-open: </tspan>
+    <tspan fill="#b5cea8">5</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="328"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8">  # Retry</text>
+
+  <text xml:space="preserve" x="466" y="347"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">  retry:</text>
+
+  <text xml:space="preserve" x="466" y="366"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">    instances:</text>
+
+  <text xml:space="preserve" x="466" y="385"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>      userSvc:</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="404"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        max-attempts: </tspan>
+    <tspan fill="#b5cea8">3</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="423"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        wait-duration: </tspan>
+    <tspan fill="#ce9178">500ms</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="442"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#9aa4b8">  # TimeLimiter</text>
+
+  <text xml:space="preserve" x="466" y="461"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">  time-limiter:</text>
+
+  <text xml:space="preserve" x="466" y="480"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">    instances:</text>
+
+  <text xml:space="preserve" x="466" y="499"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>      userSvc:</tspan>
+  </text>
+
+  <text xml:space="preserve" x="466" y="518"
+    font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    font-size="13" fill="#ffffff">
+    <tspan>        timeout-duration: </tspan>
+    <tspan fill="#ce9178">3s</tspan>
+  </text>
+
+  <!-- Bottom note -->
+  <text x="440" y="548" text-anchor="middle"
+    font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#888">어노테이션 순서: @CircuitBreaker → @TimeLimiter → @Retry (바깥부터 안쪽 순)</text>
+</svg>
