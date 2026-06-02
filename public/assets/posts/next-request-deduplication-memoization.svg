@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arb" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="ard" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Request Memoization 동작 원리</text>
+
+  <!-- Subtitle -->
+  <text x="440" y="72"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">컴포넌트 트리에서 동일한 URL로 3회 호출 — 네트워크 요청은 1회</text>
+
+  <!-- Component: RootLayout -->
+  <rect x="60" y="90" width="200" height="68" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="160" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">RootLayout</text>
+  <text x="160" y="140"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">fetchUser() 호출</text>
+
+  <!-- Component: UserProfile -->
+  <rect x="340" y="90" width="200" height="68" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">UserProfile</text>
+  <text x="440" y="140"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">fetchUser() 호출</text>
+
+  <!-- Component: ProfileCard -->
+  <rect x="620" y="90" width="200" height="68" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="720" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">ProfileCard</text>
+  <text x="720" y="140"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">fetchUser() 호출</text>
+
+  <!-- Arrow 1: RootLayout -> Cache (solid, 1st call) -->
+  <line x1="160" y1="158" x2="160" y2="228" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arb)"/>
+  <text x="170" y="200"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">1st call</text>
+
+  <!-- Arrow 2: UserProfile -> Cache (dashed, cache hit) -->
+  <line x1="440" y1="158" x2="440" y2="228" stroke="#666" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#ard)"/>
+  <text x="450" y="200"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">cache hit</text>
+
+  <!-- Arrow 3: ProfileCard -> Cache (dashed, cache hit) -->
+  <line x1="720" y1="158" x2="720" y2="228" stroke="#666" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#ard)"/>
+  <text x="730" y="200"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">cache hit</text>
+
+  <!-- Memoization Cache box -->
+  <rect x="60" y="232" width="760" height="72" rx="10" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="260"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">Request Memoization Cache</text>
+  <text x="440" y="284"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Key: URL + options  |  단일 렌더 패스 스코프  |  렌더 완료 후 자동 해제</text>
+
+  <!-- Arrow: Cache -> API (solid) -->
+  <line x1="440" y1="304" x2="440" y2="372" stroke="#55c555" stroke-width="2" marker-end="url(#arg)"/>
+  <text x="450" y="344"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">실제 1회 요청</text>
+
+  <!-- External API box -->
+  <rect x="270" y="376" width="340" height="68" rx="10" fill="#160d20" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="404"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">External API / DB</text>
+  <text x="440" y="426"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">네트워크 요청 단 1회만 발생</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="476"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">React 18 기능 — App Router 전용 / GET 요청에만 적용</text>
+</svg>

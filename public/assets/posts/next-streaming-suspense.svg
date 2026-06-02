@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Suspense 경계 배치와 스트리밍 순서</text>
+
+  <!-- Page structure left -->
+  <text x="220" y="78"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">컴포넌트 구조</text>
+
+  <!-- Layout (static) -->
+  <rect x="60" y="88" width="340" height="44" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="230" y="114"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Layout (정적 — 즉시 전송)</text>
+
+  <!-- ProductInfo (static) -->
+  <rect x="80" y="148" width="200" height="44" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="180" y="174"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">ProductInfo (정적)</text>
+
+  <!-- Reviews (Suspense) -->
+  <rect x="80" y="208" width="200" height="52" rx="6" fill="#0d0d1a" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="180" y="232"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7777cc">Suspense: Reviews</text>
+  <text x="180" y="250"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">fallback: ReviewSkeleton</text>
+
+  <!-- Recommendations (Suspense) -->
+  <rect x="80" y="276" width="200" height="52" rx="6" fill="#0d0d1a" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="180" y="300"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7777cc">Suspense: Recommendations</text>
+  <text x="180" y="318"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">fallback: RecoSkeleton</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="70" x2="440" y2="420" stroke="#2a2a2a" stroke-width="1.5"/>
+
+  <!-- Timeline right -->
+  <text x="660" y="78"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">스트리밍 타임라인</text>
+
+  <!-- T1: Shell -->
+  <rect x="460" y="88" width="360" height="44" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="106"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555">T=50ms: 정적 셸 전송</text>
+  <text x="640" y="122"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">Layout + ProductInfo + 스켈레톤 2개</text>
+
+  <!-- T2: Reviews ready -->
+  <rect x="460" y="148" width="360" height="44" rx="6" fill="#0d0d1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="640" y="166"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7777cc">T=800ms: Reviews 청크 스트리밍</text>
+  <text x="640" y="182"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">ReviewSkeleton → 실제 리뷰 교체</text>
+
+  <!-- T3: Recommendations ready -->
+  <rect x="460" y="208" width="360" height="44" rx="6" fill="#0d0d1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="640" y="226"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7777cc">T=1,200ms: Recommendations 청크</text>
+  <text x="640" y="242"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">RecoSkeleton → 실제 추천 상품 교체</text>
+
+  <!-- T=done -->
+  <rect x="460" y="268" width="360" height="44" rx="6" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="290"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">T=1,200ms: 페이지 완전히 로드</text>
+  <text x="640" y="306"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">전통 방식이었다면 T=1,200ms까지 빈 화면</text>
+
+  <!-- loading.tsx note -->
+  <rect x="60" y="352" width="760" height="68" rx="8" fill="#0d0d0d" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="376"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">loading.tsx — 자동 Suspense 경계</text>
+  <text x="440" y="398"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">라우트 세그먼트에 loading.tsx를 만들면 Next.js가 자동으로 Suspense로 감쌉니다</text>
+  <text x="440" y="414"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전체 페이지 수준 스켈레톤 또는 컴포넌트 수준 Suspense로 세밀하게 제어 가능</text>
+</svg>

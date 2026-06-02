@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arb" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="aro" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e09050"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">시간 기반 재검증 (revalidate) 타임라인</text>
+
+  <!-- Timeline axis -->
+  <line x1="60" y1="140" x2="820" y2="140" stroke="#3a4a6e" stroke-width="2" marker-end="url(#arb)"/>
+  <text x="840" y="145"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">시간</text>
+
+  <!-- Phase 1: Fresh -->
+  <rect x="60" y="96" width="200" height="36" rx="4" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="160" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555">FRESH (캐시 유효)</text>
+
+  <!-- Phase 2: Stale -->
+  <rect x="260" y="96" width="200" height="36" rx="4" fill="#1a1000" stroke="#e09050" stroke-width="1"/>
+  <text x="360" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e09050">STALE (만료됨)</text>
+
+  <!-- Phase 3: Revalidating -->
+  <rect x="460" y="96" width="200" height="36" rx="4" fill="#0d0d1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="560" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7777cc">백그라운드 갱신</text>
+
+  <!-- Phase 4: Fresh again -->
+  <rect x="660" y="96" width="140" height="36" rx="4" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="730" y="118"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555">FRESH 재시작</text>
+
+  <!-- Event markers on timeline -->
+  <!-- T=0: Initial fetch -->
+  <line x1="60" y1="130" x2="60" y2="160" stroke="#55c555" stroke-width="2"/>
+  <text x="60" y="175"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">T=0</text>
+  <text x="60" y="190"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">초기 fetch</text>
+
+  <!-- T=revalidate: expiry -->
+  <line x1="260" y1="130" x2="260" y2="160" stroke="#e09050" stroke-width="2"/>
+  <text x="260" y="175"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e09050">T=revalidate</text>
+  <text x="260" y="190"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">캐시 만료</text>
+
+  <!-- T=next request: stale served -->
+  <line x1="460" y1="130" x2="460" y2="160" stroke="#7777cc" stroke-width="2"/>
+  <text x="460" y="175"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7777cc">첫 요청</text>
+  <text x="460" y="190"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">stale 반환</text>
+  <text x="460" y="205"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">+ 백그라운드 갱신</text>
+
+  <!-- T=updated: fresh again -->
+  <line x1="660" y1="130" x2="660" y2="160" stroke="#55c555" stroke-width="2"/>
+  <text x="660" y="175"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">갱신 완료</text>
+  <text x="660" y="190"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">이후 요청 fresh</text>
+
+  <!-- Annotation boxes -->
+  <!-- Stale-while-revalidate explanation -->
+  <rect x="60" y="226" width="760" height="80" rx="8" fill="#0d0d1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="252"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc">Stale-While-Revalidate 전략</text>
+  <text x="440" y="274"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">만료 직후 첫 요청: 오래된 데이터를 즉시 반환 (사용자 대기 없음)</text>
+  <text x="440" y="294"
+        text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">동시에 백그라운드에서 새 데이터 패칭 → 완료 후 다음 요청부터 최신 데이터 제공</text>
+
+  <!-- Code block: revalidate options -->
+  <rect x="60" y="326" width="760" height="124" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="348" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 60초 TTL — ISR 패턴</text>
+  <text x="76" y="366" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> res = </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">await</tspan>
+    <tspan fill="#ffffff"> fetch(url, { next: { revalidate: </tspan>
+    <tspan fill="#b5cea8">60</tspan>
+    <tspan fill="#ffffff"> } });</tspan>
+  </text>
+  <text x="76" y="384" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 세그먼트 전체에 기본값 설정</text>
+  <text x="76" y="402" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan>
+    <tspan fill="#ffffff"> revalidate = </tspan>
+    <tspan fill="#b5cea8">3600</tspan>
+    <tspan fill="#ffffff">; </tspan>
+    <tspan fill="#9aa4b8">// 이 라우트 모든 fetch 기본 1시간</tspan>
+  </text>
+  <text x="76" y="420" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan>
+    <tspan fill="#ffffff"> revalidate = </tspan>
+    <tspan fill="#b5cea8">false</tspan>
+    <tspan fill="#ffffff">; </tspan>
+    <tspan fill="#9aa4b8">// 영구 캐시 (force-cache)</tspan>
+  </text>
+  <text x="76" y="438" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan>
+    <tspan fill="#ffffff"> revalidate = </tspan>
+    <tspan fill="#b5cea8">0</tspan>
+    <tspan fill="#ffffff">; </tspan>
+    <tspan fill="#9aa4b8">// 동적 렌더링 강제</tspan>
+  </text>
+</svg>
