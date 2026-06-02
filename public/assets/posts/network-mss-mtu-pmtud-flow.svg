@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="apf" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ape" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">PMTUD: 경로 MTU 탐색</text>
+
+  <!-- Network topology -->
+  <!-- Host A -->
+  <rect x="60" y="100" width="100" height="50" rx="6" fill="#0a1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="110" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">Host A</text>
+  <text x="110" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">MTU 1500</text>
+
+  <!-- Router 1 -->
+  <rect x="260" y="100" width="120" height="50" rx="6" fill="#1a1828" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="320" y="125" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">Router 1</text>
+  <text x="320" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">MTU 1500</text>
+
+  <!-- Router 2 (bottleneck) -->
+  <rect x="500" y="100" width="120" height="50" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="560" y="125" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">Router 2</text>
+  <text x="560" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">MTU 576 (병목)</text>
+
+  <!-- Host B -->
+  <rect x="720" y="100" width="100" height="50" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="770" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Host B</text>
+  <text x="770" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">MTU 1500</text>
+
+  <!-- Links -->
+  <line x1="160" y1="125" x2="260" y2="125" stroke="#7777cc" stroke-width="2"/>
+  <line x1="380" y1="125" x2="500" y2="125" stroke="#7777cc" stroke-width="2"/>
+  <line x1="620" y1="125" x2="720" y2="125" stroke="#7777cc" stroke-width="2"/>
+
+  <!-- Step 1: Send large packet DF=1 -->
+  <line x1="110" y1="180" x2="496" y2="200" stroke="#7ec8e3" stroke-width="2" marker-end="url(#apf)"/>
+  <rect x="200" y="164" width="220" height="32" rx="4" fill="#0a1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="310" y="181" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3">IP Pkt, Len=1500, DF=1</text>
+  <text x="310" y="193" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">단편화 금지 플래그</text>
+
+  <!-- Step 2: ICMP Too Big from Router 2 -->
+  <line x1="500" y1="230" x2="124" y2="258" stroke="#e05555" stroke-width="2" marker-end="url(#ape)"/>
+  <rect x="220" y="214" width="240" height="32" rx="4" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="340" y="231" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#e05555">ICMP Frag Needed (Next-Hop MTU=576)</text>
+
+  <!-- Step 3: Retry with smaller packet -->
+  <line x1="110" y1="290" x2="756" y2="310" stroke="#55c555" stroke-width="2" marker-end="url(#apf)"/>
+  <rect x="310" y="274" width="220" height="32" rx="4" fill="#0a2a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="420" y="291" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555">IP Pkt, Len=576, DF=1</text>
+  <text x="420" y="303" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">MTU 조정 후 재전송 → 성공</text>
+
+  <!-- PMTUD Black Hole -->
+  <rect x="60" y="342" width="760" height="96" rx="6" fill="#1a0a0a" stroke="#3a1a1a" stroke-width="1.5"/>
+  <text x="440" y="364" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">PMTUD Black Hole 문제</text>
+  <text x="440" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">방화벽이 ICMP를 차단하면 PMTUD가 동작하지 않음</text>
+  <text x="440" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">대응: TCP MSS Clamping (라우터에서 MSS 옵션을 강제로 줄임)</text>
+  <text x="440" y="426" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ce9178">iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</text>
+</svg>

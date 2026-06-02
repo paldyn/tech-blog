@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="ab" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ag2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="ao" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">TCP Seq / ACK 동작 원리</text>
+
+  <!-- Sender / Receiver -->
+  <rect x="80" y="68" width="140" height="40" rx="6" fill="#0a1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="93" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">송신자</text>
+
+  <rect x="660" y="68" width="140" height="40" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="730" y="93" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">수신자</text>
+
+  <!-- Timeline -->
+  <line x1="150" y1="108" x2="150" y2="460" stroke="#2a3a4a" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="730" y1="108" x2="730" y2="460" stroke="#2a4a2a" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Segment 1 -->
+  <line x1="150" y1="145" x2="716" y2="175" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ab)"/>
+  <rect x="270" y="128" width="240" height="34" rx="4" fill="#0a1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="390" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">Seq=1000, Len=200</text>
+  <text x="390" y="159" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">bytes 1000~1199 전송</text>
+
+  <!-- ACK 1 -->
+  <line x1="730" y1="205" x2="164" y2="235" stroke="#55c555" stroke-width="2" marker-end="url(#ag2)"/>
+  <rect x="330" y="188" width="240" height="34" rx="4" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="450" y="205" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">ACK=1200</text>
+  <text x="450" y="219" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">"1200부터 보내줘"</text>
+
+  <!-- Segment 2 -->
+  <line x1="150" y1="270" x2="716" y2="300" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ab)"/>
+  <rect x="270" y="253" width="240" height="34" rx="4" fill="#0a1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="390" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">Seq=1200, Len=300</text>
+  <text x="390" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">bytes 1200~1499 전송</text>
+
+  <!-- Segment 3 (lost) -->
+  <line x1="150" y1="320" x2="530" y2="340" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="380" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Seq=1500, Len=100 (유실)</text>
+  <text x="542" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#e05555">✗</text>
+
+  <!-- Duplicate ACK -->
+  <line x1="730" y1="330" x2="164" y2="345" stroke="#ce9178" stroke-width="2" marker-end="url(#ao)"/>
+  <rect x="330" y="315" width="280" height="34" rx="4" fill="#1a1208" stroke="#ce9178" stroke-width="1"/>
+  <text x="470" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ce9178">ACK=1500 (Duplicate ACK)</text>
+  <text x="470" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">1500 아직 못 받음, 1500부터 보내줘</text>
+
+  <!-- Retransmit -->
+  <line x1="150" y1="385" x2="716" y2="405" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#ab)"/>
+  <rect x="270" y="368" width="240" height="34" rx="4" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="390" y="385" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">재전송: Seq=1500, Len=100</text>
+  <text x="390" y="399" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">3 Dup-ACK → Fast Retransmit</text>
+
+  <!-- Final ACK -->
+  <line x1="730" y1="428" x2="164" y2="443" stroke="#55c555" stroke-width="2" marker-end="url(#ag2)"/>
+  <rect x="330" y="413" width="240" height="34" rx="4" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="450" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">ACK=1600</text>
+  <text x="450" y="444" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">1500~1599 수신 완료</text>
+
+  <!-- Note -->
+  <rect x="60" y="472" width="760" height="34" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="440" y="493" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ACK 번호 = 수신자가 다음에 받기를 기대하는 바이트 번호 (Cumulative ACK)</text>
+</svg>
