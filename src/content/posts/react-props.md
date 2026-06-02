@@ -1,137 +1,121 @@
 ---
-title: "props로 데이터 전달하기"
-description: "React의 props 개념과 단방향 데이터 흐름, 다양한 값을 props로 전달하는 방법, 기본값과 children prop 활용법을 설명합니다."
+title: "Props — 컴포넌트 간 데이터 전달의 모든 것"
+description: "React props의 단방향 데이터 흐름, 읽기 전용 원칙, 다양한 타입의 props 전달, 기본값 설정, 콜백 패턴으로 자식→부모 소통하는 방법을 완전히 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
-archiveOrder: 4
+pubDate: "2026-06-03"
+archiveOrder: 7
 type: "knowledge"
 category: "React"
-tags: ["React", "props", "단방향흐름", "컴포넌트", "children"]
+tags: ["props", "단방향데이터흐름", "읽기전용", "기본값", "콜백패턴", "React기초"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-components/)에서 컴포넌트를 만들고 트리로 조합하는 방법을 배웠습니다. 컴포넌트들이 서로 데이터를 주고받는 메커니즘이 **props**입니다. props를 제대로 이해하면 컴포넌트를 진정한 의미에서 재사용 가능하게 만들 수 있습니다.
+[지난 글](/posts/react-children/)에서 children prop으로 컴포넌트를 합성하는 방법을 배웠다. 이번 글에서는 React 컴포넌트 간 데이터를 전달하는 핵심 메커니즘인 **props** 전체를 정리한다.
 
----
+## Props란
 
-## props란
-
-**props(properties)**는 부모 컴포넌트가 자식 컴포넌트에게 전달하는 데이터입니다. 함수의 인자와 같은 개념으로, 컴포넌트 함수의 첫 번째 매개변수로 받습니다.
+Props(Properties)는 부모 컴포넌트가 자식 컴포넌트에 전달하는 데이터다. HTML 속성처럼 생겼지만 JavaScript 값 무엇이든 전달할 수 있다.
 
 ```jsx
-// 부모가 props 전달
-<UserCard name="Alice" score={42} />
+// 부모가 props를 전달
+function App() {
+  const user = { name: 'Alice', age: 28 };
 
-// 자식이 props 수신
-function UserCard(props) {
-  return <p>{props.name} — {props.score}점</p>;
+  return (
+    <UserProfile
+      name={user.name}
+      age={user.age}
+      isAdmin={true}
+      onLogout={() => console.log('로그아웃')}
+    />
+  );
+}
+
+// 자식이 props를 받아 사용
+function UserProfile({ name, age, isAdmin, onLogout }) {
+  return (
+    <div>
+      <h2>{name} ({age}세)</h2>
+      {isAdmin && <span className="badge">관리자</span>}
+      <button onClick={onLogout}>로그아웃</button>
+    </div>
+  );
 }
 ```
-
-실무에서는 **구조 분해 할당**으로 받는 것이 관례입니다.
-
-```jsx
-function UserCard({ name, score }) {
-  return <p>{name} — {score}점</p>;
-}
-```
-
----
 
 ## 단방향 데이터 흐름
 
-![Props 단방향 흐름](/assets/posts/react-props-flow.svg)
+React props의 가장 중요한 규칙이다.
 
-props는 항상 **부모 → 자식** 방향으로만 흐릅니다. 자식은 받은 props를 읽을 수만 있고 직접 수정할 수 없습니다. 이것이 React의 **단방향 데이터 흐름(one-way data flow)**입니다.
+![Props: 단방향 데이터 흐름](/assets/posts/react-props-flow.svg)
+
+**Props는 부모에서 자식으로만 흐른다.** 자식이 부모 데이터를 직접 바꿀 수 없다. 이 원칙이 React 앱의 데이터 흐름을 예측 가능하게 만든다.
 
 ```jsx
-function Child({ count }) {
-  // ❌ props 직접 수정 — 절대 금지
-  count = count + 1;
-
-  // ✅ 읽기만 가능
-  return <p>현재: {count}</p>;
+// ❌ 자식이 props를 변경하려 하면 안 된다
+function Child({ user }) {
+  user.name = 'Bob';  // 절대 하면 안 됨!
+  return <p>{user.name}</p>;
 }
 ```
 
-자식이 부모의 상태를 변경하려면, 부모가 **콜백 함수를 props로 내려주고** 자식이 그것을 호출합니다.
+자식에서 부모 상태를 변경해야 할 때는 부모가 전달한 **콜백 함수**를 호출한다.
 
 ```jsx
 function Parent() {
   const [count, setCount] = useState(0);
 
-  return <Child count={count} onIncrement={() => setCount(c => c + 1)} />;
+  return (
+    <Child
+      count={count}
+      onIncrement={() => setCount(c => c + 1)}  // 콜백 전달
+    />
+  );
 }
 
 function Child({ count, onIncrement }) {
   return (
-    <div>
-      <p>카운트: {count}</p>
-      <button onClick={onIncrement}>+1</button>
-    </div>
+    <button onClick={onIncrement}>  {/* 콜백 실행 */}
+      카운트: {count}
+    </button>
   );
 }
 ```
 
----
+## Props 타입과 기본값
 
-## 전달할 수 있는 값의 종류
+![Props 타입과 기본값 패턴](/assets/posts/react-props-types.svg)
 
-![Props 타입 종류](/assets/posts/react-props-types.svg)
-
-JSX 속성의 `{}` 안에는 어떤 JavaScript 값이든 넣을 수 있습니다.
+### 전달 가능한 값 타입
 
 ```jsx
-<ProfileCard
-  name="Alice"             // 문자열: 따옴표
-  age={29}                 // 숫자: 중괄호
-  isAdmin={true}           // 불리언: 중괄호 (또는 isAdmin 속성만 써도 true)
-  tags={['React', 'TS']}   // 배열
-  address={{ city: '서울', zip: '04001' }}  // 객체
-  onEdit={handleEdit}      // 함수
+// 문자열 (따옴표로 직접)
+<Button label="확인" />
+
+// 그 외 모든 값 (중괄호 필수)
+<Component
+  count={42}              // 숫자
+  disabled={false}        // boolean
+  disabled              // {true}의 축약형
+  user={{ name: 'Alice' }} // 객체 (이중 중괄호!)
+  items={[1, 2, 3]}      // 배열
+  render={() => <p />}   // 함수
+  node={<span />}        // React Element
 />
 ```
 
-### children prop
+### 기본값 설정
 
-여는 태그와 닫는 태그 사이의 내용은 자동으로 `props.children`에 담깁니다.
-
-```jsx
-function Card({ children, className = '' }) {
-  return (
-    <div className={`card ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-// 사용: 어떤 내용이든 Card 안에 넣을 수 있음
-function App() {
-  return (
-    <Card className="featured">
-      <h2>공지사항</h2>
-      <p>이 내용이 Card의 children입니다.</p>
-    </Card>
-  );
-}
-```
-
-`children`을 활용하면 **컨테이너** 역할을 하는 컴포넌트를 만들기 쉽습니다. Modal, Card, Layout, Tooltip 등이 이 패턴을 자주 사용합니다.
-
----
-
-## 기본값 설정
-
-props를 전달하지 않았을 때 사용할 기본값은 구조 분해 할당에서 `=`으로 설정합니다.
+구조분해 할당에서 기본값을 지정하는 것이 가장 권장되는 방법이다.
 
 ```jsx
 function Button({
-  label = '확인',
+  label = '버튼',
   variant = 'primary',
-  size = 'md',
+  size = 'medium',
   disabled = false,
-  onClick
+  onClick,
 }) {
   return (
     <button
@@ -144,50 +128,66 @@ function Button({
   );
 }
 
-// 기본값 사용
-<Button onClick={handleClick} />        // label='확인', variant='primary'
-
-// 기본값 덮어쓰기
-<Button label="삭제" variant="danger" onClick={handleDelete} />
+// 아무 props 없이 쓰면 기본값 사용
+<Button />  // label="버튼", variant="primary", ...
 ```
 
----
+## TypeScript로 Props 타입 정의
 
-## Props 스프레드
+TypeScript를 쓰면 잘못된 props를 컴파일 타임에 잡을 수 있다.
 
-객체의 모든 속성을 props로 전달할 때 스프레드 연산자를 씁니다.
-
-```jsx
-const buttonProps = {
-  label: '저장',
-  variant: 'primary',
-  onClick: handleSave,
+```tsx
+type ButtonProps = {
+  label?: string;            // 선택적
+  variant?: 'primary' | 'secondary' | 'danger';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+  onClick: () => void;       // 필수
 };
 
-// 개별 전달과 동일
-<Button {...buttonProps} />
+function Button({ label = '버튼', variant = 'primary', onClick }: ButtonProps) {
+  return (
+    <button className={`btn btn-${variant}`} onClick={onClick}>
+      {label}
+    </button>
+  );
+}
+
+// ❌ onClick 누락 → 컴파일 에러
+<Button label="저장" />
+
+// ✅ 올바른 사용
+<Button label="저장" onClick={() => save()} />
 ```
 
-단, 과도하게 사용하면 어떤 props가 흘러가는지 파악하기 어려워집니다. 필요한 경우에만 사용하는 것이 좋습니다.
+## Props로 컴포넌트 전달하기
+
+컴포넌트 자체를 props로 전달하면 렌더링 로직을 외부에서 주입할 수 있다.
+
+```jsx
+// 아이콘 컴포넌트를 prop으로 받는 Button
+function IconButton({ icon: Icon, label, onClick }) {
+  return (
+    <button onClick={onClick}>
+      <Icon className="icon" />
+      {label}
+    </button>
+  );
+}
+
+// 어떤 아이콘이든 주입 가능
+<IconButton
+  icon={StarIcon}
+  label="즐겨찾기"
+  onClick={toggleFavorite}
+/>
+```
 
 ---
 
-## Props vs State 한눈에 비교
+**지난 글:** [children prop — 컴포넌트 안에 컴포넌트 넣기](/posts/react-children/)
 
-| 특성 | props | state |
-|------|-------|-------|
-| 출처 | 부모로부터 전달 | 컴포넌트 자체 |
-| 수정 | 읽기 전용 | `setState`로 수정 |
-| 변경 시 | 부모가 바꾸면 리렌더 | `setState` 호출 시 리렌더 |
-| 목적 | 컴포넌트 설정·구성 | 내부 동적 상태 |
-
-state는 다음 글에서 자세히 다룹니다.
-
----
-
-**지난 글:** [컴포넌트의 개념](/posts/react-components/)
-
-**다음 글:** [조건부 렌더링](/posts/react-conditional-rendering/)
+**다음 글:** [Props Spreading — 유용하지만 주의가 필요한 패턴](/posts/react-props-spreading/)
 
 <br>
 읽어주셔서 감사합니다. 😊

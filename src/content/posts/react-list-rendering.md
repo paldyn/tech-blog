@@ -1,23 +1,21 @@
 ---
-title: "리스트 렌더링"
-description: "React에서 배열 데이터를 .map()으로 렌더링하는 방법, filter와 조합하는 패턴, 빈 배열 처리, 중첩 리스트 구현을 설명합니다."
+title: "리스트 렌더링 — 배열을 UI로 변환하기"
+description: "React에서 배열을 map으로 JSX 리스트로 변환하는 방법, key prop의 역할, filter/map 조합, 중첩 리스트, key에 index 쓰면 안 되는 이유를 완전히 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
-archiveOrder: 6
+pubDate: "2026-06-03"
+archiveOrder: 10
 type: "knowledge"
 category: "React"
-tags: ["React", "리스트렌더링", "map", "filter", "key"]
+tags: ["리스트렌더링", "map", "key", "filter", "중첩리스트", "React기초"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-conditional-rendering/)에서 조건에 따라 다른 UI를 보여주는 패턴을 살펴봤습니다. 이번에는 배열 데이터를 화면에 나열하는 **리스트 렌더링**을 다룹니다. React에서는 JavaScript의 `.map()`이 핵심 도구입니다.
+[지난 글](/posts/react-conditional-rendering/)에서 조건부 렌더링의 모든 패턴을 배웠다. 이번 글에서는 React 앱에서 매우 자주 쓰이는 **리스트 렌더링**을 다룬다. 데이터 배열을 JSX 요소 배열로 변환하는 것이 핵심이다.
 
----
+## 기본 패턴: Array.map()
 
-## 기본 패턴 — .map()
-
-React에서 배열 데이터를 렌더링할 때는 `.map()`으로 각 항목을 JSX 요소로 변환합니다.
+JavaScript의 `map()`은 배열의 각 요소를 변환해 새 배열을 반환한다. React에서는 데이터 배열을 JSX 배열로 변환할 때 쓴다.
 
 ```jsx
 const fruits = ['사과', '바나나', '체리'];
@@ -33,19 +31,17 @@ function FruitList() {
 }
 ```
 
-`.map()`의 반환값(JSX 배열)을 `{}`으로 감싸면 React가 자동으로 각 요소를 렌더링합니다.
+## map 렌더링 흐름
 
----
+![배열 → UI: map() 렌더링](/assets/posts/react-list-rendering-map.svg)
 
-## 객체 배열 렌더링
-
-실무에서는 대부분 객체 배열을 다룹니다. 각 객체의 고유 `id`를 `key`로 사용합니다.
+실무에서는 문자열 배열보다 객체 배열이 더 흔하다.
 
 ```jsx
 const products = [
-  { id: 1, name: '노트북', price: 1_200_000 },
-  { id: 2, name: '마우스', price: 35_000 },
-  { id: 3, name: '모니터', price: 450_000 },
+  { id: 1, name: '노트북', price: 1200000 },
+  { id: 2, name: '마우스', price: 45000 },
+  { id: 3, name: '키보드', price: 89000 },
 ];
 
 function ProductList() {
@@ -53,8 +49,8 @@ function ProductList() {
     <ul className="product-list">
       {products.map(product => (
         <li key={product.id} className="product-item">
-          <span className="name">{product.name}</span>
-          <span className="price">{product.price.toLocaleString()}원</span>
+          <strong>{product.name}</strong>
+          <span>{product.price.toLocaleString()}원</span>
         </li>
       ))}
     </ul>
@@ -62,81 +58,101 @@ function ProductList() {
 }
 ```
 
-![리스트 렌더링 map 패턴](/assets/posts/react-list-rendering-map.svg)
+## key prop이 반드시 필요한 이유
 
----
-
-## 컴포넌트로 분리하기
-
-리스트 항목이 복잡할수록 별도 컴포넌트로 분리하면 코드가 깔끔해집니다.
+`key`는 React가 리스트의 항목을 식별하는 데 사용하는 특별한 prop이다. 항목이 추가·삭제·재정렬될 때 어떤 DOM 노드를 업데이트해야 하는지 결정한다.
 
 ```jsx
-function ProductCard({ id, name, price, category }) {
+// key 없으면 경고: Each child in a list should have a unique "key" prop.
+{items.map(item => <Card item={item} />)}   // ⚠ key 없음
+
+// key 있음
+{items.map(item => <Card key={item.id} item={item} />)}  // ✅
+```
+
+**key는 리스트 내에서 고유하면 충분하다.** 전체 앱에서 고유할 필요는 없다. 같은 배열 내에서 중복되지 않으면 된다.
+
+## filter + map 조합
+
+![filter + map 패턴 & 중첩 리스트](/assets/posts/react-list-rendering-filter.svg)
+
+조건에 맞는 항목만 렌더링하려면 `filter`를 먼저 적용한다.
+
+```jsx
+function TodoList({ todos, showCompleted }) {
+  const filtered = showCompleted
+    ? todos.filter(t => t.done)
+    : todos;
+
   return (
-    <article className="card" aria-labelledby={`product-${id}`}>
-      <h3 id={`product-${id}`}>{name}</h3>
-      <p className="category">{category}</p>
-      <p className="price">{price.toLocaleString()}원</p>
-    </article>
+    <ul>
+      {filtered.map(todo => (
+        <li key={todo.id} className={todo.done ? 'done' : ''}>
+          {todo.title}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## index를 key로 쓰면 안 되는 경우
+
+배열이 정렬되거나 항목이 삽입·삭제되는 경우 `index`를 key로 쓰면 React가 잘못된 컴포넌트를 재사용한다.
+
+```jsx
+// ❌ 정렬 가능한 리스트에서 index를 key로 쓰면 안 된다
+{sortedItems.map((item, index) => (
+  <SortableRow key={index} item={item} />  // 재정렬 시 버그 발생
+))}
+
+// ✅ 고유 ID 사용
+{sortedItems.map(item => (
+  <SortableRow key={item.id} item={item} />
+))}
+```
+
+**예외**: 정적인 리스트(순서 변경, 추가, 삭제가 없는)이고 항목에 고유 ID가 없을 때만 index를 써도 괜찮다.
+
+## 빈 리스트 처리
+
+```jsx
+function ItemList({ items }) {
+  if (items.length === 0) {
+    return <p className="empty">항목이 없습니다.</p>;
+  }
+
+  return (
+    <ul>
+      {items.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## 컴포넌트로 리스트 아이템 분리
+
+리스트 아이템이 복잡해지면 별도 컴포넌트로 분리한다. `key`는 반환되는 컴포넌트가 아닌 map 안의 최상위 요소에 붙인다.
+
+```jsx
+function ProductCard({ product }) {
+  return (
+    <li className="product-card">
+      <img src={product.imageUrl} alt={product.name} />
+      <h3>{product.name}</h3>
+      <p>{product.description}</p>
+      <button>담기</button>
+    </li>
   );
 }
 
 function ProductGrid({ products }) {
   return (
-    <div className="grid">
+    <ul className="grid">
       {products.map(product => (
-        <ProductCard key={product.id} {...product} />
-      ))}
-    </div>
-  );
-}
-```
-
----
-
-## filter + map 조합
-
-조건에 맞는 항목만 렌더링할 때는 `.filter()` 뒤에 `.map()`을 연결합니다.
-
-```jsx
-function PremiumProducts({ products }) {
-  return (
-    <section>
-      <h2>프리미엄 상품</h2>
-      <ul>
-        {products
-          .filter(p => p.price >= 100_000)
-          .map(p => (
-            <li key={p.id}>{p.name} — {p.price.toLocaleString()}원</li>
-          ))}
-      </ul>
-    </section>
-  );
-}
-```
-
----
-
-## 빈 배열 처리 (Empty State)
-
-배열이 비었을 때 "항목 없음" UI를 보여주는 것은 좋은 UX의 기본입니다.
-
-```jsx
-function CommentList({ comments }) {
-  if (comments.length === 0) {
-    return (
-      <div className="empty-state">
-        <p>아직 댓글이 없습니다. 첫 번째 댓글을 남겨보세요!</p>
-      </div>
-    );
-  }
-
-  return (
-    <ul>
-      {comments.map(comment => (
-        <li key={comment.id}>
-          <strong>{comment.author}</strong>: {comment.text}
-        </li>
+        <ProductCard key={product.id} product={product} />
       ))}
     </ul>
   );
@@ -145,59 +161,7 @@ function CommentList({ comments }) {
 
 ---
 
-## 중첩 리스트
-
-카테고리 안에 아이템이 있는 구조처럼 중첩 리스트도 `.map()` 안에 `.map()`을 씁니다. 각 수준의 요소에 별도로 `key`를 지정합니다.
-
-```jsx
-function CategoryMenu({ categories }) {
-  return (
-    <nav>
-      {categories.map(category => (
-        <section key={category.id}>
-          <h2>{category.name}</h2>
-          <ul>
-            {category.items.map(item => (
-              <li key={item.id}>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </nav>
-  );
-}
-```
-
-![리스트 렌더링 패턴](/assets/posts/react-list-rendering-patterns.svg)
-
----
-
-## key에 대한 오해
-
-`key`는 React 내부에서만 사용하며, 컴포넌트의 `props`로 전달되지 않습니다. 자식 컴포넌트에서 `key` 값을 사용하려면 별도 prop으로 명시적으로 내려야 합니다.
-
-```jsx
-// key는 props.key로 접근 불가
-function Item({ id, name }) {
-  // ❌ props.key로 받을 수 없음
-  return <li data-id={id}>{name}</li>;
-}
-
-// 렌더링 시: key와 id를 둘 다 전달
-{items.map(item => (
-  <Item key={item.id} id={item.id} name={item.name} />
-))}
-```
-
-`key`에 대한 더 자세한 내용은 다음 글에서 다룹니다.
-
----
-
-**지난 글:** [조건부 렌더링](/posts/react-conditional-rendering/)
-
-**다음 글:** [key의 역할과 올바른 사용](/posts/react-keys/)
+**지난 글:** [조건부 렌더링 — 상황에 따라 다른 UI 보여주기](/posts/react-conditional-rendering/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif;background:#0a0a0a">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">조건부 렌더링 함정과 해결책</text>
+  <text x="440" y="72" font-size="14" fill="#888" text-anchor="middle">흔히 만나는 3가지 실수와 올바른 패턴</text>
+
+  <!-- Pitfall 1: 0 -->
+  <rect x="55" y="95" width="370" height="155" rx="8" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="118" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">함정 1: 숫자 0 렌더링</text>
+  <rect x="70" y="128" width="340" height="108" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="82" y="148" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono',monospace" xml:space="preserve">// ❌ count=0이면 "0" 출력</text>
+  <text x="82" y="166" font-size="13" fill="#e05555" font-family="'JetBrains Mono',monospace" xml:space="preserve">{items.length &amp;&amp; &lt;List /&gt;}</text>
+  <text x="82" y="184" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono',monospace" xml:space="preserve">// ✅ 해결: boolean으로 변환</text>
+  <text x="82" y="202" font-size="13" fill="#55c555" font-family="'JetBrains Mono',monospace" xml:space="preserve">{items.length &gt; 0 &amp;&amp; &lt;List /&gt;}</text>
+  <text x="82" y="220" font-size="13" fill="#55c555" font-family="'JetBrains Mono',monospace" xml:space="preserve">{!!items.length &amp;&amp; &lt;List /&gt;}</text>
+
+  <!-- Pitfall 2: nested ternary -->
+  <rect x="455" y="95" width="370" height="155" rx="8" fill="#111" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="118" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">함정 2: 중첩 삼항 연산자</text>
+  <rect x="470" y="128" width="340" height="108" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="148" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono',monospace" xml:space="preserve">// ❌ 가독성 최악</text>
+  <text x="482" y="166" font-size="13" fill="#e05555" font-family="'JetBrains Mono',monospace" xml:space="preserve">{a ? &lt;A/&gt; : b ? &lt;B/&gt; : &lt;C/&gt;}</text>
+  <text x="482" y="184" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono',monospace" xml:space="preserve">// ✅ 별도 함수로 추출</text>
+  <text x="482" y="202" font-size="13" fill="#55c555" font-family="'JetBrains Mono',monospace" xml:space="preserve">function</text>
+  <text x="525" y="202" font-size="13" fill="#ffffff" font-family="'JetBrains Mono',monospace" xml:space="preserve"> renderContent() {</text>
+  <text x="482" y="220" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono',monospace" xml:space="preserve">  if</text>
+  <text x="500" y="220" font-size="13" fill="#ffffff" font-family="'JetBrains Mono',monospace" xml:space="preserve"> (a) </text>
+  <text x="528" y="220" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono',monospace" xml:space="preserve">return</text>
+  <text x="570" y="220" font-size="13" fill="#ffffff" font-family="'JetBrains Mono',monospace" xml:space="preserve"> &lt;A/&gt;</text>
+
+  <!-- Pitfall 3: null return -->
+  <rect x="55" y="280" width="370" height="130" rx="8" fill="#111" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="303" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">컴포넌트가 null을 반환하는 경우</text>
+  <rect x="70" y="313" width="340" height="82" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="82" y="333" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono',monospace" xml:space="preserve">// null 반환 = 아무것도 렌더링 안 함</text>
+  <text x="82" y="351" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono',monospace" xml:space="preserve">function</text>
+  <text x="125" y="351" font-size="13" fill="#ffffff" font-family="'JetBrains Mono',monospace" xml:space="preserve"> Banner({ show, msg }) {</text>
+  <text x="82" y="369" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono',monospace" xml:space="preserve">  if</text>
+  <text x="100" y="369" font-size="13" fill="#ffffff" font-family="'JetBrains Mono',monospace" xml:space="preserve"> (!show) </text>
+  <text x="82" y="387" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono',monospace" xml:space="preserve">    return</text>
+  <text x="126" y="387" font-size="13" fill="#b5cea8" font-family="'JetBrains Mono',monospace" xml:space="preserve"> null</text>
+
+  <!-- Note box -->
+  <rect x="455" y="280" width="370" height="130" rx="8" fill="#111118" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="303" font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">선택 기준 요약</text>
+  <text x="640" y="330" font-size="12" fill="#888" text-anchor="middle">단순 보이기/숨기기 → &amp;&amp;</text>
+  <text x="640" y="352" font-size="12" fill="#888" text-anchor="middle">A 또는 B → 삼항 연산자</text>
+  <text x="640" y="374" font-size="12" fill="#888" text-anchor="middle">3가지 이상 → 객체 맵 또는 if/else</text>
+  <text x="640" y="396" font-size="12" fill="#888" text-anchor="middle">진입 조건 검사 → early return</text>
+</svg>

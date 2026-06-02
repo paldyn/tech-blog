@@ -1,92 +1,85 @@
 ---
-title: "children prop으로 컴포넌트 조합하기"
-description: "React children prop의 작동 원리, 받을 수 있는 값의 종류, 레이아웃 컴포넌트·슬롯 패턴·render prop 등 실전 컴포지션 패턴을 설명합니다."
+title: "children prop — 컴포넌트 안에 컴포넌트 넣기"
+description: "React children prop의 개념, 타입 종류, 레이아웃 래퍼 패턴, 슬롯 패턴, 함수 children, 그리고 React.Children API를 완전히 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
-archiveOrder: 3
+pubDate: "2026-06-03"
+archiveOrder: 6
 type: "knowledge"
 category: "React"
-tags: ["React", "children", "컴포지션", "props", "패턴"]
+tags: ["children", "props.children", "슬롯패턴", "레이아웃래퍼", "React패턴", "컴포넌트합성"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-props/)에서 props로 데이터를 전달하는 방법을 살펴봤습니다. props 중에서도 가장 특별한 `children`은 컴포넌트 태그 사이에 넣은 모든 내용을 받는 통로입니다. React가 상속 대신 컴포지션을 권장하는 이유가 바로 이 `children` prop에 있습니다.
-
----
+[지난 글](/posts/react-components/)에서 컴포넌트의 기본 구조와 합성 원칙을 배웠다. 이번 글에서는 컴포넌트 합성에서 핵심 역할을 하는 **children prop**을 깊이 이해한다.
 
 ## children이란
 
-`children`은 컴포넌트 여는 태그와 닫는 태그 사이의 내용을 담는 **특별히 이름 붙여진 prop**입니다.
+JSX에서 여는 태그와 닫는 태그 사이에 있는 모든 내용은 자동으로 `props.children`으로 전달된다.
 
 ```jsx
-// 사용 측 — 태그 사이의 내용이 children
-<Card title="공지">
-  <p>내용입니다.</p>
-  <button>닫기</button>
+<Card>
+  <h2>제목</h2>
+  <p>내용</p>
 </Card>
 
-// 정의 측 — props.children으로 수신
+// 위는 사실상 이것과 같다
+<Card children={[<h2>제목</h2>, <p>내용</p>]} />
+```
+
+컴포넌트 정의에서 `children`을 받아 원하는 위치에 렌더링한다.
+
+```jsx
 function Card({ title, children }) {
   return (
     <div className="card">
-      <h2>{title}</h2>
-      {children}    {/* 여기서 렌더링 */}
+      <h3 className="card-title">{title}</h3>
+      <div className="card-body">
+        {children}  {/* 부모가 넣어준 내용이 여기 들어간다 */}
+      </div>
     </div>
   );
 }
 ```
 
-`children`은 다른 prop과 똑같이 `props.children`으로 접근하거나 구조 분해로 꺼낼 수 있습니다. React가 마법처럼 처리하는 것이 아니라, 단지 이름이 `children`인 일반 prop입니다.
+## children prop 개념
 
-![children prop 작동 원리](/assets/posts/react-children-concept.svg)
+![children prop 개념](/assets/posts/react-children-concept.svg)
 
----
+### children의 타입
 
-## children이 받을 수 있는 값
-
-`children`에는 다양한 타입이 올 수 있습니다.
+`children`은 전달하는 내용에 따라 타입이 달라진다.
 
 ```jsx
-// 문자열
-<Label>이름</Label>         // children = "이름"
+// 1. 문자열
+<Button>클릭하세요</Button>  // children = "클릭하세요"
 
-// 단일 React 요소
-<Box><p>단락</p></Box>      // children = <p>단락</p>
+// 2. 단일 React Element
+<Card><Avatar /></Card>     // children = <Avatar /> (ReactElement 객체)
 
-// 여러 요소 (배열)
-<Box><a /><b /><c /></Box>  // children = [<a/>, <b/>, <c/>]
+// 3. 배열 (여러 자식)
+<List>
+  <Item />
+  <Item />
+</List>                     // children = [<Item />, <Item />]
 
-// 표현식
-<Box>{user.name}</Box>      // children = user.name 값
-
-// 함수 (render prop 패턴)
-<Loader>{data => <List items={data} />}</Loader>
+// 4. null/undefined (없음)
+<Loading />                 // children = undefined
 ```
 
-TypeScript에서 `children`의 타입은 `React.ReactNode`로 선언합니다.
+## children 활용 패턴
 
-```tsx
-interface CardProps {
-  title: string;
-  children: React.ReactNode;   // string | number | JSX.Element | null | undefined | ...
-}
-```
+![children 활용 패턴](/assets/posts/react-children-patterns.svg)
 
----
+### 레이아웃 래퍼 패턴
 
-## 레이아웃 컴포넌트
-
-페이지 전체 구조를 `children`으로 조합하는 패턴입니다. 헤더·사이드바·푸터는 고정하고 본문 영역만 `children`으로 교체합니다.
+가장 흔한 children 사용 패턴이다. 공통 레이아웃(헤더, 사이드바, 푸터)은 래퍼 컴포넌트가 담당하고, 페이지 콘텐츠는 children으로 주입한다.
 
 ```jsx
 function AppLayout({ children }) {
   return (
     <div className="app">
       <Header />
-      <aside className="sidebar">
-        <Nav />
-      </aside>
       <main className="content">
         {children}
       </main>
@@ -99,109 +92,94 @@ function AppLayout({ children }) {
 function HomePage() {
   return (
     <AppLayout>
-      <HeroBanner />
-      <ArticleList />
+      <HeroSection />
+      <FeaturedArticles />
     </AppLayout>
   );
 }
 ```
 
----
+### 슬롯 패턴
 
-## 슬롯 패턴: 여러 삽입 지점
-
-`children` 외에 추가 prop으로 다른 영역도 외부에서 주입할 수 있습니다.
+여러 위치에 다른 내용을 주입하려면 named props를 쓴다. Vue의 named slot과 비슷한 개념이다.
 
 ```jsx
-function Dialog({ header, children, footer }) {
+function Dialog({ header, footer, children }) {
   return (
-    <div className="dialog" role="dialog">
-      {header && <div className="dialog-header">{header}</div>}
+    <dialog className="dialog">
+      <div className="dialog-header">{header}</div>
       <div className="dialog-body">{children}</div>
-      {footer && <div className="dialog-footer">{footer}</div>}
-    </div>
+      <div className="dialog-footer">{footer}</div>
+    </dialog>
   );
 }
 
 // 사용
 <Dialog
-  header={<h2>알림</h2>}
-  footer={<button onClick={onClose}>닫기</button>}
+  header={<h2>삭제 확인</h2>}
+  footer={
+    <>
+      <button onClick={onCancel}>취소</button>
+      <button onClick={onConfirm}>삭제</button>
+    </>
+  }
 >
-  <p>작업이 완료되었습니다.</p>
+  <p>정말 삭제하시겠습니까?</p>
 </Dialog>
 ```
 
-이 패턴은 Angular의 `ng-content`, Vue의 `<slot>`과 동일한 개념입니다.
+## React.Children API
 
-![children 활용 컴포지션 패턴](/assets/posts/react-children-patterns.svg)
-
----
-
-## 함수 children (Render Prop)
-
-`children`이 함수인 경우, 컴포넌트가 데이터를 인자로 넘기며 함수를 호출합니다.
+`children`이 배열인지 단일 요소인지 항상 보장이 안 되는 상황에서 `React.Children` API가 유용하다.
 
 ```jsx
-function DataFetcher({ url, children }) {
-  const [data, setData] = useState(null);
+import { Children, cloneElement } from 'react';
 
-  useEffect(() => {
-    fetch(url).then(r => r.json()).then(setData);
-  }, [url]);
-
-  if (!data) return <Spinner />;
-  return children(data);       // 데이터를 넘기며 children(함수)를 호출
-}
-
-// 사용
-<DataFetcher url="/api/posts">
-  {posts => (
-    <ul>
-      {posts.map(post => <li key={post.id}>{post.title}</li>)}
-    </ul>
-  )}
-</DataFetcher>
-```
-
-로직을 컴포넌트 안에 캡슐화하면서, 렌더링 결과는 외부에서 제어할 수 있습니다.
-
----
-
-## children 다루기 시 주의사항
-
-```jsx
-// children이 없을 수 있으므로 방어적으로 처리
-function Panel({ children }) {
-  if (!children) return null;
-  return <div className="panel">{children}</div>;
-}
-
-// 또는 기본값 설정
-function Panel({ children = <p>내용 없음</p> }) {
-  return <div className="panel">{children}</div>;
-}
-```
-
-`React.Children` API(`React.Children.count`, `React.Children.map` 등)는 `children`을 배열처럼 다루는 유틸리티입니다. 하지만 단일 자식인 경우 `children`이 배열이 아니기 때문에, 직접 `.length`를 호출하면 오류가 발생합니다. `React.Children.count(children)`을 쓰면 단일·복수·null을 일관되게 처리할 수 있습니다.
-
-```jsx
-function List({ children }) {
-  const count = React.Children.count(children); // 0, 1, 또는 n
+function TabGroup({ children, activeIndex }) {
   return (
-    <div>
-      <span>{count}개 항목</span>
-      <ul>{children}</ul>
+    <div className="tabs">
+      {Children.map(children, (child, index) =>
+        cloneElement(child, {
+          isActive: index === activeIndex,
+        })
+      )}
     </div>
+  );
+}
+```
+
+주요 메서드:
+
+| 메서드 | 설명 |
+|--------|------|
+| `Children.map(children, fn)` | 각 child에 함수 적용 |
+| `Children.forEach(children, fn)` | 반환값 없이 순회 |
+| `Children.count(children)` | child 개수 반환 |
+| `Children.only(children)` | child가 정확히 1개인지 검증 |
+| `Children.toArray(children)` | children을 평탄한 배열로 변환 |
+
+> React 18 이후 공식 문서는 `React.Children` 대신 `children`을 배열로 직접 받는 방식을 권장한다. `cloneElement`로 props를 주입하는 대신 context나 명시적 props 전달을 사용하면 코드가 더 명확해진다.
+
+## children 없을 때 처리
+
+```jsx
+function Section({ title, children }) {
+  if (!children) return null;     // children 없으면 렌더링 안 함
+
+  return (
+    <section>
+      <h2>{title}</h2>
+      {children}
+    </section>
   );
 }
 ```
 
 ---
 
-**지난 글:** [props로 데이터 전달하기](/posts/react-props/)
+**지난 글:** [컴포넌트 기초 — React 앱의 기본 구성 단위](/posts/react-components/)
 
-**다음 글:** [Props 스프레딩과 전달 패턴](/posts/react-props-spreading/)
+**다음 글:** [Props — 컴포넌트 간 데이터 전달의 모든 것](/posts/react-props/)
 
 <br>
 읽어주셔서 감사합니다. 😊

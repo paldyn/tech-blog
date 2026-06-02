@@ -1,85 +1,97 @@
 ---
-title: "React.Fragment 완전 이해"
-description: "Fragment가 필요한 이유와 단축 문법(<>), key prop이 필요할 때 명시 문법을 써야 하는 이유, 그리고 Flexbox·테이블 레이아웃에서의 활용 패턴을 정리합니다."
+title: "Fragment — 불필요한 래퍼 없이 여러 요소 반환하기"
+description: "React Fragment의 필요성, 단축 문법과 전체 문법 차이, div 지옥 문제, 그리고 table/dl 같은 시맨틱 HTML 구조를 올바르게 유지하는 방법을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
-archiveOrder: 2
+pubDate: "2026-06-03"
+archiveOrder: 4
 type: "knowledge"
 category: "React"
-tags: ["React", "Fragment", "JSX", "DOM", "레이아웃"]
+tags: ["Fragment", "React.Fragment", "div지옥", "시맨틱HTML", "JSX", "React기초"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-jsx-deep/)에서 JSX가 단일 루트 요소를 요구한다는 것을 확인했습니다. 여러 요소를 반환해야 할 때 `<div>`로 감싸면 DOM에 불필요한 노드가 생깁니다. **Fragment**는 이 문제를 해결하는 React의 특수 컴포넌트입니다.
+[지난 글](/posts/react-jsx-deep/)에서 JSX의 심화 표현식과 패턴을 살펴봤다. 이번 글에서는 React 컴포넌트 작성 시 항상 만나는 제약 — "단일 루트 요소" — 을 깔끔하게 해결해주는 **Fragment**를 다룬다.
 
----
+## 문제: 모든 컴포넌트는 단일 루트를 반환해야 한다
 
-## Fragment가 필요한 이유
-
-HTML `<table>`의 `<tr>` 안에는 `<td>`나 `<th>`만 직접 위치할 수 있습니다. 그런데 여러 `<td>`를 반환하는 컴포넌트를 만들 때 `<div>`로 감싸면 유효하지 않은 DOM이 됩니다.
+JSX는 컴파일 후 단일 함수 호출이 된다. 따라서 여러 요소를 반환하려면 반드시 하나의 부모로 감싸야 한다.
 
 ```jsx
-// ❌ div가 tr과 td 사이에 끼어 DOM이 망가짐
-function Columns() {
+// ❌ 오류: 루트 요소가 2개
+function Greeting() {
+  return (
+    <h1>안녕하세요</h1>
+    <p>React를 배워봅시다</p>
+  );
+}
+
+// 일반적인 해결책: div로 감싸기
+function Greeting() {
   return (
     <div>
-      <td>이름</td>
-      <td>나이</td>
+      <h1>안녕하세요</h1>
+      <p>React를 배워봅시다</p>
     </div>
   );
 }
 ```
 
-Fragment는 DOM에 어떤 노드도 추가하지 않고 여러 자식을 묶어 줍니다.
+div로 감싸는 방식은 작동하지만 두 가지 문제가 있다.
 
-```jsx
-// ✓ Fragment — DOM에 흔적 없음
-function Columns() {
-  return (
-    <>
-      <td>이름</td>
-      <td>나이</td>
-    </>
-  );
-}
-```
+1. **CSS 레이아웃 파괴** — flexbox나 grid 컨텍스트에서 불필요한 div가 낀다
+2. **시맨틱 HTML 위반** — `<table>` 안에 `<tr>`, `<dl>` 안에 `<dt>/<dd>` 등 특정 부모-자식 관계가 강제되는 HTML에서 중간에 div가 끼면 유효하지 않은 구조가 된다
+
+## Fragment로 해결
 
 ![Fragment가 필요한 이유](/assets/posts/react-fragments-why.svg)
 
----
-
-## 두 가지 문법
-
-### 단축 문법 `<>…</>`
-
-가장 일반적인 형태입니다. `React.Fragment`와 동일하게 동작하지만, **`key` prop을 받지 못한다**는 제약이 있습니다.
-
-```jsx
-function Header() {
-  return (
-    <>
-      <h1>제목</h1>
-      <nav>...</nav>
-    </>
-  );
-}
-```
-
-### 명시 문법 `<React.Fragment>`
-
-`key`를 전달해야 하는 경우에만 사용합니다.
+Fragment는 DOM에 아무 요소도 추가하지 않으면서 여러 자식을 그룹화하는 React 전용 컴포넌트다.
 
 ```jsx
 import { Fragment } from 'react';
 
-function List({ items }) {
+function Greeting() {
+  return (
+    <Fragment>
+      <h1>안녕하세요</h1>
+      <p>React를 배워봅시다</p>
+    </Fragment>
+  );
+}
+```
+
+## 단축 문법 `<>...</>`
+
+대부분의 경우 `<>...</>` 단축 문법을 쓴다. 더 간결하고 `import`도 필요 없다.
+
+```jsx
+function Greeting() {
+  return (
+    <>
+      <h1>안녕하세요</h1>
+      <p>React를 배워봅시다</p>
+    </>
+  );
+}
+```
+
+## 단축 문법의 한계: key prop
+
+단축 문법 `<>`는 props를 받을 수 없다. `key` prop이 필요한 리스트 렌더링에서는 전체 문법을 써야 한다.
+
+![Fragment 사용 패턴](/assets/posts/react-fragments-patterns.svg)
+
+```jsx
+import { Fragment } from 'react';
+
+function GlossaryList({ terms }) {
   return (
     <dl>
-      {items.map(item => (
-        <Fragment key={item.id}>
-          <dt>{item.term}</dt>
-          <dd>{item.description}</dd>
+      {terms.map(term => (
+        <Fragment key={term.id}>   {/* key 지정 가능 */}
+          <dt>{term.word}</dt>
+          <dd>{term.definition}</dd>
         </Fragment>
       ))}
     </dl>
@@ -87,78 +99,61 @@ function List({ items }) {
 }
 ```
 
-`Fragment`를 named import로 가져오면 `React.Fragment`보다 짧게 쓸 수 있습니다.
-
----
-
-## key가 있는 Fragment
-
-목록에서 여러 DOM 요소를 하나의 key로 묶어야 할 때 명시 문법이 필수입니다. `dt`/`dd` 쌍이 대표적인 예입니다.
-
-![key가 있는 Fragment 패턴](/assets/posts/react-fragments-keyed.svg)
-
-단축 `<>` 에 `key`를 붙이면 파서 오류가 발생합니다.
+단축 문법 `<>`에 `key`를 붙이면 문법 오류다.
 
 ```jsx
-// ❌ 불가 — 단축 문법은 key 지원 안 함
-{items.map(item => (
-  <key={item.id}>
-    <dt>{item.term}</dt>
-    <dd>{item.desc}</dd>
+// ❌ 오류: <> 에는 props 사용 불가
+{terms.map(term => (
+  <key={term.id}>   {/* 불가 */}
+    <dt>{term.word}</dt>
   </>
-))}
-
-// ✓ React.Fragment (또는 Fragment named import)
-{items.map(item => (
-  <Fragment key={item.id}>
-    <dt>{item.term}</dt>
-    <dd>{item.desc}</dd>
-  </Fragment>
 ))}
 ```
 
----
+## 테이블 컴포넌트 예시
 
-## CSS Flexbox / Grid와 Fragment
-
-Flex 컨테이너 안에 `<div>` 래퍼가 생기면 의도치 않은 레이아웃이 발생합니다.
+Fragment의 실용 가치가 가장 잘 드러나는 사례다.
 
 ```jsx
-// ❌ Flex 아이템이 div로 한 번 더 감싸져 레이아웃 틀어짐
-function Actions() {
-  return (
-    <div>
-      <button>저장</button>
-      <button>취소</button>
-    </div>
-  );
-}
-
-// ✓ Fragment로 감싸면 버튼이 직접 flex 아이템이 됨
-function Actions() {
+function TableRows({ data }) {
   return (
     <>
-      <button>저장</button>
-      <button>취소</button>
+      {data.map(row => (
+        <tr key={row.id}>
+          <td>{row.name}</td>
+          <td>{row.age}</td>
+          <td>{row.city}</td>
+        </tr>
+      ))}
     </>
   );
 }
+
+function UserTable({ users }) {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>나이</th>
+          <th>도시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <TableRows data={users} />
+      </tbody>
+    </table>
+  );
+}
 ```
 
----
-
-## Fragment가 필요 없는 경우
-
-- 반환 요소가 이미 **하나**라면 Fragment는 불필요합니다.
-- 래퍼 `<div>`가 의미상 필요한 경우(예: CSS 스타일 적용 대상)라면 오히려 `<div>`를 쓰세요.
-
-Fragment는 "DOM에 추가 노드를 만들고 싶지 않을 때"만 사용하는 도구입니다.
+`TableRows`가 `<>`를 반환하기 때문에 `<tbody>` 안에 직접 `<tr>` 들이 들어간다. div 래퍼를 썼다면 유효하지 않은 HTML 구조가 됐을 것이다.
 
 ---
 
-**지난 글:** [JSX 심화: 컴파일 과정과 표현식 규칙](/posts/react-jsx-deep/)
+**지난 글:** [JSX 심화 — 표현식, 조건 렌더링, Spread, Children](/posts/react-jsx-deep/)
 
-**다음 글:** [컴포넌트의 개념](/posts/react-components/)
+**다음 글:** [컴포넌트 기초 — React 앱의 기본 구성 단위](/posts/react-components/)
 
 <br>
 읽어주셔서 감사합니다. 😊
