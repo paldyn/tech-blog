@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-warn" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">unmodifiable vs synchronized vs checked 래퍼</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Collections 팩토리가 반환하는 세 가지 방어 래퍼</text>
+
+  <!-- unmodifiable -->
+  <rect x="60" y="88" width="230" height="120" fill="#1a2a1a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="175" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">unmodifiable</text>
+  <text x="80" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">쓰기 시 UnsupportedOperation</text>
+  <text x="80" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">원본 변경 → 뷰에 반영됨</text>
+  <text x="80" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">복사본 아님 — 얕은 방어</text>
+  <text x="80" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">Java 9+: List.of() 사용 권장</text>
+
+  <!-- synchronized -->
+  <rect x="325" y="88" width="230" height="120" fill="#1a1a2a" rx="8" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc">synchronized</text>
+  <text x="345" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">모든 메서드에 mutex 적용</text>
+  <text x="345" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">반복 시 외부 동기화 필수</text>
+  <text x="345" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">전체 잠금 → 경합 시 성능 ↓</text>
+  <text x="345" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">현대: ConcurrentHashMap 선호</text>
+
+  <!-- checked -->
+  <rect x="590" y="88" width="230" height="120" fill="#2a1a1a" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="705" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555">checked</text>
+  <text x="610" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">런타임 타입 검증 추가</text>
+  <text x="610" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">제네릭 소거 우회 방지</text>
+  <text x="610" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">삽입 시 ClassCastException</text>
+  <text x="610" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">레거시 raw 타입 디버깅용</text>
+
+  <!-- Code: unmodifiable usage -->
+  <text x="60" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8e8e8">unmodifiableList 사용 예시</text>
+  <rect x="60" y="260" width="370" height="158" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> mutable = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#ffffff">String&gt;();</tspan></text>
+  <text x="76" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">mutable.add("a"); mutable.add("b");</text>
+  <text x="76" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> view = Collections.unmodifiableList(mutable);</tspan></text>
+  <text x="76" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// view.add("c") → UnsupportedOperationException</text>
+  <text x="76" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">mutable.add("c");</text>
+  <text x="76" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// view.size() == 3 (원본 변경 반영!)</text>
+  <text x="76" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 완전 불변은 List.copyOf(mutable)</text>
+  <text x="76" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 또는 List.of(...)로 생성</text>
+
+  <!-- Code: nCopies / singleton -->
+  <text x="460" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e8e8e8">nCopies · singletonList · emptyList</text>
+  <rect x="460" y="260" width="360" height="158" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// "x"를 5개 가진 불변 리스트</text>
+  <text x="476" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> copies = Collections.nCopies(5, </tspan><tspan fill="#ce9178">"x"</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="476" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// [x, x, x, x, x]</text>
+  <text x="476" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="476" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// null-safe 빈 리스트 (공유 인스턴스)</text>
+  <text x="476" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> empty = Collections.emptyList();</tspan></text>
+  <text x="476" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="476" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 단일 원소 불변 리스트</text>
+  <text x="476" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> single = Collections.singletonList(42);</tspan></text>
+</svg>

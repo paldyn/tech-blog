@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">flatMap 동작 원리와 주요 중간 연산 코드</text>
+
+  <!-- flatMap diagram -->
+  <text x="80" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">flatMap: Stream&lt;Stream&lt;R&gt;&gt; → Stream&lt;R&gt; 평탄화</text>
+
+  <!-- Input streams -->
+  <rect x="64" y="90" width="110" height="36" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="119" y="113" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">[1, 2]</text>
+
+  <rect x="64" y="132" width="110" height="36" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="119" y="155" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">[3, 4]</text>
+
+  <rect x="64" y="174" width="110" height="36" fill="#1a2a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="119" y="197" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">[5, 6]</text>
+
+  <!-- map arrow -->
+  <text x="196" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">map → </text>
+
+  <!-- Nested streams (map result) -->
+  <rect x="244" y="90" width="136" height="36" fill="#0a1a2a" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="312" y="113" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">Stream[1,2]</text>
+
+  <rect x="244" y="132" width="136" height="36" fill="#0a1a2a" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="312" y="155" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">Stream[3,4]</text>
+
+  <rect x="244" y="174" width="136" height="36" fill="#0a1a2a" rx="4" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="312" y="197" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">Stream[5,6]</text>
+
+  <!-- flatMap arrow -->
+  <line x1="390" y1="151" x2="440" y2="151" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="396" y="143" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">flatten</text>
+
+  <!-- Result -->
+  <rect x="448" y="122" width="170" height="58" fill="#1a3a5a" rx="6" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="533" y="148" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="14" font-weight="600" fill="#7ec8e3">[1,2,3,4,5,6]</text>
+  <text x="533" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">단일 평탄화 스트림</text>
+
+  <!-- Code: flatMap, filter, map, sorted, distinct -->
+  <text x="80" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">주요 중간 연산 조합 예시</text>
+  <rect x="64" y="260" width="752" height="160" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> words = List.of(</tspan><tspan fill="#ce9178">"hello world"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"java stream"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"hello java"</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="80" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 각 문장을 단어로 분리 → 중복 제거 → 정렬</text>
+  <text x="80" y="316" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> unique = words.stream()</tspan></text>
+  <text x="80" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    .flatMap(s -&gt; Arrays.stream(s.split(" ")))</text>
+  <text x="80" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    .distinct()</text>
+  <text x="80" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    .sorted()</text>
+  <text x="80" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    .toList();</text>
+  <text x="80" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// [hello, java, stream, world]</text>
+</svg>

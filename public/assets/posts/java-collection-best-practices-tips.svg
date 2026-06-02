@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">컬렉션 모범 사례 — 코드 패턴</text>
+
+  <!-- Left: Initialization tips -->
+  <text x="80" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">초기 용량 지정 · 인터페이스 타입 선언</text>
+  <rect x="64" y="90" width="360" height="240" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 나쁜 예: 구체 타입 노출</text>
+  <text x="80" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">ArrayList</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#ffffff">String&gt; list = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList&lt;&gt;();</tspan></text>
+  <text x="80" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 좋은 예: 인터페이스 타입</text>
+  <text x="80" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">List</tspan><tspan fill="#ffffff">&lt;</tspan><tspan fill="#ffffff">String&gt; list = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList&lt;&gt;();</tspan></text>
+  <text x="80" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="80" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 크기 예측 시 초기 용량 지정</text>
+  <text x="80" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// (재할당 비용 절감)</text>
+  <text x="80" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> n = 10_000;</tspan></text>
+  <text x="80" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> list2 = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ArrayList&lt;String&gt;(n);</tspan></text>
+  <text x="80" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// HashMap: 예상 크기 / 0.75</text>
+  <text x="80" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> map = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> HashMap&lt;String, Integer&gt;(</tspan></text>
+  <text x="80" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    (int)(n / 0.75) + 1);</text>
+
+  <!-- Right: Anti-patterns -->
+  <text x="476" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555">흔한 실수 · 안티패턴</text>
+  <rect x="460" y="90" width="356" height="240" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 반복 중 ConcurrentModification</text>
+  <text x="476" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> (String s : list) {</tspan></text>
+  <text x="476" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    list.remove(s); </text>
+  <text x="476" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// ConcurrentModificationEx!</text>
+  <text x="476" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">}</text>
+  <text x="476" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 올바른 방법</text>
+  <text x="476" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">list.removeIf(s -&gt; condition(s));</text>
+  <text x="476" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// 또는 Iterator 직접 사용</text>
+  <text x="476" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> it = list.iterator();</tspan></text>
+  <text x="476" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">while</tspan><tspan fill="#ffffff"> (it.hasNext()) {</tspan></text>
+  <text x="476" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">    it.next(); it.remove();</text>
+  <text x="476" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff">}</text>
+
+  <!-- Bottom: more tips as boxes -->
+  <rect x="64" y="352" width="220" height="88" fill="#0f2010" rx="6" stroke="#55c555" stroke-width="1"/>
+  <text x="174" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">null 처리 전략</text>
+  <text x="80" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">HashMap: null 키/값 허용</text>
+  <text x="80" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">TreeMap: null 키 불허(비교 불가)</text>
+  <text x="80" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">List.of: null 완전 불허</text>
+
+  <rect x="308" y="352" width="220" height="88" fill="#201020" rx="6" stroke="#7777cc" stroke-width="1"/>
+  <text x="418" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">equals/hashCode</text>
+  <text x="324" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">HashMap 키: 둘 다 반드시 구현</text>
+  <text x="324" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">mutable 객체를 키로 쓰면 위험</text>
+  <text x="324" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">record: 자동 생성됨</text>
+
+  <rect x="552" y="352" width="264" height="88" fill="#1a2a1a" rx="6" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="684" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">반환 타입 권장</text>
+  <text x="568" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">빈 컬렉션 반환 (null 반환 금지)</text>
+  <text x="568" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">List&lt;&gt; → List.of() 또는 emptyList()</text>
+  <text x="568" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">인터페이스 타입으로 선언</text>
+</svg>
