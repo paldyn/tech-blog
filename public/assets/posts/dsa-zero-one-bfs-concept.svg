@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr-01" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-01g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">0-1 BFS — deque로 O(V+E) 최단 경로</text>
+
+  <!-- Left: graph with 0/1 weights -->
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">가중치 0 또는 1인 그래프</text>
+
+  <circle cx="130" cy="130" r="24" fill="#1a3a1a" stroke="#55c555" stroke-width="2.5"/>
+  <text x="130" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">S</text>
+
+  <circle cx="260" cy="90" r="24" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="260" y="95" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">A</text>
+
+  <circle cx="260" cy="190" r="24" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="260" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">B</text>
+
+  <circle cx="380" cy="130" r="24" fill="#2e2a1a" stroke="#e8c060" stroke-width="2"/>
+  <text x="380" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8c060" text-anchor="middle">C</text>
+
+  <circle cx="380" cy="240" r="24" fill="#2e1a1a" stroke="#e05555" stroke-width="2"/>
+  <text x="380" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">D</text>
+
+  <!-- Edges with weights -->
+  <!-- S→A w=0 -->
+  <line x1="152" y1="114" x2="238" y2="98" stroke="#55c555" stroke-width="2.5" marker-end="url(#arr-01g)"/>
+  <text x="192" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" font-weight="700">w=0</text>
+
+  <!-- S→B w=1 -->
+  <line x1="152" y1="146" x2="238" y2="180" stroke="#e05555" stroke-width="2" marker-end="url(#arr-01)"/>
+  <text x="186" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">w=1</text>
+
+  <!-- A→C w=1 -->
+  <line x1="282" y1="103" x2="358" y2="120" stroke="#e05555" stroke-width="2" marker-end="url(#arr-01)"/>
+  <text x="316" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">w=1</text>
+
+  <!-- B→C w=0 -->
+  <line x1="282" y1="182" x2="358" y2="142" stroke="#55c555" stroke-width="2.5" marker-end="url(#arr-01g)"/>
+  <text x="316" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" font-weight="700">w=0</text>
+
+  <!-- B→D w=1 -->
+  <line x1="282" y1="202" x2="356" y2="236" stroke="#e05555" stroke-width="2" marker-end="url(#arr-01)"/>
+  <text x="312" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">w=1</text>
+
+  <!-- dist table -->
+  <text x="60" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">dist from S:</text>
+  <text x="60" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">A=0 (S→A 직접, w=0)</text>
+  <text x="60" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">B=1 (S→B, w=1)</text>
+  <text x="60" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8c060">C=1 (S→A→B(skip)→C via B: S→B→C=1+0=1)</text>
+  <text x="60" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">D=2 (S→B→D=1+1=2)</text>
+
+  <!-- Right: deque mechanics -->
+  <text x="480" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">deque 동작 방식</text>
+
+  <rect x="480" y="88" width="360" height="300" rx="6" fill="#0f0f1a" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="496" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">deque: [S(0)]   dist[S]=0</text>
+  <line x1="496" y1="120" x2="836" y2="120" stroke="#3a4a6e" stroke-width="0.5"/>
+  <text x="496" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">pop_front S(0)</text>
+  <text x="496" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">  w=0 → A: push_FRONT, dist[A]=0</text>
+  <text x="496" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">  w=1 → B: push_BACK,  dist[B]=1</text>
+  <text x="496" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">deque: [A(0), B(1)]</text>
+  <line x1="496" y1="200" x2="836" y2="200" stroke="#3a4a6e" stroke-width="0.5"/>
+  <text x="496" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">pop_front A(0)</text>
+  <text x="496" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">  w=1 → C: push_BACK,  dist[C]=1</text>
+  <text x="496" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">deque: [B(1), C(1)]</text>
+  <line x1="496" y1="262" x2="836" y2="262" stroke="#3a4a6e" stroke-width="0.5"/>
+  <text x="496" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">pop_front B(1)</text>
+  <text x="496" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">  w=0 → C: already dist[C]=1 ≤ 1</text>
+  <text x="496" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555">  w=1 → D: push_BACK,  dist[D]=2</text>
+  <text x="496" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">deque: [C(1), D(2)]</text>
+  <text x="496" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#888">...계속...</text>
+  <text x="496" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">결과: S=0,A=0,B=1,C=1,D=2</text>
+
+  <text x="60" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">w=0: push_front (같은 거리 레이어 유지)  |  w=1: push_back (다음 레이어)</text>
+  <text x="60" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">다익스트라 O((V+E) log V) 대비, 0-1 BFS는 O(V+E) — 가중치가 0/1로 제한될 때 유리</text>
+</svg>
