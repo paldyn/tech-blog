@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">클라우드 메타데이터 SSRF 공격 체인</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="72" width="160" height="64" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="140" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">① 공격자</text>
+  <text x="140" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SSRF 취약점 발견</text>
+  <text x="140" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(URL Fetch 기능)</text>
+
+  <line x1="222" y1="104" x2="298" y2="104" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- Step 2 -->
+  <rect x="300" y="72" width="280" height="64" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="316" y="94" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">② SSRF 요청 전송</text>
+  <text x="316" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">url=http://169.254.169.254/</text>
+  <text x="316" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">latest/meta-data/</text>
+
+  <line x1="582" y1="104" x2="658" y2="104" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- IMDS -->
+  <rect x="660" y="72" width="180" height="64" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="750" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">AWS IMDS</text>
+  <text x="750" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">169.254.169.254</text>
+  <text x="750" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">인증 없이 응답</text>
+
+  <!-- Step 3: get role names -->
+  <line x1="750" y1="138" x2="750" y2="172" stroke="#ce9178" stroke-width="2" marker-end="url(#arr-orange)"/>
+  <rect x="580" y="174" width="340" height="54" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="596" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">③ IAM 역할 이름 조회 응답</text>
+  <text x="596" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" xml:space="preserve">ec2-prod-role</text>
+
+  <!-- Step 4: get credentials -->
+  <line x1="750" y1="230" x2="750" y2="264" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <rect x="460" y="266" width="460" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">④ IAM 자격증명 탈취</text>
+  <text x="476" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">/latest/meta-data/iam/security-credentials/ec2-prod-role</text>
+  <text x="476" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" xml:space="preserve">AccessKeyId: ASIA...</text>
+  <text x="476" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" xml:space="preserve">SecretAccessKey: xxx / Token: yyy</text>
+
+  <!-- Step 5: use credentials -->
+  <line x1="460" y1="316" x2="280" y2="316" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <rect x="60" y="278" width="220" height="76" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="170" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">⑤ 공격자</text>
+  <text x="170" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">탈취한 자격증명으로</text>
+  <text x="170" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">전체 AWS 리소스 접근</text>
+  <text x="170" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">S3, RDS, Lambda 등</text>
+
+  <!-- Cloud provider comparison -->
+  <text x="440" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">주요 클라우드 메타데이터 엔드포인트</text>
+
+  <rect x="60" y="402" width="760" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">AWS IMDSv1:</text>
+  <text x="180" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve"> http://169.254.169.254/latest/meta-data/</text>
+  <text x="76" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">GCP:</text>
+  <text x="120" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve"> http://metadata.google.internal/computeMetadata/v1/</text>
+  <text x="76" y="464" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">Azure:</text>
+  <text x="126" y="464" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve"> http://169.254.169.254/metadata/instance</text>
+  <text x="76" y="484" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">EKS Pod:</text>
+  <text x="156" y="484" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" xml:space="preserve"> $AWS_CONTAINER_CREDENTIALS_RELATIVE_URI</text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Broken Access Control: 주요 유형</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">OWASP Top 10 2021 — A01 (가장 흔한 취약점)</text>
+
+  <!-- Type 1: IDOR -->
+  <rect x="60" y="88" width="370" height="110" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">① IDOR (Insecure Direct Object Reference)</text>
+  <text x="76" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 내 주문: GET /api/orders/1001</text>
+  <text x="76" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve"># 타인 주문: GET /api/orders/1002  → 200 OK?</text>
+  <text x="76" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 소유자 검증 없이 ID만으로 접근 허용</text>
+
+  <!-- Type 2: Privilege Escalation -->
+  <rect x="450" y="88" width="370" height="110" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="635" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">② 수평/수직 권한 상승</text>
+  <text x="466" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 수평: user A가 user B 데이터 접근</text>
+  <text x="466" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve"># 수직: 일반 사용자가 /admin 접근</text>
+  <text x="466" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># URL 직접 입력으로 관리자 기능 접근</text>
+
+  <!-- Type 3: Path Traversal -->
+  <rect x="60" y="216" width="370" height="110" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">③ 경로 순회 (Path Traversal)</text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">GET /files?name=../../../etc/passwd</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 허용 디렉토리 밖의 파일 접근</text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 설정 파일, SSH 키, DB 파일 등</text>
+
+  <!-- Type 4: Missing Function Level -->
+  <rect x="450" y="216" width="370" height="110" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="635" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">④ 기능 수준 접근 제어 누락</text>
+  <text x="466" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">POST /api/admin/deleteUser  → 200 OK</text>
+  <text x="466" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># UI에서 숨겼지만 API는 열려 있음</text>
+  <text x="466" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># role 검증 없는 관리자 엔드포인트</text>
+
+  <!-- Type 5: Mass Assignment -->
+  <rect x="60" y="344" width="370" height="110" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">⑤ 질량 할당 (Mass Assignment)</text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">PUT /users/me</text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">{"name":"Alice","role":"admin"} → OK?</text>
+  <text x="76" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 수정 불가 필드를 사용자가 임의 변경</text>
+
+  <!-- Type 6: Metadata Manipulation -->
+  <rect x="450" y="344" width="370" height="110" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="635" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">⑥ JWT/쿠키 조작</text>
+  <text x="466" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># JWT payload 변조</text>
+  <text x="466" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">{"role":"user"} → {"role":"admin"}</text>
+  <text x="466" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 서명 검증 없는 토큰 수락</text>
+
+  <!-- Bottom bar -->
+  <rect x="60" y="462" width="760" height="28" rx="6" fill="#0d0d0d" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">원칙: 모든 요청에서 인증(누구?) + 인가(무엇을?) 서버 사이드 검증 — UI 숨김은 보안이 아님</text>
+</svg>

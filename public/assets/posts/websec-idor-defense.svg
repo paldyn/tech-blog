@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">IDOR 방어: 소유자 검증과 간접 참조</text>
+
+  <!-- Direct vs Indirect reference -->
+  <text x="220" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">직접 참조 (취약)</text>
+  <text x="660" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">간접 참조 (안전)</text>
+
+  <rect x="60" y="94" width="340" height="110" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// DB의 실제 ID를 URL에 노출</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">GET /documents/42</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">GET /documents/43  </text>
+  <text x="248" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">← 예측 가능</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 순차 ID → 전체 열거 공격 가능</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 소유자 검증 없으면 IDOR!</text>
+
+  <rect x="480" y="94" width="340" height="110" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// UUID로 예측 불가 ID 사용</text>
+  <text x="496" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">GET /documents/8f14e45f...</text>
+  <text x="496" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 예측 어려움 + 소유자 검증 필수</text>
+  <text x="496" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">Document.findOne({</text>
+  <text x="496" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">  id: uuid, owner: req.user.id })</text>
+
+  <!-- REST API pattern -->
+  <text x="440" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">사용자 범위 쿼리 패턴 (user-scoped query)</text>
+
+  <rect x="60" y="244" width="760" height="156" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// Django ORM — 항상 current user로 필터</text>
+  <text x="76" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">class</text>
+  <text x="118" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> DocumentViewSet(viewsets.ModelViewSet):</text>
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    def</text>
+  <text x="112" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> get_queryset(self):</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">        # 모든 조회에 owner=current_user 자동 적용</text>
+  <text x="76" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">        return</text>
+  <text x="128" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> Document.objects.filter(</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">                owner=self.request.user</text>
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        )</text>
+  <text x="76" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">        # retrieve, update, delete 모두 이 queryset에서 동작 → IDOR 방어</text>
+</svg>

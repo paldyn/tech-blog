@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="48" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Reflected XSS 공격 흐름</text>
+
+  <!-- Step labels -->
+  <!-- Step 1: Attacker crafts URL -->
+  <rect x="60" y="90" width="200" height="64" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="160" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">① 공격자</text>
+  <text x="160" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">악성 URL 생성</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="262" y1="122" x2="338" y2="122" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="300" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전송</text>
+
+  <!-- Step 2: Victim clicks link -->
+  <rect x="340" y="90" width="200" height="64" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">② 피해자</text>
+  <text x="440" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">링크 클릭</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="542" y1="122" x2="618" y2="122" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="580" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">요청</text>
+
+  <!-- Step 3: Server -->
+  <rect x="620" y="90" width="200" height="64" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="720" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ 서버</text>
+  <text x="720" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">입력 그대로 반사</text>
+
+  <!-- Arrow 3 down to response -->
+  <line x1="720" y1="155" x2="720" y2="209" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Step 4: Response with script -->
+  <rect x="60" y="212" width="760" height="90" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">HTTP Response (악성 스크립트 포함)</text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">GET</text>
+  <text x="116" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> /search?q=</text>
+  <text x="230" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">&lt;script&gt;alert(1)&lt;/script&gt;</text>
+  <text x="76" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">→ 검색결과: </text>
+  <text x="180" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">&lt;script&gt;alert(1)&lt;/script&gt;</text>
+
+  <!-- Arrow response to victim browser -->
+  <line x1="440" y1="302" x2="440" y2="356" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="455" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">브라우저 실행</text>
+
+  <!-- Step 5: Browser executes script -->
+  <rect x="60" y="358" width="340" height="64" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">④ 피해자 브라우저</text>
+  <text x="230" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">스크립트 실행 → 쿠키 탈취</text>
+
+  <!-- Arrow victim to attacker server -->
+  <line x1="402" y1="390" x2="478" y2="390" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="440" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">데이터 전송</text>
+
+  <!-- Step 6: Attacker server receives data -->
+  <rect x="480" y="358" width="340" height="64" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="650" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">⑤ 공격자 서버</text>
+  <text x="650" y="406" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">세션 쿠키 수집</text>
+
+  <!-- Key point box -->
+  <rect x="60" y="450" width="760" height="50" rx="8" fill="#0d0d0d" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">핵심: 서버가 입력값을 검증 없이 HTML에 반사 → 브라우저가 스크립트로 해석하여 실행</text>
+  <text x="440" y="491" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">URL 파라미터, 검색어, 에러 메시지 등 즉시 응답에 포함되는 모든 입력이 대상</text>
+</svg>

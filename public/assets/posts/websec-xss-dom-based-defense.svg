@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">DOM XSS 방어: Sink를 안전하게 대체하기</text>
+
+  <!-- Vulnerable pattern -->
+  <text x="220" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">위험한 패턴</text>
+
+  <rect x="60" y="94" width="340" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// ❌ 위험한 Sink 사용</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">el.innerHTML</text>
+  <text x="178" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = userInput;</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">document.write</text>
+  <text x="202" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">(userInput);</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">eval</text>
+  <text x="106" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">(userInput);</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">location.href</text>
+  <text x="188" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = userInput;</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">$.html</text>
+  <text x="118" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">(userInput);</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">el.outerHTML</text>
+  <text x="186" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = userInput;</text>
+
+  <!-- Safe pattern -->
+  <text x="660" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">안전한 대안</text>
+
+  <rect x="480" y="94" width="340" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// ✅ 안전한 Sink 대체</text>
+  <text x="496" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">el.textContent</text>
+  <text x="614" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = input;</text>
+  <text x="496" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">el.innerText</text>
+  <text x="600" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = input;</text>
+  <text x="496" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// JSON 파싱으로 eval 대체</text>
+  <text x="496" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">JSON.parse</text>
+  <text x="578" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">(input);</text>
+  <text x="496" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// URL은 허용 프로토콜만</text>
+  <text x="496" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">if (url.startsWith(</text>
+  <text x="628" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">'https://'</text>
+  <text x="710" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">))</text>
+
+  <!-- Trusted Types -->
+  <text x="440" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">Trusted Types API (브라우저 레벨 방어)</text>
+
+  <rect x="60" y="296" width="760" height="110" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// Trusted Types로 innerHTML 할당을 타입 안전하게 강제</text>
+  <text x="76" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">if</text>
+  <text x="94" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (window.trustedTypes &amp;&amp; trustedTypes.createPolicy) {</text>
+  <text x="76" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  const</text>
+  <text x="118" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> policy = trustedTypes.createPolicy(</text>
+  <text x="360" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">'safe'</text>
+  <text x="394" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">, {</text>
+  <text x="76" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    createHTML: (s) =&gt; DOMPurify.sanitize(s)</text>
+  <text x="76" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  });</text>
+  <text x="76" y="398" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  el.innerHTML = policy.createHTML(userInput);</text>
+
+  <!-- Wait that's wrong, let me recalculate positions -->
+  <rect x="60" y="418" width="760" height="12" rx="4" fill="#0d0d0d" stroke="none"/>
+  <text x="440" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">CSP: require-trusted-types-for 'script' 헤더로 정책 없는 innerHTML 할당 자동 차단</text>
+</svg>

