@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">LimitRange Admission 처리 흐름</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Pod/Container 생성 시 기본값 주입 및 범위 검증</text>
+
+  <!-- Step 1: Pod create request -->
+  <rect x="60" y="96" width="160" height="60" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="140" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Pod 생성 요청</text>
+  <text x="140" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">resources 미지정</text>
+
+  <!-- Arrow -->
+  <line x1="220" y1="126" x2="278" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Step 2: Admission Controller -->
+  <rect x="278" y="96" width="200" height="60" fill="#1a1420" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="378" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">LimitRanger</text>
+  <text x="378" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Admission Controller</text>
+  <text x="378" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">네임스페이스 LimitRange 조회</text>
+
+  <!-- Arrow right -->
+  <line x1="478" y1="126" x2="536" y2="126" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Step 3: Check -->
+  <rect x="536" y="96" width="180" height="60" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="626" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">범위 검사</text>
+  <text x="626" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">min ≤ request ≤ max ?</text>
+  <text x="626" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">request ≤ limit ?</text>
+
+  <!-- Allow arrow -->
+  <line x1="716" y1="114" x2="796" y2="114" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="756" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">통과</text>
+  <rect x="796" y="96" width="44" height="36" fill="#0a1a0a" rx="6" stroke="#55c555" stroke-width="1.5"/>
+  <text x="818" y="119" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" fill="#55c555" text-anchor="middle">✓</text>
+
+  <!-- Reject arrow -->
+  <line x1="716" y1="138" x2="796" y2="160" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="756" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">위반</text>
+  <rect x="796" y="148" width="44" height="36" fill="#1a0a0a" rx="6" stroke="#e05555" stroke-width="1.5"/>
+  <text x="818" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" fill="#e05555" text-anchor="middle">✗</text>
+  <text x="818" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">403 거부</text>
+
+  <!-- Default injection box -->
+  <rect x="278" y="196" width="440" height="90" fill="#0a1015" rx="8" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="498" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">기본값 자동 주입 (Mutating)</text>
+  <text x="498" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">requests 미지정 → defaultRequest 값으로 채움</text>
+  <text x="498" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">limits 미지정 → default 값으로 채움</text>
+  <text x="498" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">이미 지정된 값은 변경하지 않음</text>
+
+  <!-- Arrow from LimitRanger down -->
+  <line x1="378" y1="156" x2="378" y2="196" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-b)"/>
+
+  <!-- Code block -->
+  <rect x="60" y="306" width="760" height="110" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#888"># LimitRange 적용 전후 비교</text>
+  <text x="80" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#888"># 적용 전: resources 없음</text>
+  <text x="80" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#ffffff">kubectl describe pod mypod | grep -A6 Limits</text>
+  <text x="80" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#888"># Limits:  cpu: 200m  memory: 256Mi  (주입된 default)</text>
+  <text x="80" y="408" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#888"># Requests: cpu: 100m  memory: 128Mi  (주입된 defaultRequest)</text>
+</svg>

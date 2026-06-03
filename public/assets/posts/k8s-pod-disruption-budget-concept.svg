@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PodDisruptionBudget (PDB) 개념</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">minAvailable · maxUnavailable · 자발적 중단 보호</text>
+
+  <!-- PDB Spec Box -->
+  <rect x="60" y="100" width="360" height="240" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3" text-anchor="middle">PDB 스펙 설정</text>
+
+  <!-- minAvailable -->
+  <rect x="80" y="140" width="320" height="56" fill="#0a1a0a" rx="6" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="100" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">minAvailable: 2</text>
+  <text x="100" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">최소 2개 Pod가 항상 Available 상태여야 함</text>
+
+  <!-- maxUnavailable -->
+  <rect x="80" y="208" width="320" height="56" fill="#1a0a0a" rx="6" stroke="#5a2a2a" stroke-width="1"/>
+  <text x="100" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">maxUnavailable: 1</text>
+  <text x="100" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">동시에 최대 1개 Pod만 Unavailable 허용</text>
+
+  <!-- selector -->
+  <rect x="80" y="276" width="320" height="48" fill="#0d0d1a" rx="6" stroke="#3a3a6e" stroke-width="1"/>
+  <text x="100" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">selector</text>
+  <text x="100" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">matchLabels: {app: web-server}</text>
+
+  <!-- Right side: Pod status visualization -->
+  <rect x="460" y="100" width="360" height="240" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8" text-anchor="middle">Pod 상태 시나리오 (replicas=4)</text>
+
+  <!-- Scenario 1: OK -->
+  <text x="480" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">✓ 허용 (available=3, unavailable=1)</text>
+  <!-- 4 pods, 3 green 1 gray -->
+  <rect x="480" y="160" width="50" height="28" fill="#1a3a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="505" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">Pod1</text>
+  <rect x="538" y="160" width="50" height="28" fill="#1a3a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="563" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">Pod2</text>
+  <rect x="596" y="160" width="50" height="28" fill="#1a3a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="621" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">Pod3</text>
+  <rect x="654" y="160" width="50" height="28" fill="#2a2a2a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="679" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod4</text>
+
+  <!-- Scenario 2: Blocked -->
+  <text x="480" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">✗ 차단 (available=2, 추가 중단 불가)</text>
+  <rect x="480" y="225" width="50" height="28" fill="#1a3a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="505" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">Pod1</text>
+  <rect x="538" y="225" width="50" height="28" fill="#1a3a1a" rx="4" stroke="#55c555" stroke-width="1"/>
+  <text x="563" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">Pod2</text>
+  <rect x="596" y="225" width="50" height="28" fill="#2a2a2a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="621" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod3</text>
+  <rect x="654" y="225" width="50" height="28" fill="#2a2a2a" rx="4" stroke="#555" stroke-width="1"/>
+  <text x="679" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod4</text>
+  <!-- Block icon -->
+  <circle cx="760" cy="239" r="14" fill="#3a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="760" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">✗</text>
+
+  <!-- Scenario 3: percentage -->
+  <text x="480" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">% 표기: minAvailable: "75%"도 허용</text>
+  <rect x="480" y="290" width="220" height="28" fill="#0d0d1a" rx="4" stroke="#7777cc" stroke-width="1"/>
+  <text x="590" y="309" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc" text-anchor="middle">replicas × 75% = 최소 3개 보호</text>
+
+  <!-- Code block -->
+  <rect x="60" y="362" width="760" height="128" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#7ec8e3" font-weight="600">apiVersion:</text>
+  <text x="168" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#ce9178"> policy/v1</text>
+  <text x="80" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#7ec8e3" font-weight="600">kind:</text>
+  <text x="117" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#ce9178"> PodDisruptionBudget</text>
+  <text x="80" y="426" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#7ec8e3" font-weight="600">spec:</text>
+  <text x="80" y="446" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#7ec8e3" font-weight="600">  minAvailable:</text>
+  <text x="200" y="446" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#b5cea8"> 2</text>
+  <text x="80" y="466" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#7ec8e3" font-weight="600">  selector:</text>
+  <text x="80" y="484" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#ffffff">    matchLabels: {app: web}</text>
+</svg>

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Cluster Autoscaler 스케일 결정 흐름</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Pending Pod 감지 → 노드 그룹 평가 → 노드 추가/제거</text>
+
+  <!-- Scale Up path -->
+  <text x="220" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Scale-Up 경로</text>
+
+  <rect x="60" y="112" width="160" height="54" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="140" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8" text-anchor="middle">Pending Pods</text>
+  <text x="140" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">스케줄 불가 Pod 감지</text>
+
+  <line x1="220" y1="139" x2="276" y2="139" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <rect x="276" y="112" width="180" height="54" fill="#0f1923" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="366" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">노드 그룹 시뮬레이션</text>
+  <text x="366" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">추가 시 Pod 수용 가능?</text>
+
+  <line x1="456" y1="139" x2="516" y2="139" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <rect x="516" y="112" width="160" height="54" fill="#0f1923" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="596" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">최선 노드 그룹 선택</text>
+  <text x="596" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">expander 전략 적용</text>
+
+  <line x1="676" y1="139" x2="736" y2="139" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <rect x="736" y="112" width="104" height="54" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="788" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">노드 추가</text>
+  <text x="788" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Cloud API 호출</text>
+
+  <!-- Scale Down path -->
+  <text x="220" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Scale-Down 경로</text>
+
+  <rect x="60" y="220" width="160" height="54" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="140" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8" text-anchor="middle">저사용 노드 감지</text>
+  <text x="140" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">50% 미만 10분 이상</text>
+
+  <line x1="220" y1="247" x2="276" y2="247" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <rect x="276" y="220" width="180" height="54" fill="#0f1923" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="366" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">이주 가능성 확인</text>
+  <text x="366" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod 이동 가능? PDB OK?</text>
+
+  <line x1="456" y1="247" x2="516" y2="247" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <rect x="516" y="220" width="160" height="54" fill="#0f1923" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="596" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">Pod drain &amp; 이주</text>
+  <text x="596" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">PDB 준수</text>
+
+  <line x1="676" y1="247" x2="736" y2="247" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+
+  <rect x="736" y="220" width="104" height="54" fill="#1a0a0a" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="788" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">노드 제거</text>
+  <text x="788" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Cloud API 호출</text>
+
+  <!-- Blocker conditions -->
+  <rect x="60" y="296" width="760" height="80" fill="#0f1923" rx="8" stroke="#e8a020" stroke-width="1"/>
+  <text x="440" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8a020" text-anchor="middle">Scale-Down 차단 조건</text>
+  <text x="100" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• cluster-autoscaler.kubernetes.io/safe-to-evict: "false" 어노테이션</text>
+  <text x="100" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• PodDisruptionBudget 위반 · kube-system 중요 Pod · local storage 사용 Pod</text>
+
+  <!-- Code block -->
+  <rect x="60" y="394" width="760" height="66" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#888"># CA 이벤트 로그 확인</text>
+  <text x="80" y="434" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#ffffff">kubectl -n kube-system logs -l app=cluster-autoscaler --tail=50</text>
+  <text x="80" y="452" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#888"># "Scale-up: group=ng-xxx, nodes=2" / "Scale-down: removing node ng-xxx-3"</text>
+</svg>

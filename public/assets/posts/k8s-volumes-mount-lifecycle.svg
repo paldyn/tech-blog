@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Volume 마운트 생명주기와 subPath</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">volumes 선언 → volumeMounts 참조 → subPath 활용</text>
+
+  <!-- Pod spec structure -->
+  <rect x="60" y="90" width="520" height="240" fill="#0f1923" rx="8" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="320" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Pod Spec</text>
+
+  <rect x="76" y="124" width="488" height="192" fill="#000000" rx="5" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">containers:</text>
+  <text x="96" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">- name: app</text>
+  <text x="96" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">  volumeMounts:</text>
+  <text x="96" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">  - name: data</text>
+  <text x="96" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">    mountPath: /var/data</text>
+  <text x="96" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ce9178">    subPath: app1    </text>
+  <text x="330" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#888"># 볼륨 내 특정 서브디렉토리만 마운트</text>
+  <text x="96" y="252" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">volumes:</text>
+  <text x="96" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">- name: data</text>
+  <text x="96" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">  persistentVolumeClaim: {claimName: shared-data}</text>
+  <text x="96" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#888">  # volumes.name == volumeMounts.name 참조</text>
+
+  <!-- Volume directory structure -->
+  <rect x="610" y="90" width="230" height="240" fill="#0f1923" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="725" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">볼륨 내 디렉토리</text>
+
+  <rect x="626" y="124" width="198" height="192" fill="#0a1015" rx="5" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="646" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#888">/shared-data/</text>
+  <text x="646" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#55c555">  ├── app1/   ← subPath</text>
+  <text x="646" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#888">  │    (→ /var/data)</text>
+  <text x="646" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#888">  ├── app2/</text>
+  <text x="646" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#888">  └── shared/</text>
+  <text x="726" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">동일 볼륨을 여러 컨테이너가</text>
+  <text x="726" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">다른 서브경로로 분리해 사용</text>
+
+  <!-- Important notes box -->
+  <rect x="60" y="350" width="760" height="70" fill="#1a1420" rx="8" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">주요 주의사항</text>
+  <text x="100" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• emptyDir: Pod 재시작 후에도 유지 (노드 재시작 시 삭제)</text>
+  <text x="480" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• subPath 사용 시 ConfigMap 핫 리로드 안 됨</text>
+  <text x="100" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• hostPath: 보안 위험 (privileged 노드 접근) — 프로덕션 사용 자제</text>
+</svg>

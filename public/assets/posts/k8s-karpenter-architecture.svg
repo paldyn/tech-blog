@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Karpenter 프로비저닝 아키텍처</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">NodePool + EC2NodeClass → Pod 요건에 맞는 최적 노드 즉시 생성</text>
+
+  <!-- Pending Pods -->
+  <rect x="60" y="98" width="160" height="64" fill="#0f1923" rx="8" stroke="#e05555" stroke-width="1"/>
+  <text x="140" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">Pending Pods</text>
+  <text x="140" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">nodeSelector / affinity</text>
+  <text x="140" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">resource request 분석</text>
+
+  <!-- Arrow to Karpenter -->
+  <line x1="220" y1="130" x2="276" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Karpenter Controller -->
+  <rect x="276" y="98" width="200" height="64" fill="#1a1420" rx="8" stroke="#7777cc" stroke-width="2"/>
+  <text x="376" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">Karpenter</text>
+  <text x="376" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod 요건 수집</text>
+  <text x="376" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">최적 인스턴스 타입 선택</text>
+
+  <!-- Arrow to Cloud API -->
+  <line x1="476" y1="130" x2="540" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+
+  <!-- Cloud Provider -->
+  <rect x="540" y="98" width="160" height="64" fill="#0f1923" rx="8" stroke="#e8a020" stroke-width="1.5"/>
+  <text x="620" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8a020" text-anchor="middle">Cloud API</text>
+  <text x="620" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">EC2 CreateFleet</text>
+  <text x="620" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">(60초 내 노드 준비)</text>
+
+  <!-- New Node -->
+  <line x1="700" y1="130" x2="760" y2="130" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <rect x="760" y="98" width="80" height="64" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="800" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">New</text>
+  <text x="800" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Node</text>
+
+  <!-- NodePool box -->
+  <rect x="60" y="196" width="380" height="140" fill="#0f1923" rx="8" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="250" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">NodePool (v1)</text>
+  <rect x="76" y="230" width="348" height="92" fill="#000000" rx="5" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="96" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">spec.template.spec:</text>
+  <text x="96" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">  requirements:            </text>
+  <text x="96" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">  - key: karpenter.sh/capacity-type</text>
+  <text x="96" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ce9178">    values: [spot, on-demand]</text>
+
+  <!-- EC2NodeClass box -->
+  <rect x="460" y="196" width="380" height="140" fill="#0f1923" rx="8" stroke="#e8a020" stroke-width="1"/>
+  <text x="650" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8a020" text-anchor="middle">EC2NodeClass</text>
+  <rect x="476" y="230" width="348" height="92" fill="#000000" rx="5" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">spec:</text>
+  <text x="496" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">  amiFamily: AL2023</text>
+  <text x="496" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ffffff">  subnetSelectorTerms:</text>
+  <text x="496" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="12" fill="#ce9178">    - tags: {karpenter.sh/discovery: eks}</text>
+
+  <!-- Consolidation box -->
+  <rect x="60" y="356" width="760" height="80" fill="#0f1923" rx="8" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Consolidation (통합 최적화)</text>
+  <text x="120" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• WhenEmptyOrUnderutilized: 저사용 노드 Pod를 다른 노드로 이주 후 노드 삭제</text>
+  <text x="120" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 더 저렴한 인스턴스 타입으로 대체 가능할 때 노드 교체 (예: m5.2xl → m5.xl 2개)</text>
+
+  <!-- Code snippet -->
+  <rect x="60" y="452" width="760" height="30" fill="#000000" rx="5" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="472" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        xml:space="preserve" font-size="13" fill="#ffffff">spec.disruption: {consolidationPolicy: WhenEmptyOrUnderutilized, consolidateAfter: 30s}</text>
+</svg>
