@@ -1,57 +1,58 @@
 ---
-title: "TypeScript 완전 정복 ②: 왜 지금 TypeScript인가"
-description: "TypeScript가 단순한 유행이 아닌 이유. 생산성, 오류 예방, 생태계 지원, 팀 협업 측면에서 TypeScript 도입의 실질적 이유를 설명합니다."
+title: "왜 TypeScript인가: 정적 타입이 바꾸는 개발 경험"
+description: "JavaScript로 충분한데 왜 TypeScript를 써야 하는가? 에러 조기 검출, IDE 지원, 리팩터링 안전성 등 TypeScript 도입의 실질적 이유를 코드로 설명한다."
 author: "PALDYN Team"
-pubDate: "2026-06-02"
+pubDate: "2026-06-04"
 archiveOrder: 2
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "생산성", "타입안전성", "에코시스템", "정적타입"]
+tags: ["TypeScript", "정적타입", "타입에러", "IDE지원", "리팩터링", "코드품질"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-essence/)에서 TypeScript가 JavaScript의 상위 집합이며 컴파일 타임 타입 검사를 제공한다는 것을 살펴봤다. 이번 글에서는 더 구체적인 질문을 다룬다: "TypeScript를 왜 **지금** 써야 하는가?" 단순한 트렌드가 아니라 실질적인 이유를 정리한다.
+[지난 글](/posts/ts-essence/)에서 TypeScript가 무엇인지, JavaScript와 어떤 관계인지를 살펴봤다. 이번 편에서는 "왜 굳이 TypeScript를 써야 하는가?"라는 현실적인 질문에 정면으로 답한다.
 
-## TypeScript 도입의 5가지 핵심 이유
+## 같은 버그, 다른 발견 시점
 
-![TypeScript를 써야 하는 5가지 이유](/assets/posts/ts-why-typescript-adoption.svg)
+TypeScript의 핵심 가치는 단순하다. **에러를 더 일찍, 더 저렴하게 발견한다.** 아래 코드를 보자.
 
-### 이유 1: 오류를 코딩 중에 발견한다
+![컴파일 타임 vs 런타임 에러 검출](/assets/posts/ts-why-typescript-errors.svg)
 
-TypeScript의 가장 직접적인 이점은 버그를 런타임이 아닌 **코드 작성 중에** 잡는다는 것이다. 아래 예시를 보자.
+JavaScript에서는 `add("1", 2)`를 호출해도 아무 에러가 없다. 문자열과 숫자를 `+`로 연결하면 `"12"`가 되기 때문이다. 이 버그는 실행한 사람이 이상한 결과를 봐야만 드러난다.
+
+TypeScript에서는 같은 코드가 컴파일 단계에서 즉시 에러를 발생시킨다.
 
 ```typescript
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  stock: number;
+function add(a: number, b: number): number {
+  return a + b;
 }
 
-function applyDiscount(product: Product, rate: number): Product {
-  return {
-    ...product,
-    price: product.price * (1 - rate),
-  };
-}
-
-// 실수: 객체 대신 id만 전달
-// applyDiscount(42, 0.1); // 오류: Argument of type 'number' is not assignable
-//                          // to parameter of type 'Product'
-
-// 실수: 존재하지 않는 필드 접근
-// product.discount; // 오류: Property 'discount' does not exist on type 'Product'
+add("1", 2);
+// Error: Argument of type 'string' is not assignable
+//        to parameter of type 'number'.
 ```
 
-JavaScript였다면 이 오류들은 런타임에야 발견된다. TypeScript는 에디터에서 빨간 밑줄로 즉시 알려준다.
+에디터가 빨간 물결선으로 즉시 표시하고, 저장하거나 빌드할 때 컴파일이 중단된다. 사용자가 프로덕션 버그를 보기 전에 개발자가 먼저 알게 된다.
 
-### 이유 2: 자동완성과 리팩터링이 정확해진다
+## 버그 발견 비용의 차이
 
-타입 정보가 있으면 에디터(VS Code 등)가 정확한 자동완성을 제공한다. `.`을 입력하면 그 객체에 실제로 존재하는 프로퍼티만 제안한다. JavaScript에서는 "이 객체에 어떤 필드가 있더라?" 하고 문서나 소스를 찾아야 했다.
+소프트웨어 공학의 오래된 법칙이 있다. 버그를 수정하는 비용은 발견하는 시점이 늦을수록 기하급수적으로 늘어난다.
+
+| 발견 시점 | 상대적 비용 |
+|-----------|------------|
+| 코딩 중 (IDE가 표시) | 1배 |
+| 코드 리뷰 | 6배 |
+| QA 테스트 | 15배 |
+| 프로덕션 | 100배+ |
+
+TypeScript는 버그를 "코딩 중"으로 끌어당긴다. 에디터가 실시간으로 타입 오류를 표시하기 때문에 코드를 작성하는 순간에 바로 수정할 수 있다.
+
+## 강력한 IDE 지원
+
+TypeScript를 쓰는 또 다른 이유는 **개발 경험(DX)의 극적인 향상**이다.
 
 ```typescript
-// 에디터가 user. 입력 시 id, name, email, createdAt 자동 제안
 interface User {
   id: number;
   name: string;
@@ -59,89 +60,65 @@ interface User {
   createdAt: Date;
 }
 
-function formatUser(user: User) {
-  return `${user.name} <${user.email}>`; // 자동완성으로 빠르게 작성
+function formatUser(user: User): string {
+  // 여기서 Ctrl+Space를 누르면 user.id, user.name,
+  // user.email, user.createdAt이 자동완성된다.
+  return `${user.name} (${user.email})`;
 }
 ```
 
-리팩터링도 안전해진다. 함수 이름이나 인터페이스 필드명을 바꾸면 그것을 참조하는 모든 곳에서 컴파일 오류가 발생해, 무엇을 고쳐야 하는지 명확하게 알 수 있다.
+타입 정보가 있으면 에디터는 다음을 제공할 수 있다.
 
-### 이유 3: 코드가 문서가 된다
+- **정확한 자동완성**: 객체의 프로퍼티만 정확히 제안한다. 오타나 없는 프로퍼티는 에러로 표시된다.
+- **타입 힌트(Hover)**: 함수 시그니처, 반환 타입을 즉시 확인한다.
+- **정의로 이동(F12)**: 타입/함수가 어디서 선언됐는지 한 키로 이동한다.
+- **참조 찾기(Shift+F12)**: 이 타입이 코드 전체에서 어디서 사용되는지 한번에 확인한다.
 
-타입 어노테이션은 코드의 의도를 표현하는 가장 신뢰할 수 있는 문서다. 주석은 코드가 바뀌어도 업데이트되지 않을 수 있지만, 타입은 항상 실제 코드와 일치한다.
+## 살아있는 문서화
+
+TypeScript 타입은 코드의 **계약서(contract)**다. 함수 시그니처를 보면 무엇을 받고 무엇을 반환하는지 즉시 알 수 있다.
 
 ```typescript
-// 타입이 없는 JavaScript — 매개변수의 의미를 알기 어려움
-function createOrder(userId, items, couponCode, addressId) { }
+// 타입 없이는 내부를 읽어야 이해된다
+function processPayment(data, options) { ... }
 
-// TypeScript — 타입 자체가 문서
-type OrderItem = { productId: number; quantity: number; };
-type CouponCode = string | null;
-
-function createOrder(
-  userId: number,
-  items: OrderItem[],
-  couponCode: CouponCode,
-  addressId: number
-): Promise<Order> { }
+// 타입이 있으면 호출 전에 계약을 알 수 있다
+function processPayment(
+  data: PaymentData,
+  options?: { retries?: number; timeout?: number }
+): Promise<PaymentResult> { ... }
 ```
 
-두 번째 함수는 JSDoc 주석 없이도 파라미터의 의미가 명확하다.
+별도 주석이나 문서 없이도 함수를 어떻게 써야 하는지 타입이 알려준다. 더 중요한 것은 이 "문서"가 코드와 항상 동기화된다는 점이다. 주석은 코드가 바뀌어도 방치되지만, 타입은 컴파일러가 강제한다.
 
-### 이유 4: 대규모 팀과 코드베이스를 지탱한다
+## 안전한 대규모 리팩터링
 
-5명이 넘는 팀에서 JavaScript로 개발하면 흔히 이런 일이 생긴다: 팀원 A가 함수 시그니처를 바꿨는데, 팀원 B가 작성한 코드가 이전 시그니처를 사용해 런타임 오류가 발생한다. TypeScript는 이런 암묵적 계약 위반을 컴파일 타임에 잡아낸다.
+TypeScript 도입의 가장 극적인 효과는 리팩터링 자신감이다.
 
 ```typescript
-// 팀원 A가 함수를 수정 (email 필수 추가)
-function createUser(name: string, email: string): User {
-  return { id: Math.random(), name, email };
+// User 인터페이스에서 'email' 필드를 'emailAddress'로 이름 변경
+interface User {
+  id: number;
+  name: string;
+  emailAddress: string;  // 'email' → 'emailAddress'
 }
-
-// 팀원 B의 기존 코드 — 이제 컴파일 오류 발생
-// createUser("Alice"); // 오류: Expected 2 arguments, but got 1
-// 런타임이 아니라 빌드 타임에 발견됨
 ```
 
-### 이유 5: 생태계가 TypeScript 퍼스트다
+이 변경 후 `tsc`를 실행하면 프로젝트 전체에서 `user.email`을 참조하는 모든 지점이 에러로 표시된다. 수천 개의 파일을 수동으로 grep할 필요 없이, 컴파일러가 영향 범위를 정확히 알려준다.
 
-![TypeScript 생태계 현황](/assets/posts/ts-why-typescript-ecosystem.svg)
+JavaScript에서는 이 작업이 "용기가 필요한 일"이었다. TypeScript에서는 일상적인 작업이 된다.
 
-2024-2025년 기준으로 주요 프레임워크와 라이브러리 대부분이 TypeScript 퍼스트다. Next.js, NestJS, Prisma, Drizzle, Hono, tRPC, Zod 등은 TypeScript를 기본으로 설계됐다. 이 라이브러리들은 타입 정의를 내장하고 있어서 별도 `@types/` 패키지 설치 없이 완전한 타입 안전성을 제공한다.
+## TypeScript의 이점 정리
 
-## TypeScript가 적합하지 않은 경우
+![TypeScript 도입의 핵심 이점](/assets/posts/ts-why-typescript-benefits.svg)
 
-TypeScript가 항상 최선은 아니다. 다음 경우에는 신중히 고려해야 한다.
-
-```typescript
-// 소규모 스크립트 — 타입 설정 오버헤드가 클 수 있음
-// 100줄짜리 스크립트에 tsconfig, 빌드 설정까지 세팅하는 건 과할 수 있다
-
-// 그러나 Node.js 22+ + tsx로 설정 없이 실행 가능
-// npx tsx script.ts
-```
-
-- **50줄 이하 스크립트**: 설정 오버헤드가 코드량보다 클 수 있다
-- **프로토타입 PoC**: 빠른 검증이 목적이라면 JS로 시작해도 된다
-- **학습 목적 작은 예제**: TypeScript 문법 자체를 배우는 중이라면 오히려 복잡해진다
-
-하지만 이 경우에도 Node.js에서 `tsx`나 Bun으로 TypeScript를 설정 없이 바로 실행할 수 있어서, "설정이 귀찮다"는 이유는 점점 설득력을 잃어가고 있다.
-
-## TypeScript 도입의 실질적 ROI
-
-Microsoft 내부 데이터에 따르면 TypeScript 도입으로 런타임 버그가 약 15% 감소했다는 보고가 있다. 에어비앤비는 TypeScript 도입 후 발생한 버그의 38%가 TypeScript가 있었더라면 사전 예방 가능했다고 분석했다. 이는 단순히 "오류 잡기"를 넘어서 **팀 속도와 코드 품질 전반**에 영향을 미친다.
-
-## 정리
-
-TypeScript는 트렌드가 아니라 **생산성 투자**다. 초기 타입 작성에 약간의 비용이 들지만, 오류 예방, 리팩터링 안전성, 코드 문서화, 팀 협업 개선으로 그 이상의 가치를 돌려준다. 특히 프로젝트 규모가 클수록, 팀 인원이 많을수록, 그 효과는 배가된다.
-
-다음 글에서는 TypeScript와 JavaScript를 직접 비교해 구체적으로 무엇이 달라지는지를 코드로 보여준다.
+이 시리즈를 따라가면서 각 이점이 구체적으로 어떻게 구현되는지 하나씩 체험하게 될 것이다. 다음 편에서는 TypeScript와 JavaScript를 정면 비교하면서 "슈퍼셋"의 의미를 더 구체적으로 탐구한다.
 
 ---
 
-**지난 글:** [TypeScript의 본질](/posts/ts-essence/)
+**지난 글:** [TypeScript 완전 정복: 시리즈를 시작하며](/posts/ts-essence/)
 
-**다음 글:** [TypeScript vs JavaScript: 실전 비교](/posts/ts-vs-javascript/)
+**다음 글:** [TypeScript vs JavaScript: 슈퍼셋의 의미](/posts/ts-vs-javascript/)
 
 <br>
 읽어주셔서 감사합니다. 😊

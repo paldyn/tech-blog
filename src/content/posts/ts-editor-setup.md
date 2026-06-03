@@ -1,83 +1,114 @@
 ---
-title: "TypeScript 완전 정복 ⑧: 에디터 설정 (VS Code + TypeScript)"
-description: "VS Code에서 TypeScript 개발 경험을 극대화하는 설정. 확장 프로그램, settings.json, ESLint, Prettier, 단축키까지 완전 가이드."
+title: "에디터 설정: VS Code로 TypeScript 개발 환경 완성"
+description: "TypeScript 개발에 최적화된 VS Code 설정, 필수 확장, 키보드 단축키, 그리고 다른 에디터 옵션을 상세히 안내한다."
 author: "PALDYN Team"
-pubDate: "2026-06-02"
+pubDate: "2026-06-04"
 archiveOrder: 8
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "VSCode", "ESLint", "Prettier", "에디터설정", "개발환경"]
+tags: ["TypeScript", "VSCode", "에디터설정", "IntelliSense", "개발환경", "확장"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-first-program/)에서 첫 TypeScript 프로그램을 작성했다. TypeScript의 진가는 좋은 에디터 설정과 함께할 때 발휘된다. 이번 글에서는 VS Code를 TypeScript 최강 개발 환경으로 만드는 방법을 설명한다.
+[지난 글](/posts/ts-first-program/)에서 첫 TypeScript 프로그램을 작성했다. 이번 편에서는 TypeScript 개발 경험을 극대화하는 에디터 환경을 구성한다. VS Code를 중심으로 핵심 기능과 설정을 다룬다.
 
-## VS Code + TypeScript 기본 동작
+## 왜 VS Code인가
 
-VS Code는 TypeScript 서버(`tsserver`)를 기본 내장하고 있다. 별도 설정 없이도 `.ts` 파일을 열면 자동완성, 타입 오류 표시, 리팩터링 기능이 동작한다. 이것이 VS Code가 TypeScript 개발자들에게 가장 인기 있는 이유다.
+TypeScript 팀이 직접 VS Code를 일상적인 개발 도구로 사용한다. TypeScript Language Server(`tsserver`)가 VS Code에 기본 내장되어 별도 플러그인 없이 최고 수준의 TypeScript 지원을 제공한다.
+
+![VS Code + TypeScript: 최적의 조합](/assets/posts/ts-editor-setup-vscode.svg)
+
+## TypeScript Language Server
+
+VS Code가 TypeScript를 지원하는 핵심은 **tsserver**라는 언어 서버다. 이 서버가 백그라운드에서 다음 작업을 처리한다.
+
+- 코드를 실시간으로 파싱하고 타입 분석
+- 자동완성 후보 계산
+- 타입 에러 탐지 및 위치 보고
+- 정의/참조 탐색 인덱스 관리
+
+VS Code에 내장된 tsserver 버전을 확인하려면: `Ctrl+Shift+P` → `TypeScript: Select TypeScript Version`
+
+프로젝트에 설치된 TypeScript 버전을 우선 사용하려면 "Use Workspace Version"을 선택한다. 이렇게 하면 tsconfig.json의 설정이 에디터에도 정확히 반영된다.
+
+## 핵심 기능 활용
+
+![에디터 TypeScript 지원 기능 비교](/assets/posts/ts-editor-setup-features.svg)
+
+### 자동완성 (IntelliSense)
 
 ```typescript
-// VS Code에서 이 코드를 입력해보자
 interface Product {
+  id: number;
   name: string;
   price: number;
+  category: string;
 }
 
-const p: Product = {
-  name: "Apple",
-  price: 1000,
-};
+const product: Product = { ... };
 
-// p. 를 입력하는 순간 name, price 자동완성 제안
-// p.nme 입력 시 즉시 빨간 밑줄 + 오류 메시지
+product.  // Ctrl+Space로 id, name, price, category 목록 표시
 ```
 
-## 핵심 설정과 확장 프로그램
+타입이 정의된 객체에서 `.`을 입력하면 해당 타입의 프로퍼티/메서드만 정확하게 제안된다. 오타를 치면 즉시 에러 표시가 뜬다.
 
-![VS Code + TypeScript 핵심 설정](/assets/posts/ts-editor-setup-vscode.svg)
+### 호버로 타입 확인
 
-### 필수 확장 프로그램 설치
+변수나 함수 위에 마우스를 올리거나 `Ctrl+K Ctrl+I`를 누르면 추론된 타입이 팝업으로 표시된다.
 
-```bash
-# VS Code 커맨드 팔레트 (Ctrl+Shift+X)에서 검색하거나
-# CLI로 설치:
-code --install-extension dbaeumer.vscode-eslint
-code --install-extension esbenp.prettier-vscode
-code --install-extension usernamehw.errorlens
-code --install-extension streetsidesoftware.code-spell-checker
+```typescript
+const arr = [1, 2, 3];
+// arr 위에 호버: const arr: number[]
+
+const sum = arr.reduce((acc, n) => acc + n, 0);
+// sum 위에 호버: const sum: number
 ```
 
-**Error Lens**는 오류를 별도 패널이 아닌 해당 코드 줄 옆에 인라인으로 표시해준다. TypeScript 개발 경험을 크게 향상시키는 확장이다.
+### 정의로 이동 (F12)
 
-### .vscode/settings.json 설정
+함수, 타입, 변수 위에서 `F12`를 누르면 선언된 위치로 이동한다. 외부 라이브러리의 `.d.ts` 파일도 열린다. TypeScript를 쓰는 가장 큰 DX 장점 중 하나다.
 
-프로젝트 루트에 `.vscode/settings.json`을 만들어 팀 전체가 동일한 설정을 공유할 수 있다.
+### 참조 찾기 (Shift+F12)
+
+특정 함수나 타입이 프로젝트 전체에서 어디서 사용되는지 찾는다. 리팩터링 전 영향 범위 파악에 필수다.
+
+### 이름 변경 리팩터링 (F2)
+
+변수나 타입 이름 위에서 `F2`를 누르면 모든 참조 지점을 한 번에 변경한다. TypeScript 타입 정보 덕분에 JavaScript에서보다 훨씬 정확하다.
+
+## VS Code 설정
+
+`settings.json`에 추가하면 TypeScript 개발 경험이 좋아지는 설정들이다.
 
 ```json
+// .vscode/settings.json
 {
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  // 저장 시 자동 임포트 정리
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
-    "source.fixAll.eslint": "explicit"
+    "source.organizeImports": "explicit"
   },
+
+  // TypeScript 관련 설정
+  "typescript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
   "typescript.inlayHints.parameterNames.enabled": "literals",
-  "typescript.inlayHints.variableTypes.enabled": false
+  "typescript.inlayHints.variableTypes.enabled": false,
+
+  // 에디터 기본 설정
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
 ```
 
-`typescript.inlayHints.parameterNames`를 활성화하면 함수 호출 시 매개변수 이름이 인라인으로 표시돼 코드 가독성이 높아진다.
+**인레이 힌트(Inlay Hints)**: `typescript.inlayHints` 옵션을 켜면 파라미터 이름과 추론된 타입이 코드 안에 표시된다. 유용하지만 과하면 오히려 가독성을 해친다.
 
-## Prettier 설정
+## 필수 확장(Extensions)
+
+VS Code 기본 TypeScript 지원으로도 충분하지만, 다음 확장을 추가하면 생산성이 더 높아진다.
+
+**Prettier - Code formatter**: 코드 포맷 자동화
 
 ```bash
 npm install --save-dev prettier
@@ -86,100 +117,53 @@ npm install --save-dev prettier
 ```json
 // .prettierrc
 {
-  "semi": true,
   "singleQuote": true,
+  "semi": true,
   "tabWidth": 2,
-  "trailingComma": "es5",
-  "printWidth": 100,
-  "arrowParens": "avoid"
+  "trailingComma": "es5"
 }
 ```
 
-```
-# .prettierignore
-dist/
-node_modules/
-*.min.js
-```
-
-## ESLint + TypeScript 설정
-
-![ESLint + TypeScript 설정](/assets/posts/ts-editor-setup-eslint.svg)
+**ESLint**: 코드 품질 검사
 
 ```bash
-npm install --save-dev eslint typescript-eslint globals
+npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
 ```
 
-```javascript
-// eslint.config.js (ESLint 9.x Flat Config)
-import tseslint from 'typescript-eslint';
-import globals from 'globals';
+**Error Lens**: 에러 메시지를 인라인으로 코드 옆에 표시
 
-export default tseslint.config(
-  ...tseslint.configs.recommended,
-  {
-    languageOptions: {
-      globals: globals.node,
-    },
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/no-floating-promises': 'error',
-    },
-  }
-);
-```
+**Total TypeScript**: Matt Pocock의 TypeScript 심화 학습 확장
 
-`no-floating-promises` 규칙은 `await` 없이 Promise를 반환하는 함수를 호출할 때 경고를 준다. 비동기 코드에서 흔한 실수를 방지한다.
-
-## 유용한 VS Code 단축키
+## 키보드 단축키 정리
 
 | 단축키 | 기능 |
 |--------|------|
 | `F12` | 정의로 이동 |
-| `Alt+F12` | 정의 피크 (팝업으로 보기) |
+| `Alt+F12` | 정의 미리보기 |
 | `Shift+F12` | 참조 찾기 |
-| `F2` | 심볼 이름 변경 (모든 참조 동시 변경) |
-| `Ctrl+.` | 빠른 수정 (Quick Fix) |
-| `Ctrl+Shift+I` | import 정리 |
+| `F2` | 이름 변경 |
+| `Ctrl+.` | 빠른 수정(Quick Fix) |
 | `Ctrl+Space` | 자동완성 트리거 |
-| `Ctrl+Shift+P` → "TypeScript: Restart TS Server" | TS 서버 재시작 |
+| `Ctrl+K Ctrl+I` | 타입 힌트 팝업 |
+| `Ctrl+Shift+P` | 명령 팔레트 |
 
-특히 `F2` (심볼 이름 변경)은 TypeScript의 강점을 잘 보여준다. 인터페이스 필드명을 바꾸면 그 필드를 사용하는 모든 파일이 자동으로 업데이트된다.
+## 다른 에디터 선택지
 
-## TypeScript 서버 버전 선택
+VS Code가 최선이지만 다른 에디터도 TypeScript를 잘 지원한다.
 
-VS Code는 자체 TypeScript 버전을 내장하고 있지만, 프로젝트 로컬에 설치된 TypeScript 버전을 사용하는 것이 권장된다.
+**WebStorm (JetBrains)**: 유료지만 TypeScript 지원이 훌륭하다. 프로젝트 전체 분석이 빠르다.
 
-`Ctrl+Shift+P` → "TypeScript: Select TypeScript Version" → "Use Workspace Version"
+**Neovim**: `nvim-lspconfig` + `typescript-language-server`로 설정하면 VS Code 수준의 지원이 가능하다.
 
-이렇게 하면 팀 전체가 `package.json`에 명시된 동일 버전을 사용하게 된다.
+**Helix**: 현대적인 터미널 편집기. LSP 내장으로 설정이 간단하다.
 
-## 다른 에디터 지원
-
-VS Code가 아닌 에디터를 사용한다면:
-
-```bash
-# Neovim: nvim-lspconfig + typescript-language-server
-npm install -g typescript typescript-language-server
-
-# WebStorm: JetBrains IDE — TypeScript 지원 기본 내장
-# 별도 플러그인 불필요, tsconfig.json 자동 감지
-
-# Vim: coc-tsserver 플러그인
-# :CocInstall coc-tsserver
-```
-
-## 정리
-
-VS Code + TypeScript는 내장 `tsserver` 덕분에 설치만으로 기본 지원이 된다. Error Lens로 오류를 인라인에 표시하고, Prettier로 저장 시 자동 포매팅, ESLint로 코드 품질을 관리하면 탄탄한 개발 환경이 완성된다. `F2` 리네임과 `F12` 정의 이동은 TypeScript 개발의 핵심 워크플로우다.
+다음 편에서는 TypeScript의 핵심 개념 중 하나인 **타입 공간과 값 공간**의 차이를 깊이 탐구한다.
 
 ---
 
-**지난 글:** [첫 TypeScript 프로그램 작성](/posts/ts-first-program/)
+**지난 글:** [첫 TypeScript 프로그램: Hello, Types!](/posts/ts-first-program/)
 
-**다음 글:** [타입 공간 vs 값 공간](/posts/ts-type-vs-value-space/)
+**다음 글:** [타입 공간과 값 공간: TypeScript를 이해하는 핵심 개념](/posts/ts-type-vs-value-space/)
 
 <br>
 읽어주셔서 감사합니다. 😊

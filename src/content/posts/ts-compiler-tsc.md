@@ -1,8 +1,8 @@
 ---
-title: "TypeScript 완전 정복 ⑤: tsc 컴파일러 완전 이해"
-description: "TypeScript 컴파일러 tsc의 내부 동작 원리, 주요 CLI 옵션, 타입 검사와 코드 생성을 분리하는 현대적 워크플로우를 설명합니다."
+title: "tsc 컴파일러 완전 해부: 동작 원리와 옵션"
+description: "TypeScript 컴파일러 tsc의 내부 파이프라인, 핵심 플래그 사용법, tsconfig.json 주요 옵션을 깊이 있게 다룬다."
 author: "PALDYN Team"
-pubDate: "2026-06-02"
+pubDate: "2026-06-04"
 archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
@@ -11,197 +11,208 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-setup-install/)에서 TypeScript를 설치하고 `tsconfig.json`을 만들었다. 이번 글에서는 `tsc`가 내부적으로 어떻게 동작하는지, 어떤 CLI 옵션이 있는지, 그리고 현대 개발 워크플로우에서 `tsc`를 어떻게 효율적으로 사용하는지를 다룬다.
+[지난 글](/posts/ts-setup-install/)에서 TypeScript 개발 환경을 구성했다. 이번 편에서는 `tsc` 컴파일러가 내부적으로 어떻게 동작하는지, 그리고 실무에서 자주 쓰는 옵션과 플래그를 체계적으로 정리한다.
 
-## tsc 컴파일러 내부 파이프라인
+## tsc 컴파일 파이프라인
 
-`tsc`는 단순히 "타입을 제거하는 도구"가 아니다. 내부적으로 정교한 파이프라인을 거친다.
+TypeScript 컴파일러는 소스 파일을 받아 4단계로 처리한다.
 
-![tsc 컴파일러 내부 파이프라인](/assets/posts/ts-compiler-tsc-pipeline.svg)
+![tsc 컴파일러 파이프라인](/assets/posts/ts-compiler-tsc-pipeline.svg)
 
-**파이프라인 5단계:**
+### ① 파싱 (Parsing)
 
-1. **스캐너(Scanner)**: 소스 코드를 토큰으로 분해
-2. **파서(Parser)**: 토큰으로 AST(추상 구문 트리) 생성
-3. **바인더(Binder)**: 변수 선언을 심볼 테이블에 등록, 스코프 분석
-4. **타입 검사기(Type Checker)**: 타입 추론 및 오류 탐지 — 파이프라인의 핵심
-5. **에미터(Emitter)**: 타입 정보를 제거한 `.js` 파일과 `.d.ts` 파일 생성
+소스 코드를 읽어 **추상 구문 트리(AST, Abstract Syntax Tree)**로 변환한다. 이 단계에서 구문 오류(SyntaxError)가 검출된다.
 
-TypeScript가 "느리다"고 느껴지는 이유는 대부분 4단계 **타입 검사기**다. 타입 추론은 프로그래밍 언어 이론의 복잡한 연산이다. 대규모 코드베이스에서 빌드 속도 최적화가 필요하면 타입 검사와 코드 생성을 분리하는 전략을 쓴다.
+### ② 심볼 해석 (Symbol Resolution)
 
-## 컴파일 결과 살펴보기
+변수, 함수, 타입 선언을 스코프와 연결한다. "이 `name`이라는 변수는 어디서 선언됐는가"를 추적한다.
 
-```typescript
-// 입력: src/example.ts
-interface User {
-  name: string;
-  age: number;
-}
+### ③ 타입 검사 (Type Checking)
 
-const greeting = (user: User): string => {
-  return `Hello, ${user.name}!`;
-};
+이 단계가 TypeScript의 핵심이다. 모든 표현식의 타입을 계산하고, 타입 규칙을 위반하는 코드를 찾아낸다. 타입 에러는 여기서 발생한다.
 
-enum Direction {
-  Up = "UP",
-  Down = "DOWN",
-}
-```
+### ④ 출력 (Emit)
 
-```javascript
-// 출력: dist/example.js (ES2022, commonjs 기준)
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const greeting = (user) => {
-    return `Hello, ${user.name}!`;
-};
-var Direction;
-(function (Direction) {
-    Direction["Up"] = "UP";
-    Direction["Down"] = "DOWN";
-})(Direction || (Direction = {}));
-```
+타입 정보를 제거하고 JavaScript 파일을 생성한다. 선택적으로 `.d.ts` 타입 선언 파일과 소스맵(`.js.map`)도 생성할 수 있다.
 
-`interface`는 완전히 사라지고, `enum`은 IIFE 패턴으로 변환됐다. 타입 어노테이션도 없다.
-
-## 자주 쓰는 tsc CLI 옵션
+## 주요 CLI 플래그
 
 ```bash
-# 기본 빌드 (tsconfig.json 읽음)
+# 기본 컴파일 (tsconfig.json 사용)
 npx tsc
 
-# 감시 모드 (파일 변경 감지 → 자동 재빌드)
-npx tsc --watch
-npx tsc -w
+# 특정 파일만 컴파일 (tsconfig 무시)
+npx tsc src/index.ts
 
-# 타입 검사만 (JS 파일 생성 안 함)
+# 파일 변경 감지 모드
+npx tsc --watch
+
+# 타입 검사만 수행 (파일 출력 없음)
 npx tsc --noEmit
 
-# 단일 파일 컴파일 (tsconfig 무시)
-npx tsc src/index.ts --target ES2020 --module commonjs
-
-# 현재 적용 중인 tsconfig 확인
-npx tsc --showConfig
-
-# 진단 정보 출력 (속도 분석)
-npx tsc --diagnostics
-
-# 자세한 컴파일 정보
-npx tsc --verbose
+# 상세 출력 보기
+npx tsc --listFiles
 ```
 
-## tsc의 두 가지 역할 분리
+`--noEmit`은 CI 파이프라인에서 타입 검사 단계에 자주 쓰인다. 파일을 생성하지 않고 타입 오류만 체크한다.
 
-`tsc`는 두 가지 역할을 한다: **타입 검사**와 **코드 생성**. 현대 워크플로우에서는 이 두 역할을 분리하는 것이 일반적이다.
+## tsconfig.json 핵심 옵션
 
-![tsc의 두 가지 역할 분리](/assets/posts/ts-compiler-tsc-modes.svg)
+![tsconfig.json 핵심 옵션](/assets/posts/ts-compiler-tsc-config.svg)
 
-**이유:** `tsc`의 코드 생성은 `esbuild`, `SWC`, `Vite` 같은 도구보다 10~100배 느리다. 반면 타입 검사는 `tsc` 외에 대안이 없다. 따라서 개발 서버와 빌드에는 빠른 도구를 쓰고, CI에서 `tsc --noEmit`으로 타입을 검사하는 전략이 널리 쓰인다.
-
-```json
-// package.json 스크립트 분리
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "typecheck": "tsc --noEmit",
-    "typecheck:watch": "tsc --noEmit --watch",
-    "ci": "tsc --noEmit && vitest run"
-  }
-}
-```
-
-## tsconfig extends와 공유 설정
-
-여러 패키지가 있는 모노레포나 팀 공통 설정을 만들 때는 `extends`를 활용한다.
+### 출력 제어 옵션
 
 ```json
-// tsconfig.base.json (공통 설정)
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "target": "ES2020",          // 출력 JS 버전
+    "module": "NodeNext",        // 모듈 시스템
+    "moduleResolution": "NodeNext",  // 모듈 탐색 방식
+    "outDir": "./dist",          // 출력 디렉터리
+    "rootDir": "./src",          // 소스 루트
+    "declaration": true,         // .d.ts 생성
+    "declarationMap": true,      // 선언 파일 소스맵
+    "sourceMap": true            // .js.map 소스맵
   }
 }
 ```
 
+`target` 값에 따라 tsc가 최신 JS 문법을 하위 호환 코드로 변환한다. 예를 들어 `target: "ES5"`로 설정하면 화살표 함수가 일반 함수로 변환된다.
+
+### 엄격 모드 옵션
+
+`"strict": true`는 6개의 하위 옵션을 한번에 켠다.
+
 ```json
-// tsconfig.json (프로젝트별 설정)
+{
+  "compilerOptions": {
+    "strict": true
+    // 아래 6개를 모두 켜는 것과 동일:
+    // "noImplicitAny": true,
+    // "strictNullChecks": true,
+    // "strictFunctionTypes": true,
+    // "strictBindCallApply": true,
+    // "strictPropertyInitialization": true,
+    // "noImplicitThis": true
+  }
+}
+```
+
+이 중 가장 중요한 두 가지:
+
+**`noImplicitAny`**: 타입을 추론할 수 없을 때 `any`로 묵시적 처리하는 것을 금지한다.
+
+```typescript
+// noImplicitAny: true일 때 에러
+function greet(name) {  // Error: Parameter 'name' implicitly has an 'any' type
+  return `Hello, ${name}`;
+}
+
+// 명시적 타입 추가 필요
+function greet(name: string) {
+  return `Hello, ${name}`;
+}
+```
+
+**`strictNullChecks`**: `null`과 `undefined`를 다른 타입에 할당할 수 없게 한다.
+
+```typescript
+// strictNullChecks: true일 때
+let name: string = null;  // Error: Type 'null' is not assignable to type 'string'
+
+// null을 허용하려면 유니언 타입 사용
+let name: string | null = null;  // OK
+```
+
+### 모듈 관련 옵션
+
+```json
+{
+  "compilerOptions": {
+    "esModuleInterop": true,              // CommonJS 모듈 기본 import 허용
+    "allowSyntheticDefaultImports": true, // 기본 export 없어도 default import 허용
+    "resolveJsonModule": true,            // .json 파일 import 허용
+    "paths": {                            // 경로 별칭
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+`esModuleInterop`은 `import fs from 'fs'`처럼 CommonJS 모듈을 기본(default) import 방식으로 쓸 수 있게 해준다.
+
+### 추가 검사 옵션
+
+```json
+{
+  "compilerOptions": {
+    "noUnusedLocals": true,          // 사용하지 않는 지역변수 에러
+    "noUnusedParameters": true,      // 사용하지 않는 파라미터 에러
+    "noImplicitReturns": true,       // 함수가 항상 값을 반환해야 함
+    "noFallthroughCasesInSwitch": true  // switch 폴스루 금지
+  }
+}
+```
+
+이 옵션들은 `strict`에 포함되지 않지만 코드 품질에 크게 기여한다.
+
+## 여러 tsconfig 파일 관리
+
+프로젝트가 커지면 환경별로 다른 설정이 필요하다.
+
+```json
+// tsconfig.base.json - 공통 설정
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "strict": true,
+    "lib": ["ES2020"]
+  }
+}
+
+// tsconfig.json - 개발 환경
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "sourceMap": true
+  },
+  "include": ["src"]
+}
+
+// tsconfig.prod.json - 프로덕션 빌드
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
-    "module": "commonjs"
+    "declaration": true
   }
 }
 ```
 
-`@tsconfig/recommended`, `@tsconfig/node22` 같은 공식 기본 설정 패키지도 있다.
+`extends`로 기본 설정을 상속하고 각 환경에 필요한 옵션만 오버라이드한다.
 
-```bash
-npm install --save-dev @tsconfig/node22
-```
+## 성능 최적화: incremental 컴파일
 
-```json
-{
-  "extends": "@tsconfig/node22/tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src"
-  }
-}
-```
-
-## 컴파일 오류 이해하기
-
-`tsc`가 출력하는 오류 메시지는 처음엔 낯설다. 패턴을 이해하면 읽기 쉬워진다.
-
-```typescript
-// 오류 예시 코드
-let x: number = "hello";
-```
-
-```
-src/index.ts:1:5 - error TS2322: Type 'string' is not assignable to type 'number'.
-
-1 let x: number = "hello";
-      ~
-```
-
-`TS2322`는 TypeScript 오류 코드다. [TypeScript Error Decoder](https://ts.errors.wtf/)나 공식 문서에서 코드로 검색하면 상세 설명을 찾을 수 있다. 자주 보는 오류 코드들:
-- `TS2322`: 타입 불일치
-- `TS2339`: 존재하지 않는 프로퍼티
-- `TS2345`: 함수 인수 타입 불일치
-- `TS7006`: 암묵적 `any` (`noImplicitAny`)
-- `TS2531`: `null` 가능성 (`strictNullChecks`)
-
-## 증분 컴파일과 빌드 캐시
-
-대규모 프로젝트에서 `tsc`를 빠르게 하려면 증분 컴파일을 활성화한다.
+큰 프로젝트에서 컴파일 속도를 높이려면 증분 컴파일을 활성화한다.
 
 ```json
 {
   "compilerOptions": {
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": "./.tsbuildinfo"
   }
 }
 ```
 
-`.tsBuildInfo` 파일에 이전 빌드 정보를 저장해 변경된 파일만 재컴파일한다. `.gitignore`에 `.tsbuildinfo`를 추가하는 것이 일반적이다.
+이전 컴파일 정보를 `.tsbuildinfo`에 캐시해서 변경된 파일만 재컴파일한다.
 
-## 정리
-
-`tsc`는 타입 검사기이자 코드 생성기다. 현대 프로젝트에서는 `tsc --noEmit`으로 타입 검사, Vite/esbuild로 번들링을 분리하는 전략이 표준이다. 오류 코드를 이해하고, `incremental` 설정으로 빌드 속도를 최적화할 수 있다.
+다음 편에서는 설치 없이 브라우저에서 TypeScript를 바로 실험할 수 있는 TypeScript Playground를 소개한다.
 
 ---
 
-**지난 글:** [TypeScript 설치와 환경 설정](/posts/ts-setup-install/)
+**지난 글:** [TypeScript 설치와 환경 구성: 첫 발을 내딛다](/posts/ts-setup-install/)
 
-**다음 글:** [TypeScript Playground 활용](/posts/ts-playground-repl/)
+**다음 글:** [TypeScript Playground: 브라우저에서 즉시 실험하기](/posts/ts-playground-repl/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,119 +1,104 @@
 ---
-title: "TypeScript 완전 정복 ①: TypeScript의 본질"
-description: "TypeScript가 무엇인지, JavaScript와 어떤 관계인지, 타입 시스템이 왜 필요한지를 핵심만 짚어 설명합니다. 시리즈의 출발점."
+title: "TypeScript 완전 정복: 시리즈를 시작하며"
+description: "TypeScript가 무엇인지, 왜 탄생했는지, JavaScript와 어떤 관계인지 — TypeScript 완전 정복 시리즈의 시작점을 명확히 짚는다."
 author: "PALDYN Team"
-pubDate: "2026-06-02"
+pubDate: "2026-06-04"
 archiveOrder: 1
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "타입시스템", "JavaScript", "정적타입", "컴파일"]
+tags: ["TypeScript", "타입스크립트", "정적타입", "JavaScript슈퍼셋", "프론트엔드", "백엔드"]
 featured: false
 draft: false
 ---
 
-프론트엔드 개발자라면 한 번쯤 들어봤을 이름, TypeScript. 거대한 오픈소스 프로젝트들이 너나없이 TypeScript로 전환했고, 채용 공고에도 "TypeScript 우대"가 기본값이 됐다. 그런데 막상 처음 접하면 "그냥 JavaScript에 타입을 붙인 것 아닌가?" 하는 생각이 든다. 이 시리즈는 그 질문에서 출발한다. TypeScript가 **정확히 무엇**이며, 왜 지금 가장 중요한 프론트엔드·백엔드 언어 중 하나가 됐는지를 처음부터 완전히 이해하는 것이 목표다.
+TypeScript는 2012년 Microsoft가 공개한 이후 지금까지 꾸준히 성장해 왔으며, 오늘날 프론트엔드와 백엔드를 막론하고 사실상의 표준 언어로 자리 잡았다. 이 시리즈는 TypeScript의 기초 개념부터 고급 타입 시스템, 실무 패턴까지 순서대로 파고드는 완전 정복 가이드다. 첫 번째 글인 이번 편에서는 "TypeScript가 무엇인가"라는 가장 근본적인 질문에 답한다.
 
 ## TypeScript란 무엇인가
 
-TypeScript는 Microsoft가 2012년에 발표한 **JavaScript의 상위 집합(superset) 언어**다. "상위 집합"이라는 말이 핵심이다. 모든 유효한 JavaScript 코드는 그대로 TypeScript 코드이기도 하다. TypeScript는 JavaScript 위에 **정적 타입 시스템**을 더한 것이다.
+한 줄로 요약하면 **TypeScript = JavaScript + 타입 시스템**이다. 더 정확하게는 "타입을 추가한 JavaScript의 상위 집합(superset)"이다. 모든 유효한 JavaScript 파일은 그대로 TypeScript 파일로 사용할 수 있다는 뜻이다.
+
+![TypeScript의 본질](/assets/posts/ts-essence-overview.svg)
+
+TypeScript는 브라우저나 Node.js가 직접 실행하지 못한다. TypeScript 컴파일러(`tsc`)가 소스를 읽어 타입을 검사한 뒤, 타입 정보를 제거하고 순수 JavaScript를 출력한다. 이 과정을 **컴파일** 또는 **트랜스파일**이라고 부른다.
 
 ```typescript
-// 이것은 완벽히 유효한 TypeScript 코드다 (그냥 JavaScript)
+// TypeScript 소스
+function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+// tsc가 출력하는 JavaScript
 function greet(name) {
-  return "Hello, " + name;
-}
-
-// 이것은 TypeScript가 추가한 문법 (타입 어노테이션)
-function greetTyped(name: string): string {
-  return "Hello, " + name;
+  return `Hello, ${name}!`;
 }
 ```
 
-TypeScript 파일(`.ts`, `.tsx`)은 **컴파일러(`tsc`)**가 처리하면 순수한 JavaScript 파일(`.js`)로 변환된다. 브라우저도, Node.js도 TypeScript를 직접 실행하지 않는다. TypeScript는 개발 단계에서만 존재하고, 런타임에는 흔적도 없이 사라진다.
+`name: string`이라는 타입 주석은 JS 출력에서 완전히 사라진다. 타입은 오직 컴파일 타임에만 존재하고 런타임에는 아무런 흔적도 남기지 않는다.
 
-![TypeScript의 본질: JavaScript + 타입 시스템](/assets/posts/ts-essence-concept.svg)
+## 컴파일 흐름 한눈에 보기
 
-## 정적 타입 vs 동적 타입
+![TypeScript 컴파일 흐름](/assets/posts/ts-essence-compile.svg)
 
-프로그래밍 언어에서 타입이 **언제** 결정되느냐에 따라 크게 두 가지로 나뉜다.
+TypeScript 파일(`.ts`)은 `tsc`를 통해 JavaScript 파일(`.js`)로 변환된다. 이때 타입 에러가 있으면 컴파일이 중단(또는 경고)되고 개발자에게 보고된다. 에러가 없으면 순수 JavaScript가 출력되어 Node.js나 브라우저에서 실행된다.
 
-**동적 타입 언어(JavaScript, Python, Ruby)**는 변수의 타입이 런타임에 결정된다. 코드를 작성할 때는 이 변수가 숫자인지 문자열인지 신경 쓰지 않아도 된다. 유연하지만, 타입 관련 오류가 실행 중에야 드러난다.
+## TypeScript가 해결하는 문제
 
-**정적 타입 언어(TypeScript, Java, Rust)**는 변수의 타입이 컴파일 타임에 결정된다. 코드를 실행하기 전에 타입 검사기가 오류를 잡아준다.
+JavaScript는 동적 타입 언어다. 변수에 어떤 값이든 넣을 수 있고, 함수가 어떤 인자를 받는지 코드를 읽지 않으면 알 수 없다. 소규모 스크립트에서는 문제가 없지만 코드베이스가 수만 줄로 커지면 다음과 같은 문제가 생긴다.
+
+- **런타임 크래시**: 잘못된 타입의 값을 전달해도 실행 전까지 알 수 없다.
+- **IDE 한계**: 에디터가 타입 정보를 모르면 자동완성이 부정확하다.
+- **리팩터링 공포**: 함수 시그니처를 바꾸면 어디가 깨지는지 전체 검색에 의존해야 한다.
+- **암묵적 계약**: API가 어떤 형태의 데이터를 받는지 문서로만 알 수 있다.
+
+TypeScript는 이 문제를 **정적 타입 검사**로 해결한다. 컴파일 단계에서 타입 규칙 위반을 찾아내므로 개발 사이클 가장 초기에, 가장 저렴한 비용으로 버그를 잡는다.
+
+## JavaScript와의 관계
+
+TypeScript는 JavaScript를 대체하는 언어가 아니다. JavaScript를 강화(augment)하는 언어다. 세 가지 핵심 관계를 기억하자.
+
+**슈퍼셋**: 모든 유효한 `.js`는 유효한 `.ts`다. 기존 JavaScript 프로젝트에 TypeScript를 도입할 때 파일 확장자만 바꿔도 동작하는 이유다.
+
+**컴파일 후 삭제**: 타입 정보는 런타임에 존재하지 않는다. TypeScript는 실행 오버헤드를 추가하지 않는다.
+
+**점진적 채택**: `allowJs`, `checkJs` 옵션을 이용하면 기존 JavaScript 파일을 그대로 두면서 TypeScript를 조금씩 섞어 쓸 수 있다.
 
 ```typescript
-// JavaScript식: 런타임까지 오류 모름
-let value: any = "hello";
-value = 42;
-// value.toUpperCase(); // 런타임 TypeError!
-
-// TypeScript: 코드 작성 중 즉시 감지
-let value2: string = "hello";
-// value2 = 42; // 오류: Type 'number' is not assignable to type 'string'
-```
-
-## 타입은 왜 필요한가
-
-오류를 일찍 발견할수록 수정 비용이 극적으로 줄어든다. 코딩 중 에디터에서 발견한 오류는 몇 초 안에 고칠 수 있다. 같은 오류가 프로덕션에서 발생하면 장애 대응, 핫픽스 배포, 사용자 CS 처리까지 수십 배의 비용이 든다.
-
-![타입 안전성: 오류를 언제 발견하는가](/assets/posts/ts-essence-type-safety.svg)
-
-정적 타입의 두 번째 이점은 **도구 지원**이다. 에디터가 타입 정보를 알면 자동완성, 타입 힌트, 리팩터링 도구가 정확하게 동작한다. 함수 시그니처가 바뀌면 그 함수를 쓰는 모든 곳에서 즉시 오류가 표시된다. 대규모 코드베이스에서 이 능력은 필수다.
-
-## TypeScript가 하지 않는 것
-
-TypeScript에 대한 흔한 오해를 정리하자.
-
-```typescript
-// TypeScript는 런타임 타입 검사를 하지 않는다
-// 컴파일 후 타입 정보는 사라진다
-function process(input: string) {
-  return input.toUpperCase();
-}
-
-// 외부 API 응답에 as를 남용하지 말 것
-// const data = await fetchUser() as User; // 위험!
-
-// 올바른 방법: 런타임 검증 추가
-function isUser(x: unknown): x is User {
-  return typeof x === "object" && x !== null && "name" in x;
+// tsconfig.json
+{
+  "compilerOptions": {
+    "allowJs": true,    // .js 파일도 컴파일에 포함
+    "checkJs": true,    // .js 파일도 타입 검사
+    "strict": true
+  }
 }
 ```
 
-TypeScript가 **하지 않는** 것: 런타임 타입 보장, 성능 최적화, 새로운 런타임 기능 추가.
+## 왜 지금 TypeScript인가
 
-TypeScript가 **하는** 것: 컴파일 타임 타입 검사, 개발 도구 통합 향상, 코드 문서화 역할.
+2024년 State of JS 설문에서 응답자의 78%가 "TypeScript를 사용 중"이라고 답했다. React, Vue, Angular 같은 주요 프레임워크가 TypeScript를 공식 지원하고, Node.js 생태계(Fastify, NestJS, tRPC 등)도 TypeScript-first로 전환했다. 취업 시장에서도 TypeScript 경험은 사실상 필수 요건이 됐다.
 
-## 슈퍼셋이라는 의미
+TypeScript를 배우는 것은 단순히 "타입을 추가하는 법"을 배우는 것이 아니다. 코드를 더 명확하게 설계하는 방법, 팀과의 소통 수단으로서의 타입, 컴파일러를 도구로 삼는 사고방식을 익히는 과정이다.
 
-TypeScript가 JavaScript의 슈퍼셋이라는 사실은 점진적 도입을 가능하게 한다. `allowJs: true` 설정으로 `.js`와 `.ts` 파일을 섞어 쓸 수 있고, 하나씩 전환해 나갈 수 있다.
+## 시리즈 로드맵
 
-```typescript
-// 점진적 타이핑 — 처음엔 any를 써도 된다
-function processLegacy(data: any) {
-  return data.value;
-}
+이 시리즈는 다음 순서로 진행된다.
 
-// 시간을 들여 구체적인 타입으로 개선
-interface Data {
-  value: number;
-  label: string;
-}
+1. **기초 세팅**: 설치, tsc, Playground, 첫 프로그램, 에디터 설정
+2. **타입 기초**: 기본 타입, 특수 타입, 배열, 튜플, 객체, 리터럴
+3. **타입 시스템**: 추론, 주석, 단언, 유니언, 교차 타입
+4. **좁히기(Narrowing)**: 타입 가드, instanceof, in 연산자, CFA
+5. **인터페이스 & 클래스**: extends, 추상 클래스, 접근 제한자
+6. **제네릭**: 함수/클래스 제네릭, 제약, 기본값
+7. **고급 타입**: 조건부, 매핑, 템플릿 리터럴, 재귀
+8. **유틸리티 타입**: Partial, Pick, Record, Extract 등
+9. **모듈 & 설정**: tsconfig, 선언 파일, 모듈 시스템
+10. **실전 패턴**: React, Node.js, 비동기, 에러 처리
 
-function processTyped(data: Data) {
-  return data.value; // 완전한 타입 안전성
-}
-```
-
-이 점진적 전환 전략 덕분에 수십만 줄의 레거시 JavaScript 프로젝트도 TypeScript로 옮길 수 있다.
-
-## 정리
-
-TypeScript는 JavaScript가 진화한 형태다. JavaScript의 자유로움을 유지하면서, 대규모 애플리케이션 개발에 필요한 타입 안전성과 도구 지원을 더했다. 컴파일하면 순수 JS가 되므로 어디서든 실행된다. 이 시리즈를 통해 타입 시스템의 기초부터 고급 패턴까지, TypeScript를 완전히 정복한다.
+이제 본격적으로 시작하자.
 
 ---
 
-**다음 글:** [왜 TypeScript를 써야 하는가](/posts/ts-why-typescript/)
+**다음 글:** [왜 TypeScript인가: 정적 타입이 바꾸는 개발 경험](/posts/ts-why-typescript/)
 
 <br>
 읽어주셔서 감사합니다. 😊
