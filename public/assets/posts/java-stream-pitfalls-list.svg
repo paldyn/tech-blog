@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Stream 주요 함정 — 주의사항 정리</text>
+
+  <!-- Pitfall 1 -->
+  <rect x="60" y="66" width="372" height="80" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">1. 스트림 재사용 불가</text>
+  <text x="80" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">종료 연산 후 스트림은 closed 상태</text>
+  <text x="80" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: 매번 새 스트림 생성, Supplier&lt;Stream&gt; 패턴 활용</text>
+
+  <!-- Pitfall 2 -->
+  <rect x="448" y="66" width="372" height="80" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="468" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">2. 사이드 이펙트 — forEach 남용</text>
+  <text x="468" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">외부 컬렉션에 add()하는 forEach는 스레드 안전 X</text>
+  <text x="468" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: collect()를 사용해 결과 수집</text>
+
+  <!-- Pitfall 3 -->
+  <rect x="60" y="158" width="372" height="80" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">3. 무한 스트림 종료 조건 누락</text>
+  <text x="80" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Stream.iterate() / generate()는 무한 스트림</text>
+  <text x="80" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: limit(n) 또는 takeWhile(pred) 반드시 추가</text>
+
+  <!-- Pitfall 4 -->
+  <rect x="448" y="158" width="372" height="80" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="468" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">4. 중간 연산은 지연 실행</text>
+  <text x="468" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">filter/map은 종료 연산 없이 실행 안 됨</text>
+  <text x="468" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: 반드시 종료 연산(collect, count, forEach 등)으로 마무리</text>
+
+  <!-- Pitfall 5 -->
+  <rect x="60" y="250" width="372" height="80" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="80" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">5. 병렬 스트림 + 공유 상태</text>
+  <text x="80" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">멀티 스레드 접근으로 경쟁 조건 발생</text>
+  <text x="80" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: 상태 없는 람다 사용, Atomic 클래스 또는 collect</text>
+
+  <!-- Pitfall 6 -->
+  <rect x="448" y="250" width="372" height="80" rx="8" fill="#111" stroke="#e05555" stroke-width="1"/>
+  <text x="468" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">6. Optional.get() 무검증 호출</text>
+  <text x="468" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">findFirst() 결과를 바로 .get() 하면 NoSuchElementException</text>
+  <text x="468" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: orElse / orElseGet / ifPresent / orElseThrow 사용</text>
+
+  <!-- Pitfall 7 -->
+  <rect x="60" y="342" width="372" height="80" rx="8" fill="#111" stroke="#e8c542" stroke-width="1"/>
+  <text x="80" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8c542">7. Checked Exception 처리 불편</text>
+  <text x="80" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">람다 내부에서 throws 선언 없이 checked ex 불가</text>
+  <text x="80" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: try-catch 래핑 또는 unchecked 변환 유틸리티</text>
+
+  <!-- Pitfall 8 -->
+  <rect x="448" y="342" width="372" height="80" rx="8" fill="#111" stroke="#e8c542" stroke-width="1"/>
+  <text x="468" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8c542">8. 과도한 스트림 체이닝</text>
+  <text x="468" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">10단계 이상 체이닝 → 가독성/디버깅 어려움</text>
+  <text x="468" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">해결: 중간 변수로 분리 또는 전통 루프로 전환 고려</text>
+
+  <text x="440" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">스트림은 강력하지만 올바른 사용 패턴을 숙지해야 한다</text>
+  <text x="440" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">디버깅 팁: .peek(System.out::println)으로 중간 값 확인</text>
+</svg>

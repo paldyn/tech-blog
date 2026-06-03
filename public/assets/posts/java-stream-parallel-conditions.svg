@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">병렬 스트림 — 성능 향상 조건과 주의사항</text>
+
+  <!-- Conditions header -->
+  <text x="220" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">병렬화 효과가 큰 경우</text>
+  <text x="660" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">병렬화 효과가 없거나 역효과</text>
+
+  <!-- Good conditions -->
+  <rect x="60" y="90" width="360" height="50" rx="8" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="87" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">✓</text>
+  <text x="107" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">데이터 크기 충분히 큼 (수만 건 이상)</text>
+  <text x="107" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">병렬화 오버헤드보다 처리 이득이 커야 함</text>
+
+  <rect x="60" y="150" width="360" height="50" rx="8" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="87" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">✓</text>
+  <text x="107" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">CPU 집약적 연산 (계산 위주)</text>
+  <text x="107" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">소수 판별, 암호화, 수치 연산 등</text>
+
+  <rect x="60" y="210" width="360" height="50" rx="8" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="87" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">✓</text>
+  <text x="107" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">분할 비용 낮은 자료구조</text>
+  <text x="107" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">ArrayList, 배열 (LinkedList는 비효율적)</text>
+
+  <rect x="60" y="270" width="360" height="50" rx="8" fill="#0f1f0f" stroke="#55c555" stroke-width="1"/>
+  <text x="87" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">✓</text>
+  <text x="107" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">요소 처리가 독립적 (상태 없음)</text>
+  <text x="107" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">각 요소 처리가 다른 요소에 의존하지 않음</text>
+
+  <!-- Bad conditions -->
+  <rect x="460" y="90" width="360" height="50" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="487" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">✗</text>
+  <text x="507" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">데이터 건수가 적을 때</text>
+  <text x="507" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Fork/Join 오버헤드가 처리 시간을 초과</text>
+
+  <rect x="460" y="150" width="360" height="50" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="487" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">✗</text>
+  <text x="507" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">I/O 대기 포함 (DB 조회, 파일 읽기)</text>
+  <text x="507" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">commonPool 스레드를 블로킹으로 점유</text>
+
+  <rect x="460" y="210" width="360" height="50" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="487" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">✗</text>
+  <text x="507" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">공유 가변 상태 존재</text>
+  <text x="507" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">경쟁 조건 (race condition) 발생 위험</text>
+
+  <rect x="460" y="270" width="360" height="50" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="487" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">✗</text>
+  <text x="507" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">순서에 의존하는 연산 (findFirst 등)</text>
+  <text x="507" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">순서 보장 비용이 병렬 이득을 상쇄</text>
+
+  <!-- API row -->
+  <line x1="60" y1="336" x2="820" y2="336" stroke="#222" stroke-width="1"/>
+  <text x="440" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">병렬 스트림 생성 API</text>
+
+  <rect x="60" y="370" width="230" height="50" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="175" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">collection.parallelStream()</text>
+  <text x="175" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">컬렉션에서 직접 병렬 스트림</text>
+
+  <rect x="310" y="370" width="260" height="50" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">stream.parallel()</text>
+  <text x="440" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">기존 순차 스트림을 병렬로 전환</text>
+
+  <rect x="590" y="370" width="230" height="50" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="705" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3" text-anchor="middle">stream.sequential()</text>
+  <text x="705" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">병렬 → 순차로 다시 전환</text>
+
+  <text x="440" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">성능 개선 여부는 항상 JMH 벤치마크로 측정 — 직관만으로 판단하지 말 것</text>
+</svg>
