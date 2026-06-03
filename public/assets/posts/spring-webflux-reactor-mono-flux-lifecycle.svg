@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Mono·Flux 구독 생명주기</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Cold Publisher — subscribe() 호출 시점에 데이터 흐름 시작</text>
+
+  <!-- 생명주기 단계 (좌측 → 우측) -->
+  <!-- 1단계: 조립 -->
+  <rect x="40" y="96" width="140" height="70" rx="8" fill="#0f0f1a" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="110" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">① 조립 단계</text>
+  <text x="110" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">오퍼레이터 체인</text>
+  <text x="110" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">실행 없음</text>
+
+  <line x1="180" y1="131" x2="218" y2="131" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- 2단계: 구독 -->
+  <rect x="220" y="96" width="140" height="70" rx="8" fill="#0f1a2e" stroke="#3a5a9e" stroke-width="1.5"/>
+  <text x="290" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">② 구독 시작</text>
+  <text x="290" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">subscribe() 호출</text>
+  <text x="290" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">onSubscribe()</text>
+
+  <line x1="360" y1="131" x2="398" y2="131" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- 3단계: 요청 -->
+  <rect x="400" y="96" width="140" height="70" rx="8" fill="#0f1a2e" stroke="#3a5a9e" stroke-width="1.5"/>
+  <text x="470" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">③ 데이터 요청</text>
+  <text x="470" y="142" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">request(Long.MAX)</text>
+  <text x="470" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">배압 협상</text>
+
+  <line x1="540" y1="131" x2="578" y2="131" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- 4단계: 데이터 방출 -->
+  <rect x="580" y="96" width="140" height="70" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="115" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">④ 데이터 방출</text>
+  <text x="650" y="133" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">onNext(item)</text>
+  <text x="650" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">오퍼레이터 체인</text>
+  <text x="650" y="165" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">통과 처리</text>
+
+  <!-- 5단계: 완료/에러 -->
+  <rect x="760" y="96" width="100" height="70" rx="8" fill="#1a1a0a" stroke="#e8c84a" stroke-width="1.5"/>
+  <text x="810" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8c84a">⑤ 완료</text>
+  <text x="810" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">onComplete()</text>
+  <text x="810" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">onError()</text>
+
+  <line x1="720" y1="131" x2="758" y2="131" stroke="#555" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Mono vs Flux 비교 (중단) -->
+  <rect x="40" y="196" width="380" height="90" rx="8" fill="#0a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="230" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Mono&lt;T&gt;</text>
+  <text x="230" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">0개 또는 1개 아이템의 비동기 시퀀스</text>
+  <text x="230" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">단건 조회, 저장, 삭제 결과를 표현</text>
+  <text x="230" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">CompletableFuture 대체 | 에러는 onError로 전달</text>
+
+  <rect x="460" y="196" width="380" height="90" rx="8" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Flux&lt;T&gt;</text>
+  <text x="650" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">0개에서 N개 아이템 (무한 스트림 가능)</text>
+  <text x="650" y="256" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">목록 조회, 스트리밍, 이벤트 시퀀스</text>
+  <text x="650" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">Observable/Iterator 대체 | 배압 내장</text>
+
+  <!-- 하단: 주요 팩토리 메서드와 변환 -->
+  <rect x="40" y="310" width="380" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="56" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">// Mono 팩토리 메서드</text>
+  <text x="56" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Mono.<tspan font-weight="600" fill="#7ec8e3">just</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">"value"</tspan><tspan fill="#ffffff">)           </tspan><tspan fill="#9aa4b8">// 즉시 값</tspan></text>
+  <text x="56" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Mono.<tspan font-weight="600" fill="#7ec8e3">empty</tspan><tspan fill="#ffffff">()                </tspan><tspan fill="#9aa4b8">// 빈 완료</tspan></text>
+  <text x="56" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Mono.<tspan font-weight="600" fill="#7ec8e3">error</tspan><tspan fill="#ffffff">(</tspan><tspan font-weight="600" fill="#7ec8e3">new</tspan><tspan fill="#ffffff"> RuntimeException())</tspan></text>
+  <text x="56" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Mono.<tspan font-weight="600" fill="#7ec8e3">fromCallable</tspan><tspan fill="#ffffff">(() -&gt; blockIO())</tspan></text>
+  <text x="56" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Mono.<tspan font-weight="600" fill="#7ec8e3">fromFuture</tspan><tspan fill="#ffffff">(completableFuture)</tspan></text>
+  <text x="56" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">// Mono -&gt; Flux 변환</text>
+  <text x="56" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">mono.<tspan font-weight="600" fill="#7ec8e3">flux</tspan><tspan fill="#ffffff">()         </tspan><tspan fill="#9aa4b8">// Mono를 단일 항목 Flux로</tspan></text>
+
+  <rect x="460" y="310" width="380" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888" xml:space="preserve">// Flux 팩토리 메서드</text>
+  <text x="476" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Flux.<tspan font-weight="600" fill="#7ec8e3">just</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ce9178">"a"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"b"</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ce9178">"c"</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="476" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Flux.<tspan font-weight="600" fill="#7ec8e3">fromIterable</tspan><tspan fill="#ffffff">(list)</tspan></text>
+  <text x="476" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Flux.<tspan font-weight="600" fill="#7ec8e3">range</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#b5cea8">100</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="476" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Flux.<tspan font-weight="600" fill="#7ec8e3">interval</tspan><tspan fill="#ffffff">(Duration.ofSeconds(</tspan><tspan fill="#b5cea8">1</tspan><tspan fill="#ffffff">))</tspan></text>
+  <text x="476" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Flux.<tspan font-weight="600" fill="#7ec8e3">merge</tspan><tspan fill="#ffffff">(flux1, flux2)    </tspan><tspan fill="#9aa4b8">// 병합</tspan></text>
+  <text x="476" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Flux.<tspan font-weight="600" fill="#7ec8e3">concat</tspan><tspan fill="#ffffff">(flux1, flux2)   </tspan><tspan fill="#9aa4b8">// 순서 보장</tspan></text>
+  <text x="476" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8" xml:space="preserve">// Flux -&gt; Mono 변환</text>
+</svg>

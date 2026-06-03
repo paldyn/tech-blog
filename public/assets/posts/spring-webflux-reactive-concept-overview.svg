@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- 제목 -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">블로킹 vs 논블로킹: 스레드 모델 비교</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Spring MVC (Thread-per-Request) vs Spring WebFlux (Event Loop)</text>
+
+  <!-- 상단 구분선 -->
+  <line x1="440" y1="88" x2="440" y2="400" stroke="#333" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- === Spring MVC 좌측 === -->
+  <text x="220" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">Spring MVC (블로킹)</text>
+
+  <!-- Thread Pool -->
+  <rect x="60" y="122" width="340" height="56" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="143" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Thread Pool (고정 크기 200개)</text>
+  <text x="230" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">요청 1개 = 스레드 1개 점유 (I/O 대기 중도)</text>
+
+  <!-- 요청 1~4 스레드 -->
+  <rect x="68" y="196" width="70" height="60" rx="6" fill="#2a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="103" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">Thread-1</text>
+  <text x="103" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">요청 처리중</text>
+  <text x="103" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">I/O 대기...</text>
+
+  <rect x="150" y="196" width="70" height="60" rx="6" fill="#2a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="185" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">Thread-2</text>
+  <text x="185" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">요청 처리중</text>
+  <text x="185" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">I/O 대기...</text>
+
+  <rect x="232" y="196" width="70" height="60" rx="6" fill="#2a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="267" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">Thread-3</text>
+  <text x="267" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">요청 처리중</text>
+  <text x="267" y="248" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">I/O 대기...</text>
+
+  <rect x="314" y="196" width="70" height="60" rx="6" fill="#1a1a1a" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="349" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">Thread-N</text>
+  <text x="349" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555">대기 중...</text>
+
+  <!-- 병목 설명 -->
+  <rect x="68" y="270" width="316" height="40" rx="6" fill="#2a1a00" stroke="#e8c84a" stroke-width="1"/>
+  <text x="226" y="285" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8c84a">스레드 부족 시 → 요청 거부 (503)</text>
+  <text x="226" y="303" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">메모리: 스레드 1개 ≈ 1MB 스택</text>
+
+  <!-- === Spring WebFlux 우측 === -->
+  <text x="660" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">Spring WebFlux (논블로킹)</text>
+
+  <!-- Event Loop -->
+  <rect x="480" y="122" width="340" height="56" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="143" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Event Loop (CPU 코어 수 스레드)</text>
+  <text x="650" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">I/O 대기 중 스레드 반환 → 다른 요청 처리</text>
+
+  <!-- Event Loop 다이어그램 -->
+  <circle cx="560" cy="250" r="50" fill="#0f1f0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="560" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Event</text>
+  <text x="560" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Loop</text>
+
+  <!-- 이벤트들 -->
+  <circle cx="650" cy="210" r="22" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="650" y="207" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3">요청</text>
+  <text x="650" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3">①</text>
+
+  <circle cx="700" cy="260" r="22" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="700" y="257" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3">I/O</text>
+  <text x="700" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3">완료②</text>
+
+  <circle cx="650" cy="302" r="22" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="650" y="299" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3">요청</text>
+  <text x="650" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3">③</text>
+
+  <line x1="628" y1="218" x2="607" y2="228" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="678" y1="259" x2="612" y2="253" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="628" y1="296" x2="608" y2="268" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- WebFlux 이점 -->
+  <rect x="480" y="340" width="340" height="52" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">소수 스레드로 수만 동시 요청 처리</text>
+  <text x="650" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Netty 기반 I/O, CPU 바운드엔 효과 제한적</text>
+
+  <!-- 하단 비교 박스들 -->
+  <rect x="60" y="418" width="760" height="102" rx="8" fill="#0f0f0f" stroke="#333" stroke-width="1"/>
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">선택 기준</text>
+
+  <!-- 좌측: MVC 적합 -->
+  <rect x="72" y="448" width="330" height="62" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="237" y="467" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">Spring MVC가 적합한 경우</text>
+  <text x="237" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">JDBC / JPA 사용, CPU 집약 작업</text>
+  <text x="237" y="500" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">기존 팀 친숙도, 블로킹 라이브러리 의존</text>
+
+  <!-- 우측: WebFlux 적합 -->
+  <rect x="418" y="448" width="330" height="62" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="583" y="467" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Spring WebFlux가 적합한 경우</text>
+  <text x="583" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">I/O 집약 (API Gateway, 프록시, 스트리밍)</text>
+  <text x="583" y="500" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">R2DBC, WebClient, 마이크로서비스 연쇄 호출</text>
+</svg>
