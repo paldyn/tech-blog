@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440" style="background:#0a0a0a">
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Hydration 불일치 오류와 해결책</text>
+
+  <!-- 오류 설명 -->
+  <rect x="60" y="68" width="760" height="60" rx="10" fill="#1f0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">Hydration Mismatch</text>
+  <text x="440" y="114" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">서버 HTML과 클라이언트 React 렌더 결과가 다를 때 발생하는 오류</text>
+
+  <!-- 원인들 -->
+  <text x="440" y="154" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#888">흔한 원인과 해결책</text>
+
+  <!-- 원인 1: 날짜/시간 -->
+  <rect x="60" y="168" width="340" height="64" rx="8" fill="#101820" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">날짜/시간 의존 렌더</text>
+  <text x="230" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">서버/클라이언트 시간 차이</text>
+  <text x="230" y="228" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">new Date().toLocaleString() 불일치</text>
+
+  <rect x="420" y="168" width="400" height="64" rx="8" fill="#0d1f12" stroke="#55c555" stroke-width="1.5"/>
+  <text x="620" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">해결: useEffect로 클라이언트에서만</text>
+  <text x="620" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">useState(null) 초기값 → useEffect에서 설정</text>
+  <text x="620" y="228" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">또는 suppressHydrationWarning 속성</text>
+
+  <!-- 원인 2: Math.random / localStorage -->
+  <rect x="60" y="248" width="340" height="64" rx="8" fill="#101820" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="272" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">브라우저 전용 API</text>
+  <text x="230" y="292" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">localStorage, window, navigator</text>
+  <text x="230" y="308" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">서버에서 접근 불가 → 오류</text>
+
+  <rect x="420" y="248" width="400" height="64" rx="8" fill="#0d1f12" stroke="#55c555" stroke-width="1.5"/>
+  <text x="620" y="272" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">해결: 클라이언트 전용 컴포넌트</text>
+  <text x="620" y="292" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Next.js: dynamic(() =&gt; import(...), {ssr: false})</text>
+  <text x="620" y="308" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">또는 isMounted 패턴으로 방어</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="330" width="760" height="90" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="352"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">// 클라이언트 전용 렌더 패턴</text>
+  <text x="76" y="372"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">const</text>
+  <text x="118" y="372"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> [mounted, setMounted] = useState(</text>
+  <text x="358" y="372"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">false</text>
+  <text x="402" y="372"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">);</text>
+  <text x="76" y="392"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">useEffect</text>
+  <text x="154" y="392"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(() =&gt; setMounted(</text>
+  <text x="284" y="392"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">true</text>
+  <text x="318" y="392"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">), []);</text>
+  <text x="76" y="412"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">if</text>
+  <text x="98" y="412"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (!mounted) </text>
+  <text x="186" y="412"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">return</text>
+  <text x="234" y="412"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3"> null</text>
+  <text x="276" y="412"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">; </text>
+  <text x="310" y="412"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">// SSR: null, 클라이언트: 실제 렌더</text>
+</svg>
