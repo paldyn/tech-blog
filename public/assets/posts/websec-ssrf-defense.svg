@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SSRF 방어: 허용 목록과 네트워크 격리</text>
+
+  <!-- Defense code -->
+  <text x="220" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">서버 사이드 URL 검증</text>
+
+  <rect x="60" y="94" width="360" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">import ipaddress, urllib.parse</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">BLOCKED_NETS</text>
+  <text x="198" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = [</text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  '10.0.0.0/8'</text>
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  '172.16.0.0/12'</text>
+  <text x="76" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  '192.168.0.0/16'</text>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  '169.254.0.0/16'</text>
+  <text x="198" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"> # 링크-로컬</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  '127.0.0.0/8'</text>
+  <text x="186" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">  # 루프백</text>
+  <text x="76" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">]</text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">def is_safe_url(url: str) -&gt; bool:</text>
+  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">                                ...</text>
+
+  <!-- Allowlist approach -->
+  <text x="660" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">허용 목록 (화이트리스트)</text>
+
+  <rect x="460" y="94" width="360" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// 블랙리스트보다 화이트리스트가 안전</text>
+  <text x="476" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const</text>
+  <text x="518" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> ALLOWED_HOSTS = [</text>
+  <text x="476" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  'api.partner.com'</text>
+  <text x="476" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">  'cdn.myapp.com'</text>
+  <text x="476" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">];</text>
+  <text x="476" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const</text>
+  <text x="518" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> { hostname } = </text>
+  <text x="624" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">new</text>
+  <text x="648" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> URL(url);</text>
+  <text x="476" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">if</text>
+  <text x="494" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (!ALLOWED_HOSTS.includes(hostname))</text>
+  <text x="476" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">  throw</text>
+  <text x="524" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve"> new Error('불허 URL');</text>
+
+  <!-- Defense strategies -->
+  <text x="440" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">추가 방어 레이어</text>
+
+  <rect x="60" y="330" width="190" height="74" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="155" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">네트워크 레벨 격리</text>
+  <text x="155" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">웹 서버에서 내부망</text>
+  <text x="155" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">직접 접근 방화벽 차단</text>
+
+  <rect x="268" y="330" width="190" height="74" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="363" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">전용 아웃바운드</text>
+  <text x="363" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">프록시 서버 경유</text>
+  <text x="363" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">허용 목록 필터링</text>
+
+  <rect x="476" y="330" width="190" height="74" rx="8" fill="#1a1a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="571" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">DNS Rebinding</text>
+  <text x="571" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">방어: 검증 후 IP 고정</text>
+  <text x="571" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">재조회 금지</text>
+
+  <rect x="684" y="330" width="136" height="74" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="752" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">IMDS v2</text>
+  <text x="752" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">AWS에서 토큰</text>
+  <text x="752" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">기반 메타데이터</text>
+</svg>

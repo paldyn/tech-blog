@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">SameSite 한계와 우회 시나리오</text>
+
+  <!-- 4 bypass boxes -->
+  <rect x="60" y="70" width="370" height="100" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">① 서브도메인 탈취 (Subdomain Takeover)</text>
+  <text x="245" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">abandoned.example.com → 공격자 소유 서버</text>
+  <text x="245" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">same-site로 인식 → 쿠키 전송됨</text>
+  <text x="245" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">방어: 미사용 DNS 레코드 정리 필수</text>
+
+  <rect x="450" y="70" width="370" height="100" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="635" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">② 클라이언트 사이드 리다이렉트</text>
+  <text x="635" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">GET /redirect?url=/transfer (사용자 입력)</text>
+  <text x="635" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Lax는 top-level GET을 허용 → 우회</text>
+  <text x="635" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">방어: 상태 변경 엔드포인트는 POST만 허용</text>
+
+  <rect x="60" y="188" width="370" height="100" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">③ 오래된 브라우저 (IE, 구형 Safari)</text>
+  <text x="245" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SameSite 속성을 지원하지 않음</text>
+  <text x="245" y="254" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SameSite=None을 무시 → 기존처럼 전송</text>
+  <text x="245" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">방어: CSRF 토큰을 반드시 병용</text>
+
+  <rect x="450" y="188" width="370" height="100" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="635" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">④ XSS + CSRF 조합 공격</text>
+  <text x="635" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">XSS로 same-origin에서 스크립트 실행</text>
+  <text x="635" y="254" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SameSite 의미 없음, 토큰도 읽기 가능</text>
+  <text x="635" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">방어: XSS 자체 근절이 필수</text>
+
+  <!-- Recommended config -->
+  <text x="440" y="318" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">권장 쿠키 설정 (2026년 기준)</text>
+
+  <rect x="60" y="330" width="760" height="90" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve"># 세션 쿠키 — 최적 설정</text>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">Set-Cookie: session=</text>
+  <text x="200" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">{token}</text>
+  <text x="246" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">; Path=/; </text>
+  <text x="318" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">HttpOnly</text>
+  <text x="396" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">; </text>
+  <text x="410" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">Secure</text>
+  <text x="456" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">; </text>
+  <text x="470" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">SameSite=Lax</text>
+  <text x="76" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># SameSite 혼자는 불충분 — CSRF 토큰 또는 Origin 헤더 검증 병용 권장</text>
+  <text x="76" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 민감 작업(이체, 비번 변경)은 반드시 재인증(TOTP/패스워드) 추가</text>
+</svg>

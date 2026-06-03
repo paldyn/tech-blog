@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">DOM 기반 XSS: 서버를 거치지 않는 공격</text>
+
+  <!-- Comparison: Server-side vs DOM-based -->
+  <!-- Left: Traditional XSS path -->
+  <text x="220" y="80" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">기존 XSS (서버 경유)</text>
+
+  <rect x="60" y="90" width="120" height="50" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="120" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">브라우저</text>
+  <text x="120" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(요청)</text>
+
+  <line x1="182" y1="115" x2="218" y2="115" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <rect x="220" y="90" width="120" height="50" rx="8" fill="#0a0a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="280" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">서버</text>
+  <text x="280" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">스크립트 포함 응답</text>
+
+  <line x1="342" y1="115" x2="378" y2="115" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <rect x="380" y="90" width="120" height="50" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">브라우저</text>
+  <text x="440" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">실행</text>
+
+  <!-- Right: DOM XSS path -->
+  <text x="710" y="80" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">DOM 기반 XSS (서버 미경유)</text>
+
+  <rect x="560" y="90" width="120" height="50" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="620" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">URL/DOM</text>
+  <text x="620" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">악성 파라미터</text>
+
+  <line x1="682" y1="115" x2="718" y2="115" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="700" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e05555">서버X</text>
+
+  <rect x="720" y="90" width="120" height="50" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="780" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">JS가 DOM</text>
+  <text x="780" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">직접 조작</text>
+
+  <!-- Sources and Sinks -->
+  <text x="220" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">Source (오염 소스)</text>
+  <text x="660" y="178" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">Sink (실행 지점)</text>
+
+  <!-- Sources -->
+  <rect x="60" y="188" width="320" height="130" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// 공격자가 제어 가능한 소스</text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">location.search</text>
+  <text x="248" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">  // ?q=...</text>
+  <text x="76" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">location.hash</text>
+  <text x="248" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">    // #...</text>
+  <text x="76" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">document.referrer</text>
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">localStorage</text>
+  <text x="200" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">/ sessionStorage</text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">postMessage</text>
+  <text x="196" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve"> 데이터</text>
+
+  <!-- Arrow source to sink -->
+  <line x1="382" y1="253" x2="478" y2="253" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="430" y="245" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">오염 전파</text>
+
+  <!-- Sinks -->
+  <rect x="480" y="188" width="340" height="130" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="496" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// 위험한 Sink (실행 지점)</text>
+  <text x="496" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">element.innerHTML</text>
+  <text x="496" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">document.write()</text>
+  <text x="496" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">eval()</text>
+  <text x="496" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">setTimeout(string)</text>
+  <text x="496" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">location.href = user</text>
+
+  <!-- Example: vulnerable code -->
+  <rect x="60" y="340" width="760" height="90" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888" xml:space="preserve">// 취약한 DOM 코드 예시</text>
+  <text x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const</text>
+  <text x="118" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> name = </text>
+  <text x="180" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">new URLSearchParams</text>
+  <text x="340" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">(location.search).get(</text>
+  <text x="508" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">'name'</text>
+  <text x="548" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">);</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" font-weight="600" xml:space="preserve">document.getElementById('greeting').innerHTML</text>
+  <text x="476" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> = </text>
+  <text x="496" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ce9178" xml:space="preserve">`안녕, ${name}!`</text>
+  <text x="76" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// ?name=&lt;img src=x onerror=alert(1)&gt; → 실행!</text>
+
+  <!-- Note -->
+  <rect x="60" y="450" width="760" height="36" rx="8" fill="#0d0d0d" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="473" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">DOM XSS는 서버 로그에 남지 않아 탐지가 더 어려움 — 클라이언트 코드 정적 분석 필수</text>
+</svg>
