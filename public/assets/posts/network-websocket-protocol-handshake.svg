@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e09050"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">WebSocket 핸드셰이크 &amp; 프레임 구조</text>
+
+  <!-- Client and Server boxes -->
+  <rect x="60" y="60" width="120" height="48" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="120" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">Client</text>
+
+  <rect x="700" y="60" width="120" height="48" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="760" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">Server</text>
+
+  <!-- Vertical timelines -->
+  <line x1="120" y1="108" x2="120" y2="460" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="760" y1="108" x2="760" y2="460" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: HTTP Upgrade request -->
+  <line x1="120" y1="140" x2="758" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">① HTTP GET / Upgrade: websocket</text>
+
+  <!-- Step 2: 101 Switching Protocols -->
+  <line x1="760" y1="175" x2="122" y2="175" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="440" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">② 101 Switching Protocols</text>
+
+  <!-- Connection established -->
+  <rect x="260" y="190" width="360" height="26" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="207" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">WebSocket 연결 수립 (Full-Duplex)</text>
+
+  <!-- Step 3: client message -->
+  <line x1="120" y1="240" x2="758" y2="240" stroke="#e09050" stroke-width="2" marker-end="url(#arr-orange)"/>
+  <text x="440" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09050" text-anchor="middle">③ Data Frame (클라이언트 → 서버)</text>
+
+  <!-- Step 4: server push -->
+  <line x1="760" y1="270" x2="122" y2="270" stroke="#e09050" stroke-width="2" marker-end="url(#arr-orange)"/>
+  <text x="440" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09050" text-anchor="middle">④ Data Frame (서버 → 클라이언트, 서버 Push)</text>
+
+  <!-- Step 5: close -->
+  <line x1="120" y1="310" x2="758" y2="310" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="440" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">⑤ Close Frame (종료)</text>
+  <line x1="760" y1="330" x2="122" y2="330" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+  <text x="440" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">⑥ Close Frame ACK</text>
+
+  <!-- Frame structure -->
+  <text x="60" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">WebSocket 프레임 구조</text>
+
+  <!-- Frame bit layout -->
+  <rect x="60" y="390" width="760" height="36" rx="4" fill="#111120" stroke="#3a3a5a" stroke-width="1"/>
+
+  <!-- Bit labels -->
+  <rect x="60" y="390" width="32" height="36" rx="0" fill="#1a2a4a" stroke="#3a4a7a" stroke-width="0.5"/>
+  <text x="76" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">FIN</text>
+  <text x="76" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">1bit</text>
+
+  <rect x="92" y="390" width="48" height="36" rx="0" fill="#1a2a3a" stroke="#3a4a7a" stroke-width="0.5"/>
+  <text x="116" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7777cc" text-anchor="middle">RSV1-3</text>
+  <text x="116" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">3bit</text>
+
+  <rect x="140" y="390" width="60" height="36" rx="0" fill="#2a1a2a" stroke="#5a3a5a" stroke-width="0.5"/>
+  <text x="170" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178" text-anchor="middle">Opcode</text>
+  <text x="170" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">4bit</text>
+
+  <rect x="200" y="390" width="40" height="36" rx="0" fill="#2a2a1a" stroke="#5a5a2a" stroke-width="0.5"/>
+  <text x="220" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#b5cea8" text-anchor="middle">MASK</text>
+  <text x="220" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">1bit</text>
+
+  <rect x="240" y="390" width="120" height="36" rx="0" fill="#1a2a1a" stroke="#3a5a3a" stroke-width="0.5"/>
+  <text x="300" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555" text-anchor="middle">Payload Length</text>
+  <text x="300" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">7/7+16/7+64 bit</text>
+
+  <rect x="360" y="390" width="120" height="36" rx="0" fill="#2a1a1a" stroke="#5a3a3a" stroke-width="0.5"/>
+  <text x="420" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e09050" text-anchor="middle">Masking Key</text>
+  <text x="420" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">32bit (클라이언트만)</text>
+
+  <rect x="480" y="390" width="340" height="36" rx="0" fill="#1a1a2a" stroke="#3a3a5a" stroke-width="0.5"/>
+  <text x="650" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">Payload Data</text>
+  <text x="650" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">Masking Key로 XOR 처리</text>
+
+  <!-- Code block: opcode types -->
+  <rect x="60" y="436" width="760" height="46" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="455" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">; Opcode 값</text>
+  <text x="76" y="473" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#b5cea8">0x1</tspan>=Text  <tspan fill="#b5cea8">0x2</tspan>=Binary  <tspan fill="#b5cea8">0x8</tspan>=Close  <tspan fill="#b5cea8">0x9</tspan>=Ping  <tspan fill="#b5cea8">0xA</tspan>=Pong</text>
+</svg>
