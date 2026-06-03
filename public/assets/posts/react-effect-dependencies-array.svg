@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460" style="background:#0a0a0a">
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">의존성 배열 — 3가지 형태와 작동 방식</text>
+
+  <!-- 형태 1: 배열 없음 -->
+  <rect x="60" y="68" width="220" height="100" rx="10" fill="#101820" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="170" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">의존성 배열 없음</text>
+  <text x="76" y="114"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">useEffect(fn)</text>
+  <text x="170" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">매 렌더마다 실행</text>
+  <text x="170" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">거의 사용 안 함</text>
+
+  <!-- 형태 2: 빈 배열 -->
+  <rect x="330" y="68" width="220" height="100" rx="10" fill="#101820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">빈 의존성 배열</text>
+  <text x="346" y="114"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">useEffect(fn, [])</text>
+  <text x="440" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">마운트 시 1회</text>
+  <text x="440" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">언마운트 시 cleanup</text>
+
+  <!-- 형태 3: 값이 있는 배열 -->
+  <rect x="600" y="68" width="220" height="100" rx="10" fill="#101820" stroke="#55c555" stroke-width="1.5"/>
+  <text x="710" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">의존성 명시</text>
+  <text x="616" y="114"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">useEffect(fn, [a, b])</text>
+  <text x="710" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">a 또는 b 변경 시 실행</text>
+  <text x="710" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Object.is() 비교</text>
+
+  <!-- Object.is 비교 방식 -->
+  <rect x="60" y="190" width="760" height="76" rx="10" fill="#0a0e16" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="214" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Object.is() 비교 — 참조 동일성</text>
+  <text x="440" y="238" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">원시값(string, number, boolean): 값 비교 / 객체·배열·함수: 참조 비교</text>
+  <text x="440" y="258" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">매 렌더마다 생성되는 객체/함수는 항상 "다름" → 무한 루프 위험</text>
+
+  <!-- 코드 박스 -->
+  <rect x="60" y="286" width="380" height="152" rx="8" fill="#000000" stroke="#e05555" stroke-width="1.5"/>
+  <text x="250" y="308" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">무한 루프 예</text>
+  <text x="76" y="330"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">function</text>
+  <text x="150" y="330"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> Component() {</text>
+  <text x="76" y="350"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">  // 매 렌더마다 새 객체 생성!</text>
+  <text x="76" y="370"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">  const</text>
+  <text x="118" y="370"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555"> options = { limit: 10 };</text>
+  <text x="76" y="390"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">  useEffect</text>
+  <text x="154" y="390"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(() =&gt; fetch(options), [options]);</text>
+  <text x="76" y="418"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">  // options는 매번 새 참조 → 무한</text>
+
+  <rect x="460" y="286" width="360" height="152" rx="8" fill="#000000" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="308" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">올바른 의존성 관리</text>
+  <text x="476" y="330"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">// 방법 1: 원시값으로 분해</text>
+  <text x="476" y="350"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">useEffect</text>
+  <text x="554" y="350"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">(() =&gt; fetch({limit}),</text>
+  <text x="476" y="370"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  [limit]);</text>
+  <text x="476" y="394"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#888">// 방법 2: useMemo로 메모이제이션</text>
+  <text x="476" y="414"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">const</text>
+  <text x="518" y="414"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> stableOpts = useMemo(() =&gt; ({</text>
+  <text x="476" y="430"
+        xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  limit }), [limit]);</text>
+</svg>

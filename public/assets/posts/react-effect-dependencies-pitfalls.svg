@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 440" style="background:#0a0a0a">
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">의존성 배열 — 흔한 실수와 해결책</text>
+
+  <!-- 헤더 행 -->
+  <rect x="60" y="66" width="760" height="38" rx="6" fill="#101820" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="200" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">실수 유형</text>
+  <text x="500" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">문제</text>
+  <text x="750" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">해결책</text>
+
+  <!-- 행 1: 빈 배열에 변수 누락 -->
+  <rect x="60" y="112" width="760" height="62" rx="6" fill="#0a0e16" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="200" y="136" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">빈 배열에 변수 누락</text>
+  <text x="200" y="156" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">useEffect(() =&gt; fn(id), [])</text>
+  <text x="500" y="136" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">id 변경 무시 — 낡은 값 사용</text>
+  <text x="500" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">eslint exhaustive-deps 경고</text>
+  <text x="750" y="146" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">[id] 추가</text>
+
+  <!-- 행 2: 함수 의존성 -->
+  <rect x="60" y="182" width="760" height="62" rx="6" fill="#0a0e16" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="200" y="206" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">함수 의존성 — 무한 루프</text>
+  <text x="200" y="226" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">useEffect(fn, [callback])</text>
+  <text x="500" y="206" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">매 렌더 새 함수 참조</text>
+  <text x="500" y="226" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">effect 계속 재실행</text>
+  <text x="750" y="216" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">useCallback 사용</text>
+
+  <!-- 행 3: 객체/배열 의존성 -->
+  <rect x="60" y="252" width="760" height="62" rx="6" fill="#0a0e16" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="200" y="276" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">객체 의존성 — 참조 변경</text>
+  <text x="200" y="296" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">useEffect(fn, [{id}])</text>
+  <text x="500" y="276" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">값 같아도 매 렌더 새 객체</text>
+  <text x="500" y="296" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">무한 재실행</text>
+  <text x="750" y="276" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">원시값 분해</text>
+  <text x="750" y="296" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">useMemo</text>
+
+  <!-- 황금 규칙 -->
+  <rect x="60" y="332" width="760" height="86" rx="10" fill="#0d1f12" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="358" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">황금 규칙: 의존성 배열에 거짓말하지 말 것</text>
+  <text x="440" y="382" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">effect 내부에서 사용하는 모든 반응형 값은 의존성 배열에 넣어야 한다</text>
+  <text x="440" y="404" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">eslint 경고를 disable로 무시하는 대신, 코드 구조를 바꾸는 것이 올바른 해결</text>
+</svg>
