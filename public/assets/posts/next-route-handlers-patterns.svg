@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Route Handler 고급 패턴</text>
+
+  <!-- Left: Dynamic route + JSON body -->
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">동적 라우트 + JSON body</text>
+  <rect x="60" y="88" width="380" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="108" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// app/api/posts/[id]/route.ts</text>
+  <text x="76" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">type</tspan><tspan fill="#ffffff"> Params = { params: Promise&lt;{ id: string }&gt; }</tspan>
+  </text>
+  <text x="76" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> </text>
+  <text x="76" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> GET(_: Request, { params }: Params) {</tspan>
+  </text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> { id } = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> params</tspan>
+  </text>
+  <text x="76" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> post = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> db.post.findUnique({ where: { id } })</tspan>
+  </text>
+  <text x="76" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!post) </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> new Response(</tspan><tspan fill="#ce9178">'Not Found'</tspan><tspan fill="#ffffff">, { status: 404 })</tspan>
+  </text>
+  <text x="76" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> Response.json(post)</tspan>
+  </text>
+  <text x="76" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">}</text>
+  <text x="76" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> </text>
+  <text x="76" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> PATCH(req: Request, { params }: Params) {</tspan>
+  </text>
+
+  <!-- Right: SearchParams + CORS + Webhook -->
+  <text x="480" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">쿼리파라미터 + CORS 헤더</text>
+  <rect x="480" y="88" width="360" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="496" y="108" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// app/api/search/route.ts</text>
+  <text x="496" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> GET(req: Request) {</tspan>
+  </text>
+  <text x="496" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> { searchParams } = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> URL(req.url)</tspan>
+  </text>
+  <text x="496" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> q = searchParams.get(</tspan><tspan fill="#ce9178">'q'</tspan><tspan fill="#ffffff">) ?? </tspan><tspan fill="#ce9178">''</tspan>
+  </text>
+  <text x="496" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> results = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> search(q)</tspan>
+  </text>
+  <text x="496" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> Response.json(results, {</tspan>
+  </text>
+  <text x="496" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">    headers: {</text>
+  <text x="496" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178">      'Access-Control-Allow-Origin': '*',</text>
+  <text x="496" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">    },</text>
+  <text x="496" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  })</text>
+  <text x="496" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">}</text>
+
+  <!-- Route Handler vs Server Action -->
+  <rect x="60" y="318" width="760" height="80" rx="8" fill="#1a1a2e" stroke="#4a4a8e" stroke-width="1"/>
+  <text x="440" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Route Handler vs Server Action — 언제 쓸까?</text>
+  <text x="440" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Route Handler: 외부 앱/서비스가 호출하는 API, 웹훅, CORS 필요, 파일 스트리밍</text>
+  <text x="440" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Server Action: Next.js 앱 내부에서 폼/버튼 등 UI와 직접 연동되는 뮤테이션</text>
+</svg>

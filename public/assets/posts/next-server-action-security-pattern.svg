@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">안전한 Server Action 패턴</text>
+
+  <!-- Full secure action example -->
+  <text x="60" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">인증 + 권한 + 검증 통합 패턴</text>
+  <rect x="60" y="88" width="760" height="278" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="108" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#ce9178">'use server'</tspan>
+  </text>
+  <text x="76" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> deletePost(postId: string) {</tspan>
+  </text>
+  <text x="76" y="144" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">  // 1. 인증 확인</text>
+  <text x="76" y="162" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> session = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> getSession()</tspan>
+  </text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!session?.userId)</tspan>
+  </text>
+  <text x="76" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">    throw new</tspan><tspan fill="#ffffff"> Error(</tspan><tspan fill="#ce9178">'Unauthorized'</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="76" y="216" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> </text>
+  <text x="76" y="234" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">  // 2. 입력 검증</text>
+  <text x="76" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> id = z.string().uuid().parse(postId)</tspan>
+  </text>
+  <text x="76" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> </text>
+  <text x="76" y="288" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">  // 3. 소유권 확인 (서버에서 직접 조회)</text>
+  <text x="76" y="306" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> post = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> db.post.findFirst({</tspan>
+  </text>
+  <text x="76" y="324" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">    where: { id, userId: session.userId }</text>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  })</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!post) </tspan><tspan fill="#7ec8e3" font-weight="600">throw new</tspan><tspan fill="#ffffff"> Error(</tspan><tspan fill="#ce9178">'Forbidden'</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <!-- Bottom tip -->
+  <text x="440" y="386" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">클라이언트가 전달하는 userId를 절대 신뢰하지 말 것 — 세션에서 직접 읽을 것</text>
+</svg>

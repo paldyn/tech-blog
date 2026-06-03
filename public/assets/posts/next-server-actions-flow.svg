@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Server Actions 실행 흐름</text>
+
+  <!-- Browser -->
+  <rect x="60" y="80" width="200" height="64" rx="8" fill="#1a2a44" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="160" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">브라우저 (클라이언트)</text>
+  <text x="160" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">폼 제출 / 버튼 클릭</text>
+
+  <!-- Arrow: browser -> Next.js server -->
+  <line x1="260" y1="112" x2="360" y2="112" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="310" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">POST /action</text>
+
+  <!-- Next.js Server -->
+  <rect x="360" y="80" width="200" height="64" rx="8" fill="#1a2a44" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="460" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Next.js 서버</text>
+  <text x="460" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">'use server' 함수 실행</text>
+
+  <!-- Arrow: server -> DB -->
+  <line x1="560" y1="112" x2="660" y2="112" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="610" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">DB / 외부 API</text>
+
+  <!-- DB -->
+  <rect x="660" y="80" width="160" height="64" rx="8" fill="#1a2a44" stroke="#3a5a8e" stroke-width="1.5"/>
+  <text x="740" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Database</text>
+  <text x="740" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Prisma / Drizzle</text>
+
+  <!-- Arrow: server -> browser (revalidate + response) -->
+  <path d="M 460 144 Q 460 200 310 200 Q 160 200 160 180" stroke="#55c555" stroke-width="2"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arr-green)"/>
+  <text x="310" y="194" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">revalidate + UI 갱신</text>
+
+  <!-- What happens box -->
+  <text x="60" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Server Action이 처리하는 것</text>
+
+  <rect x="60" y="254" width="360" height="160" rx="8" fill="#0f1f0f" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="80" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">✓ 가능한 작업</text>
+  <text x="80" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• DB 뮤테이션 (INSERT, UPDATE, DELETE)</text>
+  <text x="80" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 파일 업로드 처리 / 이메일 발송</text>
+  <text x="80" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• revalidatePath / revalidateTag 호출</text>
+  <text x="80" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• cookies / headers 읽기·쓰기</text>
+  <text x="80" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• redirect / notFound 호출</text>
+  <text x="80" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 서버 전용 환경 변수 접근</text>
+
+  <rect x="460" y="254" width="360" height="160" rx="8" fill="#2a1a0f" stroke="#5a3a1a" stroke-width="1"/>
+  <text x="480" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">✗ 브라우저 API 사용 불가</text>
+  <text x="480" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• window, document, localStorage</text>
+  <text x="480" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• DOM 이벤트 리스너</text>
+  <text x="480" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e0a030">⚠ 보안 주의</text>
+  <text x="480" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 항상 서버 측 검증 필수</text>
+  <text x="480" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 클라이언트 데이터 신뢰 금지</text>
+  <text x="480" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 인증/인가 서버에서 반드시 확인</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">별도 API 라우트 없이 서버 함수를 클라이언트에서 직접 호출 — Next.js가 POST 엔드포인트로 변환</text>
+</svg>

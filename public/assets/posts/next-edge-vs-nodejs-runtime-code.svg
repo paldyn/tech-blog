@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Runtime 선언 코드 패턴</text>
+
+  <!-- Left: Edge Runtime -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Edge Runtime — Route Handler</text>
+  <rect x="60" y="90" width="360" height="150" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// app/api/geo/route.ts</text>
+  <text x="76" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan><tspan fill="#ffffff"> runtime = </tspan><tspan fill="#ce9178">'edge'</tspan>
+  </text>
+  <text x="76" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> </text>
+  <text x="76" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export function</tspan><tspan fill="#ffffff"> GET(req: Request) {</tspan>
+  </text>
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  const geo = req.geo</text>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> Response.json({ geo })</tspan>
+  </text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Right: Node.js (default) -->
+  <text x="460" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Node.js Runtime — Route Handler</text>
+  <rect x="460" y="90" width="360" height="150" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// app/api/report/route.ts</text>
+  <text x="476" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// runtime 선언 생략 = Node.js 기본값</text>
+  <text x="476" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> { db } </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> '@/lib/db'</tspan>
+  </text>
+  <text x="476" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> </text>
+  <text x="476" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> GET() {</tspan>
+  </text>
+  <text x="476" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  const rows = await db.query(...)</text>
+  <text x="476" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> Response.json(rows)</tspan>
+  </text>
+
+  <!-- Middleware note -->
+  <text x="60" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e0a030">미들웨어 — 항상 Edge</text>
+  <rect x="60" y="278" width="760" height="94" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// middleware.ts — runtime 선언 필요 없음, 항상 Edge</text>
+  <text x="76" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export function</tspan><tspan fill="#ffffff"> middleware(req: NextRequest) {</tspan>
+  </text>
+  <text x="76" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // 쿠키 검사, 리다이렉트, 헤더 수정...</text>
+  <text x="76" y="354" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> NextResponse.next()</tspan>
+  </text>
+
+  <!-- Bottom tip -->
+  <text x="440" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Edge Runtime에서는 Node.js 전용 API (fs, crypto, Buffer 등) 사용 불가</text>
+</svg>

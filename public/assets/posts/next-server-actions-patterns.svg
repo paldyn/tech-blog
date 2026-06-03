@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Server Action 선언 패턴</text>
+
+  <!-- Left: inline 'use server' in Server Component -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">패턴 1 — Server Component 인라인</text>
+  <rect x="60" y="90" width="360" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// app/posts/new/page.tsx</text>
+  <text x="76" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export default function</tspan><tspan fill="#ffffff"> NewPostPage() {</tspan>
+  </text>
+  <text x="76" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  async function</tspan><tspan fill="#ffffff"> createPost(data: FormData) {</tspan>
+  </text>
+  <text x="76" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ce9178">    'use server'</tspan>
+  </text>
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    const title = data.get('title')</text>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    await db.post.create({ title })</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    revalidatePath('/posts')</text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  return &lt;form action={createPost}&gt;...&lt;/form&gt;</text>
+
+  <!-- Right: 'use server' module -->
+  <text x="460" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">패턴 2 — 별도 액션 모듈</text>
+  <rect x="460" y="90" width="360" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// app/actions/posts.ts</text>
+  <text x="476" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ce9178">'use server'</tspan><tspan fill="#9aa4b8">  // 파일 전체가 Server Action</tspan>
+  </text>
+  <text x="476" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> </text>
+  <text x="476" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> createPost(</tspan>
+  </text>
+  <text x="476" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  data: FormData</text>
+  <text x="476" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">) {</text>
+  <text x="476" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  await db.post.create(...)</text>
+  <text x="476" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  revalidatePath('/posts')</text>
+  <text x="476" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Tip -->
+  <rect x="60" y="290" width="760" height="80" rx="8" fill="#12180f" stroke="#2a5a1a" stroke-width="1"/>
+  <text x="440" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">패턴 2(별도 모듈) 권장 이유</text>
+  <text x="440" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">여러 컴포넌트에서 재사용 가능  •  Client Component에서도 import 가능  •  테스트 용이</text>
+  <text x="440" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">패턴 1은 해당 Server Component에서만 사용할 간단한 액션에 적합</text>
+</svg>
