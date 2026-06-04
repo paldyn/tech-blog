@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">직접 구현: JWT 인증 흐름 코드</text>
+
+  <!-- Code block -->
+  <rect x="60" y="66" width="760" height="340" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="76" y="90" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#9aa4b8">// lib/auth.ts — 토큰 서명·검증 유틸</text>
+  <text x="76" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> &#123; SignJWT, jwtVerify &#125; </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> 'jose'</tspan></text>
+  <text x="76" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> SECRET = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> TextEncoder().encode(</tspan></text>
+  <text x="76" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  process.env.</tspan><tspan fill="#ffffff">JWT_SECRET!</tspan></text>
+  <text x="76" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> signToken(payload: </tspan><tspan fill="#7ec8e3" font-weight="600">object</tspan><tspan fill="#ffffff">) &#123;</tspan></text>
+  <text x="76" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> SignJWT(payload)</tspan></text>
+  <text x="76" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    .setProtectedHeader(&#123; alg: </tspan><tspan fill="#ce9178">'HS256'</tspan><tspan fill="#ffffff"> &#125;)</tspan></text>
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    .setExpirationTime(</tspan><tspan fill="#ce9178">'7d'</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    .sign(SECRET)</tspan></text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">&#125;</tspan></text>
+  <text x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="76" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> verifyToken(token: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff">) &#123;</tspan></text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> jwtVerify(token, SECRET)</tspan></text>
+  <text x="76" y="410" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">&#125;</tspan></text>
+
+  <text x="440" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">jose 라이브러리는 Edge Runtime 호환 — jsonwebtoken은 Node.js 전용이라 Middleware에서 사용 불가</text>
+</svg>

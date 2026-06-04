@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Defense in Depth — 다층 라우트 보호</text>
+
+  <!-- Layer 1: Middleware -->
+  <rect x="60" y="70" width="760" height="76" rx="10" fill="#1a2a1a" stroke="#55c555" stroke-width="2"/>
+  <text x="100" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">Layer 1 — Middleware</text>
+  <text x="100" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Edge Runtime · 가장 빠른 차단 · 모든 경로에 적용 가능</text>
+  <text x="100" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">JWT/세션 쿠키 존재 여부 확인 → 없으면 /login 리다이렉트</text>
+  <text x="720" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">middleware.ts</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="146" x2="440" y2="164" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 2: Server Component -->
+  <rect x="60" y="166" width="760" height="76" rx="10" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="100" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">Layer 2 — Server Component / Layout</text>
+  <text x="100" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Node.js Runtime · DB 연동 가능 · 역할(role) 기반 세밀한 검증</text>
+  <text x="100" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">getSession() / auth() 호출 → null이면 redirect(), 권한 없으면 403 페이지</text>
+  <text x="720" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">layout.tsx / page.tsx</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="242" x2="440" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 3: Server Action -->
+  <rect x="60" y="262" width="760" height="76" rx="10" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="100" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc">Layer 3 — Server Action / Route Handler</text>
+  <text x="100" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">데이터 변경 전 재검증 · 클라이언트 우회 불가 · CSRF 방어</text>
+  <text x="100" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">액션 내부에서 auth() 재호출 → 세션 없으면 예외 throw</text>
+  <text x="720" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">actions.ts</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="338" x2="440" y2="356" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 4: DB -->
+  <rect x="60" y="358" width="760" height="68" rx="10" fill="#111" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="100" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8">Layer 4 — 데이터베이스 접근 제어</text>
+  <text x="100" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Row-Level Security / 소유자 확인 — 데이터 자체를 사용자 ID로 필터링</text>
+  <text x="720" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">db.post.findMany</text>
+
+  <text x="440" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555" text-anchor="middle">Layer 1·2만으로도 대부분 충분 — Layer 3·4는 금융/의료 등 고보안 서비스에서 권장</text>
+  <text x="440" y="468" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">Server Action은 반드시 재검증 — Middleware가 막아도 직접 호출 가능성 존재</text>
+</svg>

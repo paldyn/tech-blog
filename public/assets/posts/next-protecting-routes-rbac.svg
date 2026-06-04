@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">역할 기반 접근 제어(RBAC) 코드 패턴</text>
+
+  <!-- Left: Middleware role check -->
+  <rect x="60" y="66" width="380" height="314" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="90" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">// middleware.ts — 역할별 경로 제어</text>
+  <text x="76" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export default</tspan><tspan fill="#ffffff"> auth((req) =&gt; &#123;</tspan></text>
+  <text x="76" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> session = req.auth</tspan></text>
+  <text x="76" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> &#123; pathname &#125; = req.nextUrl</tspan></text>
+  <text x="76" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff"> </text>
+  <text x="76" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">  // 비인증 → 로그인</text>
+  <text x="76" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!session) &#123;</tspan></text>
+  <text x="76" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> Response.redirect(</tspan></text>
+  <text x="76" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> URL(</tspan><tspan fill="#ce9178">'/login'</tspan><tspan fill="#ffffff">, req.url))</tspan></text>
+  <text x="76" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  &#125;</tspan></text>
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">  // admin 전용 경로 — role 확인</text>
+  <text x="76" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (pathname.startsWith(</tspan><tspan fill="#ce9178">'/admin'</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#7ec8e3" font-weight="600">&amp;&amp;</tspan></text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">      session.user.role !== </tspan><tspan fill="#ce9178">'admin'</tspan><tspan fill="#ffffff">) &#123;</tspan></text>
+  <text x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> Response.redirect(</tspan></text>
+  <text x="76" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">      </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> URL(</tspan><tspan fill="#ce9178">'/403'</tspan><tspan fill="#ffffff">, req.url))</tspan></text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  &#125;</tspan></text>
+
+  <!-- Right: Server Action guard -->
+  <rect x="460" y="66" width="360" height="314" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="90" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">// Server Action 내 재검증</text>
+  <text x="476" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> deletePost(id: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff">) &#123;</tspan></text>
+  <text x="476" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> session = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> auth()</tspan></text>
+  <text x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">  // 1. 인증 확인</text>
+  <text x="476" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!session?.user) &#123;</tspan></text>
+  <text x="476" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">throw new</tspan><tspan fill="#ffffff"> Error(</tspan><tspan fill="#ce9178">'Unauthorized'</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="476" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  &#125;</tspan></text>
+  <text x="476" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">  // 2. 소유자 확인</text>
+  <text x="476" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> post = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> db.post.findUnique(</tspan></text>
+  <text x="476" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    &#123; where: &#123; id &#125; &#125;</tspan></text>
+  <text x="476" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  )</tspan></text>
+  <text x="476" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (post?.authorId !== session.user.id) &#123;</tspan></text>
+  <text x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">throw new</tspan><tspan fill="#ffffff"> Error(</tspan><tspan fill="#ce9178">'Forbidden'</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text x="476" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  &#125;</tspan></text>
+  <text x="476" y="370" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  await</tspan><tspan fill="#ffffff"> db.post.delete(&#123; where: &#123; id &#125; &#125;)</tspan></text>
+
+  <text x="440" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">Middleware만 믿지 말 것 — Server Action은 URL 우회로 직접 호출 가능 → 액션 내 재검증 필수</text>
+</svg>
