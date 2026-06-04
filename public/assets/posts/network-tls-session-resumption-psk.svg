@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">TLS 1.3 PSK &amp; 0-RTT Early Data</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">이전 연결의 resumption_master_secret 재사용 흐름</text>
+
+  <!-- 단계 박스들 -->
+  <!-- 1단계: 최초 연결 -->
+  <rect x="60" y="88" width="360" height="52" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">① 최초 TLS 1.3 핸드셰이크 완료</text>
+  <text x="240" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">서버가 NewSessionTicket 메시지로 PSK 발급</text>
+
+  <defs>
+    <marker id="pskDown" viewBox="0 0 14 14" refX="7" refY="12" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto">
+      <path d="M 0 0 L 7 12 L 14 0 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+  <line x1="240" y1="140" x2="240" y2="165" stroke="#7777cc" stroke-width="2" marker-end="url(#pskDown)"/>
+
+  <!-- 2단계: PSK 저장 -->
+  <rect x="60" y="167" width="360" height="52" rx="8" fill="#1a0d2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="240" y="187" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">② 클라이언트: PSK 저장</text>
+  <text x="240" y="207" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">psk_identity + psk_value + 만료 시간 보관</text>
+
+  <line x1="240" y1="219" x2="240" y2="244" stroke="#7777cc" stroke-width="2" marker-end="url(#pskDown)"/>
+
+  <!-- 3단계: 재연결 -->
+  <rect x="60" y="246" width="360" height="52" rx="8" fill="#0d2a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">③ 재연결: ClientHello + PSK</text>
+  <text x="240" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">psk_identity, early_data (선택) 포함</text>
+
+  <!-- 오른쪽: 코드 예시 -->
+  <rect x="460" y="88" width="360" height="210" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="480" y="110" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve"># OpenSSL TLS 1.3 세션 티켓 확인</text>
+  <text x="480" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">openssl</text>
+  <text x="560" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve"> s_client \</text>
+  <text x="480" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">  -connect example.com:443 \</text>
+  <text x="480" y="172" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">  -tls1_3 \</text>
+  <text x="480" y="192" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">  -sess_out /tmp/session.pem</text>
+  <text x="480" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve"># PSK로 재연결</text>
+  <text x="480" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" xml:space="preserve">openssl</text>
+  <text x="560" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve"> s_client \</text>
+  <text x="480" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">  -sess_in /tmp/session.pem</text>
+  <text x="480" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve"># Reused: yes 확인</text>
+
+  <!-- 주의 사항 -->
+  <rect x="60" y="320" width="760" height="44" rx="8" fill="#2a1500" stroke="#e8c44a" stroke-width="1"/>
+  <text x="440" y="339" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8c44a">⚠ 0-RTT 주의사항</text>
+  <text x="440" y="357" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">0-RTT Early Data는 재전송 공격(Replay Attack) 취약 → 멱등 요청(GET)에만 사용, 금융/결제 요청 금지</text>
+</svg>

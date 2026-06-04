@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">PKI 인증서 체인 구조</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888">Root CA → Intermediate CA → 서버 인증서 신뢰 체인</text>
+
+  <defs>
+    <marker id="pkiDown" viewBox="0 0 14 14" refX="7" refY="12" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 7 12 L 14 0 z" fill="#e8c44a"/>
+    </marker>
+  </defs>
+
+  <!-- Root CA -->
+  <rect x="290" y="88" width="300" height="72" rx="8" fill="#1a1500" stroke="#e8c44a" stroke-width="2"/>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8c44a">Root CA</text>
+  <text x="440" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">자체 서명(Self-Signed), OS/브라우저에 내장</text>
+  <text x="440" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">오프라인 보관 권장 (보안 최우선)</text>
+
+  <line x1="440" y1="160" x2="440" y2="193" stroke="#e8c44a" stroke-width="2" marker-end="url(#pkiDown)"/>
+  <text x="450" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8c44a">서명</text>
+
+  <!-- Intermediate CA -->
+  <rect x="240" y="195" width="400" height="72" rx="8" fill="#1a0d2a" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="219" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7777cc">Intermediate CA</text>
+  <text x="440" y="239" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Root CA의 서명으로 신뢰, 실제 인증서 발급 담당</text>
+  <text x="440" y="257" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">침해 시 Root를 건드리지 않고 폐기 가능</text>
+
+  <line x1="440" y1="267" x2="440" y2="300" stroke="#e8c44a" stroke-width="2" marker-end="url(#pkiDown)"/>
+  <text x="450" y="289" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8c44a">서명</text>
+
+  <!-- Server Certificate -->
+  <rect x="180" y="302" width="520" height="72" rx="8" fill="#0a1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">서버(Leaf) 인증서</text>
+  <text x="440" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">도메인: example.com · 공개키 · 유효기간 · SAN</text>
+  <text x="440" y="364" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">서버가 개인키 보관, TLS 핸드셰이크에서 전송</text>
+
+  <!-- 검증 방향 -->
+  <text x="75" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">클라이언트</text>
+  <text x="75" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">검증 방향</text>
+  <line x1="100" y1="345" x2="100" y2="100" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4"/>
+  <path d="M 93 100 L 100 88 L 107 100" fill="none" stroke="#55c555" stroke-width="2"/>
+  <text x="60" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">서버 인증서</text>
+  <text x="60" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">Root CA</text>
+  <text x="65" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">신뢰 기반</text>
+
+  <!-- 하단 코드 -->
+  <rect x="60" y="396" width="760" height="44" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="80" y="416" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve"># 인증서 체인 확인</text>
+  <text x="80" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">openssl s_client -connect example.com:443 -showcerts 2&gt;/dev/null</text>
+</svg>
