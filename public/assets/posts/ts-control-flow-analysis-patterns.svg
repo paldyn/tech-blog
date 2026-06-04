@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">제어 흐름 분석 고급 패턴</text>
+
+  <!-- Pattern 1: Assignment narrowing -->
+  <rect x="40" y="66" width="390" height="178" rx="8" fill="#0a1628" stroke="#3178c6" stroke-width="1.5"/>
+  <text x="235" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">① 할당을 통한 타입 좁히기</text>
+  <rect x="56" y="100" width="358" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">let</tspan><tspan fill="#ffffff"> x: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff"> | </tspan><tspan fill="#7ec8e3" font-weight="600">number</tspan><tspan fill="#ffffff"> | </tspan><tspan fill="#7ec8e3" font-weight="600">boolean</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="72" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// x: string | number | boolean</tspan></text>
+  <text x="72" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">x = </tspan><tspan fill="#ce9178">"hello"</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="72" y="177" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// x: string (할당 후 좁혀짐)</tspan></text>
+  <text x="72" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">x.</tspan><tspan fill="#7ec8e3" font-weight="600">toUpperCase</tspan><tspan fill="#ffffff">();  </tspan><tspan fill="#9aa4b8">// OK</tspan></text>
+  <text x="72" y="215" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">x = </tspan><tspan fill="#b5cea8">42</tspan><tspan fill="#ffffff">;  </tspan><tspan fill="#9aa4b8">// x: number</tspan></text>
+
+  <!-- Pattern 2: Return narrowing -->
+  <rect x="450" y="66" width="390" height="178" rx="8" fill="#0a1628" stroke="#3178c6" stroke-width="1.5"/>
+  <text x="645" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">② return으로 타입 좁히기</text>
+  <rect x="466" y="100" width="358" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> process(v: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff"> | </tspan><tspan fill="#7ec8e3" font-weight="600">null</tspan><tspan fill="#ffffff">) {</tspan></text>
+  <text x="482" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!v) </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="482" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">  // v: string (null 제거됨)</tspan></text>
+  <text x="482" y="177" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">  console.</tspan><tspan fill="#7ec8e3" font-weight="600">log</tspan><tspan fill="#ffffff">(v.</tspan><tspan fill="#7ec8e3" font-weight="600">length</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="482" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">  // 이른 반환(early return) 패턴</tspan></text>
+  <text x="482" y="215" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">}</tspan></text>
+
+  <!-- Pattern 3: throw narrowing -->
+  <rect x="40" y="264" width="390" height="168" rx="8" fill="#0a1628" stroke="#3178c6" stroke-width="1.5"/>
+  <text x="235" y="288" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">③ throw로 타입 좁히기</text>
+  <rect x="56" y="298" width="358" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="72" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> assert(</tspan></text>
+  <text x="72" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">  v: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff"> | </tspan><tspan fill="#7ec8e3" font-weight="600">null</tspan></text>
+  <text x="72" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">): </tspan><tspan fill="#7ec8e3" font-weight="600">asserts</tspan><tspan fill="#ffffff"> v </tspan><tspan fill="#7ec8e3" font-weight="600">is</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff"> {</tspan></text>
+  <text x="72" y="375" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (!v) </tspan><tspan fill="#7ec8e3" font-weight="600">throw new</tspan><tspan fill="#ffffff"> Error();</tspan></text>
+  <text x="72" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">}</tspan><tspan fill="#9aa4b8">  // assert 후 v: string</tspan></text>
+
+  <!-- Pattern 4: loop narrowing -->
+  <rect x="450" y="264" width="390" height="168" rx="8" fill="#0a1628" stroke="#3178c6" stroke-width="1.5"/>
+  <text x="645" y="288" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">④ 루프 내 타입 추적</text>
+  <rect x="466" y="298" width="358" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">let</tspan><tspan fill="#ffffff"> val: </tspan><tspan fill="#7ec8e3" font-weight="600">string</tspan><tspan fill="#ffffff"> | </tspan><tspan fill="#7ec8e3" font-weight="600">undefined</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="482" y="337" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">while</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">true</tspan><tspan fill="#ffffff">) {</tspan></text>
+  <text x="482" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">  val = getNext();</tspan></text>
+  <text x="482" y="375" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (val) </tspan><tspan fill="#7ec8e3" font-weight="600">break</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="482" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" xml:space="preserve"><tspan fill="#ffffff">}</tspan><tspan fill="#9aa4b8">  // val: string (루프 후)</tspan></text>
+</svg>
