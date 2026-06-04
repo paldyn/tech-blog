@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">안티패턴 Before/After — 코드 교정</text>
+
+  <!-- Bad 1 -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">Before</text>
+  <rect x="60" y="94" width="360" height="100" rx="8" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// isPresent + get 안티패턴</text>
+  <text x="76" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">Optional</tspan><tspan fill="#ffffff">&lt;User&gt; opt = findUser(id);</tspan></text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> (opt.isPresent()) {</tspan></text>
+  <text x="76" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    send(opt.get().getEmail());</tspan></text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">}</tspan></text>
+
+  <!-- Arrow -->
+  <text x="440" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" fill="#55c555" text-anchor="middle">→</text>
+
+  <!-- Good 1 -->
+  <text x="470" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">After</text>
+  <rect x="470" y="94" width="350" height="100" rx="8" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="486" y="116" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// ifPresent 사용</text>
+  <text x="486" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">findUser(id)</tspan></text>
+  <text x="486" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    .map(User::getEmail)</tspan></text>
+  <text x="486" y="176" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    .ifPresent(</tspan><tspan fill="#7ec8e3" font-weight="600">this</tspan><tspan fill="#ffffff">::send);</tspan></text>
+
+  <!-- Bad 2 -->
+  <text x="60" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">Before</text>
+  <rect x="60" y="238" width="360" height="100" rx="8" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// orElse에 비용 큰 식</text>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">User</tspan><tspan fill="#ffffff"> u = opt.orElse(</tspan></text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    dao.createGuestUser());</tspan></text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">// 값 있어도 createGuestUser() 호출</text>
+
+  <!-- Arrow 2 -->
+  <text x="440" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" fill="#55c555" text-anchor="middle">→</text>
+
+  <!-- Good 2 -->
+  <text x="470" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">After</text>
+  <rect x="470" y="238" width="350" height="100" rx="8" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="486" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// orElseGet으로 지연 실행</text>
+  <text x="486" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">User</tspan><tspan fill="#ffffff"> u = opt.orElseGet(</tspan></text>
+  <text x="486" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">    () -&gt; dao.createGuestUser());</tspan></text>
+  <text x="486" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">// empty일 때만 호출됨</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="360" width="760" height="56" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc" text-anchor="middle">IntelliJ IDEA / SonarQube는 Optional 안티패턴을 자동 감지</text>
+  <text x="440" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">"Call to Optional.get() without isPresent check" 경고 → orElseThrow 리팩터링 제안</text>
+</svg>

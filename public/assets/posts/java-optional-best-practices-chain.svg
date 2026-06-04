@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Optional 체이닝 패턴 — 레이어별 흐름</text>
+
+  <!-- Flow diagram -->
+  <rect x="60" y="76" width="160" height="52" rx="8" fill="#0d1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">Repository</text>
+  <text x="140" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">findById(id)</text>
+
+  <line x1="230" y1="102" x2="270" y2="102" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="250" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3" text-anchor="middle">Opt&lt;User&gt;</text>
+
+  <rect x="280" y="76" width="160" height="52" rx="8" fill="#0d1a2a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="360" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">Service</text>
+  <text x="360" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">getUser(id)</text>
+
+  <line x1="450" y1="102" x2="490" y2="102" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="470" y="94" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3" text-anchor="middle">Opt&lt;User&gt;</text>
+
+  <rect x="500" y="76" width="200" height="52" rx="8" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="600" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" text-anchor="middle">Controller</text>
+  <text x="600" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">orElseThrow() 또는 map(DTO)</text>
+
+  <!-- Code block left -->
+  <rect x="60" y="152" width="380" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Service 레이어</text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> UserDto getUser(</tspan><tspan fill="#7ec8e3" font-weight="600">long</tspan><tspan fill="#ffffff"> id) {</tspan></text>
+  <text x="76" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> userRepo</tspan></text>
+  <text x="76" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .findById(id)</tspan></text>
+  <text x="76" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .filter(User::isActive)</tspan></text>
+  <text x="76" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .map(UserDto::from)</tspan></text>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .orElseThrow(</tspan></text>
+  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">          () -&gt; </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> UserNotFoundException(id)</tspan></text>
+  <text x="76" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        );</tspan></text>
+  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">}</tspan></text>
+
+  <!-- Code block right -->
+  <rect x="460" y="152" width="360" height="220" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="172" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 검색 결과 — 없으면 빈 응답</text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> ResponseEntity&lt;?&gt; search(</tspan></text>
+  <text x="476" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        String keyword) {</tspan></text>
+  <text x="476" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> searchService</tspan></text>
+  <text x="476" y="252" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .find(keyword)</tspan></text>
+  <text x="476" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .map(ResponseEntity::ok)</tspan></text>
+  <text x="476" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">        .orElse(ResponseEntity</tspan></text>
+  <text x="476" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">            .notFound().build());</tspan></text>
+  <text x="476" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"><tspan fill="#ffffff">}</tspan></text>
+</svg>
