@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">StorageClass 구조와 프로비저닝 흐름</text>
+
+  <!-- StorageClass box center -->
+  <rect x="310" y="70" width="260" height="120" rx="10" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#7ec8e3">StorageClass</text>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">provisioner: ebs.csi.aws.com</text>
+  <text x="440" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">parameters: type=gp3, iops=3000</text>
+  <text x="440" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">volumeBindingMode: WaitForFirstConsumer</text>
+  <text x="440" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">reclaimPolicy: Delete</text>
+
+  <!-- Arrow from PVC to StorageClass -->
+  <line x1="200" y1="180" x2="310" y2="148" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <!-- PVC box -->
+  <rect x="60" y="150" width="140" height="60" rx="8" fill="#0f2a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="130" y="176" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">PVC</text>
+  <text x="130" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">storageClassName: gp3</text>
+  <text x="90" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">참조</text>
+
+  <!-- Arrow from StorageClass to CSI Provisioner -->
+  <line x1="570" y1="148" x2="670" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <!-- CSI Provisioner box -->
+  <rect x="672" y="74" width="168" height="72" rx="8" fill="#0f1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="756" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">CSI Provisioner</text>
+  <text x="756" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">클라우드 API 호출</text>
+  <text x="756" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">EBS 볼륨 생성</text>
+
+  <!-- parameters section -->
+  <rect x="60" y="240" width="370" height="220" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="245" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">parameters (드라이버별 커스텀)</text>
+
+  <text x="80" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">AWS EBS (gp3)</text>
+  <text x="80" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">type: gp3 · iopsPerGB: "3000"</text>
+  <text x="80" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">throughput: "125" · encrypted: "true"</text>
+
+  <line x1="76" y1="336" x2="416" y2="336" stroke="#2a2a2a" stroke-width="1"/>
+
+  <text x="80" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">GCE Persistent Disk</text>
+  <text x="80" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">type: pd-ssd · replication-type: none</text>
+
+  <line x1="76" y1="384" x2="416" y2="384" stroke="#2a2a2a" stroke-width="1"/>
+
+  <text x="80" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Azure Disk</text>
+  <text x="80" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">skuName: Premium_LRS · cachingmode: ReadOnly</text>
+
+  <line x1="76" y1="432" x2="416" y2="432" stroke="#2a2a2a" stroke-width="1"/>
+
+  <text x="80" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">⚠ parameters는 드라이버마다 다름 — CSI 문서 필수 확인</text>
+
+  <!-- volumeBindingMode section -->
+  <rect x="460" y="240" width="360" height="220" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">volumeBindingMode</text>
+
+  <rect x="478" y="278" width="152" height="76" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="554" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Immediate</text>
+  <text x="554" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">PVC 생성 즉시 바인딩</text>
+  <text x="554" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">NFS·RWX에 적합</text>
+  <text x="554" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">AZ 고정 위험</text>
+
+  <rect x="650" y="278" width="152" height="76" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="726" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">WaitForFirstConsumer</text>
+  <text x="726" y="320" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Pod 스케줄 후 바인딩</text>
+  <text x="726" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">EBS·블록 스토리지 필수</text>
+  <text x="726" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">AZ 미스매치 방지</text>
+
+  <text x="640" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">allowVolumeExpansion</text>
+  <text x="640" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">true: PVC resize 허용 (용량 증가만)</text>
+  <text x="640" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">false(기본): 크기 변경 불가</text>
+  <text x="640" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">용량 감소는 지원하지 않음</text>
+  <text x="640" y="452" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">드라이버별 온라인 확장 지원 여부 상이</text>
+</svg>

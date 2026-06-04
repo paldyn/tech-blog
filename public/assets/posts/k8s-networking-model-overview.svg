@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">쿠버네티스 네트워킹 모델</text>
+
+  <!-- Node 1 box -->
+  <rect x="60" y="66" width="350" height="310" rx="10" fill="none" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="235" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Node 1</text>
+
+  <!-- Pod A on Node1 -->
+  <rect x="80" y="104" width="140" height="90" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="150" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Pod A</text>
+  <text x="150" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">10.244.1.10</text>
+  <text x="150" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">고유 IP 할당</text>
+  <text x="150" y="183" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">NAT 없이 직접 통신</text>
+
+  <!-- Pod B on Node1 -->
+  <rect x="240" y="104" width="140" height="90" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="310" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Pod B</text>
+  <text x="310" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">10.244.1.11</text>
+  <text x="310" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">동일 Pod CIDR</text>
+  <text x="310" y="183" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">같은 노드 → 직접</text>
+
+  <!-- Arrow Pod A to Pod B (same node) -->
+  <line x1="220" y1="149" x2="240" y2="149" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- CNI plugin label -->
+  <rect x="80" y="214" width="300" height="44" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="230" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">CNI Plugin (예: Calico, Flannel)</text>
+  <text x="230" y="250" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">가상 브리지 / 오버레이 / BGP 라우팅</text>
+
+  <!-- Node IP -->
+  <text x="230" y="285" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Node IP: 192.168.1.10</text>
+  <text x="230" y="303" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Pod CIDR: 10.244.1.0/24</text>
+  <text x="230" y="321" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">veth pair → cbr0 → eth0</text>
+  <text x="230" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">각 Pod는 veth pair로 노드와 연결</text>
+
+  <!-- Node 2 box -->
+  <rect x="470" y="66" width="350" height="310" rx="10" fill="none" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="645" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Node 2</text>
+
+  <!-- Pod C on Node2 -->
+  <rect x="490" y="104" width="140" height="90" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="560" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Pod C</text>
+  <text x="560" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">10.244.2.10</text>
+  <text x="560" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">다른 Pod CIDR</text>
+  <text x="560" y="183" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">다른 노드 → 오버레이</text>
+
+  <!-- CNI plugin label node2 -->
+  <rect x="490" y="214" width="300" height="44" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="640" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">CNI Plugin</text>
+  <text x="640" y="250" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">노드 간 라우팅 처리</text>
+
+  <text x="640" y="285" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Node IP: 192.168.1.11</text>
+  <text x="640" y="303" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Pod CIDR: 10.244.2.0/24</text>
+
+  <!-- Cross-node arrow (Pod A to Pod C) -->
+  <line x1="410" y1="190" x2="470" y2="190" stroke="#7ec8e3" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="440" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">노드 간</text>
+
+  <!-- Kubernetes Network Requirements -->
+  <rect x="60" y="400" width="760" height="100" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="424" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">쿠버네티스 네트워킹 4가지 필수 요건</text>
+
+  <text x="175" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Pod ↔ Pod</text>
+  <text x="175" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">노드 관계없이 직접 통신</text>
+  <text x="175" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">NAT 없이 원본 IP 유지</text>
+
+  <text x="375" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Node ↔ Pod</text>
+  <text x="375" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">노드가 모든 Pod IP 접근 가능</text>
+  <text x="375" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">kubelet, 모니터링 에이전트</text>
+
+  <text x="575" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Pod 내 컨테이너</text>
+  <text x="575" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">같은 네트워크 네임스페이스</text>
+  <text x="575" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">localhost로 통신</text>
+
+  <text x="762" y="450" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Service</text>
+  <text x="762" y="468" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">안정적인 클러스터 IP</text>
+  <text x="762" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">kube-proxy로 로드밸런싱</text>
+
+  <line x1="280" y1="412" x2="280" y2="490" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="480" y1="412" x2="480" y2="490" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="680" y1="412" x2="680" y2="490" stroke="#2a2a2a" stroke-width="1"/>
+</svg>

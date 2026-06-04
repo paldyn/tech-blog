@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Stateful 스토리지 패턴 비교</text>
+
+  <!-- Pattern 1: Single Writer -->
+  <rect x="60" y="68" width="230" height="180" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">단일 쓰기 (RWO)</text>
+  <text x="175" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Primary DB 패턴</text>
+
+  <!-- DB icon: 1 primary -->
+  <rect x="130" y="126" width="90" height="40" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="175" y="151" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Primary DB</text>
+
+  <text x="175" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">EBS gp3 (RWO)</text>
+  <text x="175" y="204" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">1 Pod → 1 PVC → 1 PV</text>
+  <text x="175" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">PostgreSQL, MySQL 단독</text>
+  <text x="175" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">간단하지만 HA 없음</text>
+
+  <!-- Pattern 2: StatefulSet -->
+  <rect x="325" y="68" width="230" height="180" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">StatefulSet 복제</text>
+  <text x="440" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">각 Pod 독립 PVC</text>
+
+  <rect x="373" y="126" width="60" height="36" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="403" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Pod-0</text>
+
+  <rect x="447" y="126" width="60" height="36" rx="4" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="477" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">Pod-1</text>
+
+  <text x="440" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">volumeClaimTemplates</text>
+  <text x="440" y="204" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">PVC-0 / PVC-1 자동 생성</text>
+  <text x="440" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Cassandra, Kafka, Elasticsearch</text>
+  <text x="440" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">앱 레이어 복제</text>
+
+  <!-- Pattern 3: Shared RWX -->
+  <rect x="590" y="68" width="230" height="180" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="705" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">공유 파일시스템 (RWX)</text>
+  <text x="705" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">다수 Pod 동시 접근</text>
+
+  <rect x="618" y="126" width="56" height="36" rx="4" fill="#0f1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="646" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">App-0</text>
+
+  <rect x="685" y="126" width="56" height="36" rx="4" fill="#0f1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="713" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">App-1</text>
+
+  <rect x="750" y="126" width="56" height="36" rx="4" fill="#0f1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="778" y="149" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">App-2</text>
+
+  <text x="705" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">NFS / AWS EFS / CephFS</text>
+  <text x="705" y="204" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">단일 PVC 공유</text>
+  <text x="705" y="222" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">파일 업로드, ML 데이터셋</text>
+  <text x="705" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">쓰기 충돌 주의</text>
+
+  <!-- Code section: volumeClaimTemplates -->
+  <rect x="60" y="272" width="760" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># StatefulSet volumeClaimTemplates</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">volumeClaimTemplates</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">              :</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">- metadata.name: </text>
+  <text x="237" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">data</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">  spec.accessModes</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">         : [</text>
+  <text x="310" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">ReadWriteOnce</text>
+  <text x="435" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">]</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">  spec.storageClassName</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">  : </text>
+  <text x="316" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">fast-ssd</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">  spec.resources.requests.storage</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff"> : </text>
+  <text x="430" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#b5cea8">50Gi</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># → data-pod-0, data-pod-1, data-pod-2 PVC 자동 생성</text>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># StatefulSet 삭제 시 PVC는 자동 삭제되지 않음 (수동 정리)</text>
+  <text x="76" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># persistentVolumeClaimRetentionPolicy 로 동작 변경 가능 (k8s 1.27+)</text>
+  <text x="76" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># whenDeleted/whenScaled: Retain | Delete</text>
+</svg>

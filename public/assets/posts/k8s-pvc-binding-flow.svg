@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">PersistentVolume &amp; PVC 바인딩 흐름</text>
+
+  <!-- Static Provisioning flow -->
+  <text x="200" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">정적 프로비저닝</text>
+
+  <!-- PV box -->
+  <rect x="60" y="100" width="160" height="70" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">PersistentVolume</text>
+  <text x="140" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">관리자가 미리 생성</text>
+  <text x="140" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Available</text>
+
+  <!-- Arrow PV -> PVC -->
+  <line x1="220" y1="135" x2="268" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="244" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">바인딩</text>
+
+  <!-- PVC box -->
+  <rect x="270" y="100" width="160" height="70" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="350" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">PVC</text>
+  <text x="350" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">사용자가 요청</text>
+  <text x="350" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Bound</text>
+
+  <!-- Arrow PVC -> Pod -->
+  <line x1="430" y1="135" x2="478" y2="135" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="454" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">마운트</text>
+
+  <!-- Pod box (static) -->
+  <rect x="480" y="100" width="120" height="70" rx="8" fill="#0f1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="540" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Pod</text>
+  <text x="540" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">볼륨 사용</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="198" x2="820" y2="198" stroke="#2a2a2a" stroke-width="1"/>
+
+  <!-- Dynamic Provisioning flow -->
+  <text x="440" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">동적 프로비저닝 (StorageClass)</text>
+
+  <!-- PVC box (dynamic) -->
+  <rect x="60" y="244" width="160" height="80" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="140" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">PVC 생성</text>
+  <text x="140" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">storageClassName 참조</text>
+  <text x="140" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">Pending</text>
+
+  <!-- Arrow PVC -> StorageClass -->
+  <line x1="220" y1="284" x2="268" y2="284" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="244" y="277" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">조회</text>
+
+  <!-- StorageClass box -->
+  <rect x="270" y="244" width="160" height="80" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="350" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">StorageClass</text>
+  <text x="350" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">프로비저너 정의</text>
+  <text x="350" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">ex) ebs.csi.aws.com</text>
+
+  <!-- Arrow StorageClass -> CSI -->
+  <line x1="430" y1="284" x2="478" y2="284" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="454" y="277" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">호출</text>
+
+  <!-- CSI/Provisioner box -->
+  <rect x="480" y="244" width="140" height="80" rx="8" fill="#0f1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="550" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">CSI 프로비저너</text>
+  <text x="550" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">클라우드 디스크 생성</text>
+  <text x="550" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">EBS, PD, Azure Disk</text>
+
+  <!-- Arrow CSI -> PV created -->
+  <line x1="620" y1="284" x2="668" y2="284" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="644" y="277" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">생성</text>
+
+  <!-- PV auto-created box -->
+  <rect x="670" y="244" width="150" height="80" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="745" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">PV 자동 생성</text>
+  <text x="745" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">PVC에 자동 바인딩</text>
+  <text x="745" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">Bound</text>
+
+  <!-- Access Modes section -->
+  <rect x="60" y="354" width="760" height="100" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="376" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Access Modes</text>
+
+  <text x="180" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">ReadWriteOnce (RWO)</text>
+  <text x="180" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">단일 노드 읽기/쓰기</text>
+  <text x="180" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">EBS, Azure Disk</text>
+
+  <text x="440" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">ReadOnlyMany (ROX)</text>
+  <text x="440" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">다수 노드 읽기 전용</text>
+  <text x="440" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">정적 콘텐츠 배포</text>
+
+  <text x="700" y="402" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">ReadWriteMany (RWX)</text>
+  <text x="700" y="420" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">다수 노드 읽기/쓰기</text>
+  <text x="700" y="438" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">NFS, CephFS, EFS</text>
+
+  <!-- vertical dividers in access modes -->
+  <line x1="310" y1="366" x2="310" y2="444" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="570" y1="366" x2="570" y2="444" stroke="#2a2a2a" stroke-width="1"/>
+</svg>

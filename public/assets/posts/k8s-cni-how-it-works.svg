@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">CNI — 동작 원리와 호출 흐름</text>
+
+  <!-- kubelet box -->
+  <rect x="60" y="72" width="160" height="60" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="140" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">kubelet</text>
+  <text x="140" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Pod 생성 요청 수신</text>
+
+  <!-- arrow kubelet to container runtime -->
+  <line x1="220" y1="102" x2="256" y2="102" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- container runtime box -->
+  <rect x="258" y="72" width="160" height="60" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="338" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">컨테이너 런타임</text>
+  <text x="338" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">containerd / CRI-O</text>
+
+  <!-- arrow runtime to CNI -->
+  <line x1="418" y1="102" x2="454" y2="102" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="434" y="94" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">CNI ADD</text>
+
+  <!-- CNI Plugin box -->
+  <rect x="456" y="72" width="160" height="60" rx="8" fill="#0f2a0f" stroke="#55c555" stroke-width="2"/>
+  <text x="536" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">CNI Plugin</text>
+  <text x="536" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/etc/cni/net.d/ 설정</text>
+
+  <!-- arrow CNI to kernel -->
+  <line x1="616" y1="102" x2="652" y2="102" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Linux kernel -->
+  <rect x="654" y="72" width="166" height="60" rx="8" fill="#1a1a0a" stroke="#e8a020" stroke-width="1.5"/>
+  <text x="737" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8a020">리눅스 커널</text>
+  <text x="737" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">veth / bridge / netns</text>
+
+  <!-- Step boxes: CNI ADD actions -->
+  <text x="440" y="160" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">CNI ADD 명령 처리 단계</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="176" width="170" height="64" rx="6" fill="#0f1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="145" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">① netns 생성</text>
+  <text x="145" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">pause 컨테이너용</text>
+  <text x="145" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">/var/run/netns/xxx</text>
+
+  <line x1="230" y1="208" x2="254" y2="208" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="256" y="176" width="170" height="64" rx="6" fill="#0f1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="341" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">② veth 생성</text>
+  <text x="341" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">eth0 in netns</text>
+  <text x="341" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">vethXX in host</text>
+
+  <line x1="426" y1="208" x2="450" y2="208" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="452" y="176" width="170" height="64" rx="6" fill="#0f1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="537" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">③ IP 할당</text>
+  <text x="537" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">IPAM 플러그인 호출</text>
+  <text x="537" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">host-local / dhcp</text>
+
+  <line x1="622" y1="208" x2="646" y2="208" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="648" y="176" width="172" height="64" rx="6" fill="#0f2a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="734" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">④ 라우팅·정책</text>
+  <text x="734" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">기본 게이트웨이</text>
+  <text x="734" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">iptables / eBPF 규칙</text>
+
+  <!-- CNI DEL flow -->
+  <text x="440" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">CNI DEL — Pod 종료 시 역순 정리</text>
+
+  <!-- Code block: CNI config -->
+  <rect x="60" y="290" width="760" height="186" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># /etc/cni/net.d/10-calico.conflist</text>
+  <text x="76" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">{</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">  "cniVersion"</text>
+  <text x="76" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">         : </text>
+  <text x="265" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">"0.3.1"</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">  "name"</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">               : </text>
+  <text x="218" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">"k8s-pod-network"</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">  "plugins"</text>
+  <text x="76" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">            : [</text>
+  <text x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">    { </text>
+  <text x="117" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">"type"</text>
+  <text x="117" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">: </text>
+  <text x="183" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">"calico"</text>
+  <text x="250" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">, </text>
+  <text x="268" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">"ipam"</text>
+  <text x="268" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">: {</text>
+  <text x="330" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">"type"</text>
+  <text x="330" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">: </text>
+  <text x="390" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ce9178">"calico-ipam"</text>
+  <text x="490" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">} }</text>
+  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#ffffff">  ]</text>
+  <text x="76" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#7ec8e3" font-weight="600">}</text>
+  <text x="140" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8">   # kubelet이 파일 수정 시간 순으로 첫 번째 .conflist 사용</text>
+  <text x="76" y="468" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        xml:space="preserve" fill="#9aa4b8"># plugins 배열: 메인 플러그인 + 체인 플러그인(bandwidth, portmap 등)</text>
+</svg>
