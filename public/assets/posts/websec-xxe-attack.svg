@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrow-red" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">XXE 공격 흐름</text>
+
+  <!-- Step boxes -->
+  <!-- Attacker -->
+  <rect x="20" y="68" width="130" height="52" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="85" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">공격자</text>
+  <text x="85" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">악성 XML 전송</text>
+
+  <!-- Arrow 1 -->
+  <line x1="152" y1="94" x2="218" y2="94" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+
+  <!-- XML Parser -->
+  <rect x="220" y="68" width="160" height="52" rx="8" fill="#0a1020" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="300" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">XML 파서</text>
+  <text x="300" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">외부 엔티티 처리</text>
+
+  <!-- Arrow 2 -->
+  <line x1="382" y1="94" x2="448" y2="94" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+
+  <!-- File System -->
+  <rect x="450" y="68" width="160" height="52" rx="8" fill="#0a1020" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="530" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3" text-anchor="middle">파일 시스템</text>
+  <text x="530" y="109" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" fill="#ce9178" text-anchor="middle">/etc/passwd</text>
+
+  <!-- Arrow 3 -->
+  <line x1="612" y1="94" x2="678" y2="94" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+
+  <!-- Response -->
+  <rect x="680" y="68" width="180" height="52" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="770" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">파일 내용 반환</text>
+  <text x="770" y="109" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">공격자에게 노출</text>
+
+  <!-- Malicious XML code box -->
+  <rect x="20" y="142" width="540" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="36" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">악성 XML 페이로드</text>
+  <text x="36" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">&lt;?xml version=</text><text x="200" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"1.0"</text><text x="248" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">?&gt;</text>
+  <text x="36" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">&lt;!DOCTYPE foo [</text>
+  <text x="36" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">  &lt;!ENTITY xxe SYSTEM</text>
+  <text x="36" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">    "file:///etc/passwd"&gt;</text>
+  <text x="36" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">]&gt;</text>
+  <text x="36" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">&lt;data&gt;&amp;xxe;&lt;/data&gt;</text>
+  <text x="36" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// &amp;xxe; 가 /etc/passwd 내용으로 치환됨</text>
+
+  <!-- Explanation box -->
+  <rect x="580" y="142" width="280" height="200" rx="8" fill="#0d0d0d" stroke="#e05555" stroke-width="1"/>
+  <text x="720" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">공격 가능 대상</text>
+  <text x="600" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">• /etc/passwd (사용자 정보)</text>
+  <text x="600" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">• /etc/shadow (패스워드 해시)</text>
+  <text x="600" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">• SSH 개인키</text>
+  <text x="600" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">• 앱 설정 파일 (DB 비밀번호)</text>
+  <text x="600" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">• 내부 네트워크 포트 스캔</text>
+  <text x="600" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">• SSRF 공격 연계</text>
+  <text x="600" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">• DoS (Billion Laughs)</text>
+
+  <!-- Result box -->
+  <rect x="20" y="362" width="840" height="90" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">XXE (XML External Entity) 공격이란?</text>
+  <text x="440" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">XML 파서가 외부 엔티티 참조를 허용할 때, 공격자가 서버의 로컬 파일이나 내부 네트워크에</text>
+  <text x="440" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">접근할 수 있게 되는 취약점. XML 파싱 기능이 있는 모든 시스템이 영향받음.</text>
+  <text x="440" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">OWASP Top 10 A05 포함</text>
+</svg>

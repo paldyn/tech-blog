@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrow-red" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">안전하지 않은 역직렬화: 공격 흐름</text>
+
+  <!-- Flow steps -->
+  <!-- Step 1: Craft -->
+  <rect x="20" y="66" width="150" height="60" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="95" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">① 악성 객체 생성</text>
+  <text x="95" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">직렬화 페이로드</text>
+
+  <!-- Arrow 1 -->
+  <line x1="172" y1="96" x2="218" y2="96" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+
+  <!-- Step 2: Send -->
+  <rect x="220" y="66" width="150" height="60" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="295" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">② 서버 전송</text>
+  <text x="295" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">HTTP 요청에 포함</text>
+
+  <!-- Arrow 2 -->
+  <line x1="372" y1="96" x2="418" y2="96" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+
+  <!-- Step 3: Deserialize -->
+  <rect x="420" y="66" width="150" height="60" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="495" y="91" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e05555" text-anchor="middle">③ 서버 역직렬화</text>
+  <text x="495" y="111" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">자동 객체 복원</text>
+
+  <!-- Arrow 3 -->
+  <line x1="572" y1="96" x2="618" y2="96" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-red)"/>
+
+  <!-- Step 4: RCE -->
+  <rect x="620" y="66" width="240" height="60" rx="8" fill="#2a0505" stroke="#e05555" stroke-width="2"/>
+  <text x="740" y="87" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">④ RCE 발생!</text>
+  <text x="740" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8" text-anchor="middle">Remote Code Execution</text>
+
+  <!-- Python exploit example -->
+  <rect x="20" y="148" width="420" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="36" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">Python pickle 역직렬화 공격 예시</text>
+  <text x="36" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve"># ❌ 악성 pickle 페이로드</text>
+  <text x="36" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">import </text><text x="97" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">pickle, os</text>
+  <text x="36" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">class </text><text x="84" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">Exploit:</text>
+  <text x="36" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">  def </text><text x="78" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">__reduce__(self):</text>
+  <text x="36" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">    return </text><text x="104" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">(os.system, (</text><text x="250" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">'id'</text><text x="278" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">,))</text>
+  <text x="36" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">pickle.loads(payload)  # RCE 발생!</text>
+  <text x="36" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8">역직렬화 시 __reduce__ 메서드 자동 호출 → 임의 코드 실행</text>
+
+  <!-- Java exploit example -->
+  <rect x="460" y="148" width="400" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">Java 역직렬화 공격 개념</text>
+  <text x="476" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// ❌ 취약한 코드</text>
+  <text x="476" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">ObjectInputStream </text><text x="614" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">ois =</text>
+  <text x="476" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">  new </text><text x="518" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">ObjectInputStream(input)</text>
+  <text x="476" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff" xml:space="preserve">Object obj = ois.readObject()</text>
+  <text x="476" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// 공격자 입력을 검증 없이</text>
+  <text x="476" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// 역직렬화 → 가젯 체인 실행</text>
+  <text x="476" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Apache Commons, Spring 등 가젯 체인 활용</text>
+
+  <!-- Bottom result -->
+  <rect x="20" y="368" width="840" height="96" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">역직렬화 공격이 위험한 이유</text>
+  <text x="440" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">신뢰할 수 없는 데이터를 역직렬화할 때, 공격자가 조작한 객체가 서버에서 실행되어</text>
+  <text x="440" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">임의 코드 실행(RCE), 권한 상승, 데이터 탈취 등이 가능해짐</text>
+  <text x="440" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#9aa4b8" text-anchor="middle">Java serialization, Python pickle, PHP unserialize 등이 주요 공격 벡터</text>
+</svg>

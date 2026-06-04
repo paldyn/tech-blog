@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">역직렬화 방어 전략</text>
+
+  <!-- Approach 1: HMAC signing -->
+  <rect x="20" y="62" width="410" height="110" rx="8" fill="#0d0d0d" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="40" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">① 입력 서명 검증 (HMAC)</text>
+  <text x="40" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">직렬화 데이터를 서버 비밀키로 서명하여</text>
+  <text x="40" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">위변조 여부를 역직렬화 전에 반드시 검증</text>
+  <text x="40" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">HMAC.verify(data, signature, secret_key)</text>
+
+  <!-- Approach 2: Type restriction -->
+  <rect x="450" y="62" width="410" height="110" rx="8" fill="#0d0d0d" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="470" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">② 타입 제한 (허용 클래스만)</text>
+  <text x="470" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">역직렬화 가능한 클래스를 허용 목록으로</text>
+  <text x="470" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">엄격하게 제한하여 가젯 체인 차단</text>
+  <text x="470" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555" xml:space="preserve">allowedClasses = [UserDTO, OrderDTO]</text>
+
+  <!-- Safe code box -->
+  <rect x="20" y="192" width="840" height="190" rx="8" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="36" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">안전한 대안: JSON 직렬화 + 스키마 검증</text>
+  <text x="36" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// ✅ JSON 직렬화 (바이너리 대신)</text>
+  <text x="36" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const </text><text x="98" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">data = JSON.parse(input)</text>
+  <text x="36" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// ✅ 스키마 검증</text>
+  <text x="36" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const </text><text x="98" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">valid = schema.validate(data)</text>
+  <text x="36" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">if </text><text x="62" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">(!valid) </text><text x="127" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">throw new </text><text x="234" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">Error(</text><text x="292" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">'Invalid'</text><text x="360" y="334" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">)</text>
+  <text x="36" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// ✅ 이후 비즈니스 로직 실행</text>
+
+  <!-- Bottom summary -->
+  <rect x="20" y="400" width="840" height="66" rx="8" fill="#051a05" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">핵심 방어 원칙</text>
+  <text x="100" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• 신뢰할 수 없는 데이터 역직렬화 금지</text>
+  <text x="380" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• JSON + 스키마 검증 선호</text>
+  <text x="620" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">• 역직렬화 전 무결성 검증</text>
+</svg>

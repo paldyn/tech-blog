@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">민감 데이터 노출 경로</text>
+
+  <!-- Vector 1: Unencrypted HTTP -->
+  <rect x="30" y="64" width="390" height="190" rx="8" fill="#0d0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <rect x="30" y="64" width="390" height="36" rx="8" fill="#2a0808"/>
+  <rect x="30" y="88" width="390" height="12" fill="#2a0808"/>
+  <text x="225" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">① 암호화 없는 전송</text>
+  <text x="50" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">HTTP → 평문 노출</text>
+  <text x="50" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">네트워크 도청으로 전송 중인</text>
+  <text x="50" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">사용자 데이터, 비밀번호 탈취 가능</text>
+  <text x="50" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">GET http://site.com/login</text>
+  <text x="50" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">password=mysecret  ← 노출!</text>
+  <text x="50" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">대응: HTTPS 강제 적용 (HSTS)</text>
+
+  <!-- Vector 2: Weak crypto -->
+  <rect x="460" y="64" width="390" height="190" rx="8" fill="#0d0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <rect x="460" y="64" width="390" height="36" rx="8" fill="#2a0808"/>
+  <rect x="460" y="88" width="390" height="12" fill="#2a0808"/>
+  <text x="655" y="89" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">② 취약한 암호화</text>
+  <text x="480" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">MD5, SHA1 해시 사용</text>
+  <text x="480" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">레인보우 테이블 공격으로</text>
+  <text x="480" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">비밀번호 역산 가능</text>
+  <text x="480" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">md5("password")</text>
+  <text x="480" y="214" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">= 5f4dcc3b5aa765d61d8327deb</text>
+  <text x="480" y="242" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">대응: bcrypt, Argon2 사용</text>
+
+  <!-- Vector 3: Hardcoded secrets -->
+  <rect x="30" y="274" width="390" height="190" rx="8" fill="#0d0d0d" stroke="#e8a020" stroke-width="1.5"/>
+  <rect x="30" y="274" width="390" height="36" rx="8" fill="#1a1000"/>
+  <rect x="30" y="298" width="390" height="12" fill="#1a1000"/>
+  <text x="225" y="299" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8a020" text-anchor="middle">③ 하드코딩된 시크릿</text>
+  <text x="50" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8a020" xml:space="preserve">소스코드에 API 키 노출</text>
+  <text x="50" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">Git 저장소 공개 시 API 키,</text>
+  <text x="50" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">DB 비밀번호 등 노출</text>
+  <text x="50" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">const key = "sk-abc123xyz"</text>
+  <text x="50" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// GitHub에 올라가면 즉시 탈취</text>
+  <text x="50" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8a020">대응: 환경변수, Vault 사용</text>
+
+  <!-- Vector 4: Over-sharing -->
+  <rect x="460" y="274" width="390" height="190" rx="8" fill="#0d0d0d" stroke="#e8a020" stroke-width="1.5"/>
+  <rect x="460" y="274" width="390" height="36" rx="8" fill="#1a1000"/>
+  <rect x="460" y="298" width="390" height="12" fill="#1a1000"/>
+  <text x="655" y="299" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e8a020" text-anchor="middle">④ 과도한 데이터 응답</text>
+  <text x="480" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e8a020" xml:space="preserve">불필요한 필드 포함</text>
+  <text x="480" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">API 응답에 password,</text>
+  <text x="480" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#9aa4b8">ssn 등 민감 필드 포함</text>
+  <text x="480" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">{ name, email,</text>
+  <text x="480" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#e05555" xml:space="preserve">  password, ssn }</text>
+  <text x="480" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8a020">대응: 응답 필드 명시적 선택</text>
+</svg>
