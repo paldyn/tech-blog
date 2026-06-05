@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrW" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8e8e8"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">예외 체이닝 전파 흐름</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">하위 계층 예외가 상위 계층으로 래핑되며 전파</text>
+
+  <!-- Layer: DB -->
+  <rect x="60" y="90" width="760" height="60" rx="8" fill="#101010" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="100" y="115" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">레이어 1 (인프라)</text>
+  <rect x="240" y="100" width="400" height="40" rx="6" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="125" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">SQLException: "connection refused"</text>
+
+  <line x1="440" y1="150" x2="440" y2="178" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrB)"/>
+  <text x="500" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">래핑 (cause 보존)</text>
+
+  <!-- Layer: Repository -->
+  <rect x="60" y="180" width="760" height="60" rx="8" fill="#101010" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="100" y="205" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">레이어 2 (리포지터리)</text>
+  <rect x="200" y="190" width="480" height="40" rx="6" fill="#101828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="215" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">DataAccessException (cause = SQLException)</text>
+
+  <line x1="440" y1="240" x2="440" y2="268" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrB)"/>
+  <text x="500" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">래핑 (cause 보존)</text>
+
+  <!-- Layer: Service -->
+  <rect x="60" y="270" width="760" height="60" rx="8" fill="#101010" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="100" y="295" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">레이어 3 (서비스)</text>
+  <rect x="160" y="280" width="560" height="40" rx="6" fill="#102010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="305" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">OrderServiceException (cause = DataAccessException)</text>
+
+  <line x1="440" y1="330" x2="440" y2="358" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrB)"/>
+  <text x="500" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">전파</text>
+
+  <!-- Layer: API -->
+  <rect x="60" y="360" width="760" height="60" rx="8" fill="#101010" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="100" y="385" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">레이어 4 (컨트롤러)</text>
+  <rect x="120" y="370" width="640" height="40" rx="6" fill="#1a1a10" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="440" y="395" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#b5cea8">catch → 로그 기록 + HTTP 500 응답 (getCause() 체인 출력)</text>
+
+  <!-- getCause() chain illustration -->
+  <rect x="60" y="440" width="760" height="50" rx="8" fill="#101020" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">getCause() 체인 탐색</text>
+  <text x="440" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">e.getCause() → DataAccessException → .getCause() → SQLException (근본 원인)</text>
+</svg>

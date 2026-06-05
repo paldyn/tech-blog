@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arrW" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8e8e8"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#ce9178"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Suppressed Exception 처리 원리</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">try 블록 예외 + close() 예외가 동시에 발생할 때</text>
+
+  <!-- Left scenario: try body throws, close throws -->
+  <rect x="60" y="90" width="360" height="40" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="115" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">① try 블록에서 예외 발생 (Primary)</text>
+
+  <line x1="240" y1="130" x2="240" y2="158" stroke="#e05555" stroke-width="2" marker-end="url(#arrR)"/>
+
+  <rect x="60" y="160" width="360" height="40" rx="8" fill="#2a1a10" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="240" y="185" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178">② close() 실행 중 또 다른 예외 발생</text>
+
+  <line x1="240" y1="200" x2="240" y2="228" stroke="#e8e8e8" stroke-width="2" marker-end="url(#arrW)"/>
+
+  <rect x="60" y="230" width="360" height="60" rx="8" fill="#101828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="252" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">③ close() 예외는 Suppressed로 첨부</text>
+  <text x="240" y="272" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">primary.addSuppressed(closeException)</text>
+
+  <line x1="240" y1="290" x2="240" y2="318" stroke="#55c555" stroke-width="2" marker-end="url(#arrW)"/>
+
+  <rect x="60" y="320" width="360" height="60" rx="8" fill="#101820" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">④ Primary 예외가 전파됨 (손실 없음)</text>
+  <text x="240" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">e.getSuppressed() 로 close 예외 조회 가능</text>
+
+  <!-- Right: Code example -->
+  <rect x="460" y="90" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="114" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// Suppressed 예외 조회</text>
+  <text x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">try</text>
+  <text x="476" y="132" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    (BadResource r = </text>
+  <text x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">        new</text>
+  <text x="476" y="150" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">         BadResource()) {</text>
+  <text x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    r.use(); </text>
+  <text x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">} </text>
+  <text x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  catch</text>
+  <text x="476" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        (Exception e) {</text>
+  <text x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    // Suppressed 예외 출력</text>
+  <text x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    </text>
+  <text x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    for</text>
+  <text x="476" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        (Throwable s :</text>
+  <text x="476" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">         e.getSuppressed()) {</text>
+  <text x="476" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      log(s); } }</text>
+
+  <!-- vs old pattern -->
+  <rect x="460" y="330" width="360" height="120" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="352" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">구식 finally 패턴의 문제</text>
+  <text x="640" y="372" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">finally { r.close(); } 에서 예외 발생 시</text>
+  <text x="640" y="392" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">→ try 블록 예외가 완전히 소실됨!</text>
+  <text x="640" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">try-with-resources는 이 문제를 해결</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="400" width="360" height="60" rx="8" fill="#101828" stroke="#7777cc" stroke-width="1"/>
+  <text x="240" y="422" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Java 9+: 사실상 final 변수 지원</text>
+  <text x="240" y="442" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">try(existingResource) { } — 재선언 불필요</text>
+</svg>

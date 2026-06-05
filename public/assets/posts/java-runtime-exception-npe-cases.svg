@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">NullPointerException 발생 케이스와 방어</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Java 14+ Helpful NPE 메시지 포함</text>
+
+  <!-- NPE cases left column -->
+  <rect x="60" y="90" width="380" height="340" rx="8" fill="#101010" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="250" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">NPE 발생 상황 (6가지)</text>
+
+  <rect x="76" y="120" width="348" height="298" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 1. null 객체 메서드 호출</text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">String s = </text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">null</text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">        ;</text>
+  <text x="92" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">s.length(); </text>
+  <text x="92" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// NPE!</text>
+
+  <text x="92" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 2. null 배열 요소 접근</text>
+  <text x="92" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">int[] arr = </text>
+  <text x="92" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">null</text>
+  <text x="92" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">          ;</text>
+  <text x="92" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">arr[0];     </text>
+  <text x="92" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// NPE!</text>
+
+  <text x="92" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 3. null 오토언박싱</text>
+  <text x="92" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">Integer n = </text>
+  <text x="92" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">null</text>
+  <text x="92" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">          ;</text>
+  <text x="92" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">int i = n;  </text>
+  <text x="92" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// NPE!</text>
+
+  <text x="92" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 4. null throw</text>
+  <text x="92" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">throw</text>
+  <text x="92" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">       (Exception)</text>
+  <text x="92" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">null</text>
+  <text x="92" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">    ; // NPE!</text>
+  <text x="92" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 5. synchronized(null)</text>
+  <text x="92" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 6. null 필드 접근 체인</text>
+
+  <!-- Defense patterns right column -->
+  <rect x="460" y="90" width="360" height="340" rx="8" fill="#101810" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">NPE 방어 전략</text>
+
+  <text x="476" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">1. Objects.requireNonNull()</text>
+  <text x="476" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">파라미터 null 검사 + 명확한 메시지</text>
+
+  <text x="476" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">2. Optional 반환 타입</text>
+  <text x="476" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">null 대신 Optional.empty() 반환</text>
+
+  <text x="476" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">3. 방어적 조건 검사</text>
+  <text x="476" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">if (obj != null) 또는 Objects.isNull()</text>
+
+  <text x="476" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">4. @NotNull / @NonNull 애너테이션</text>
+  <text x="476" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">정적 분석 도구(SpotBugs, IntelliJ)로 감지</text>
+
+  <text x="476" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">5. Record / sealed class</text>
+  <text x="476" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">불변 객체 + compact constructor 검증</text>
+
+  <text x="476" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#b5cea8">Java 14+ Helpful NPE</text>
+  <text x="476" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">어떤 변수가 null인지 메시지에 명시</text>
+  <text x="476" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">"Cannot invoke 'User.getName()'</text>
+  <text x="476" y="422" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888"> because 'user' is null"</text>
+
+  <!-- Bottom -->
+  <rect x="60" y="446" width="760" height="0" rx="8"/>
+</svg>

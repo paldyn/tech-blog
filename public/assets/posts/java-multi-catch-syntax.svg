@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">multi-catch 구문과 예외 계층 주의사항</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Java 7+ | catch (A | B e) 구문</text>
+
+  <!-- Before: Verbose -->
+  <rect x="60" y="90" width="360" height="180" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">Java 7 이전 — 반복 코드</text>
+
+  <rect x="76" y="120" width="328" height="138" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">try</text>
+  <text x="92" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    { riskyOp(); }</text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      (IOException e) {</text>
+  <text x="92" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    handleError(e); }</text>
+  <text x="92" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="92" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      (SQLException e) {</text>
+  <text x="92" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    handleError(e); } </text>
+  <text x="92" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 중복!</text>
+  <text x="92" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">"handleError" 두 번</text>
+
+  <!-- Arrow -->
+  <line x1="430" y1="180" x2="458" y2="180" stroke="#55c555" stroke-width="2.5" marker-end="url(#arrG)"/>
+  <text x="440" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">개선</text>
+
+  <!-- After: multi-catch -->
+  <rect x="460" y="90" width="360" height="180" rx="8" fill="#101a10" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Java 7+ — multi-catch</text>
+
+  <rect x="476" y="120" width="328" height="138" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">try</text>
+  <text x="492" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    { riskyOp(); }</text>
+  <text x="492" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="492" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      (</text>
+  <text x="492" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">    IOException</text>
+  <text x="492" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">               |</text>
+  <text x="492" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">    SQLException</text>
+  <text x="492" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">               e) {</text>
+  <text x="492" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    handleError(e);</text>
+  <text x="492" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="492" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">// 중복 제거!</text>
+
+  <!-- Warning: catch order -->
+  <rect x="60" y="300" width="360" height="160" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="322" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">catch 순서 주의 — 구체적인 것을 먼저</text>
+
+  <rect x="76" y="330" width="328" height="118" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 컴파일 에러!</text>
+  <text x="92" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="92" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      (Exception e) { ... }</text>
+  <text x="92" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="92" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      (IOException e) { ... }</text>
+  <text x="92" y="404" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// IOException은 Exception 하위 타입</text>
+  <text x="92" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">// → 이미 위에서 잡혀 도달 불가!</text>
+  <text x="92" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 하위 타입부터 선언해야 함</text>
+
+  <!-- multi-catch constraint -->
+  <rect x="460" y="300" width="360" height="160" rx="8" fill="#101828" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="322" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">multi-catch 제약사항</text>
+  <text x="476" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• e 는 implicitly final (재할당 불가)</text>
+  <text x="476" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• catch (A | B e) 에서 A가 B의 상위 타입이면</text>
+  <text x="492" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">컴파일 에러 (중복으로 판단)</text>
+  <text x="476" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 타입은 LUB(최소 공통 상위 타입)로 추론됨</text>
+  <text x="476" y="442" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">e의 타입 = IOException | SQLException 의 LUB</text>
+</svg>
