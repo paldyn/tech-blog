@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Ingress Controller 아키텍처</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">클라이언트 → LoadBalancer → Ingress Controller → 규칙 기반 Service 라우팅</text>
+
+  <!-- Internet -->
+  <rect x="60" y="95" width="120" height="54" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="120" y="119" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">Internet</text>
+  <text x="120" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">클라이언트</text>
+
+  <line x1="180" y1="122" x2="218" y2="122" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Cloud LB -->
+  <rect x="222" y="95" width="130" height="54" rx="8" fill="#112240" stroke="#3a6ea5" stroke-width="1.5"/>
+  <text x="287" y="119" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Cloud LB</text>
+  <text x="287" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">LoadBalancer Service</text>
+
+  <line x1="352" y1="122" x2="390" y2="122" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Ingress Controller -->
+  <rect x="394" y="80" width="180" height="84" rx="8" fill="#0e1e14" stroke="#2a6040" stroke-width="1.5"/>
+  <text x="484" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Ingress Controller</text>
+  <text x="484" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">nginx / Traefik / Contour</text>
+  <text x="484" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Ingress 리소스 watch + 라우팅 설정</text>
+  <text x="484" y="157" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">TLS termination · host/path 매칭</text>
+
+  <!-- Ingress Resource -->
+  <rect x="394" y="190" width="180" height="54" rx="8" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="484" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Ingress 리소스</text>
+  <text x="484" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Host/Path 라우팅 규칙 정의</text>
+
+  <!-- Arrow from Ingress Resource to Controller -->
+  <line x1="484" y1="190" x2="484" y2="164" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="505" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7777cc">watch</text>
+
+  <!-- Routing arrows to services -->
+  <line x1="574" y1="110" x2="645" y2="130" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="574" y1="122" x2="645" y2="220" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="574" y1="134" x2="645" y2="310" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Path labels -->
+  <text x="580" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178">/api</text>
+  <text x="580" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178">/web</text>
+  <text x="580" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#ce9178">/static</text>
+
+  <!-- Service A -->
+  <rect x="649" y="100" width="170" height="80" rx="8" fill="#0f1a2e" stroke="#3a6ea5" stroke-width="1"/>
+  <text x="734" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">api-service</text>
+  <text x="734" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">ClusterIP</text>
+  <rect x="659" y="152" width="64" height="24" rx="4" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="691" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">api-pod-1</text>
+  <rect x="729" y="152" width="64" height="24" rx="4" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="761" y="169" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">api-pod-2</text>
+
+  <!-- Service B -->
+  <rect x="649" y="195" width="170" height="80" rx="8" fill="#0f1a2e" stroke="#3a6ea5" stroke-width="1"/>
+  <text x="734" y="221" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">web-service</text>
+  <text x="734" y="239" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">ClusterIP</text>
+  <rect x="659" y="247" width="64" height="24" rx="4" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="691" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">web-pod-1</text>
+  <rect x="729" y="247" width="64" height="24" rx="4" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="761" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">web-pod-2</text>
+
+  <!-- Service C -->
+  <rect x="649" y="290" width="170" height="80" rx="8" fill="#0f1a2e" stroke="#3a6ea5" stroke-width="1"/>
+  <text x="734" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">static-service</text>
+  <text x="734" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">ClusterIP</text>
+  <rect x="659" y="342" width="64" height="24" rx="4" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="691" y="359" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">cdn-pod-1</text>
+  <rect x="729" y="342" width="64" height="24" rx="4" fill="#112240" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="761" y="359" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">cdn-pod-2</text>
+
+  <!-- Code box: Ingress rule -->
+  <rect x="60" y="265" width="320" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="78" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">rules:</text>
+  <text x="78" y="305" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">- host: <tspan fill="#ce9178">example.com</tspan></text>
+  <text x="78" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  http:</text>
+  <text x="78" y="343" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    paths:</text>
+  <text x="78" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    - path: <tspan fill="#ce9178">/api</tspan></text>
+
+  <text x="440" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">하나의 LB IP로 여러 서비스를 Host/Path 기반으로 라우팅 — Service type: LoadBalancer 대비 비용 절감</text>
+</svg>

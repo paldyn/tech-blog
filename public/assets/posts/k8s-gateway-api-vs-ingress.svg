@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Gateway API vs Ingress 비교</text>
+
+  <!-- Left header: Ingress -->
+  <rect x="40" y="64" width="370" height="50" rx="6" fill="#1a1a2e" stroke="#e05555" stroke-width="2"/>
+  <text x="225" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#e05555" text-anchor="middle">Ingress (기존)</text>
+  <text x="225" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">networking.k8s.io/v1</text>
+
+  <!-- Right header: Gateway API -->
+  <rect x="470" y="64" width="370" height="50" rx="6" fill="#0d1a0d" stroke="#55c555" stroke-width="2"/>
+  <text x="655" y="84" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#55c555" text-anchor="middle">Gateway API (차세대)</text>
+  <text x="655" y="103" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">gateway.networking.k8s.io/v1</text>
+
+  <!-- VS divider -->
+  <text x="440" y="95" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#555" text-anchor="middle">VS</text>
+
+  <!-- Section 1: 역할 분리 -->
+  <text x="440" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">역할 분리</text>
+  <line x1="40" y1="150" x2="840" y2="150" stroke="#2a2a2a" stroke-width="1"/>
+
+  <rect x="40" y="158" width="370" height="60" rx="4" fill="#111"/>
+  <text x="225" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">단일 리소스(Ingress)에 모든 설정 집중</text>
+  <text x="225" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Annotation으로 컨트롤러별 확장 → 이식성 없음</text>
+  <text x="225" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">인프라/앱 설정 혼합</text>
+
+  <rect x="470" y="158" width="370" height="60" rx="4" fill="#0a110a"/>
+  <text x="655" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">GatewayClass / Gateway / Route 3계층</text>
+  <text x="655" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">인프라 관리자·클러스터 운영자·앱 개발자 역할 분리</text>
+  <text x="655" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">권한 위임(cross-namespace 참조) 지원</text>
+
+  <!-- Section 2: 트래픽 분산 -->
+  <text x="440" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">트래픽 분산 (가중치 라우팅)</text>
+  <line x1="40" y1="252" x2="840" y2="252" stroke="#2a2a2a" stroke-width="1"/>
+
+  <rect x="40" y="260" width="370" height="60" rx="4" fill="#111"/>
+  <text x="225" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">컨트롤러 고유 Annotation 필요</text>
+  <text x="225" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">nginx: canary-weight annotation</text>
+  <text x="225" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">컨트롤러 교체 시 설정 재작성 필요</text>
+
+  <rect x="470" y="260" width="370" height="60" rx="4" fill="#0a110a"/>
+  <text x="655" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">HTTPRoute spec에 weight 내장</text>
+  <text x="655" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">backendRefs: [{weight: 90}, {weight: 10}]</text>
+  <text x="655" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">표준 스펙 → 컨트롤러 독립적</text>
+
+  <!-- Section 3: 헤더 기반 라우팅 -->
+  <text x="440" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">헤더 기반 라우팅</text>
+  <line x1="40" y1="354" x2="840" y2="354" stroke="#2a2a2a" stroke-width="1"/>
+
+  <rect x="40" y="362" width="370" height="60" rx="4" fill="#111"/>
+  <text x="225" y="383" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">비표준 · 컨트롤러마다 다름</text>
+  <text x="225" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">nginx: configuration-snippet 사용</text>
+  <text x="225" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">복잡하고 실수 유발 가능성 높음</text>
+
+  <rect x="470" y="362" width="370" height="60" rx="4" fill="#0a110a"/>
+  <text x="655" y="383" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">HTTPRoute.matches.headers 표준화</text>
+  <text x="655" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">type: Exact / RegularExpression</text>
+  <text x="655" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">선언적 · 이식성 보장</text>
+
+  <!-- Section 4: 표현력 -->
+  <text x="440" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">표현력 / 성숙도</text>
+  <line x1="40" y1="456" x2="840" y2="456" stroke="#2a2a2a" stroke-width="1"/>
+
+  <rect x="40" y="462" width="370" height="40" rx="4" fill="#111"/>
+  <text x="225" y="487" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">안정적·보편적 · GA 오래됨 · 단순 L7 라우팅에 충분</text>
+
+  <rect x="470" y="462" width="370" height="40" rx="4" fill="#0a110a"/>
+  <text x="655" y="487" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">v1.0 GA(2023) · TCP/TLS/gRPC 지원 · 미래 표준</text>
+</svg>

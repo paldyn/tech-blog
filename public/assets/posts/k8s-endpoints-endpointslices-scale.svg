@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Endpoints vs EndpointSlice 스케일 비교</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">대규모 클러스터에서의 업데이트 전파 비용 차이</text>
+
+  <!-- ===== LEFT: Endpoints fanout problem ===== -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e05555">Endpoints — fanout 문제</text>
+
+  <!-- Single big Endpoints object -->
+  <rect x="60" y="114" width="340" height="130" rx="8" fill="#2a0808" stroke="#e05555" stroke-width="2"/>
+  <text x="230" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">Endpoints (단일 오브젝트)</text>
+
+  <!-- IP list -->
+  <text x="80" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">10.0.0.1, 10.0.0.2, 10.0.0.3, 10.0.0.4, 10.0.0.5,</text>
+  <text x="80" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">10.0.0.6, 10.0.0.7, 10.0.0.8, ..., 10.0.1.244</text>
+  <text x="80" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">500개 Pod IP 전부 1개 오브젝트</text>
+  <text x="80" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">Pod 1개 변경 → 전체 오브젝트 재전송</text>
+  <text x="80" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">오브젝트 크기: ~50KB (500 endpoints)</text>
+
+  <!-- Fan-out arrows to nodes -->
+  <text x="230" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">모든 노드에 전체 오브젝트 전파</text>
+
+  <line x1="140" y1="244" x2="80" y2="292" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-r)"/>
+  <line x1="200" y1="244" x2="190" y2="292" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-r)"/>
+  <line x1="260" y1="244" x2="300" y2="292" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-r)"/>
+  <line x1="320" y1="244" x2="360" y2="292" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-r)"/>
+
+  <!-- Node boxes -->
+  <rect x="55" y="293" width="50" height="28" rx="4" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="80" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-0</text>
+  <rect x="163" y="293" width="50" height="28" rx="4" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="188" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-1</text>
+  <rect x="271" y="293" width="50" height="28" rx="4" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="296" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-2</text>
+  <rect x="335" y="293" width="50" height="28" rx="4" fill="#111" stroke="#555" stroke-width="1"/>
+  <text x="360" y="312" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-N</text>
+
+  <text x="80" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">etcd 부하 + 네트워크 증폭 문제 심각</text>
+
+  <!-- Divider -->
+  <line x1="450" y1="88" x2="450" y2="470" stroke="#222" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <!-- ===== RIGHT: EndpointSlice solution ===== -->
+  <text x="470" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">EndpointSlice — 샤딩 해결</text>
+
+  <!-- 5 small slices -->
+  <rect x="470" y="114" width="120" height="54" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="530" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#55c555">Slice-0</text>
+  <text x="530" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">100 endpoints</text>
+  <text x="530" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">~10KB</text>
+
+  <rect x="604" y="114" width="120" height="54" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="664" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#55c555">Slice-1</text>
+  <text x="664" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">100 endpoints</text>
+  <text x="664" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">~10KB</text>
+
+  <rect x="738" y="114" width="102" height="54" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="789" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#55c555">Slice-4</text>
+  <text x="789" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">100 endpoints</text>
+  <text x="789" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">~10KB</text>
+
+  <text x="730" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" fill="#888">...</text>
+
+  <!-- Pod 1개 변경 시 -->
+  <rect x="470" y="188" width="260" height="36" rx="6" fill="#102010" stroke="#55c555" stroke-width="1"/>
+  <text x="600" y="207" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">Pod 1개 변경 → 해당 Slice만 업데이트</text>
+
+  <!-- Selective update arrows -->
+  <line x1="530" y1="188" x2="530" y2="258" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <line x1="600" y1="188" x2="610" y2="258" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="664" y1="168" x2="710" y2="258" stroke="#333" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <text x="470" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">변경된 Slice만 전파 (10KB)</text>
+  <text x="620" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#333">나머지 Slice 무변경</text>
+
+  <!-- Nodes right -->
+  <rect x="470" y="260" width="60" height="28" rx="4" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="500" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">Node-0</text>
+  <rect x="546" y="260" width="60" height="28" rx="4" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="576" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-1</text>
+  <rect x="622" y="260" width="60" height="28" rx="4" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="652" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-2</text>
+  <rect x="698" y="260" width="60" height="28" rx="4" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="728" y="279" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">Node-N</text>
+
+  <text x="470" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">etcd 부하 최소화 + 빠른 수렴</text>
+
+  <!-- Comparison table -->
+  <rect x="60" y="358" width="760" height="116" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="378" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 비교              Endpoints         EndpointSlice</text>
+  <text x="76" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">오브젝트당 최대</tspan><tspan fill="#ffffff">    무제한 (문제)      </tspan><tspan fill="#55c555">100개 (기본값)</tspan></text>
+  <text x="76" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">Pod 변경 비용</tspan><tspan fill="#ffffff">      전체 재전파        </tspan><tspan fill="#55c555">해당 슬라이스만</tspan></text>
+  <text x="76" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">IPv6 듀얼스택</tspan><tspan fill="#e05555">      미지원              </tspan><tspan fill="#55c555">지원</tspan></text>
+  <text x="76" y="450" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">기본 활성화</tspan><tspan fill="#ffffff">       K8s 1.0+          </tspan><tspan fill="#55c555">K8s 1.21+ (GA)</tspan></text>
+  <text x="76" y="468" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">추가 메타데이터</tspan><tspan fill="#ffffff">    없음                 </tspan><tspan fill="#55c555">topology, conditions</tspan></text>
+</svg>

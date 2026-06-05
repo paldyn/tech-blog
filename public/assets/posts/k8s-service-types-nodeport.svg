@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-v" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">NodePort vs LoadBalancer 트래픽 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">외부 클라이언트에서 Pod까지의 경로 비교</text>
+
+  <!-- ===== NodePort Flow (top half) ===== -->
+  <text x="60" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555">NodePort 흐름</text>
+
+  <!-- Client -->
+  <rect x="60" y="116" width="110" height="54" rx="8" fill="#111" stroke="#555" stroke-width="1.5"/>
+  <text x="115" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">외부 클라이언트</text>
+  <text x="115" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">192.168.1.100</text>
+
+  <!-- Arrow 1 -->
+  <line x1="170" y1="143" x2="217" y2="143" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="193" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">HTTP</text>
+
+  <!-- Node box -->
+  <rect x="218" y="100" width="160" height="90" rx="8" fill="#111a11" stroke="#55c555" stroke-width="1.5"/>
+  <text x="298" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">Node</text>
+  <text x="298" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">10.0.0.1:30080</text>
+  <!-- kube-proxy label -->
+  <rect x="234" y="148" width="128" height="28" rx="4" fill="#1a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="298" y="167" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">kube-proxy</text>
+
+  <!-- Arrow 2 -->
+  <line x1="378" y1="143" x2="425" y2="143" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="401" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">iptables</text>
+
+  <!-- ClusterIP Service -->
+  <rect x="426" y="110" width="130" height="66" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="491" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#55c555">ClusterIP</text>
+  <text x="491" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">10.96.0.1:80</text>
+  <text x="491" y="164" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#666">type: NodePort</text>
+
+  <!-- Arrow 3 top -->
+  <line x1="556" y1="133" x2="600" y2="118" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <!-- Arrow 3 mid -->
+  <line x1="556" y1="143" x2="600" y2="143" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <!-- Arrow 3 bot -->
+  <line x1="556" y1="153" x2="600" y2="168" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Pods -->
+  <rect x="601" y="104" width="70" height="30" rx="5" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="636" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-0 :8080</text>
+
+  <rect x="601" y="128" width="70" height="30" rx="5" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="636" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-1 :8080</text>
+
+  <rect x="601" y="152" width="70" height="30" rx="5" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="636" y="172" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-2 :8080</text>
+
+  <!-- NodePort note -->
+  <text x="60" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">포트 범위: 30000-32767 | 모든 노드에서 동일 포트 개방 | 단점: 포트 충돌, 보안 노출</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="240" x2="840" y2="240" stroke="#222" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ===== LoadBalancer Flow (bottom half) ===== -->
+  <text x="60" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#7777cc">LoadBalancer 흐름</text>
+
+  <!-- Client LB -->
+  <rect x="60" y="286" width="110" height="54" rx="8" fill="#111" stroke="#555" stroke-width="1.5"/>
+  <text x="115" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">외부 클라이언트</text>
+  <text x="115" y="325" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">internet</text>
+
+  <!-- Arrow -->
+  <line x1="170" y1="313" x2="210" y2="313" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+  <text x="190" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">HTTP</text>
+
+  <!-- Cloud LB -->
+  <rect x="211" y="284" width="130" height="58" rx="8" fill="#13103a" stroke="#7777cc" stroke-width="2"/>
+  <text x="276" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7777cc">Cloud LB</text>
+  <text x="276" y="325" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">203.0.113.10:80</text>
+
+  <!-- Arrow -->
+  <line x1="341" y1="313" x2="381" y2="313" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+  <text x="361" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">분산</text>
+
+  <!-- Node(s) -->
+  <rect x="382" y="278" width="120" height="70" rx="8" fill="#111a11" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="442" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7777cc">Node</text>
+  <text x="442" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">:NodePort</text>
+  <rect x="398" y="326" width="88" height="16" rx="3" fill="#1a1a3a" stroke="#7777cc" stroke-width="1"/>
+  <text x="442" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7777cc">kube-proxy</text>
+
+  <!-- Arrow -->
+  <line x1="502" y1="313" x2="545" y2="313" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+
+  <!-- ClusterIP Service LB -->
+  <rect x="546" y="288" width="120" height="50" rx="8" fill="#13103a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="606" y="309" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7777cc">ClusterIP</text>
+  <text x="606" y="325" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">type: LB</text>
+
+  <!-- Arrows to pods -->
+  <line x1="666" y1="303" x2="700" y2="292" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+  <line x1="666" y1="313" x2="700" y2="313" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+  <line x1="666" y1="323" x2="700" y2="334" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-v)"/>
+
+  <!-- Pods LB -->
+  <rect x="701" y="278" width="70" height="24" rx="4" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="736" y="295" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-0</text>
+
+  <rect x="701" y="302" width="70" height="24" rx="4" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="736" y="319" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-1</text>
+
+  <rect x="701" y="326" width="70" height="24" rx="4" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="736" y="343" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-2</text>
+
+  <!-- LB note -->
+  <text x="60" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">External IP 자동 할당 | 클라우드 LB가 헬스체크 | 고가용성 보장 | 비용 발생</text>
+
+  <!-- Code block: YAML comparison -->
+  <rect x="60" y="408" width="760" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="426" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># NodePort                             # LoadBalancer</text>
+  <text x="76" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">spec</tspan><tspan fill="#ffffff">:</tspan><tspan fill="#ffffff">                                    </tspan><tspan fill="#7ec8e3" font-weight="600">spec</tspan><tspan fill="#ffffff">:</tspan></text>
+  <text x="76" y="462" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">type</tspan><tspan fill="#ffffff">: NodePort                      </tspan><tspan fill="#7ec8e3" font-weight="600">type</tspan><tspan fill="#ffffff">: LoadBalancer</tspan></text>
+  <text x="76" y="480" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">nodePort</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#b5cea8">30080</tspan><tspan fill="#ffffff">                      # External IP 자동 할당</tspan></text>
+</svg>

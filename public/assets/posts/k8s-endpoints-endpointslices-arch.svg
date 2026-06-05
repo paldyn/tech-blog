@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-d" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Endpoints vs EndpointSlice 아키텍처</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Service → Endpoints/EndpointSlice → Pod 매핑 구조와 kube-proxy 감시</text>
+
+  <!-- ===== LEFT: Endpoints (classic) ===== -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#7ec8e3">Endpoints (레거시)</text>
+
+  <!-- Service box -->
+  <rect x="60" y="114" width="130" height="54" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="125" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">Service</text>
+  <text x="125" y="153" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">myapp-svc</text>
+
+  <!-- Arrow Service -> Endpoints -->
+  <line x1="190" y1="141" x2="227" y2="141" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="208" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">select</text>
+
+  <!-- Endpoints object -->
+  <rect x="228" y="100" width="160" height="140" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="308" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">Endpoints</text>
+  <text x="308" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">단일 오브젝트</text>
+
+  <!-- Pod IPs in Endpoints -->
+  <rect x="244" y="148" width="128" height="16" rx="3" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="308" y="160" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">10.0.0.1:8080</text>
+
+  <rect x="244" y="168" width="128" height="16" rx="3" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="308" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">10.0.0.2:8080</text>
+
+  <rect x="244" y="188" width="128" height="16" rx="3" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="308" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">10.0.0.3:8080</text>
+
+  <text x="308" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#666">... 모든 IP 한 객체에</text>
+
+  <!-- Arrows Endpoints -> Pods -->
+  <line x1="388" y1="141" x2="420" y2="118" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="388" y1="158" x2="420" y2="158" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="388" y1="175" x2="420" y2="198" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Pods classic -->
+  <rect x="421" y="104" width="70" height="28" rx="5" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="456" y="123" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-0</text>
+  <rect x="421" y="144" width="70" height="28" rx="5" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="456" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-1</text>
+  <rect x="421" y="184" width="70" height="28" rx="5" fill="#111" stroke="#444" stroke-width="1"/>
+  <text x="456" y="203" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e8e8e8">Pod-2</text>
+
+  <!-- kube-proxy watching Endpoints -->
+  <rect x="60" y="270" width="130" height="44" rx="6" fill="#1a1a0d" stroke="#888" stroke-width="1"/>
+  <text x="125" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="600" fill="#e8e8e8">kube-proxy</text>
+  <text x="125" y="303" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">iptables/ipvs</text>
+
+  <!-- dashed watch arrow -->
+  <line x1="190" y1="292" x2="226" y2="222" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-d)"/>
+  <text x="220" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">watch</text>
+
+  <!-- Divider -->
+  <line x1="530" y1="88" x2="530" y2="460" stroke="#222" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <!-- ===== RIGHT: EndpointSlice (new) ===== -->
+  <text x="555" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555">EndpointSlice (권장)</text>
+
+  <!-- Service box right -->
+  <rect x="555" y="114" width="130" height="54" rx="8" fill="#0f2e1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="620" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">Service</text>
+  <text x="620" y="153" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">myapp-svc</text>
+
+  <!-- Arrow Service -> EPS slices -->
+  <line x1="685" y1="136" x2="718" y2="120" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <line x1="685" y1="148" x2="718" y2="168" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- EndpointSlice 1 -->
+  <rect x="719" y="102" width="140" height="66" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="789" y="120" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#55c555">EndpointSlice-0</text>
+  <text x="789" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">10.0.0.1 ~ 10.0.0.100</text>
+  <text x="789" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">≤100 endpoints</text>
+
+  <!-- EndpointSlice 2 -->
+  <rect x="719" y="180" width="140" height="66" rx="6" fill="#0d2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="789" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="700" fill="#55c555">EndpointSlice-1</text>
+  <text x="789" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#7ec8e3">10.0.0.101 ~ ...</text>
+  <text x="789" y="230" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">≤100 endpoints</text>
+
+  <!-- kube-proxy watching EPS -->
+  <rect x="555" y="270" width="130" height="44" rx="6" fill="#1a1a0d" stroke="#888" stroke-width="1"/>
+  <text x="620" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="600" fill="#e8e8e8">kube-proxy</text>
+  <text x="620" y="303" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">iptables/ipvs</text>
+
+  <!-- dashed watch arrow to EPS -->
+  <line x1="685" y1="280" x2="718" y2="248" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-d)"/>
+  <text x="720" y="275" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#888">watch</text>
+
+  <!-- Code block bottom -->
+  <rect x="60" y="350" width="760" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># Endpoints 조회                       # EndpointSlice 조회</text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">kubectl <tspan fill="#7ec8e3" font-weight="600">get</tspan> endpoints myapp-svc          kubectl <tspan fill="#7ec8e3" font-weight="600">get</tspan> endpointslices</text>
+  <text x="76" y="408" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># NAME       ENDPOINTS               # NAME               ADDRESSTYPE</text>
+  <text x="76" y="426" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888" xml:space="preserve"># myapp-svc  10.0.0.1:8080,          # myapp-svc-abcde     IPv4</text>
+  <text x="76" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888" xml:space="preserve">#            10.0.0.2:8080,...        # myapp-svc-fghij     IPv4</text>
+  <text x="76" y="462" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#888" xml:space="preserve">#            (단일 오브젝트)            # (슬라이스 단위 분산)</text>
+  <text x="76" y="480" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">kubectl describe endpointslice myapp-svc-abcde</text>
+</svg>
