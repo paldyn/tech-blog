@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">CSP Nonce 우회 기법과 방어</text>
+
+  <!-- Bypass 1: nonce leaked -->
+  <rect x="60" y="68" width="370" height="148" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1"/>
+  <text x="245" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">① Nonce 유출 우회</text>
+  <text x="76" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">nonce 값이 DOM에 노출되면 재사용 시도</text>
+  <rect x="76" y="122" width="338" height="82" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 취약: nonce를 JS 변수로 노출</text>
+  <text x="92" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">window.__nonce__ = '{nonce}'</text>
+  <text x="92" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// XSS + DOM Clobbering으로 nonce 탈취</text>
+  <text x="76" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">방어: nonce를 JS 변수로 노출하지 않음</text>
+
+  <!-- Bypass 2: JSONP/open redirect on allowed domain -->
+  <rect x="450" y="68" width="370" height="148" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1"/>
+  <text x="635" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">② 허용 도메인 내 JSONP 악용</text>
+  <text x="466" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">허용된 CDN에 JSONP 엔드포인트가 있을 때</text>
+  <rect x="466" y="122" width="338" height="82" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// script-src allowed: cdn.example.com</text>
+  <text x="482" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">&lt;script src="cdn.example.com/jsonp</text>
+  <text x="482" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  ?cb=eval('악성코드')"&gt;</text>
+  <text x="466" y="208" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">방어: strict-dynamic 사용, JSONP 없는 CDN 선택</text>
+
+  <!-- Safe Nonce Implementation -->
+  <text x="60" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Next.js에서 CSP Nonce 구현 예시</text>
+
+  <rect x="60" y="264" width="760" height="132" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// middleware.ts</text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">export function middleware(request: NextRequest) {</text>
+  <text x="76" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')</text>
+  <text x="76" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  const csp = `default-src 'self'; script-src 'nonce-${nonce}' 'strict-dynamic'`</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  const headers = new Headers(request.headers)</text>
+  <text x="76" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  headers.set('x-nonce', nonce)</text>
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  const response = NextResponse.next({ request: { headers } })</text>
+  <text x="76" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">  // response에 CSP 헤더 설정 후 반환</text>
+</svg>

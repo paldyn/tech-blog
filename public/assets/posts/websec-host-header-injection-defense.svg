@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Host 헤더 인젝션 방어 방법</text>
+
+  <!-- Defense 1 -->
+  <rect x="60" y="68" width="370" height="158" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">① 서버 설정에서 허용 호스트 고정</text>
+  <rect x="76" y="104" width="338" height="110" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># Django settings.py</text>
+  <text x="92" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">ALLOWED_HOSTS = [</text>
+  <text x="92" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  'app.example.com',</text>
+  <text x="92" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  'www.example.com',</text>
+  <text x="92" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">]</text>
+
+  <!-- Defense 2 -->
+  <rect x="450" y="68" width="370" height="158" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="635" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">② 링크 생성 시 설정값 사용</text>
+  <rect x="466" y="104" width="338" height="110" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 취약: Host 헤더 직접 사용</text>
+  <text x="482" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">const link = `${req.headers.host}/r`</text>
+  <text x="482" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 안전: 환경변수에서 고정값 사용</text>
+  <text x="482" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">const link = `${process.env.APP_URL}/r`</text>
+  <text x="482" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// APP_URL = 'https://app.example.com'</text>
+
+  <!-- Defense 3 -->
+  <rect x="60" y="246" width="370" height="158" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">③ Nginx에서 잘못된 Host 차단</text>
+  <rect x="76" y="282" width="338" height="110" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># default server block</text>
+  <text x="92" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">server {</text>
+  <text x="92" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  listen 80 default_server;</text>
+  <text x="92" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  return 444; # 연결 즉시 종료</text>
+  <text x="92" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">}</text>
+
+  <!-- Defense 4 -->
+  <rect x="450" y="246" width="370" height="158" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="635" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">④ 미들웨어에서 Host 검증</text>
+  <rect x="466" y="282" width="338" height="110" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function validateHost(req, res, next) {</text>
+  <text x="482" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  const host = req.headers.host</text>
+  <text x="482" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  if (!ALLOWED.includes(host))</text>
+  <text x="482" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">    return res.status(400).end()</text>
+  <text x="482" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  next()</text>
+  <text x="482" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">}</text>
+</svg>

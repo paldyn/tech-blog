@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">레이스 컨디션 방어 패턴</text>
+
+  <!-- Defense 1: Atomic DB update -->
+  <rect x="60" y="68" width="370" height="156" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">① DB 원자적 업데이트 (권장)</text>
+  <rect x="76" y="104" width="338" height="108" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 조건부 UPDATE로 원자적 처리</text>
+  <text x="92" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">UPDATE coupons</text>
+  <text x="92" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">SET used = true</text>
+  <text x="92" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">WHERE id = 1</text>
+  <text x="92" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  AND used = false</text>
+  <text x="92" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- rowCount=0 이면 이미 사용됨</text>
+
+  <!-- Defense 2: DB locking -->
+  <rect x="450" y="68" width="370" height="156" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="635" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">② SELECT FOR UPDATE (비관적 락)</text>
+  <rect x="466" y="104" width="338" height="108" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">BEGIN;</text>
+  <text x="482" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">SELECT * FROM coupons</text>
+  <text x="482" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">WHERE id=1 FOR UPDATE;</text>
+  <text x="482" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 다른 트랜잭션 블록</text>
+  <text x="482" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">-- 처리 후:</text>
+  <text x="482" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">UPDATE ... SET used=true; COMMIT;</text>
+
+  <!-- Defense 3: Redis lock -->
+  <rect x="60" y="244" width="370" height="156" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">③ 분산 락 (Redis)</text>
+  <rect x="76" y="280" width="338" height="108" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// SET NX EX 원자적 획득</text>
+  <text x="92" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const ok = await redis.set(</text>
+  <text x="92" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  `lock:coupon:${id}`,</text>
+  <text x="92" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  '1', 'NX', 'EX', 10</text>
+  <text x="92" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">)</text>
+  <text x="92" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">if (!ok) throw new Error('이미 처리 중')</text>
+
+  <!-- Defense 4: Idempotency key -->
+  <rect x="450" y="244" width="370" height="156" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="635" y="268" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">④ 멱등성 키(Idempotency Key)</text>
+  <rect x="466" y="280" width="338" height="108" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 클라이언트가 유니크 키 전송</text>
+  <text x="482" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">POST /apply-coupon</text>
+  <text x="482" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">Idempotency-Key: uuid-abc</text>
+  <text x="482" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 동일 키 재요청 시</text>
+  <text x="482" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">→ 저장된 응답 반환 (재처리 안 함)</text>
+</svg>

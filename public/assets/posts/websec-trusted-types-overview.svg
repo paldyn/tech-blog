@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Trusted Types: DOM XSS 싱크 제어</text>
+
+  <!-- Problem: Without Trusted Types -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">문제: DOM XSS 싱크(sink)에 문자열 직접 삽입</text>
+
+  <rect x="60" y="92" width="760" height="90" rx="6" fill="#1a0505" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">위험한 DOM 싱크들 — 문자열을 직접 받으면 XSS 발생</text>
+  <rect x="76" y="124" width="748" height="50" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">elem.innerHTML = userInput         // DOM XSS</text>
+  <text x="92" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">document.write(data)               // DOM XSS</text>
+  <text x="470" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">eval(code)                         // code injection</text>
+  <text x="470" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">script.src = url                   // script injection</text>
+
+  <!-- Solution: Trusted Types -->
+  <text x="60" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">해결: Trusted Types로 타입 검사 강제</text>
+
+  <!-- CSP header to enable -->
+  <rect x="60" y="226" width="760" height="44" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># CSP로 활성화</text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">Content-Security-Policy: require-trusted-types-for 'script'; trusted-types myPolicy</text>
+
+  <!-- Policy definition -->
+  <rect x="60" y="286" width="370" height="160" rx="6" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">정책 정의 (sanitize 로직 집중)</text>
+  <rect x="76" y="320" width="338" height="114" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const policy = trustedTypes</text>
+  <text x="92" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  .createPolicy('myPolicy', {</text>
+  <text x="92" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    createHTML: (input) =&gt;</text>
+  <text x="92" y="394" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">      DOMPurify.sanitize(input),</text>
+  <text x="92" y="412" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  })</text>
+
+  <!-- Usage -->
+  <rect x="450" y="286" width="370" height="160" rx="6" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="635" y="308" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">정책으로 생성된 신뢰 타입만 허용</text>
+  <rect x="466" y="320" width="338" height="114" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 안전: TrustedHTML 객체</text>
+  <text x="482" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">elem.innerHTML =</text>
+  <text x="482" y="376" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  policy.createHTML(userInput)</text>
+  <text x="482" y="396" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 차단: 일반 문자열</text>
+  <text x="482" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">elem.innerHTML = userInput // ERROR</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="460" width="760" height="28" rx="6" fill="#0a0a18" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="478" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">모든 DOM XSS 싱크를 한 곳(Policy)에서만 통과하도록 강제 → 감사(audit) 범위 최소화</text>
+</svg>

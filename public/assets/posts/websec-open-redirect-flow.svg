@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e09040"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">오픈 리다이렉트 공격 흐름</text>
+
+  <!-- Step 1: Attacker crafts URL -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">① 공격자가 신뢰 도메인을 이용해 피싱 URL 생성</text>
+
+  <rect x="60" y="96" width="760" height="52" rx="8" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="118" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">https://trusted-bank.com/redirect?url=https://evil-phishing.com</text>
+  <text x="76" y="138" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">→ trusted-bank.com 이 도메인이라 사용자는 안전하다고 믿음</text>
+
+  <!-- Step 2: Victim clicks -->
+  <text x="60" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc">② 피해자가 링크 클릭 → 서버가 검증 없이 리다이렉트</text>
+
+  <!-- Victim -->
+  <rect x="60" y="194" width="130" height="58" rx="8" fill="#100a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="125" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">피해자</text>
+  <text x="125" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">링크 클릭</text>
+
+  <!-- Trusted server -->
+  <rect x="300" y="194" width="180" height="58" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="390" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">trusted-bank.com</text>
+  <text x="390" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e09040">무검증 302 리다이렉트</text>
+
+  <!-- Attacker server -->
+  <rect x="600" y="194" width="220" height="58" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="710" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">evil-phishing.com</text>
+  <text x="710" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">가짜 로그인 페이지</text>
+
+  <line x1="190" y1="223" x2="298" y2="223" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <line x1="480" y1="223" x2="598" y2="223" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <text x="539" y="212" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">302 Location:</text>
+  <text x="539" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">evil-phishing.com</text>
+
+  <!-- HTTP response code box -->
+  <rect x="60" y="282" width="370" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">서버 응답 (취약한 경우)</text>
+  <text x="76" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">HTTP/1.1 302 Found</text>
+  <text x="76" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">Location: https://evil-phishing.com</text>
+  <text x="76" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// url 파라미터를 그대로 사용</text>
+
+  <!-- Impact box -->
+  <rect x="460" y="282" width="360" height="80" rx="6" fill="#1a0505" stroke="#e05555" stroke-width="1"/>
+  <text x="640" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">피해 유형</text>
+  <text x="476" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 피싱: 가짜 로그인 페이지로 자격증명 탈취</text>
+  <text x="476" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• OAuth 코드 탈취: redirect_uri 검증 우회</text>
+  <text x="476" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• SSRF 경유: 내부 서비스 접근</text>
+
+  <!-- URL bypass techniques -->
+  <text x="60" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">검증 우회 기법들</text>
+
+  <rect x="60" y="416" width="760" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">?url=//evil.com             → 프로토콜 상대 URL</text>
+  <text x="76" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">?url=https:evil.com         → 콜론 뒤 슬래시 생략</text>
+  <text x="440" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">?url=https://trusted.com@evil.com</text>
+  <text x="440" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ce9178" xml:space="preserve">?url=%2F%2Fevil.com         → URL 인코딩</text>
+</svg>

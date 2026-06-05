@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">CSP Nonce vs Hash 동작 비교</text>
+
+  <!-- Nonce section -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">Nonce 방식</text>
+
+  <rect x="60" y="92" width="370" height="158" rx="6" fill="#0a1020" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3">① 서버: 요청마다 랜덤 nonce 생성</text>
+  <rect x="76" y="124" width="338" height="114" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 요청마다 새 nonce</text>
+  <text x="92" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const n = randomBytes(16).toString('base64')</text>
+  <text x="92" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">CSP: script-src 'nonce-{n}'</text>
+  <text x="92" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">HTML: &lt;script nonce="{n}"&gt;</text>
+  <text x="92" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 브라우저: nonce 일치 시만 실행</text>
+
+  <!-- Nonce pros/cons -->
+  <rect x="60" y="262" width="370" height="88" rx="6" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="76" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">장점</text>
+  <text x="76" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 스크립트 내용이 변경돼도 적용 가능</text>
+  <text x="76" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• SPA·동적 콘텐츠에 적합</text>
+  <text x="76" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">• 요청마다 서버에서 생성해야 함 (CDN 캐시 불가)</text>
+
+  <!-- Hash section -->
+  <text x="450" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e09040">Hash 방식</text>
+
+  <rect x="450" y="92" width="370" height="158" rx="6" fill="#0a0a10" stroke="#e09040" stroke-width="1"/>
+  <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e09040">② 빌드 시: 스크립트 내용의 해시 계산</text>
+  <rect x="466" y="124" width="338" height="114" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 빌드 타임에 계산</text>
+  <text x="482" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const h = sha256(scriptContent)</text>
+  <text x="482" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">CSP: script-src 'sha256-{h}'</text>
+  <text x="482" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">HTML: &lt;script&gt;정확히 같은 내용&lt;/script&gt;</text>
+  <text x="482" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 브라우저: 해시 일치 시만 실행</text>
+
+  <!-- Hash pros/cons -->
+  <rect x="450" y="262" width="370" height="88" rx="6" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="466" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">장점</text>
+  <text x="466" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 정적 페이지·CDN 캐시 가능</text>
+  <text x="466" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 서버에서 동적 생성 불필요</text>
+  <text x="466" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">• 스크립트 내용 변경 시 해시도 갱신해야 함</text>
+
+  <!-- strict-dynamic -->
+  <rect x="60" y="368" width="760" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">'strict-dynamic' 키워드</text>
+  <text x="76" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">nonce/hash가 있는 스크립트가 동적으로 추가하는 스크립트도 신뢰. 허용 목록(도메인)은 무시됨</text>
+  <text x="76" y="430" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">script-src 'nonce-{n}' 'strict-dynamic'</text>
+  <text x="76" y="450" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// nonce 스크립트가 document.createElement('script')로 추가한 것도 허용</text>
+  <text x="76" y="464" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// React/Vue/Angular 번들러와 함께 사용 시 편리</text>
+</svg>

