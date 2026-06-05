@@ -1,44 +1,49 @@
 ---
-title: "Props — 컴포넌트 간 데이터 전달의 모든 것"
-description: "React props의 단방향 데이터 흐름, 읽기 전용 원칙, 다양한 타입의 props 전달, 기본값 설정, 콜백 패턴으로 자식→부모 소통하는 방법을 완전히 정리합니다."
+title: "Props 완전 정복 — 데이터 전달과 기본값, 타입 검증"
+description: "React Props의 단방향 데이터 흐름, 구조분해 할당, 기본값 설정, 콜백 prop, TypeScript 타입 선언 방법을 상세히 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-03"
+pubDate: "2026-06-06"
 archiveOrder: 7
 type: "knowledge"
 category: "React"
-tags: ["props", "단방향데이터흐름", "읽기전용", "기본값", "콜백패턴", "React기초"]
+tags: ["Props", "React", "단방향데이터흐름", "TypeScript", "컴포넌트통신"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-children/)에서 children prop으로 컴포넌트를 합성하는 방법을 배웠다. 이번 글에서는 React 컴포넌트 간 데이터를 전달하는 핵심 메커니즘인 **props** 전체를 정리한다.
+[지난 글](/posts/react-children/)에서 children prop을 통한 합성 패턴을 배웠다. Props는 React에서 컴포넌트 간 데이터를 전달하는 유일한 공식 방법이다. 부모가 자식에게, 단방향으로 흐른다. 이번 글에서는 props의 모든 것을 파헤친다.
 
-## Props란
+## Props란 무엇인가
 
-Props(Properties)는 부모 컴포넌트가 자식 컴포넌트에 전달하는 데이터다. HTML 속성처럼 생겼지만 JavaScript 값 무엇이든 전달할 수 있다.
+**Props(Properties)**는 부모 컴포넌트에서 자식 컴포넌트로 전달되는 읽기 전용 데이터다. 함수의 인자와 동일한 개념이다.
 
 ```jsx
-// 부모가 props를 전달
+// 부모 — props를 JSX 속성으로 전달
 function App() {
-  const user = { name: 'Alice', age: 28 };
-
-  return (
-    <UserProfile
-      name={user.name}
-      age={user.age}
-      isAdmin={true}
-      onLogout={() => console.log('로그아웃')}
-    />
-  );
+  const user = { name: "홍길동", score: 95 };
+  return <UserCard user={user} rank={1} isHighlighted={true} />;
 }
 
-// 자식이 props를 받아 사용
-function UserProfile({ name, age, isAdmin, onLogout }) {
+// 자식 — props 객체를 인자로 수신
+function UserCard(props) {
   return (
-    <div>
-      <h2>{name} ({age}세)</h2>
-      {isAdmin && <span className="badge">관리자</span>}
-      <button onClick={onLogout}>로그아웃</button>
+    <div className={props.isHighlighted ? 'highlighted' : ''}>
+      <h3>{props.user.name}</h3>
+      <p>#{props.rank} | {props.user.score}점</p>
+    </div>
+  );
+}
+```
+
+실전에서는 **구조분해 할당**으로 props를 직접 꺼내 쓴다.
+
+```jsx
+// 구조분해 할당 — 더 깔끔한 코드
+function UserCard({ user, rank, isHighlighted }) {
+  return (
+    <div className={isHighlighted ? 'highlighted' : ''}>
+      <h3>{user.name}</h3>
+      <p>#{rank} | {user.score}점</p>
     </div>
   );
 }
@@ -46,76 +51,33 @@ function UserProfile({ name, age, isAdmin, onLogout }) {
 
 ## 단방향 데이터 흐름
 
-React props의 가장 중요한 규칙이다.
+Props는 항상 **부모 → 자식** 방향으로만 흐른다. 자식은 props를 직접 수정할 수 없다.
 
-![Props: 단방향 데이터 흐름](/assets/posts/react-props-flow.svg)
-
-**Props는 부모에서 자식으로만 흐른다.** 자식이 부모 데이터를 직접 바꿀 수 없다. 이 원칙이 React 앱의 데이터 흐름을 예측 가능하게 만든다.
+![Props 단방향 데이터 흐름](/assets/posts/react-props-flow.svg)
 
 ```jsx
-// ❌ 자식이 props를 변경하려 하면 안 된다
-function Child({ user }) {
-  user.name = 'Bob';  // 절대 하면 안 됨!
-  return <p>{user.name}</p>;
+function Child({ count }) {
+  // ❌ Props 직접 수정 금지
+  // count = count + 1; → 에러 또는 예측 불가능한 동작
+
+  // ✅ 수정이 필요하면 부모에게 콜백을 받아 호출
+  return <p>{count}</p>;
 }
 ```
 
-자식에서 부모 상태를 변경해야 할 때는 부모가 전달한 **콜백 함수**를 호출한다.
+단방향 흐름 덕분에 데이터의 출처가 명확해지고, 버그를 추적하기 쉬워진다.
 
-```jsx
-function Parent() {
-  const [count, setCount] = useState(0);
+## 기본값(Default Props) 설정
 
-  return (
-    <Child
-      count={count}
-      onIncrement={() => setCount(c => c + 1)}  // 콜백 전달
-    />
-  );
-}
-
-function Child({ count, onIncrement }) {
-  return (
-    <button onClick={onIncrement}>  {/* 콜백 실행 */}
-      카운트: {count}
-    </button>
-  );
-}
-```
-
-## Props 타입과 기본값
-
-![Props 타입과 기본값 패턴](/assets/posts/react-props-types.svg)
-
-### 전달 가능한 값 타입
-
-```jsx
-// 문자열 (따옴표로 직접)
-<Button label="확인" />
-
-// 그 외 모든 값 (중괄호 필수)
-<Component
-  count={42}              // 숫자
-  disabled={false}        // boolean
-  disabled              // {true}의 축약형
-  user={{ name: 'Alice' }} // 객체 (이중 중괄호!)
-  items={[1, 2, 3]}      // 배열
-  render={() => <p />}   // 함수
-  node={<span />}        // React Element
-/>
-```
-
-### 기본값 설정
-
-구조분해 할당에서 기본값을 지정하는 것이 가장 권장되는 방법이다.
+Props가 전달되지 않을 때 사용할 기본값을 구조분해 할당에서 `=`으로 지정한다.
 
 ```jsx
 function Button({
-  label = '버튼',
-  variant = 'primary',
-  size = 'medium',
-  disabled = false,
-  onClick,
+  label = '버튼',         // 문자열 기본값
+  variant = 'primary',   // 열거형 기본값
+  size = 'md',
+  disabled = false,      // 불리언 기본값
+  onClick = () => {},    // 빈 함수 기본값 (안전한 호출 보장)
 }) {
   return (
     <button
@@ -128,66 +90,128 @@ function Button({
   );
 }
 
-// 아무 props 없이 쓰면 기본값 사용
-<Button />  // label="버튼", variant="primary", ...
+// 기본값이 있으므로 props 생략 가능
+<Button />                    // label="버튼", variant="primary"
+<Button label="저장" />       // variant="primary" 기본값 유지
+<Button variant="danger" disabled />  // disabled는 true로 전달됨
 ```
 
-## TypeScript로 Props 타입 정의
+불리언 props는 `disabled={true}` 대신 `disabled`만 써도 `true`로 전달된다.
 
-TypeScript를 쓰면 잘못된 props를 컴파일 타임에 잡을 수 있다.
+## 콜백 Props: 자식 → 부모 데이터 전달
 
-```tsx
-type ButtonProps = {
-  label?: string;            // 선택적
-  variant?: 'primary' | 'secondary' | 'danger';
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
-  onClick: () => void;       // 필수
-};
-
-function Button({ label = '버튼', variant = 'primary', onClick }: ButtonProps) {
-  return (
-    <button className={`btn btn-${variant}`} onClick={onClick}>
-      {label}
-    </button>
-  );
-}
-
-// ❌ onClick 누락 → 컴파일 에러
-<Button label="저장" />
-
-// ✅ 올바른 사용
-<Button label="저장" onClick={() => save()} />
-```
-
-## Props로 컴포넌트 전달하기
-
-컴포넌트 자체를 props로 전달하면 렌더링 로직을 외부에서 주입할 수 있다.
+자식이 부모에게 데이터를 보내야 할 때, 부모가 콜백 함수를 prop으로 내려보내고 자식이 이를 호출한다.
 
 ```jsx
-// 아이콘 컴포넌트를 prop으로 받는 Button
-function IconButton({ icon: Icon, label, onClick }) {
+// 부모 — 상태와 콜백 소유
+function SearchPage() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleSearch = async (q) => {
+    setQuery(q);
+    const data = await fetchSearch(q);
+    setResults(data);
+  };
+
   return (
-    <button onClick={onClick}>
-      <Icon className="icon" />
-      {label}
-    </button>
+    <div>
+      <SearchInput onSearch={handleSearch} />  {/* 콜백 전달 */}
+      <ResultList items={results} />
+    </div>
   );
 }
 
-// 어떤 아이콘이든 주입 가능
-<IconButton
-  icon={StarIcon}
-  label="즐겨찾기"
-  onClick={toggleFavorite}
-/>
+// 자식 — 콜백을 받아 호출
+function SearchInput({ onSearch }) {
+  const [value, setValue] = useState('');
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    onSearch(e.target.value);  // 부모의 콜백 호출
+  };
+
+  return <input value={value} onChange={handleChange} placeholder="검색..." />;
+}
 ```
+
+## TypeScript Props 타입 선언
+
+![Props 패턴과 타입](/assets/posts/react-props-patterns.svg)
+
+TypeScript를 사용할 때 props 타입을 명시적으로 선언한다.
+
+```tsx
+// 기본 타입 선언
+type UserCardProps = {
+  name: string;                   // 필수 문자열
+  age?: number;                   // 선택적 숫자
+  role: 'admin' | 'user' | 'guest'; // 유니온 타입
+  onSelect: (id: string) => void; // 콜백
+  children?: React.ReactNode;     // JSX children
+};
+
+function UserCard({ name, age, role, onSelect, children }: UserCardProps) {
+  return (
+    <div onClick={() => onSelect(name)}>
+      <h3>{name} ({role})</h3>
+      {age !== undefined && <p>{age}세</p>}
+      {children}
+    </div>
+  );
+}
+```
+
+HTML 기본 속성을 모두 상속받고 싶을 때는 `ComponentPropsWithoutRef`를 확장한다.
+
+```tsx
+// 버튼의 모든 HTML 속성 + 커스텀 속성
+type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
+  variant?: 'primary' | 'secondary' | 'danger';
+  isLoading?: boolean;
+};
+
+function Button({ variant = 'primary', isLoading, children, ...rest }: ButtonProps) {
+  return (
+    <button
+      className={`btn btn-${variant}`}
+      disabled={isLoading || rest.disabled}
+      {...rest}
+    >
+      {isLoading ? <Spinner /> : children}
+    </button>
+  );
+}
+```
+
+## Props 전달 팁
+
+```jsx
+// 1. 불리언 prop — true일 때 속성명만 써도 됨
+<Input required />        // required={true}와 동일
+<Input readOnly={false} /> // 명시적 false
+
+// 2. 표현식 prop — 중괄호로 전달
+<Card score={user.score * 1.1} />
+<Card style={{ color: 'red' }} />
+
+// 3. 문자열 prop — 따옴표 직접 사용 가능 (중괄호 불필요)
+<Card title="홍길동" />   // "홍길동" 문자열
+<Card title={'홍길동'} /> // 동일
+
+// 4. 함수 prop
+<Button onClick={() => console.log('clicked')} />
+```
+
+## 정리
+
+Props는 React 단방향 데이터 흐름의 핵심이다. 항상 부모에서 자식으로 흐르며, 자식은 절대 직접 수정할 수 없다. 기본값은 구조분해 할당으로, 타입 안전성은 TypeScript로 확보한다. 자식이 부모에게 데이터를 보낼 때는 콜백 함수를 prop으로 받아 호출한다. 다음 글에서는 props 스프레딩의 편리함과 위험성을 함께 살펴본다.
 
 ---
 
-**지난 글:** [children prop — 컴포넌트 안에 컴포넌트 넣기](/posts/react-children/)
+**지난 글:** [children prop — 컴포넌트 합성의 기초](/posts/react-children/)
 
-**다음 글:** [Props Spreading — 유용하지만 주의가 필요한 패턴](/posts/react-props-spreading/)
+**다음 글:** [Props Spreading — 편리함과 위험성의 균형](/posts/react-props-spreading/)
 
 <br>
 읽어주셔서 감사합니다. 😊

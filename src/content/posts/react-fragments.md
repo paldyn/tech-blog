@@ -1,130 +1,93 @@
 ---
-title: "Fragment — 불필요한 래퍼 없이 여러 요소 반환하기"
-description: "React Fragment의 필요성, 단축 문법과 전체 문법 차이, div 지옥 문제, 그리고 table/dl 같은 시맨틱 HTML 구조를 올바르게 유지하는 방법을 정리합니다."
+title: "React Fragment — 불필요한 DOM 노드 없애기"
+description: "React Fragment가 필요한 이유, <></> 단축 문법과 React.Fragment의 차이, key prop 사용법, 실전에서 Fragment가 필요한 4가지 상황을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-03"
+pubDate: "2026-06-06"
 archiveOrder: 4
 type: "knowledge"
 category: "React"
-tags: ["Fragment", "React.Fragment", "div지옥", "시맨틱HTML", "JSX", "React기초"]
+tags: ["React Fragment", "Fragment", "React", "DOM구조", "JSX"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-jsx-deep/)에서 JSX의 심화 표현식과 패턴을 살펴봤다. 이번 글에서는 React 컴포넌트 작성 시 항상 만나는 제약 — "단일 루트 요소" — 을 깔끔하게 해결해주는 **Fragment**를 다룬다.
+[지난 글](/posts/react-jsx-deep/)에서 JSX의 고급 패턴을 살펴봤다. React 컴포넌트는 반드시 단일 루트 요소를 반환해야 한다는 규칙 때문에, 여러 요소를 반환할 때 `<div>`로 감싸는 습관이 생기기 쉽다. 하지만 이 방법은 불필요한 DOM 노드를 만들어 구조를 오염시킨다. **React Fragment**가 이 문제의 해법이다.
 
-## 문제: 모든 컴포넌트는 단일 루트를 반환해야 한다
+## 왜 Fragment가 필요한가
 
-JSX는 컴파일 후 단일 함수 호출이 된다. 따라서 여러 요소를 반환하려면 반드시 하나의 부모로 감싸야 한다.
+HTML 테이블을 생각해보자. `<tr>` 안에는 `<td>`가 직접 들어가야 한다. 만약 `<td>`를 묶는 컴포넌트가 `<div>`를 반환하면 `<tr> → <div> → <td>` 구조가 되어 HTML이 깨진다.
 
 ```jsx
-// ❌ 오류: 루트 요소가 2개
-function Greeting() {
+// ❌ div로 감싸면 테이블 구조 파괴
+function Row() {
   return (
-    <h1>안녕하세요</h1>
-    <p>React를 배워봅시다</p>
-  );
-}
-
-// 일반적인 해결책: div로 감싸기
-function Greeting() {
-  return (
-    <div>
-      <h1>안녕하세요</h1>
-      <p>React를 배워봅시다</p>
+    <div>          {/* 이 div가 tr 안에 삽입되어 구조 깨짐 */}
+      <td>홍길동</td>
+      <td>30세</td>
     </div>
   );
 }
+
+// 렌더링 결과: <tr><div><td>홍길동</td><td>30세</td></div></tr> ← 무효한 HTML
 ```
 
-div로 감싸는 방식은 작동하지만 두 가지 문제가 있다.
+Fragment를 사용하면 DOM에 실제 노드가 추가되지 않아 구조가 유지된다.
 
-1. **CSS 레이아웃 파괴** — flexbox나 grid 컨텍스트에서 불필요한 div가 낀다
-2. **시맨틱 HTML 위반** — `<table>` 안에 `<tr>`, `<dl>` 안에 `<dt>/<dd>` 등 특정 부모-자식 관계가 강제되는 HTML에서 중간에 div가 끼면 유효하지 않은 구조가 된다
+![Fragment: 불필요한 DOM 노드 문제 해결](/assets/posts/react-fragments-problem.svg)
 
-## Fragment로 해결
+## 두 가지 문법
 
-![Fragment가 필요한 이유](/assets/posts/react-fragments-why.svg)
+### 단축 문법 `<></>`
 
-Fragment는 DOM에 아무 요소도 추가하지 않으면서 여러 자식을 그룹화하는 React 전용 컴포넌트다.
-
-```jsx
-import { Fragment } from 'react';
-
-function Greeting() {
-  return (
-    <Fragment>
-      <h1>안녕하세요</h1>
-      <p>React를 배워봅시다</p>
-    </Fragment>
-  );
-}
-```
-
-## 단축 문법 `<>...</>`
-
-대부분의 경우 `<>...</>` 단축 문법을 쓴다. 더 간결하고 `import`도 필요 없다.
+가장 간편하다. 단, `key` 속성을 붙일 수 없다.
 
 ```jsx
-function Greeting() {
+function Row() {
   return (
     <>
-      <h1>안녕하세요</h1>
-      <p>React를 배워봅시다</p>
+      <td>홍길동</td>
+      <td>30세</td>
     </>
   );
 }
 ```
 
-## 단축 문법의 한계: key prop
+### React.Fragment
 
-단축 문법 `<>`는 props를 받을 수 없다. `key` prop이 필요한 리스트 렌더링에서는 전체 문법을 써야 한다.
-
-![Fragment 사용 패턴](/assets/posts/react-fragments-patterns.svg)
+`key` 속성이 필요할 때 사용한다.
 
 ```jsx
-import { Fragment } from 'react';
+import React from 'react';
 
-function GlossaryList({ terms }) {
+function GlossaryList({ items }) {
   return (
     <dl>
-      {terms.map(term => (
-        <Fragment key={term.id}>   {/* key 지정 가능 */}
-          <dt>{term.word}</dt>
-          <dd>{term.definition}</dd>
-        </Fragment>
+      {items.map(item => (
+        <React.Fragment key={item.id}>
+          <dt>{item.term}</dt>
+          <dd>{item.description}</dd>
+        </React.Fragment>
       ))}
     </dl>
   );
 }
 ```
 
-단축 문법 `<>`에 `key`를 붙이면 문법 오류다.
+`key`를 갖는 Fragment는 리스트 렌더링에서 여러 형제 요소를 묶을 때 필수다.
+
+## Fragment가 필요한 4가지 상황
+
+![Fragment가 필요한 4가지 상황](/assets/posts/react-fragments-usage.svg)
+
+### ① 테이블 구조 유지
 
 ```jsx
-// ❌ 오류: <> 에는 props 사용 불가
-{terms.map(term => (
-  <key={term.id}>   {/* 불가 */}
-    <dt>{term.word}</dt>
-  </>
-))}
-```
-
-## 테이블 컴포넌트 예시
-
-Fragment의 실용 가치가 가장 잘 드러나는 사례다.
-
-```jsx
-function TableRows({ data }) {
+function TableRow({ user }) {
   return (
     <>
-      {data.map(row => (
-        <tr key={row.id}>
-          <td>{row.name}</td>
-          <td>{row.age}</td>
-          <td>{row.city}</td>
-        </tr>
-      ))}
+      <td>{user.name}</td>
+      <td>{user.email}</td>
+      <td>{user.role}</td>
     </>
   );
 }
@@ -132,28 +95,112 @@ function TableRows({ data }) {
 function UserTable({ users }) {
   return (
     <table>
-      <thead>
-        <tr>
-          <th>이름</th>
-          <th>나이</th>
-          <th>도시</th>
-        </tr>
-      </thead>
       <tbody>
-        <TableRows data={users} />
+        {users.map(user => (
+          <tr key={user.id}>
+            <TableRow user={user} />
+          </tr>
+        ))}
       </tbody>
     </table>
   );
 }
 ```
 
-`TableRows`가 `<>`를 반환하기 때문에 `<tbody>` 안에 직접 `<tr>` 들이 들어간다. div 래퍼를 썼다면 유효하지 않은 HTML 구조가 됐을 것이다.
+### ② CSS Flexbox/Grid 레이아웃 보호
+
+불필요한 `<div>`가 flex/grid 자식으로 끼어들면 레이아웃이 깨질 수 있다.
+
+```jsx
+function FieldGroup({ label, input, hint }) {
+  // div를 반환하면 flex 자식이 하나 더 생겨 레이아웃 오작동
+  return (
+    <>
+      {label}
+      {input}
+      {hint}
+    </>
+  );
+}
+
+// 부모: display flex; flex-direction column;
+// Fragment 덕분에 label, input, hint가 직접 flex 자식이 됨
+```
+
+### ③ 리스트 렌더링에서 여러 형제 요소
+
+```jsx
+function DefinitionList({ terms }) {
+  return (
+    <dl>
+      {terms.map(({ id, word, meaning }) => (
+        <React.Fragment key={id}>
+          <dt className="term">{word}</dt>
+          <dd className="def">{meaning}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
+}
+```
+
+### ④ 조건부 블록 전환
+
+```jsx
+function AuthSection({ isLoggedIn }) {
+  return (
+    <>
+      {isLoggedIn ? (
+        <>
+          <UserAvatar />
+          <LogoutButton />
+        </>
+      ) : (
+        <>
+          <LoginButton />
+          <SignupLink />
+        </>
+      )}
+    </>
+  );
+}
+```
+
+## Fragment는 실제 DOM에 아무것도 남기지 않는다
+
+브라우저 DevTools로 확인해보면 Fragment로 감싼 요소들은 추가적인 래퍼 없이 그대로 나타난다.
+
+```jsx
+// React
+function App() {
+  return (
+    <>
+      <header>헤더</header>
+      <main>본문</main>
+      <footer>푸터</footer>
+    </>
+  );
+}
+
+// 브라우저 DOM (추가 노드 없음)
+// <body>
+//   <div id="root">
+//     <header>헤더</header>
+//     <main>본문</main>
+//     <footer>푸터</footer>
+//   </div>
+// </body>
+```
+
+## 정리
+
+Fragment는 React의 "단일 루트 요소" 제약을 DOM 오염 없이 충족시키는 도구다. `<></>` 단축 문법은 key가 필요 없을 때, `<React.Fragment key={id}>`는 리스트처럼 key가 필요할 때 사용한다. 다음 글에서는 React 컴포넌트의 구조와 종류를 자세히 살펴본다.
 
 ---
 
-**지난 글:** [JSX 심화 — 표현식, 조건 렌더링, Spread, Children](/posts/react-jsx-deep/)
+**지난 글:** [JSX 심화 — 표현식, 조건, 반복, 특수 케이스](/posts/react-jsx-deep/)
 
-**다음 글:** [컴포넌트 기초 — React 앱의 기본 구성 단위](/posts/react-components/)
+**다음 글:** [React 컴포넌트 — 함수형과 클래스형, 컴포넌트 설계 원칙](/posts/react-components/)
 
 <br>
 읽어주셔서 감사합니다. 😊

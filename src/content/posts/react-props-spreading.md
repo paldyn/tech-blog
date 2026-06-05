@@ -1,151 +1,204 @@
 ---
-title: "Props Spreading — 유용하지만 주의가 필요한 패턴"
-description: "React props spread 연산자의 동작 원리, 무분별한 spread의 위험(DOM 오염, 의도치 않은 오버라이드), rest 패턴으로 안전하게 사용하는 방법을 정리합니다."
+title: "Props Spreading — 편리함과 위험성의 균형"
+description: "Props 스프레딩 {...props}의 동작 원리, DOM 경고가 발생하는 이유, 안전한 props 분리 패턴, className 병합 패턴을 실전 예제와 함께 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-03"
+pubDate: "2026-06-06"
 archiveOrder: 8
 type: "knowledge"
 category: "React"
-tags: ["Props Spreading", "rest props", "DOM오염", "컴포넌트패턴", "React기초", "JSX"]
+tags: ["Props Spreading", "React", "...props", "컴포넌트패턴", "DOM속성"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-props/)에서 props의 단방향 흐름과 타입을 배웠다. 이번 글에서는 props에서 특히 조심해야 할 **spread 패턴**을 다룬다.
+[지난 글](/posts/react-props/)에서 Props의 전달 방식과 타입 검증을 배웠다. `{...props}` 스프레딩은 컴포넌트 래핑 시 매우 편리하지만, 잘못 쓰면 DOM 경고를 일으키거나 예상치 못한 props가 전달되는 버그를 만든다.
 
 ## Props Spreading이란
 
-JSX에서 `{...obj}` 문법으로 객체의 모든 키-값을 props로 한번에 전달하는 패턴이다.
+`{...props}` 문법은 객체의 모든 프로퍼티를 JSX 속성으로 펼쳐서 전달한다.
 
 ```jsx
-const buttonProps = {
-  type: 'button',
-  disabled: false,
-  className: 'btn',
-};
+// 스프레딩 없이 명시적 전달
+<input
+  type={props.type}
+  value={props.value}
+  onChange={props.onChange}
+  placeholder={props.placeholder}
+  disabled={props.disabled}
+/>
 
-// 아래 두 줄은 완전히 동일하다
-<button {...buttonProps} />
-<button type="button" disabled={false} className="btn" />
+// 스프레딩으로 한 번에 전달 (동일한 결과)
+<input {...props} />
 ```
 
-## 개념 비교
+## DOM 경고가 발생하는 이유
 
-![Props Spreading 개념](/assets/posts/react-props-spreading-concept.svg)
-
-명시적 전달과 spread 전달의 차이는 명확하다. 명시적 전달은 어떤 props가 내려가는지 코드에서 한눈에 보인다. Spread는 코드가 짧지만 전달되는 내용을 추적하기 어렵다.
-
-## 안전하지 않은 Spread 사례
-
-### 1. DOM 오염
-
-HTML 요소가 모르는 props를 받으면 React는 경고를 출력하고, 브라우저 콘솔도 오류를 낸다.
+React에서 HTML 요소에 알 수 없는 속성을 전달하면 경고가 발생한다.
 
 ```jsx
-// ❌ variant는 HTML div 속성이 아님
-function Card({ variant, ...props }) {
-  return <div variant={variant} {...props} />;
+// ❌ 문제: 커스텀 props가 DOM input에 그대로 전달됨
+function BadInput(props) {
+  return <input {...props} />;
 }
 
-// 경고: Unknown prop `variant` on <div> tag.
+// labelText, errorMessage는 HTML input이 모르는 속성
+<BadInput
+  type="email"
+  labelText="이메일"      // DOM input에 전달됨 → 경고
+  errorMessage="필수입력" // DOM input에 전달됨 → 경고
+/>
+
+// 콘솔: Warning: React does not recognize the `labelText` prop on a DOM element.
 ```
 
-### 2. 의도치 않은 오버라이드
+커스텀 props는 HTML 요소가 아닌 React 컴포넌트 레이어에서 소비해야 한다.
+
+![Props Spreading 문제와 해결](/assets/posts/react-props-spreading-problem.svg)
+
+## 올바른 패턴: 커스텀 props 분리
+
+구조분해 할당으로 커스텀 props를 꺼내고, 나머지(`...rest`)를 HTML 요소에 전달한다.
 
 ```jsx
-// ❌ 부모가 준 onClick이 내부 onClick을 덮어버린다
-function DangerButton({ ...props }) {
+// ✅ 커스텀 props를 분리하고 나머지만 전달
+function FormInput({ label, error, helpText, ...rest }) {
   return (
-    <button
-      {...props}
-      onClick={() => {
-        // 안전 확인 로직
-        if (window.confirm('정말요?')) props.onClick?.();
-      }}
-    />
-  );
-}
-
-// spread가 onClick을 오버라이드해서 확인 로직이 사라짐
-<DangerButton {...{ onClick: () => deleteAll() }} />
-```
-
-## 안전한 패턴: Rest Spreading
-
-![안전한 Props Spreading 패턴](/assets/posts/react-props-spreading-safe.svg)
-
-컴포넌트 전용 props를 먼저 꺼내고, 나머지(`...rest`)만 DOM 요소에 전달한다.
-
-```jsx
-function Input({
-  label,          // 컴포넌트 전용 (DOM에 전달 X)
-  errorMessage,   // 컴포넌트 전용
-  className = '',
-  ...rest         // type, value, onChange, placeholder, disabled 등
-}) {
-  return (
-    <div className="input-wrapper">
+    <div className="form-group">
       {label && <label>{label}</label>}
-      <input
-        className={`input ${errorMessage ? 'input-error' : ''} ${className}`}
-        {...rest}   // HTML input 속성만 안전하게 전달
-      />
-      {errorMessage && <p className="error">{errorMessage}</p>}
+      <input {...rest} />           {/* 표준 HTML 속성만 전달 */}
+      {helpText && <p className="help">{helpText}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
 
-// 사용
-<Input
+// 사용 측
+<FormInput
   label="이메일"
-  errorMessage="유효한 이메일을 입력하세요"
+  error={errors.email}
+  helpText="유효한 이메일 주소를 입력하세요"
   type="email"
   value={email}
-  onChange={e => setEmail(e.target.value)}
+  onChange={handleChange}
+  required
 />
 ```
 
-## Spread 순서가 중요하다
+![안전한 Props 분리 패턴](/assets/posts/react-props-spreading-patterns.svg)
 
-같은 key가 여러 번 나오면 **뒤에 오는 값이 이긴다.**
+## 안전한 Props 분리 4가지 패턴
 
-```jsx
-const defaults = { type: 'text', className: 'input' };
+### 패턴 ① 커스텀 props 분리 + 나머지 전달
 
-// defaults.type이 'email'로 오버라이드된다
-<input {...defaults} type="email" />
-// 결과: type="email" className="input"
-
-// 'email'이 defaults.type으로 오버라이드된다
-<input type="email" {...defaults} />
-// 결과: type="text" className="input"
-```
-
-## 언제 Spread를 써도 좋은가
-
-**래퍼(Wrapper) 컴포넌트**에서 네이티브 요소를 감쌀 때, rest 패턴과 함께 쓰면 안전하다.
+가장 기본적인 패턴이다.
 
 ```jsx
-// 버튼 래퍼: HTML button의 모든 속성 그대로 지원
-function Button({ children, className = '', ...rest }) {
+function Button({ variant = 'primary', size = 'md', isLoading, ...rest }) {
   return (
     <button
-      className={`btn ${className}`}
-      {...rest}
+      className={`btn btn-${variant} btn-${size}`}
+      disabled={isLoading || rest.disabled}
+      {...rest}           // onClick, type, aria-* 등 전달됨
     >
-      {children}
+      {isLoading ? <Spinner /> : rest.children}
     </button>
   );
 }
 ```
 
-반면, **비즈니스 컴포넌트**(특정 도메인 데이터를 렌더링하는 컴포넌트)에서는 명시적 props를 선호한다. 어떤 데이터가 필요한지 타입을 보고 알 수 있어야 유지보수가 쉽다.
+### 패턴 ② className 병합
+
+외부에서 추가 className을 전달할 수 있도록 내부와 병합한다.
+
+```jsx
+function Card({ variant = 'default', className = '', children, ...rest }) {
+  const baseClass = `card card-${variant}`;
+  const mergedClass = [baseClass, className].filter(Boolean).join(' ');
+
+  return (
+    <div className={mergedClass} {...rest}>
+      {children}
+    </div>
+  );
+}
+
+// clsx 라이브러리를 쓰면 더 깔끔
+import clsx from 'clsx';
+
+function Card({ variant, className, ...rest }) {
+  return (
+    <div className={clsx('card', `card-${variant}`, className)} {...rest} />
+  );
+}
+```
+
+### 패턴 ③ 스프레딩 순서가 중요하다
+
+스프레딩 위치에 따라 기본값이 덮어씌워진다.
+
+```jsx
+// ❌ rest.type이 type="email"을 덮어쓸 수 있음
+function EmailInput({ ...rest }) {
+  return <input type="email" {...rest} />;  // rest에 type이 있으면 email 무효화!
+}
+
+// ✅ 기본값을 뒤에 두어 보호
+function EmailInput({ ...rest }) {
+  return <input {...rest} type="email" />;  // 항상 email 타입 유지
+}
+```
+
+### 패턴 ④ TypeScript + ComponentPropsWithoutRef
+
+TypeScript에서 HTML 요소의 모든 표준 속성을 자동 상속하는 방법이다.
+
+```tsx
+type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
+  variant?: 'primary' | 'secondary' | 'danger';
+  isLoading?: boolean;
+};
+
+function Button({ variant = 'primary', isLoading, children, ...rest }: ButtonProps) {
+  return (
+    <button
+      className={`btn btn-${variant}`}
+      disabled={isLoading}
+      {...rest}
+    >
+      {isLoading ? '로딩 중...' : children}
+    </button>
+  );
+}
+
+// TypeScript가 button의 모든 속성(type, onClick, aria-* 등)을 자동 제안
+<Button type="submit" onClick={handleSubmit} aria-label="저장하기" variant="primary">
+  저장
+</Button>
+```
+
+## 스프레딩 사용 기준
+
+```
+스프레딩 적합:
+  ✅ HTML 요소를 얇게 래핑하는 UI 컴포넌트 (Button, Input, Card 등)
+  ✅ 커스텀 props를 분리한 후 ...rest를 전달
+  ✅ 테스트 유틸리티에서 모든 이벤트 핸들러를 주입할 때
+
+스프레딩 부적합:
+  ❌ 복잡한 비즈니스 컴포넌트에 props 전체를 덮어씌울 때
+  ❌ 어떤 props가 전달될지 예측하기 어려울 때
+  ❌ 두 컴포넌트 간 "props relay"를 여러 단계 이어 사용할 때 → prop drilling 문제
+```
+
+## 정리
+
+Props 스프레딩은 래핑 컴포넌트에서 HTML 속성을 전달할 때 강력하다. 핵심은 **커스텀 props를 먼저 분리**하고 나머지(`...rest`)만 전달하는 것이다. TypeScript의 `ComponentPropsWithoutRef`와 결합하면 타입 안전성까지 확보된다. 다음 글에서는 조건에 따라 UI를 다르게 렌더링하는 **조건부 렌더링** 패턴을 다룬다.
 
 ---
 
-**지난 글:** [Props — 컴포넌트 간 데이터 전달의 모든 것](/posts/react-props/)
+**지난 글:** [Props 완전 정복 — 데이터 전달과 기본값, 타입 검증](/posts/react-props/)
 
-**다음 글:** [조건부 렌더링 — 상황에 따라 다른 UI 보여주기](/posts/react-conditional-rendering/)
+**다음 글:** [조건부 렌더링 — 상황에 맞는 UI 표현하기](/posts/react-conditional-rendering/)
 
 <br>
 읽어주셔서 감사합니다. 😊
