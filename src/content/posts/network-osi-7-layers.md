@@ -1,116 +1,173 @@
 ---
-title: "OSI 7계층 완전 이해"
-description: "OSI 참조 모델의 7개 계층이 하는 일, 각 계층의 PDU, 캡슐화 과정을 그림과 함께 이해합니다."
+title: "OSI 7계층 모델: 네트워크 통신의 설계도"
+description: "OSI 7계층 모델의 각 계층 역할, PDU 이름, 대표 프로토콜을 정리하고 캡슐화·디캡슐화 동작을 코드와 함께 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
+pubDate: "2026-06-06"
 archiveOrder: 2
 type: "knowledge"
 category: "Network"
-tags: ["OSI", "7계층", "캡슐화", "PDU", "네트워크"]
+tags: ["OSI7계층", "캡슐화", "프로토콜계층", "네트워크모델", "PDU", "TCP/IP"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-what-is-network/)에서 네트워크의 기본 개념과 범위별 분류를 살펴봤습니다. 이번에는 네트워크 통신을 이해하는 핵심 틀인 **OSI 7계층 모델**을 다룹니다. 처음 접하면 외워야 할 단어가 많아 막막하지만, 각 계층이 "왜 존재하는지"를 중심으로 이해하면 훨씬 쉽게 자리 잡힙니다.
+[지난 글](/posts/network-what-is-network/)에서 네트워크가 노드·링크·프로토콜의 조합임을 살펴봤다. 이번 글에서는 그 프로토콜을 계층별로 정리한 **OSI(Open Systems Interconnection) 7계층 모델**을 파헤친다. OSI 모델은 실제 구현보다는 개념 이해와 문제 해결의 기준이 되는 참조 모델(Reference Model)이다.
 
 ## OSI 모델이란
 
-OSI(Open Systems Interconnection) 모델은 ISO가 1984년 표준화한 **네트워크 통신 참조 모델**입니다. 서로 다른 벤더의 장비들이 통신할 수 있도록, 네트워크 기능을 7개의 독립적인 계층으로 분리했습니다.
+1984년 ISO(국제표준화기구)가 제안한 **통신 프로토콜 설계를 위한 7단계 계층 구조**다. 서로 다른 벤더의 장비끼리도 통신할 수 있도록 표준화된 계층별 역할을 정의한다. 실제 인터넷은 TCP/IP 4계층을 사용하지만, 트러블슈팅이나 기술 설명 시 OSI 모델이 기준이 된다.
 
-오늘날 실제 인터넷은 TCP/IP 4계층 모델 위에서 동작하지만, OSI 7계층은 **문제 진단, 기술 이해, 시험 학습**의 공통 언어로 여전히 폭넓게 사용됩니다. "3계층 문제"라고 하면 IP 라우팅 이슈, "2계층 문제"라고 하면 MAC/이더넷 이슈임을 바로 파악할 수 있습니다.
+![OSI 7계층 다이어그램](/assets/posts/network-osi-7-layers-diagram.svg)
 
-![OSI 7계층 스택](/assets/posts/network-osi-7-layers-stack.svg)
+## 7개 계층 상세
 
-## 각 계층의 역할
+### 1계층: 물리 (Physical)
 
-### 1계층 — 물리 계층 (Physical Layer)
+전기 신호, 광 신호, 전파를 이용해 비트(0, 1)를 전송한다. 케이블 종류, 커넥터, 전압 레벨, 전송 속도를 정의한다. 이 계층은 데이터의 의미를 모르고, 비트 스트림만 전달한다.
 
-비트(0, 1)를 전기 신호, 광 신호, 전파로 변환해 **물리 매체를 통해 전송**합니다. 케이블의 종류, 커넥터 모양, 신호 전압 등 하드웨어 명세를 다룹니다.
+- PDU: **Bit**
+- 장비: 케이블, 리피터, 허브
+- 기술: 이더넷 물리 규격(100BASE-TX), Wi-Fi 무선 신호, 광섬유
 
-- 장비: 케이블, 허브(Hub), 리피터
-- PDU: **비트(Bit)**
+### 2계층: 데이터링크 (Data Link)
 
-### 2계층 — 데이터링크 계층 (Data Link Layer)
+같은 네트워크(링크) 내의 노드 간 신뢰성 있는 프레임 전송을 담당한다. **MAC 주소**로 장치를 식별하고, 오류 감지(FCS), 흐름 제어를 수행한다. 2개의 서브계층으로 구성된다.
 
-같은 네트워크 안의 장치 간 **신뢰성 있는 직접 통신**을 담당합니다. MAC 주소로 장치를 식별하고, 프레임 경계 구분·오류 감지(CRC)를 수행합니다.
+- LLC(Logical Link Control): 상위 프로토콜 식별, 흐름제어
+- MAC(Media Access Control): 매체 접근 제어, MAC 주소 관리
 
-- 장비: 스위치(Switch), 브리지(Bridge)
-- PDU: **프레임(Frame)**
-
-### 3계층 — 네트워크 계층 (Network Layer)
-
-**서로 다른 네트워크 간 경로를 결정**합니다. IP 주소로 목적지를 식별하고, 라우터가 최적 경로를 선택해 패킷을 전달합니다.
-
-- 장비: 라우터(Router)
-- 프로토콜: IP, ICMP, ARP(엄밀히는 2.5계층)
-- PDU: **패킷(Packet)**
-
-### 4계층 — 전송 계층 (Transport Layer)
-
-**포트 번호**를 이용해 프로세스 간 통신을 가능하게 합니다. TCP는 신뢰성 있는 연결 지향 통신을, UDP는 빠른 비연결 통신을 제공합니다.
-
-- 프로토콜: TCP, UDP
-- PDU: **세그먼트(Segment)** (TCP) / **데이터그램(Datagram)** (UDP)
-
-### 5·6·7계층 — 세션·표현·응용 계층
-
-현실에서는 대부분의 애플리케이션 프로토콜이 이 세 계층을 합쳐서 처리합니다.
-
-| 계층 | 역할 | 예시 |
-|------|------|------|
-| 5 — 세션 | 연결 수립·유지·종료 | NetBIOS, RPC |
-| 6 — 표현 | 데이터 변환·암호화·압축 | TLS/SSL, JPEG |
-| 7 — 응용 | 사용자 인터페이스 제공 | HTTP, FTP, DNS |
-
-## 캡슐화와 역캡슐화
-
-OSI 모델의 가장 중요한 동작 원리가 **캡슐화(Encapsulation)** 입니다. 데이터를 보낼 때 각 계층은 자신의 헤더(필요시 트레일러)를 추가하며 데이터를 감쌉니다. 수신 측은 역순으로 헤더를 제거해 원본 데이터를 복원합니다.
-
-![캡슐화 과정](/assets/posts/network-osi-7-layers-encap.svg)
-
-```text
-송신 측:
-  [데이터]
-  → [TCP 헤더 | 데이터]           ← 4계층: 세그먼트 생성
-  → [IP 헤더 | TCP 헤더 | 데이터]  ← 3계층: 패킷 생성
-  → [ETH | IP | TCP | 데이터 | FCS] ← 2계층: 프레임 생성
-  → 01001011 01110010...           ← 1계층: 비트 전송
-
-수신 측 (역순 처리):
-  비트 → 프레임 → 패킷 → 세그먼트 → 데이터
+```
+Ethernet Frame 구조:
+[Preamble 8B][Dest MAC 6B][Src MAC 6B][EtherType 2B][Data][FCS 4B]
 ```
 
-각 계층은 **자신의 헤더만 읽고 처리**합니다. 3계층 라우터는 IP 헤더만 보고 경로를 결정하며, TCP 세그먼트 내부는 관여하지 않습니다. 이 **계층 독립성** 덕분에 각 계층의 기술을 독립적으로 발전시킬 수 있습니다.
+- PDU: **Frame**
+- 장비: 스위치, 브리지
+- 기술: Ethernet, Wi-Fi(802.11), PPP
 
-## 계층 분리의 이점
+### 3계층: 네트워크 (Network)
 
-```text
-문제 진단 예시:
-  "웹 페이지가 안 열려요"
-  └─ DNS 응답은 오나요? (7계층)
-      └─ TCP 연결은 되나요? (4계층)
-          └─ ping은 되나요? (3계층)
-              └─ 케이블은 연결됐나요? (1·2계층)
+서로 다른 네트워크 간의 **패킷 라우팅**을 담당한다. **IP 주소**로 출발지·목적지를 표시하고, 라우터가 최적 경로를 결정한다. 에러 보고(ICMP), 주소 해석(ARP)도 이 계층에서 처리된다.
+
+```
+IP Packet 구조:
+[IP Header: Src IP, Dst IP, TTL, Protocol ...][TCP/UDP Segment]
 ```
 
-계층화된 모델이 있으면 문제 범위를 빠르게 좁힐 수 있습니다. 또한 HTTP/2가 나왔어도 IP·이더넷은 그대로 사용하듯, 한 계층의 교체가 다른 계층에 영향을 주지 않습니다.
+- PDU: **Packet**
+- 장비: 라우터, L3 스위치
+- 기술: IPv4, IPv6, ICMP, ARP, BGP
 
-## OSI vs TCP/IP
+### 4계층: 전송 (Transport)
 
-| OSI 7계층 | TCP/IP 4계층 |
-|-----------|-------------|
-| 응용·표현·세션 (5·6·7) | 응용 계층 |
-| 전송 (4) | 전송 계층 |
-| 네트워크 (3) | 인터넷 계층 |
-| 데이터링크·물리 (1·2) | 네트워크 접근 계층 |
+**종단 간(End-to-End) 데이터 전달**을 책임진다. **포트 번호**로 애플리케이션을 구분하고, TCP는 신뢰성(재전송, 흐름제어, 혼잡제어)을, UDP는 빠른 전송을 제공한다.
 
-다음 글에서는 실제 인터넷 통신의 기반인 TCP/IP 모델을 더 깊이 살펴봅니다.
+```
+TCP Segment 구조:
+[Src Port 2B][Dst Port 2B][Seq# 4B][Ack# 4B][Flags][Window][Checksum][Data]
+```
+
+- PDU: **Segment** (TCP) / **Datagram** (UDP)
+- 기술: TCP, UDP, SCTP
+
+### 5계층: 세션 (Session)
+
+통신 세션의 수립·유지·종료를 관리한다. 체크포인트를 두어 연결이 끊겼을 때 복구 지점을 제공한다. 현대 인터넷 애플리케이션에서는 애플리케이션 레이어에서 직접 처리하는 경우가 많아 실질적 역할이 줄었다.
+
+- 기술: NetBIOS, RPC, SMB 세션 관리
+
+### 6계층: 표현 (Presentation)
+
+데이터의 **형식·암호화·압축**을 담당한다. 서로 다른 시스템 간 데이터 형식 차이를 해결한다. TLS/SSL 암호화, JPEG/PNG 이미지 인코딩, ASCII/UTF-8 문자 인코딩이 이 계층에 속한다.
+
+- 기술: TLS, SSL, JPEG, ASCII, Base64
+
+### 7계층: 응용 (Application)
+
+사용자가 직접 상호작용하는 서비스를 제공한다. 웹 브라우저, 이메일 클라이언트, FTP 클라이언트가 이 계층에서 동작한다.
+
+- PDU: **Data** (Message)
+- 기술: HTTP, HTTPS, FTP, SMTP, DNS, SSH
+
+## 캡슐화와 디캡슐화
+
+OSI 모델의 핵심 메커니즘은 **캡슐화(Encapsulation)**다. 데이터를 보낼 때 각 계층이 헤더를 추가하고, 받을 때 역순으로 제거한다.
+
+![캡슐화 과정](/assets/posts/network-osi-7-layers-encapsulation.svg)
+
+```python
+# 캡슐화 과정 개념 코드 (의사 코드)
+def send_data(raw_data):
+    # 7계층: HTTP 헤더 추가
+    app_data = http_header + raw_data
+
+    # 4계층: TCP 헤더 추가 (포트, 시퀀스번호...)
+    segment = tcp_header + app_data
+
+    # 3계층: IP 헤더 추가 (IP 주소, TTL...)
+    packet = ip_header + segment
+
+    # 2계층: 이더넷 헤더+FCS 추가 (MAC 주소...)
+    frame = eth_header + packet + fcs
+
+    # 1계층: 비트로 변환해 물리 매체로 전송
+    transmit_bits(frame)
+```
+
+수신 측에서는 정확히 반대 순서로 헤더를 벗겨낸다(디캡슐화). 각 계층은 자신의 헤더만 처리하고, 상위 계층 내용은 불투명 페이로드로 취급한다.
+
+## PDU(Protocol Data Unit) 이름
+
+각 계층에서 데이터 단위를 부르는 이름이 다르다.
+
+| 계층 | PDU 이름 | 비고 |
+|------|----------|------|
+| 7~5 | Data / Message | 응용 데이터 |
+| 4 | Segment (TCP) / Datagram (UDP) | 포트 정보 포함 |
+| 3 | Packet | IP 주소 포함 |
+| 2 | Frame | MAC 주소 포함 |
+| 1 | Bit | 0/1 신호 |
+
+## OSI vs TCP/IP 모델
+
+실제 인터넷은 TCP/IP 4계층 모델을 사용한다.
+
+```
+OSI 7계층          TCP/IP 4계층
+─────────────────  ────────────────
+7. Application     Application (5+6+7 통합)
+6. Presentation
+5. Session
+─────────────────  ────────────────
+4. Transport       Transport
+─────────────────  ────────────────
+3. Network         Internet
+─────────────────  ────────────────
+2. Data Link       Network Access (1+2 통합)
+1. Physical
+```
+
+TCP/IP는 OSI보다 단순하고 실용적이다. 다음 글에서 TCP/IP 모델을 자세히 다룬다.
+
+## 트러블슈팅에서의 OSI 모델
+
+OSI 7계층 모델의 실제 가치는 **네트워크 장애 원인을 계층별로 격리**하는 데 있다.
+
+```
+1계층 문제: 케이블 불량, 링크 다운 → ip link show
+2계층 문제: ARP 실패, MAC 충돌 → arp -n
+3계층 문제: 라우팅 오류, IP 충돌 → ping, traceroute
+4계층 문제: 포트 차단, TCP 연결 실패 → telnet, nc
+7계층 문제: HTTP 오류, 인증 실패 → curl -v
+```
+
+"ping은 되는데 HTTP가 안 된다"면 3계층까지는 정상이므로 4~7계층 문제다. 이렇게 계층을 좁혀가며 원인을 찾는다.
 
 ---
 
 **지난 글:** [네트워크란 무엇인가](/posts/network-what-is-network/)
 
-**다음 글:** [TCP/IP 모델 완전 이해](/posts/network-tcp-ip-model/)
+**다음 글:** [TCP/IP 4계층 모델](/posts/network-tcp-ip-model/)
 
 <br>
 읽어주셔서 감사합니다. 😊

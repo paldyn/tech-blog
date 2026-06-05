@@ -1,178 +1,166 @@
 ---
-title: "신호와 인코딩: 데이터를 전파로 바꾸는 법"
-description: "디지털 데이터가 물리 매체를 통해 전달되는 과정, NRZ·맨체스터·4B/5B 인코딩 방식, 아날로그 변조(QAM), Shannon 용량 정리를 설명합니다."
+title: "신호와 인코딩: 비트가 물리 세계로 나가는 방법"
+description: "디지털 데이터를 물리 신호로 변환하는 인코딩 방식(NRZ, Manchester, 4B/5B, 8B/10B)과 아날로그 변조(ASK/FSK/PSK/QAM)를 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
-archiveOrder: 3
+pubDate: "2026-06-06"
+archiveOrder: 7
 type: "knowledge"
 category: "Network"
-tags: ["신호인코딩", "NRZ", "맨체스터인코딩", "4B5B", "QAM", "Shannon", "물리계층"]
+tags: ["신호인코딩", "Manchester", "4B5B", "QAM", "물리계층", "변조방식"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-circuit-vs-packet-switching/)에서 패킷이 네트워크를 통해 전달되는 교환 방식을 살펴봤다. 이번에는 한 단계 더 아래로 내려가 **비트(0과 1)가 실제 물리 신호로 변환되는 방법**을 살펴본다. 물리 계층에서 어떤 인코딩 방식을 쓰느냐에 따라 클럭 동기화 능력, 대역폭 효율, 에러 감지 능력이 달라진다.
+[지난 글](/posts/network-circuit-vs-packet-switching/)에서 패킷 교환의 동작 원리를 살펴봤다. 이번 글에서는 OSI 1계층(물리 계층)의 핵심인 **신호(Signal)와 인코딩(Encoding)**을 다룬다. 컴퓨터 내부의 0과 1이 어떻게 케이블·전파를 통해 전달되는지 이해하면 네트워크 성능과 장애의 물리적 근거를 파악할 수 있다.
 
 ## 신호의 기본 개념
 
-물리 계층에서 데이터는 **전압(유선), 빛(광섬유), 전파(무선)** 형태로 전달된다. 중요한 것은 이 신호가 **연속적인 아날로그 파형**인 반면, 우리가 전달하려는 데이터는 **이산적인 디지털 비트**라는 점이다.
+물리 계층에서 데이터는 **신호(Signal)**로 전달된다. 신호는 시간에 따른 물리량(전압, 전류, 빛의 세기, 전파 주파수)의 변화다.
 
 ```
-디지털 데이터:  1  0  1  1  0  0  1
-                ↓  (인코딩)
-물리 신호:  +V  0  +V  +V  0  0  +V  (전압 변화)
+신호 분류:
+  아날로그 신호: 연속적인 값 (전통 전화, AM/FM 라디오)
+  디지털 신호: 불연속적인 값 (0/1, 컴퓨터 데이터)
+
+주요 특성:
+  주파수(Frequency): 초당 사이클 수 (Hz)
+  진폭(Amplitude): 신호 최대 세기
+  위상(Phase): 기준점 대비 시작 위치
+  파장(Wavelength): 한 사이클의 물리적 길이
 ```
 
-**주파수(Frequency)**는 초당 신호 변화 횟수(Hz), **대역폭(Bandwidth)**은 신호가 사용하는 주파수 범위다. 채널 대역폭이 넓을수록 단위 시간에 더 많은 데이터를 전송할 수 있다.
+## 대역폭과 나이퀴스트·샤논 정리
+
+**나이퀴스트(Nyquist) 정리**는 잡음 없는 채널의 최대 전송률을 정의한다.
+
+```
+나이퀴스트 공식:
+  최대 비트율 = 2 × 대역폭(Hz) × log₂(신호 레벨 수)
+
+  예: 대역폭 3000Hz, 2레벨(0/1) 신호
+  최대 비트율 = 2 × 3000 × log₂(2) = 6000 bps
+
+샤논(Shannon) 공식 (잡음 고려):
+  채널 용량 = 대역폭 × log₂(1 + S/N)
+  S/N: 신호 대 잡음 비율 (Signal-to-Noise Ratio)
+
+  예: 3000Hz 대역폭, SNR = 30dB (1000:1)
+  채널 용량 = 3000 × log₂(1001) ≈ 30,000 bps
+```
 
 ## 디지털 인코딩 방식
 
-![디지털 인코딩 비교](/assets/posts/network-signaling-encoding-methods.svg)
+![디지털 인코딩 방식](/assets/posts/network-signaling-encoding-types.svg)
 
 ### NRZ-L (Non-Return-to-Zero Level)
 
-가장 단순한 인코딩이다. 1을 높은 전압(+V), 0을 낮은 전압(0 또는 -V)으로 표현한다.
+가장 단순한 방식. 0은 낮은 전압, 1은 높은 전압으로 표현한다.
 
 ```
-비트:   1    0    1    1    0    0    1
-NRZ-L: ___  ___  ___  ___
-      +V  |     |+V |+V |   +V
-          |_____|   |   |_____|
-           0    0       0    0
+비트:    0  1  0  0  1  1  0  1
+전압: L  H     L  L     H  H  L  H
 ```
 
-**문제**: 연속된 0 또는 1이 길면 전압이 변하지 않아 수신측에서 클럭을 잃어버린다(DC drift). 긴 데이터 스트림에서는 사용하기 어렵다.
+**단점**: 연속된 같은 비트(000... 또는 111...)는 전압이 변하지 않아 수신 측이 클럭을 잃기 쉽다. 또 DC 성분이 있어 장거리 전송에 부적합하다.
 
-### 맨체스터 인코딩 (Manchester Encoding)
+### Manchester Encoding
 
-각 비트 구간의 **중앙에서 전압 전이**가 일어난다. 1은 하강(High→Low), 0은 상승(Low→High)으로 표현한다. IEEE 802.3 이더넷(10BASE-T, 10BASE5)이 사용한다.
+각 비트 중간에 전압 전환이 일어난다. 0은 H→L, 1은 L→H 전환으로 표현한다.
 
-```python
-def manchester_encode(bits: list[int]) -> list[str]:
-    """맨체스터 인코딩: 1=하강전이, 0=상승전이"""
-    result = []
-    for bit in bits:
-        if bit == 1:
-            result.append("H→L")  # 1: High to Low
-        else:
-            result.append("L→H")  # 0: Low to High
-    return result
-
-encoded = manchester_encode([1, 0, 1, 1, 0])
-print(encoded)  # ['H→L', 'L→H', 'H→L', 'H→L', 'L→H']
+```
+비트:     0      1
+신호:  H→L    L→H
+클럭:  내장 (동기화 자동)
 ```
 
-**장점**: 각 비트마다 전이가 발생하므로 클럭이 신호에 내장된다. 수신측이 클럭을 별도로 동기화할 필요 없다.  
-**단점**: 하나의 비트를 표현하는 데 신호 전이가 2번 필요하므로 **대역폭이 2배** 소모된다.
+**장점**: 클럭이 데이터에 내장되어 자기 동기화(self-clocking)가 가능하다. 이더넷 10BASE-T가 사용한다.  
+**단점**: 대역폭 사용량이 NRZ의 2배.
 
 ### 4B/5B 인코딩
 
-100 Mbps Fast Ethernet(100BASE-TX)이 사용하는 방식이다. 4비트 데이터를 5비트 코드워드로 매핑해 전송한다. 32개 5비트 패턴(2⁵) 중 16개(2⁴)만 사용하며, 사용되지 않는 나머지는 프레임 경계나 오류 감지에 활용된다.
+4비트 데이터를 5비트 코드로 매핑한다. 5비트 코드는 연속 0이 3개를 초과하지 않도록 설계되어 있어 동기화가 쉽다.
 
 ```python
-# 4B/5B 인코딩 테이블 (부분)
-ENCODING_TABLE = {
-    0b0000: 0b11110,  # 0x0 → 11110
-    0b0001: 0b01001,  # 0x1 → 01001
-    0b0010: 0b10100,  # 0x2 → 10100
-    0b0011: 0b10101,  # 0x3 → 10101
-    0b0100: 0b01010,  # 0x4 → 01010
-    0b0101: 0b01011,  # 0x5 → 01011
-    0b1110: 0b11100,  # 0xE → 11100
-    0b1111: 0b11101,  # 0xF → 11101
+# 4B/5B 매핑 테이블 일부
+b4_to_b5 = {
+    '0000': '11110',
+    '0001': '01001',
+    '0010': '10100',
+    '0011': '10101',
+    '0100': '01010',
+    '1111': '11101',
+    # ...
 }
-
-DECODING_TABLE = {v: k for k, v in ENCODING_TABLE.items()}
-
-def encode_4b5b(nibble: int) -> int:
-    """4비트 → 5비트 변환"""
-    return ENCODING_TABLE[nibble & 0xF]
-
-def decode_4b5b(code: int) -> int | None:
-    """5비트 → 4비트 역변환 (유효하지 않으면 None)"""
-    return DECODING_TABLE.get(code)
 ```
 
-**핵심**: 5비트 코드워드는 연속된 0이 최대 3개로 제한된다. 이를 NRZ-I(차동 인코딩)와 결합하면 클럭 동기화가 보장된다. 오버헤드는 25%(4/5 = 80% 효율)지만 맨체스터의 50%보다 훨씬 효율적이다.
+100BASE-TX(Fast Ethernet)에서 4B/5B + NRZI 조합으로 사용된다. 오버헤드는 25%.
 
-## 아날로그 변조
+### 8B/10B 인코딩
 
-광케이블이나 이더넷처럼 디지털 신호를 직접 보낼 수 없는 매체(전화선, 무선)는 **아날로그 반송파(Carrier)**에 디지털 데이터를 실어 보낸다.
-
-![아날로그 변조와 Shannon](/assets/posts/network-signaling-encoding-layers.svg)
+8비트를 10비트로 매핑. DC 균형(0과 1의 수가 비슷)을 유지하고 동기화를 보장한다.
 
 ```
-변조 방식 비교:
-ASK  (진폭 편이): 1 = 높은 진폭, 0 = 낮은 진폭  → 잡음에 약함
-FSK  (주파수 편이): 1 = 높은 주파수, 0 = 낮은 주파수  → 잡음에 강함
-PSK  (위상 편이): 1 = 0°, 0 = 180°  → 조밀한 부호화
-QAM  (직교 진폭): 진폭 + 위상 동시 변조  → 가장 효율적
+기가비트 이더넷(1000BASE-T), SATA, PCIe에서 사용
+오버헤드: 25%
+이점: DC 균형 → 광섬유/동축 케이블에서 신호 품질 향상
 ```
 
-Wi-Fi 6E와 Wi-Fi 7은 **4096-QAM**을 사용한다. 하나의 심볼로 log₂(4096) = 12비트를 동시에 전송한다.
+## 아날로그 변조 방식
 
-```python
-import math
+디지털 데이터를 아날로그 캐리어(반송파) 신호에 실을 때는 변조(Modulation)를 사용한다. Wi-Fi, 모뎀, 5G에서 핵심 기술이다.
 
-def qam_bits_per_symbol(m: int) -> int:
-    """M-QAM에서 심볼당 비트 수 계산"""
-    return int(math.log2(m))
+![아날로그 변조 방식](/assets/posts/network-signaling-encoding-modulation.svg)
 
-for m in [4, 16, 64, 256, 1024, 4096]:
-    bps = qam_bits_per_symbol(m)
-    print(f"{m}-QAM: {bps} bits/symbol")
-# 4-QAM:    2 bits/symbol  (Wi-Fi 1/2)
-# 64-QAM:   6 bits/symbol  (Wi-Fi 5)
-# 256-QAM:  8 bits/symbol  (Wi-Fi 6)
-# 1024-QAM: 10 bits/symbol (Wi-Fi 6E)
-# 4096-QAM: 12 bits/symbol (Wi-Fi 7)
-```
+### QAM (Quadrature Amplitude Modulation)
 
-## Shannon의 채널 용량 정리
-
-어떤 채널이든 이론적 최대 전송 속도는 **Shannon의 정리**로 결정된다.
+진폭과 위상을 동시에 변조해 심볼당 더 많은 비트를 전송한다.
 
 ```
-C = B × log₂(1 + S/N)
+QAM 레벨별 효율:
+  QAM-4   (QPSK):   2 bits/심볼  → Wi-Fi 기본
+  QAM-16:           4 bits/심볼  → Wi-Fi 4
+  QAM-64:           6 bits/심볼  → Wi-Fi 5 (good SNR)
+  QAM-256:          8 bits/심볼  → Wi-Fi 5 (excellent SNR)
+  QAM-1024:        10 bits/심볼  → Wi-Fi 6
+  QAM-4096:        12 bits/심볼  → Wi-Fi 7
 
-C: 채널 용량 (bps)
-B: 채널 대역폭 (Hz)
-S/N: 신호 대 잡음비 (선형값)
+높은 QAM일수록:
+  → 더 많은 데이터 전송 가능 (대역폭 효율 ↑)
+  → 신호 구분이 어려워져 높은 SNR 필요
+  → 거리가 멀거나 잡음이 많으면 낮은 QAM으로 자동 조정
 ```
 
-```python
-def shannon_capacity(bandwidth_hz: float, snr_db: float) -> float:
-    """Shannon 채널 용량 계산"""
-    snr_linear = 10 ** (snr_db / 10)
-    capacity_bps = bandwidth_hz * math.log2(1 + snr_linear)
-    return capacity_bps
+## OFDM: 멀티캐리어 전송
 
-# 예: 5GHz Wi-Fi 채널 80MHz, SNR 30dB
-capacity = shannon_capacity(80e6, 30)
-print(f"이론적 최대: {capacity / 1e6:.1f} Mbps")
-# → 이론적 최대: 798.0 Mbps
+현대 Wi-Fi와 LTE/5G는 **OFDM(Orthogonal Frequency Division Multiplexing)**을 사용한다.
 
-# SNR이 낮아지면 용량 급감
-for snr in [30, 20, 10, 3]:
-    cap = shannon_capacity(80e6, snr) / 1e6
-    print(f"SNR {snr:2d}dB → {cap:6.1f} Mbps")
-# SNR 30dB → 798.0 Mbps
-# SNR 20dB → 532.4 Mbps
-# SNR 10dB → 266.2 Mbps
-# SNR  3dB → 127.0 Mbps
+```
+OFDM 원리:
+  1. 넓은 대역폭을 수백~수천 개의 좁은 서브캐리어로 분할
+  2. 각 서브캐리어에 독립적으로 QAM 변조
+  3. 주파수 선택적 페이딩(multipath fading)에 강함
+
+Wi-Fi 6 (802.11ax):
+  서브캐리어 간격: 78.125 kHz
+  FFT 크기: 1024 포인트
+  심볼당 최대 10 bits (QAM-1024)
+  총 최대 속도: 9.6 Gbps (이론값)
 ```
 
-실제 Wi-Fi 속도가 이론값에 못 미치는 이유는 프로토콜 오버헤드, 간섭, 레트라이 등 여러 요인 때문이다.
+## 클럭 복원과 동기화
 
-## 정리
+수신 측은 수신한 신호에서 **클럭(Clock)**을 복원해야 비트 경계를 정확히 알 수 있다.
 
-디지털 데이터가 물리 신호로 변환될 때 세 가지 핵심 문제를 해결해야 한다.
+```
+동기화 방식:
+  ① 별도 클럭 라인 (단거리, 예: SPI)
+  ② 자기 동기화 인코딩 (Manchester, 8B/10B)
+     → 전압 전환이 클럭 역할
+  ③ PLL (Phase-Locked Loop) 회로
+     → 수신 신호의 전환 패턴에서 클럭 추출
+```
 
-1. **클럭 동기화**: 맨체스터나 4B/5B처럼 신호에 클럭 정보를 내장
-2. **대역폭 효율**: NRZ계열이 효율적이지만 동기화 어려움
-3. **잡음 저항**: SNR이 높아야 고차 QAM 적용 가능
-
-현대 이더넷(10GBASE-T)은 4D-PAM5라는 5레벨 신호를 사용하고, Wi-Fi는 OFDM + QAM 조합으로 스펙트럼 효율을 극대화하고 있다.
+이더넷이 Manchester 인코딩(10Mbps)에서 4B/5B+NRZI(100Mbps), 8B/10B(1Gbps)로 발전한 것도 고속에서 클럭 동기화를 유지하면서 오버헤드를 줄이기 위한 진화였다.
 
 ---
 

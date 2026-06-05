@@ -1,139 +1,163 @@
 ---
-title: "대역폭, 처리량, 지연이란"
-description: "네트워크 성능을 측정하는 대역폭(Bandwidth), 처리량(Throughput), 지연(Latency)의 차이와 RTT 개념을 명확히 설명합니다."
+title: "대역폭, 처리량, 지연시간: 네트워크 성능의 3요소"
+description: "네트워크 성능을 측정하는 핵심 지표인 대역폭(Bandwidth), 처리량(Throughput), 지연시간(Latency)의 차이와 측정 방법을 실무 관점에서 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
+pubDate: "2026-06-06"
 archiveOrder: 4
 type: "knowledge"
 category: "Network"
-tags: ["대역폭", "처리량", "지연", "RTT", "네트워크 성능"]
+tags: ["대역폭", "처리량", "지연시간", "Bandwidth", "Throughput", "Latency", "네트워크성능"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-tcp-ip-model/)에서 TCP/IP 모델의 계층 구조와 각 계층의 역할을 살펴봤습니다. 네트워크 구조를 이해했다면 이제 "이 네트워크가 얼마나 빠른가"를 측정하는 방법을 알아야 합니다. **대역폭(Bandwidth), 처리량(Throughput), 지연(Latency)** 은 네트워크 성능을 설명하는 가장 중요한 세 가지 지표이며, 이 셋을 혼용하면 잘못된 병목 분석으로 이어집니다.
+[지난 글](/posts/network-tcp-ip-model/)에서 TCP/IP 4계층 모델 구조를 살펴봤다. 이번 글에서는 네트워크 성능을 평가할 때 반드시 알아야 할 세 가지 핵심 지표인 **대역폭(Bandwidth)**, **처리량(Throughput)**, **지연시간(Latency)**을 다룬다. 이 세 개념을 혼동하면 성능 병목을 잘못 진단하게 된다.
 
 ## 대역폭 (Bandwidth)
 
-대역폭은 네트워크 링크가 **이론적으로 전달할 수 있는 최대 데이터 양**입니다. 단위는 비트/초(bps, bit per second)이며, 일반적으로 Mbps·Gbps로 표현합니다.
+대역폭은 **네트워크 링크가 이론상 전송할 수 있는 최대 데이터 속도**다. 파이프의 굵기에 비유한다. 1Gbps 이더넷 케이블은 초당 최대 1,000,000,000비트를 전송할 수 있다.
 
-```text
-100Mbps 이더넷 = 초당 최대 100,000,000 비트 전송 가능
-1Gbps 광케이블  = 초당 최대 1,000,000,000 비트 전송 가능
+단위 체계:
+```
+1 bps   = 1 bit per second
+1 Kbps  = 1,000 bps
+1 Mbps  = 1,000,000 bps
+1 Gbps  = 1,000,000,000 bps
+1 Tbps  = 1,000,000,000,000 bps
+
+⚠ 1 MBps (메가바이트/초) ≠ 1 Mbps (메가비트/초)
+  1 MBps = 8 Mbps
 ```
 
-대역폭은 **도로의 최대 차선 수**에 비유할 수 있습니다. 8차선 고속도로라 해도 차가 막히면 실제 통행 속도는 낮아집니다.
+대역폭은 링크의 물리적 특성에서 결정된다. 광섬유는 구리 케이블보다 훨씬 높은 대역폭을 제공한다.
 
-> **주의**: ISP 광고 속도(예: "500Mbps 인터넷")는 대역폭 기준입니다. 실제 다운로드 속도는 이보다 낮을 수 있습니다.
+![대역폭·처리량·지연시간 개념](/assets/posts/network-bandwidth-throughput-latency-concepts.svg)
 
 ## 처리량 (Throughput)
 
-처리량은 **단위 시간 동안 실제로 전달된 데이터 양**입니다. 대역폭이 상한선이라면, 처리량은 실제 측정값입니다.
+처리량은 **실제로 전송된 데이터 속도**다. 파이프에 실제로 흐르는 물의 양에 비유한다. 대역폭보다 항상 작거나 같으며, 다양한 요인으로 감소한다.
 
-처리량이 대역폭보다 낮아지는 이유:
+처리량을 낮추는 요인들:
+```
+실제 처리량 = 대역폭 × 효율
+             ─────────────────────────
+효율을 낮추는 요소:
+  - 프로토콜 오버헤드 (TCP/IP 헤더 ~5%)
+  - 패킷 손실 및 재전송
+  - 네트워크 혼잡 (TCP 혼잡 제어)
+  - 인코딩 오버헤드 (이더넷 프리앰블 등)
+  - 반이중(Half-Duplex) 충돌
+  - 큐잉 지연으로 인한 버퍼 드롭
+```
 
-| 원인 | 설명 |
-|------|------|
-| 패킷 손실 | 재전송 발생 → 유효 처리량 감소 |
-| 프로토콜 오버헤드 | TCP 헤더, IP 헤더가 실제 데이터 공간 소비 |
-| 네트워크 혼잡 | 중간 라우터 큐 초과 |
-| TCP 윈도우 크기 | 슬라이딩 윈도우 크기 제한 |
+1Gbps 링크에서 실제 파일 전송 속도가 700~800Mbps에 그치는 것이 정상이다. 50%를 밑돌면 문제가 있다고 볼 수 있다.
+
+## 지연시간 (Latency)
+
+지연시간은 **데이터 패킷이 출발지에서 목적지까지 이동하는 데 걸리는 시간**이다. 단위는 ms(밀리초)다. 대역폭과 별개의 개념으로, 파이프가 아무리 굵어도 지구 반대편 서버까지의 물리적 거리는 변하지 않는다.
+
+지연시간의 4가지 구성요소:
+
+| 구성요소 | 원인 | 크기 |
+|----------|------|------|
+| 전파 지연 | 물리적 거리, 빛의 속도 | 국내 ~5ms, 태평양 ~80ms |
+| 전송 지연 | 패킷 크기 ÷ 대역폭 | 1500B/1Gbps ≈ 0.012ms |
+| 처리 지연 | 라우터 헤더 분석 | 수 마이크로초 |
+| 큐잉 지연 | 라우터 버퍼 대기 | 0~수십ms (혼잡 시) |
+
+```python
+# 전송 지연 계산 예시
+packet_size_bits = 1500 * 8   # 1500 bytes = 12000 bits
+bandwidth_bps = 1_000_000_000  # 1 Gbps
+
+transmission_delay = packet_size_bits / bandwidth_bps
+print(f"전송 지연: {transmission_delay * 1000:.4f} ms")  # 0.0120 ms
+
+# 전파 지연 (서울-부산, 약 400km 광케이블)
+distance_m = 400_000
+speed_of_light = 200_000_000  # 광섬유 내 2/3 광속
+propagation_delay = distance_m / speed_of_light
+print(f"전파 지연: {propagation_delay * 1000:.2f} ms")  # 2.00 ms
+```
+
+## RTT (Round-Trip Time)
+
+RTT는 **패킷 왕복 시간**이다. 요청을 보내고 응답이 돌아오기까지 걸리는 시간으로, 대부분의 latency 측정은 RTT로 표현된다.
 
 ```bash
-# iperf3로 처리량 측정 (서버/클라이언트 모드)
-# 서버
-iperf3 -s
+$ ping -c 4 google.com
+PING google.com (142.250.9.100): 56 data bytes
+64 bytes: icmp_seq=0 ttl=117 time=12.4 ms
+64 bytes: icmp_seq=1 ttl=117 time=11.8 ms
+64 bytes: icmp_seq=2 ttl=117 time=12.1 ms
+64 bytes: icmp_seq=3 ttl=117 time=13.2 ms
 
-# 클라이언트 (서버 IP = 192.168.1.10)
-iperf3 -c 192.168.1.10 -t 10
-
-# 출력 예시:
-# [ ID] Interval        Transfer    Bitrate
-# [  5] 0.00-10.00 sec  880 MBytes  739 Mbits/sec  ← 처리량
+--- google.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss
+rtt min/avg/max/mdev = 11.8/12.4/13.2/0.5 ms
 ```
 
-![대역폭·처리량·지연 개념도](/assets/posts/network-bandwidth-throughput-latency-concepts.svg)
+RTT ≈ 왕복이므로 단방향 지연은 약 RTT/2다. `mdev` 값이 크면 지터(Jitter)가 높다는 신호다.
 
-## 지연 (Latency)
+## 성능 측정 도구
 
-지연은 **데이터가 출발지에서 목적지까지 이동하는 데 걸리는 시간**입니다. 단위는 밀리초(ms)입니다. 대역폭이 아무리 넓어도 지연이 크면 응답성이 나쁩니다.
-
-### 지연의 4가지 구성 요소
-
-```text
-1. 전파 지연 (Propagation Delay)
-   신호가 물리 매체를 통해 이동하는 시간
-   = 거리 / 빛의 속도(0.7c)
-   서울→도쿄(약 1,200km) ≈ 5.7ms
-
-2. 전송 지연 (Transmission Delay)
-   패킷을 링크에 내보내는 데 걸리는 시간
-   = 패킷 크기(bits) / 대역폭(bps)
-   1500byte 패킷 @ 100Mbps ≈ 0.12ms
-
-3. 큐잉 지연 (Queuing Delay)
-   라우터 버퍼에서 대기하는 시간
-   네트워크 혼잡 시 가변적·예측 불가
-
-4. 처리 지연 (Processing Delay)
-   라우터가 헤더를 읽고 경로를 결정하는 시간
-   일반적으로 수 마이크로초
-```
-
-### RTT (Round-Trip Time)
-
-실무에서 지연은 주로 **RTT(왕복 지연)** 로 측정합니다.
-
-![RTT 측정 흐름](/assets/posts/network-bandwidth-throughput-latency-rtt.svg)
+![성능 측정 도구](/assets/posts/network-bandwidth-throughput-latency-metrics.svg)
 
 ```bash
-# ping으로 RTT 측정
-ping -c 5 google.com
+# 처리량 측정: iperf3
+iperf3 -s                          # 서버 모드
+iperf3 -c <server-ip> -t 10 -P 4  # 10초, 4 스트림으로 측정
 
-# 출력 예시:
-# 64 bytes from 142.250.196.110: icmp_seq=1 ttl=118 time=5.23 ms
-# 64 bytes from 142.250.196.110: icmp_seq=2 ttl=118 time=4.89 ms
-# rtt min/avg/max/mdev = 4.89/5.06/5.23/0.17 ms
+# UDP 처리량과 패킷 손실 측정
+iperf3 -c <server-ip> -u -b 100M
+
+# TCP 연결 상세 정보 (RTT, cwnd)
+ss -i dst google.com
+# rtt:12.4/2.1 means avg_rtt:12.4ms, rtt_variance:2.1ms
+
+# 경로별 지연 측정
+traceroute -n google.com
+mtr --report google.com
 ```
 
-편도 지연 = RTT ÷ 2로 근사합니다. 지구 반대편(한국↔뉴욕)은 약 160ms RTT로, 웹 요청마다 이 지연이 누적됩니다.
+## Bandwidth-Delay Product
 
-## 대역폭 vs 지연: 무엇이 병목인가
+**BDP(Bandwidth-Delay Product)**는 링크 위에 "in-flight" 상태로 있을 수 있는 최대 데이터 양이다.
 
-```text
-시나리오 A: 대용량 파일 다운로드 (1GB)
-  → 대역폭이 병목. 지연 20ms여도 큰 영향 없음.
-  → 대역폭 100Mbps → 200Mbps로 올리면 2배 빠름.
+```
+BDP = 대역폭(bps) × RTT(초)
 
-시나리오 B: 실시간 API 요청 (1KB 요청/응답)
-  → 지연이 병목. 대역폭 1Gbps여도 RTT 200ms면 느림.
-  → CDN·엣지 서버로 거리 줄이면 효과적.
+예: 100 Mbps 링크, RTT 100ms
+BDP = 100,000,000 × 0.1 = 10,000,000 bits = 10 MB
 
-시나리오 C: 화상통화 (연속 스트림)
-  → 대역폭 + 지연 모두 중요.
-  → 지터(Jitter, 지연 편차)도 추가 고려 필요.
+→ TCP 수신 윈도우가 10MB 이상이어야 링크를 100% 활용 가능
+  그보다 작으면 sender가 ACK를 기다리며 멈추는 현상 발생
 ```
 
-## BDP: 대역폭-지연 곱
+고대역폭·고지연 환경(예: 위성 링크)에서 TCP 성능이 떨어지는 이유가 바로 BDP를 채우지 못하는 윈도우 크기 제한 때문이다.
 
-네트워크에서 "파이프 안에 얼마나 많은 데이터가 있을 수 있나"를 나타내는 **BDP(Bandwidth-Delay Product)** 는 TCP 최적화에 중요합니다.
+## 대역폭 vs 지연시간: 어느 것이 중요한가
 
-```text
-BDP = 대역폭 × RTT
-예: 100Mbps × 0.04s(RTT 40ms) = 4,000,000 bits = 500KB
+둘 다 중요하지만 워크로드에 따라 병목이 다르다.
 
-→ TCP 수신 윈도우가 500KB 이상이어야 링크를 완전히 활용 가능
+```
+대역폭이 중요한 경우:
+  - 대용량 파일 전송 (백업, 미디어 스트리밍)
+  - 배치 작업, 데이터 마이그레이션
+
+지연시간이 중요한 경우:
+  - 게임, 화상통화, 실시간 거래
+  - HTTP 요청/응답 패턴 (TTFB: Time To First Byte)
+  - DB 쿼리, 마이크로서비스 RPC 호출
 ```
 
-대역폭이 넓고 지연이 큰 링크(예: 위성 통신)에서는 BDP가 매우 커져서, TCP의 기본 윈도우 크기로는 링크를 다 쓰지 못합니다. 이것이 TCP 윈도우 스케일링이 필요한 이유입니다.
-
-다음 글에서는 네트워크 하드웨어 수준의 주소 체계인 **MAC 주소**를 살펴봅니다.
+웹 페이지 로딩 속도를 개선하려면 대역폭보다 RTT 감소(CDN, HTTP/2 멀티플렉싱)가 훨씬 효과적인 경우가 많다.
 
 ---
 
-**지난 글:** [TCP/IP 모델 완전 이해](/posts/network-tcp-ip-model/)
+**지난 글:** [TCP/IP 4계층 모델](/posts/network-tcp-ip-model/)
 
-**다음 글:** [MAC 주소란 무엇인가](/posts/network-mac-address/)
+**다음 글:** [RTT와 지터](/posts/network-rtt-jitter/)
 
 <br>
 읽어주셔서 감사합니다. 😊
