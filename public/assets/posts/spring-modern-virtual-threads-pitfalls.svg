@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">
+    Virtual Threads 주의사항
+  </text>
+
+  <!-- Pinning box -->
+  <rect x="60" y="66" width="360" height="164" fill="#1a0808" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">Pinning (핀닝) 문제</text>
+  <text x="80" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">synchronized 블록 내 I/O → VT가 캐리어</text>
+  <text x="80" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">스레드에 pin되어 언마운트 불가</text>
+  <text x="80" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555">// 핀닝 발생 (피해야 함)</text>
+  <text x="80" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">synchronized (lock) &#123;</text>
+  <text x="80" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">    db.query(...); // I/O 블로킹</text>
+  <text x="80" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">&#125;</text>
+
+  <!-- Solution box -->
+  <rect x="460" y="66" width="360" height="164" fill="#0a1a0a" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">ReentrantLock 사용</text>
+  <text x="480" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">ReentrantLock은 VT-aware → 블로킹</text>
+  <text x="480" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">시 캐리어 해제 가능</text>
+  <text x="480" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">// 올바른 방법</text>
+  <text x="480" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">lock.lock();</text>
+  <text x="480" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">    db.query(...); // 안전</text>
+  <text x="480" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#ffffff">lock.unlock();</text>
+
+  <!-- ThreadLocal warning -->
+  <rect x="60" y="252" width="760" height="84" fill="#1a1008" rx="8" stroke="#e8a020" stroke-width="1.5"/>
+  <text x="440" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8a020" text-anchor="middle">ThreadLocal 과다 사용 주의</text>
+  <text x="440" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">VT는 수십만 개가 생성됨 → ThreadLocal 남용 시 메모리 누수</text>
+  <text x="440" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Java 21의 ScopedValue 사용 권장 (불변 컨텍스트 전파)</text>
+
+  <!-- CPU vs IO advice -->
+  <rect x="60" y="352" width="760" height="64" fill="#111" rx="8" stroke="#444" stroke-width="1"/>
+  <text x="440" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">언제 효과적인가</text>
+  <text x="440" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">I/O 집중 워크로드(DB, 외부 API) ✓ · CPU 집중 연산(암호화, 이미지) ✗</text>
+</svg>
