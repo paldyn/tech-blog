@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
+  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Garbage Collection — 고아 오브젝트 정리</text>
+
+  <!-- Orphan scenario -->
+  <rect x="60" y="74" width="360" height="180" rx="8" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="240" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">고아(Orphan) 시나리오</text>
+  <text x="80" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">kubectl delete deploy my-app \</text>
+  <text x="80" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">  --cascade=orphan</text>
+  <text x="80" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">&#x2022; Deployment만 삭제됨</text>
+  <text x="80" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">&#x2022; ReplicaSet, Pod는 남음 (ownerRef 유지)</text>
+  <text x="80" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">&#x2022; 오너 없어진 RS는 GC 대상</text>
+  <text x="80" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">&#x2022; 활용: 잠시 컨트롤러만 교체할 때</text>
+
+  <!-- GC process -->
+  <rect x="460" y="74" width="360" height="180" rx="8" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="640" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">GC 작동 원리</text>
+  <text x="480" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">K8s GC 컨트롤러가 주기적으로</text>
+  <text x="480" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">ownerReferences 검사</text>
+  <text x="480" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">&#x2022; 오너가 존재 &#x2192; 유지</text>
+  <text x="480" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">&#x2022; 오너가 없음 &#x2192; 삭제 대기열</text>
+  <text x="480" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">&#x2022; blockOwnerDeletion=true인 경우</text>
+  <text x="480" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9ca3af">   오너 삭제 전에 자신이 먼저 삭제됨</text>
+
+  <!-- Code: ownerRef example -->
+  <rect x="60" y="284" width="760" height="54" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># ownerReferences 확인</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">kubectl</tspan> get pod my-pod -o jsonpath='{.metadata.ownerReferences}'</text>
+</svg>

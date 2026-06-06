@@ -1,169 +1,132 @@
 ---
-title: "파드(Pod) 생명주기 완전 이해"
-description: "K8s Pod의 5가지 Phase(Pending/Running/Succeeded/Failed/Unknown), 4가지 Conditions, restartPolicy, 생성부터 삭제까지 전체 타임라인을 깊이 분석합니다."
+title: "Pod 라이프사이클 — Pending부터 Terminating까지"
+description: "Kubernetes Pod가 생성되어 삭제되기까지의 전체 단계(Pending, Running, Succeeded, Failed, Unknown)와 restartPolicy, graceful shutdown 메커니즘을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
-archiveOrder: 8
+pubDate: "2026-06-07"
+archiveOrder: 7
 type: "knowledge"
 category: "Kubernetes"
-tags: ["kubernetes", "k8s", "pod", "lifecycle", "phase", "conditions", "restartPolicy"]
+tags: ["Kubernetes", "Pod", "라이프사이클", "restartPolicy", "CrashLoopBackOff", "gracefulShutdown"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-krew-plugins/)에서 kubectl 플러그인으로 생산성을 높이는 방법을 살펴봤다. 이제 K8s의 가장 기본 실행 단위인 **파드(Pod)** 의 생명주기를 깊이 이해할 차례다. "왜 내 파드가 Pending에서 안 넘어가지?", "CrashLoopBackOff는 어떤 상태인가?"를 정확히 이해하려면 파드 생명주기를 제대로 알아야 한다.
+[지난 글](/posts/k8s-pod-basics/)에서 Pod의 기본 구조를 배웠다. Pod는 단순히 "실행 중이거나 아니거나"가 아니라 여러 단계(Phase)를 거친다. 이 라이프사이클을 이해하면 장애 디버깅이 훨씬 쉬워진다.
 
-## Phase: 파드의 큰 그림 상태
+## Pod Phase (단계)
 
-파드의 `status.phase`는 5가지 값을 갖는다.
-
-![파드 생명주기 상태 머신](/assets/posts/k8s-pod-lifecycle-phases.svg)
+![Pod 라이프사이클 단계](/assets/posts/k8s-pod-lifecycle-phases.svg)
 
 | Phase | 의미 |
-|-------|------|
-| `Pending` | etcd에 저장됐지만 아직 실행 중이 아님. 스케줄링 대기 또는 이미지 pull 중 |
-| `Running` | 노드에 바인딩되어 최소 1개 컨테이너가 실행 중 |
-| `Succeeded` | 모든 컨테이너가 exit 0으로 정상 종료 (Job에서 중요) |
-| `Failed` | 모든 컨테이너가 종료됐고 최소 1개가 비정상 종료 |
-| `Unknown` | 노드와 통신 불가 (노드 장애, 네트워크 분리) |
+|---|---|
+| Pending | 스케줄링 대기 중, 또는 이미지 다운로드 중 |
+| Running | 하나 이상의 컨테이너가 실행 중 |
+| Succeeded | 모든 컨테이너가 exit 0으로 정상 종료 |
+| Failed | 하나 이상의 컨테이너가 비정상 종료(exit ≠ 0) |
+| Unknown | 노드 통신 불가로 상태 파악 불가 |
 
-```bash
-# Phase 확인
-kubectl get pod my-pod -o jsonpath='{.status.phase}'
+주의: Phase는 Pod 전체의 상태고, **컨테이너 State**(Waiting/Running/Terminated)는 개별 컨테이너의 상태다. Pod가 Running이어도 컨테이너는 Waiting(이미지 풀 중)일 수 있다.
 
-# 넓은 시야로 확인
-kubectl get pods -o wide
+## Pod 생성 흐름 상세
 
-# 모든 파드 Phase 필터링
-kubectl get pods --field-selector=status.phase=Pending
-kubectl get pods --field-selector=status.phase=Failed
+```
+kubectl apply → API Server → etcd 저장 → [Phase: Pending]
+     ↓
+kube-scheduler: 적합 노드 선택 → spec.nodeName 기록
+     ↓
+kubelet (해당 노드): Pod 감지 → 이미지 풀 → Init 컨테이너 실행
+     ↓
+Init 컨테이너 완료 → 앱 컨테이너 시작 → [Phase: Running]
+     ↓
+Readiness Probe 통과 → Service 엔드포인트에 등록 (트래픽 수신 시작)
 ```
 
-## Conditions: 세부 체크포인트
+Readiness Probe를 통과하기 전까지 Service가 트래픽을 이 Pod에 보내지 않는다. 그래서 Probe 설정이 배포 안정성에 직결된다.
 
-Phase가 큰 그림이라면, **Conditions**는 파드 상태의 세부 체크포인트다.
+## restartPolicy
 
-![파드 생성 타임라인과 Conditions](/assets/posts/k8s-pod-lifecycle-conditions.svg)
-
-4가지 주요 Condition:
-
-| Condition | True 시점 |
-|-----------|-----------|
-| `PodScheduled` | 스케줄러가 노드 배정 완료 |
-| `Initialized` | 모든 Init 컨테이너 성공적으로 완료 |
-| `ContainersReady` | 모든 컨테이너가 ready 상태 |
-| `Ready` | 파드가 트래픽 수신 가능 (Service Endpoints에 등록) |
-
-```bash
-# Conditions 전체 확인
-kubectl describe pod my-pod | grep -A 20 "Conditions:"
-
-# jsonpath로 특정 condition 확인
-kubectl get pod my-pod -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}'
-
-# 모든 condition 타입 확인
-kubectl get pod my-pod \
-  -o jsonpath='{range .status.conditions[*]}{.type}: {.status}{"\n"}{end}'
-```
-
-## restartPolicy: 실패 시 동작
-
-파드 스펙의 `restartPolicy`는 컨테이너 종료 후 동작을 결정한다.
+![restartPolicy 비교](/assets/posts/k8s-pod-lifecycle-restart.svg)
 
 ```yaml
 spec:
-  restartPolicy: Always    # 기본값: 항상 재시작 (Deployment, DaemonSet)
-  # restartPolicy: OnFailure  # 비정상 종료 시만 재시작 (Job)
-  # restartPolicy: Never      # 재시작 안 함 (Job, 일회성 작업)
+  restartPolicy: Always    # 기본값. Deployment에 필수
+  # restartPolicy: OnFailure  # Job에 사용
+  # restartPolicy: Never      # 1회 실행 후 분석 목적
   containers:
-    - name: app
-      image: my-app:1.0
+  - name: app
+    image: myapp:v1
 ```
 
-```bash
-# 재시작 횟수 확인
-kubectl get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
+컨테이너가 종료되면 kubelet이 재시작하는데, 연속으로 실패하면 **지수 백오프(Exponential Backoff)**가 적용된다.
 
-# RESTARTS 컬럼으로 확인
-kubectl get pods
-# NAME       READY   STATUS    RESTARTS   AGE
-# my-pod     1/1     Running   3          10m  ← 3번 재시작됨
+```
+1회 실패 → 10초 대기
+2회 실패 → 20초 대기
+3회 실패 → 40초 대기
+...최대 5분(300초) 대기
 ```
 
-**CrashLoopBackOff**는 Phase가 아니다. `Running` Phase에서 컨테이너가 계속 종료되고 재시작을 반복할 때 K8s가 backoff 지연을 증가시키며 표시하는 `status.containerStatuses[].state.waiting.reason`이다.
+이 상태가 `kubectl get pods`에서 `CrashLoopBackOff`로 표시된다. BackOff 중인 상태라는 뜻이지, 컨테이너가 죽은 게 아니다. 10분 정상 실행 시 카운터가 리셋된다.
 
-## 파드 삭제: Terminating과 grace period
+## Graceful Shutdown (종료 흐름)
 
-파드를 삭제하면 즉시 사라지는 게 아니다.
+`kubectl delete pod` 또는 Deployment 업데이트 시 Pod 삭제가 발생한다.
 
-```bash
-# 파드 삭제 (graceful)
-kubectl delete pod my-pod
-
-# 삭제 흐름:
-# 1. API Server가 deletionTimestamp 설정
-# 2. kubelet이 감지 → PreStop hook 실행
-# 3. SIGTERM 신호 전송
-# 4. terminationGracePeriodSeconds(기본 30s) 대기
-# 5. 아직 살아있으면 SIGKILL
-# 6. 파드 오브젝트 삭제
-
-# 강제 즉시 삭제 (grace period 0)
-kubectl delete pod my-pod --grace-period=0 --force
-
-# Terminating 상태 파드 확인
-kubectl get pods | grep Terminating
+```
+1. K8s: Pod에 SIGTERM 전송 + Service 엔드포인트에서 제거
+2. gracePeriodSeconds 동안 대기 (기본 30초)
+3. 컨테이너가 자체 정리 후 exit
+   → 30초 내 종료 안 되면 SIGKILL 강제 종료
 ```
 
-## 파드 상태 자세히 보기
+```yaml
+spec:
+  terminationGracePeriodSeconds: 60  # 기본 30, 최대 값 없음
+  containers:
+  - name: app
+    image: myapp:v1
+    lifecycle:
+      preStop:             # SIGTERM 전에 먼저 실행
+        exec:
+          command: ["/bin/sh", "-c", "sleep 5"]
+```
+
+`preStop` 훅은 로드 밸런서에서 Pod가 제거되기 전에 잠시 대기하거나, 진행 중인 요청을 마무리하는 데 유용하다.
+
+## Conditions (상세 상태)
+
+Pod Phase 외에 `Conditions`로 더 세밀한 상태를 확인할 수 있다.
 
 ```bash
-# 전체 상태 확인
 kubectl describe pod my-pod
 
-# 컨테이너 상태 (Running/Waiting/Terminated)
-kubectl get pod my-pod -o jsonpath='{.status.containerStatuses}'
-
-# 이전 컨테이너 종료 이유 확인
-kubectl get pod my-pod \
-  -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
-
-# Events: 가장 중요한 디버깅 정보
-kubectl describe pod my-pod | tail -20
-# Events:
-#   Warning  FailedScheduling  Insufficient memory
-#   Normal   Pulling           Pulling image "my-app:1.0"
-#   Normal   Started           Started container app
+# Conditions:
+#   Type              Status
+#   Initialized       True    # Init 컨테이너 완료
+#   Ready             True    # Readiness Probe 통과
+#   ContainersReady   True    # 모든 컨테이너 준비됨
+#   PodScheduled      True    # 노드 배정 완료
 ```
 
-## 파드 재시작과 backoff
+`Ready`가 False인데 Pod가 Running이면, Readiness Probe 실패나 Init 컨테이너 문제일 가능성이 높다.
 
-restartPolicy=Always일 때 컨테이너가 계속 실패하면 K8s는 재시작 간격을 지수적으로 증가시킨다.
-
-```
-10s → 20s → 40s → 80s → 160s → 300s (최대)
-```
-
-이게 바로 CrashLoopBackOff다. "백오프 상태에서 다음 재시작을 기다리는 중"이라는 의미다.
+## 라이프사이클 이벤트 확인
 
 ```bash
-# 재시작 이유 파악
-kubectl logs my-pod --previous  # 이전 컨테이너의 로그
+# Pod 이벤트 확인 (가장 먼저 볼 곳)
+kubectl describe pod my-pod | grep -A 20 Events
 
-# 오류 이유
-kubectl describe pod my-pod | grep -A 3 "Last State:"
-# Last State:     Terminated
-#   Reason:       OOMKilled    ← 메모리 초과
-#   Exit Code:    137
+# 이벤트만 별도 조회
+kubectl get events --field-selector involvedObject.name=my-pod --sort-by=.lastTimestamp
 ```
 
-파드 생명주기를 이해하면 트러블슈팅이 한결 수월해진다. 다음 글에서는 컨테이너 시작/종료 시점에 실행되는 **생명주기 훅(hooks)** 을 살펴본다.
+스케줄링 실패, 이미지 풀 에러, OOMKilled 등 대부분의 문제가 Events 섹션에 기록된다.
 
 ---
 
-**지난 글:** [kubectl 플러그인 매니저 krew 완전 정리](/posts/k8s-krew-plugins/)
+**지난 글:** [Kubernetes Pod 기초](/posts/k8s-pod-basics/)
 
-**다음 글:** [파드 생명주기 훅: PostStart와 PreStop](/posts/k8s-pod-lifecycle-hooks/)
+**다음 글:** [Pod 라이프사이클 훅 — postStart와 preStop](/posts/k8s-pod-lifecycle-hooks/)
 
 <br>
 읽어주셔서 감사합니다. 😊

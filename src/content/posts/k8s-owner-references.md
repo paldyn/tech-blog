@@ -1,129 +1,140 @@
 ---
-title: "쿠버네티스 Owner References와 가비지 컬렉션"
-description: "Kubernetes 리소스 간 소유권을 표현하는 ownerReferences 필드의 구조와, Foreground·Background·Orphan 세 가지 가비지 컬렉션 정책을 설명합니다."
+title: "Owner Reference — Kubernetes 오브젝트 소유권 관계 완전 해설"
+description: "Kubernetes ownerReferences 필드의 동작 원리, Cascade Deletion 방식(Foreground/Background/Orphan), 그리고 Garbage Collector가 고아 오브젝트를 정리하는 방식을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-02"
-archiveOrder: 4
+pubDate: "2026-06-07"
+archiveOrder: 9
 type: "knowledge"
 category: "Kubernetes"
-tags: ["Kubernetes", "ownerReferences", "가비지 컬렉션", "Deployment", "ReplicaSet", "cascadeDelete"]
+tags: ["Kubernetes", "ownerReference", "GarbageCollection", "CascadeDeletion", "오브젝트관리"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-annotations/)에서 Annotations의 용도와 실전 패턴을 살펴봤습니다. 이번에는 Kubernetes 리소스 간 **소유권(ownership)**을 기록하는 `ownerReferences` 필드와, 상위 리소스 삭제 시 하위 리소스를 어떻게 처리할지 결정하는 **가비지 컬렉션 정책**을 다룹니다.
+[지난 글](/posts/k8s-pod-lifecycle-hooks/)에서 Pod 라이프사이클 훅을 살펴봤다. 이번 글에서는 Kubernetes 오브젝트들이 서로 **소유 관계(Ownership)**를 어떻게 표현하고, 이 관계가 삭제 동작에 어떤 영향을 미치는지 알아본다.
 
 ## ownerReferences란
 
-Kubernetes에서 Deployment가 ReplicaSet을 만들고, ReplicaSet이 Pod를 만들 때, 각 하위 오브젝트의 `metadata.ownerReferences`에는 자신을 만든 상위 오브젝트의 정보가 자동으로 기록됩니다. 이를 통해 가비지 컬렉터(GC)가 상위가 사라졌을 때 하위를 정리할 수 있습니다.
+Kubernetes 오브젝트는 `metadata.ownerReferences` 필드로 **자신의 오너(소유자)**를 명시한다. ReplicaSet이 생성한 Pod라면, 그 Pod의 ownerReferences에는 ReplicaSet의 정보가 담긴다.
 
 ```yaml
-# Pod를 describe 또는 -o yaml로 확인 시 자동으로 존재
+# Pod의 metadata 예시 (kubectl get pod my-pod -o yaml)
 metadata:
+  name: my-app-7d4b9c-xkzp2
   ownerReferences:
   - apiVersion: apps/v1
     kind: ReplicaSet
-    name: web-7d9f8c
-    uid: bbb-222-ccc-ddd
-    controller: true
-    blockOwnerDeletion: true
+    name: my-app-7d4b9c
+    uid: a1b2c3d4-...          # 오너의 고유 UID
+    controller: true           # 이 오너가 컨트롤러임을 표시
+    blockOwnerDeletion: true   # 오너 삭제 전 자신이 먼저 삭제됨
 ```
 
-- **uid**: 이름이 같은 오브젝트를 구분하기 위해 UID를 사용합니다. 크로스 네임스페이스 참조는 불가능합니다.
-- **controller: true**: 이 ownerReference가 실질적인 컨트롤러임을 나타냅니다. 오브젝트당 하나만 가능.
-- **blockOwnerDeletion: true**: Foreground 삭제 시 소유자가 먼저 지워지는 것을 막아 하위 정리가 완료될 때까지 기다리게 합니다.
+## 소유 체인
 
-## Deployment → ReplicaSet → Pod 소유권 체인
+![Owner Reference 체인](/assets/posts/k8s-owner-references-chain.svg)
 
-```bash
-# 소유권 체인 확인
-kubectl get replicaset -o yaml | grep -A5 ownerReferences
-kubectl get pod web-xxxx -o yaml | grep -A5 ownerReferences
+Deployment를 생성하면 소유 체인이 형성된다.
+
+```
+Deployment → ReplicaSet → Pod (여러 개)
 ```
 
-![Owner References 소유권 체인](/assets/posts/k8s-owner-references-chain.svg)
-
-Deployment를 삭제하면 GC는 이 체인을 따라 ReplicaSet과 Pod를 순서대로 정리합니다.
-
-## 가비지 컬렉션 정책
-
-삭제 시 `--cascade` 옵션 또는 API의 `propagationPolicy`로 동작을 제어할 수 있습니다.
-
-### Foreground (기본값)
-
-상위 오브젝트에 `deletionTimestamp`를 표시하고, 하위 오브젝트(`blockOwnerDeletion: true`)가 모두 삭제된 후에 상위를 실제로 삭제합니다. 삭제 완료 전까지 상위 오브젝트가 조회됩니다.
+각 오브젝트는 자신의 직접적인 오너만 ownerReferences에 기록한다. Pod는 ReplicaSet을 오너로, ReplicaSet은 Deployment를 오너로 가리킨다. Pod가 Deployment를 직접 참조하지는 않는다.
 
 ```bash
-# API를 통한 Foreground 삭제
-kubectl delete deployment web --cascade=foreground
+# 소유 체인 확인
+kubectl get replicaset -l app=my-app -o yaml | grep -A5 ownerReferences
+kubectl get pod -l app=my-app -o jsonpath='{range .items[*]}{.metadata.name}: {.metadata.ownerReferences[0].kind}/{.metadata.ownerReferences[0].name}{"\n"}{end}'
 ```
 
-### Background (kubectl 기본값)
+## Cascade Deletion (연쇄 삭제)
 
-상위 오브젝트를 즉시 삭제하고, GC 컨트롤러가 비동기적으로 하위 오브젝트를 정리합니다. 빠르지만 삭제 완료 여부를 즉시 확인하기 어렵습니다.
+Deployment를 삭제하면 ReplicaSet도, Pod도 삭제된다. 이것이 Cascade Deletion이다. 방식은 세 가지다.
+
+### Foreground (기본)
 
 ```bash
-kubectl delete deployment web
+kubectl delete deployment my-app
 # 또는 명시적으로
-kubectl delete deployment web --cascade=background
+kubectl delete deployment my-app --cascade=foreground
 ```
 
-### Orphan (고아 정책)
+1. Deployment의 `deletionTimestamp` 설정 (삭제 예약)
+2. GC가 소유된 ReplicaSet부터 삭제
+3. ReplicaSet이 소유한 Pod 삭제
+4. 모든 하위 오브젝트 삭제 완료 후 Deployment 삭제
 
-상위 오브젝트만 삭제하고 하위 오브젝트는 남깁니다. 하위 오브젝트에서 ownerReferences가 제거되어 독립 오브젝트가 됩니다.
+삭제 중 Deployment는 API에서 여전히 보이지만 `deletionTimestamp`가 설정되어 있다.
+
+### Background
 
 ```bash
-# Deployment만 삭제, ReplicaSet과 Pod는 유지
-kubectl delete deployment web --cascade=orphan
+kubectl delete deployment my-app --cascade=background
 ```
 
-Orphan 정책은 Deployment를 교체하면서 기존 Pod를 유지해야 할 때, 또는 디버깅 목적으로 ReplicaSet을 남겨두어야 할 때 유용합니다.
+오너(Deployment)를 즉시 삭제하고, GC가 고아가 된 ReplicaSet과 Pod를 비동기로 삭제한다. 빠르지만 하위 오브젝트가 일정 시간 남아있을 수 있다.
 
-![ownerReferences 구조와 삭제 정책](/assets/posts/k8s-owner-references-yaml.svg)
-
-## 직접 ownerReferences 설정
-
-컨트롤러를 직접 개발하거나 커스텀 리소스를 다룰 때 ownerReferences를 수동으로 설정할 수 있습니다.
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: web-config
-  ownerReferences:
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: web
-    uid: aaa-111-bbb  # kubectl get deployment web -o jsonpath='{.metadata.uid}'
-    controller: false      # ConfigMap은 Deployment가 직접 제어하지 않음
-    blockOwnerDeletion: false
-```
-
-`controller: false`로 설정하면 다수의 소유자를 참조할 수 있습니다. Deployment가 삭제될 때 이 ConfigMap도 함께 정리됩니다.
-
-## ownerReferences 확인 방법
+### Orphan (고아로 남기기)
 
 ```bash
-# Pod의 ownerReferences 확인
-kubectl get pod web-xxx -o jsonpath='{.metadata.ownerReferences}'
-
-# YAML 전체 출력에서 확인
-kubectl get pod web-xxx -o yaml | grep -A10 ownerReferences
-
-# 특정 ownerReference로 연결된 리소스 추적
-kubectl get replicaset --selector=app=web
-kubectl get pod --selector=app=web
+kubectl delete deployment my-app --cascade=orphan
 ```
 
-## 주의사항
+![Garbage Collection — 고아 오브젝트 정리](/assets/posts/k8s-owner-references-gc.svg)
 
-ownerReferences는 **같은 네임스페이스** 내에서만 동작합니다. 클러스터 범위 리소스(PersistentVolume, ClusterRole 등)는 네임스페이스 범위 리소스를 소유할 수 없습니다. 또한 순환 참조(A → B → A)는 허용되지 않으며, API 서버가 검증 단계에서 거부합니다.
+Deployment만 삭제하고 ReplicaSet과 Pod는 남긴다. 잠시 컨트롤러를 교체하거나 하위 오브젝트를 다른 컨트롤러로 재연결할 때 사용한다.
+
+## ownerReferences 직접 조작
+
+일반적으로 K8s 컨트롤러가 자동으로 ownerReferences를 설정하지만, 커스텀 컨트롤러를 개발할 때 직접 설정하는 경우가 있다.
+
+```go
+// controller-runtime 기반 Go 코드 예시
+import "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+
+// 오너십 설정: configMap의 오너를 myResource로 지정
+err := controllerutil.SetControllerReference(myResource, configMap, r.Scheme)
+```
+
+```bash
+# kubectl로 직접 patch (비권장 — 컨트롤러에서 처리하는 것이 원칙)
+kubectl patch pod my-pod --type=json \
+  -p='[{"op":"add","path":"/metadata/ownerReferences","value":[{"apiVersion":"apps/v1","kind":"ReplicaSet","name":"my-rs","uid":"abc123","controller":true,"blockOwnerDeletion":true}]}]'
+```
+
+## blockOwnerDeletion
+
+`blockOwnerDeletion: true`로 설정된 오브젝트가 있으면, 오너는 Foreground 삭제 시 이 오브젝트가 먼저 삭제될 때까지 기다린다. `false`로 설정하면 오너가 먼저 삭제될 수 있다.
+
+```bash
+# blockOwnerDeletion 확인
+kubectl get pod my-pod -o jsonpath='{.metadata.ownerReferences[0].blockOwnerDeletion}'
+# true
+```
+
+## Garbage Collector
+
+GC 컨트롤러는 Controller Manager 내부에 있으며, 주기적으로 모든 오브젝트의 ownerReferences를 검사한다. 오너 UID가 클러스터에 존재하지 않는 오브젝트를 발견하면 삭제 대기열에 추가한다.
+
+```bash
+# 고아 ReplicaSet 찾기 (오너 Deployment가 없는 경우)
+kubectl get replicaset --all-namespaces -o json | \
+  python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+for rs in data['items']:
+    owners = rs['metadata'].get('ownerReferences', [])
+    if not owners:
+        print(rs['metadata']['namespace'] + '/' + rs['metadata']['name'], '(no owner)')
+"
+```
 
 ---
 
-**지난 글:** [쿠버네티스 Annotations 실전 활용](/posts/k8s-annotations/)
+**지난 글:** [Pod 라이프사이클 훅](/posts/k8s-pod-lifecycle-hooks/)
 
-**다음 글:** [쿠버네티스 ReplicaSet 완전 이해](/posts/k8s-replicaset/)
+**다음 글:** [ReplicaSet — Pod 복제본을 유지하는 메커니즘](/posts/k8s-replicaset/)
 
 <br>
 읽어주셔서 감사합니다. 😊
