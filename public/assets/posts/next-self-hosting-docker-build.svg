@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Docker 멀티스테이지 빌드 흐름</text>
+
+  <!-- Stage 1: deps -->
+  <rect x="60" y="78" width="220" height="100" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="80" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Stage 1: deps</text>
+  <text x="80" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">node:20-alpine</text>
+  <text x="80" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">npm ci --only=production</text>
+  <text x="80" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">node_modules 설치</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="280" y1="128" x2="338" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Stage 2: builder -->
+  <rect x="340" y="78" width="220" height="100" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="360" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Stage 2: builder</text>
+  <text x="360" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">node:20-alpine</text>
+  <text x="360" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">next build (standalone)</text>
+  <text x="360" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">.next/standalone 생성</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="560" y1="128" x2="618" y2="128" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Stage 3: runner -->
+  <rect x="620" y="78" width="200" height="100" rx="8" fill="#111827" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Stage 3: runner</text>
+  <text x="640" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">node:20-alpine</text>
+  <text x="640" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">standalone 복사 실행</text>
+  <text x="640" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">최종 이미지 ~120MB</text>
+
+  <!-- next.config.ts note -->
+  <rect x="60" y="210" width="760" height="54" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">next.config.ts</text>
+  <text x="200" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">에</text>
+  <text x="220" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3" font-weight="600">output: 'standalone'</text>
+  <text x="390" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">설정 필수 — node_modules 없이 실행 가능한 번들 생성</text>
+  <text x="80" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">standalone 모드: 필요한 의존성만 포함, 최종 이미지 크기 대폭 감소</text>
+
+  <!-- Dockerfile code block -->
+  <text x="60" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">Dockerfile (핵심 부분)</text>
+
+  <rect x="60" y="322" width="760" height="172" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># Stage 1: 의존성 설치</tspan>
+  </text>
+  <text x="76" y="364" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> node:20-alpine </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> deps</tspan>
+  </text>
+  <text x="76" y="382" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">WORKDIR</tspan><tspan fill="#ffffff"> /app</tspan>
+  </text>
+  <text x="76" y="400" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">COPY</tspan><tspan fill="#ffffff"> package*.json ./  </tspan><tspan fill="#9aa4b8">&amp;&amp; npm ci</tspan>
+  </text>
+  <text x="76" y="418" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># Stage 2: 빌드</tspan>
+  </text>
+  <text x="76" y="436" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">FROM</tspan><tspan fill="#ffffff"> node:20-alpine </tspan><tspan fill="#7ec8e3" font-weight="600">AS</tspan><tspan fill="#ffffff"> builder</tspan>
+  </text>
+  <text x="76" y="454" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">COPY</tspan><tspan fill="#ffffff"> --from=deps /app/node_modules ./node_modules</tspan>
+  </text>
+  <text x="76" y="472" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">RUN</tspan><tspan fill="#ffffff"> npm run build</tspan>
+  </text>
+  <text x="76" y="490" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># Stage 3: 실행 (최소 이미지)</tspan>
+  </text>
+</svg>

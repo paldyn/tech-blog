@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrog" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">On-Demand Revalidation 흐름</text>
+
+  <!-- CMS / Admin -->
+  <rect x="60" y="90" width="180" height="70" rx="8" fill="#111827" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="150" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">CMS / Admin</text>
+  <text x="150" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">콘텐츠 업데이트</text>
+
+  <!-- Arrow CMS → Webhook -->
+  <line x1="240" y1="125" x2="298" y2="125" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="269" y="115" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">HTTP POST</text>
+
+  <!-- Route Handler (Webhook) -->
+  <rect x="300" y="90" width="200" height="70" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="400" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">Route Handler</text>
+  <text x="400" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">/api/revalidate</text>
+  <text x="400" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">시크릿 토큰 검증</text>
+
+  <!-- Arrow Handler → Cache -->
+  <line x1="500" y1="125" x2="558" y2="125" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Cache layer -->
+  <rect x="560" y="90" width="200" height="70" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="660" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Next.js Cache</text>
+  <text x="660" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">revalidatePath('/posts')</text>
+  <text x="660" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">캐시 무효화</text>
+
+  <!-- Arrow Cache → User -->
+  <line x1="760" y1="125" x2="818" y2="125" stroke="#55c555" stroke-width="2" marker-end="url(#arrog)"/>
+
+  <!-- User -->
+  <rect x="820" y="96" width="40" height="58" rx="8" fill="#111827" stroke="#55c555" stroke-width="1.5"/>
+  <text x="840" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#55c555" text-anchor="middle">User</text>
+  <text x="840" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">최신</text>
+
+  <!-- Code block: webhook handler -->
+  <text x="60" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">On-Demand Revalidation 구현</text>
+
+  <rect x="60" y="226" width="760" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// app/api/revalidate/route.ts</tspan>
+  </text>
+  <text x="76" y="268" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> { revalidatePath, revalidateTag } </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> 'next/cache'</tspan>
+  </text>
+  <text x="76" y="286" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> { NextRequest } </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan><tspan fill="#ce9178"> 'next/server'</tspan>
+  </text>
+  <text x="76" y="308" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export async function</tspan><tspan fill="#ffffff"> POST(req: NextRequest) {</tspan>
+  </text>
+  <text x="76" y="326" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan><tspan fill="#ffffff"> secret = req.nextUrl.searchParams.get(</tspan><tspan fill="#ce9178">'secret'</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="76" y="344" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (secret !== process.env.REVALIDATE_SECRET)</tspan>
+  </text>
+  <text x="76" y="362" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> Response.json({ message: </tspan><tspan fill="#ce9178">'unauthorized'</tspan><tspan fill="#ffffff"> }, { status: </tspan><tspan fill="#b5cea8">401</tspan><tspan fill="#ffffff"> })</tspan>
+  </text>
+  <text x="76" y="380" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  revalidatePath(</tspan><tspan fill="#ce9178">'/posts'</tspan><tspan fill="#ffffff">)        </tspan><tspan fill="#9aa4b8">// 특정 경로 무효화</tspan>
+  </text>
+  <text x="76" y="398" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  revalidateTag(</tspan><tspan fill="#ce9178">'products'</tspan><tspan fill="#ffffff">)      </tspan><tspan fill="#9aa4b8">// 태그 기반 무효화</tspan>
+  </text>
+  <text x="76" y="416" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> Response.json({ revalidated: </tspan><tspan fill="#b5cea8">true</tspan><tspan fill="#ffffff"> })</tspan>
+  </text>
+  <text x="76" y="434" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}</tspan>
+  </text>
+</svg>

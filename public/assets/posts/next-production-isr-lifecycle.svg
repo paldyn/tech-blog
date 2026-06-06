@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ISR 캐시 라이프사이클</text>
+
+  <!-- State 1: MISS (first request) -->
+  <rect x="60" y="80" width="200" height="76" rx="8" fill="#111827" stroke="#e05555" stroke-width="1.5"/>
+  <text x="160" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">① MISS</text>
+  <text x="160" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">최초 요청 / 캐시 없음</text>
+  <text x="160" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">서버에서 생성 후 캐시</text>
+
+  <!-- Arrow MISS → HIT -->
+  <line x1="260" y1="118" x2="318" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- State 2: HIT (within revalidate) -->
+  <rect x="320" y="80" width="200" height="76" rx="8" fill="#111827" stroke="#55c555" stroke-width="1.5"/>
+  <text x="420" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">② HIT</text>
+  <text x="420" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">revalidate 시간 이내</text>
+  <text x="420" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">캐시된 HTML 즉시 응답</text>
+
+  <!-- Arrow HIT → STALE -->
+  <line x1="520" y1="118" x2="578" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="549" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">만료 후</text>
+
+  <!-- State 3: STALE -->
+  <rect x="580" y="80" width="240" height="76" rx="8" fill="#111827" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="700" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">③ STALE</text>
+  <text x="700" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">오래된 캐시 즉시 응답</text>
+  <text x="700" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">백그라운드 재생성 시작</text>
+
+  <!-- Arrow STALE back to HIT -->
+  <path d="M 700 156 Q 700 196 420 196 Q 280 196 280 156" fill="none"
+        stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="490" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">재생성 완료 → 다음 요청부터 HIT</text>
+
+  <!-- Code: revalidate 설정 -->
+  <text x="60" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">revalidate 설정 방법</text>
+
+  <rect x="60" y="276" width="370" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="300" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// fetch 단위 (권장)</tspan>
+  </text>
+  <text x="76" y="318" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> data = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> fetch(url, {</tspan>
+  </text>
+  <text x="76" y="336" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  next: { revalidate: </tspan><tspan fill="#b5cea8">3600</tspan><tspan fill="#ffffff"> }, </tspan><tspan fill="#9aa4b8">// 1시간</tspan>
+  </text>
+  <text x="76" y="354" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">})</tspan>
+  </text>
+  <text x="76" y="376" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// 세그먼트 전체 (route segment config)</tspan>
+  </text>
+  <text x="76" y="394" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan><tspan fill="#ffffff"> revalidate = </tspan><tspan fill="#b5cea8">3600</tspan>
+  </text>
+  <text x="76" y="412" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">export const</tspan><tspan fill="#ffffff"> dynamicParams = </tspan><tspan fill="#b5cea8">true</tspan>
+  </text>
+
+  <!-- On-demand revalidation box -->
+  <rect x="460" y="276" width="360" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="300" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// On-demand: 특정 경로 무효화</tspan>
+  </text>
+  <text x="476" y="318" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> { revalidatePath } </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan>
+  </text>
+  <text x="476" y="336" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ce9178">  'next/cache'</tspan>
+  </text>
+  <text x="476" y="358" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// On-demand: 태그 기반 무효화</tspan>
+  </text>
+  <text x="476" y="376" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> { revalidateTag } </tspan><tspan fill="#7ec8e3" font-weight="600">from</tspan>
+  </text>
+  <text x="476" y="394" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ce9178">  'next/cache'</tspan>
+  </text>
+  <text x="476" y="412" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">revalidateTag(</tspan><tspan fill="#ce9178">'products'</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+
+  <!-- Bottom hint -->
+  <text x="440" y="460" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">revalidate: 0 → 항상 동적 / revalidate: false → 영구 캐시(기본)</text>
+</svg>
