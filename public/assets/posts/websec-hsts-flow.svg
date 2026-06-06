@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" style="background:#0a0a0a;border-radius:12px">
+  <defs>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#3a6ea8"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">HSTS 동작 흐름</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">첫 방문 이후 HTTP 연결을 브라우저가 자동으로 HTTPS로 업그레이드</text>
+
+  <!-- Scenario 1: First visit -->
+  <rect x="60" y="95" width="760" height="28" rx="4" fill="#1a2a1a" stroke="#3aa83a" stroke-width="1"/>
+  <text x="440" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">시나리오 A: 첫 방문 (HSTS 학습)</text>
+
+  <!-- Browser box -->
+  <rect x="60" y="135" width="160" height="70" rx="6" fill="#0d1520" stroke="#3a6ea8" stroke-width="1.5"/>
+  <text x="140" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">브라우저</text>
+  <text x="140" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">사용자가 https://로</text>
+  <text x="140" y="195" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">처음 방문</text>
+
+  <!-- Server box -->
+  <rect x="620" y="135" width="200" height="70" rx="6" fill="#0d1a0d" stroke="#3aa83a" stroke-width="1.5"/>
+  <text x="720" y="163" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">서버</text>
+  <text x="720" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">HTTPS 응답 + HSTS 헤더</text>
+
+  <!-- Arrow: Browser → Server -->
+  <line x1="225" y1="155" x2="615" y2="155" stroke="#3a6ea8" stroke-width="2" marker-end="url(#arr-b)"/>
+  <text x="420" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" text-anchor="middle">HTTPS GET /</text>
+
+  <!-- Arrow: Server → Browser (HSTS header) -->
+  <line x1="615" y1="175" x2="225" y2="175" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="420" y="191" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">200 OK + Strict-Transport-Security: max-age=31536000</text>
+
+  <!-- HSTS stored label -->
+  <rect x="60" y="222" width="160" height="30" rx="4" fill="#0d1a0d" stroke="#3aa83a" stroke-width="1"/>
+  <text x="140" y="241" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" font-weight="600" fill="#55c555" text-anchor="middle">HSTS 정책 저장</text>
+
+  <!-- Scenario 2: HTTP attempt -->
+  <rect x="60" y="270" width="760" height="28" rx="4" fill="#2d0f0f" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="289" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">시나리오 B: HTTP 접속 시도 (HSTS 적용)</text>
+
+  <!-- Browser HSTS upgrade -->
+  <rect x="60" y="308" width="300" height="80" rx="6" fill="#0d1520" stroke="#3a6ea8" stroke-width="1.5"/>
+  <text x="210" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">브라우저 (HSTS 저장됨)</text>
+  <text x="210" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa" text-anchor="middle">http://example.com 요청 시</text>
+  <text x="210" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">네트워크 전송 없이 즉시</text>
+  <text x="210" y="386" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">https://로 내부 업그레이드</text>
+
+  <!-- Arrow upgrade -->
+  <line x1="365" y1="348" x2="435" y2="348" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="400" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">307</text>
+  <text x="400" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555" text-anchor="middle">내부</text>
+
+  <!-- Result -->
+  <rect x="440" y="308" width="390" height="80" rx="6" fill="#0d1a0d" stroke="#3aa83a" stroke-width="1.5"/>
+  <text x="635" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">결과</text>
+  <text x="635" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa" text-anchor="middle">HTTP 요청이 네트워크에 나가지 않음</text>
+  <text x="635" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa" text-anchor="middle">→ MITM 공격 기회 자체를 제거</text>
+  <text x="635" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">SSL Stripping 불가능</text>
+
+  <!-- Bottom: HSTS header reference -->
+  <rect x="60" y="415" width="760" height="70" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8"># 응답 헤더 예시</text>
+  <text x="76" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#7ec8e3" font-weight="600">Strict-Transport-Security</text>
+  <text x="286" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">: </text>
+  <text x="298" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ce9178">max-age=31536000</text>
+  <text x="443" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">; </text>
+  <text x="454" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ce9178">includeSubDomains</text>
+  <text x="586" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">; </text>
+  <text x="597" y="454" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ce9178">preload</text>
+  <text x="76" y="474" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">max-age=31536000 = 1년. HSTS는 반드시 HTTPS에서만 설정해야 한다</text>
+</svg>
