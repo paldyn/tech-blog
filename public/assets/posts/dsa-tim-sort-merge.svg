@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" style="background:#0a0a0a">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">팀 정렬: minRun 계산 + galloping 병합</text>
+
+  <!-- Left: minRun calculation -->
+  <text x="60" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">minRun 계산</text>
+  <rect x="60" y="88" width="380" height="196" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># n=64: 2^6 → minRun=32</tspan>
+  </text>
+  <text x="76" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># n=65: 65/2=32 r=1 → 33</tspan>
+  </text>
+  <text x="76" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> min_run(n):</tspan>
+  </text>
+  <text x="76" y="166" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    r = 0</tspan>
+  </text>
+  <text x="76" y="184" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    while</tspan><tspan fill="#ffffff"> n &gt;= 64:</tspan>
+  </text>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        r |= n &amp; 1</tspan>
+  </text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        n &gt;&gt;= 1</tspan>
+  </text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> n + r</tspan>
+  </text>
+  <text x="76" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8"># 결과: 32 &lt;= minRun &lt;= 64</tspan>
+  </text>
+
+  <!-- Right: galloping -->
+  <text x="466" y="78" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7777cc">Galloping 병합</text>
+  <rect x="466" y="88" width="374" height="196" rx="6" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="484" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">일반 병합 — 한 번에 1개씩 비교</text>
+  <text x="484" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">A: [1, 2, 3, 100, 101]</text>
+  <text x="484" y="154" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">B: [50, 60, 70]</text>
+  <text x="484" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">Galloping 모드 진입 조건</text>
+  <text x="484" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">한쪽에서 연속 7회 이상 win</text>
+  <text x="484" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">→ 이진 탐색으로 경계 찾기</text>
+  <text x="484" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">→ 블록 단위 복사로 가속</text>
+  <text x="484" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">A[0..2]를 통째로 출력 후 B와 비교</text>
+
+  <!-- Bottom summary table -->
+  <rect x="60" y="310" width="760" height="72" rx="8" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">팀 정렬 vs 병합 정렬 vs 퀵 정렬</text>
+
+  <text x="90" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">평균 시간</text>
+  <text x="90" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">O(N)~O(N log N)</text>
+
+  <text x="340" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">공간</text>
+  <text x="340" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e8e8e8">O(N)</text>
+
+  <text x="480" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">안정성</text>
+  <text x="480" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#55c555">안정</text>
+
+  <text x="620" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">실전 활용</text>
+  <text x="620" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#7ec8e3">Python sort(), Java Arrays.sort(Object)</text>
+</svg>

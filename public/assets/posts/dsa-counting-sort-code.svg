@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" style="background:#0a0a0a">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">카운팅 정렬 구현 (안정 정렬 버전)</text>
+
+  <rect x="60" y="64" width="450" height="306" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+
+  <text x="76" y="88" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">void</tspan><tspan fill="#ffffff"> countingSort(</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff">* a, </tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> n, </tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> k) {</tspan>
+  </text>
+  <text x="76" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">  // k = 최댓값 (값 범위 0~k)</tspan>
+  </text>
+  <text x="76" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  vector&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff">&gt; c(k + 1, 0), b(n);</tspan>
+  </text>
+  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">  // 1. 빈도 집계</tspan>
+  </text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  for</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> x : a) c[x]++;</tspan>
+  </text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">  // 2. 누적합 (Prefix Sum)</tspan>
+  </text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  for</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> i = 1; i &lt;= k; i++)</tspan>
+  </text>
+  <text x="76" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    c[i] += c[i - 1];</tspan>
+  </text>
+  <text x="76" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">  // 3. 역방향 배치 (안정 정렬 보장)</tspan>
+  </text>
+  <text x="76" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  for</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> i = n - 1; i &gt;= 0; i--) {</tspan>
+  </text>
+  <text x="76" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    b[--c[a[i]]] = a[i];</tspan>
+  </text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  }</tspan>
+  </text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">  // 결과 복사</tspan>
+  </text>
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  copy(b.begin(), b.end(), a);</tspan>
+  </text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}</tspan>
+  </text>
+
+  <!-- Right panel: key insight -->
+  <rect x="540" y="64" width="300" height="140" rx="8" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="690" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7777cc">핵심 아이디어</text>
+  <text x="558" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">c[x]는 x가 출력 배열에서</text>
+  <text x="558" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">몇 번째까지 배치됐는지 추적</text>
+  <text x="558" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7777cc">b[--c[a[i]]] = a[i]</text>
+  <text x="558" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">역방향 순회 = 같은 값의</text>
+  <text x="558" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">상대 순서 유지 (안정)</text>
+
+  <rect x="540" y="224" width="300" height="100" rx="8" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="690" y="250" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#55c555">Radix Sort 연계</text>
+  <text x="558" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">기수 정렬의 각 자릿수 서브루틴으로</text>
+  <text x="558" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">카운팅 정렬을 사용 (K=10 고정)</text>
+  <text x="558" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">안정성 필수 요건</text>
+
+  <rect x="540" y="344" width="300" height="56" rx="8" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="558" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">시간: O(N + K)  ·  공간: O(N + K)</text>
+  <text x="558" y="388" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">비교 없이 정렬 — 비교 기반 하한 미적용</text>
+</svg>

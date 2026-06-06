@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500" style="background:#0a0a0a">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">외부 정렬: 청크 생성 → K-way 병합</text>
+
+  <!-- Phase 1: Sort chunks -->
+  <text x="60" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">1단계: 청크 생성 (RAM에 올려 정렬 후 파일로)</text>
+
+  <!-- Large file icon -->
+  <rect x="60" y="92" width="120" height="80" rx="6" fill="#1a1f2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="120" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">대용량 파일</text>
+  <text x="120" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#555">100 GB</text>
+  <text x="120" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#444">(RAM 4GB)</text>
+
+  <!-- Arrow -->
+  <line x1="188" y1="132" x2="218" y2="132" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="200" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">청크 읽기</text>
+
+  <!-- Chunk files -->
+  <rect x="224" y="92" width="90" height="56" rx="5" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="269" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">chunk_1.tmp</text>
+  <text x="269" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정렬됨 (4GB)</text>
+
+  <rect x="324" y="92" width="90" height="56" rx="5" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="369" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">chunk_2.tmp</text>
+  <text x="369" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정렬됨 (4GB)</text>
+
+  <rect x="424" y="92" width="90" height="56" rx="5" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="469" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">chunk_3.tmp</text>
+  <text x="469" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정렬됨 (4GB)</text>
+
+  <text x="530" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="20" fill="#555">...</text>
+
+  <rect x="554" y="92" width="90" height="56" rx="5" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="599" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">chunk_k.tmp</text>
+  <text x="599" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">정렬됨</text>
+
+  <!-- Phase 2: K-way merge -->
+  <text x="60" y="182" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">2단계: K-way 병합 (최소 힙 활용)</text>
+
+  <!-- Input buffers -->
+  <rect x="60" y="196" width="90" height="44" rx="4" fill="#1f1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="105" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">입력 버퍼 1</text>
+  <text x="105" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">head: 3</text>
+
+  <rect x="164" y="196" width="90" height="44" rx="4" fill="#1f1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="209" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">입력 버퍼 2</text>
+  <text x="209" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">head: 7</text>
+
+  <rect x="268" y="196" width="90" height="44" rx="4" fill="#1f1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="313" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7777cc">입력 버퍼 3</text>
+  <text x="313" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">head: 1</text>
+
+  <text x="374" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="18" fill="#555">...</text>
+
+  <!-- Min heap -->
+  <rect x="460" y="180" width="160" height="80" rx="8" fill="#1a2030" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="540" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">최소 힙</text>
+  <text x="540" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">[(1,buf3),(3,buf1),</text>
+  <text x="540" y="246" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">(7,buf2), ...]</text>
+
+  <!-- Arrow to output buffer -->
+  <line x1="628" y1="220" x2="666" y2="220" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="648" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">최솟값 추출</text>
+
+  <rect x="672" y="196" width="110" height="44" rx="4" fill="#1a2a1f" stroke="#55c555" stroke-width="1.5"/>
+  <text x="727" y="214" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">출력 버퍼</text>
+  <text x="727" y="232" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">1, 3, 7...</text>
+
+  <!-- Arrow from heap back to buffer (refill) -->
+  <path d="M 540 260 Q 540 290 313 290 Q 313 248 313 248" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+  <text x="400" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">버퍼 소진시 다음 페이지 읽기</text>
+
+  <!-- Output file -->
+  <line x1="727" y1="248" x2="727" y2="298" stroke="#55c555" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="672" y="304" width="110" height="56" rx="6" fill="#1a2a1f" stroke="#55c555" stroke-width="2"/>
+  <text x="727" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">output.dat</text>
+  <text x="727" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">100GB 정렬 완료</text>
+
+  <!-- Complexity table -->
+  <rect x="60" y="370" width="760" height="110" rx="8" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="394" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">복잡도 및 I/O 분석</text>
+  <text x="80" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">정렬 Pass 수</text>
+  <text x="80" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">1 + log_K(C)  C=청크 수</text>
+  <text x="80" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#555">K=병합 수, 보통 2~16</text>
+
+  <text x="320" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">CPU 시간</text>
+  <text x="320" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">O(N log N)</text>
+
+  <text x="520" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">병목</text>
+  <text x="520" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">디스크 I/O 횟수</text>
+  <text x="520" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">K 증가 → Pass 감소</text>
+
+  <text x="700" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">RAM 사용</text>
+  <text x="700" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">O(K) 힙 + 버퍼</text>
+</svg>

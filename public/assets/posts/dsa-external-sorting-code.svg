@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" style="background:#0a0a0a">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">외부 정렬: K-way 병합 핵심 구현 (Python)</text>
+
+  <rect x="60" y="64" width="490" height="306" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="88" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan><tspan fill="#ffffff"> heapq</tspan>
+  </text>
+  <text x="76" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> kway_merge(chunk_files, out_path):</tspan>
+  </text>
+  <text x="76" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 각 청크 파일의 이터레이터 생성</tspan>
+  </text>
+  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    iters = [</tspan><tspan fill="#7ec8e3" font-weight="600">open</tspan><tspan fill="#ffffff">(f) </tspan><tspan fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> f </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> chunk_files]</tspan>
+  </text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    # 초기 최소 힙: (값, 청크번호, 이터레이터)</tspan>
+  </text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    heap = []</tspan>
+  </text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    for</tspan><tspan fill="#ffffff"> i, it </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">enumerate</tspan><tspan fill="#ffffff">(iters):</tspan>
+  </text>
+  <text x="76" y="214" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        val = </tspan><tspan fill="#7ec8e3" font-weight="600">next</tspan><tspan fill="#ffffff">(it, </tspan><tspan fill="#7ec8e3" font-weight="600">None</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="76" y="232" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        if</tspan><tspan fill="#ffffff"> val </tspan><tspan fill="#7ec8e3" font-weight="600">is not</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">None</tspan><tspan fill="#ffffff">:</tspan>
+  </text>
+  <text x="76" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            heapq.heappush(heap,(val,i,it))</tspan>
+  </text>
+  <text x="76" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    with</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">open</tspan><tspan fill="#ffffff">(out_path,</tspan><tspan fill="#ce9178">'w'</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#7ec8e3" font-weight="600">as</tspan><tspan fill="#ffffff"> out:</tspan>
+  </text>
+  <text x="76" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">        while</tspan><tspan fill="#ffffff"> heap:</tspan>
+  </text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            val,i,it = heapq.heappop(heap)</tspan>
+  </text>
+  <text x="76" y="322" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            out.write(</tspan><tspan fill="#7ec8e3" font-weight="600">str</tspan><tspan fill="#ffffff">(val)+</tspan><tspan fill="#ce9178">'\n'</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">            nxt = </tspan><tspan fill="#7ec8e3" font-weight="600">next</tspan><tspan fill="#ffffff">(it, </tspan><tspan fill="#7ec8e3" font-weight="600">None</tspan><tspan fill="#ffffff">)</tspan>
+  </text>
+  <text x="76" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">            if</tspan><tspan fill="#ffffff"> nxt: heapq.heappush(heap,(nxt,i,it))</tspan>
+  </text>
+
+  <!-- Right panel: optimization tips -->
+  <rect x="576" y="64" width="264" height="306" rx="8" fill="#0a0f1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="708" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="600" fill="#7ec8e3">최적화 팁</text>
+  <text x="594" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">버퍼 크기 조정</text>
+  <text x="594" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">디스크 I/O 최소화</text>
+  <text x="594" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">버퍼 = RAM / (K+1)</text>
+
+  <text x="594" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">병합 차수(K) 선택</text>
+  <text x="594" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">K 클수록 Pass 수 감소</text>
+  <text x="594" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">힙 크기 K → O(log K)</text>
+
+  <text x="594" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Replacement Selection</text>
+  <text x="594" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">청크 크기를 RAM의</text>
+  <text x="594" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#7ec8e3">2배까지 늘릴 수 있음</text>
+
+  <text x="594" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">비동기 I/O</text>
+  <text x="594" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8">읽기/쓰기를 CPU 작업과</text>
+  <text x="594" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">오버랩(Double Buffering)</text>
+</svg>
