@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">useMemo 사용 기준</text>
+
+  <!-- Use case 1: Good use -->
+  <rect x="60" y="68" width="360" height="150" rx="8" fill="#0a200a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">적합한 경우</text>
+  <text x="80" y="115" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 대용량 배열 정렬 / 필터링</text>
+  <text x="80" y="137" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 복잡한 수치 계산 (통계, 집계)</text>
+  <text x="80" y="159" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• React.memo 자식에 넘기는 객체</text>
+  <text x="80" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• useEffect deps의 객체/배열</text>
+  <text x="80" y="203" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 렌더 프로파일러에서 확인된 병목</text>
+
+  <!-- Use case 2: Bad use -->
+  <rect x="460" y="68" width="360" height="150" rx="8" fill="#200a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">불필요한 경우</text>
+  <text x="480" y="115" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 단순 덧셈, 문자열 조합 등</text>
+  <text x="480" y="137" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 배열 길이가 수십 개 이하</text>
+  <text x="480" y="159" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 원시값(string, number) 반환</text>
+  <text x="480" y="181" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 자식 컴포넌트에 넘기지 않는 값</text>
+  <text x="480" y="203" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">• 모든 컴포넌트에 무조건 적용</text>
+
+  <!-- Code boxes -->
+  <rect x="60" y="238" width="360" height="152" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 적합: 10000개 항목 필터 + 정렬</text>
+  <text x="76" y="279" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> result = </tspan><tspan fill="#7ec8e3" font-weight="600">useMemo</tspan><tspan fill="#ffffff">(() =&gt; {</tspan></text>
+  <text x="76" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> products</tspan></text>
+  <text x="76" y="317" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    .filter(p =&gt; p.price &lt; maxPrice)</tspan></text>
+  <text x="76" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">    .sort((a, b) =&gt; a.name.localeCompare(b.name));</tspan></text>
+  <text x="76" y="355" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">}, [products, maxPrice]);</tspan></text>
+  <text x="76" y="377" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#9aa4b8">// maxPrice UI가 바뀌어도 sort는 생략</text>
+</svg>

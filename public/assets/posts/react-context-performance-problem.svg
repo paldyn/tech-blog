@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Context 리렌더 문제와 해결</text>
+
+  <!-- Problem side -->
+  <text x="210" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">객체를 value로 직접 전달</text>
+
+  <rect x="145" y="88" width="130" height="44" rx="6" fill="#200a0a" stroke="#e05555"/>
+  <text x="210" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle" font-weight="600">Provider</text>
+  <text x="210" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">value={"{user, theme}"}</text>
+
+  <!-- children - all re-render -->
+  <line x1="210" y1="132" x2="130" y2="162" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <line x1="210" y1="132" x2="210" y2="162" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <line x1="210" y1="132" x2="290" y2="162" stroke="#e05555" stroke-width="1.5" marker-end="url(#arr-red)"/>
+
+  <rect x="65" y="164" width="130" height="44" rx="6" fill="#200a0a" stroke="#e05555"/>
+  <text x="130" y="183" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">UserName</text>
+  <text x="130" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">user만 사용</text>
+
+  <rect x="145" y="164" width="130" height="44" rx="6" fill="#200a0a" stroke="#e05555"/>
+  <text x="210" y="183" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">Avatar</text>
+  <text x="210" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">user.avatar만 사용</text>
+
+  <rect x="225" y="164" width="130" height="44" rx="6" fill="#200a0a" stroke="#e05555"/>
+  <text x="290" y="183" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">ThemeBtn</text>
+  <text x="290" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">theme만 사용</text>
+
+  <text x="210" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">user 변경 시 ThemeBtn도 리렌더!</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="68" x2="440" y2="240" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Solution side -->
+  <text x="660" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">Context 분리</text>
+
+  <rect x="530" y="88" width="130" height="44" rx="6" fill="#0a200a" stroke="#55c555"/>
+  <text x="595" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle" font-weight="600">UserProvider</text>
+  <text x="595" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">value={user}</text>
+
+  <rect x="720" y="88" width="130" height="44" rx="6" fill="#0a200a" stroke="#55c555"/>
+  <text x="785" y="107" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle" font-weight="600">ThemeProvider</text>
+  <text x="785" y="124" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">value={theme}</text>
+
+  <line x1="595" y1="132" x2="540" y2="162" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="595" y1="132" x2="650" y2="162" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="785" y1="132" x2="785" y2="162" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <rect x="475" y="164" width="130" height="44" rx="6" fill="#0a200a" stroke="#55c555"/>
+  <text x="540" y="183" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">UserName</text>
+  <text x="540" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">user 구독</text>
+
+  <rect x="615" y="164" width="130" height="44" rx="6" fill="#0a200a" stroke="#55c555"/>
+  <text x="680" y="183" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">Avatar</text>
+  <text x="680" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">user 구독</text>
+
+  <rect x="720" y="164" width="130" height="44" rx="6" fill="#0a1a20" stroke="#7ec8e3"/>
+  <text x="785" y="183" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">ThemeBtn</text>
+  <text x="785" y="199" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888" text-anchor="middle">theme 구독</text>
+
+  <text x="660" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">user 변경 시 ThemeBtn 리렌더 없음</text>
+
+  <!-- Code section -->
+  <rect x="60" y="254" width="760" height="194" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ❌ 매 렌더마다 새 객체 → 모든 소비자 리렌더</text>
+  <text x="76" y="295" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">MyContext.Provider</tspan><tspan fill="#ffffff"> value=</tspan><tspan fill="#ce9178">{"{{ user, theme }}"}</tspan><tspan fill="#ffffff">&gt;</tspan></text>
+  <text x="76" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ✅ useMemo로 객체 안정화</text>
+  <text x="76" y="333" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> ctxValue = </tspan><tspan fill="#7ec8e3" font-weight="600">useMemo</tspan><tspan fill="#ffffff">(() =&gt; ({ user, theme }), [user, theme]);</tspan></text>
+  <text x="76" y="352" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">MyContext.Provider</tspan><tspan fill="#ffffff"> value={ctxValue}&gt;</tspan></text>
+  <text x="76" y="371" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ✅✅ 관심사별 Context 분리 (최선)</text>
+  <text x="76" y="390" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">UserContext.Provider</tspan><tspan fill="#ffffff"> value={user}&gt;&lt;</tspan><tspan fill="#7ec8e3" font-weight="600">ThemeContext.Provider</tspan><tspan fill="#ffffff"> value={theme}&gt;</tspan></text>
+  <text x="76" y="409" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">  {children}</tspan></text>
+  <text x="76" y="428" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13"><tspan fill="#ffffff">&lt;/</tspan><tspan fill="#7ec8e3" font-weight="600">ThemeContext.Provider</tspan><tspan fill="#ffffff">&gt;&lt;/</tspan><tspan fill="#7ec8e3" font-weight="600">UserContext.Provider</tspan><tspan fill="#ffffff">&gt;</tspan></text>
+</svg>
