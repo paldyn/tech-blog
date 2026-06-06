@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="ary" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="21" font-weight="700" fill="#e8e8e8" text-anchor="middle">Record와 직렬화</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Java Record는 Serializable을 구현하면 특별한 직렬화 규칙을 적용받는다</text>
+
+  <!-- Record Serialization diff -->
+  <!-- Left: 일반 클래스 -->
+  <rect x="60" y="85" width="360" height="200" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555" text-anchor="middle">일반 클래스 역직렬화</text>
+
+  <text x="80" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">1. 바이트 스트림에서 헤더/클래스 읽기</text>
+  <line x1="100" y1="140" x2="100" y2="158" stroke="#888" stroke-width="1" marker-end="url(#ary)"/>
+  <text x="80" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">2. 생성자 호출 없이 인스턴스 생성</text>
+  <line x1="100" y1="180" x2="100" y2="198" stroke="#888" stroke-width="1" marker-end="url(#ary)"/>
+  <text x="80" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">3. 리플렉션으로 필드에 값 주입</text>
+  <line x1="100" y1="220" x2="100" y2="238" stroke="#888" stroke-width="1" marker-end="url(#ary)"/>
+  <text x="80" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">4. 불변식 검증 우회 가능!</text>
+  <text x="80" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">생성자 로직이 실행 안 됨 → 데이터 무결성 위험</text>
+
+  <!-- Right: Record -->
+  <rect x="460" y="85" width="360" height="200" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">Record 역직렬화 (Java 16+)</text>
+
+  <text x="480" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">1. 바이트 스트림에서 헤더/클래스 읽기</text>
+  <line x1="500" y1="140" x2="500" y2="158" stroke="#888" stroke-width="1" marker-end="url(#ar)"/>
+  <text x="480" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">2. 컴포넌트 값을 스트림에서 읽기</text>
+  <line x1="500" y1="180" x2="500" y2="198" stroke="#888" stroke-width="1" marker-end="url(#ar)"/>
+  <text x="480" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">3. 정식 생성자(canonical) 호출</text>
+  <line x1="500" y1="220" x2="500" y2="238" stroke="#888" stroke-width="1" marker-end="url(#ar)"/>
+  <text x="480" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">4. 불변식 검증 자동 실행!</text>
+  <text x="480" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">생성자 compact 로직이 그대로 적용</text>
+
+  <!-- Three key facts about record serialization -->
+  <text x="440" y="315" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8" text-anchor="middle">Record 직렬화의 특별한 규칙</text>
+
+  <rect x="60" y="328" width="235" height="92" rx="7" fill="#0d1a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="178" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#55c555" text-anchor="middle">생성자 보장</text>
+  <text x="80" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">역직렬화 시 항상</text>
+  <text x="80" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">정식 생성자 경유</text>
+  <text x="80" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">불변식 검증 실행됨</text>
+  <text x="80" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">보안 강화</text>
+
+  <rect x="323" y="328" width="234" height="92" rx="7" fill="#0d1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="440" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">writeObject 금지</text>
+  <text x="340" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">writeObject / readObject</text>
+  <text x="340" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">커스터마이징 불가</text>
+  <text x="340" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">readResolve는 허용</text>
+  <text x="340" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">설계 단순성 유지</text>
+
+  <rect x="585" y="328" width="235" height="92" rx="7" fill="#1a1a0d" stroke="#b5cea8" stroke-width="1"/>
+  <text x="703" y="348" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#b5cea8" text-anchor="middle">serialVersionUID</text>
+  <text x="605" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">명시 가능 (선택)</text>
+  <text x="605" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">미명시 시 컴포넌트</text>
+  <text x="605" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">구조 기반 자동 계산</text>
+  <text x="605" y="414" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#b5cea8">필드 변경 시 재계산</text>
+</svg>

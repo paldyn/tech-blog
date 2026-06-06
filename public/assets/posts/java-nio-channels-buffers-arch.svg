@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="21" font-weight="700" fill="#e8e8e8" text-anchor="middle">NIO 채널 &amp; 버퍼 — 아키텍처</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Channel이 데이터를 이동시키고 Buffer가 데이터를 담는다</text>
+
+  <!-- IO vs NIO comparison -->
+  <!-- IO side -->
+  <rect x="60" y="85" width="340" height="44" rx="7" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="230" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">java.io (전통 Stream I/O)</text>
+  <text x="230" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">단방향, 블로킹, 바이트 단위</text>
+
+  <!-- NIO side -->
+  <rect x="480" y="85" width="340" height="44" rx="7" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="650" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">java.nio (NIO Channel/Buffer)</text>
+  <text x="650" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">양방향, 논블로킹 가능, 버퍼 단위</text>
+
+  <!-- Channel box -->
+  <rect x="340" y="155" width="200" height="60" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">Channel</text>
+  <text x="440" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">데이터 이동 통로 (양방향)</text>
+
+  <!-- Buffer box -->
+  <rect x="340" y="250" width="200" height="60" rx="8" fill="#1a1a0d" stroke="#b5cea8" stroke-width="2"/>
+  <text x="440" y="273" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#b5cea8" text-anchor="middle">Buffer</text>
+  <text x="440" y="293" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">데이터 컨테이너 (capacity/position/limit)</text>
+
+  <!-- Channel arrow down to Buffer -->
+  <line x1="440" y1="215" x2="440" y2="250" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="452" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">read/write</text>
+
+  <!-- FileSystem box -->
+  <rect x="340" y="345" width="200" height="44" rx="7" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
+  <text x="440" y="365" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888" text-anchor="middle">File System / Network</text>
+  <text x="440" y="381" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">OS 커널</text>
+
+  <line x1="440" y1="310" x2="440" y2="345" stroke="#888" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- Channel implementations left -->
+  <rect x="60" y="155" width="190" height="155" rx="7" fill="#0d1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="155" y="175" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Channel 구현체</text>
+  <text x="80" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• FileChannel</text>
+  <text x="80" y="214" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• SocketChannel</text>
+  <text x="80" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• ServerSocketChannel</text>
+  <text x="80" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• DatagramChannel</text>
+  <text x="80" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• Pipe.SinkChannel</text>
+  <text x="80" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• AsynchronousFileChannel</text>
+  <text x="80" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">AsyncSocket 외...</text>
+
+  <!-- Arrow from channel impl to Channel -->
+  <line x1="250" y1="185" x2="340" y2="185" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- Buffer internals right -->
+  <rect x="630" y="230" width="210" height="120" rx="7" fill="#1a1a0d" stroke="#b5cea8" stroke-width="1"/>
+  <text x="735" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#b5cea8" text-anchor="middle">ByteBuffer 상태</text>
+
+  <!-- Buffer state visualization -->
+  <rect x="650" y="260" width="170" height="24" rx="3" fill="#111" stroke="#444" stroke-width="1"/>
+  <!-- capacity region -->
+  <rect x="650" y="260" width="170" height="24" rx="3" fill="#1a1a0d" stroke="#b5cea8" stroke-width="1"/>
+  <!-- limit region -->
+  <rect x="650" y="260" width="120" height="24" rx="0" fill="#0d1a0d" stroke="none"/>
+  <!-- position region -->
+  <rect x="650" y="260" width="60" height="24" rx="0" fill="#0d200d" stroke="none"/>
+
+  <text x="680" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555" text-anchor="middle">position</text>
+  <text x="742" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7ec8e3" text-anchor="middle">limit</text>
+  <text x="800" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#b5cea8" text-anchor="middle">capacity</text>
+
+  <text x="735" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">flip(): limit=pos, pos=0</text>
+  <text x="735" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">clear(): pos=0, limit=cap</text>
+  <text x="735" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">compact(): 미읽은 데이터 앞으로</text>
+
+  <!-- Arrow from Buffer to buffer internals -->
+  <line x1="540" y1="280" x2="630" y2="280" stroke="#b5cea8" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <!-- Direct vs Heap label -->
+  <rect x="60" y="430" width="760" height="52" rx="6" fill="#111" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="440" y="450" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">Heap Buffer vs Direct Buffer</text>
+  <text x="200" y="470" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">ByteBuffer.allocate(n) → JVM 힙 (GC 대상)</text>
+  <text x="660" y="470" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">ByteBuffer.allocateDirect(n) → 네이티브 메모리 (복사 없음)</text>
+</svg>

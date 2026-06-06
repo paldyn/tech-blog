@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ae" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+  <text x="440" y="38" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">인터럽트 처리 패턴</text>
+
+  <!-- Left: Wrong interrupt handling -->
+  <rect x="60" y="56" width="365" height="200" rx="6" fill="#000000" stroke="#e05555" stroke-width="1.5"/>
+  <text x="243" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">잘못된 패턴 — 인터럽트 무시</text>
+
+  <text x="76" y="95" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">while</text>
+  <text x="126" y="95" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (</text>
+  <text x="146" y="95" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">true</text>
+  <text x="186" y="95" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">) {</text>
+
+  <text x="76" y="115" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  try</text>
+  <text x="116" y="115" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> {</text>
+
+  <text x="76" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    Thread</text>
+  <text x="150" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">.sleep(</text>
+  <text x="206" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">1000</text>
+  <text x="246" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">);</text>
+
+  <text x="76" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  } </text>
+  <text x="108" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="154" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (InterruptedException e) {</text>
+
+  <text x="76" y="169" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    // 아무것도 안 함 ← 위험!</text>
+
+  <text x="76" y="187" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  }</text>
+
+  <text x="76" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <text x="243" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">인터럽트 신호 소멸 → 스레드 중단 불가</text>
+  <text x="243" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">InterruptedException 발생 시 플래그는 자동 클리어됨</text>
+
+  <!-- Right: Correct interrupt handling -->
+  <rect x="455" y="56" width="365" height="200" rx="6" fill="#000000" stroke="#55c555" stroke-width="1.5"/>
+  <text x="638" y="76" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">올바른 패턴 — 인터럽트 전파</text>
+
+  <text x="471" y="95" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">while</text>
+  <text x="521" y="95" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (!Thread.currentThread()</text>
+  <text x="471" y="113" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        .isInterrupted()) {</text>
+
+  <text x="471" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">  try</text>
+  <text x="511" y="133" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> {</text>
+  <text x="471" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    Thread</text>
+  <text x="545" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">.sleep(</text>
+  <text x="601" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8" xml:space="preserve">1000</text>
+  <text x="641" y="151" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">);</text>
+  <text x="471" y="169" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  } </text>
+  <text x="503" y="169" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">catch</text>
+  <text x="549" y="169" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> (InterruptedException e) {</text>
+  <text x="471" y="187" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    // 인터럽트 플래그 복원!</text>
+  <text x="471" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    Thread</text>
+  <text x="545" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">.currentThread().interrupt();</text>
+  <text x="471" y="223" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  }</text>
+  <text x="471" y="241" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="638" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">인터럽트 전파 → 루프 조건에서 정상 종료</text>
+
+  <!-- Daemon vs User thread -->
+  <rect x="60" y="290" width="760" height="106" rx="6" fill="#111" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="440" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">데몬 스레드 vs 사용자 스레드</text>
+
+  <rect x="80" y="322" width="330" height="60" rx="5" fill="#0d1520" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="245" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#7ec8e3" text-anchor="middle">사용자 스레드 (기본)</text>
+  <text x="100" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">JVM은 모든 사용자 스레드가 종료될 때 종료</text>
+  <text x="100" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">setDaemon(false) 기본값</text>
+
+  <rect x="430" y="322" width="370" height="60" rx="5" fill="#1a0d1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="615" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="700" fill="#7777cc" text-anchor="middle">데몬 스레드</text>
+  <text x="450" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">모든 사용자 스레드 종료 시 JVM이 강제 종료</text>
+  <text x="450" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">t.setDaemon(true) — start() 전에 호출해야</text>
+
+  <text x="440" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">가비지 컬렉터, 모니터링 백그라운드 스레드 → 데몬 / 비즈니스 로직 → 사용자 스레드</text>
+</svg>

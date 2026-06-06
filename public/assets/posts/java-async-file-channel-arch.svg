@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="ar" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="21" font-weight="700" fill="#e8e8e8" text-anchor="middle">AsynchronousFileChannel — 비동기 파일 I/O</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">I/O 완료를 기다리지 않고 콜백 또는 Future로 결과 수신</text>
+
+  <!-- Two patterns side by side -->
+  <!-- Left: CompletionHandler -->
+  <rect x="60" y="85" width="360" height="280" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">패턴 1: CompletionHandler</text>
+  <text x="240" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">완료 시 콜백 호출</text>
+
+  <!-- Flow boxes -->
+  <rect x="90" y="142" width="240" height="36" rx="5" fill="#1a2e1a" stroke="#55c555" stroke-width="1"/>
+  <text x="210" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">channel.read(buf, pos, attach, handler)</text>
+
+  <line x1="210" y1="178" x2="210" y2="200" stroke="#888" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="240" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">즉시 반환 (논블로킹)</text>
+
+  <rect x="90" y="200" width="240" height="36" rx="5" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
+  <text x="210" y="223" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Thread Pool (I/O 처리)</text>
+
+  <line x1="210" y1="236" x2="210" y2="258" stroke="#888" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <rect x="90" y="258" width="115" height="36" rx="5" fill="#0d2010" stroke="#55c555" stroke-width="1"/>
+  <text x="148" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">completed()</text>
+
+  <rect x="215" y="258" width="115" height="36" rx="5" fill="#2e1a1a" stroke="#e05555" stroke-width="1"/>
+  <text x="273" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">failed()</text>
+
+  <text x="240" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">I/O 스레드 풀에서 콜백 실행</text>
+  <text x="240" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">호출 스레드는 이미 다른 작업 중</text>
+  <text x="240" y="355" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3" text-anchor="middle">handler.completed(bytesRead, attach)</text>
+
+  <!-- Right: Future -->
+  <rect x="460" y="85" width="360" height="280" rx="8" fill="#1a1a0d" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="640" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#b5cea8" text-anchor="middle">패턴 2: Future</text>
+  <text x="640" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Future로 결과 대기</text>
+
+  <rect x="490" y="142" width="240" height="36" rx="5" fill="#2e2a1a" stroke="#b5cea8" stroke-width="1"/>
+  <text x="610" y="165" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8" text-anchor="middle">Future&lt;Integer&gt; f = channel.read(buf, pos)</text>
+
+  <line x1="610" y1="178" x2="610" y2="200" stroke="#888" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="640" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">즉시 반환</text>
+
+  <rect x="490" y="200" width="240" height="36" rx="5" fill="#1a1a1a" stroke="#888" stroke-width="1"/>
+  <text x="610" y="223" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">// 다른 작업 수행 가능</text>
+
+  <line x1="610" y1="236" x2="610" y2="258" stroke="#888" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <rect x="490" y="258" width="240" height="36" rx="5" fill="#1a2e1a" stroke="#b5cea8" stroke-width="1"/>
+  <text x="610" y="281" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8" text-anchor="middle">int bytes = f.get(); // 블로킹 대기</text>
+
+  <text x="640" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">f.get(timeout, unit) 타임아웃 가능</text>
+  <text x="640" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">f.isDone() 비블로킹 완료 확인</text>
+  <text x="640" y="355" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#b5cea8" text-anchor="middle">단순하지만 get()에서 블로킹</text>
+
+  <!-- Bottom comparison -->
+  <rect x="60" y="385" width="760" height="76" rx="6" fill="#111" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="440" y="405" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">AsynchronousFileChannel 특징</text>
+  <text x="200" y="425" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">파일 위치(position) 명시 필수</text>
+  <text x="440" y="425" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">position 자동 갱신 없음</text>
+  <text x="690" y="425" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8" text-anchor="middle">병렬 read/write 가능</text>
+  <text x="200" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">AsynchronousChannelGroup으로</text>
+  <text x="440" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">스레드 풀 공유 가능</text>
+  <text x="690" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Java 21+ CompletableFuture 연계 권장</text>
+</svg>

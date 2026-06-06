@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="21" font-weight="700" fill="#e8e8e8" text-anchor="middle">Java 직렬화의 4가지 함정</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">보안, 성능, 유지보수, 이식성 — 4가지 약점</text>
+
+  <!-- Pitfall 1: Security -->
+  <rect x="60" y="85" width="365" height="150" rx="8" fill="#2e0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="243" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">1. 보안 취약점</text>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• 역직렬화 공격 (Deserialization Attack)</text>
+  <text x="80" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  조작된 바이트 스트림으로 임의 코드 실행</text>
+  <text x="80" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• AC ED magic number → 공격자 식별 용이</text>
+  <text x="80" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  Commons Collections, Spring, Log4j 가젯체인</text>
+  <text x="80" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">  CVE-2015-4852, CVE-2016-4978 등 실제 피해</text>
+  <text x="80" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">  대응: 신뢰할 수 없는 소스의 역직렬화 절대 금지</text>
+
+  <!-- Pitfall 2: Performance -->
+  <rect x="455" y="85" width="365" height="150" rx="8" fill="#1a1a0d" stroke="#b5cea8" stroke-width="1.5"/>
+  <text x="638" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#b5cea8" text-anchor="middle">2. 성능 문제</text>
+  <text x="475" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• JSON 대비 직렬화 4~10배, 용량도 큼</text>
+  <text x="475" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  클래스 메타데이터, 전체 그래프 탐색 오버헤드</text>
+  <text x="475" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• Protocol Buffers 대비 3~5배 느림</text>
+  <text x="475" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  반성(Reflection) 기반이라 최적화 어려움</text>
+  <text x="475" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8">  대안: Jackson JSON, Protobuf, Avro, Kryo</text>
+  <text x="475" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">  Kryo: Java 직렬화의 ~10배 속도</text>
+
+  <!-- Pitfall 3: Maintainability -->
+  <rect x="60" y="258" width="365" height="140" rx="8" fill="#0d1520" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="243" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">3. 유지보수 부담</text>
+  <text x="80" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• 클래스 변경 시 하위 호환성 깨짐</text>
+  <text x="80" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  필드 추가/삭제, 이름 변경 → 역직렬화 실패</text>
+  <text x="80" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• API 설계 제약 (내부 구현 유출)</text>
+  <text x="80" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  직렬화 형식이 public API가 되어 버림</text>
+  <text x="80" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">  Java의 저자 Bloch: "직렬화 없이 설계 가능하다면 하지 말라"</text>
+
+  <!-- Pitfall 4: Portability -->
+  <rect x="455" y="258" width="365" height="140" rx="8" fill="#1a0d1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="638" y="280" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">4. 이식성 부재</text>
+  <text x="475" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• Java 전용 — 다른 언어에서 읽기 불가</text>
+  <text x="475" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  마이크로서비스 환경(Go, Python 혼재)에서 사용 불가</text>
+  <text x="475" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">• JVM 버전 간 미묘한 차이 존재</text>
+  <text x="475" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">  대안: JSON (범용), Protobuf (이진 + 범용)</text>
+  <text x="475" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">  Avro (스키마 진화), MessagePack (경량 이진)</text>
+
+  <!-- Bottom: JEP 290 -->
+  <rect x="60" y="418" width="760" height="44" rx="6" fill="#111" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="440" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">완화책: JEP 290 Serialization Filters (Java 9+)</text>
+  <text x="440" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">ObjectInputFilter로 허용 클래스 화이트리스트 지정 — 가젯 체인 차단</text>
+</svg>
