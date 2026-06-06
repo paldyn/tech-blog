@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">postMessage 취약점과 방어 패턴</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">흔한 실수와 안전한 구현 대조</text>
+
+  <!-- Left: Vulnerable -->
+  <rect x="60" y="95" width="370" height="36" rx="6" fill="#2d0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="245" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#e05555" text-anchor="middle">취약한 구현</text>
+
+  <!-- Vuln 1 -->
+  <text x="75" y="153" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8a020">① targetOrigin = '*' 사용</text>
+  <rect x="60" y="162" width="370" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="181" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">// 나쁜 예: 모든 오리진 전달</text>
+  <text x="76" y="197" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#7ec8e3" font-weight="600">iframe</text>
+  <text x="121" y="197" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">.contentWindow.postMessage(</text>
+  <text x="76" y="213" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">  { token: userToken },</text>
+  <text x="76" y="229" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#e05555">  '*'</text>
+  <text x="102" y="229" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">  );</text>
+
+  <!-- Vuln 2 -->
+  <text x="75" y="255" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8a020">② origin 미검증 수신</text>
+  <rect x="60" y="264" width="370" height="90" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="283" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">// 나쁜 예: origin 검사 없음</text>
+  <text x="76" y="299" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#7ec8e3" font-weight="600">window</text>
+  <text x="121" y="299" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">.addEventListener(</text>
+  <text x="76" y="315" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ce9178">  'message'</text>
+  <text x="156" y="315" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">, (e) =&gt; {</text>
+  <text x="76" y="331" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#9aa4b8">  // origin 확인 없이 바로 처리!</text>
+  <text x="76" y="347" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#7ec8e3" font-weight="600">  eval</text>
+  <text x="109" y="347" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve" fill="#ffffff">(e.data.code);</text>
+
+  <!-- Vuln 3 label -->
+  <text x="75" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8a020">③ data를 innerHTML에 직접 삽입</text>
+  <rect x="60" y="390" width="370" height="48" rx="6" fill="#1a0f0f" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="245" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">e.data가 악성 HTML이면 XSS 발생</text>
+  <text x="245" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">div.innerHTML = e.data ← 절대 금지</text>
+
+  <!-- Right: Safe -->
+  <rect x="460" y="95" width="360" height="36" rx="6" fill="#0d1f0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="15" font-weight="700" fill="#55c555" text-anchor="middle">안전한 구현</text>
+
+  <!-- Safe code -->
+  <rect x="460" y="143" width="360" height="222" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#9aa4b8">// ① 정확한 targetOrigin 지정</text>
+  <text x="476" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">const </text>
+  <text x="511" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">TRUSTED = </text>
+  <text x="597" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ce9178">'https://widget.co'</text>
+  <text x="476" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">iframe</text>
+  <text x="511" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">.contentWindow.postMessage(</text>
+  <text x="476" y="210" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">  data, TRUSTED);</text>
+  <text x="476" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#9aa4b8">// ② origin + 타입 검증</text>
+  <text x="476" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">window</text>
+  <text x="511" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">.addEventListener(</text>
+  <text x="476" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ce9178">  'message'</text>
+  <text x="540" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">, (e) =&gt; {</text>
+  <text x="476" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  if </text>
+  <text x="496" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">(e.origin !== TRUSTED) </text>
+  <text x="476" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">    return</text>
+  <text x="524" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">;</text>
+  <text x="476" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#9aa4b8">  // 타입 기반 안전한 처리</text>
+  <text x="476" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  switch</text>
+  <text x="516" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff"> (e.data.type) { ... }</text>
+  <text x="476" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">});</text>
+  <text x="476" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#9aa4b8">// ③ textContent로 삽입 (XSS 방지)</text>
+
+  <!-- Bottom info -->
+  <rect x="460" y="390" width="360" height="48" rx="6" fill="#0d1a0d" stroke="#3aa83a" stroke-width="1"/>
+  <text x="640" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">구조화된 타입 기반 메시지 스키마</text>
+  <text x="640" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">{ type: string, payload: SafeData }</text>
+</svg>

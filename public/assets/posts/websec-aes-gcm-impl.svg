@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" style="background:#0a0a0a;border-radius:12px">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">AES-GCM 구현 패턴</text>
+  <text x="440" y="72" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#888" text-anchor="middle">암호화 + 무결성 검증을 동시에 제공하는 AEAD 모드</text>
+
+  <!-- Left: GCM structure -->
+  <rect x="60" y="95" width="360" height="36" rx="6" fill="#0d1a0d" stroke="#3aa83a" stroke-width="1.5"/>
+  <text x="240" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">GCM 구성 요소</text>
+
+  <rect x="60" y="143" width="360" height="210" rx="6" fill="#0f1820" stroke="#3a6ea8" stroke-width="1"/>
+
+  <!-- Key -->
+  <rect x="80" y="158" width="320" height="36" rx="4" fill="#0d2a0d" stroke="#3aa83a" stroke-width="1"/>
+  <text x="115" y="171" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#55c555">키 (Key)</text>
+  <text x="115" y="185" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">AES-128: 16바이트 / AES-256: 32바이트</text>
+  <text x="380" y="180" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#aaa" text-anchor="end">비밀 유지</text>
+
+  <!-- Nonce -->
+  <rect x="80" y="202" width="320" height="36" rx="4" fill="#1a2a3a" stroke="#3a6ea8" stroke-width="1"/>
+  <text x="115" y="215" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">Nonce (IV)</text>
+  <text x="115" y="229" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">12바이트 (96비트) 랜덤 · 재사용 절대 금지</text>
+
+  <!-- Plaintext -->
+  <rect x="80" y="246" width="320" height="36" rx="4" fill="#0d1520" stroke="#888" stroke-width="1"/>
+  <text x="115" y="259" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8e8e8">평문 (Plaintext)</text>
+  <text x="115" y="273" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">암호화 대상 데이터 (가변 길이)</text>
+
+  <!-- AAD -->
+  <rect x="80" y="290" width="320" height="36" rx="4" fill="#1a0f2a" stroke="#8a3aa8" stroke-width="1"/>
+  <text x="115" y="303" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b07ad0">AAD (추가 인증 데이터)</text>
+  <text x="115" y="317" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">암호화 없이 무결성 검증만 (헤더 등)</text>
+
+  <!-- Output -->
+  <rect x="80" y="334" width="320" height="12" rx="4" fill="#2a2a2a"/>
+
+  <text x="115" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8e8e8">출력: 암호문 + 인증 태그(16바이트)</text>
+
+  <!-- Right: Code examples -->
+  <rect x="455" y="95" width="365" height="36" rx="6" fill="#180d1a" stroke="#8a3aa8" stroke-width="1.5"/>
+  <text x="637" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#b07ad0" text-anchor="middle">Node.js 구현</text>
+
+  <rect x="455" y="143" width="365" height="210" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">const </text>
+  <text x="505" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">{ createCipheriv, randomBytes } =</text>
+  <text x="471" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ce9178">  require</text>
+  <text x="520" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">(</text>
+  <text x="526" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ce9178">'node:crypto'</text>
+  <text x="618" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">);</text>
+  <text x="471" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">function </text>
+  <text x="526" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">encrypt(key, plaintext) {</text>
+  <text x="471" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#9aa4b8">  // 12바이트 랜덤 nonce</text>
+  <text x="471" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  const </text>
+  <text x="505" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">nonce = randomBytes(</text>
+  <text x="637" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#b5cea8">12</text>
+  <text x="650" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">);</text>
+  <text x="471" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  const </text>
+  <text x="505" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">cipher = createCipheriv(</text>
+  <text x="471" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ce9178">    'aes-256-gcm'</text>
+  <text x="570" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">, key, nonce);</text>
+  <text x="471" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  const </text>
+  <text x="505" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">ct = Buffer.concat([</text>
+  <text x="471" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">    cipher.update(plaintext), cipher.final()]);</text>
+  <text x="471" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  const </text>
+  <text x="505" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">tag = cipher.getAuthTag();</text>
+  <text x="471" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#7ec8e3" font-weight="600">  return </text>
+  <text x="510" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">{ nonce, ct, tag };</text>
+  <text x="471" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="11" xml:space="preserve" fill="#ffffff">}</text>
+
+  <!-- Warning: Nonce reuse -->
+  <rect x="60" y="375" width="760" height="65" rx="8" fill="#1a0f0f" stroke="#e05555" stroke-width="1.5"/>
+  <text x="80" y="398" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="700" fill="#e05555">⚠ Nonce 재사용 금지 — 치명적 취약점</text>
+  <text x="80" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#aaa">같은 키와 Nonce로 두 메시지를 암호화하면 키스트림 XOR로 두 평문 모두 복구 가능</text>
+  <text x="80" y="434" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">대응: randomBytes(12)로 매번 새 Nonce 생성 · DB에 (key, nonce) 유니크 제약</text>
+</svg>
