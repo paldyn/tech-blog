@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">재귀 조건부 타입 패턴</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">infer + 재귀로 중첩 구조를 분해하는 타입 레벨 알고리즘</text>
+
+  <!-- Left: flatten -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">중첩 배열 평탄화</text>
+  <rect x="60" y="116" width="360" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Flatten&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt; =</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> (<tspan fill="#7ec8e3" font-weight="600">infer</tspan> Item)[]</text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? Flatten&lt;Item&gt;</text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">T</tspan>;</text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> A = Flatten&lt;<tspan fill="#b5cea8">number</tspan>[][][]&gt;;</text>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// number</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 3번 재귀: number[][][] → number[][] → number[] → number</text>
+
+  <!-- Right: Last -->
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">튜플 마지막 요소</text>
+  <rect x="460" y="116" width="360" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Last&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[]&gt; =</text>
+  <text x="476" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [...unknown[], <tspan fill="#7ec8e3" font-weight="600">infer</tspan> L]</text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? L</text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">never</tspan>;</text>
+  <text x="476" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="476" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> L1 = Last&lt;[1, 2, 3]&gt;;    <tspan fill="#9aa4b8">// 3</tspan></text>
+  <text x="476" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> L2 = Last&lt;[<tspan fill="#ce9178">string</tspan>]&gt;;      <tspan fill="#9aa4b8">// string</tspan></text>
+  <text x="476" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 재귀 없이 variadic 패턴 매칭 사용</text>
+
+  <!-- Bottom: Replace in union -->
+  <text x="60" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">문자열 치환 (재귀 infer)</text>
+  <rect x="60" y="316" width="760" height="126" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Replace&lt;</text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">S</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#ce9178">string</tspan>, From <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#ce9178">string</tspan>, To <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#ce9178">string</tspan></text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">&gt; = <tspan fill="#7ec8e3" font-weight="600">S</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#ce9178">`${<tspan fill="#7ec8e3 font-weight=" font-weight="600">infer</tspan> A}${From}${ <tspan fill="#7ec8e3 font-weight=">infer</tspan> B}`</tspan></text>
+  <text x="76" y="392" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  ? Replace&lt;<tspan fill="#ce9178">`${A}${To}${B}`</tspan>, From, To&gt; : <tspan fill="#7ec8e3" font-weight="600">S</tspan>;</text>
+  <text x="76" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Replace&lt;"a_b_c", "_", "-"&gt; = "a-b-c"</text>
+  <text x="76" y="428" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 모든 출현을 재귀적으로 치환</text>
+
+  <!-- Note -->
+  <rect x="60" y="460" width="760" height="0" rx="4"/>
+</svg>

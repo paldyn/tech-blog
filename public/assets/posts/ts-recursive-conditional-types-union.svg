@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">재귀 + 분배 조건부 타입</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">유니언을 분해해 재귀적으로 변환하는 고급 패턴</text>
+
+  <!-- Left: union to intersection -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">UnionToIntersection (분배 역이용)</text>
+  <rect x="60" y="116" width="360" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> UnionToIntersection&lt;<tspan fill="#7ec8e3" font-weight="600">U</tspan>&gt; =</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  (<tspan fill="#7ec8e3" font-weight="600">U</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#7ec8e3" font-weight="600">any</tspan></text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? (k: <tspan fill="#7ec8e3" font-weight="600">U</tspan>) =&gt; <tspan fill="#7ec8e3" font-weight="600">void</tspan></text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">never</tspan></text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  ) <tspan fill="#7ec8e3" font-weight="600">extends</tspan> (k: <tspan fill="#7ec8e3" font-weight="600">infer</tspan> I) =&gt; <tspan fill="#7ec8e3" font-weight="600">void</tspan></text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? I : <tspan fill="#7ec8e3" font-weight="600">never</tspan>;</text>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// {a:1} | {b:2} → {a:1} &amp; {b:2}</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 반변 위치 infer = 교차 타입으로 합쳐짐</text>
+
+  <!-- Right: Permutation -->
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">유니언 순열 생성</text>
+  <rect x="460" y="116" width="360" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Permutation&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>, <tspan fill="#7ec8e3" font-weight="600">U</tspan> = <tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt; =</text>
+  <text x="476" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  [<tspan fill="#7ec8e3" font-weight="600">T</tspan>] <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [<tspan fill="#7ec8e3" font-weight="600">never</tspan>]</text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? []</text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">U</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#7ec8e3" font-weight="600">U</tspan></text>
+  <text x="476" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? [<tspan fill="#7ec8e3" font-weight="600">U</tspan>, ...Permutation&lt;Exclude&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>, <tspan fill="#7ec8e3" font-weight="600">U</tspan>&gt;&gt;]</text>
+  <text x="476" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">never</tspan>;</text>
+  <text x="476" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Permutation&lt;"a" | "b"&gt;</text>
+  <text x="476" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// = ["a","b"] | ["b","a"]</text>
+
+  <!-- Bottom: depth counter -->
+  <text x="60" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">깊이 제한 — 튜플 길이로 카운터 구현</text>
+  <rect x="60" y="316" width="760" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Repeat&lt;</text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan>, N <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">number</tspan>,</text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  Acc <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#7ec8e3" font-weight="600">T</tspan>[] = []</text>
+  <text x="76" y="392" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">&gt; = Acc[<tspan fill="#ce9178">"length"</tspan>] <tspan fill="#7ec8e3" font-weight="600">extends</tspan> N ? Acc : Repeat&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>, N, [<tspan fill="#7ec8e3" font-weight="600">T</tspan>, ...Acc]&gt;;</text>
+  <text x="76" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Repeat&lt;string, 3&gt; = [string, string, string]</text>
+
+  <!-- Note -->
+  <rect x="60" y="444" width="760" height="0" rx="4"/>
+</svg>

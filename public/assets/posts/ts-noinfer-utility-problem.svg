@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">NoInfer 없을 때의 문제</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">여러 위치에서 T를 추론하면 원치 않는 타입으로 확장된다</text>
+
+  <!-- Problem code block: 9 lines, h=180 -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">문제: T가 두 위치에서 추론되어 의도치 않은 타입 확장 발생</text>
+  <rect x="60" y="116" width="760" height="180" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">function</tspan> setInitialValue&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt;(</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  items: <tspan fill="#7ec8e3" font-weight="600">T</tspan>[],</text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  initial: <tspan fill="#7ec8e3" font-weight="600">T</tspan>  <tspan fill="#9aa4b8">// T도 여기서 추론됨 (문제!)</tspan></text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">): <tspan fill="#7ec8e3" font-weight="600">void</tspan> { <tspan fill="#9aa4b8">/* ... */</tspan> }</text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#9aa4b8">// items = string[] → T = string 으로 추론하길 기대</tspan></text>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">setInitialValue([<tspan fill="#ce9178">"a"</tspan>, <tspan fill="#ce9178">"b"</tspan>], <tspan fill="#b5cea8">0</tspan>);</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 오류 없음! T = string | number 로 확장 — 의도와 다름</text>
+  <text x="76" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// initial에 숫자 0이 들어가야 할 이유가 없는데 허용됨</text>
+
+  <!-- Arrow down -->
+  <defs>
+    <marker id="arrD" viewBox="0 0 14 14" refX="7" refY="12" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 7 13 L 14 0 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <line x1="440" y1="300" x2="440" y2="326" stroke="#e05555" stroke-width="2" marker-end="url(#arrD)"/>
+
+  <!-- Result box -->
+  <rect x="200" y="332" width="480" height="54" rx="6" fill="#1a0505" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">T = string | number (원치 않는 유니언 확장)</text>
+  <text x="440" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">initial 위치도 T 추론에 참여하므로 items와 initial의 공통 슈퍼타입으로 확장됨</text>
+
+  <!-- Note -->
+  <rect x="60" y="418" width="760" height="54" rx="6" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">원하는 동작</text>
+  <text x="440" y="458" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">items에서만 T를 추론하고, initial은 추론에 참여하지 않으면서 T 타입 검사는 받아야 함</text>
+</svg>

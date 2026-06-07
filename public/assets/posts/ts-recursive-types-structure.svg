@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">재귀 타입 패턴</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">타입이 자기 자신을 참조해 중첩 구조를 표현한다</text>
+
+  <!-- Left: Tree node -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">트리 노드 (자기 참조 객체)</text>
+  <rect x="60" y="116" width="360" height="144" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> TreeNode&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt; = {</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  value: <tspan fill="#7ec8e3" font-weight="600">T</tspan>;</text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  children: TreeNode&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt;[];</text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">};</text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> tree: TreeNode&lt;<tspan fill="#b5cea8">number</tspan>&gt; = {</text>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  value: <tspan fill="#b5cea8">1</tspan>,</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  children: [{ value: <tspan fill="#b5cea8">2</tspan>, children: [] }]</text>
+
+  <!-- Right: DeepReadonly -->
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">DeepReadonly (중첩 변환)</text>
+  <rect x="460" y="116" width="360" height="144" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> DeepReadonly&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt; =</text>
+  <text x="476" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">(...args: never[]) =&gt; unknown</tspan></text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? <tspan fill="#7ec8e3" font-weight="600">T</tspan>  <tspan fill="#9aa4b8">// 함수는 그대로</tspan></text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">object</tspan></text>
+  <text x="476" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? { <tspan fill="#7ec8e3" font-weight="600">readonly</tspan> [<tspan fill="#7ec8e3" font-weight="600">K</tspan> <tspan fill="#7ec8e3" font-weight="600">in</tspan> <tspan fill="#7ec8e3" font-weight="600">keyof</tspan> <tspan fill="#7ec8e3" font-weight="600">T</tspan>]: DeepReadonly&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>[<tspan fill="#7ec8e3" font-weight="600">K</tspan>]&gt; }</text>
+  <text x="476" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    : <tspan fill="#7ec8e3" font-weight="600">T</tspan>;  <tspan fill="#9aa4b8">// 원시 타입은 그대로</tspan></text>
+  <text x="476" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 모든 중첩 객체에 readonly 적용</text>
+  <text x="476" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Readonly&lt;T&gt;는 1레벨만 — 이건 무한 깊이</text>
+
+  <!-- JSON value type -->
+  <text x="60" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">JSON 타입 (재귀 유니언)</text>
+  <rect x="60" y="298" width="760" height="108" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Json =</text>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  | <tspan fill="#b5cea8">string</tspan> | <tspan fill="#b5cea8">number</tspan> | <tspan fill="#b5cea8">boolean</tspan> | <tspan fill="#7ec8e3" font-weight="600">null</tspan></text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  | Json[]                   <tspan fill="#9aa4b8">// 배열 재귀</tspan></text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  | { [key: <tspan fill="#b5cea8">string</tspan>]: Json };  <tspan fill="#9aa4b8">// 객체 재귀</tspan></text>
+  <text x="76" y="392" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// JSON.parse() 반환값을 안전하게 타이핑</text>
+
+  <!-- Note -->
+  <rect x="60" y="430" width="760" height="36" rx="6" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">TypeScript는 재귀 타입을 지연 평가(lazy evaluation)로 처리 — 무한 재귀도 허용되는 경우가 있음</text>
+</svg>

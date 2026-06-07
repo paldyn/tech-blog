@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">재귀 타입 제한과 우회</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">즉시 평가 vs 지연 평가 — 인터페이스 래퍼로 순환 참조 해결</text>
+
+  <!-- Left: immediate vs deferred -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555">즉시 평가 (오류 발생)</text>
+  <rect x="60" y="116" width="360" height="126" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// ✗ 즉시 평가 — 타입 오류</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Bad = Bad[];  <tspan fill="#9aa4b8">// 오류!</tspan></text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 조건부/매핑 없이 바로 자기 참조</text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// ✓ 인터페이스로 해결</text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">interface</tspan> GoodList <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#7ec8e3" font-weight="600">Array</tspan>&lt;GoodList&gt; {}</text>
+
+  <!-- Right: depth limit -->
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">깊이 제한 (TS 재귀 깊이 ~50)</text>
+  <rect x="460" y="116" width="360" height="126" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 꼬리 재귀 스타일 (더 깊이 가능)</text>
+  <text x="476" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Flatten&lt;</text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan>,</text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  Acc <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[] = []</text>
+  <text x="476" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">&gt; = <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [<tspan fill="#7ec8e3" font-weight="600">infer</tspan> H, ...<tspan fill="#7ec8e3" font-weight="600">infer</tspan> R]</text>
+  <text x="476" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  ? Flatten&lt;R, [...Acc, H]&gt; : Acc;</text>
+
+  <!-- Deep partial example -->
+  <text x="60" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">실전 패턴: DeepPartial (중첩 optional)</text>
+  <rect x="60" y="280" width="760" height="144" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> DeepPartial&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>&gt; = <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">object</tspan> ? {</text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  [<tspan fill="#7ec8e3" font-weight="600">K</tspan> <tspan fill="#7ec8e3" font-weight="600">in</tspan> <tspan fill="#7ec8e3" font-weight="600">keyof</tspan> <tspan fill="#7ec8e3" font-weight="600">T</tspan>]?: DeepPartial&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan>[<tspan fill="#7ec8e3" font-weight="600">K</tspan>]&gt;;</text>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">} : <tspan fill="#7ec8e3" font-weight="600">T</tspan>;</text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> PartialConfig = DeepPartial&lt;{</text>
+  <text x="76" y="392" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  db: { host: <tspan fill="#ce9178">string</tspan>; port: <tspan fill="#b5cea8">number</tspan> };</text>
+  <text x="76" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">}&gt;; <tspan fill="#9aa4b8">// { db?: { host?: string; port?: number } }</tspan></text>
+
+  <!-- Note -->
+  <rect x="60" y="444" width="760" height="0" rx="4" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="0"/>
+</svg>

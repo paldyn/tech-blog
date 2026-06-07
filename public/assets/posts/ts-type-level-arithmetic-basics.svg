@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">튜플 길이로 구현하는 타입 산술</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">TypeScript에서 숫자는 리터럴 — 튜플로 덧셈·뺄셈·비교를 구현한다</text>
+
+  <!-- Key insight box -->
+  <rect x="60" y="92" width="760" height="54" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">핵심 아이디어</text>
+  <text x="440" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e8e8e8" text-anchor="middle">숫자 리터럴 타입 3 = 길이가 3인 튜플 [u, u, u] — 연산 = 튜플 조작</text>
+
+  <!-- Code block: basics -->
+  <text x="60" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">기본 연산 구현</text>
+  <rect x="60" y="180" width="760" height="252" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="202" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 튜플 생성: N 길이의 튜플 만들기</text>
+  <text x="76" y="220" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Arr&lt;N <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">number</tspan>, A <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[] = []&gt; =</text>
+  <text x="76" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  A[<tspan fill="#ce9178">"length"</tspan>] <tspan fill="#7ec8e3" font-weight="600">extends</tspan> N ? A : Arr&lt;N, [unknown, ...A]&gt;;</text>
+  <text x="76" y="256" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="274" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 덧셈: 두 튜플 합치기 → 길이가 합</text>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Add&lt;A <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">number</tspan>, B <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">number</tspan>&gt; =</text>
+  <text x="76" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  [...Arr&lt;A&gt;, ...Arr&lt;B&gt;][<tspan fill="#ce9178">"length"</tspan>];</text>
+  <text x="76" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Add&lt;3, 4&gt; = 7</text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 뺄셈: B 길이만큼 A에서 제거</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Sub&lt;A <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">number</tspan>, B <tspan fill="#7ec8e3" font-weight="600">extends</tspan> <tspan fill="#b5cea8">number</tspan>&gt; =</text>
+  <text x="76" y="400" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  Arr&lt;A&gt; <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [...Arr&lt;B&gt;, ...<tspan fill="#7ec8e3" font-weight="600">infer</tspan> Rest]</text>
+  <text x="76" y="418" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? Rest[<tspan fill="#ce9178">"length"</tspan>] : <tspan fill="#7ec8e3" font-weight="600">never</tspan>;</text>
+
+  <!-- Note -->
+  <rect x="60" y="454" width="760" height="18" rx="4" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="467" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">재귀 깊이 한계(~50) 때문에 큰 수(50+) 연산은 불가 — 실용 범위: 0~45 정도</text>
+</svg>

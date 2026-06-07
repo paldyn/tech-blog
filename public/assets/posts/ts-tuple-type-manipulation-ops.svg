@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">튜플 타입 분해 &amp; 재조합</text>
+  <text x="440" y="74" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888" text-anchor="middle">variadic 스프레드와 infer로 튜플을 다루는 핵심 패턴</text>
+
+  <!-- Left: basic operations -->
+  <text x="60" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">기본 분해 연산</text>
+  <rect x="60" y="116" width="360" height="198" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 첫 요소 / 나머지</text>
+  <text x="76" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Head&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [unknown, ...unknown[]]&gt; = <tspan fill="#7ec8e3" font-weight="600">T</tspan>[0];</text>
+  <text x="76" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Tail&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[]&gt; =</text>
+  <text x="76" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [unknown, ...<tspan fill="#7ec8e3" font-weight="600">infer</tspan> R] ? R : [];</text>
+  <text x="76" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="76" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 마지막 / 앞부분</text>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Last&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[]&gt; =</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [...unknown[], <tspan fill="#7ec8e3" font-weight="600">infer</tspan> L] ? L : <tspan fill="#7ec8e3" font-weight="600">never</tspan>;</text>
+  <text x="76" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Last&lt;[1,2,3]&gt; = 3</text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Tail&lt;[1,2,3]&gt; = [2, 3]</text>
+
+  <!-- Right: transforms -->
+  <text x="460" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">변환 연산</text>
+  <rect x="460" y="116" width="360" height="198" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 뒤집기</text>
+  <text x="476" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Reverse&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[], Acc <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[] = []&gt; =</text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> [<tspan fill="#7ec8e3" font-weight="600">infer</tspan> H, ...<tspan fill="#7ec8e3" font-weight="600">infer</tspan> R]</text>
+  <text x="476" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">    ? Reverse&lt;R, [H, ...Acc]&gt; : Acc;</text>
+  <text x="476" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// Reverse&lt;[1,2,3]&gt; = [3,2,1]</text>
+  <text x="476" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"></text>
+  <text x="476" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 각 요소에 타입 변환 적용</text>
+  <text x="476" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> TupleToUnion&lt;<tspan fill="#7ec8e3" font-weight="600">T</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> unknown[]&gt; = <tspan fill="#7ec8e3" font-weight="600">T</tspan>[<tspan fill="#b5cea8">number</tspan>];</text>
+  <text x="476" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// TupleToUnion&lt;[1,2,3]&gt; = 1|2|3</text>
+  <text x="476" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// T[number] = 인덱스 접근 타입</text>
+
+  <!-- Bottom: function params -->
+  <text x="60" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">함수 매개변수 ↔ 튜플 변환</text>
+  <rect x="60" y="354" width="760" height="90" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 함수 파라미터 타입 → 튜플</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">type</tspan> Params&lt;<tspan fill="#7ec8e3" font-weight="600">F</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> (...args: never[]) =&gt; unknown&gt; =</text>
+  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">  <tspan fill="#7ec8e3" font-weight="600">F</tspan> <tspan fill="#7ec8e3" font-weight="600">extends</tspan> (...args: <tspan fill="#7ec8e3" font-weight="600">infer</tspan> P) =&gt; unknown ? P : <tspan fill="#7ec8e3" font-weight="600">never</tspan>;</text>
+  <text x="76" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// === Parameters&lt;F&gt; 내장과 동일</text>
+
+  <!-- Note -->
+  <rect x="60" y="462" width="760" height="0" rx="4"/>
+</svg>
