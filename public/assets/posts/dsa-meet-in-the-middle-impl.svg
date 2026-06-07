@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#e8e8e8" text-anchor="middle">부분합 = target 쌍 개수 구하기</text>
+
+  <!-- Code block -->
+  <rect x="60" y="66" width="760" height="316" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="80" y="90" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  # Meet in the Middle: 부분합이 target인 경우의 수</text>
+  <text x="80" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  from</text>
+  <text x="80" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        bisect import bisect_left, bisect_right</text>
+  <text x="80" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  from</text>
+  <text x="80" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        itertools import combinations</text>
+
+  <text x="80" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">  def</text>
+  <text x="80" y="158" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      count_pairs(A, target):</text>
+  <text x="80" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    n = len(A)</text>
+  <text x="80" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    L, R = A[:n//2], A[n//2:]</text>
+  <text x="80" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">    # 왼쪽 절반 부분합 전체 열거</text>
+  <text x="80" y="238" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    sums_L = []</text>
+  <text x="80" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    for</text>
+  <text x="80" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">        k in range(len(L)+1):</text>
+  <text x="80" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">      sums_L += [sum(c)</text>
+  <text x="80" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">                   for c in combinations(L,k)]</text>
+  <text x="80" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    sums_R = sorted([sum(c)</text>
+  <text x="80" y="298" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">                       for k in range(len(R)+1)</text>
+  <text x="80" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">                       for c in combinations(R,k)])</text>
+  <text x="80" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">    return</text>
+  <text x="80" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">           sum(bisect_right(sums_R, target-l)</text>
+  <text x="80" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">                - bisect_left(sums_R, target-l)</text>
+  <text x="80" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">               </text>
+  <text x="80" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">                   for l in sums_L)</text>
+
+  <!-- Bottom -->
+  <rect x="60" y="396" width="760" height="30" rx="6" fill="#111" stroke="#333"/>
+  <text x="440" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">O(2^(N/2) · log N) — N=40: ~2000만 ops vs 완전탐색 ~1조 ops</text>
+</svg>
