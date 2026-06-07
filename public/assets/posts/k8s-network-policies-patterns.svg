@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <!-- Background -->
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">자주 쓰는 NetworkPolicy 패턴</text>
+
+  <!-- Pattern 1: Deny All Ingress -->
+  <rect x="50" y="62" width="370" height="150" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="50" y="62" width="5" height="150" rx="4" fill="#e05555"/>
+  <text x="76" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">1. 기본 차단 (Default Deny)</text>
+  <rect x="66" y="100" width="340" height="96" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="82" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">spec:</text>
+  <text x="82" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">  podSelector: {}</text>
+  <text x="82" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">  policyTypes:</text>
+  <text x="82" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  - Ingress</text>
+  <text x="82" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># ingress: [] → 모두 차단</text>
+
+  <!-- Pattern 2: Allow Specific -->
+  <rect x="460" y="62" width="370" height="150" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="460" y="62" width="5" height="150" rx="4" fill="#55c555"/>
+  <text x="486" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">2. 특정 파드 허용</text>
+  <rect x="476" y="100" width="340" height="96" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="120" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">  ingress:</text>
+  <text x="492" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  - from:</text>
+  <text x="492" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">    - podSelector:</text>
+  <text x="492" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">        app: frontend</text>
+  <text x="492" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># app=frontend 파드만 허용</text>
+
+  <!-- Pattern 3: Namespace isolation -->
+  <rect x="50" y="232" width="370" height="150" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="50" y="232" width="5" height="150" rx="4" fill="#7ec8e3"/>
+  <text x="76" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">3. 네임스페이스 격리</text>
+  <rect x="66" y="270" width="340" height="96" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="82" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">  - from:</text>
+  <text x="82" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">    - namespaceSelector:</text>
+  <text x="82" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">        ns: monitoring</text>
+  <text x="82" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">      podSelector:</text>
+  <text x="82" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># AND 조건: ns+pod 동시 매칭</text>
+
+  <!-- Pattern 4: Egress to external CIDR -->
+  <rect x="460" y="232" width="370" height="150" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="460" y="232" width="5" height="150" rx="4" fill="#7777cc"/>
+  <text x="486" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">4. 외부 CIDR Egress 허용</text>
+  <rect x="476" y="270" width="340" height="96" rx="4" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">  egress:</text>
+  <text x="492" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">  - to:</text>
+  <text x="492" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">    - ipBlock:</text>
+  <text x="492" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">        cidr: 10.0.0.0/8</text>
+  <text x="492" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8"># 내부 CIDR만 허용</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="408" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">from/to 배열 내 여러 항목은 OR 조건, 같은 항목 내 여러 필드는 AND 조건</text>
+  <text x="440" y="424" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">ports 없이 from만 지정하면 모든 포트 허용</text>
+</svg>

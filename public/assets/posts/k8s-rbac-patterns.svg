@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <!-- Background -->
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">RBAC 패턴 — Namespace vs Cluster 범위</text>
+
+  <!-- Pattern 1: RoleBinding to Role -->
+  <rect x="50" y="62" width="370" height="140" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="50" y="62" width="5" height="140" rx="4" fill="#55c555"/>
+  <text x="76" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">① RoleBinding + Role</text>
+  <text x="76" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 특정 네임스페이스 내 파드 조회 허용</text>
+  <text x="76" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 다른 네임스페이스에는 영향 없음</text>
+  <text x="76" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• RoleBinding은 네임스페이스에 생성</text>
+  <text x="76" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• Role도 같은 네임스페이스에 생성</text>
+  <text x="76" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">용도: 개발팀이 특정 NS 내 리소스만 관리</text>
+
+  <!-- Pattern 2: RoleBinding to ClusterRole -->
+  <rect x="460" y="62" width="370" height="140" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="460" y="62" width="5" height="140" rx="4" fill="#7ec8e3"/>
+  <text x="486" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">② RoleBinding + ClusterRole</text>
+  <text x="486" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• ClusterRole을 특정 NS에만 적용</text>
+  <text x="486" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• ClusterRole 재사용 가능 (여러 NS)</text>
+  <text x="486" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• view/edit/admin ClusterRole 활용</text>
+  <text x="486" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 범위는 RoleBinding의 namespace</text>
+  <text x="486" y="188" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">용도: 표준화된 권한을 여러 NS에 적용</text>
+
+  <!-- Pattern 3: ClusterRoleBinding to ClusterRole -->
+  <rect x="50" y="228" width="370" height="140" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="50" y="228" width="5" height="140" rx="4" fill="#7777cc"/>
+  <text x="76" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">③ ClusterRoleBinding + ClusterRole</text>
+  <text x="76" y="274" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 모든 네임스페이스에 걸쳐 권한 부여</text>
+  <text x="76" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• 클러스터 레벨 리소스 접근 가능</text>
+  <text x="76" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• Node, PV, StorageClass 등 접근</text>
+  <text x="76" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• cluster-admin: 완전한 권한 (위험)</text>
+  <text x="76" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">용도: 클러스터 관리자, 모니터링 에이전트</text>
+
+  <!-- Built-in ClusterRoles -->
+  <rect x="460" y="228" width="370" height="140" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1.5"/>
+  <rect x="460" y="228" width="5" height="140" rx="4" fill="#e05555"/>
+  <text x="486" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">기본 제공 ClusterRole</text>
+  <text x="486" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• cluster-admin: 모든 권한</text>
+  <text x="486" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• admin: NS 내 대부분 허용</text>
+  <text x="486" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• edit: 읽기/쓰기 (Role 수정 불가)</text>
+  <text x="486" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">• view: 읽기 전용</text>
+  <text x="486" y="354" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">RoleBinding으로 특정 NS에만 적용 가능</text>
+</svg>
