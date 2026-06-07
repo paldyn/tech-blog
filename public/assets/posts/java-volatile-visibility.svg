@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arrv" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrv2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrv3" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">volatile — 메모리 가시성 보장</text>
+
+  <!-- Left: WITHOUT volatile -->
+  <text x="210" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">volatile 없음 (문제 발생)</text>
+
+  <!-- CPU1 cache -->
+  <rect x="60" y="92" width="140" height="60" rx="6" fill="#1f0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="130" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">CPU1 캐시</text>
+  <text x="130" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">running = true (캐시)</text>
+
+  <!-- CPU2 cache -->
+  <rect x="220" y="92" width="140" height="60" rx="6" fill="#1f0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="290" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">CPU2 캐시</text>
+  <text x="290" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">running = true?? 갱신 안 됨</text>
+
+  <!-- Main memory without volatile -->
+  <rect x="100" y="200" width="260" height="60" rx="6" fill="#111111" stroke="#333" stroke-width="1"/>
+  <text x="230" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#888">Main Memory</text>
+  <text x="230" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">running = false (실제)</text>
+
+  <line x1="130" y1="152" x2="165" y2="198" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="100" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="9" fill="#e05555">캐시에서만 읽음</text>
+
+  <!-- Right: WITH volatile -->
+  <text x="670" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">volatile 있음 (올바름)</text>
+
+  <rect x="520" y="92" width="140" height="60" rx="6" fill="#0a1f0a" stroke="#55c555" stroke-width="2"/>
+  <text x="590" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">CPU1 캐시</text>
+  <text x="590" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">write → 즉시 flush</text>
+
+  <rect x="680" y="92" width="140" height="60" rx="6" fill="#0a1f0a" stroke="#55c555" stroke-width="2"/>
+  <text x="750" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">CPU2 캐시</text>
+  <text x="750" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">read → 항상 메인 메모리</text>
+
+  <rect x="560" y="200" width="260" height="60" rx="6" fill="#111111" stroke="#55c555" stroke-width="1"/>
+  <text x="690" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Main Memory</text>
+  <text x="690" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">running = false (동기화됨)</text>
+
+  <line x1="590" y1="152" x2="630" y2="198" stroke="#55c555" stroke-width="2" marker-end="url(#arrv2)"/>
+  <line x1="690" y1="198" x2="720" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrv)"/>
+
+  <!-- Bottom: happens-before -->
+  <text x="80" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">happens-before 관계</text>
+  <rect x="60" y="320" width="760" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">volatile boolean</text>
+  <text x="224" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> running = </text>
+  <text x="314" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">true</text>
+  <text x="340" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">;</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// Writer Thread: running에 쓰기 전 모든 작업이 happens-before</text>
+  <text x="76" y="378" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sharedData = prepareData();</text>
+  <text x="76" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">running = </text>
+  <text x="168" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">false</text>
+  <text x="194" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">; </text>
+  <text x="220" y="396" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// volatile write</text>
+  <text x="76" y="414" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// Reader Thread: running 읽기 후 sharedData도 최신값</text>
+  <text x="76" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">if</text>
+  <text x="96" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (!running) use(sharedData); </text>
+  <text x="330" y="432" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// volatile read — sharedData 가시성 보장</text>
+</svg>

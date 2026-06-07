@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arrs" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrs2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Monitor Lock 동작 원리</text>
+
+  <!-- Object / Monitor -->
+  <rect x="330" y="70" width="220" height="120" rx="10" fill="#111111" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Java Object (Monitor)</text>
+  <rect x="350" y="108" width="180" height="34" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="121" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Mark Word (헤더)</text>
+  <text x="440" y="135" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#7777cc">lock 상태 | owner threadID</text>
+  <rect x="350" y="148" width="180" height="28" rx="6" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="166" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Wait Set (WAITING 스레드들)</text>
+
+  <!-- Thread A - owns lock -->
+  <rect x="60" y="80" width="150" height="54" rx="8" fill="#0a1f0a" stroke="#55c555" stroke-width="2"/>
+  <text x="135" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Thread A</text>
+  <text x="135" y="121" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">lock 소유 중</text>
+
+  <line x1="210" y1="107" x2="328" y2="107" stroke="#55c555" stroke-width="2" marker-end="url(#arrs)"/>
+  <text x="269" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">진입 성공</text>
+
+  <!-- Thread B - BLOCKED -->
+  <rect x="60" y="180" width="150" height="54" rx="8" fill="#1f0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="135" y="203" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Thread B</text>
+  <text x="135" y="221" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">BLOCKED 대기 중</text>
+
+  <!-- Entry Set -->
+  <rect x="60" y="270" width="240" height="60" rx="8" fill="#111111" stroke="#e05555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="180" y="293" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">Entry Set (진입 대기 큐)</text>
+  <text x="180" y="313" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">Thread B, Thread C, ...</text>
+
+  <line x1="135" y1="234" x2="135" y2="268" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrs2)"/>
+
+  <!-- Thread C -->
+  <rect x="670" y="80" width="150" height="54" rx="8" fill="#1a1400" stroke="#e8c44a" stroke-width="2"/>
+  <text x="745" y="103" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8c44a">Thread C</text>
+  <text x="745" y="121" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">wait() 호출 → WAITING</text>
+
+  <path d="M 745 80 Q 745 50 550 50 Q 440 50 440 68" stroke="#e8c44a" stroke-width="1.5" fill="none" stroke-dasharray="4,4" marker-end="url(#arrs)"/>
+  <text x="600" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e8c44a">wait() → Wait Set</text>
+
+  <!-- notify flow -->
+  <path d="M 550 162 Q 650 162 668 122" stroke="#55c555" stroke-width="1.5" fill="none" stroke-dasharray="4,4" marker-end="url(#arrs)"/>
+  <text x="650" y="158" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">notify()</text>
+
+  <!-- Bottom: synchronized forms -->
+  <text x="80" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">synchronized 사용 형태</text>
+  <rect x="60" y="390" width="340" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 인스턴스 메서드 — this가 모니터</text>
+  <text x="76" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">synchronized</text>
+  <text x="180" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> void method() { ... }</text>
+  <text x="76" y="452" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 정적 메서드 — Class 객체가 모니터</text>
+  <text x="76" y="470" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">static synchronized</text>
+  <text x="214" y="470" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> void sm() { ... }</text>
+  <text x="76" y="492" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 블록 — 명시적 락 객체</text>
+
+  <rect x="470" y="390" width="340" height="110" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="486" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8">// 특정 객체 락 (권장 패턴)</text>
+  <text x="486" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">private final</text>
+  <text x="584" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> Object lock = </text>
+  <text x="700" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">new</text>
+  <text x="726" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> Object();</text>
+  <text x="486" y="452" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">void</text>
+  <text x="516" y="452" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> update() {</text>
+  <text x="486" y="470" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600">    synchronized</text>
+  <text x="614" y="470" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff"> (lock) { /* ... */ }</text>
+  <text x="486" y="488" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff">}</text>
+</svg>
