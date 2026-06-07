@@ -1,174 +1,133 @@
 ---
-title: "NOT NULL, DEFAULT, CHECK 제약 — 데이터 품질을 DB에서 보장하는 방법"
-description: "NOT NULL, DEFAULT, CHECK 제약의 정확한 동작 방식과 NULL의 세값 논리, 제약에 이름을 붙여야 하는 이유를 실무 예시와 함께 정리합니다."
+title: "제약 조건 완전 정리 — NOT NULL, DEFAULT, CHECK"
+description: "SQL 제약 조건이 데이터 무결성을 어떻게 보장하는지, NOT NULL, DEFAULT, CHECK 제약의 동작 방식과 실전 활용 패턴을 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-30"
+pubDate: "2026-06-08"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "NOT NULL", "DEFAULT", "CHECK 제약", "NULL", "데이터 무결성"]
+tags: ["SQL", "제약조건", "NOT NULL", "DEFAULT", "CHECK", "무결성"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-datetime/)에서 날짜/시간 타입을 살펴봤습니다. 이번에는 열 제약 중 가장 기본이자 가장 많이 오용되는 `NOT NULL`, `DEFAULT`, `CHECK`를 자세히 다룹니다. 이 세 가지 제약을 제대로 이해하면 "애플리케이션에서 검증하면 되지 않나요?"라는 질문에 답할 수 있게 됩니다.
+[지난 글](/posts/sql-data-types-datetime/)에서 날짜·시간 타입을 다뤘다. 올바른 타입 선택 다음 단계는 **제약 조건(Constraint)**이다. 제약 조건은 데이터베이스 계층에서 잘못된 데이터를 원천 차단하는 메커니즘이다. 애플리케이션 코드가 우회되거나 버그를 포함해도 데이터베이스 수준에서 막힌다.
 
-## 왜 DB에서 제약을 걸어야 하나
+## 왜 DB 제약 조건이 필요한가
 
-애플리케이션 레이어에서도 데이터를 검증하지만, DB 제약이 별도로 필요한 이유가 있습니다.
+애플리케이션 코드에서 유효성 검사를 해도 다음 경로가 열려 있다.
 
-1. **다중 진입점**: API, 배치 잡, 마이그레이션 스크립트, 관리 도구 등 데이터가 들어오는 경로는 하나가 아닙니다.
-2. **버그 방어선**: 애플리케이션 버그로 검증이 누락되어도 DB가 마지막 방어선 역할을 합니다.
-3. **자체 문서화**: 스키마를 보면 어떤 값이 허용되는지 바로 알 수 있습니다.
+- **직접 INSERT**: DBA가 SQL 클라이언트로 직접 데이터를 넣는 경우
+- **배치 스크립트**: 유효성 검사 없는 마이그레이션 스크립트
+- **여러 애플리케이션**: 같은 DB를 사용하는 다른 앱이 규칙을 모를 수 있음
+- **버그**: 애플리케이션 코드의 엣지 케이스
 
-![열 제약의 역할과 검사 시점](/assets/posts/sql-constraints-not-null-default-check-overview.svg)
+DB 제약 조건은 "어떤 경로로 들어오든" 규칙을 강제한다.
+
+![제약 조건의 역할 — 데이터 무결성 계층](/assets/posts/sql-constraints-not-null-default-check-overview.svg)
 
 ## NOT NULL
 
-`NOT NULL`은 해당 열에 NULL 값이 들어오는 것을 차단합니다.
+NULL을 허용하지 않는다. 값이 반드시 있어야 한다.
 
 ```sql
-CREATE TABLE users (
-    id         BIGINT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    email      VARCHAR(200) NOT NULL,         -- 필수
-    name       VARCHAR(100) NOT NULL,         -- 필수
-    bio        TEXT,                          -- 선택 (NULL 허용)
-    login_count INT         NOT NULL DEFAULT 0  -- 필수, 기본값 0
+CREATE TABLE 주문 (
+    주문ID    INTEGER      PRIMARY KEY,
+    고객ID   VARCHAR(10)  NOT NULL,   -- 고객 없는 주문은 불가
+    주문일시  TIMESTAMP    NOT NULL,   -- 주문 시각 반드시 기록
+    금액     NUMERIC(12,2) NOT NULL,   -- 금액 없는 주문 불가
+    메모     TEXT                     -- NULL 허용 (선택 항목)
 );
 ```
 
-**"이 열이 항상 값을 가져야 하는가?"** — YES라면 `NOT NULL`. NO라면 NULL 허용(기본값).
-
-NULL을 허용하는 열은 `IS NULL`, `IS NOT NULL`로 쿼리하고, `COALESCE`로 기본값을 제공합니다.
+NULL은 "값이 없음"이지 0이나 빈 문자열이 아니다. 집계 함수(`SUM`, `AVG`, `COUNT`)는 NULL을 무시한다. `WHERE 메모 = NULL`은 동작하지 않고 `WHERE 메모 IS NULL`을 써야 한다.
 
 ```sql
-SELECT name, COALESCE(bio, '소개 없음') AS bio
-FROM users;
+-- NOT NULL 컬럼에 NULL 삽입 시도 → 오류
+INSERT INTO 주문 (주문ID, 고객ID, 주문일시, 금액)
+VALUES (1, NULL, CURRENT_TIMESTAMP, 50000);
+-- ERROR: null value in column "고객ID" violates not-null constraint
 ```
-
-## NULL의 세값 논리 (가장 중요한 함정)
-
-SQL의 NULL은 "값 없음"이 아니라 "알 수 없음(UNKNOWN)"입니다. NULL과의 비교 결과는 항상 UNKNOWN이므로, 일반 비교 연산자(=, !=, <)로는 NULL을 찾을 수 없습니다.
-
-![NULL의 세값 논리](/assets/posts/sql-constraints-not-null-default-check-null3val.svg)
-
-```sql
--- 잘못된 쿼리: 항상 0행 반환
-SELECT * FROM orders WHERE deleted_at = NULL;
-SELECT * FROM orders WHERE deleted_at != NULL;
-
--- 올바른 쿼리
-SELECT * FROM orders WHERE deleted_at IS NULL;
-SELECT * FROM orders WHERE deleted_at IS NOT NULL;
-```
-
-`WHERE` 절에서 UNKNOWN은 행을 제외합니다. 이 때문에 NULL이 있는 열에 인덱스를 사용할 때도 주의가 필요합니다.
 
 ## DEFAULT
 
-`DEFAULT`는 INSERT 시 해당 열의 값이 생략되면 자동으로 지정한 값을 사용합니다.
+값을 생략했을 때 자동으로 채울 기본값이다.
 
 ```sql
-CREATE TABLE orders (
-    status     VARCHAR(20) NOT NULL DEFAULT 'pending',
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    retry_count INT        NOT NULL DEFAULT 0,
-    is_active  BOOLEAN     NOT NULL DEFAULT TRUE
+CREATE TABLE 게시글 (
+    글ID      INTEGER    PRIMARY KEY,
+    제목      VARCHAR(200) NOT NULL,
+    조회수    INTEGER    NOT NULL DEFAULT 0,             -- 숫자 기본값
+    공개여부  BOOLEAN    NOT NULL DEFAULT TRUE,          -- 불리언 기본값
+    상태      VARCHAR(20) NOT NULL DEFAULT '초안',       -- 문자열 기본값
+    생성일시  TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP  -- 함수 기본값
 );
 
--- created_at, status, is_active 생략 가능
-INSERT INTO orders (customer_id, total) VALUES (1, 50000);
+-- 조회수, 공개여부, 상태, 생성일시 생략 가능
+INSERT INTO 게시글 (글ID, 제목) VALUES (1, '첫 번째 글');
+-- 자동: 조회수=0, 공개여부=TRUE, 상태='초안', 생성일시=현재시각
 ```
 
-DEFAULT 값으로 다음을 사용할 수 있습니다.
-
-| 유형 | 예시 |
-|---|---|
-| 리터럴 | `DEFAULT 0`, `DEFAULT 'pending'`, `DEFAULT TRUE` |
-| 함수 | `DEFAULT now()`, `DEFAULT gen_random_uuid()` |
-| 표현식 | `DEFAULT CURRENT_DATE + INTERVAL '30 days'` |
-
-주의: DEFAULT는 열 값이 명시적으로 **생략**될 때만 적용됩니다. `INSERT INTO t (col) VALUES (NULL)`처럼 명시적으로 NULL을 넣으면 NOT NULL 제약을 위반합니다.
+`DEFAULT` 표현식에는 리터럴 값과 일부 함수(`CURRENT_TIMESTAMP`, `CURRENT_DATE`, `NOW()`)를 쓸 수 있다. 서브쿼리나 사용자 정의 함수는 DBMS마다 지원 여부가 다르다.
 
 ## CHECK
 
-`CHECK`는 임의의 불리언 표현식으로 허용 값을 제한합니다. 표준 SQL에서 지원하며 대부분의 DBMS가 구현합니다.
+불리언 조건이 TRUE인 행만 허용한다. UNKNOWN(NULL이 포함된 비교)은 허용된다.
 
 ```sql
-CREATE TABLE products (
-    id      BIGINT  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name    VARCHAR(200) NOT NULL,
-    price   NUMERIC(12,2) NOT NULL CHECK (price >= 0),
-    stock   INT           NOT NULL DEFAULT 0 CHECK (stock >= 0),
-    rating  NUMERIC(3,1)           CHECK (rating BETWEEN 0 AND 5),
-    status  VARCHAR(20)   NOT NULL
-            CHECK (status IN ('draft', 'published', 'archived'))
+CREATE TABLE 상품 (
+    상품ID    INTEGER      PRIMARY KEY,
+    이름      VARCHAR(200) NOT NULL,
+    가격      NUMERIC(12,2) NOT NULL
+                CHECK (가격 > 0),                    -- 양수만
+    할인율    NUMERIC(5,4) NOT NULL DEFAULT 0
+                CHECK (할인율 BETWEEN 0 AND 0.5),    -- 0~50% 범위
+    등급      CHAR(1)      NOT NULL
+                CHECK (등급 IN ('A', 'B', 'C')),    -- 허용 값 목록
+    시작일    DATE         NOT NULL,
+    종료일    DATE,
+    -- 테이블 수준: 두 열 간의 관계 검증
+    CONSTRAINT chk_날짜순서 CHECK (종료일 IS NULL OR 종료일 > 시작일)
 );
 ```
 
-체크 제약에 이름을 붙이면 오류 추적이 쉬워집니다.
+`CONSTRAINT 이름` 구문으로 제약에 이름을 붙이면 오류 메시지에서 어느 제약을 위반했는지 알 수 있다.
+
+![NOT NULL · DEFAULT · CHECK 예시](/assets/posts/sql-constraints-not-null-default-check-examples.svg)
+
+## 기존 테이블에 제약 추가
+
+이미 데이터가 있는 테이블에 제약을 추가하면 기존 데이터를 검증한다. 위반 행이 있으면 추가가 실패한다.
 
 ```sql
--- 이름 없는 제약: 오류 메시지 "check constraint violated"
--- 이름 있는 제약: 오류 메시지 "check_price_non_negative violated"
-CONSTRAINT check_price_non_negative CHECK (price >= 0)
+-- NOT NULL 추가 (기존 NULL 행이 없어야 성공)
+ALTER TABLE 고객 ALTER COLUMN 이메일 SET NOT NULL;
+
+-- CHECK 제약 추가
+ALTER TABLE 상품
+    ADD CONSTRAINT chk_가격양수 CHECK (가격 > 0);
+
+-- 기존 위반 행이 있으면 검증 없이 추가 (나중에 검증)
+-- PostgreSQL 전용: NOT VALID → VALIDATE CONSTRAINT로 나중에 검증
+ALTER TABLE 상품
+    ADD CONSTRAINT chk_가격양수 CHECK (가격 > 0) NOT VALID;
+-- 신규 INSERT/UPDATE만 즉시 검증, 기존 데이터는 별도로
+ALTER TABLE 상품 VALIDATE CONSTRAINT chk_가격양수;
 ```
 
-### 테이블 제약으로 여러 열 조합 검증
+PostgreSQL의 `NOT VALID` + `VALIDATE CONSTRAINT` 패턴은 대용량 테이블에서 잠금 시간을 최소화하는 무중단 제약 추가 방법이다.
 
-열 제약은 해당 열 하나만 참조할 수 있습니다. 여러 열을 조합해 검증해야 할 때는 테이블 제약을 사용합니다.
+## CHECK 제약의 한계
 
-```sql
-CREATE TABLE discount_rules (
-    id         INT PRIMARY KEY,
-    start_date DATE NOT NULL,
-    end_date   DATE NOT NULL,
-    discount   NUMERIC(5,2) NOT NULL,
-    CONSTRAINT check_date_range   CHECK (end_date > start_date),
-    CONSTRAINT check_discount_pct CHECK (discount > 0 AND discount <= 100)
-);
-```
-
-## ALTER TABLE로 제약 추가/제거
-
-기존 테이블에 제약을 추가하거나 제거할 수 있습니다.
-
-```sql
--- 제약 추가
-ALTER TABLE products
-    ADD CONSTRAINT check_stock_non_negative CHECK (stock >= 0);
-
-ALTER TABLE users
-    ALTER COLUMN name SET NOT NULL;
-
-ALTER TABLE orders
-    ALTER COLUMN status SET DEFAULT 'pending';
-
--- 제약 제거
-ALTER TABLE products
-    DROP CONSTRAINT check_stock_non_negative;
-
-ALTER TABLE users
-    ALTER COLUMN bio DROP NOT NULL;
-```
-
-대규모 테이블에서 `NOT NULL` 추가는 기존 NULL 값을 먼저 업데이트해야 하므로 주의가 필요합니다.
-
-## 정리
-
-| 제약 | 목적 | 핵심 규칙 |
-|---|---|---|
-| `NOT NULL` | NULL 차단 | `IS NULL` / `IS NOT NULL`으로 비교 |
-| `DEFAULT` | 기본값 자동 삽입 | 생략 시만 적용, 명시적 NULL에는 적용 안 됨 |
-| `CHECK` | 값 범위·패턴 검증 | 이름 부여 권장, 다중 열은 테이블 제약 |
-
-다음 글에서는 기본 키 설계의 원칙과 자연 키 vs 대리 키 논쟁을 다룹니다.
+- **참조 무결성**: 다른 테이블의 값을 참조하는 CHECK는 표준 SQL에서 불가능하다. 외래 키(FOREIGN KEY)로 처리한다.
+- **트리거 기반 로직**: 복잡한 비즈니스 규칙은 CHECK 대신 트리거나 애플리케이션에서 처리한다.
+- **성능**: MySQL 8.0.16 이전에는 CHECK가 파싱만 되고 실제 검증이 안 됐다. MySQL 8.0.16+, PostgreSQL, Oracle은 완전히 지원한다.
 
 ---
 
-**지난 글:** [날짜와 시간 데이터 타입 — TIMESTAMP, DATE, INTERVAL 완전 정복](/posts/sql-data-types-datetime/)
+**지난 글:** [데이터 타입 완전 정리 — 날짜와 시간](/posts/sql-data-types-datetime/)
 
-**다음 글:** [기본 키 설계 원칙](/posts/sql-primary-key-design/)
+**다음 글:** [기본 키 설계 — 자연 키 vs 대리 키](/posts/sql-primary-key-design/)
 
 <br>
 읽어주셔서 감사합니다. 😊

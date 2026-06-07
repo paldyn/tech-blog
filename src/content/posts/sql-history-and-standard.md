@@ -1,86 +1,90 @@
 ---
-title: "SQL의 역사와 표준 — ANSI/ISO SQL이 만들어진 이유"
-description: "1970년 Codd 논문부터 최신 SQL:2023까지, SQL이 어떻게 표준화되었고 각 DBMS가 어떤 방언을 사용하는지 정리합니다."
+title: "SQL의 역사와 표준 — ISO SQL이 중요한 이유"
+description: "SQL이 어떻게 탄생하고 표준화되었는지, SQL-86부터 SQL:2023까지의 역사와 각 DBMS 방언의 차이를 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-30"
+pubDate: "2026-06-08"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "SQL 표준", "ANSI SQL", "SQL 역사", "방언"]
+tags: ["SQL", "표준SQL", "SQL역사", "ANSI", "ISO"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-relational-model/)에서 관계형 모델의 수학적 토대를 살펴봤습니다. 이번 글은 그 이론이 실제 언어인 SQL로 어떻게 구체화되었는지, 그리고 왜 "표준 SQL"이 존재하는지를 역사적 맥락에서 짚어봅니다.
+[지난 글](/posts/sql-relational-model/)에서 관계형 모델의 수학적 기초를 살펴봤다. 이번에는 그 이론이 어떻게 실제 언어로 구현되었는지, SQL이 탄생하고 표준화되는 과정을 짚는다. 역사를 알면 왜 특정 문법이 그 모양인지, 왜 DBMS마다 조금씩 다른지가 이해된다.
 
 ## SEQUEL에서 SQL로
 
-1970년 Edgar F. Codd가 IBM 연구소에서 관계형 모델을 제안한 이후, IBM 연구팀은 이 이론을 구현하는 언어를 개발하기 시작합니다. 1974년 Donald Chamberlin과 Raymond Boyce는 **SEQUEL(Structured English QUEry Language)**을 발표합니다. 상표권 문제로 이름이 **SQL**로 바뀌었지만 발음은 아직도 두 가지가 혼용됩니다.
+1970년 에드거 F. 코드가 관계형 모델 논문을 발표한 후, IBM 연구소의 도널드 챔벌린(Donald Chamberlin)과 레이먼드 보이스(Raymond Boyce)가 1974년 코드의 이론을 실제로 사용 가능한 언어로 구현했다. 처음 이름은 **SEQUEL(Structured English Query Language)**. "영어처럼 읽히는 쿼리 언어"를 목표로 했다.
 
-1979년 Relational Software Inc.(후의 Oracle)가 최초로 상용 RDBMS를 출시하면서 SQL은 사실상 업계 표준으로 자리잡기 시작합니다. IBM도 같은 해 DB2 전신인 System R을 출시합니다.
-
-## ANSI/ISO 표준화 역사
+상표권 문제로 이름이 **SQL(Structured Query Language)**로 바뀌었고, IBM의 System R 프로젝트에서 실제 동작하는 구현체가 만들어졌다. 1979년에는 오라클(당시 SDL)이 System R을 참고해 최초의 상용 관계형 데이터베이스인 Oracle v2를 출시했다.
 
 ![SQL 역사 타임라인](/assets/posts/sql-history-and-standard-timeline.svg)
 
-각 표준의 핵심 기여를 정리하면 다음과 같습니다.
+## SQL 표준의 진화
 
-**SQL-86 (SQL1)**: ANSI가 처음으로 채택한 표준. SELECT, INSERT, UPDATE, DELETE 기본 구문을 정의했습니다. 현재 기준으로는 매우 제한적이었습니다.
+### SQL-86 / SQL-89 (SQL1)
 
-**SQL-92 (SQL2)**: 가장 폭넓게 구현된 표준입니다. JOIN의 명시적 문법(`INNER JOIN`, `LEFT OUTER JOIN`), 서브쿼리, `CASE` 표현식, `CAST`, 문자열 함수가 추가되었습니다. 지금도 "SQL"이라고 하면 많은 사람이 이 버전을 떠올립니다.
+1986년 ANSI, 1987년 ISO에서 첫 표준이 채택되었다. `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `WHERE`, `GROUP BY`, `HAVING`이 이 시기에 정의되었다. 지금도 가장 많이 쓰는 핵심 문법들이다.
 
-**SQL:1999 (SQL3)**: 패러다임을 바꾼 버전입니다. `WITH` 절(CTE), 재귀 쿼리, 윈도우 함수, 사용자 정의 타입, 트리거, 저장 프로시저가 표준에 포함됩니다.
+### SQL-92 (SQL2)
 
-**SQL:2003**: `MERGE`, `SEQUENCE`, XML 지원, `ROW_NUMBER()` 등이 추가됩니다.
+현재도 "SQL 기본"으로 불리는 버전이다. `OUTER JOIN`, `CASE` 표현식, `CAST`, 서브쿼리, 트랜잭션 격리 수준(READ COMMITTED 등), `CREATE TABLE`, `ALTER TABLE`이 표준화되었다. 이 버전을 잘 구현한 DBMS가 **"ANSI SQL 호환"**이라고 표시한다.
 
-**SQL:2016 이후**: JSON 함수, 행 패턴 인식(`MATCH_RECOGNIZE`), 다형적 테이블 함수가 추가되며 현재까지 이어집니다.
+### SQL:1999 (SQL3)
 
-## 방언(Dialect): 표준을 벗어나는 확장
+OOP 개념 추가와 함께 **CTE(WITH 절)**, **재귀 쿼리**, 트리거, 저장 루틴, 다차원 데이터 타입이 도입되었다. 콜론(:) 구분자 도입도 이때부터다(SQL-92까지는 하이픈).
 
-표준이 있어도 각 DBMS는 표준을 부분적으로만 구현하고, 독자적인 확장을 추가합니다. 이를 **SQL 방언**이라 부릅니다.
+### SQL:2003~2016
 
-![SQL 방언 비교](/assets/posts/sql-history-and-standard-dialect.svg)
+**윈도우 함수**(`OVER`, `PARTITION BY`), **MERGE**, **XML** 지원, **SEQUENCE**가 2003년에 들어왔다. 2016년에는 **JSON 함수**(`JSON_VALUE`, `JSON_OBJECT`)와 **행 패턴 인식(MATCH_RECOGNIZE)**이 추가되었다.
 
-자주 마주치는 방언 차이를 예시로 보면 다음과 같습니다.
+### SQL:2023
+
+그래프 데이터를 SQL에서 직접 다루기 위한 **GQL(Graph Query Language)** 통합이 가장 큰 변화다. `UNIQUE` 제약의 NULL 처리 개선, 다중 파라미터 GREATEST/LEAST도 포함된다.
+
+## DBMS별 방언(Dialect)
+
+표준이 있어도 각 DBMS는 독자 확장을 추가한다. 표준을 앞서가거나, 상업적 차별화가 목적이거나, 역사적 이유로 이미 굳어진 경우다.
 
 ```sql
--- 상위 3행 가져오기
--- ANSI SQL:2008+
-SELECT * FROM products ORDER BY price FETCH FIRST 3 ROWS ONLY;
+-- 페이지네이션: 같은 목적, 다른 문법
+-- Standard SQL:2008+ (PostgreSQL, MySQL 8+)
+SELECT * FROM 고객 ORDER BY 고객ID FETCH FIRST 10 ROWS ONLY;
 
 -- MySQL / MariaDB
-SELECT * FROM products ORDER BY price LIMIT 3;
+SELECT * FROM 고객 ORDER BY 고객ID LIMIT 10;
 
 -- SQL Server (T-SQL)
-SELECT TOP 3 * FROM products ORDER BY price;
+SELECT TOP 10 * FROM 고객 ORDER BY 고객ID;
 
 -- Oracle (12c 이전)
-SELECT * FROM (
-    SELECT * FROM products ORDER BY price
-) WHERE ROWNUM <= 3;
+SELECT * FROM 고객 WHERE ROWNUM <= 10 ORDER BY 고객ID;
 ```
 
-같은 결과를 얻는데 문법이 네 가지입니다. 이 때문에 ORM이나 마이그레이션 도구가 방언 추상화를 맡는 경우가 많습니다.
+![DBMS별 SQL 방언 비교](/assets/posts/sql-history-and-standard-dialects.svg)
 
 ## 표준을 배워야 하는 이유
 
-방언 차이가 크더라도 표준 SQL을 먼저 익히는 것이 중요합니다.
+방언을 먼저 배우면 특정 DBMS에 종속된다. 표준 SQL을 기반으로 익히면:
 
-1. **이식성**: 표준 문법은 어떤 DBMS에서도 동작하거나 최소한 해석 가능합니다.
-2. **이해력**: 방언을 이해하려면 표준이 기준점이 되어야 합니다.
-3. **미래 대비**: DBMS들은 시간이 지나면서 표준 쪽으로 수렴하는 경향이 있습니다(예: MySQL 8.0의 윈도우 함수 지원).
+- **이식성**: MySQL에서 PostgreSQL로 이전할 때 코드 수정이 최소화된다.
+- **일관된 이해**: 동일 개념이 왜 다른 문법으로 표현되는지 이해할 수 있다.
+- **최적화 사고**: 실행 계획 이해, 쿼리 재작성 등은 표준 개념 위에서 이루어진다.
 
-이 시리즈는 특정 DBMS에 치우치지 않고 표준 SQL을 기반으로 설명하되, 벤더별 차이가 중요한 지점에서는 명시적으로 표기합니다.
+이 시리즈는 **ISO SQL 표준**을 기준으로 설명하고, DBMS별로 중요한 차이가 있을 때만 별도로 표기한다.
 
-## 정리
+## 표준 준수 수준
 
-SQL은 이론(관계형 모델) → 실험적 구현(SEQUEL) → 상용화 → 표준화의 경로를 거쳐 지금에 이르렀습니다. 표준은 50년에 걸쳐 꾸준히 확장되었고, 각 DBMS는 표준을 부분 구현하면서 독자 기능을 추가했습니다. 다음 글에서는 클라이언트가 SQL을 DBMS로 전달하는 프로토콜 계층을 살펴봅니다.
+표준을 "완전히" 구현한 DBMS는 없다. ISO 표준은 Core SQL과 여러 Feature로 나뉘며, DBMS마다 구현 수준이 다르다. PostgreSQL이 표준 준수율이 가장 높은 것으로 알려져 있고, Oracle과 SQL Server는 각자의 확장이 풍부하다. MySQL/MariaDB는 실용성 중심으로 발전했다.
+
+표준 문법이 동작하지 않을 때는 해당 DBMS 문서의 "Compatibility" 또는 "Non-standard extension" 섹션을 확인하면 대안을 찾을 수 있다.
 
 ---
 
-**지난 글:** [관계형 모델의 핵심 — 테이블, 키, 그리고 관계](/posts/sql-relational-model/)
+**지난 글:** [관계형 모델의 수학적 기초 — 릴레이션과 집합 이론](/posts/sql-relational-model/)
 
-**다음 글:** [클라이언트-서버 프로토콜 — SQL이 전달되는 방식](/posts/sql-client-server-protocol/)
+**다음 글:** [SQL 클라이언트-서버 프로토콜 — 쿼리가 실행되는 과정](/posts/sql-client-server-protocol/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,151 +1,144 @@
 ---
-title: "날짜와 시간 데이터 타입 — TIMESTAMP, DATE, INTERVAL 완전 정복"
-description: "DATE, TIME, TIMESTAMP, TIMESTAMPTZ의 차이와 타임존 처리, INTERVAL 연산, 실무에서 자주 발생하는 날짜 타입 실수를 정리합니다."
+title: "데이터 타입 완전 정리 — 날짜와 시간"
+description: "SQL DATE, TIME, TIMESTAMP, TIMESTAMPTZ, INTERVAL의 차이와 연산 방법, DBMS별 구현 차이, 타임존 처리 주의사항을 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-30"
+pubDate: "2026-06-08"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "날짜 타입", "TIMESTAMP", "타임존", "INTERVAL", "TIMESTAMPTZ"]
+tags: ["SQL", "DATE", "TIMESTAMP", "INTERVAL", "타임존", "데이터타입"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 숫자와 문자열 타입을 살펴봤습니다. 이번에는 날짜와 시간 타입을 다룹니다. "날짜는 그냥 저장하면 되지 않나?"라고 생각하기 쉽지만, 타임존 처리를 잘못하면 데이터가 조용히 틀려지는 심각한 버그가 발생합니다.
+[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 숫자와 문자열 타입을 살펴봤다. 날짜·시간 타입은 타입 종류가 많고 DBMS마다 이름이 달라 혼란스럽다. 특히 타임존을 잘못 다루면 글로벌 서비스에서 데이터가 어긋나는 심각한 문제가 생긴다.
 
-## 날짜/시간 타입 종류
+## 날짜·시간 타입 종류
+
+SQL은 세 가지 기본 날짜·시간 타입을 정의한다.
+
+```sql
+-- 날짜만
+생년월일   DATE         -- '1990-01-15'
+
+-- 시간만
+영업시작   TIME         -- '09:00:00'
+
+-- 날짜 + 시간 (타임존 없음)
+생성일시   TIMESTAMP    -- '2026-06-08 14:30:00.000000'
+
+-- 날짜 + 시간 + 타임존
+이벤트일시 TIMESTAMPTZ  -- '2026-06-08 14:30:00+09'
+-- (내부는 UTC로 저장, 조회 시 세션 타임존으로 변환)
+
+-- 기간
+체험기간   INTERVAL     -- '30 days', '3 months', '1 year 6 months'
+```
 
 ![날짜·시간 타입 비교](/assets/posts/sql-data-types-datetime-types.svg)
 
+## DATE — 날짜만 필요할 때
+
+생년월일, 계약 만료일, 공휴일 등 시간 정보가 의미 없는 경우에 사용한다.
+
 ```sql
--- DATE: 날짜만
-birth_date  DATE    NOT NULL,           -- 1990-01-01
+CREATE TABLE 직원 (
+    직원ID   INTEGER  PRIMARY KEY,
+    입사일   DATE     NOT NULL,
+    생년월일 DATE
+);
 
--- TIME: 시간만 (타임존 없음)
-open_time   TIME    NOT NULL,           -- 09:00:00
+-- 입사 후 경과 일수
+SELECT 직원ID, CURRENT_DATE - 입사일 AS 재직일수
+FROM   직원;
 
--- TIMESTAMP: 날짜+시간 (타임존 없음)
-local_time  TIMESTAMP NOT NULL,         -- 2026-05-30 14:30:00
-
--- TIMESTAMPTZ (WITH TIME ZONE): 날짜+시간+타임존 정보
-created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),  -- 2026-05-30 14:30:00+09
-
--- INTERVAL: 시간 간격
-expire_in   INTERVAL    -- INTERVAL '7 days', INTERVAL '1 hour 30 minutes'
+-- 30일 후 만료
+SELECT 계약ID,
+       만료일 - CURRENT_DATE AS 남은일수
+FROM   계약
+WHERE  만료일 BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '30 days';
 ```
 
 ## TIMESTAMP vs TIMESTAMPTZ
 
-**가장 중요한 구분입니다.**
-
-`TIMESTAMP`(타임존 없음)는 입력된 값을 그대로 저장합니다. 서버의 타임존 설정에 따라 같은 값이 다른 의미를 가질 수 있습니다.
-
-`TIMESTAMPTZ`(타임존 있음, PostgreSQL 약어)는 입력 값을 UTC로 변환해 저장하고, 조회 시 세션의 타임존으로 변환해 반환합니다.
+이 둘의 차이를 모르면 글로벌 서비스에서 데이터가 어긋난다.
 
 ```sql
--- 세션 타임존 Asia/Seoul (+09:00) 에서 삽입
-INSERT INTO events (name, started_at)
-VALUES ('컨퍼런스', '2026-05-30 14:00:00');
+-- TIMESTAMP: 타임존 정보 없이 "있는 그대로" 저장
+생성일시 TIMESTAMP    -- '2026-06-08 14:30:00'
+-- KST로 저장했는데 서버 타임존이 바뀌면 다른 시각으로 해석됨
 
--- TIMESTAMP라면: '2026-05-30 14:00:00' 그대로 저장
--- TIMESTAMPTZ라면: '2026-05-30 05:00:00 UTC'로 저장
---   → 다른 TZ(UTC) 세션에서 조회하면 '2026-05-30 05:00:00' 반환
---   → Asia/Seoul 세션에서 조회하면 '2026-05-30 14:00:00' 반환
+-- TIMESTAMPTZ: UTC로 변환해 저장, 조회 시 세션 타임존으로 변환
+이벤트일시 TIMESTAMPTZ  -- 내부: UTC '2026-06-08 05:30:00+00'
+-- SET timezone = 'Asia/Seoul'; → '2026-06-08 14:30:00+09'로 보임
+-- SET timezone = 'America/New_York'; → '2026-06-08 01:30:00-04'로 보임
 ```
 
-**글로벌 서비스나 팀원이 다른 타임존에 있다면 `TIMESTAMPTZ`를 기본으로 선택합니다.** 국내 단일 서비스라도 서버 이전이나 클라우드 리전 변경 시 TIMESTAMP는 위험합니다.
+**글로벌 서비스 규칙**: 이벤트 발생 시각을 저장할 때는 항상 `TIMESTAMPTZ`(또는 UTC로 저장하는 `TIMESTAMP`)를 사용한다. 타임존 없는 `TIMESTAMP`는 로컬 시각이 명확히 고정된 시스템에서만 쓴다.
 
-## 실무 권장 설계 패턴
+## MySQL의 2038 문제
+
+MySQL의 `TIMESTAMP` 타입은 내부적으로 4바이트 Unix timestamp를 저장한다. 최대값이 2038년 1월 19일 03:14:07 UTC다.
 
 ```sql
-CREATE TABLE orders (
-    id          BIGINT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    -- 생성/수정 시각은 항상 타임존 포함
-    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-    -- 비즈니스 의미가 있는 날짜는 DATE
-    due_date    DATE,
-    -- 삭제 처리 시각
-    deleted_at  TIMESTAMPTZ
-);
+-- MySQL: TIMESTAMP는 2038년 한계
+주문일시 TIMESTAMP   -- 2038년 이후 데이터 저장 불가!
+
+-- MySQL: DATETIME이 안전
+주문일시 DATETIME    -- 0001 ~ 9999년 지원 (타임존 없음)
 ```
 
-## INTERVAL 연산
+신규 시스템 설계 시 MySQL에서는 타임존이 필요 없으면 `DATETIME`, 타임존이 필요하면 UTC로 통일한 `DATETIME`에 저장하는 관례를 쓴다.
 
-`INTERVAL`은 시간 간격을 표현합니다. 날짜 연산에 매우 유용합니다.
+## INTERVAL — 기간 연산
 
 ```sql
--- 7일 후 만료
-SELECT now() + INTERVAL '7 days' AS expires_at;
+-- 만료일 산출
+SELECT 가입일 + INTERVAL '1 year' AS 만료일
+FROM   구독;
 
--- 1개월 전 데이터 조회
-SELECT * FROM logs
-WHERE created_at >= now() - INTERVAL '1 month';
+-- 7일 이내 주문 조회
+SELECT * FROM 주문
+WHERE  주문일시 >= CURRENT_TIMESTAMP - INTERVAL '7 days';
 
--- 만료일 계산
-UPDATE subscriptions
-SET expires_at = started_at + INTERVAL '1 year'
-WHERE plan = 'annual';
+-- 나이 계산 (PostgreSQL)
+SELECT AGE(CURRENT_DATE, 생년월일) AS 나이
+FROM   직원;
+-- 결과: '30 years 5 mons 12 days'
 ```
 
-## 날짜/시간 함수
+![날짜·시간 연산 예시](/assets/posts/sql-data-types-datetime-operations.svg)
 
-![날짜/시간 함수 및 연산](/assets/posts/sql-data-types-datetime-functions.svg)
+## 날짜 인덱스와 WHERE 절
 
-자주 쓰는 함수를 정리합니다.
+날짜 컬럼에 함수를 적용하면 인덱스를 타지 못한다.
 
-| 기능 | PostgreSQL | MySQL | Oracle |
+```sql
+-- 인덱스 사용 불가 (함수 적용)
+WHERE EXTRACT(YEAR FROM 주문일) = 2026
+
+-- 인덱스 사용 가능 (범위 조건)
+WHERE 주문일 >= '2026-01-01'
+  AND 주문일 <  '2027-01-01'
+```
+
+연도나 월 기준으로 필터링할 때는 범위 조건을 사용한다. PostgreSQL과 MySQL은 `EXTRACT` 또는 `YEAR()` 함수 기반 Function-Based Index를 지원하지만, 일반적인 경우에는 범위 조건이 더 직관적이고 이식 가능하다.
+
+## DBMS별 현재 시각 함수
+
+| 표준 SQL | PostgreSQL | MySQL | Oracle |
 |---|---|---|---|
-| 현재 날짜 | `CURRENT_DATE` | `CURDATE()` | `SYSDATE` |
-| 현재 타임스탬프 | `now()` | `NOW()` | `SYSTIMESTAMP` |
-| 연도 추출 | `EXTRACT(YEAR FROM d)` | `YEAR(d)` | `EXTRACT(YEAR FROM d)` |
-| 날짜 포맷 | `TO_CHAR(d, 'YYYY-MM-DD')` | `DATE_FORMAT(d, '%Y-%m-%d')` | `TO_CHAR(d, 'YYYY-MM-DD')` |
-| 날짜 차이 | `AGE(d1, d2)` | `DATEDIFF(d1, d2)` | `d1 - d2` |
+| `CURRENT_DATE` | 동일 | 동일 | SYSDATE (날짜+시간) |
+| `CURRENT_TIMESTAMP` | 동일 / `NOW()` | 동일 / `NOW()` | SYSTIMESTAMP |
+| `CURRENT_TIME` | 동일 | 동일 | - |
 
-## 타임존 변환
-
-```sql
--- PostgreSQL: AT TIME ZONE
-SELECT created_at AT TIME ZONE 'Asia/Seoul' AS kst_time
-FROM orders;
-
--- MySQL: CONVERT_TZ
-SELECT CONVERT_TZ(created_at, 'UTC', 'Asia/Seoul') AS kst_time
-FROM orders;
-
--- Oracle: FROM_TZ + AT TIME ZONE
-SELECT FROM_TZ(CAST(created_at AS TIMESTAMP), 'UTC')
-       AT TIME ZONE 'Asia/Seoul' AS kst_time
-FROM orders;
-```
-
-## 흔한 실수
-
-1. **`TIMESTAMP`에 UTC 값을 저장했다고 가정하고 조회**: 실제로는 로컬 시간이 저장되어 9시간 오차 발생
-2. **날짜 범위 쿼리에서 시간 미포함**: `WHERE date_col = '2026-05-30'`은 날짜 타입에서는 동작하지만, `TIMESTAMP` 컬럼에서는 자정 한 시점만 조회
-
-```sql
--- 틀린 예: TIMESTAMP 컬럼 날짜 범위 조회
-WHERE created_at = '2026-05-30'  -- 자정 정각만 매칭
-
--- 올바른 예
-WHERE created_at >= '2026-05-30'
-  AND created_at <  '2026-05-31'
-```
-
-## 정리
-
-- 날짜만 필요하면 `DATE`, 시각이 필요하면 기본적으로 `TIMESTAMPTZ`를 선택합니다.
-- 내부 저장은 항상 UTC, 표시는 서비스 타임존으로 변환하는 패턴이 일관성을 유지합니다.
-- `INTERVAL`을 활용하면 날짜 연산이 간결해집니다.
-
-다음 글에서는 `NOT NULL`, `DEFAULT`, `CHECK` 제약을 다룹니다.
+Oracle의 `SYSDATE`는 날짜와 시간을 모두 포함하는 Oracle 전용 타입이다. 날짜만 필요하면 `TRUNC(SYSDATE)`를 사용한다.
 
 ---
 
-**지난 글:** [숫자·문자·불리언 데이터 타입 완전 정복](/posts/sql-data-types-numeric-string-bool/)
+**지난 글:** [데이터 타입 완전 정리 — 숫자, 문자열, 불리언](/posts/sql-data-types-numeric-string-bool/)
 
-**다음 글:** [NOT NULL, DEFAULT, CHECK 제약](/posts/sql-constraints-not-null-default-check/)
+**다음 글:** [제약 조건 완전 정리 — NOT NULL, DEFAULT, CHECK](/posts/sql-constraints-not-null-default-check/)
 
 <br>
 읽어주셔서 감사합니다. 😊

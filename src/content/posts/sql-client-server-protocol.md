@@ -1,105 +1,101 @@
 ---
-title: "클라이언트-서버 프로토콜 — SQL이 전달되는 방식"
-description: "SQL 쿼리가 애플리케이션을 떠나 DBMS에 도달하기까지 파싱·옵티마이저·실행의 과정을 추적하고, Simple Statement와 Prepared Statement의 차이를 명확히 정리합니다."
+title: "SQL 클라이언트-서버 프로토콜 — 쿼리가 실행되는 과정"
+description: "SQL 쿼리가 클라이언트에서 DBMS 서버까지 어떻게 전달되고, 파싱·최적화·실행을 거쳐 결과가 돌아오는지 내부 흐름을 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-30"
+pubDate: "2026-06-08"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "클라이언트 서버", "프로토콜", "Prepared Statement", "SQL 인젝션"]
+tags: ["SQL", "클라이언트서버", "PreparedStatement", "JDBC", "쿼리실행"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-history-and-standard/)에서 SQL 표준의 역사를 살펴봤습니다. 이번에는 내가 작성한 SQL 한 줄이 어떤 경로를 거쳐 실제로 실행되는지를 살펴봅니다. 이 흐름을 이해해야 성능 문제를 파악하고 보안 취약점을 예방할 수 있습니다.
+[지난 글](/posts/sql-history-and-standard/)에서 SQL 표준이 어떻게 발전했는지 살펴봤다. SQL을 단순히 쿼리를 보내는 언어로만 알면 성능 문제에 부딪혔을 때 원인을 찾기 어렵다. 이번에는 SQL 텍스트가 클라이언트를 떠나 DBMS 서버에서 결과로 돌아오기까지의 과정을 단계별로 살펴본다.
 
-## 전체 흐름
+## 쿼리 실행 8단계
 
-애플리케이션에서 `SELECT * FROM users WHERE id = 1`을 실행하면 내부적으로는 다음 단계를 거칩니다.
+### ① SQL 텍스트 작성
 
-![SQL 클라이언트-서버 통신 흐름](/assets/posts/sql-client-server-protocol-flow.svg)
+개발자가 애플리케이션 코드나 SQL 클라이언트(psql, DBeaver, SQL*Plus 등)에서 SQL 문자열을 작성한다.
 
-### 1. 드라이버와 커넥션
+### ② 드라이버 직렬화
 
-애플리케이션은 DBMS와 직접 소통하지 않습니다. **드라이버(Driver)**가 중간에서 역할을 합니다. Java라면 JDBC, Python이라면 psycopg2 또는 PyMySQL, Node.js라면 pg 또는 mysql2 같은 라이브러리가 드라이버입니다.
+SQL 텍스트는 드라이버(JDBC, ODBC, libpq, pymysql 등)가 해당 DBMS 전용 와이어 프로토콜(wire protocol)로 직렬화해 TCP/IP를 통해 전송한다. PostgreSQL은 Frontend/Backend Protocol, MySQL은 MySQL Protocol(COM_QUERY 커맨드)을 사용한다.
 
-드라이버는 TCP 연결을 DBMS에 맺고, 각 DBMS의 고유 **와이어 프로토콜(Wire Protocol)**로 패킷을 전송합니다.
+### ③ 파서(Parser)
 
-| DBMS | 프로토콜 | 기본 포트 |
-|---|---|---|
-| PostgreSQL | PostgreSQL Wire Protocol | 5432 |
-| MySQL/MariaDB | MySQL Client/Server Protocol | 3306 |
-| SQL Server | TDS (Tabular Data Stream) | 1433 |
-| Oracle | Oracle Net (SQL*Net) | 1521 |
+서버는 수신한 SQL 텍스트를 **파서**로 분석한다. 렉서(Lexer)가 토큰을 분리하고, 파서가 문법 규칙에 따라 **AST(Abstract Syntax Tree)**를 생성한다. 문법 오류는 여기서 잡힌다.
 
-### 2. 파싱(Parse)
+### ④ 옵티마이저(Optimizer)
 
-DBMS 서버는 SQL 문자열을 받으면 **어휘 분석 → 구문 분석 → AST(Abstract Syntax Tree) 생성** 과정을 거칩니다. 문법 오류는 이 단계에서 잡힙니다. "테이블이 없다"는 오류도 대부분 이 단계에서 발생합니다.
+AST를 받은 **옵티마이저**가 통계 정보(테이블 크기, 컬럼 분포, 인덱스 구조)를 바탕으로 가능한 실행 계획들의 비용을 계산하고, 가장 저렴한 **실행 계획(Execution Plan)**을 선택한다. `EXPLAIN` 명령으로 이 계획을 확인할 수 있다.
 
-### 3. 옵티마이저(Optimizer)
+### ⑤ 실행 엔진(Executor)
 
-파싱된 쿼리는 **옵티마이저**가 받습니다. 옵티마이저는 같은 결과를 얻는 여러 실행 경로를 탐색하고 비용(I/O, CPU)이 가장 낮은 **실행 계획(Execution Plan)**을 선택합니다. 인덱스를 쓸지, 어떤 방식으로 테이블을 조인할지가 여기서 결정됩니다.
+선택된 실행 계획에 따라 **실행 엔진**이 실제 데이터를 처리한다. 조인 알고리즘(Nested Loop, Hash Join, Merge Join), 집계 연산 등이 여기서 이루어진다.
 
-`EXPLAIN` 명령으로 옵티마이저가 선택한 계획을 확인할 수 있습니다.
+### ⑥ 스토리지 엔진
+
+실행 엔진의 요청에 따라 **스토리지 엔진**이 데이터를 읽는다. 버퍼 캐시에 있으면 메모리에서, 없으면 디스크에서 페이지를 읽어온다. 이 I/O 비용이 쿼리 성능에 가장 큰 영향을 미친다.
+
+### ⑦⑧ 결과 반환 및 페치
+
+결과 집합이 드라이버를 통해 클라이언트로 반환된다. 수백만 행 결과라면 한 번에 전송하지 않고 **커서(Cursor)**를 통해 배치로 가져온다(FETCH).
+
+![SQL 쿼리 실행 흐름](/assets/posts/sql-client-server-protocol-flow.svg)
+
+## Prepared Statement
+
+매번 SQL 텍스트를 파싱하는 비용을 줄이고 SQL Injection을 방지하는 핵심 도구가 **Prepared Statement**다. 쿼리 구조를 먼저 준비(PREPARE)하고, 파라미터만 바꿔가며 반복 실행(EXECUTE)한다.
+
+```java
+// Java JDBC 예시
+PreparedStatement ps = conn.prepareStatement(
+    "SELECT * FROM 고객 WHERE 고객ID = ?"
+);
+ps.setString(1, customerId);   // 파라미터 바인딩
+ResultSet rs = ps.executeQuery();
+```
+
+파라미터 바인딩은 값을 SQL 텍스트에 직접 붙이지 않고 별도로 전달하므로, `'; DROP TABLE 고객; --` 같은 악의적 입력이 SQL 명령으로 해석되지 않는다.
+
+![Prepared Statement vs 일반 쿼리](/assets/posts/sql-client-server-protocol-prepared.svg)
+
+## 커넥션 풀(Connection Pool)
+
+TCP 커넥션 수립은 비싼 연산이다. 매 요청마다 새로운 커넥션을 만들면 CPU와 네트워크 오버헤드가 크다. 실제 서비스에서는 **커넥션 풀**을 사용해 커넥션을 미리 만들어 두고 재사용한다.
+
+```
+HikariCP 설정 예시 (Spring Boot)
+  minimumIdle: 5      -- 항상 유지할 최소 커넥션 수
+  maximumPoolSize: 20 -- 최대 허용 커넥션 수
+  connectionTimeout: 30000  -- 커넥션 대기 타임아웃 (ms)
+```
+
+풀이 부족하면 요청이 대기하고, 너무 크면 DBMS 메모리를 낭비한다. CPU 코어 수 × 2 + 유효 스핀들 수를 시작점으로 튜닝한다(HikariCP 가이드라인).
+
+## EXPLAIN으로 실행 계획 확인
 
 ```sql
-EXPLAIN SELECT * FROM users WHERE email = 'hong@example.com';
+-- PostgreSQL
+EXPLAIN ANALYZE
+SELECT * FROM 고객 WHERE 나이 > 30;
+
+-- MySQL
+EXPLAIN FORMAT=JSON
+SELECT * FROM 고객 WHERE 나이 > 30;
 ```
 
-### 4. 실행(Execute)
-
-실행 계획에 따라 **스토리지 엔진**이 데이터를 읽습니다. 버퍼 풀(메모리)에 데이터가 있으면 디스크를 읽지 않고 바로 반환합니다. 없으면 디스크에서 페이지를 로드합니다.
-
-실행 결과는 **결과셋(Result Set)**으로 만들어져 프로토콜 패킷으로 직렬화되어 클라이언트로 전송됩니다.
-
-## Simple Statement vs Prepared Statement
-
-가장 중요한 실용적 주제입니다.
-
-![Simple vs Prepared Statement](/assets/posts/sql-client-server-protocol-prepare.svg)
-
-**Simple Statement**는 매번 SQL 문자열을 서버로 보내고, 파싱·옵티마이저·실행이 모두 한 번에 일어납니다. 동일한 쿼리를 100번 실행하면 파싱도 100번 합니다.
-
-**Prepared Statement**는 두 단계로 나뉩니다.
-
-1. **Prepare**: SQL 문자열(파라미터는 `?` 또는 `$1`로 표시)을 서버에 보내 파싱·최적화를 마칩니다.
-2. **Execute**: 실제 값만 바인딩해서 실행합니다. 파싱·최적화를 건너뜁니다.
-
-```sql
--- PostgreSQL 예시
-PREPARE get_user(int) AS
-    SELECT id, name, email FROM users WHERE id = $1;
-
-EXECUTE get_user(42);
-EXECUTE get_user(99);  -- 파싱 없이 실행
-```
-
-Prepared Statement의 세 가지 이점은 다음과 같습니다.
-
-| 이점 | 설명 |
-|---|---|
-| **SQL 인젝션 방어** | 바인딩 값은 SQL 코드가 아닌 데이터로 처리됨 |
-| **파싱 비용 절감** | 동일 쿼리 반복 시 옵티마이징 생략 |
-| **플랜 캐시 활용** | 캐시된 실행 계획 재사용 |
-
-## 커넥션 풀
-
-DBMS 연결은 비용이 큽니다(TCP 핸드셰이크 + 인증 + 세션 초기화). 따라서 실무에서는 **커넥션 풀(Connection Pool)**을 사용해 연결을 재사용합니다. HikariCP(Java), pgBouncer(PostgreSQL), ProxySQL(MySQL)이 대표적입니다.
-
-```
-애플리케이션 → 커넥션 풀 → DB 서버
-              (연결 10개 유지)
-```
-
-풀이 없으면 요청마다 새 연결을 맺고 끊어서 DB 서버가 연결 폭탄을 받을 수 있습니다.
-
-## 정리
-
-SQL 한 줄은 드라이버 → 와이어 프로토콜 → 파싱 → 옵티마이저 → 실행 → 결과셋 반환의 경로를 거칩니다. Prepared Statement를 쓰면 보안과 성능을 동시에 챙길 수 있습니다. 다음 글에서는 SQL 언어 분류(DDL, DML, DCL, TCL)를 명확히 정리합니다.
+`EXPLAIN` 결과에서 확인해야 할 핵심 지표:
+- **Seq Scan / Full Table Scan**: 인덱스 없이 전체 테이블 스캔 — 행이 많으면 느림
+- **Index Scan / Index Range Scan**: 인덱스 사용 — 선택도 낮은 조건에 효과적
+- **rows**: 옵티마이저 추정 처리 행 수 — 실제와 크게 다르면 통계 갱신 필요
+- **actual time** (PostgreSQL의 ANALYZE 옵션): 실제 소요 시간
 
 ---
 
-**지난 글:** [SQL의 역사와 표준 — ANSI/ISO SQL이 만들어진 이유](/posts/sql-history-and-standard/)
+**지난 글:** [SQL의 역사와 표준 — ISO SQL이 중요한 이유](/posts/sql-history-and-standard/)
 
 **다음 글:** [SQL 언어 분류 — DDL, DML, DCL, TCL](/posts/sql-language-categories/)
 
