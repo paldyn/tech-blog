@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">TLS 주요 공격 유형과 대응책</text>
+
+  <!-- Row 1 -->
+  <rect x="60" y="64" width="360" height="80" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">다운그레이드 공격</text>
+  <text x="240" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">MITM이 협상을 강제로 TLS 1.0으로 낮춤</text>
+  <text x="240" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">대응: TLS_FALLBACK_SCSV, 최소 버전 TLS 1.2 강제</text>
+  <text x="240" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">nginx: ssl_protocols TLSv1.2 TLSv1.3;</text>
+
+  <rect x="460" y="64" width="360" height="80" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">BEAST (TLS 1.0 CBC IV 예측)</text>
+  <text x="640" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">TLS 1.0 CBC 모드의 IV 예측 가능성 악용</text>
+  <text x="640" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">대응: TLS 1.2+ 사용, ECDHE+GCM cipher 선택</text>
+  <text x="640" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">GCM은 인증된 암호화 — BEAST 해당 없음</text>
+
+  <!-- Row 2 -->
+  <rect x="60" y="160" width="360" height="80" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">POODLE (SSLv3 패딩 오라클)</text>
+  <text x="240" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SSLv3 CBC 패딩 검증 취약점 악용</text>
+  <text x="240" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">대응: SSLv3 완전 비활성화 (이미 대부분 완료)</text>
+  <text x="240" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">openssl s_client -no_ssl3 확인</text>
+
+  <rect x="460" y="160" width="360" height="80" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">HEARTBLEED (OpenSSL 메모리 노출)</text>
+  <text x="640" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">HeartBeat 확장 버그로 서버 메모리 64KB 노출</text>
+  <text x="640" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">대응: OpenSSL 1.0.1g+ 즉시 패치 (2014)</text>
+  <text x="640" y="234" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">비밀키, 세션 쿠키, 비밀번호 등 노출</text>
+
+  <!-- Row 3 -->
+  <rect x="60" y="256" width="360" height="80" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">LOGJAM (약한 DH 파라미터)</text>
+  <text x="240" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">512/768/1024 bit DH → 사전 계산으로 크랙</text>
+  <text x="240" y="314" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">대응: ECDHE 사용 또는 DH 4096 bit 이상</text>
+  <text x="240" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">openssl dhparam -out dh4096.pem 4096</text>
+
+  <rect x="460" y="256" width="360" height="80" rx="8" fill="#1a0808" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">인증서 위조 / MITM</text>
+  <text x="640" y="296" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">CA 침해 또는 오발급으로 가짜 인증서 사용</text>
+  <text x="640" y="314" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">대응: HPKP(deprecated), CT 로그, CAA DNS</text>
+  <text x="640" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">Certificate Pinning (모바일 앱)</text>
+
+  <!-- Summary bar -->
+  <rect x="60" y="352" width="760" height="50" rx="8" fill="#112211" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="373" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">TLS 보안 설정 핵심 3원칙</text>
+  <text x="440" y="393" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">① TLS 1.3 우선 (1.2 허용, 1.1 이하 금지)  ·  ② ECDHE cipher만 허용 (PFS)  ·  ③ HSTS 설정 (HTTPS 강제)</text>
+</svg>

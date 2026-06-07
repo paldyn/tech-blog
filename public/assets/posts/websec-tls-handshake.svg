@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-p" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="40" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">TLS 1.3 핸드셰이크 상세 흐름</text>
+
+  <!-- Client column -->
+  <rect x="60" y="56" width="160" height="44" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="83" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Client</text>
+
+  <!-- Server column -->
+  <rect x="660" y="56" width="160" height="44" rx="8" fill="#111a11" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="83" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Server</text>
+
+  <!-- Timeline lines -->
+  <line x1="140" y1="102" x2="140" y2="490" stroke="#3a4a6e" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="740" y1="102" x2="740" y2="490" stroke="#3a5e3a" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Round 1 -->
+  <text x="60" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">RTT 1 →</text>
+
+  <!-- 1: ClientHello -->
+  <line x1="142" y1="135" x2="736" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">① ClientHello</text>
+  <text x="440" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">TLS버전, cipher suites, 클라이언트 EC 공개키(key_share), 랜덤값</text>
+
+  <!-- 2: ServerHello + Certificate -->
+  <line x1="738" y1="172" x2="144" y2="172" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="440" y="163" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">② ServerHello + EncryptedExtensions + Certificate + CertificateVerify + Finished</text>
+  <text x="440" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">서버 EC 공개키, 선택된 cipher, 인증서 체인, ECDSA 서명, MAC</text>
+
+  <!-- ECDHE Compute box -->
+  <rect x="200" y="198" width="480" height="44" rx="6" fill="#111122" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="217" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">양측에서 ECDHE 공유 비밀 계산</text>
+  <text x="440" y="233" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">HKDF로 세션 키 유도: client_key, server_key, client_iv, server_iv</text>
+
+  <!-- 3: Client Finished -->
+  <line x1="142" y1="262" x2="736" y2="262" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="253" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">③ Client Finished (MAC)</text>
+  <text x="440" y="275" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">핸드셰이크 완료 확인 MAC — 이후 모든 통신 AES-GCM 암호화</text>
+
+  <!-- Application data -->
+  <rect x="60" y="286" width="760" height="30" rx="4" fill="#112211" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Application Data (AES-256-GCM 암호화) — 총 1 RTT</text>
+
+  <!-- TLS 1.2 comparison -->
+  <text x="60" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">TLS 1.2 비교 →</text>
+
+  <!-- 1.2 needs 2 RTT -->
+  <rect x="60" y="340" width="760" height="60" rx="6" fill="#1a0808" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">TLS 1.2: 2 RTT 핸드셰이크 (1.3보다 느림)</text>
+  <text x="440" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">취약한 cipher suite 허용 (RC4, 3DES, NULL 등 지원) · RSA 정적 키 교환 가능 (PFS 없음)</text>
+  <text x="440" y="396" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">BEAST, POODLE, FREAK, LOGJAM 등 다수 공격 기법 존재 — 가능하면 1.3만 허용 권장</text>
+
+  <!-- 0-RTT section -->
+  <rect x="60" y="416" width="760" height="64" rx="6" fill="#111122" stroke="#7777cc" stroke-width="1"/>
+  <text x="440" y="436" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">TLS 1.3 0-RTT (Early Data) — 재연결 최적화</text>
+  <text x="440" y="456" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이전 세션의 PSK(Pre-Shared Key) 사용 → 첫 메시지부터 암호화</text>
+  <text x="440" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">⚠ 재전송 공격(Replay Attack) 취약 — 멱등성(GET) 요청에만 허용, 결제/상태변경에 사용 금지</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="504" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">TLS 1.3 필수 cipher: TLS_AES_256_GCM_SHA384, TLS_CHACHA20_POLY1305_SHA256</text>
+</svg>
