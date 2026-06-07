@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">HMAC 주요 사용 사례</text>
+
+  <!-- API 서명 -->
+  <rect x="60" y="68" width="240" height="54" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="180" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">API 요청 서명</text>
+  <text x="180" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">AWS Signature V4, HMAC-SHA256</text>
+
+  <!-- JWT HS256 -->
+  <rect x="320" y="68" width="240" height="54" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">JWT HS256</text>
+  <text x="440" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">header.payload에 HMAC 서명</text>
+
+  <!-- TOTP -->
+  <rect x="580" y="68" width="240" height="54" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="700" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">TOTP (OTP)</text>
+  <text x="700" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">HMAC-SHA1(시크릿, 타임스텝)</text>
+
+  <!-- Webhook verification flow -->
+  <text x="440" y="152" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Webhook 서명 검증 흐름</text>
+
+  <!-- Sender side -->
+  <rect x="60" y="166" width="180" height="54" rx="8" fill="#111122" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">이벤트 발생</text>
+  <text x="150" y="206" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">payload 준비</text>
+
+  <rect x="60" y="238" width="180" height="54" rx="8" fill="#111122" stroke="#7777cc" stroke-width="1"/>
+  <text x="150" y="260" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">HMAC 계산</text>
+  <text x="150" y="278" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">sig = HMAC(secret, payload)</text>
+
+  <line x1="150" y1="222" x2="150" y2="236" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="60" y="310" width="180" height="54" rx="8" fill="#111122" stroke="#7777cc" stroke-width="1"/>
+  <text x="150" y="332" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">HTTP 전송</text>
+  <text x="150" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">X-Signature: sha256=sig</text>
+
+  <line x1="150" y1="294" x2="150" y2="308" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Arrow from sender to receiver -->
+  <line x1="242" y1="337" x2="398" y2="337" stroke="#e0a055" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="320" y="327" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e0a055">네트워크</text>
+
+  <!-- Receiver side -->
+  <rect x="400" y="166" width="420" height="198" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="610" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">수신자 검증</text>
+
+  <rect x="420" y="204" width="380" height="140" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="436" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 상수 시간 비교 (timing attack 방어)</text>
+  <text x="436" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">import</tspan> hmac</text>
+  <text x="436" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">expected = hmac.<tspan fill="#7ec8e3" font-weight="600">new</tspan>(</text>
+  <text x="436" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    secret, payload, <tspan fill="#ce9178">'sha256'</tspan>).digest()</text>
+  <text x="436" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">if</tspan> hmac.compare_digest(expected, received):</text>
+  <text x="436" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    process_webhook()  <tspan fill="#9aa4b8"># 검증 성공</tspan></text>
+  <text x="436" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">else</tspan>: reject()  <tspan fill="#9aa4b8"># 위조 감지</tspan></text>
+
+  <!-- Bottom note -->
+  <text x="440" y="385" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">⚠ == 비교 금지 — hmac.compare_digest() 사용. 타이밍 공격으로 서명 유추 가능</text>
+  <text x="440" y="403" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">GitHub, Stripe, Slack 웹훅 모두 HMAC-SHA256 서명 방식 채택</text>
+</svg>
