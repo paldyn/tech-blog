@@ -1,174 +1,111 @@
 ---
-title: "MAC 주소: 네트워크 장치의 물리적 신분증"
-description: "MAC 주소의 구조(OUI + NIC), I/G·U/L 비트, 유니캐스트·멀티캐스트·브로드캐스트 구분, MAC 범위와 IP와의 역할 차이를 설명합니다."
+title: "MAC 주소 완전 정복: 구조, 역할, 실전 활용"
+description: "MAC 주소의 48비트 구조(OUI+NIC), I/G비트와 U/L비트, 유니캐스트·멀티캐스트·브로드캐스트 주소, 스푸핑 방어까지 완전 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-06"
+pubDate: "2026-06-08"
 archiveOrder: 9
 type: "knowledge"
 category: "Network"
-tags: ["MAC주소", "OUI", "이더넷", "L2주소", "유니캐스트", "브로드캐스트"]
+tags: ["MAC주소", "OUI", "이더넷", "브로드캐스트", "멀티캐스트", "MAC스푸핑", "ARP"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-error-detection-crc/)에서 오류 감지와 CRC를 살펴봤다. 이번 글에서는 데이터링크 계층(L2)에서 장치를 식별하는 **MAC 주소(MAC Address)**의 구조와 동작을 다룬다. IP 주소가 논리적 주소라면, MAC 주소는 네트워크 인터페이스에 새겨진 물리적 주소다.
+[지난 글](/posts/network-error-detection-crc/)에서 CRC가 이더넷 프레임의 무결성을 어떻게 보장하는지 살펴봤다. 이더넷 프레임의 또 다른 핵심 요소가 **MAC 주소(Media Access Control Address)**다. IP 주소가 논리적 주소라면, MAC 주소는 네트워크 인터페이스 카드(NIC)에 부여된 **물리적 주소**다. 같은 네트워크 세그먼트 안에서 프레임을 올바른 장치에 전달하는 것이 MAC 주소의 역할이다.
 
-## MAC 주소란
-
-MAC(Media Access Control) 주소는 **네트워크 인터페이스 카드(NIC)에 제조사가 부여하는 48비트(6바이트) 고유 식별자**다. 이더넷, Wi-Fi, Bluetooth 등 모든 데이터링크 계층 기술에서 사용한다.
-
-```
-표기 형식:
-  콜론 구분: AA:BB:CC:DD:EE:FF  (Linux, macOS)
-  하이픈 구분: AA-BB-CC-DD-EE-FF  (Windows)
-  점 구분: AABB.CCDD.EEFF  (Cisco)
-
-크기: 6바이트 = 48비트
-이론적 주소 수: 2⁴⁸ = 약 281조 개
-```
-
-## MAC 주소 구조
+## MAC 주소의 48비트 구조
 
 ![MAC 주소 구조](/assets/posts/network-mac-address-structure.svg)
 
-### OUI (Organizationally Unique Identifier)
+MAC 주소는 **48비트(6바이트)**로 구성되며, 통상 콜론이나 하이픈으로 구분된 16진수로 표현한다.
 
-앞 3바이트(24비트)는 **제조사 식별자**로 IEEE가 제조사에게 부여한다. 예를 들어 `00:1A:E9`는 Apple의 OUI다.
+```text
+AC:DE:48:00:11:22
+│         │
+OUI       NIC 고유 번호
+(24비트)  (24비트)
+```
+
+**OUI(Organizationally Unique Identifier)**: 앞 3바이트로, IEEE가 제조사에 할당한 고유 식별자다. 특정 MAC 주소의 제조사를 알고 싶으면 OUI 데이터베이스에서 조회할 수 있다.
 
 ```bash
-# Linux에서 MAC 주소 확인
-ip link show
-# 또는
-cat /sys/class/net/eth0/address
+# OUI 데이터베이스 조회
+curl -s "https://api.macvendors.com/AC:DE:48" 
+# 응답: Apple, Inc.
+
+# Linux에서 OUI DB 직접 조회
+grep -i "AC:DE:48" /usr/share/misc/oui.txt
+```
+
+**NIC 고유 번호**: 뒤 3바이트로, 제조사가 각 장치에 순차적으로 할당한다. 이론적으로 전 세계에서 유일한 값이어야 하지만, 가상화 환경에서는 OS가 임의 생성한 값을 사용하기도 한다.
+
+## 첫 번째 바이트의 특수 비트
+
+첫 번째 옥텟의 최하위 2비트는 특별한 의미를 가진다.
+
+```text
+바이트: AC = 1010 1100
+                   │ └── 비트 0 (I/G): 0=유니캐스트, 1=멀티캐스트
+                   └──── 비트 1 (U/L): 0=전역고유, 1=로컬관리
+
+AC(10101100):
+- 비트0 = 0 → 유니캐스트 주소
+- 비트1 = 0 → IEEE 전역 고유 주소 (실제 제조사 할당)
+```
+
+## 이더넷 프레임 내 MAC 주소 위치
+
+![이더넷 프레임의 MAC 주소](/assets/posts/network-mac-address-frame.svg)
+
+이더넷 프레임은 목적지 MAC 6바이트를 먼저, 출발지 MAC 6바이트를 그 다음에 배치한다. 스위치는 이 두 주소를 기반으로 프레임을 올바른 포트로 전달한다.
+
+## 유니캐스트, 멀티캐스트, 브로드캐스트
+
+```text
+유니캐스트:   AC:DE:48:00:11:22  (특정 NIC 1개)
+멀티캐스트:   01:00:5E:xx:xx:xx  (IPv4 멀티캐스트 그룹)
+              33:33:xx:xx:xx:xx  (IPv6 멀티캐스트 그룹)
+브로드캐스트: FF:FF:FF:FF:FF:FF  (동일 세그먼트 전체)
+```
+
+브로드캐스트는 모든 장치가 수신·처리해야 하므로, 대규모 네트워크에서 남용되면 성능 저하(브로드캐스트 스톰)를 일으킨다. VLAN으로 브로드캐스트 도메인을 분리하는 이유가 바로 이것이다.
+
+## MAC 주소 확인과 변경
+
+```bash
+# Linux: MAC 주소 확인
+ip link show eth0
+# link/ether ac:de:48:00:11:22 brd ff:ff:ff:ff:ff:ff
+
+# MAC 주소 임시 변경 (인터페이스 DOWN → 변경 → UP)
+ip link set eth0 down
+ip link set eth0 address 02:00:00:00:00:01
+ip link set eth0 up
 
 # macOS
 ifconfig en0 | grep ether
-
-# OUI 조회
-# curl https://api.macvendors.com/AA:BB:CC:DD:EE:FF
 ```
 
-### NIC Specific
+## MAC 스푸핑 (Spoofing)
 
-뒤 3바이트(24비트)는 **제조사가 장치별로 할당**하는 고유 번호다. 같은 제조사의 제품 사이에서도 중복되지 않아야 한다.
+공격자가 MAC 주소를 타 장치 주소로 변경해 프레임을 가로채는 기법이다. 방어 수단으로는 스위치의 **포트 보안(Port Security)** 기능이 있다.
 
-### 특수 비트 (첫 번째 바이트)
-
-첫 번째 바이트의 최하위 2비트가 특별한 의미를 갖는다.
-
-```
-첫 번째 바이트: 0xAA = 1010 1010
-                                ↑↑
-                              U/L I/G
-
-비트 0 (I/G: Individual/Group):
-  0 → Unicast: 특정 장치 하나를 지정
-  1 → Multicast/Broadcast
-
-비트 1 (U/L: Universal/Local):
-  0 → UAA (Universally Administered): 제조사 부여, 전역적으로 유일
-  1 → LAA (Locally Administered): 소프트웨어로 임의 설정
-
-예) 가상화 환경의 가상 NIC:
-  VMware: 00:0C:29:xx:xx:xx (UAA, VMware OUI)
-  임의 MAC: 02:xx:xx:xx:xx:xx (U/L 비트=1, LAA)
+```text
+포트 보안 설정 (Cisco IOS 예시):
+interface FastEthernet0/1
+  switchport port-security
+  switchport port-security maximum 1
+  switchport port-security mac-address sticky
+  switchport port-security violation shutdown
 ```
 
-## 유니캐스트·멀티캐스트·브로드캐스트
-
-```
-유니캐스트 (Unicast):
-  I/G 비트 = 0
-  특정 NIC 하나에 전달
-  예: AA:BB:CC:DD:EE:FF
-
-멀티캐스트 (Multicast):
-  I/G 비트 = 1
-  특정 그룹의 장치들에 전달
-  IPv4 멀티캐스트: 01:00:5E:xx:xx:xx
-  IPv6 멀티캐스트: 33:33:xx:xx:xx:xx
-
-브로드캐스트 (Broadcast):
-  FF:FF:FF:FF:FF:FF
-  LAN 내 모든 장치에 전달
-  ARP 요청, DHCP Discovery에 사용
-```
-
-## MAC 주소의 범위
-
-![MAC 주소의 범위](/assets/posts/network-mac-address-scope.svg)
-
-MAC 주소는 **같은 LAN(링크) 내에서만 유효**하다. 라우터를 넘어가면 Ethernet 프레임이 새로 만들어지며 MAC 주소가 변경된다.
-
-```
-패킷 이동 경로 예시:
-  [Client] → [Router 1] → [Router 2] → [Server]
-
-  Client  → Router 1 (Ethernet):
-    Src MAC: Client의 MAC
-    Dst MAC: Router 1의 MAC (default gateway)
-
-  Router 1 → Router 2 (WAN):
-    Ethernet 프레임 새로 생성
-    Src MAC: Router 1 WAN 인터페이스 MAC
-    Dst MAC: Router 2 WAN 인터페이스 MAC
-
-  Router 2 → Server (Ethernet):
-    Src MAC: Router 2 LAN 인터페이스 MAC
-    Dst MAC: Server의 MAC (ARP로 확인)
-```
-
-## MAC 주소와 IP 주소의 역할 분리
-
-```
-MAC 주소 (L2):
-  - 같은 네트워크(링크) 내 장치 식별
-  - 스위치가 프레임 전달에 사용
-  - 라우터를 넘으면 변경됨
-  - 하드웨어에 고정 (LAA로 변경 가능)
-
-IP 주소 (L3):
-  - 전 네트워크에서 유일한 논리 주소
-  - 라우터가 패킷 경로 결정에 사용
-  - 라우터를 넘어도 유지됨
-  - 소프트웨어적 할당 (DHCP)
-```
-
-## MAC 주소 변경 (MAC Spoofing)
-
-MAC 주소는 소프트웨어로 변경 가능하다. 이를 MAC 스푸핑(Spoofing) 또는 MAC 클로닝이라고 한다.
-
-```bash
-# Linux에서 MAC 주소 임시 변경
-ip link set dev eth0 down
-ip link set dev eth0 address 02:11:22:33:44:55  # LAA (비트1=1)
-ip link set dev eth0 up
-
-# macOS (Network Preferences에서 변경 또는)
-sudo ifconfig en0 ether 02:11:22:33:44:55
-
-# Windows PowerShell
-Set-NetAdapter -Name "Ethernet" -MacAddress "02-11-22-33-44-55"
-```
-
-합법적 사용: VPN, 가상화, 프라이버시 보호(iOS/Android의 랜덤 MAC).  
-악의적 사용: MAC 필터 우회, ARP 스푸핑 공격.
-
-## ip link 출력 해석
-
-```bash
-$ ip link show eth0
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP
-    link/ether aa:bb:cc:11:22:33 brd ff:ff:ff:ff:ff:ff
-#              ↑ MAC 주소           ↑ 브로드캐스트 MAC
-# MTU 1500: 이더넷 최대 전송 단위 (바이트)
-```
+MAC 주소가 어떻게 실제 통신에 사용되는지, 스위치가 어떻게 MAC 테이블을 관리하는지는 이더넷 글에서 더 자세히 다룬다. 다음 글에서는 이더넷 표준 자체를 완전히 해부한다.
 
 ---
 
-**지난 글:** [오류 감지와 CRC](/posts/network-error-detection-crc/)
+**지난 글:** [오류 검출과 CRC](/posts/network-error-detection-crc/)
 
-**다음 글:** [이더넷](/posts/network-ethernet/)
+**다음 글:** [이더넷 완전 정복: 프레임 구조와 CSMA/CD](/posts/network-ethernet/)
 
 <br>
 읽어주셔서 감사합니다. 😊
