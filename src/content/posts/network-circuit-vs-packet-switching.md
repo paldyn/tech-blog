@@ -1,143 +1,89 @@
 ---
-title: "회선 교환 vs 패킷 교환: 인터넷이 패킷을 선택한 이유"
-description: "회선 교환(Circuit Switching)과 패킷 교환(Packet Switching)의 동작 원리, 장단점, 통계적 다중화 개념, Store-and-Forward 방식을 비교 설명합니다."
+title: "회선 교환 vs 패킷 교환: 인터넷의 근본 원리"
+description: "회선 교환(Circuit Switching)과 패킷 교환(Packet Switching)의 동작 원리, Store-and-Forward, 장단점 비교를 완전 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-06"
+pubDate: "2026-06-08"
 archiveOrder: 6
 type: "knowledge"
 category: "Network"
-tags: ["회선교환", "패킷교환", "통계적다중화", "StoreAndForward", "PSTN", "인터넷"]
+tags: ["회선교환", "패킷교환", "CircuitSwitching", "PacketSwitching", "Store-and-Forward", "인터넷원리"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-rtt-jitter/)에서 RTT와 지터를 살펴봤다. 이번 글에서는 네트워크가 데이터를 전달하는 두 가지 근본적인 방식인 **회선 교환(Circuit Switching)**과 **패킷 교환(Packet Switching)**을 비교한다. 인터넷이 왜 패킷 교환을 선택했는지 이해하면 네트워크 설계의 철학이 보인다.
+[지난 글](/posts/network-rtt-jitter/)에서 RTT와 지터가 실시간 서비스 품질을 결정하는 핵심 지표임을 살펴봤다. 이번 글에서는 한 발짝 더 물러서서, 네트워크가 데이터를 전달하는 두 가지 근본적인 패러다임인 **회선 교환**과 **패킷 교환**을 비교한다. 이 두 방식의 선택이 인터넷의 설계 철학 자체를 결정했다.
 
 ## 회선 교환 (Circuit Switching)
 
-회선 교환은 **통신 전에 출발지에서 목적지까지 전용 경로(회선)를 예약**하고, 통신이 끝날 때까지 그 경로를 독점하는 방식이다.
+전통적인 전화망(PSTN)이 채택한 방식이다. 통화 전 송신자와 수신자 사이에 **전용 경로(Circuit)**를 사전에 예약하고, 통화가 끝날 때까지 그 경로를 독점 사용한다.
 
-![회선 교환 vs 패킷 교환](/assets/posts/network-circuit-vs-packet-switching-compare.svg)
+![회선 교환 vs 패킷 교환](/assets/posts/network-circuit-vs-packet-switching-circuit.svg)
 
-우리가 아는 전통 **PSTN(Public Switched Telephone Network)** 전화망이 대표적이다. 전화를 걸면 교환기가 상대방까지의 경로를 확보하고, 통화 내내 그 경로를 유지한다.
+**3단계 동작**:
+1. **연결 수립(Call Setup)**: 경로상 모든 스위치가 전용 자원을 할당
+2. **데이터 전송**: 예약된 경로로 일정한 대역폭 보장
+3. **연결 해제(Teardown)**: 경로 해제, 자원 반납
 
+장점은 **일정한 품질 보장(QoS)**이다. 예약된 대역폭이 항상 사용 가능하므로 전화 통화처럼 지연 변동이 없어야 하는 서비스에 적합했다. 단점은 **자원 낭비**다. 아무 말도 안 하는 동안(침묵 구간)에도 회선이 점유된다.
+
+```text
+회선 교환 비효율 예시:
+- 전화 통화 중 50%가 침묵 구간
+- 회선은 100% 내내 점유
+- 실제 활용률: ~50%
 ```
-회선 교환 동작 순서:
-1. 연결 설정 (Connection Setup)
-   → 출발지~목적지 경로의 모든 스위치에 자원 예약
-   → 대역폭의 특정 슬롯(TDM) 또는 주파수(FDM) 할당
-
-2. 데이터 전송
-   → 예약된 전용 경로로만 전송
-   → 지연시간 일정, QoS 보장
-   → 데이터가 없어도(침묵) 슬롯 점유
-
-3. 연결 해제
-   → 예약 자원 반납
-```
-
-**장점**: 지연시간 예측 가능, 일정한 QoS  
-**단점**: 유휴 시간에도 자원 낭비, 연결 수 한계, 설정 시간(call setup delay)
 
 ## 패킷 교환 (Packet Switching)
 
-패킷 교환은 **데이터를 패킷 단위로 쪼개 각각 독립적으로 전달**하는 방식이다. 전용 경로를 예약하지 않고, 각 패킷이 네트워크 상황에 따라 다른 경로를 택할 수 있다.
+인터넷이 채택한 방식이다. 데이터를 **패킷(Packet)**이라는 작은 단위로 분할해 전송한다. 각 패킷은 독립적으로 최적 경로를 찾아가며, 라우터는 들어온 패킷을 저장(Store)하고 다음 홉으로 전달(Forward)한다.
 
-```
-패킷 교환 동작:
-  [전체 데이터]
-       ↓ 분할
-  [패킷1 | 헤더(IP)] → 라우터A → 라우터B → 목적지
-  [패킷2 | 헤더(IP)] → 라우터A → 라우터C → 목적지 (다른 경로 가능)
-  [패킷3 | 헤더(IP)] → 라우터B → 목적지 (순서 바뀔 수 있음)
-       ↓ 재조립
-  [전체 데이터 복원]
-```
+![패킷 교환 Store-and-Forward](/assets/posts/network-circuit-vs-packet-switching-packet.svg)
 
-![통계적 다중화](/assets/posts/network-circuit-vs-packet-switching-mux.svg)
+**Store-and-Forward** 동작: 라우터는 패킷 전체를 수신 완료한 후에야 다음 링크로 전송한다. 이 때문에 각 홉에서 `패킷크기 ÷ 링크속도`만큼의 전송 지연이 발생한다.
 
-## Store-and-Forward
+```text
+# Store-and-Forward 지연 계산
+패킷 크기: 1,500 bytes = 12,000 bits
+링크 속도: 100 Mbps
 
-패킷 교환 라우터의 핵심 동작은 **Store-and-Forward**다. 패킷 전체를 수신한 뒤, 오류를 확인하고, 다음 홉으로 전달한다.
-
-```python
-# Store-and-Forward 의사 코드
-def router_forward(incoming_packet):
-    # 1. Store: 패킷 전체를 버퍼에 저장
-    buffer.store(incoming_packet)
-    
-    # 2. 오류 검증 (FCS/CRC)
-    if not verify_checksum(incoming_packet):
-        drop(incoming_packet)
-        return
-    
-    # 3. IP 헤더 파싱
-    dst_ip = incoming_packet.ip_header.dst
-    
-    # 4. 라우팅 테이블 조회
-    next_hop = routing_table.lookup(dst_ip)
-    
-    # 5. Forward: 다음 홉으로 전달
-    output_queue[next_hop].enqueue(incoming_packet)
+전송 지연 per hop = 12,000 / 100,000,000 = 0.12 ms
+홉 수 3개 → 총 전송 지연 ≈ 0.36 ms (무시할 수준)
 ```
 
-Store-and-Forward 지연:
-```
-전송 지연 = (패킷 크기) / (링크 대역폭)
-총 전송 지연 = N홉 × (패킷 크기 / 대역폭)  # 직렬화 지연
-```
+장점은 **자원 공유**와 **확장성**이다. 여러 흐름의 패킷이 같은 링크를 나눠 쓰기 때문에 전체 효율이 훨씬 높다. 단점은 **지연 변동(지터)**이다. 혼잡 시 큐에 쌓인 패킷이 늘어나 지연이 예측 불가능해진다.
 
-## 통계적 다중화 (Statistical Multiplexing)
+## 두 방식의 멀티플렉싱
 
-패킷 교환의 핵심 강점은 **통계적 다중화**다. 여러 사용자가 링크를 공유하되, 전통적인 TDM(시분할)처럼 고정된 슬롯을 할당하는 대신, **필요한 시점에만 링크를 사용**한다.
+```text
+회선 교환의 멀티플렉싱:
+TDM (Time Division Multiplexing) — 시간 슬롯 고정 할당
+FDM (Frequency Division Multiplexing) — 주파수 대역 고정 할당
+→ 특정 흐름에 슬롯/대역 예약 → 예측 가능하지만 비효율
 
-```
-TDM (회선 교환):
-  시간: [A][B][C][A][B 빈][C][A]...
-        ↑ B가 침묵해도 슬롯 낭비
-
-통계적 다중화 (패킷 교환):
-  시간: [A:p1][B:p1][A:p2][C:p1][B:p2][C:p2]...
-        ↑ 빈 슬롯 없이 링크 최대 활용
+패킷 교환의 멀티플렉싱:
+Statistical Multiplexing — 패킷 단위 동적 공유
+→ 유휴 대역폭을 다른 흐름이 즉시 사용 → 효율적이지만 혼잡 가능
 ```
 
-이 덕분에 1Gbps 링크에 수백 개의 사용자가 동시에 접속해도, 각자가 전체 대역폭을 burst해서 사용할 수 있다. 대신 모두가 동시에 burst하면 혼잡(congestion)이 발생한다.
+## 현대의 절충: VoIP와 QoS
 
-## 가상 회선 (Virtual Circuit)
+순수 패킷 교환 네트워크에서 실시간 서비스를 돌리는 해법이 **QoS(Quality of Service)**다. DiffServ, DSCP 마킹으로 음성·화상 트래픽에 높은 우선순위를 부여해, 실질적으로 회선 교환에 가까운 품질을 보장한다.
 
-두 방식의 중간 형태로 **가상 회선(Virtual Circuit)**이 있다. ATM(Asynchronous Transfer Mode)이나 MPLS가 이 방식을 사용한다.
-
-```
-가상 회선 특징:
-- 연결 설정 시 경로를 미리 결정 (회선 교환과 유사)
-- 하지만 자원을 물리적으로 점유하지 않음 (패킷 교환과 유사)
-- 각 패킷에 작은 VCI(Virtual Circuit Identifier)만 붙임
-- 경로 일관성 + 패킷 순서 보장
-
-MPLS Label Switching:
-  패킷 헤더 대신 짧은 레이블로 라우팅 → 고속 처리
-  ISP 백본에서 QoS 보장에 활용
+```bash
+# Linux에서 tc(traffic control)로 QoS 설정 예시
+# VoIP(포트 5060) 트래픽 우선 처리
+tc qdisc add dev eth0 root handle 1: prio
+tc filter add dev eth0 parent 1: protocol ip \
+   u32 match ip dport 5060 0xffff flowid 1:1
 ```
 
-## 왜 인터넷은 패킷 교환을 선택했는가
-
-ARPANET 설계자들은 회선 교환이 군사 목적에 취약하다고 판단했다. 특정 경로가 끊겨도 다른 경로로 자동 우회할 수 있는 **견고성(resilience)**을 원했기 때문이다.
-
-```
-패킷 교환을 선택한 이유:
-1. 경로 장애 시 자동 우회 가능
-2. 자원을 여러 사용자가 공유 → 비용 절감
-3. 버스트 트래픽에 적합 (웹, 파일 전송)
-4. 새 기술 추가 시 기존 인프라 변경 최소화
-```
-
-오늘날 5G에서는 실시간성이 필요한 슬라이스(slice)에 QoS를 적용해 회선 교환의 특성을 패킷 네트워크 위에 구현하고 있다.
+패킷 교환이 인터넷을 만들었다면, QoS가 인터넷 위에서 전화를 가능하게 했다. 다음 글에서는 이 모든 통신의 물리적 기반인 신호와 인코딩을 살펴본다.
 
 ---
 
-**지난 글:** [RTT와 지터](/posts/network-rtt-jitter/)
+**지난 글:** [RTT와 지터: 지연 변동성 이해하기](/posts/network-rtt-jitter/)
 
-**다음 글:** [신호와 인코딩](/posts/network-signaling-encoding/)
+**다음 글:** [신호와 인코딩: 비트를 전기 신호로 바꾸는 방법](/posts/network-signaling-encoding/)
 
 <br>
 읽어주셔서 감사합니다. 😊
