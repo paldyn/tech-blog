@@ -1,206 +1,125 @@
 ---
-title: "React Fragment — 불필요한 DOM 노드 없애기"
-description: "React Fragment가 필요한 이유, <></> 단축 문법과 React.Fragment의 차이, key prop 사용법, 실전에서 Fragment가 필요한 4가지 상황을 다룹니다."
+title: "Fragment — 불필요한 DOM 노드 없애기"
+description: "<></> Fragment 문법이 왜 필요한지, key prop이 있을 때 명시적 Fragment를 쓰는 방법, table·dl 같은 구조적 HTML에서의 활용법을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-06"
+pubDate: "2026-06-08"
 archiveOrder: 4
 type: "knowledge"
 category: "React"
-tags: ["React Fragment", "Fragment", "React", "DOM구조", "JSX"]
+tags: ["Fragment", "React", "JSX", "DOM", "목록렌더링", "key"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-jsx-deep/)에서 JSX의 고급 패턴을 살펴봤다. React 컴포넌트는 반드시 단일 루트 요소를 반환해야 한다는 규칙 때문에, 여러 요소를 반환할 때 `<div>`로 감싸는 습관이 생기기 쉽다. 하지만 이 방법은 불필요한 DOM 노드를 만들어 구조를 오염시킨다. **React Fragment**가 이 문제의 해법이다.
+[지난 글](/posts/react-jsx-deep/)에서 JSX가 내부적으로 어떤 객체로 변환되는지 살펴봤다. React 컴포넌트는 반드시 최상위 요소 하나를 반환해야 한다. 가장 쉬운 해결책은 `<div>`로 감싸는 것이지만, 이 방법이 HTML 구조를 깨거나 불필요한 DOM 노드를 추가하는 경우가 있다. 이때 **Fragment**가 필요하다.
 
-## 왜 Fragment가 필요한가
+## 왜 wrapper div가 문제가 될까
 
-HTML 테이블을 생각해보자. `<tr>` 안에는 `<td>`가 직접 들어가야 한다. 만약 `<td>`를 묶는 컴포넌트가 `<div>`를 반환하면 `<tr> → <div> → <td>` 구조가 되어 HTML이 깨진다.
+`<table>` 안에 `<tr>`, `<td>`가 들어가야 하는 구조를 컴포넌트로 분리한다고 가정하자.
 
 ```jsx
-// ❌ div로 감싸면 테이블 구조 파괴
-function Row() {
+// ❌ wrapper div를 쓰면 HTML 구조가 깨진다
+function TableRow() {
   return (
-    <div>          {/* 이 div가 tr 안에 삽입되어 구조 깨짐 */}
-      <td>홍길동</td>
-      <td>30세</td>
+    <div>               {/* table 안에 div는 유효하지 않은 HTML */}
+      <td>이름</td>
+      <td>값</td>
     </div>
   );
 }
 
-// 렌더링 결과: <tr><div><td>홍길동</td><td>30세</td></div></tr> ← 무효한 HTML
+// 실제 렌더된 HTML
+// <table><tr><div><td>이름</td><td>값</td></div></tr></table>
+// ← 브라우저가 div를 table 밖으로 꺼낼 수 있음
 ```
 
-Fragment를 사용하면 DOM에 실제 노드가 추가되지 않아 구조가 유지된다.
+CSS `flex` 또는 `grid` 레이아웃에서 직접 자식 요소의 스타일을 계산할 때도, 중간에 불필요한 `<div>`가 끼면 레이아웃이 어긋난다.
 
-![Fragment: 불필요한 DOM 노드 문제 해결](/assets/posts/react-fragments-problem.svg)
+## Fragment 기본 사용법
 
-## 두 가지 문법
-
-### 단축 문법 `<></>`
-
-가장 간편하다. 단, `key` 속성을 붙일 수 없다.
+`<>...</>` 단축 문법을 쓰면 JSX 최상위 요소 규칙을 지키면서도 DOM에 아무 노드도 추가하지 않는다.
 
 ```jsx
-function Row() {
+function TableRow() {
   return (
     <>
-      <td>홍길동</td>
-      <td>30세</td>
+      <td>이름</td>
+      <td>값</td>
     </>
   );
 }
 ```
 
-### React.Fragment
+렌더 결과 HTML에는 `<td>이름</td><td>값</td>` 두 개만 나타난다. Fragment 자체는 DOM에 흔적을 남기지 않는다.
 
-`key` 속성이 필요할 때 사용한다.
+![Fragment가 필요한 이유](/assets/posts/react-fragments-why.svg)
+
+## 두 가지 문법
+
+**단축 문법 `<>...</>`** 은 대부분의 상황에서 사용하는 형태다. 임포트 없이 바로 쓸 수 있다.
+
+**명시적 `<Fragment>...</Fragment>`** 는 `key` prop을 붙여야 할 때 필요하다. `<>` 단축 문법에는 props를 붙일 수 없다.
 
 ```jsx
-import React from 'react';
+import { Fragment } from 'react';
 
+// key가 필요한 경우 명시적 Fragment 사용
 function GlossaryList({ items }) {
   return (
     <dl>
       {items.map(item => (
-        <React.Fragment key={item.id}>
+        <Fragment key={item.id}>
           <dt>{item.term}</dt>
           <dd>{item.description}</dd>
-        </React.Fragment>
+        </Fragment>
       ))}
     </dl>
   );
 }
 ```
 
-`key`를 갖는 Fragment는 리스트 렌더링에서 여러 형제 요소를 묶을 때 필수다.
+![Fragment에 key 사용하기](/assets/posts/react-fragments-key.svg)
 
-## Fragment가 필요한 4가지 상황
+## 목록 렌더링에서 Fragment + key
 
-![Fragment가 필요한 4가지 상황](/assets/posts/react-fragments-usage.svg)
-
-### ① 테이블 구조 유지
+`map()`으로 여러 DOM 요소를 묶어 반환할 때 흔히 만나는 패턴이다. `dl > dt + dd` 쌍, `tr > th + td` 쌍처럼 한 논리 단위가 여러 형제 요소로 이뤄질 때, Fragment에 `key`를 달아 React 재조정을 돕는다.
 
 ```jsx
-function TableRow({ user }) {
-  return (
-    <>
-      <td>{user.name}</td>
-      <td>{user.email}</td>
-      <td>{user.role}</td>
-    </>
-  );
-}
+// key 없는 단축 문법 (에러는 안 나지만 key 경고가 뜸)
+{items.map(item => (
+  <>
+    <dt>{item.term}</dt>
+    <dd>{item.description}</dd>
+  </>
+))}
 
-function UserTable({ users }) {
-  return (
-    <table>
-      <tbody>
-        {users.map(user => (
-          <tr key={user.id}>
-            <TableRow user={user} />
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
+// ✅ Fragment에 key 부여
+{items.map(item => (
+  <Fragment key={item.id}>
+    <dt>{item.term}</dt>
+    <dd>{item.description}</dd>
+  </Fragment>
+))}
 ```
 
-### ② CSS Flexbox/Grid 레이아웃 보호
+## Fragment는 진짜 컴포넌트다
 
-불필요한 `<div>`가 flex/grid 자식으로 끼어들면 레이아웃이 깨질 수 있다.
-
-```jsx
-function FieldGroup({ label, input, hint }) {
-  // div를 반환하면 flex 자식이 하나 더 생겨 레이아웃 오작동
-  return (
-    <>
-      {label}
-      {input}
-      {hint}
-    </>
-  );
-}
-
-// 부모: display flex; flex-direction column;
-// Fragment 덕분에 label, input, hint가 직접 flex 자식이 됨
-```
-
-### ③ 리스트 렌더링에서 여러 형제 요소
-
-```jsx
-function DefinitionList({ terms }) {
-  return (
-    <dl>
-      {terms.map(({ id, word, meaning }) => (
-        <React.Fragment key={id}>
-          <dt className="term">{word}</dt>
-          <dd className="def">{meaning}</dd>
-        </React.Fragment>
-      ))}
-    </dl>
-  );
-}
-```
-
-### ④ 조건부 블록 전환
-
-```jsx
-function AuthSection({ isLoggedIn }) {
-  return (
-    <>
-      {isLoggedIn ? (
-        <>
-          <UserAvatar />
-          <LogoutButton />
-        </>
-      ) : (
-        <>
-          <LoginButton />
-          <SignupLink />
-        </>
-      )}
-    </>
-  );
-}
-```
-
-## Fragment는 실제 DOM에 아무것도 남기지 않는다
-
-브라우저 DevTools로 확인해보면 Fragment로 감싼 요소들은 추가적인 래퍼 없이 그대로 나타난다.
-
-```jsx
-// React
-function App() {
-  return (
-    <>
-      <header>헤더</header>
-      <main>본문</main>
-      <footer>푸터</footer>
-    </>
-  );
-}
-
-// 브라우저 DOM (추가 노드 없음)
-// <body>
-//   <div id="root">
-//     <header>헤더</header>
-//     <main>본문</main>
-//     <footer>푸터</footer>
-//   </div>
-// </body>
-```
+`React.Fragment`는 실제 React 컴포넌트다. `type` 필드에 `Symbol(react.fragment)`가 들어간 React Element를 만든다. React가 이 Element를 처리할 때 자식들을 그대로 렌더하고 Fragment 자체는 DOM에 남기지 않는다.
 
 ## 정리
 
-Fragment는 React의 "단일 루트 요소" 제약을 DOM 오염 없이 충족시키는 도구다. `<></>` 단축 문법은 key가 필요 없을 때, `<React.Fragment key={id}>`는 리스트처럼 key가 필요할 때 사용한다. 다음 글에서는 React 컴포넌트의 구조와 종류를 자세히 살펴본다.
+- 여러 형제 요소를 반환해야 할 때 `<>...</>` Fragment를 사용한다
+- Fragment는 DOM에 노드를 남기지 않으므로 `table`, `flex`, `grid` 구조를 깨지 않는다
+- `key` prop이 필요할 때는 `<Fragment key={id}>` 명시 문법을 쓴다
+- 단축 `<>` 문법은 `key` 외의 props를 받을 수 없다
+
+다음 글에서는 React의 가장 핵심적인 단위인 **컴포넌트**를 깊이 다룬다.
 
 ---
 
-**지난 글:** [JSX 심화 — 표현식, 조건, 반복, 특수 케이스](/posts/react-jsx-deep/)
+**지난 글:** [JSX 깊이 보기 — createElement와 JSX Element 객체](/posts/react-jsx-deep/)
 
-**다음 글:** [React 컴포넌트 — 함수형과 클래스형, 컴포넌트 설계 원칙](/posts/react-components/)
+**다음 글:** [컴포넌트 완전 정복 — 함수 컴포넌트와 설계 원칙](/posts/react-components/)
 
 <br>
 읽어주셔서 감사합니다. 😊

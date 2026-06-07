@@ -1,211 +1,173 @@
 ---
-title: "조건부 렌더링 — 상황에 맞는 UI 표현하기"
-description: "React의 5가지 조건부 렌더링 방법(if/else, 삼항, &&, 변수, 컴포넌트 맵), && 연산자의 0 함정, null 반환과 CSS hidden의 차이를 실전 예제로 설명합니다."
+title: "조건부 렌더링 — 삼항 연산자부터 얼리 리턴까지"
+description: "if/else 얼리 리턴, 삼항 연산자, && 단축 평가, JSX 변수 패턴까지 React 조건부 렌더링의 모든 패턴과 0 렌더링 함정을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-06"
+pubDate: "2026-06-08"
 archiveOrder: 9
 type: "knowledge"
 category: "React"
-tags: ["조건부렌더링", "React", "삼항연산자", "논리AND", "null반환"]
+tags: ["조건부렌더링", "삼항연산자", "단락평가", "얼리리턴", "React", "JSX패턴"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-props-spreading/)에서 props 스프레딩의 올바른 사용법을 배웠다. 실제 앱에서 UI는 상태, 권한, 데이터 유무에 따라 다르게 보여야 한다. React는 자바스크립트 표현식을 JSX 안에 그대로 쓸 수 있어, 조건부 렌더링 방법도 다양하다.
+[지난 글](/posts/react-props-spreading/)에서 props spreading의 올바른 사용법을 살펴봤다. 실제 앱에서 UI는 거의 항상 조건에 따라 달라진다. 로그인 여부, 로딩 상태, 에러 유무에 따라 완전히 다른 화면을 보여줘야 한다. React에서 조건부 렌더링은 별도 문법이 아니라 **순수 JavaScript 조건 표현식**을 JSX 안에서 활용하는 것이다.
 
-## 5가지 조건부 렌더링 방법
+## 4가지 패턴
 
-![조건부 렌더링 5가지 방법](/assets/posts/react-conditional-rendering-methods.svg)
+### ① if/else — 얼리 리턴
 
-### ① if/else로 early return
-
-가장 읽기 쉬운 방법이다. 렌더링 전에 특수 케이스를 먼저 처리하고 조기 반환한다.
+컴포넌트 함수 안에서 일반 `if` 문을 사용한다. 특히 로딩·에러 가드에 최적이다.
 
 ```jsx
-function UserProfile({ userId }) {
-  const { data: user, isLoading, error } = useUser(userId);
+function PostPage({ postId }) {
+  const { data, isLoading, error } = usePost(postId);
 
-  // 특수 케이스 먼저 처리 (guard clauses)
-  if (isLoading) return <Skeleton />;
-  if (error)     return <ErrorMessage error={error} />;
-  if (!user)     return <EmptyState message="사용자를 찾을 수 없습니다" />;
+  if (isLoading) return <Spinner />;
+  if (error) return <ErrorMessage message={error.message} />;
 
-  // 메인 렌더링
   return (
-    <div className="profile">
-      <Avatar src={user.avatar} name={user.name} />
-      <h2>{user.name}</h2>
-      <p>{user.bio}</p>
-    </div>
+    <article>
+      <h1>{data.title}</h1>
+      <p>{data.body}</p>
+    </article>
   );
 }
 ```
 
-이 패턴을 **Guard Clause(가드 절)** 패턴이라 한다. 중첩 없이 코드가 선형적으로 읽힌다.
+"행복 경로"(정상 케이스)를 마지막에 두고 예외 케이스를 앞에서 처리하는 구조다. 코드가 위에서 아래로 선형적으로 읽혀 이해하기 쉽다.
 
-### ② 삼항 연산자 (?:)
+### ② 삼항 연산자 — 두 가지 중 하나
 
-두 가지 중 하나를 선택해 렌더링할 때 사용한다. JSX 안에 인라인으로 쓸 수 있다.
+JSX 안에서 인라인으로 A 또는 B를 선택할 때 쓴다.
 
 ```jsx
-function LoginStatus({ isLoggedIn }) {
+function AuthButton({ isLoggedIn }) {
   return (
     <header>
-      <Logo />
-      {isLoggedIn
-        ? <UserMenu />
-        : <LoginButton />
-      }
+      <h1>My App</h1>
+      {isLoggedIn ? (
+        <button onClick={logout}>로그아웃</button>
+      ) : (
+        <button onClick={login}>로그인</button>
+      )}
     </header>
   );
 }
-
-// 단순한 경우 한 줄도 가능
-const badge = isNew ? <NewBadge /> : null;
 ```
 
-삼항이 중첩되면 가독성이 떨어진다. 3단 이상 중첩은 컴포넌트 분리 또는 변수 방식이 낫다.
+두 가지 분기가 명확할 때 적합하다. 중첩 삼항 연산자는 가독성을 급격히 떨어뜨리므로 피해야 한다.
 
-### ③ 논리 AND (&&)
+### ③ && 단축 평가 — 있거나 없거나
 
-조건이 참일 때만 렌더링하고, 거짓이면 아무것도 표시하지 않을 때 사용한다.
+조건이 참일 때만 무언가를 렌더하고, 거짓이면 아무것도 렌더하지 않을 때 쓴다.
 
 ```jsx
-function Notification({ count, messages }) {
+function Notification({ hasNew }) {
   return (
     <div>
-      {count > 0 && <Badge count={count} />}
-      {messages.length > 0 && (
-        <MessageList messages={messages} />
-      )}
+      <span>알림</span>
+      {hasNew && <span className="badge">새 알림</span>}
     </div>
   );
 }
-```
-
-**⚠ 주의: 숫자 0 함정**
-
-```jsx
-// ❌ count가 0이면 "0"이 화면에 출력됨
-{count && <Badge count={count} />}
-
-// ✅ 명시적 비교로 해결
-{count > 0 && <Badge count={count} />}
-
-// ✅ Boolean 변환
-{Boolean(count) && <Badge count={count} />}
-
-// ✅ 삼항으로 null
-{count ? <Badge count={count} /> : null}
 ```
 
 ### ④ 변수에 JSX 저장
 
-JSX를 변수에 저장해 복잡한 조건 로직을 분리한다.
+세 가지 이상의 분기가 필요하거나 복잡한 조건 로직이 있을 때 변수에 JSX를 미리 저장한다.
 
 ```jsx
-function Dashboard({ role, permissions }) {
-  let sidebarContent;
+function StatusMessage({ status }) {
+  let content;
+  if (status === 'loading') content = <Spinner />;
+  else if (status === 'error') content = <ErrorIcon />;
+  else if (status === 'empty') content = <EmptyState />;
+  else content = <CheckIcon />;
 
-  if (role === 'admin') {
-    sidebarContent = <AdminSidebar />;
-  } else if (permissions.includes('manager')) {
-    sidebarContent = <ManagerSidebar />;
-  } else {
-    sidebarContent = <UserSidebar />;
-  }
-
-  return (
-    <div className="dashboard">
-      <aside>{sidebarContent}</aside>
-      <main><Outlet /></main>
-    </div>
-  );
+  return <div className="status">{content}</div>;
 }
 ```
 
-### ⑤ 컴포넌트 맵(Map Object)
+복잡한 로직을 JSX 반환 부분에서 분리할 수 있어 읽기 쉬워진다.
 
-여러 값 중 하나에 따라 컴포넌트를 전환할 때, 객체로 매핑하면 switch보다 간결하다.
+![조건부 렌더링 4가지 패턴](/assets/posts/react-conditional-patterns.svg)
+
+## && 연산자의 함정 — 0이 화면에 나타난다
+
+`&&` 단축 평가를 숫자나 빈 문자열에 사용하면 예상치 못한 결과가 생긴다.
 
 ```jsx
-const STATUS_COMPONENTS = {
-  idle:    <IdleView />,
-  loading: <LoadingView />,
-  success: <SuccessView />,
-  error:   <ErrorView />,
-};
+const count = 0;
 
-function StatusDisplay({ status }) {
-  return STATUS_COMPONENTS[status] ?? <UnknownStatus />;
+// ❌ 잘못된 코드 — 화면에 "0"이 나타남
+{count && <Badge>{count}</Badge>}
+
+// 이유: 0 && <Badge> === 0 (false가 아니라 숫자 0)
+// React는 숫자 0을 DOM에 렌더한다
+```
+
+JavaScript `&&`의 결과가 `false`이면 React가 렌더하지 않지만, `0`, `NaN`, `""` 같은 falsy 값은 **React가 텍스트 노드로 렌더**한다.
+
+```jsx
+// ✅ Boolean으로 명시적 변환
+{!!count && <Badge>{count}</Badge>}
+
+// ✅ 삼항 연산자로 명확하게
+{count > 0 ? <Badge>{count}</Badge> : null}
+```
+
+![&& 연산자 함정](/assets/posts/react-conditional-pitfalls.svg)
+
+## null과 false를 반환하면 아무것도 렌더되지 않는다
+
+컴포넌트가 `null`이나 `false`를 반환하면 React는 DOM에 아무것도 추가하지 않는다. `undefined`를 반환하면 에러가 발생하므로 조심해야 한다.
+
+```jsx
+// null 반환 → DOM에서 완전히 제거
+function Banner({ show }) {
+  if (!show) return null;
+  return <div className="banner">이벤트 배너</div>;
+}
+
+// undefined 반환 → ⚠️ React 에러
+function Bad() {
+  // return이 없으면 undefined 반환 — 에러!
 }
 ```
 
-`??` 연산자는 `null`이나 `undefined`일 때 폴백을 제공한다.
+## 복잡한 조건은 컴포넌트로 분리
 
-## null 반환과 CSS hidden의 차이
-
-![실전 조건부 렌더링 패턴](/assets/posts/react-conditional-rendering-patterns.svg)
-
-컴포넌트를 숨길 때 `null` 반환과 CSS `display: none` / `visibility: hidden`은 다르게 동작한다.
+삼항 연산자나 `&&`이 JSX 안에서 3줄 이상을 차지하거나 중첩된다면 별도 컴포넌트로 분리하는 것이 낫다.
 
 ```jsx
-// null 반환 — 컴포넌트가 완전히 언마운트됨
-function Modal({ isOpen }) {
-  if (!isOpen) return null;
-  return <ModalContent />;
+// ❌ 읽기 어려운 중첩 삼항
+{isLoading ? <Spinner /> : error ? <Error msg={error} /> : data ? <List items={data} /> : null}
+
+// ✅ 컴포넌트로 분리
+function PostContent({ isLoading, error, data }) {
+  if (isLoading) return <Spinner />;
+  if (error) return <Error msg={error} />;
+  if (!data) return null;
+  return <List items={data} />;
 }
-// 열 때마다 새로 마운트 → 내부 state 초기화
-// 닫을 때 DOM에서 완전 제거
-
-// CSS로 숨김 — 마운트 유지
-function Modal({ isOpen }) {
-  return (
-    <div style={{ display: isOpen ? 'block' : 'none' }}>
-      <ModalContent />
-    </div>
-  );
-}
-// state가 닫혀도 보존됨
-// 애니메이션(fade out 등) 구현 가능
-```
-
-| 방법 | 마운트 상태 | state 보존 | 애니메이션 |
-|---|---|---|---|
-| null 반환 | 언마운트 | ❌ 초기화 | 진입만 가능 |
-| display:none | 마운트 유지 | ✅ 보존 | 진입·퇴장 모두 가능 |
-
-드로어, 모달처럼 **열고 닫는 UI에 애니메이션**이 필요하다면 CSS로 숨기는 방식을 선택한다.
-
-## 권한 기반 조건부 렌더링
-
-실전에서 자주 쓰이는 패턴 — 권한 체크를 컴포넌트로 추출한다.
-
-```jsx
-function Can({ permission, children, fallback = null }) {
-  const { permissions } = useAuth();
-  return permissions.includes(permission) ? children : fallback;
-}
-
-// 사용 측
-<Can permission="posts:write">
-  <CreatePostButton />
-</Can>
-
-<Can permission="admin:delete" fallback={<span>권한 없음</span>}>
-  <DeleteButton />
-</Can>
 ```
 
 ## 정리
 
-조건부 렌더링의 핵심은 **가독성과 의도의 명확성**이다. 단순 on/off는 `&&`, 두 가지 택일은 삼항, 여러 가드 조건은 early return, 3개 이상 선택지는 컴포넌트 맵을 쓴다. `&&` 사용 시 숫자 0 함정을 반드시 피하고, 애니메이션이 필요한 UI는 `null` 반환 대신 CSS로 숨긴다. 다음 글에서는 배열 데이터를 화면에 표시하는 **리스트 렌더링**을 알아본다.
+- 로딩·에러 가드에는 얼리 리턴 패턴이 가장 명확하다
+- A/B 선택에는 삼항 연산자, 있거나 없거나에는 `&&` 단축 평가를 쓴다
+- `&&`를 숫자/빈 문자열에 쓰면 0이나 빈 텍스트가 렌더될 수 있다. `!!` 또는 삼항으로 해결한다
+- 복잡한 조건 로직은 변수나 별도 컴포넌트로 분리한다
+- `null` 반환 = DOM에서 제거. `undefined` 반환 = 에러
+
+다음 글에서는 배열 데이터를 화면에 나열하는 **목록 렌더링** 패턴을 다룬다.
 
 ---
 
-**지난 글:** [Props Spreading — 편리함과 위험성의 균형](/posts/react-props-spreading/)
+**지난 글:** [Props Spreading — 편리함과 위험성 사이](/posts/react-props-spreading/)
 
-**다음 글:** [리스트 렌더링 — map, key, 성능 최적화](/posts/react-list-rendering/)
+**다음 글:** [목록 렌더링 — map()과 배열 처리 패턴](/posts/react-list-rendering/)
 
 <br>
 읽어주셔서 감사합니다. 😊

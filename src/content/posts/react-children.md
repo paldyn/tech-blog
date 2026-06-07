@@ -1,222 +1,162 @@
 ---
-title: "children prop — 컴포넌트 합성의 기초"
-description: "children prop의 개념, 다양한 children 타입, 렌더 프롭 패턴, Named Slot 패턴, TypeScript에서 children 타입 선언 방법을 다룹니다."
+title: "children prop 완전 정복 — 컴포넌트 슬롯 패턴"
+description: "children prop의 동작 원리, 단일/다중 슬롯 패턴, children을 조작하는 React.Children API, 함수를 children으로 전달하는 패턴까지 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-06"
+pubDate: "2026-06-08"
 archiveOrder: 6
 type: "knowledge"
 category: "React"
-tags: ["children prop", "컴포넌트합성", "렌더프롭", "React", "TypeScript"]
+tags: ["children", "props", "슬롯패턴", "합성", "React.Children", "컴포넌트설계"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-components/)에서 컴포넌트의 구조와 설계 원칙을 배웠다. React에서 컴포넌트를 유연하게 재사용하는 핵심 메커니즘이 바로 **children prop**이다. 여는 태그와 닫는 태그 사이에 넣은 모든 것이 `children`으로 전달된다.
+[지난 글](/posts/react-components/)에서 컴포넌트의 구조와 합성 원칙을 배웠다. `children`은 React에서 가장 강력하면서도 자주 과소평가되는 prop이다. 컴포넌트가 자신의 내부 내용을 사용 측에 위임할 수 있게 해주는 **슬롯 메커니즘**이다.
 
-## children prop이란
+## children은 특별한 prop이다
 
-JSX에서 컴포넌트를 열고 닫는 태그 사이에 넣은 콘텐츠는 자동으로 `children` prop으로 전달된다.
-
-```jsx
-// 부모 — 태그 사이 콘텐츠가 children
-<Card title="프로필">
-  <Avatar src="/photo.jpg" />
-  <p>홍길동</p>
-</Card>
-
-// Card 컴포넌트 — children을 props로 수신
-function Card({ title, children }) {
-  return (
-    <div className="card">
-      <h2>{title}</h2>
-      <div className="card-body">
-        {children}
-      </div>
-    </div>
-  );
-}
-```
-
-이처럼 컴포넌트가 내부 콘텐츠를 모르는 채로 외부에서 받아 렌더링하는 패턴을 **합성(Composition)**이라 한다.
-
-![children prop 전달 방식](/assets/posts/react-children-prop.svg)
-
-## children이 될 수 있는 것
-
-`children`은 React가 렌더링할 수 있는 모든 값이 될 수 있다.
+JSX에서 컴포넌트 태그 사이에 작성한 내용은 자동으로 `props.children`에 들어간다. 명시적으로 전달하지 않아도 된다.
 
 ```jsx
-// 문자열
-<Button>저장</Button>
-
-// JSX 요소
-<Button><StarIcon /> 즐겨찾기</Button>
-
-// 여러 요소 (Fragment 없이도 됨)
-<Card>
-  <h3>제목</h3>
-  <p>내용</p>
-</Card>
-
-// null/undefined (아무것도 렌더링 안 됨)
-<Modal>{isOpen ? <Content /> : null}</Modal>
-
-// 함수 (Render Props 패턴)
-<DataFetcher url="/api/users">
-  {(data) => <UserList users={data} />}
-</DataFetcher>
-```
-
-## 합성으로 레이아웃 컴포넌트 만들기
-
-children을 활용하면 어떤 콘텐츠든 담을 수 있는 범용 레이아웃 컴포넌트를 만들 수 있다.
-
-```jsx
-// 재사용 가능한 Modal 컴포넌트
-function Modal({ isOpen, onClose, title, children }) {
-  if (!isOpen) return null;
-
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={e => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>{title}</h2>
-          <button onClick={onClose}>✕</button>
-        </div>
-        <div className="modal-body">
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 사용 측 — 어떤 내용이든 담을 수 있음
-<Modal isOpen={isOpen} onClose={close} title="사용자 정보">
-  <UserForm onSubmit={handleSubmit} />
-</Modal>
-```
-
-## Named Slot 패턴 (여러 children 영역)
-
-여러 개의 독립적인 콘텐츠 영역이 필요할 때는 JSX를 별도 prop으로 전달한다.
-
-```jsx
-function PageLayout({ header, sidebar, main, footer }) {
-  return (
-    <div className="page">
-      <header className="page-header">{header}</header>
-      <div className="page-body">
-        <aside className="sidebar">{sidebar}</aside>
-        <main className="main-content">{main}</main>
-      </div>
-      <footer className="page-footer">{footer}</footer>
-    </div>
-  );
+function Card({ children }) {
+  return <div className="card">{children}</div>;
 }
 
 // 사용 측
-<PageLayout
-  header={<NavBar />}
-  sidebar={<CategoryMenu />}
-  main={<ArticleList />}
-  footer={<SiteFooter />}
-/>
+<Card>
+  <h2>제목</h2>
+  <p>내용</p>
+</Card>
 ```
 
-이 패턴은 Angular의 `ng-content`나 Vue의 `<slot>`과 유사하다.
+`Card`는 어떤 내용이 올지 미리 알 필요가 없다. 레이아웃(`.card` 스타일)만 담당하고 실제 내용은 사용 측이 결정한다. 이 분리가 재사용성의 핵심이다.
 
-![children 활용 패턴과 TypeScript 타입](/assets/posts/react-children-api.svg)
+## children의 타입
 
-## Render Props 패턴
-
-children이 함수일 때, 컴포넌트 내부 상태를 함수 인자로 넘겨 외부에서 렌더링을 제어할 수 있다.
+`children`은 상황에 따라 타입이 달라진다.
 
 ```jsx
-// Render Props — children이 함수
-function DataFetcher({ url, children }) {
+<Comp>Hello</Comp>
+// children: "Hello" (문자열)
+
+<Comp><span>A</span></Comp>
+// children: ReactElement (단일 요소)
+
+<Comp><span>A</span><span>B</span></Comp>
+// children: [ReactElement, ReactElement] (배열)
+
+<Comp />
+// children: undefined (없음)
+```
+
+타입이 불안정하기 때문에 `children`을 배열로 다루려면 `React.Children.toArray()`로 정규화하거나, 스프레드 전에 존재 여부를 확인해야 한다.
+
+![children prop 슬롯 패턴](/assets/posts/react-children-slot.svg)
+
+## 다중 슬롯 — 명명된 children props
+
+헤더·바디·푸터처럼 여러 위치에 외부 내용을 받고 싶을 때는 prop 이름을 붙인다.
+
+```jsx
+function Modal({ header, children, footer }) {
+  return (
+    <div className="modal">
+      <div className="modal-header">{header}</div>
+      <div className="modal-body">{children}</div>
+      <div className="modal-footer">{footer}</div>
+    </div>
+  );
+}
+
+// 사용
+<Modal
+  header={<h2>확인하시겠습니까?</h2>}
+  footer={<button onClick={onClose}>닫기</button>}
+>
+  <p>이 작업은 되돌릴 수 없습니다.</p>
+</Modal>
+```
+
+`children`은 메인 슬롯으로 태그 사이 내용을 받고, `header`와 `footer`는 명시적 JSX prop으로 받는다.
+
+![다중 슬롯 패턴](/assets/posts/react-children-api.svg)
+
+## 렌더 prop — 함수를 children으로
+
+`children`에 함수를 전달하는 패턴이 있다. 컴포넌트가 내부 데이터를 자식에게 역으로 주입할 때 사용한다.
+
+```jsx
+function DataLoader({ url, children }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(url)
       .then(r => r.json())
-      .then(data => { setData(data); setLoading(false); });
+      .then(d => { setData(d); setLoading(false); });
   }, [url]);
 
-  return children(data, loading); // 함수를 호출해 렌더링
+  return children({ data, loading });
 }
 
-// 사용 측 — children이 함수
-<DataFetcher url="/api/users">
-  {(users, loading) =>
-    loading ? <Spinner /> : <UserList users={users} />
+// 사용 — children이 함수다
+<DataLoader url="/api/posts">
+  {({ data, loading }) =>
+    loading ? <Spinner /> : <PostList posts={data} />
   }
-</DataFetcher>
+</DataLoader>
 ```
 
-단, 렌더 프롭은 커스텀 훅으로 대체하는 것이 더 간결하다. 기존 코드를 읽을 때 이해하기 위해 알아두면 충분하다.
+`DataLoader`가 데이터 패칭을 담당하고, 렌더 방식은 완전히 사용 측이 결정한다. 이 패턴을 **렌더 prop(render prop)** 패턴이라 한다. 요즘은 커스텀 훅으로 대부분 대체할 수 있지만, 서드파티 라이브러리나 오래된 코드베이스에서 자주 만난다.
 
-## TypeScript에서 children 타입
+## React.Children 유틸리티
 
-TypeScript로 React를 쓸 때 children 타입을 올바르게 선언해야 한다.
+`children`을 순회하거나 개수를 세야 할 때 `React.Children` API를 쓴다.
 
-```tsx
-import { type ReactNode, type ReactElement } from 'react';
+```jsx
+import { Children, cloneElement } from 'react';
 
-// ReactNode: 가장 넓은 타입 (문자열, 숫자, JSX, null, undefined, 배열 모두)
-type CardProps = {
-  children: ReactNode;
-  title: string;
-};
-
-// ReactElement: JSX 요소만 (문자열/null 제외)
-type IconButtonProps = {
-  children: ReactElement;  // 반드시 JSX 요소여야 할 때
-};
-
-// children을 선택적으로
-type MaybeChildrenProps = {
-  children?: ReactNode;    // 없어도 되는 children
-};
-
-function Card({ title, children }: CardProps) {
+function RadioGroup({ children, name }) {
   return (
-    <div className="card">
-      <h2>{title}</h2>
-      {children ?? <p className="empty">내용이 없습니다</p>}
+    <div>
+      {Children.map(children, child =>
+        cloneElement(child, { name })
+      )}
     </div>
   );
 }
 ```
 
-## children 패턴 선택 가이드
+`Children.map()`, `Children.count()`, `Children.toArray()` 등이 있다. 단, 이 API는 React 컴포넌트 트리의 불투명한 내부를 건드리는 것이라 일반적으로 권장되지 않는다. 가능하면 context나 명시적 props로 해결하는 것이 더 명확하다.
 
-```
-children 사용 상황 결정 트리:
+## children에 기본값 설정
 
-내용 영역이 1개?
-  └─ YES → children prop 사용
-       <Modal>{content}</Modal>
+`children`이 전달되지 않을 때 기본 UI를 보여주려면 기본값을 설정한다.
 
-내용 영역이 여러 개?
-  └─ YES → named slot (JSX as prop)
-       <Layout header={...} main={...} />
+```jsx
+function Button({ children = '확인' }) {
+  return <button>{children}</button>;
+}
 
-내부 상태를 외부에 노출해야?
-  └─ YES → render props 또는 커스텀 훅
-       <Toggle>{(on, toggle) => ...}</Toggle>
+<Button />           // → <button>확인</button>
+<Button>취소</Button> // → <button>취소</button>
 ```
 
 ## 정리
 
-`children`은 React 합성 패턴의 근간이다. 태그 사이의 콘텐츠를 유연하게 주입해 범용적이고 재사용 가능한 컴포넌트를 만들 수 있다. 단일 children, Named Slot, Render Props를 상황에 맞게 사용하면 컴포넌트 설계가 훨씬 유연해진다. 다음 글에서는 데이터를 전달하는 **props**를 더 깊이 파헤친다.
+- 태그 사이 내용은 자동으로 `props.children`으로 전달된다
+- `children`을 활용하면 레이아웃과 내용을 분리해 재사용성을 높일 수 있다
+- 여러 슬롯이 필요하면 `header`, `footer` 같은 명명된 JSX props를 사용한다
+- 렌더 prop 패턴으로 컴포넌트가 내부 데이터를 자식 함수에 주입할 수 있다
+- `React.Children` API는 최후 수단으로 쓴다
+
+다음 글에서는 부모가 자식에게 데이터를 전달하는 **Props**를 전면적으로 다룬다.
 
 ---
 
-**지난 글:** [React 컴포넌트 — 함수형과 클래스형, 컴포넌트 설계 원칙](/posts/react-components/)
+**지난 글:** [컴포넌트 완전 정복 — 함수 컴포넌트와 설계 원칙](/posts/react-components/)
 
-**다음 글:** [Props 완전 정복 — 데이터 전달과 기본값, 타입 검증](/posts/react-props/)
+**다음 글:** [Props 완전 정복 — 컴포넌트 인터페이스 설계](/posts/react-props/)
 
 <br>
 읽어주셔서 감사합니다. 😊

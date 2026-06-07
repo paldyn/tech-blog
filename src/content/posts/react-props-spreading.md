@@ -1,204 +1,152 @@
 ---
-title: "Props Spreading — 편리함과 위험성의 균형"
-description: "Props 스프레딩 {...props}의 동작 원리, DOM 경고가 발생하는 이유, 안전한 props 분리 패턴, className 병합 패턴을 실전 예제와 함께 설명합니다."
+title: "Props Spreading — 편리함과 위험성 사이"
+description: "JSX props spreading({...props})의 올바른 사용법, 커스텀 props와 DOM props 분리, className 합치기 패턴, 스프레드를 피해야 할 상황을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-06"
+pubDate: "2026-06-08"
 archiveOrder: 8
 type: "knowledge"
 category: "React"
-tags: ["Props Spreading", "React", "...props", "컴포넌트패턴", "DOM속성"]
+tags: ["props", "스프레딩", "rest props", "className", "컴포넌트설계", "React"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-props/)에서 Props의 전달 방식과 타입 검증을 배웠다. `{...props}` 스프레딩은 컴포넌트 래핑 시 매우 편리하지만, 잘못 쓰면 DOM 경고를 일으키거나 예상치 못한 props가 전달되는 버그를 만든다.
+[지난 글](/posts/react-props/)에서 Props의 단방향 흐름과 기본 패턴을 배웠다. JSX에서 `{...props}` 스프레드는 여러 props를 한 번에 전달할 때 편리하다. 하지만 무분별하게 쓰면 의도치 않은 DOM 속성 경고나 컴포넌트 인터페이스 불명확함 같은 문제가 생긴다.
 
-## Props Spreading이란
-
-`{...props}` 문법은 객체의 모든 프로퍼티를 JSX 속성으로 펼쳐서 전달한다.
+## Props Spreading의 기본
 
 ```jsx
-// 스프레딩 없이 명시적 전달
-<input
-  type={props.type}
-  value={props.value}
-  onChange={props.onChange}
-  placeholder={props.placeholder}
-  disabled={props.disabled}
-/>
-
-// 스프레딩으로 한 번에 전달 (동일한 결과)
-<input {...props} />
-```
-
-## DOM 경고가 발생하는 이유
-
-React에서 HTML 요소에 알 수 없는 속성을 전달하면 경고가 발생한다.
-
-```jsx
-// ❌ 문제: 커스텀 props가 DOM input에 그대로 전달됨
-function BadInput(props) {
-  return <input {...props} />;
-}
-
-// labelText, errorMessage는 HTML input이 모르는 속성
-<BadInput
-  type="email"
-  labelText="이메일"      // DOM input에 전달됨 → 경고
-  errorMessage="필수입력" // DOM input에 전달됨 → 경고
-/>
-
-// 콘솔: Warning: React does not recognize the `labelText` prop on a DOM element.
-```
-
-커스텀 props는 HTML 요소가 아닌 React 컴포넌트 레이어에서 소비해야 한다.
-
-![Props Spreading 문제와 해결](/assets/posts/react-props-spreading-problem.svg)
-
-## 올바른 패턴: 커스텀 props 분리
-
-구조분해 할당으로 커스텀 props를 꺼내고, 나머지(`...rest`)를 HTML 요소에 전달한다.
-
-```jsx
-// ✅ 커스텀 props를 분리하고 나머지만 전달
-function FormInput({ label, error, helpText, ...rest }) {
-  return (
-    <div className="form-group">
-      {label && <label>{label}</label>}
-      <input {...rest} />           {/* 표준 HTML 속성만 전달 */}
-      {helpText && <p className="help">{helpText}</p>}
-      {error && <p className="error">{error}</p>}
-    </div>
-  );
-}
-
-// 사용 측
-<FormInput
-  label="이메일"
-  error={errors.email}
-  helpText="유효한 이메일 주소를 입력하세요"
-  type="email"
-  value={email}
-  onChange={handleChange}
-  required
-/>
-```
-
-![안전한 Props 분리 패턴](/assets/posts/react-props-spreading-patterns.svg)
-
-## 안전한 Props 분리 4가지 패턴
-
-### 패턴 ① 커스텀 props 분리 + 나머지 전달
-
-가장 기본적인 패턴이다.
-
-```jsx
-function Button({ variant = 'primary', size = 'md', isLoading, ...rest }) {
-  return (
-    <button
-      className={`btn btn-${variant} btn-${size}`}
-      disabled={isLoading || rest.disabled}
-      {...rest}           // onClick, type, aria-* 등 전달됨
-    >
-      {isLoading ? <Spinner /> : rest.children}
-    </button>
-  );
-}
-```
-
-### 패턴 ② className 병합
-
-외부에서 추가 className을 전달할 수 있도록 내부와 병합한다.
-
-```jsx
-function Card({ variant = 'default', className = '', children, ...rest }) {
-  const baseClass = `card card-${variant}`;
-  const mergedClass = [baseClass, className].filter(Boolean).join(' ');
-
-  return (
-    <div className={mergedClass} {...rest}>
-      {children}
-    </div>
-  );
-}
-
-// clsx 라이브러리를 쓰면 더 깔끔
-import clsx from 'clsx';
-
-function Card({ variant, className, ...rest }) {
-  return (
-    <div className={clsx('card', `card-${variant}`, className)} {...rest} />
-  );
-}
-```
-
-### 패턴 ③ 스프레딩 순서가 중요하다
-
-스프레딩 위치에 따라 기본값이 덮어씌워진다.
-
-```jsx
-// ❌ rest.type이 type="email"을 덮어쓸 수 있음
-function EmailInput({ ...rest }) {
-  return <input type="email" {...rest} />;  // rest에 type이 있으면 email 무효화!
-}
-
-// ✅ 기본값을 뒤에 두어 보호
-function EmailInput({ ...rest }) {
-  return <input {...rest} type="email" />;  // 항상 email 타입 유지
-}
-```
-
-### 패턴 ④ TypeScript + ComponentPropsWithoutRef
-
-TypeScript에서 HTML 요소의 모든 표준 속성을 자동 상속하는 방법이다.
-
-```tsx
-type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
-  variant?: 'primary' | 'secondary' | 'danger';
-  isLoading?: boolean;
+const buttonProps = {
+  type: 'submit',
+  disabled: false,
+  className: 'btn-primary',
 };
 
-function Button({ variant = 'primary', isLoading, children, ...rest }: ButtonProps) {
+// 아래 두 줄은 완전히 동일하다
+<button type="submit" disabled={false} className="btn-primary">제출</button>
+<button {...buttonProps}>제출</button>
+```
+
+객체 스프레드 문법이 JSX 속성에도 그대로 적용된다. 여러 props를 한 번에 전달하거나 부모에서 받은 props를 하위 컴포넌트에 그대로 전달할 때 사용한다.
+
+## 문제 1: 커스텀 props가 DOM에 노출된다
+
+React 컴포넌트가 받는 props 중 `variant`, `isLoading`, `size` 같은 **커스텀 props**는 HTML DOM 요소에 직접 전달하면 안 된다. 브라우저 콘솔에 경고가 뜨고, 일부는 HTML 동작에 영향을 줄 수 있다.
+
+```jsx
+// ❌ 위험 — 모든 props를 div에 전달
+function Box(props) {
+  return <div {...props} />;
+}
+
+<Box isActive={true} size="large">내용</Box>
+// → <div isactive="true" size="large">내용</div> ← 알 수 없는 DOM 속성 경고
+```
+
+![Props Spreading 위험과 올바른 사용](/assets/posts/react-props-spreading-risk.svg)
+
+## 해결책: 커스텀 Props를 먼저 추출하고 나머지만 전달
+
+```jsx
+// ✅ 커스텀 props를 구조 분해로 추출, 나머지만 DOM에 전달
+function Button({ variant = 'primary', isLoading, children, ...rest }) {
   return (
     <button
       className={`btn btn-${variant}`}
       disabled={isLoading}
       {...rest}
     >
-      {isLoading ? '로딩 중...' : children}
+      {isLoading ? '처리 중...' : children}
     </button>
   );
 }
-
-// TypeScript가 button의 모든 속성(type, onClick, aria-* 등)을 자동 제안
-<Button type="submit" onClick={handleSubmit} aria-label="저장하기" variant="primary">
-  저장
-</Button>
 ```
 
-## 스프레딩 사용 기준
+`variant`와 `isLoading`은 구조 분해로 추출해 컴포넌트 로직에서 사용하고, `...rest`에는 `type`, `onClick`, `aria-*`, `data-*` 같은 진짜 HTML 속성만 남는다.
 
-```
-스프레딩 적합:
-  ✅ HTML 요소를 얇게 래핑하는 UI 컴포넌트 (Button, Input, Card 등)
-  ✅ 커스텀 props를 분리한 후 ...rest를 전달
-  ✅ 테스트 유틸리티에서 모든 이벤트 핸들러를 주입할 때
+## className 합치기
 
-스프레딩 부적합:
-  ❌ 복잡한 비즈니스 컴포넌트에 props 전체를 덮어씌울 때
-  ❌ 어떤 props가 전달될지 예측하기 어려울 때
-  ❌ 두 컴포넌트 간 "props relay"를 여러 단계 이어 사용할 때 → prop drilling 문제
+UI 컴포넌트가 기본 className을 갖되, 사용 측이 추가 className을 넣을 수 있게 하려면 두 값을 합쳐야 한다.
+
+```jsx
+function Card({ className, children, ...rest }) {
+  const combinedClass = ['card', className].filter(Boolean).join(' ');
+  return (
+    <div className={combinedClass} {...rest}>
+      {children}
+    </div>
+  );
+}
+
+<Card className="my-4 shadow-lg">내용</Card>
+// → <div class="card my-4 shadow-lg">내용</div>
 ```
+
+Tailwind CSS를 사용한다면 `clsx` + `tailwind-merge` 조합이 충돌 없는 클래스 병합을 처리해준다.
+
+![스프레드로 className 합치기](/assets/posts/react-props-spreading-forward.svg)
+
+## 문제 2: 인터페이스가 불명확해진다
+
+```jsx
+// ❌ 무엇을 받는지 알 수 없음
+function MyInput(props) {
+  return <input {...props} />;
+}
+
+// ✅ 명확한 인터페이스
+function MyInput({ label, error, className, ...inputProps }) {
+  return (
+    <label>
+      {label}
+      <input className={`input ${error ? 'input-error' : ''} ${className || ''}`} {...inputProps} />
+      {error && <span className="error-msg">{error}</span>}
+    </label>
+  );
+}
+```
+
+컴포넌트가 받을 수 있는 props를 명시적으로 구조 분해하면 타입 힌트와 자동완성이 동작하고, 코드를 읽는 사람이 컴포넌트 인터페이스를 즉시 파악할 수 있다.
+
+## Props 순서와 오버라이드
+
+스프레드에서 나중에 오는 같은 이름의 prop이 이전 것을 덮어쓴다.
+
+```jsx
+// ...rest에 onClick이 있으면 아래 onClick보다 앞에 왔으므로
+// 컴포넌트 내부 onClick이 우선된다
+<button {...rest} onClick={handleClick}>제출</button>
+
+// 반대로 사용 측이 override하게 하려면
+<button onClick={defaultClick} {...rest}>제출</button>
+// → rest.onClick이 defaultClick을 덮어씀
+```
+
+이 순서를 의도적으로 활용해 기본값(default)과 오버라이드(override) 중 어느 것이 우선순위를 가질지 제어할 수 있다.
+
+## 언제 스프레드를 쓰면 안 될까
+
+- 어떤 props가 전달될지 예측하기 어려운 경우
+- 부모 컴포넌트의 많은 내부 state를 그대로 전달하는 prop drilling 해결책으로 쓸 때
+- 스프레드된 props 중 어떤 것이 실제로 DOM에 닿는지 파악하기 어려울 때
+
+이런 상황에서는 context나 명시적 props 전달이 더 명확한 해결책이다.
 
 ## 정리
 
-Props 스프레딩은 래핑 컴포넌트에서 HTML 속성을 전달할 때 강력하다. 핵심은 **커스텀 props를 먼저 분리**하고 나머지(`...rest`)만 전달하는 것이다. TypeScript의 `ComponentPropsWithoutRef`와 결합하면 타입 안전성까지 확보된다. 다음 글에서는 조건에 따라 UI를 다르게 렌더링하는 **조건부 렌더링** 패턴을 다룬다.
+- `{...props}` 스프레드는 편리하지만 커스텀 props를 먼저 추출한 후 사용해야 한다
+- 커스텀 props를 그대로 DOM 요소에 전달하면 콘솔 경고가 발생한다
+- `className`은 기본값과 합치는 패턴이 필요하다
+- props 순서로 기본값과 오버라이드 우선순위를 제어할 수 있다
+- 인터페이스가 불명확해질 정도로 스프레드에 의존하는 것은 피한다
+
+다음 글에서는 조건에 따라 다른 UI를 보여주는 **조건부 렌더링** 패턴들을 다룬다.
 
 ---
 
-**지난 글:** [Props 완전 정복 — 데이터 전달과 기본값, 타입 검증](/posts/react-props/)
+**지난 글:** [Props 완전 정복 — 컴포넌트 인터페이스 설계](/posts/react-props/)
 
-**다음 글:** [조건부 렌더링 — 상황에 맞는 UI 표현하기](/posts/react-conditional-rendering/)
+**다음 글:** [조건부 렌더링 — 삼항 연산자부터 얼리 리턴까지](/posts/react-conditional-rendering/)
 
 <br>
 읽어주셔서 감사합니다. 😊
