@@ -1,136 +1,159 @@
 ---
-title: "CREATE TABLE 기초 — 테이블 설계의 시작"
-description: "CREATE TABLE 구문의 전체 구조와 열 정의, 제약 조건 선언 방법, CTAS와 복합 기본 키 패턴까지 테이블 생성의 모든 것을 다룹니다."
+title: "CREATE TABLE 기초 — 테이블 생성과 구조 설계"
+description: "CREATE TABLE 구문의 전체 구조, 열 정의 방식, 제약조건 이름 붙이기, CREATE TABLE AS SELECT 활용, 그리고 실무에서 자주 발생하는 설계 실수를 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-09"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "CREATE TABLE", "DDL", "제약조건", "테이블설계"]
+tags: ["SQL", "CREATE TABLE", "DDL", "테이블설계", "제약조건", "스키마"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-language-categories/)에서 SQL을 DDL, DML, DCL, TCL로 분류했다. 이제 DDL의 첫 번째 구문인 `CREATE TABLE`을 깊이 살펴본다. 테이블을 제대로 만드는 것이 이후 모든 쿼리의 성능과 데이터 품질을 결정한다.
+[지난 글](/posts/sql-language-categories/)에서 SQL을 DDL, DML, DCL, TCL로 분류했다. DDL의 핵심은 `CREATE TABLE`이다. 이번 글에서는 테이블 생성 구문을 완전히 해부하고, 열 이름 규칙부터 제약조건 명명, 자동 증가 키, 그리고 실무에서 반복되는 설계 실수까지 정리한다.
 
 ## CREATE TABLE 기본 구조
 
-`CREATE TABLE` 구문은 테이블 이름, 열(컬럼) 목록, 테이블 수준 제약 조건으로 이루어진다.
+`CREATE TABLE` 문은 테이블 이름, 열 정의 목록, 테이블 제약조건으로 구성된다.
+
+![CREATE TABLE 구문 분해](/assets/posts/sql-create-table-basics-syntax.svg)
+
+## 열 정의 규칙
+
+### 이름 규칙
+
+소문자 `snake_case`를 기본으로 한다. `order_id`, `user_name`, `created_at` 같은 형식이다. SQL 예약어(`order`, `group`, `select`)는 열 이름으로 사용하면 쿼터로 감싸야 해서 피하는 것이 좋다.
+
+### NOT NULL과 DEFAULT
+
+대부분의 열은 `NOT NULL`이어야 한다. NULL은 "모른다"를 의미하므로, 비즈니스적으로 반드시 존재해야 하는 값에 NULL을 허용하면 나중에 쿼리에서 `IS NULL` 처리를 빠뜨리는 실수로 이어진다. `DEFAULT`를 함께 설정하면 INSERT 시 생략해도 안전하다.
 
 ```sql
-CREATE TABLE 테이블명 (
-    열이름1  데이터타입  [열 수준 제약],
-    열이름2  데이터타입  [열 수준 제약],
-    ...
-    [테이블 수준 제약]
+-- 잘못된 설계: 모든 열에 NULL 허용
+CREATE TABLE bad_users (
+    id   INT,
+    name VARCHAR(100),
+    email VARCHAR(255)
+);
+
+-- 올바른 설계
+CREATE TABLE users (
+    id         BIGINT       NOT NULL,
+    name       VARCHAR(100) NOT NULL,
+    email      VARCHAR(255) NOT NULL,
+    is_active  BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
-열 수준 제약은 해당 열 바로 뒤에 선언하고, 테이블 수준 제약은 모든 열 선언 뒤에 별도로 작성한다. 두 열 이상을 묶는 복합 제약은 반드시 테이블 수준으로 선언해야 한다.
+## 자동 증가 기본 키
 
-![CREATE TABLE 구조 해부](/assets/posts/sql-create-table-basics-anatomy.svg)
-
-## 열 정의 핵심 요소
-
-### 데이터 타입
-
-타입 선택은 스토리지 효율과 연산 성능에 직접 영향을 준다.
+각 DBMS마다 자동 증가 열 문법이 다르다.
 
 ```sql
-CREATE TABLE 직원 (
-    직원ID     INTEGER           PRIMARY KEY,  -- 4바이트 정수
-    사번       CHAR(10)          NOT NULL,     -- 고정 길이 문자열
-    이름       VARCHAR(100)      NOT NULL,     -- 가변 길이 문자열
-    급여       NUMERIC(12, 2)    NOT NULL,     -- 정밀 소수 (화폐)
-    입사일     DATE              NOT NULL,     -- 날짜 (시간 없음)
-    활성여부   BOOLEAN           DEFAULT TRUE  -- 참/거짓
+-- PostgreSQL (IDENTITY, SQL:2003 표준)
+CREATE TABLE products (
+    id   INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- MySQL / MariaDB
+CREATE TABLE products (
+    id   INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- Oracle (12c 이상)
+CREATE TABLE products (
+    id   NUMBER GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR2(100) NOT NULL,
+    CONSTRAINT pk_products PRIMARY KEY (id)
+);
+
+-- SQL Server
+CREATE TABLE products (
+    id   INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL
 );
 ```
 
-정확한 화폐 계산에는 `FLOAT`/`DOUBLE` 대신 `NUMERIC(precision, scale)` 또는 `DECIMAL`을 쓴다. 부동소수점은 `0.1 + 0.2 = 0.30000000000000004` 같은 오차를 낸다.
+## 제약조건 명명 방법
 
-### 제약 조건
+제약조건에 이름을 붙이면 오류 메시지가 명확해지고, `ALTER TABLE`로 제약조건을 수정·삭제할 때 이름으로 참조할 수 있다.
 
 ```sql
-CREATE TABLE 제품 (
-    제품ID     INTEGER      PRIMARY KEY,     -- PK: UNIQUE + NOT NULL
-    제품코드   VARCHAR(20)  NOT NULL UNIQUE, -- 중복 불가
-    가격       NUMERIC(10,2) NOT NULL
-                 CHECK (가격 > 0),           -- 양수 강제
-    재고수량   INTEGER      NOT NULL
-                 DEFAULT 0,                  -- 생략 시 기본값
-    카테고리   VARCHAR(50)  NOT NULL
-                 DEFAULT '미분류'
+CREATE TABLE order_items (
+    item_id    BIGINT        NOT NULL,
+    order_id   BIGINT        NOT NULL,
+    product_id INT           NOT NULL,
+    quantity   INT           NOT NULL,
+    unit_price DECIMAL(12,2) NOT NULL,
+
+    CONSTRAINT pk_order_items    PRIMARY KEY (item_id),
+    CONSTRAINT fk_oi_order       FOREIGN KEY (order_id)   REFERENCES orders(order_id),
+    CONSTRAINT fk_oi_product     FOREIGN KEY (product_id) REFERENCES products(id),
+    CONSTRAINT chk_oi_quantity   CHECK (quantity > 0),
+    CONSTRAINT chk_oi_unit_price CHECK (unit_price >= 0)
 );
 ```
 
-`CHECK` 제약은 비즈니스 규칙을 데이터베이스 계층에서 강제한다. 애플리케이션이 우회해도 막힌다.
+FK 위반 시 오류 메시지에 `fk_oi_order`가 포함되어 어떤 관계가 깨졌는지 즉시 알 수 있다.
+
+## CREATE TABLE AS SELECT
+
+기존 테이블이나 쿼리 결과로 새 테이블을 만들 수 있다.
+
+```sql
+-- 구조 + 데이터 복사
+CREATE TABLE orders_backup AS
+SELECT * FROM orders WHERE created_at < '2024-01-01';
+
+-- 구조만 복사 (데이터 없음)
+CREATE TABLE orders_empty AS
+SELECT * FROM orders WHERE 1 = 0;
+```
+
+주의할 점은 **제약조건이 복사되지 않는다**는 것이다. PRIMARY KEY, FOREIGN KEY, NOT NULL, DEFAULT가 모두 사라진다. 백업 테이블을 실제 운영에 사용할 계획이라면 제약조건을 별도로 추가해야 한다.
 
 ## IF NOT EXISTS
 
-이미 테이블이 있으면 오류 대신 무시하는 옵션이다. 멱등성이 필요한 마이그레이션 스크립트에서 유용하다.
+스크립트를 반복 실행해도 오류가 나지 않게 하려면 `IF NOT EXISTS`를 사용한다.
 
 ```sql
-CREATE TABLE IF NOT EXISTS 로그 (
-    로그ID    BIGINT      PRIMARY KEY,
-    이벤트   VARCHAR(200) NOT NULL,
-    생성일시 TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS config (
+    key   VARCHAR(100) NOT NULL PRIMARY KEY,
+    value TEXT         NOT NULL
 );
 ```
 
-다만 `IF NOT EXISTS`는 스키마가 달라도 오류 없이 넘어가므로, 마이그레이션 도구(Flyway, Liquibase)에서는 버전 관리된 스크립트를 통해 중복을 제어한다.
+## 테이블 설계 체크리스트
 
-## CTAS — CREATE TABLE AS SELECT
+![테이블 설계 체크리스트](/assets/posts/sql-create-table-basics-design.svg)
 
-기존 쿼리 결과로 새 테이블을 만드는 방법이다.
+### 흔한 실수
 
-```sql
--- 데이터와 구조 모두 복사
-CREATE TABLE 2024년주문 AS
-SELECT * FROM 주문 WHERE EXTRACT(YEAR FROM 주문일) = 2024;
+**VARCHAR(255) 남용**: VARCHAR(255)가 "안전한 길이"라는 잘못된 믿음이 있다. 하지만 인덱스에 포함된 VARCHAR(255) 열은 인덱스 키 크기를 증가시키고, 일부 DBMS에서 행 크기 제한에 걸릴 수 있다. 실제 최대 길이를 추정해서 지정하라.
 
--- 구조만 복사 (데이터 없이)
-CREATE TABLE 주문_백업 AS
-SELECT * FROM 주문 WHERE 1 = 0;
-```
-
-CTAS는 열 타입은 복사하지만 **기본 키, 외래 키, NOT NULL, 인덱스는 복사하지 않는다**. 복사 후 필요한 제약과 인덱스를 `ALTER TABLE`과 `CREATE INDEX`로 추가해야 한다.
-
-![CTAS와 복합 기본 키](/assets/posts/sql-create-table-basics-patterns.svg)
-
-## 복합 기본 키
-
-두 개 이상의 열 조합이 행을 유일하게 식별할 때 사용한다. 다대다(M:N) 관계의 연결 테이블이 대표적이다.
+**FLOAT로 금액 저장**: `FLOAT`과 `DOUBLE`은 부동소수점이라 이진수로 정확히 표현할 수 없는 소수가 있다. `0.1 + 0.2 ≠ 0.3`이 될 수 있다. 금액은 반드시 `DECIMAL(x, y)` 또는 `NUMERIC(x, y)`를 사용하라.
 
 ```sql
-CREATE TABLE 수강신청 (
-    학생ID    INTEGER NOT NULL,
-    강의ID    INTEGER NOT NULL,
-    신청일    DATE    NOT NULL DEFAULT CURRENT_DATE,
-    PRIMARY KEY (학생ID, 강의ID),  -- 테이블 수준 선언
-    FOREIGN KEY (학생ID) REFERENCES 학생(학생ID),
-    FOREIGN KEY (강의ID) REFERENCES 강의(강의ID)
-);
+-- 잘못됨
+amount FLOAT NOT NULL
+
+-- 올바름
+amount DECIMAL(15, 2) NOT NULL  -- 총 15자리, 소수점 이하 2자리
 ```
 
-같은 학생이 같은 강의를 중복 신청할 수 없다는 규칙이 `PRIMARY KEY (학생ID, 강의ID)`로 표현된다.
+**updated_at 자동 갱신 누락**: 감사(Audit)나 캐시 무효화를 위해 `updated_at`이 필요한 테이블에서 이를 빠뜨리면 나중에 ALTER TABLE 비용이 크다. 설계 초기에 추가하는 것이 좋다.
 
-## 명명 규칙 권장 사항
-
-일관된 명명 규칙은 SQL 가독성과 유지 보수성을 높인다.
-
-- **테이블**: 복수형 영문 소문자 언더스코어(`orders`, `order_items`) 또는 한국어 명사
-- **열**: 소문자 언더스코어(`customer_id`, `created_at`)
-- **기본 키**: `{테이블명}_id` 또는 단순 `id`
-- **외래 키**: 참조 대상과 동일한 이름(`customer_id` → `customers.customer_id`)
-
-예약어(SELECT, TABLE, ORDER 등)는 열 이름으로 쓰지 않는다. 불가피하면 큰따옴표(`"order"`)나 백틱(MySQL: `` `order` ``)으로 이스케이프한다.
+다음 글에서는 테이블에서 가장 중요한 선택 중 하나인 숫자, 문자열, 불리언 데이터 타입을 상세히 다룬다.
 
 ---
 
-**지난 글:** [SQL 언어 분류 — DDL, DML, DCL, TCL 완전 정리](/posts/sql-language-categories/)
+**지난 글:** [SQL 언어 분류 — DDL, DML, DCL, TCL](/posts/sql-language-categories/)
 
-**다음 글:** [데이터 타입 완전 정리 — 숫자, 문자열, 불리언](/posts/sql-data-types-numeric-string-bool/)
+**다음 글:** [데이터 타입 완전 정복 — 숫자, 문자열, 불리언](/posts/sql-data-types-numeric-string-bool/)
 
 <br>
 읽어주셔서 감사합니다. 😊

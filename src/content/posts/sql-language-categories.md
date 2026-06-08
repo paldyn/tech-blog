@@ -1,129 +1,152 @@
 ---
-title: "SQL 언어 분류 — DDL, DML, DCL, TCL 완전 정리"
-description: "SQL을 기능별로 분류하는 DDL, DML, DCL, TCL의 차이와 각 구문의 역할, 트랜잭션과의 관계를 이해합니다."
+title: "SQL 언어 분류 — DDL, DML, DCL, TCL"
+description: "SQL 명령어를 DDL(데이터 정의어), DML(데이터 조작어), DCL(데이터 제어어), TCL(트랜잭션 제어어)로 분류하고, 각 범주의 핵심 명령어와 암묵적 커밋 등 실무에서 놓치기 쉬운 동작 방식을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-09"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "DDL", "DML", "DCL", "TCL", "트랜잭션"]
+tags: ["SQL", "DDL", "DML", "DCL", "TCL", "CREATE", "INSERT", "GRANT", "COMMIT"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-client-server-protocol/)에서 SQL이 서버에서 처리되는 내부 흐름을 살펴봤다. 이번에는 SQL 구문을 기능에 따라 분류하는 방법을 정리한다. 단순 암기가 아니라, 각 분류가 **트랜잭션과 어떻게 다르게 동작하는지**를 이해하는 것이 핵심이다.
+[지난 글](/posts/sql-client-server-protocol/)에서 SQL이 네트워크를 통해 DBMS로 전달되는 과정을 살펴봤다. 이번에는 SQL 명령어 자체를 체계적으로 분류한다. SQL은 용도에 따라 크게 네 가지 범주로 나뉜다. 이 분류를 이해하면 "DDL은 롤백이 안 되는데 왜 그럴까?", "GRANT는 트랜잭션 안에서 써야 할까?" 같은 실무 질문에 답할 수 있다.
 
-## 4가지 분류
+## 4가지 언어 분류
 
-SQL 구문은 목적에 따라 네 범주로 나뉜다.
-
-| 분류 | 영문 | 대표 구문 | 주요 특성 |
-|---|---|---|---|
-| DDL | Data Definition Language | CREATE, ALTER, DROP, TRUNCATE | 구조 정의, 대부분 DBMS에서 자동 커밋 |
-| DML | Data Manipulation Language | SELECT, INSERT, UPDATE, DELETE | 데이터 조작, 트랜잭션 안에서 실행 |
-| DCL | Data Control Language | GRANT, REVOKE | 권한 관리 |
-| TCL | Transaction Control Language | COMMIT, ROLLBACK, SAVEPOINT | 트랜잭션 경계 제어 |
-
-![SQL 언어 분류 개요](/assets/posts/sql-language-categories-overview.svg)
+![SQL 언어 분류 체계](/assets/posts/sql-language-categories-overview.svg)
 
 ## DDL — 데이터 정의어
 
-데이터베이스 **구조**를 다루는 명령이다. 테이블, 인덱스, 뷰, 시퀀스를 만들고 수정하고 삭제한다.
+**DDL(Data Definition Language)**은 데이터베이스 객체(테이블, 인덱스, 뷰, 시퀀스 등)의 구조를 정의한다. 핵심 명령어는 `CREATE`, `ALTER`, `DROP`, `TRUNCATE`, `RENAME`이다.
 
 ```sql
 -- 테이블 생성
-CREATE TABLE 주문 (
-    주문ID    INTEGER     PRIMARY KEY,
-    고객ID   VARCHAR(10) NOT NULL,
-    주문일   DATE        NOT NULL DEFAULT CURRENT_DATE,
-    금액     NUMERIC(12,2)
+CREATE TABLE categories (
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
--- 컬럼 추가
-ALTER TABLE 주문 ADD COLUMN 배송지 VARCHAR(200);
+-- 열 추가
+ALTER TABLE categories ADD COLUMN description TEXT;
 
--- 테이블 완전 삭제
-DROP TABLE 주문;
+-- 테이블 전체 삭제 (구조 보존)
+TRUNCATE TABLE categories;
+
+-- 테이블 구조 및 데이터 모두 삭제
+DROP TABLE IF EXISTS categories;
 ```
 
-**주의**: Oracle, MySQL에서는 DDL이 실행되면 암묵적 커밋이 발생한다. 실행 중이던 트랜잭션이 강제 커밋되므로 주의가 필요하다. PostgreSQL은 DDL도 트랜잭션으로 감쌀 수 있어 `BEGIN; ALTER TABLE ...; ROLLBACK;`이 가능하다.
+### DDL의 암묵적 커밋
+
+DDL의 중요한 특성은 **암묵적 커밋(Implicit COMMIT)**이다. Oracle, MySQL, SQL Server, PostgreSQL 모두 DDL 문이 실행되면 현재 트랜잭션이 즉시 커밋된다. 이는 DDL 작업을 롤백할 수 없음을 의미한다.
+
+> 예외: PostgreSQL은 DDL도 트랜잭션 안에서 롤백 가능하다. `BEGIN; CREATE TABLE t ...; ROLLBACK;`이 동작한다. 하지만 Oracle, MySQL은 그렇지 않다.
 
 ## DML — 데이터 조작어
 
-데이터 **내용**을 읽고 쓰는 명령이다. `SELECT`는 읽기, 나머지(`INSERT`, `UPDATE`, `DELETE`)는 쓰기다.
+**DML(Data Manipulation Language)**은 데이터 자체를 읽고 쓰는 명령어다. `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `MERGE`가 여기 속한다.
+
+DML은 트랜잭션 안에서 실행되며 `COMMIT`이나 `ROLLBACK`으로 결과를 확정하거나 취소할 수 있다.
 
 ```sql
--- 조회
-SELECT 이름, 나이 FROM 고객 WHERE 도시 = '서울';
+-- INSERT: 단건 삽입
+INSERT INTO products (name, price) VALUES ('마우스', 45000);
 
--- 삽입
-INSERT INTO 고객 (고객ID, 이름, 나이) VALUES ('C004', '신사임당', 38);
+-- INSERT ... SELECT: 조회 결과 삽입
+INSERT INTO product_archive
+SELECT * FROM products WHERE created_at < '2023-01-01';
 
--- 수정
-UPDATE 고객 SET 나이 = 39 WHERE 고객ID = 'C004';
+-- UPDATE: 조건부 갱신
+UPDATE products SET stock = stock - 1 WHERE id = 42 AND stock > 0;
 
--- 삭제
-DELETE FROM 고객 WHERE 고객ID = 'C004';
+-- DELETE: 조건부 삭제
+DELETE FROM orders WHERE status = 'cancelled' AND created_at < NOW() - INTERVAL '90 days';
 ```
 
-DML은 트랜잭션 안에서 실행된다. ROLLBACK으로 취소할 수 있다. 단, 대부분의 도구는 기본적으로 **자동 커밋(autocommit)** 모드이므로, 명시적으로 `BEGIN`을 선언하지 않으면 각 구문이 즉시 커밋된다.
-
-## TCL — 트랜잭션 제어어
-
-DML 변경 사항을 확정하거나 취소하는 명령이다. 트랜잭션은 **ACID**를 보장하는 작업의 논리적 단위다.
-
-```sql
-BEGIN;  -- 트랜잭션 시작 (MySQL: START TRANSACTION)
-
-UPDATE 계좌 SET 잔액 = 잔액 - 10000 WHERE 계좌ID = 'A001';
-SAVEPOINT after_debit;  -- 중간 저장점
-
-UPDATE 계좌 SET 잔액 = 잔액 + 10000 WHERE 계좌ID = 'A002';
-
--- 오류 발생 시 두 번째 UPDATE만 취소
-ROLLBACK TO after_debit;
-
-COMMIT;  -- 또는 ROLLBACK으로 전체 취소
-```
-
-`SAVEPOINT`는 긴 트랜잭션에서 부분 롤백을 가능하게 한다. 예를 들어 100개 행을 처리하다가 50번째에서 오류가 나면, 전체가 아닌 51~100번째만 롤백할 수 있다.
+`SELECT`는 데이터를 변경하지 않아 **DQL(Data Query Language)**로 따로 분류하기도 한다. 그러나 SQL 표준 분류에서는 DML의 일부다.
 
 ## DCL — 데이터 제어어
 
-사용자나 역할(Role)에 대한 **권한**을 관리한다.
+**DCL(Data Control Language)**은 데이터베이스 접근 권한을 관리한다. `GRANT`와 `REVOKE`가 전부다.
 
 ```sql
 -- 권한 부여
-GRANT SELECT, INSERT, UPDATE ON 고객 TO app_user;
-
--- 역할(Role) 생성 후 부여
-CREATE ROLE read_only;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO read_only;
-GRANT read_only TO analyst_user;
+GRANT SELECT, INSERT, UPDATE ON products TO app_user;
+GRANT ALL PRIVILEGES ON DATABASE mydb TO admin_user;
 
 -- 권한 회수
-REVOKE INSERT, UPDATE ON 고객 FROM app_user;
+REVOKE INSERT ON products FROM app_user;
+
+-- 롤(Role) 기반 권한 관리 (권장)
+CREATE ROLE readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
+GRANT readonly TO reporting_user;
 ```
 
-보안 원칙인 **최소 권한(Principle of Least Privilege)**에 따라, 애플리케이션 계정에는 필요한 권한만 부여한다. SELECT 전용 리포팅 계정이 실수로 `DELETE`를 실행할 수 없도록 막는다.
+최신 RDBMS에서는 `GRANT`를 직접 사용자에게 부여하기보다 **Role**을 만들어 권한 집합을 관리하는 것이 일반적이다.
 
-![DDL/DML/TCL/DCL 예시 코드](/assets/posts/sql-language-categories-examples.svg)
+## TCL — 트랜잭션 제어어
 
-## DDL과 DML의 트랜잭션 차이
+**TCL(Transaction Control Language)**은 트랜잭션의 경계를 제어한다.
 
-| 항목 | DDL | DML |
-|---|---|---|
-| 트랜잭션 감쌀 수 있나? | Oracle/MySQL: 불가 (암묵적 커밋) / PostgreSQL: 가능 | 항상 가능 |
-| ROLLBACK 대상 | 대부분 불가 | 가능 |
-| 실행 후 효과 | 즉시 영구 반영(Oracle/MySQL) | COMMIT 전까지 해당 세션에만 보임 |
+```sql
+-- 트랜잭션 시작
+BEGIN;  -- PostgreSQL/MySQL
+-- 또는
+START TRANSACTION;  -- MySQL 표준
 
-Oracle과 MySQL에서 마이그레이션 스크립트를 짤 때 `CREATE TABLE` 다음에 `INSERT`를 하고 `ROLLBACK`을 해도 테이블은 남아 있다. 이 차이를 모르면 데이터 유실이나 의도치 않은 스키마 변경이 생긴다.
+-- 커밋
+COMMIT;
+
+-- 롤백
+ROLLBACK;
+
+-- 저장점(Savepoint)
+BEGIN;
+    INSERT INTO orders (id, amount) VALUES (1, 50000);
+    SAVEPOINT sp1;
+    INSERT INTO order_items (order_id, product_id) VALUES (1, 99);
+    -- 아이템 삽입만 취소, 주문 삽입은 유지
+    ROLLBACK TO SAVEPOINT sp1;
+COMMIT;
+```
+
+### autocommit 설정
+
+MySQL은 기본적으로 `autocommit=1`이다. 각 DML 문이 자동으로 커밋된다. `BEGIN` 또는 `START TRANSACTION`으로 명시적 트랜잭션을 시작하면 autocommit이 일시적으로 비활성화된다.
+
+PostgreSQL도 `autocommit`이 기본 ON이지만, `BEGIN`으로 묶으면 명시적 트랜잭션이 된다.
+
+```sql
+-- MySQL: autocommit 확인/변경
+SELECT @@autocommit;
+SET autocommit = 0;  -- 세션 범위 변경
+
+-- PostgreSQL: 기본 autocommit 상태
+-- BEGIN 없이 실행 시 각 문장이 자동 커밋
+-- BEGIN 이후에는 COMMIT/ROLLBACK 명시 필요
+```
+
+## 실무 체크리스트
+
+| 상황 | 주의할 점 |
+|---|---|
+| DDL 실행 전 | 현재 트랜잭션이 있으면 DDL 전에 커밋됨 (Oracle/MySQL) |
+| TRUNCATE vs DELETE | TRUNCATE는 DDL이라 롤백 안 됨 (PostgreSQL 제외) |
+| GRANT 범위 | 신규 테이블에 권한 필요 시 `ON FUTURE TABLES` (Snowflake) 또는 재부여 필요 |
+| autocommit 확인 | MySQL에서 DML 후 커밋 없이 접속 종료 시 자동 롤백 |
+
+![분류별 SQL 예시](/assets/posts/sql-language-categories-examples.svg)
+
+다음 글부터는 DDL의 핵심인 `CREATE TABLE`부터 시작해 테이블 설계와 데이터 타입을 구체적으로 다룬다.
 
 ---
 
-**지난 글:** [SQL 클라이언트-서버 프로토콜 — 쿼리가 실행되는 과정](/posts/sql-client-server-protocol/)
+**지난 글:** [클라이언트-서버 프로토콜과 커넥션 관리](/posts/sql-client-server-protocol/)
 
-**다음 글:** [CREATE TABLE 기초 — 테이블 설계의 시작](/posts/sql-create-table-basics/)
+**다음 글:** [CREATE TABLE 기초 — 테이블 생성과 구조 설계](/posts/sql-create-table-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

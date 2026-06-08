@@ -1,104 +1,135 @@
 ---
-title: "관계형 모델의 수학적 기초 — 릴레이션과 집합 이론"
-description: "에드거 코드의 관계형 모델이 집합 이론과 어떻게 연결되는지, 도메인·릴레이션·관계 대수의 개념을 이해합니다."
+title: "관계 모델의 수학적 기초 — 릴레이션, 속성, 튜플"
+description: "E. F. Codd가 제안한 관계 모델의 이론적 토대를 살펴봅니다. 도메인, 속성, 튜플, 릴레이션, 스키마의 정의와 관계 대수 6가지 기본 연산이 SQL에 어떻게 대응되는지 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-09"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "RDB", "관계형모델", "관계대수", "집합이론"]
+tags: ["SQL", "관계모델", "릴레이션", "관계대수", "Codd", "튜플", "도메인"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-what-is-rdb/)에서 RDB가 파일 시스템의 문제를 어떻게 해결하는지 살펴봤다. 이번에는 한 단계 더 들어가서 관계형 모델의 수학적 토대를 살펴본다. "SQL은 그냥 테이블 조회 언어 아닌가?"라는 생각을 넘어서면 SQL이 왜 이렇게 설계되었는지, 쿼리 최적화가 왜 가능한지가 보인다.
+[지난 글](/posts/sql-what-is-rdb/)에서 관계형 데이터베이스의 탄생 배경과 핵심 개념을 개괄적으로 다뤘다. 이번에는 그 수학적 토대인 **관계 모델(Relational Model)**을 좀 더 엄밀하게 살펴본다. 이론이 지루하게 느껴질 수 있지만, 관계 모델을 이해해야 설계와 최적화에서 "왜 이렇게 해야 하는가"라는 질문에 스스로 답할 수 있다.
 
-## 도메인(Domain)
+## E. F. Codd와 관계 모델
 
-관계형 모델에서 **도메인**은 특정 속성이 취할 수 있는 값의 집합이다. 수학의 정의역(domain)과 같은 개념이다.
+1970년 Edgar F. Codd는 IBM 연구 논문 "A Relational Model of Data for Large Shared Data Banks"에서 관계 모델을 제안했다. 당시 DBMS는 계층형(IMS)이나 망형(CODASYL) 구조였는데, 이들은 데이터에 접근하려면 포인터를 따라가는 네비게이션 방식을 사용했다. Codd는 이를 집합론(Set Theory)과 술어 논리(First-Order Predicate Logic)에 기반한 선언형 방식으로 대체하자고 주장했다.
 
-- `나이` 속성의 도메인: 0 이상 150 이하의 정수
-- `이메일` 속성의 도메인: RFC 5321을 따르는 유효한 이메일 문자열
-- `성별` 속성의 도메인: `{ 'M', 'F', 'X' }`
+핵심 아이디어는 간단했다. "사용자는 *무엇*을 원하는지만 기술하고, *어떻게* 찾을지는 시스템이 결정한다."
 
-SQL에서 도메인은 **데이터 타입 + 제약 조건**으로 표현된다. `INTEGER CHECK (나이 BETWEEN 0 AND 150)` 이 코드가 바로 도메인을 선언하는 것이다.
+## 도메인 — 값의 허용 집합
 
-![관계형 모델 — 도메인과 릴레이션](/assets/posts/sql-relational-model-sets.svg)
+**도메인(Domain)**은 속성이 가질 수 있는 값의 집합이다. 예를 들어 `age` 속성의 도메인은 0 이상 150 이하의 정수, `email` 속성의 도메인은 이메일 형식 문자열이다.
 
-## 릴레이션(Relation)
-
-n개의 도메인 D1, D2, ..., Dn이 있을 때, 그들의 **카르테시안 곱(Cartesian Product) D1 × D2 × ... × Dn의 부분집합**이 릴레이션이다. SQL의 테이블이 바로 릴레이션이다.
-
-릴레이션은 네 가지 성질을 갖는다.
-
-1. **행 순서 없음**: 튜플(행)은 집합의 원소이므로 순서가 없다. `ORDER BY` 없이 가져온 행 순서는 보장되지 않는다.
-2. **중복 튜플 없음**: 같은 행이 두 번 존재할 수 없다. 기본 키가 이를 보장한다.
-3. **원자 값(1NF)**: 각 셀은 분해할 수 없는 단일 값이어야 한다. 배열을 한 셀에 넣는 것은 원칙적으로 1NF 위반이다.
-4. **열 순서 없음**: 속성도 집합이므로 이론상 순서가 없다. `SELECT *`보다 열 이름을 명시하는 것이 좋은 이유다.
-
-## 관계 대수(Relational Algebra)
-
-코드는 릴레이션을 입력받아 릴레이션을 출력하는 **관계 대수 연산**을 정의했다. SQL은 이 연산의 선언형 인터페이스다.
+도메인의 핵심 조건은 **원자성(Atomicity)**이다. 각 도메인 값은 더 이상 분해할 수 없어야 한다. 하나의 셀에 여러 값을 담거나, 콤마로 구분된 문자열을 저장하는 것은 관계 모델을 위반한다. 이것이 제1정규형(1NF)의 기초가 되는 규칙이다.
 
 ```sql
--- σ Selection → WHERE
-SELECT * FROM 고객 WHERE 나이 > 28;
+-- 위반 예시: 한 셀에 여러 전화번호
+-- phones: "010-1234-5678, 02-987-6543"  ← 원자성 위반
 
--- π Projection → SELECT 열 목록
-SELECT 이름, 도시 FROM 고객;
-
--- ⋈ Join → JOIN
-SELECT c.이름, o.제품명
-FROM 고객 c JOIN 주문 o ON c.고객ID = o.고객ID;
-
--- ∪ Union → UNION
-SELECT 고객ID FROM 우수고객
-UNION
-SELECT 고객ID FROM 신규고객;
+-- 올바른 설계: 별도 테이블로 분리
+CREATE TABLE user_phones (
+    user_id  INT,
+    phone    VARCHAR(20),
+    PRIMARY KEY (user_id, phone)
+);
 ```
 
-![관계 대수 핵심 연산](/assets/posts/sql-relational-model-operations.svg)
+## 속성과 스키마
 
-## 닫힘 성질(Closure Property)
-
-관계 대수의 핵심은 **닫힘 성질**이다. 모든 연산의 결과가 다시 릴레이션이다. 이 덕분에 연산을 중첩할 수 있다.
+**속성(Attribute)**은 이름과 도메인의 쌍이다. 테이블에서는 열(Column)로 구현된다. 속성들의 집합이 릴레이션의 **스키마(Schema)**다. 스키마는 구조를 정의하고, 인스턴스(Instance)는 실제 데이터를 담는다.
 
 ```sql
--- Selection 후 Projection — 연산 합성 가능
-SELECT 이름
-FROM   고객
-WHERE  나이 > 28;
+-- 스키마 정의
+CREATE TABLE employees (
+    emp_id     INT,           -- 속성: 이름=emp_id, 도메인=정수
+    name       VARCHAR(100),  -- 속성: 이름=name, 도메인=문자열
+    hire_date  DATE,          -- 속성: 이름=hire_date, 도메인=날짜
+    salary     DECIMAL(12,2)  -- 속성: 이름=salary, 도메인=소수
+);
 ```
 
-이 쿼리는 σ(고객, 나이>28) 결과에 π(이름)을 적용한 것이다. 결과가 항상 릴레이션이기 때문에 서브쿼리, CTE, 파생 테이블 등 SQL의 조합 능력이 가능해진다.
+## 튜플과 릴레이션
 
-## NULL과 3치 논리
+**튜플(Tuple)**은 각 속성에 대해 도메인에서 하나의 값을 선택한 순서 없는 쌍의 집합이다. 테이블의 한 행(Row)에 해당한다.
 
-순수 수학적 관계형 모델은 NULL을 정의하지 않는다. 코드 자신도 NULL을 두 개(미지(Unknown) vs 해당없음(Not Applicable))로 구분하자고 했지만, 실제 SQL은 단일 NULL을 사용해 3치 논리(TRUE / FALSE / UNKNOWN)를 만들었다.
+**릴레이션(Relation)**은 헤더(속성의 집합)와 바디(튜플의 집합)로 구성된다. 바디는 수학적 집합이므로 두 가지 성질이 보장된다.
+
+1. **중복 없음**: 완전히 동일한 튜플이 두 개 존재할 수 없다.
+2. **순서 없음**: 행의 순서는 릴레이션에서 의미가 없다. `ORDER BY` 없이 반환되는 행의 순서는 보장되지 않는다.
+
+![관계 모델의 구성 요소](/assets/posts/sql-relational-model-theory.svg)
+
+## NULL의 의미
+
+관계 모델에서 `NULL`은 "값이 없다"가 아니라 "**알 수 없다(Unknown)**"는 의미다. NULL이 포함된 연산은 예상치 못한 결과를 낳는다.
 
 ```sql
--- UNKNOWN 논리의 함정
-SELECT * FROM 고객 WHERE 나이 <> 30;
--- 나이가 NULL인 행은 결과에 포함되지 않는다!
--- <> 30은 NULL에 대해 UNKNOWN을 반환하기 때문
+-- NULL 비교
+SELECT 1 = NULL;    -- NULL (True도 False도 아님)
+SELECT NULL = NULL; -- NULL (두 NULL이 같은지도 알 수 없음)
+
+-- NULL 처리
+SELECT COALESCE(salary, 0) FROM employees; -- NULL이면 0으로 대체
+SELECT * FROM employees WHERE salary IS NULL; -- NULL 비교는 IS NULL 사용
 ```
 
-`WHERE` 절은 UNKNOWN을 FALSE로 처리한다. NULL을 다룰 때 `IS NULL`, `IS NOT NULL`, `COALESCE`를 쓰는 이유가 여기에 있다.
+이런 특성 때문에 NULL 처리를 잘못하면 WHERE 조건에서 행이 예상치 못하게 필터링된다. 이 부분은 시리즈 후반부에 자세히 다룬다.
 
-## 왜 이 이론이 중요한가
+## 관계 대수 — SQL의 이론적 토대
 
-관계형 모델을 이해하면 SQL을 더 정확하게 다룰 수 있다.
+Codd는 릴레이션을 다루는 연산 집합인 **관계 대수(Relational Algebra)**를 정의했다. 6가지 기본 연산이 있으며, 이것들의 조합으로 모든 쿼리를 표현할 수 있다.
 
-- **행 순서는 보장되지 않는다** → 정렬이 필요하면 반드시 `ORDER BY`를 쓴다
-- **집합 연산은 중복을 제거한다** → `UNION ALL`과 `UNION`의 차이가 이해된다
-- **NULL은 값이 아니다** → `= NULL`이 아니라 `IS NULL`을 써야 하는 이유가 자명해진다
-- **쿼리 최적화가 가능하다** → 대수 등가 변환으로 실행 계획을 바꿔도 결과가 같다
+![관계 대수 6가지 기본 연산](/assets/posts/sql-relational-model-algebra.svg)
+
+| 연산 | 기호 | SQL 대응 |
+|---|---|---|
+| 선택(Selection) | σ | `WHERE` |
+| 투영(Projection) | π | `SELECT 열목록` |
+| 조인(Join) | ⋈ | `JOIN` |
+| 합집합(Union) | ∪ | `UNION` |
+| 차집합(Difference) | − | `EXCEPT` / `MINUS` |
+| 곱집합(Cartesian Product) | × | `CROSS JOIN` |
+
+파생 연산인 교집합(∩, `INTERSECT`)과 나누기(÷)도 있지만, 기본 연산의 조합으로 표현 가능하다.
+
+### 선택과 투영 조합
+
+```sql
+-- σ(selection): 조건 만족하는 튜플
+-- π(projection): 특정 속성만 추출
+-- 아래 SQL = π_{name,email}(σ_{age > 30}(users))
+
+SELECT name, email
+FROM users
+WHERE age > 30;
+```
+
+### 조인
+
+조인은 두 릴레이션의 튜플을 조건에 따라 결합한다. 관계 대수에서는 `σ(R × S)`로 표현되며, 곱집합 후 선택 연산을 적용하는 것과 같다. 하지만 실제 DBMS는 이를 그대로 실행하지 않고 최적화된 알고리즘(Nested Loop, Hash Join 등)을 사용한다.
+
+```sql
+-- ⋈ (자연 조인): 같은 이름의 속성을 자동 조인
+SELECT o.order_id, u.name, o.amount
+FROM orders o
+JOIN users u ON o.user_id = u.user_id
+WHERE o.amount > 50000;
+```
+
+## 관계 완전성
+
+관계 대수로 표현 가능한 모든 쿼리를 표현할 수 있는 언어를 **관계 완전(Relationally Complete)**하다고 한다. SQL은 관계 완전하며, 여기에 집계(Aggregation)와 정렬(Ordering) 같은 추가 기능을 갖춘다. 따라서 SQL로 표현할 수 없는 관계 대수 쿼리는 없다.
+
+이 이론적 토대를 이해하면, SQL의 이상한 동작이 버그가 아니라 집합론의 자연스러운 결과임을 알 수 있다. 다음 글에서는 SQL 언어 자체의 역사와 표준화 과정을 살펴본다.
 
 ---
 
-**지난 글:** [RDB란 무엇인가 — 관계형 데이터베이스의 핵심 개념](/posts/sql-what-is-rdb/)
+**지난 글:** [관계형 데이터베이스란 무엇인가](/posts/sql-what-is-rdb/)
 
-**다음 글:** [SQL의 역사와 표준 — ISO SQL이 중요한 이유](/posts/sql-history-and-standard/)
+**다음 글:** [SQL의 역사와 표준 — ANSI SQL부터 SQL:2023까지](/posts/sql-history-and-standard/)
 
 <br>
 읽어주셔서 감사합니다. 😊
