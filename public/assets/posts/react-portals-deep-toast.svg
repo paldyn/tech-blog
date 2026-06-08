@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Portal로 토스트(Toast) 알림 구현</text>
+
+  <!-- Left code: ToastContext + useToast -->
+  <text x="220" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">ToastProvider</text>
+  <rect x="60" y="92" width="340" height="290" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="78" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">const</text>
+  <text x="116" y="116" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8"> ToastCtx = createContext(null);</text>
+  <text x="78" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">export function</text>
+  <text x="178" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8"> ToastProvider({ children }) {</text>
+  <text x="78" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">  const</text>
+  <text x="116" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8"> [toasts, setToasts] = useState([]);</text>
+  <text x="78" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">  const</text>
+  <text x="116" y="185" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8"> addToast = useCallback((msg, type) =&gt; {</text>
+  <text x="78" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">    const</text>
+  <text x="116" y="205" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8"> id = Date.now();</text>
+  <text x="78" y="225" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">    setToasts(prev =&gt; [...prev, {id, msg, type}]);</text>
+  <text x="78" y="245" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">    setTimeout(() =&gt; removeToast(id), 3000);</text>
+  <text x="78" y="265" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">  }, []);</text>
+  <text x="78" y="295" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">  return</text>
+  <text x="78" y="315" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">    &lt;ToastCtx.Provider value={addToast}&gt;</text>
+  <text x="78" y="335" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">      {children}</text>
+  <text x="78" y="355" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">      {createPortal(&lt;ToastList toasts={toasts}/&gt;,</text>
+  <text x="78" y="375" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">        document.body)}</text>
+
+  <!-- Right: visual toast preview + usage -->
+  <text x="660" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">토스트 미리보기</text>
+
+  <!-- Toast notifications -->
+  <rect x="500" y="92" width="320" height="44" rx="8" fill="#0d1a0d" stroke="#55c555" stroke-width="1.5"/>
+  <text x="520" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#55c555">✓ 저장되었습니다.</text>
+
+  <rect x="500" y="144" width="320" height="44" rx="8" fill="#1a0d0d" stroke="#e05555" stroke-width="1.5"/>
+  <text x="520" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#e05555">✗ 오류가 발생했습니다.</text>
+
+  <rect x="500" y="196" width="320" height="44" rx="8" fill="#0d0d1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="520" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" fill="#7ec8e3">ℹ 새 업데이트가 있습니다.</text>
+
+  <!-- Usage code -->
+  <text x="660" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+    font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">사용법</text>
+  <rect x="500" y="282" width="320" height="100" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="518" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#9aa4b8">// 어떤 컴포넌트에서든</text>
+  <text x="518" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#7ec8e3" font-weight="600">const</text>
+  <text x="556" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8"> toast = useToast();</text>
+  <text x="518" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">toast('저장!', 'success');</text>
+  <text x="518" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+    xml:space="preserve" font-size="12" fill="#e8e8e8">toast('오류', 'error');</text>
+</svg>
