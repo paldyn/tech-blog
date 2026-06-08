@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">DELETE 동작과 멱등성</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">리소스 삭제 — 두 번 불러도 결과 동일 (멱등)</text>
+
+  <!-- Timeline: 1st DELETE -->
+  <rect x="60" y="90" width="360" height="130" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">첫 번째 DELETE 요청</text>
+
+  <rect x="80" y="126" width="320" height="52" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="100" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="12" fill="#e05555" font-weight="600">DELETE /users/42 HTTP/1.1</text>
+  <text x="100" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="12" fill="#7ec8e3" font-weight="600">Host:</text>
+  <text x="148" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="12" fill="#ffffff"> api.example.com</text>
+
+  <rect x="80" y="190" width="320" height="22" rx="4" fill="#0f1a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="240" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">응답: 204 No Content</text>
+
+  <!-- Timeline: 2nd DELETE -->
+  <rect x="460" y="90" width="360" height="130" rx="8" fill="#0d1117" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">두 번째 DELETE 요청</text>
+
+  <rect x="480" y="126" width="320" height="52" rx="5" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="500" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="12" fill="#e05555" font-weight="600">DELETE /users/42 HTTP/1.1</text>
+  <text x="500" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="12" fill="#7ec8e3" font-weight="600">Host:</text>
+  <text x="548" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace" xml:space="preserve"
+        font-size="12" fill="#ffffff"> api.example.com</text>
+
+  <rect x="480" y="190" width="320" height="22" rx="4" fill="#1a0f0f" stroke="#e05555" stroke-width="1"/>
+  <text x="640" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="middle">응답: 404 Not Found (이미 삭제됨)</text>
+
+  <!-- Idempotency explanation -->
+  <rect x="60" y="244" width="760" height="90" rx="8" fill="#0f1a0f" stroke="#55c555" stroke-width="1"/>
+  <text x="440" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">DELETE는 멱등 — 결과 상태가 같음</text>
+  <text x="440" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">멱등성은 응답 코드가 아닌 서버 상태의 동일함을 의미한다.</text>
+  <text x="440" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">두 번 삭제해도 서버 상태는 동일: users/42가 존재하지 않음</text>
+  <text x="440" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">(응답 코드 204 vs 404는 다르지만, 리소스 부재라는 상태는 같음)</text>
+
+  <!-- Response code note -->
+  <rect x="60" y="352" width="360" height="50" rx="6" fill="#0d1117" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">삭제 성공 응답 코드</text>
+  <text x="80" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">200 OK · 204 No Content · 202 Accepted</text>
+
+  <rect x="460" y="352" width="360" height="50" rx="6" fill="#0d1117" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="480" y="372" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">DELETE 본문</text>
+  <text x="480" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">RFC 허용이나 실무에선 본문 없이 사용 권장</text>
+</svg>
