@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <!-- Background -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">NonNullable 실전 패턴</text>
+
+  <!-- Filter truthy pattern -->
+  <rect x="60" y="68" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">// filter(Boolean) 타입 강화</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> notNull&lt;T&gt;(</tspan>
+    <tspan x="76" dy="20">  value: T</tspan>
+    <tspan x="76" dy="20">): value is NonNullable&lt;T&gt; {</tspan>
+    <tspan x="76" dy="20">  <tspan font-weight="600" fill="#7ec8e3">return</tspan> value != null;</tspan>
+    <tspan x="76" dy="20">}</tspan>
+    <tspan x="76" dy="20">items.filter(notNull); <tspan fill="#9aa4b8">// T[]</tspan></tspan>
+  </text>
+
+  <!-- Generic constraint -->
+  <rect x="455" y="68" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">// 제네릭 제약 조건</text>
+  <text x="471" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> process&lt;T</tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">extends</tspan> NonNullable&lt;unknown&gt;</tspan>
+    <tspan x="471" dy="20">&gt;(value: T): T {</tspan>
+    <tspan x="471" dy="20">  <tspan fill="#9aa4b8">// T가 null/undefined 아님</tspan></tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">return</tspan> value;</tspan>
+    <tspan x="471" dy="20">}</tspan>
+  </text>
+
+  <!-- Record key pattern -->
+  <rect x="60" y="242" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">// 안전한 맵 조회</text>
+  <text x="76" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> getOrThrow&lt;K, V&gt;(</tspan>
+    <tspan x="76" dy="20">  map: Map&lt;K, V&gt;,</tspan>
+    <tspan x="76" dy="20">  key: K</tspan>
+    <tspan x="76" dy="20">): NonNullable&lt;V&gt; {</tspan>
+    <tspan x="76" dy="20">  <tspan font-weight="600" fill="#7ec8e3">const</tspan> v = map.get(key);</tspan>
+    <tspan x="76" dy="20">  <tspan font-weight="600" fill="#7ec8e3">if</tspan> (!v) <tspan font-weight="600" fill="#7ec8e3">throw</tspan> <tspan font-weight="600" fill="#7ec8e3">new</tspan> Error(<tspan fill="#ce9178">"Not found"</tspan>);</tspan>
+  </text>
+
+  <!-- DeepNonNullable -->
+  <rect x="455" y="242" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">// 재귀 버전 (커스텀)</text>
+  <text x="471" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> DeepNonNullable&lt;T&gt; =</tspan>
+    <tspan x="471" dy="20">  T <tspan font-weight="600" fill="#7ec8e3">extends</tspan> object</tspan>
+    <tspan x="471" dy="20">    ? { [K <tspan font-weight="600" fill="#7ec8e3">in keyof</tspan> T]:</tspan>
+    <tspan x="471" dy="20">        DeepNonNullable&lt;T[K]&gt; }</tspan>
+    <tspan x="471" dy="20">    : NonNullable&lt;T&gt;;</tspan>
+  </text>
+</svg>

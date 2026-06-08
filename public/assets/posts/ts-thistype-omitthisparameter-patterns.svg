@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <!-- Background -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ThisType · OmitThisParameter 실전 패턴</text>
+
+  <!-- Vue-like Options API -->
+  <rect x="60" y="68" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">// Options API 스타일 정의</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> Options&lt;D, M&gt; = {</tspan>
+    <tspan x="76" dy="20">  data(): D;</tspan>
+    <tspan x="76" dy="20">  methods?: M &amp;</tspan>
+    <tspan x="76" dy="20">    ThisType&lt;D &amp; M&gt;;</tspan>
+    <tspan x="76" dy="20">};</tspan>
+    <tspan x="76" dy="20"><tspan fill="#9aa4b8">// methods 내 this: D &amp; M</tspan></tspan>
+  </text>
+
+  <!-- bind pattern -->
+  <rect x="455" y="68" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">// bind 후 this 제거</text>
+  <text x="471" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> format(</tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">this</tspan>: User, label: <tspan fill="#b5cea8">string</tspan></tspan>
+    <tspan x="471" dy="20">): <tspan fill="#b5cea8">string</tspan> { <tspan font-weight="600" fill="#7ec8e3">return</tspan> <tspan fill="#ce9178">""</tspan>; }</tspan>
+    <tspan x="471" dy="20"> </tspan>
+    <tspan x="471" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> Bound =</tspan>
+    <tspan x="471" dy="20">  OmitThisParameter&lt;<tspan font-weight="600" fill="#7ec8e3">typeof</tspan> format&gt;;</tspan>
+  </text>
+
+  <!-- Method builder pattern -->
+  <rect x="60" y="242" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">// 메서드 컬렉션 정의</text>
+  <text x="76" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">const</tspan> userMethods = {</tspan>
+    <tspan x="76" dy="20">  fullName(): <tspan fill="#b5cea8">string</tspan> {</tspan>
+    <tspan x="76" dy="20">    <tspan font-weight="600" fill="#7ec8e3">return</tspan> <tspan fill="#ce9178">`${this.first} ${this.last}`</tspan>;</tspan>
+    <tspan x="76" dy="20">  }</tspan>
+    <tspan x="76" dy="20">} <tspan font-weight="600" fill="#7ec8e3">satisfies</tspan></tspan>
+    <tspan x="76" dy="20">  ThisType&lt;{ first: <tspan fill="#b5cea8">string</tspan>; last: <tspan fill="#b5cea8">string</tspan> }&gt;;</tspan>
+  </text>
+
+  <!-- Event handler registration -->
+  <rect x="455" y="242" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">// 이벤트 핸들러 등록</text>
+  <text x="471" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">class</tspan> Button {</tspan>
+    <tspan x="471" dy="20">  onClick(</tspan>
+    <tspan x="471" dy="20">    <tspan font-weight="600" fill="#7ec8e3">this</tspan>: <tspan font-weight="600" fill="#7ec8e3">void</tspan>,</tspan>
+    <tspan x="471" dy="20">    e: MouseEvent): <tspan font-weight="600" fill="#7ec8e3">void</tspan> {}</tspan>
+    <tspan x="471" dy="20">}</tspan>
+    <tspan x="471" dy="20"><tspan fill="#9aa4b8">// this:void = this 사용 금지</tspan></tspan>
+  </text>
+</svg>

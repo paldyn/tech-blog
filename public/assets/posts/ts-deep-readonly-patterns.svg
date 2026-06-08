@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <!-- Background -->
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">DeepReadonly · DeepPartial 실전 패턴</text>
+
+  <!-- Redux state pattern -->
+  <rect x="60" y="68" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">// Redux 불변 상태</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> AppState =</tspan>
+    <tspan x="76" dy="20">  DeepReadonly&lt;{</tspan>
+    <tspan x="76" dy="20">    user: { name: <tspan fill="#b5cea8">string</tspan>; role: <tspan fill="#b5cea8">string</tspan> };</tspan>
+    <tspan x="76" dy="20">    cart: { items: Item[] };</tspan>
+    <tspan x="76" dy="20">  }&gt;;</tspan>
+    <tspan x="76" dy="20"> </tspan>
+    <tspan x="76" dy="20"><tspan fill="#9aa4b8">// state.user.name = "x" Error!</tspan></tspan>
+  </text>
+
+  <!-- Config pattern -->
+  <rect x="455" y="68" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">// 설정 객체 불변화</text>
+  <text x="471" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> loadConfig(</tspan>
+    <tspan x="471" dy="20">  raw: Config</tspan>
+    <tspan x="471" dy="20">): DeepReadonly&lt;Config&gt; {</tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">return</tspan> Object.freeze(raw)</tspan>
+    <tspan x="471" dy="20">    <tspan font-weight="600" fill="#7ec8e3">as</tspan> DeepReadonly&lt;Config&gt;;</tspan>
+    <tspan x="471" dy="20">}</tspan>
+  </text>
+
+  <!-- DeepPartial -->
+  <rect x="60" y="262" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">// DeepPartial 재귀 패턴</text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> DeepPartial&lt;T&gt; =</tspan>
+    <tspan x="76" dy="20">  T <tspan font-weight="600" fill="#7ec8e3">extends</tspan> object</tspan>
+    <tspan x="76" dy="20">    ? { [K <tspan font-weight="600" fill="#7ec8e3">in keyof</tspan> T]?:</tspan>
+    <tspan x="76" dy="20">        DeepPartial&lt;T[K]&gt; }</tspan>
+    <tspan x="76" dy="20">    : T;</tspan>
+  </text>
+
+  <!-- Mutable pattern -->
+  <rect x="455" y="262" width="365" height="152" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">// DeepMutable 역변환</text>
+  <text x="471" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> DeepMutable&lt;T&gt; =</tspan>
+    <tspan x="471" dy="20">  T <tspan font-weight="600" fill="#7ec8e3">extends</tspan> object</tspan>
+    <tspan x="471" dy="20">    ? { -<tspan font-weight="600" fill="#7ec8e3">readonly</tspan> [K <tspan font-weight="600" fill="#7ec8e3">in keyof</tspan> T]:</tspan>
+    <tspan x="471" dy="20">        DeepMutable&lt;T[K]&gt; }</tspan>
+    <tspan x="471" dy="20">    : T;</tspan>
+  </text>
+</svg>

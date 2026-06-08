@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Extract · Exclude 실전 패턴</text>
+
+  <!-- NonNullable pattern -->
+  <rect x="60" y="68" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">// null/undefined 제거</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> T = <tspan fill="#b5cea8">string</tspan> | <tspan fill="#b5cea8">number</tspan></tspan>
+    <tspan x="76" dy="20">        | <tspan font-weight="600" fill="#7ec8e3">null</tspan> | <tspan font-weight="600" fill="#7ec8e3">undefined</tspan>;</tspan>
+    <tspan x="76" dy="20"> </tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> A =</tspan>
+    <tspan x="76" dy="20">  Exclude&lt;T, <tspan font-weight="600" fill="#7ec8e3">null</tspan> | <tspan font-weight="600" fill="#7ec8e3">undefined</tspan>&gt;;</tspan>
+    <tspan x="76" dy="20"><tspan fill="#9aa4b8">// A = string | number</tspan></tspan>
+  </text>
+
+  <!-- Discriminated union filter -->
+  <rect x="455" y="68" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">// 판별 유니언 필터링</text>
+  <text x="471" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> Shape =</tspan>
+    <tspan x="471" dy="20">  | { kind: <tspan fill="#ce9178">"circle"</tspan>; r: <tspan fill="#b5cea8">number</tspan> }</tspan>
+    <tspan x="471" dy="20">  | { kind: <tspan fill="#ce9178">"rect"</tspan>; w: <tspan fill="#b5cea8">number</tspan> }</tspan>
+    <tspan x="471" dy="20">  | { kind: <tspan fill="#ce9178">"tri"</tspan>; h: <tspan fill="#b5cea8">number</tspan> };</tspan>
+    <tspan x="471" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> WithRadius =</tspan>
+    <tspan x="471" dy="20">  Extract&lt;Shape, { r: <tspan fill="#b5cea8">number</tspan> }&gt;;</tspan>
+  </text>
+
+  <!-- Event handler pattern -->
+  <rect x="60" y="262" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">// 키 집합 연산</text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> A = <tspan fill="#ce9178">"a"</tspan> | <tspan fill="#ce9178">"b"</tspan> | <tspan fill="#ce9178">"c"</tspan>;</tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> B = <tspan fill="#ce9178">"b"</tspan> | <tspan fill="#ce9178">"c"</tspan> | <tspan fill="#ce9178">"d"</tspan>;</tspan>
+    <tspan x="76" dy="20"> </tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> Inter = Extract&lt;A, B&gt;; <tspan fill="#9aa4b8">// "b"|"c"</tspan></tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> Diff  = Exclude&lt;A, B&gt;; <tspan fill="#9aa4b8">// "a"</tspan></tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> Diff2 = Exclude&lt;B, A&gt;; <tspan fill="#9aa4b8">// "d"</tspan></tspan>
+  </text>
+
+  <!-- Invert pattern -->
+  <rect x="455" y="262" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">// 함수 프로퍼티만 추출</text>
+  <text x="471" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">type</tspan> FnKeys&lt;T&gt; = {</tspan>
+    <tspan x="471" dy="20">  [K <tspan font-weight="600" fill="#7ec8e3">in keyof</tspan> T]:</tspan>
+    <tspan x="471" dy="20">    T[K] <tspan font-weight="600" fill="#7ec8e3">extends</tspan> Function</tspan>
+    <tspan x="471" dy="20">      ? K : never</tspan>
+    <tspan x="471" dy="20">}[<tspan font-weight="600" fill="#7ec8e3">keyof</tspan> T];</tspan>
+    <tspan x="471" dy="20"><tspan fill="#9aa4b8">// Extract 패턴 응용</tspan></tspan>
+  </text>
+</svg>

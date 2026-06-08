@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ReturnType · Parameters 실전 패턴</text>
+
+  <!-- API function pattern -->
+  <rect x="60" y="68" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">// API 함수 반환 타입 재사용</text>
+  <text x="76" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">async function</tspan> fetchUser(</tspan>
+    <tspan x="76" dy="20">  id: <tspan fill="#b5cea8">number</tspan></tspan>
+    <tspan x="76" dy="20">) { <tspan fill="#9aa4b8">/* ... */</tspan> }</tspan>
+    <tspan x="76" dy="20"> </tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> UserResult =</tspan>
+    <tspan x="76" dy="20">  Awaited&lt;ReturnType&lt;<tspan font-weight="600" fill="#7ec8e3">typeof</tspan> fetchUser&gt;&gt;;</tspan>
+  </text>
+
+  <!-- Wrapper function -->
+  <rect x="455" y="68" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="90" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">// 래퍼 함수 시그니처 유지</text>
+  <text x="471" y="110" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> withLog&lt;F</tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">extends</tspan> (...a: any) =&gt; any</tspan>
+    <tspan x="471" dy="20">&gt;(fn: F) {</tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">return</tspan> (</tspan>
+    <tspan x="471" dy="20">    ...args: Parameters&lt;F&gt;</tspan>
+    <tspan x="471" dy="20">  ): ReturnType&lt;F&gt; =&gt; {</tspan>
+  </text>
+
+  <!-- Redux-like selector -->
+  <rect x="60" y="262" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178">// 셀렉터 반환 타입</text>
+  <text x="76" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="76" dy="0"><tspan font-weight="600" fill="#7ec8e3">const</tspan> selectUser = (s: State) =&gt;</tspan>
+    <tspan x="76" dy="20">  s.users.current;</tspan>
+    <tspan x="76" dy="20"> </tspan>
+    <tspan x="76" dy="20"><tspan font-weight="600" fill="#7ec8e3">type</tspan> SelectedUser =</tspan>
+    <tspan x="76" dy="20">  ReturnType&lt;</tspan>
+    <tspan x="76" dy="20">    <tspan font-weight="600" fill="#7ec8e3">typeof</tspan> selectUser&gt;;</tspan>
+  </text>
+
+  <!-- Throttle/debounce pattern -->
+  <rect x="455" y="262" width="365" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="471" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">// throttle/memoize 타입 보존</text>
+  <text x="471" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">
+    <tspan x="471" dy="0"><tspan font-weight="600" fill="#7ec8e3">function</tspan> memoize&lt;F</tspan>
+    <tspan x="471" dy="20">  <tspan font-weight="600" fill="#7ec8e3">extends</tspan> (...a: any) =&gt; any</tspan>
+    <tspan x="471" dy="20">&gt;(fn: F): (</tspan>
+    <tspan x="471" dy="20">  ...args: Parameters&lt;F&gt;</tspan>
+    <tspan x="471" dy="20">) =&gt; ReturnType&lt;F&gt; {</tspan>
+    <tspan x="471" dy="20">  <tspan fill="#9aa4b8">// 캐싱 로직 ...</tspan></tspan>
+  </text>
+</svg>
