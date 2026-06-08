@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Pod Security Admission — 요청 처리 흐름</text>
+
+  <!-- kubectl/API request -->
+  <rect x="40" y="80" width="140" height="60" rx="8" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="110" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">kubectl apply</text>
+  <text x="110" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Pod 생성 요청</text>
+
+  <!-- API Server -->
+  <line x1="180" y1="110" x2="220" y2="110" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="220" y="80" width="160" height="60" rx="8" fill="#0a1a2a" stroke="#7777cc" stroke-width="2"/>
+  <text x="300" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">kube-apiserver</text>
+  <text x="300" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">인증 → 인가 → Admission</text>
+
+  <!-- PSA Admission Controller -->
+  <line x1="380" y1="110" x2="420" y2="110" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="420" y="70" width="180" height="80" rx="8" fill="#1a0a2a" stroke="#7777cc" stroke-width="2"/>
+  <text x="510" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">PodSecurity</text>
+  <text x="510" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Admission Controller</text>
+  <text x="510" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888" text-anchor="middle">(Built-in, k8s 1.23+)</text>
+
+  <!-- Namespace Label Check -->
+  <line x1="510" y1="150" x2="510" y2="190" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="370" y="190" width="280" height="60" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1"/>
+  <text x="510" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">Namespace 레이블 조회</text>
+  <text x="510" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">enforce / warn / audit 모드 및 레벨 확인</text>
+
+  <!-- Three paths -->
+  <!-- enforce path -->
+  <line x1="440" y1="250" x2="200" y2="300" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrRed)"/>
+  <rect x="60" y="300" width="280" height="80" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="200" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">enforce: 위반</text>
+  <text x="200" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">403 Forbidden 반환</text>
+  <text x="200" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Pod 생성 거부</text>
+
+  <!-- warn/audit path -->
+  <line x1="510" y1="250" x2="510" y2="300" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+  <rect x="360" y="300" width="300" height="80" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="510" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">warn: 위반</text>
+  <text x="510" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">경고 메시지 출력 후 허용</text>
+  <text x="510" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Warning: header 응답에 포함</text>
+
+  <!-- audit path -->
+  <line x1="580" y1="250" x2="720" y2="300" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <rect x="660" y="300" width="180" height="80" rx="8" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="750" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">audit: 위반</text>
+  <text x="750" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8" text-anchor="middle">Audit 로그 기록</text>
+  <text x="750" y="364" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">Pod 허용</text>
+
+  <!-- Labels for arrows -->
+  <text x="305" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">거부</text>
+  <text x="505" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">경고</text>
+  <text x="625" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">기록</text>
+
+  <!-- etcd -->
+  <line x1="460" y1="380" x2="460" y2="420" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+  <rect x="360" y="420" width="200" height="30" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="460" y="440" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">etcd 저장 (enforce 통과 시)</text>
+</svg>
