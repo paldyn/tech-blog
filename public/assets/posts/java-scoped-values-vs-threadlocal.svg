@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ScopedValue vs ThreadLocal 비교</text>
+
+  <!-- Headers -->
+  <rect x="60" y="60" width="360" height="40" rx="8" fill="#1a0a0a" stroke="#5a2a2a" stroke-width="1.5"/>
+  <text x="240" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">ThreadLocal (Java 1.2+)</text>
+
+  <rect x="460" y="60" width="360" height="40" rx="8" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="640" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">ScopedValue (Java 21+)</text>
+
+  <!-- Comparison rows -->
+  <!-- Row 1: Mutability -->
+  <rect x="60" y="112" width="360" height="50" rx="4" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
+  <text x="80" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">가변성</text>
+  <text x="80" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09055">set() / remove() 으로 언제든 변경 가능</text>
+
+  <rect x="460" y="112" width="360" height="50" rx="4" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
+  <text x="480" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">가변성</text>
+  <text x="480" y="152" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">불변: 바인딩 한 번 → 스코프 내에서 읽기 전용</text>
+
+  <!-- Row 2: Lifecycle -->
+  <rect x="60" y="170" width="360" height="50" rx="4" fill="#111" stroke="#333" stroke-width="0.5"/>
+  <text x="80" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">생명주기</text>
+  <text x="80" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09055">명시적 remove() 필요. 누락 시 누수</text>
+
+  <rect x="460" y="170" width="360" height="50" rx="4" fill="#111" stroke="#333" stroke-width="0.5"/>
+  <text x="480" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">생명주기</text>
+  <text x="480" y="210" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">스코프(Runnable) 종료 시 자동 해제</text>
+
+  <!-- Row 3: Virtual threads -->
+  <rect x="60" y="228" width="360" height="50" rx="4" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
+  <text x="80" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">가상 스레드 적합성</text>
+  <text x="80" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09055">스레드당 Map 보유 → 대규모 시 메모리 부담</text>
+
+  <rect x="460" y="228" width="360" height="50" rx="4" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
+  <text x="480" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">가상 스레드 적합성</text>
+  <text x="480" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">JVM 최적화로 수백만 가상 스레드에서도 경량</text>
+
+  <!-- Row 4: Inheritance -->
+  <rect x="60" y="286" width="360" height="50" rx="4" fill="#111" stroke="#333" stroke-width="0.5"/>
+  <text x="80" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">자식 스레드 전달</text>
+  <text x="80" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09055">InheritableThreadLocal 별도 필요</text>
+
+  <rect x="460" y="286" width="360" height="50" rx="4" fill="#111" stroke="#333" stroke-width="0.5"/>
+  <text x="480" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">자식 스레드 전달</text>
+  <text x="480" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">StructuredTaskScope와 자연스럽게 통합</text>
+
+  <!-- Summary row -->
+  <rect x="60" y="356" width="760" height="80" rx="8" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="440" y="380" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">언제 무엇을 쓸까?</text>
+  <text x="80" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 값 변경이 필요하면: ThreadLocal</text>
+  <text x="80" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 불변 컨텍스트 전파 + 가상 스레드 사용 시: ScopedValue (Java 21+)</text>
+  <text x="460" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">* ScopedValue는 Java 21 preview → Java 23 finalized</text>
+  <text x="460" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">* 기존 코드 마이그레이션은 필요 시에만 권장</text>
+</svg>

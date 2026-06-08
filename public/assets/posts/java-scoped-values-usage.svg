@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ScopedValue 사용 패턴</text>
+
+  <!-- Code block -->
+  <rect x="60" y="60" width="480" height="332" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="82" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// ScopedValue 선언 (상수)</text>
+  <text x="76" y="102" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">static final</tspan> ScopedValue&lt;User&gt; USER =</text>
+  <text x="76" y="122" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    ScopedValue.newInstance();</text>
+  <text x="76" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="76" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 바인딩 + 실행</text>
+  <text x="76" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">void</tspan> handleRequest(User user) {</text>
+  <text x="76" y="202" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  ScopedValue.where(USER, user)</text>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">           .run(() -&gt; processRequest());</text>
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">  // run() 종료 후 자동 해제</text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 어디서든 get()으로 읽기</text>
+  <text x="76" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">void</tspan> processRequest() {</text>
+  <text x="76" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  User u = USER.get(); <tspan fill="#9aa4b8">// 안전</tspan></text>
+  <text x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#9aa4b8">// u.set() 같은 변경 불가</tspan></text>
+  <text x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- Right side: Scope tree visualization -->
+  <rect x="580" y="60" width="260" height="332" rx="8" fill="#0d0d1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="710" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">스코프 트리</text>
+
+  <rect x="610" y="96" width="200" height="36" rx="6" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="710" y="112" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">바인딩 이전</text>
+  <text x="710" y="126" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff">USER = 없음</text>
+
+  <path d="M 710 132 L 710 152" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="720" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">where()</text>
+
+  <rect x="610" y="152" width="200" height="36" rx="6" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="710" y="168" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">run() 내부</text>
+  <text x="710" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">USER = alice</text>
+
+  <path d="M 710 188 L 710 208" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="610" y="208" width="200" height="36" rx="6" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="710" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">중첩 바인딩</text>
+  <text x="710" y="238" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">USER = admin</text>
+
+  <path d="M 710 244 L 710 264" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="720" y="258" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">종료</text>
+
+  <rect x="610" y="264" width="200" height="36" rx="6" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="710" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">외부 스코프 복원</text>
+  <text x="710" y="294" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">USER = alice (복원)</text>
+
+  <path d="M 710 300 L 710 320" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="610" y="320" width="200" height="36" rx="6" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="710" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">run() 완료 후</text>
+  <text x="710" y="350" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff">USER = 없음 (자동 해제)</text>
+</svg>

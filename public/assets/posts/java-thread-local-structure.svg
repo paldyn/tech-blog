@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ThreadLocal 내부 구조</text>
+
+  <!-- ThreadLocal variable (shared) -->
+  <rect x="340" y="62" width="200" height="50" rx="8" fill="#1a1a3a" stroke="#5a5a9e" stroke-width="2"/>
+  <text x="440" y="82" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">ThreadLocal&lt;T&gt;</text>
+  <text x="440" y="100" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">공유 참조 (key 역할만)</text>
+
+  <!-- Arrows to threads -->
+  <path d="M 380 112 L 200 160" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+  <path d="M 440 112 L 440 160" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+  <path d="M 500 112 L 680 160" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Thread 1 -->
+  <rect x="60" y="160" width="260" height="180" rx="10" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="190" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Thread 1</text>
+  <text x="190" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Thread.currentThread().threadLocals</text>
+
+  <rect x="80" y="212" width="220" height="36" rx="6" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="190" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ffffff">ThreadLocalMap</text>
+  <text x="190" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(key=ThreadLocal ref, value)</text>
+
+  <rect x="80" y="256" width="220" height="30" rx="4" fill="#0a1a1a" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="190" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">value = "user:alice"</text>
+
+  <rect x="80" y="294" width="220" height="30" rx="4" fill="#0a1a1a" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="190" y="314" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">value = Connection@a1b2</text>
+
+  <!-- Thread 2 -->
+  <rect x="560" y="160" width="260" height="180" rx="10" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="690" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">Thread 2</text>
+  <text x="690" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Thread.currentThread().threadLocals</text>
+
+  <rect x="580" y="212" width="220" height="36" rx="6" fill="#1a2a3a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="690" y="228" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#ffffff">ThreadLocalMap</text>
+  <text x="690" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(key=ThreadLocal ref, value)</text>
+
+  <rect x="580" y="256" width="220" height="30" rx="4" fill="#0a1a1a" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="690" y="276" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">value = "user:bob"</text>
+
+  <rect x="580" y="294" width="220" height="30" rx="4" fill="#0a1a1a" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="690" y="314" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">value = Connection@c3d4</text>
+
+  <!-- Key insight -->
+  <rect x="60" y="362" width="760" height="72" rx="10" fill="#1a0a0a" stroke="#5a2a2a" stroke-width="1"/>
+  <text x="440" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e09055">핵심: 값은 ThreadLocal이 아닌 Thread 자체에 저장됨</text>
+  <text x="440" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">동일한 ThreadLocal 인스턴스로 get()해도 각 스레드는 자신의 값만 읽음 → 동기화 불필요</text>
+  <text x="440" y="430" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">⚠ 스레드 풀 재사용 시 remove()를 호출하지 않으면 이전 값이 남아 메모리 누수 발생</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <!-- Background -->
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">스레드 풀 크기 결정 공식</text>
+
+  <!-- CPU-bound box -->
+  <rect x="60" y="62" width="360" height="168" rx="10" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="240" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">CPU 집약 작업</text>
+  <text x="240" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="24" font-weight="700" fill="#ffffff">N + 1</text>
+  <text x="240" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">N = 사용 가능 CPU 코어 수</text>
+  <text x="80" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 암호화, 압축, 데이터 처리</text>
+  <text x="80" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· N+1: 한 스레드 페이지폴트 시</text>
+  <text x="80" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">  대체 스레드가 즉시 실행 가능</text>
+  <text x="80" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Runtime.getRuntime().availableProcessors()</text>
+
+  <!-- IO-bound box -->
+  <rect x="460" y="62" width="360" height="168" rx="10" fill="#1a1a0f" stroke="#4a4a1a" stroke-width="1.5"/>
+  <text x="640" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e09055">I/O 집약 작업</text>
+  <text x="640" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="20" font-weight="700" fill="#ffffff">N × (1 + W/C)</text>
+  <text x="640" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">W = 평균 대기 시간, C = 평균 CPU 시간</text>
+  <text x="480" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· DB 쿼리, HTTP 호출, 파일 I/O</text>
+  <text x="480" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· W/C = 10이면 스레드 수 = N × 11</text>
+  <text x="480" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· I/O 대기 중 CPU 낭비 없이 처리 가능</text>
+  <text x="480" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">실제로는 JMH 벤치마킹으로 측정 권장</text>
+
+  <!-- Code example: sizing -->
+  <rect x="60" y="250" width="760" height="128" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 스레드 수 계산 예시</text>
+  <text x="76" y="292" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">int</tspan> cpus = Runtime.getRuntime().availableProcessors();</text>
+  <text x="76" y="312" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">int</tspan> cpuBound = cpus + 1;      <tspan fill="#9aa4b8">// 4코어 → 5</tspan></text>
+  <text x="76" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">double</tspan> ioBound = cpus * (1 + 10.0); <tspan fill="#9aa4b8">// W/C=10 → 44</tspan></text>
+  <text x="76" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 실제 최적값은 부하 테스트 + 모니터링으로 결정할 것</text>
+</svg>

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ExecutorService 생명주기</text>
+
+  <!-- RUNNING state -->
+  <rect x="60" y="70" width="160" height="60" rx="10" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="2"/>
+  <text x="140" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">RUNNING</text>
+  <text x="140" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">작업 수락 가능</text>
+
+  <!-- Arrow RUNNING → SHUTDOWN -->
+  <path d="M 220 100 L 310 100" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="240" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">shutdown()</text>
+
+  <!-- SHUTDOWN state -->
+  <rect x="310" y="70" width="160" height="60" rx="10" fill="#1a1a0a" stroke="#4a4a1a" stroke-width="2"/>
+  <text x="390" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e09055">SHUTDOWN</text>
+  <text x="390" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">새 작업 거부</text>
+
+  <!-- Arrow SHUTDOWN → STOP (shutdownNow) -->
+  <path d="M 470 100 L 560 100" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="475" y="92" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">shutdownNow()</text>
+
+  <!-- STOP state -->
+  <rect x="560" y="70" width="160" height="60" rx="10" fill="#1a0a0a" stroke="#5a1a1a" stroke-width="2"/>
+  <text x="640" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">STOP</text>
+  <text x="640" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">진행 중 interrupt</text>
+
+  <!-- Arrows to TIDYING -->
+  <path d="M 390 130 Q 390 180 490 190" stroke="#7ec8e3" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <path d="M 640 130 Q 640 180 540 190" stroke="#7ec8e3" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- TIDYING state -->
+  <rect x="380" y="190" width="160" height="60" rx="10" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="2"/>
+  <text x="460" y="216" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">TIDYING</text>
+  <text x="460" y="236" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">terminated() 훅 실행</text>
+
+  <!-- Arrow to TERMINATED -->
+  <path d="M 460 250 L 460 290" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- TERMINATED state -->
+  <rect x="380" y="290" width="160" height="60" rx="10" fill="#1a1a2a" stroke="#4a4a6e" stroke-width="2"/>
+  <text x="460" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">TERMINATED</text>
+  <text x="460" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">awaitTermination() 반환</text>
+
+  <!-- Correct shutdown pattern -->
+  <rect x="60" y="200" width="270" height="160" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 올바른 종료 패턴</text>
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">executor.shutdown();</text>
+  <text x="76" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">try</tspan> {</text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">if</tspan> (!executor.awaitTermination(</text>
+  <text x="76" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">          60, TimeUnit.SECONDS))</text>
+  <text x="76" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    executor.shutdownNow();</text>
+  <text x="76" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">} <tspan fill="#7ec8e3" font-weight="600">catch</tspan> (InterruptedException e) {</text>
+  <text x="76" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ffffff" xml:space="preserve">  executor.shutdownNow(); }</text>
+
+  <!-- Right: awaitTermination info -->
+  <rect x="620" y="200" width="220" height="160" rx="8" fill="#050e05" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="730" y="224" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">shutdown vs shutdownNow</text>
+  <text x="636" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">shutdown():</text>
+  <text x="636" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">큐의 작업 완료 후 종료</text>
+  <text x="636" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">shutdownNow():</text>
+  <text x="636" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">진행 중 스레드에 interrupt</text>
+  <text x="636" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">큐 작업 목록 반환</text>
+  <text x="636" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">두 메서드 조합 권장</text>
+</svg>

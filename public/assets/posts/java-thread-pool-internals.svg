@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ThreadPoolExecutor 내부 동작</text>
+
+  <!-- Task submission flow -->
+  <!-- Caller -->
+  <rect x="60" y="70" width="120" height="50" rx="8" fill="#1a1a3a" stroke="#4a4a8e" stroke-width="1.5"/>
+  <text x="120" y="91" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Caller</text>
+  <text x="120" y="109" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">submit(task)</text>
+
+  <path d="M 180 95 L 230 95" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Decision 1: core threads available? -->
+  <rect x="230" y="70" width="160" height="50" rx="8" fill="#1a2a1a" stroke="#3a5a3a" stroke-width="1.5"/>
+  <text x="310" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">core 스레드</text>
+  <text x="310" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">여유 있음?</text>
+
+  <!-- YES → new core thread -->
+  <path d="M 310 70 L 310 40 L 490 40 L 490 70" stroke="#55c555" stroke-width="2" fill="none" marker-end="url(#arr-g)"/>
+  <text x="390" y="34" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">YES</text>
+
+  <!-- NO → queue -->
+  <path d="M 390 95 L 460 95" stroke="#e09055" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="416" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e09055">NO</text>
+
+  <!-- Core thread pool box -->
+  <rect x="430" y="70" width="160" height="50" rx="8" fill="#0a2a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="510" y="90" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">Core 스레드 실행</text>
+  <text x="510" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">corePoolSize까지</text>
+
+  <!-- Queue check -->
+  <path d="M 390 120 L 390 160" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="310" y="160" width="160" height="50" rx="8" fill="#1a2a1a" stroke="#3a5a3a" stroke-width="1.5"/>
+  <text x="390" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">큐 여유</text>
+  <text x="390" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">있음?</text>
+
+  <!-- YES → queue -->
+  <path d="M 470 185 L 580 185" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="516" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">YES</text>
+
+  <rect x="580" y="160" width="140" height="50" rx="8" fill="#0a1a2a" stroke="#2a3a5a" stroke-width="1.5"/>
+  <text x="650" y="180" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">WorkQueue 대기</text>
+  <text x="650" y="198" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">FIFO / priority</text>
+
+  <!-- NO → max thread check -->
+  <path d="M 390 210 L 390 250" stroke="#e09055" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="400" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e09055">NO</text>
+
+  <rect x="310" y="250" width="160" height="50" rx="8" fill="#1a2a1a" stroke="#3a5a3a" stroke-width="1.5"/>
+  <text x="390" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">max 스레드</text>
+  <text x="390" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">미만?</text>
+
+  <!-- YES → extra thread -->
+  <path d="M 470 275 L 580 275" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="516" y="268" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">YES</text>
+
+  <rect x="580" y="250" width="140" height="50" rx="8" fill="#1a1a0a" stroke="#3a3a1a" stroke-width="1.5"/>
+  <text x="650" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e09055">임시 스레드 생성</text>
+  <text x="650" y="288" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">keepAliveTime 후 제거</text>
+
+  <!-- NO → reject -->
+  <path d="M 390 300 L 390 340" stroke="#e05555" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="400" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">NO</text>
+
+  <rect x="310" y="340" width="160" height="50" rx="8" fill="#1a0a0a" stroke="#5a1a1a" stroke-width="1.5"/>
+  <text x="390" y="360" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">Reject Policy</text>
+  <text x="390" y="378" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">AbortPolicy 등</text>
+
+  <!-- Parameters box -->
+  <rect x="60" y="160" width="220" height="236" rx="8" fill="#0d0d1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="170" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">주요 파라미터</text>
+  <text x="76" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">corePoolSize</text>
+  <text x="76" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">항상 유지할 스레드 수</text>
+  <text x="76" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">maximumPoolSize</text>
+  <text x="76" y="260" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">최대 허용 스레드 수</text>
+  <text x="76" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">keepAliveTime</text>
+  <text x="76" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">유휴 임시 스레드 수명</text>
+  <text x="76" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">workQueue</text>
+  <text x="76" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">대기 작업 저장 큐</text>
+  <text x="76" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">handler</text>
+  <text x="76" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">포화 시 거부 정책</text>
+</svg>

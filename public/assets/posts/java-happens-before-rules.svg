@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">happens-before 주요 규칙</text>
+
+  <!-- Rule 1: Program Order -->
+  <rect x="60" y="62" width="360" height="84" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">1. 프로그램 순서 규칙</text>
+  <text x="76" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">동일 스레드 내에서 순서가 앞선 연산은</text>
+  <text x="76" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">순서가 뒤따르는 연산보다 먼저 발생</text>
+  <text x="76" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">a = 1; → b = a+1; (같은 스레드)</text>
+
+  <!-- Rule 2: Monitor Lock -->
+  <rect x="460" y="62" width="360" height="84" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="84" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">2. 모니터 잠금 규칙</text>
+  <text x="476" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">모니터의 unlock은 이후 동일 모니터의</text>
+  <text x="476" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">lock보다 먼저 발생</text>
+  <text x="476" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">synchronized 블록 쓰기 → 이후 읽기</text>
+
+  <!-- Rule 3: volatile -->
+  <rect x="60" y="162" width="360" height="84" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">3. volatile 변수 규칙</text>
+  <text x="76" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">volatile 변수에 대한 쓰기는 이후</text>
+  <text x="76" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">동일 변수의 읽기보다 먼저 발생</text>
+  <text x="76" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">volatile w = true; → if(w) {...}</text>
+
+  <!-- Rule 4: Thread Start -->
+  <rect x="460" y="162" width="360" height="84" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="184" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">4. 스레드 시작 규칙</text>
+  <text x="476" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">Thread.start() 이전의 모든 연산은</text>
+  <text x="476" y="220" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">새 스레드 내의 모든 연산보다 먼저</text>
+  <text x="476" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">x=1; t.start(); → 새 스레드에서 x==1</text>
+
+  <!-- Rule 5: Thread Join -->
+  <rect x="60" y="262" width="360" height="84" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">5. 스레드 종료 규칙</text>
+  <text x="76" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">스레드의 모든 연산은 해당 스레드에</text>
+  <text x="76" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">대한 join() 반환보다 먼저 발생</text>
+  <text x="76" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">t.join(); → 이후에 스레드 결과 가시</text>
+
+  <!-- Rule 6: final -->
+  <rect x="460" y="262" width="360" height="84" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">6. 초기화 최종 규칙</text>
+  <text x="476" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">final 필드의 초기화는 생성자 완료 후</text>
+  <text x="476" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">객체 참조를 받은 모든 스레드에서 보임</text>
+  <text x="476" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">불변 객체의 thread-safety 근거</text>
+
+  <!-- Transitivity note -->
+  <rect x="60" y="362" width="760" height="112" rx="10" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="440" y="388" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">이행성(Transitivity): 체인으로 연결됨</text>
+  <text x="440" y="412" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">A happens-before B  AND  B happens-before C</text>
+  <text x="440" y="432" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">→  A happens-before C</text>
+  <text x="440" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">규칙들을 체인으로 연결하면 더 복잡한 동시성 보장을 추론할 수 있음</text>
+</svg>

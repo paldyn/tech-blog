@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">명령어 재배치와 volatile 해결</text>
+
+  <!-- Left: Without volatile -->
+  <rect x="60" y="60" width="360" height="320" rx="10" fill="#1a0a0a" stroke="#5a2a2a" stroke-width="1.5"/>
+  <text x="240" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">volatile 없음 — 재배치 위험</text>
+
+  <rect x="80" y="98" width="320" height="252" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="96" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 쓰기 스레드</text>
+  <text x="96" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">int</tspan> data = 0;</text>
+  <text x="96" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">boolean</tspan> ready = <tspan fill="#7ec8e3" font-weight="600">false</tspan>;</text>
+  <text x="96" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="96" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">data = 42;    <tspan fill="#9aa4b8">// 1</tspan></text>
+  <text x="96" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">ready = <tspan fill="#7ec8e3" font-weight="600">true</tspan>; <tspan fill="#9aa4b8">// 2</tspan></text>
+  <text x="96" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// CPU가 1,2 순서 바꿀 수 있음!</text>
+  <text x="96" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 읽기 스레드</text>
+  <text x="96" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">if</tspan> (ready) {</text>
+  <text x="96" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  use(data); <tspan fill="#9aa4b8">// data==0 가능!</tspan></text>
+  <text x="96" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- Right: With volatile -->
+  <rect x="460" y="60" width="360" height="320" rx="10" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="640" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">volatile 사용 — 순서 보장</text>
+
+  <rect x="480" y="98" width="320" height="252" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="496" y="120" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 쓰기 스레드</text>
+  <text x="496" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">int</tspan> data = 0;</text>
+  <text x="496" y="160" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">volatile boolean</tspan> ready = <tspan fill="#7ec8e3" font-weight="600">false</tspan>;</text>
+  <text x="496" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="496" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">data = 42;    <tspan fill="#9aa4b8">// 1</tspan></text>
+  <text x="496" y="220" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">ready = <tspan fill="#7ec8e3" font-weight="600">true</tspan>; <tspan fill="#9aa4b8">// 2 (펜스)</tspan></text>
+  <text x="496" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 1 happens-before 2 보장!</text>
+  <text x="496" y="270" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 읽기 스레드</text>
+  <text x="496" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">if</tspan> (ready) {</text>
+  <text x="496" y="310" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  use(data); <tspan fill="#9aa4b8">// data==42 보장</tspan></text>
+  <text x="496" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- X mark on left, Check on right -->
+  <text x="240" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#e05555">재배치로 data=0 읽힐 수 있음</text>
+  <text x="640" y="400" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="700" fill="#55c555">volatile 펜스로 재배치 금지</text>
+</svg>

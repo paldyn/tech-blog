@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">FutureTask 구조와 활용</text>
+
+  <!-- Interface box: Runnable + Future -->
+  <rect x="60" y="62" width="360" height="280" rx="10" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="240" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">FutureTask&lt;V&gt; 구현 관계</text>
+
+  <rect x="80" y="98" width="140" height="40" rx="6" fill="#1a1a3a" stroke="#4a4a8e" stroke-width="1"/>
+  <text x="150" y="123" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">Runnable</text>
+
+  <rect x="240" y="98" width="140" height="40" rx="6" fill="#1a1a3a" stroke="#4a4a8e" stroke-width="1"/>
+  <text x="310" y="123" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">Future&lt;V&gt;</text>
+
+  <path d="M 150 138 L 200 170" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M 310 138 L 260 170" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="160" y="170" width="200" height="50" rx="8" fill="#0a1a2a" stroke="#2a4a6a" stroke-width="2"/>
+  <text x="260" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">FutureTask&lt;V&gt;</text>
+  <text x="260" y="210" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Runnable이자 Future</text>
+
+  <text x="80" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· run(): Callable 실행, 결과 저장</text>
+  <text x="80" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· get(): 결과 또는 예외 반환</text>
+  <text x="80" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· cancel(): 취소 시도</text>
+  <text x="80" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">executor.submit()이 내부적으로 생성</text>
+  <text x="80" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">직접 생성 시 세밀한 제어 가능</text>
+
+  <!-- Code example -->
+  <rect x="460" y="62" width="360" height="280" rx="10" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="476" y="84" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// FutureTask 직접 생성</text>
+  <text x="476" y="104" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">FutureTask&lt;Integer&gt; task =</text>
+  <text x="476" y="124" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">new</tspan> FutureTask&lt;&gt;(() -&gt; {</text>
+  <text x="476" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    TimeUnit.SECONDS.sleep(2);</text>
+  <text x="476" y="164" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">return</tspan> compute();</text>
+  <text x="476" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  });</text>
+  <text x="476" y="204" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="476" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// Thread나 executor로 실행</text>
+  <text x="476" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">new</tspan> Thread(task).start();</text>
+  <text x="476" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="476" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// Future로 결과 수집</text>
+  <text x="476" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">int</tspan> result = task.get(5, SECONDS);</text>
+  <text x="476" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve">// done(), set(), setException() 오버라이드 가능</text>
+</svg>

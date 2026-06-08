@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="380" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">플랫폼 스레드 풀 vs 가상 스레드 비교</text>
+
+  <!-- Left: Platform Thread Pool -->
+  <rect x="60" y="62" width="360" height="280" rx="10" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="240" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#7ec8e3">플랫폼 스레드 풀</text>
+  <text x="240" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">newFixedThreadPool(4)</text>
+
+  <!-- Thread boxes -->
+  <rect x="80" y="118" width="70" height="36" rx="6" fill="#1a2a4a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="115" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3">T1</text>
+  <text x="115" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">작업중</text>
+  <rect x="160" y="118" width="70" height="36" rx="6" fill="#1a2a4a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="195" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3">T2</text>
+  <text x="195" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e09055">I/O 대기</text>
+  <rect x="240" y="118" width="70" height="36" rx="6" fill="#1a2a4a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="275" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3">T3</text>
+  <text x="275" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e09055">I/O 대기</text>
+  <rect x="320" y="118" width="70" height="36" rx="6" fill="#1a2a4a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="355" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" font-weight="600" fill="#7ec8e3">T4</text>
+  <text x="355" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#e09055">I/O 대기</text>
+
+  <!-- Queue of waiting tasks -->
+  <rect x="80" y="170" width="310" height="36" rx="6" fill="#1a1a0a" stroke="#4a4a1a" stroke-width="1"/>
+  <text x="235" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e09055">대기 큐: Task5, Task6, Task7 ... (블로킹)</text>
+  <text x="235" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">모든 스레드가 I/O 대기 중 → 처리량 저하</text>
+
+  <text x="240" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· OS 스레드 1:1 매핑</text>
+  <text x="240" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 메모리: 스레드당 약 1MB 스택</text>
+  <text x="240" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· I/O 대기 중 OS 스레드 점유</text>
+  <text x="240" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">수천 개 이상은 컨텍스트 스위칭 부담</text>
+
+  <!-- Right: Virtual Threads -->
+  <rect x="460" y="62" width="360" height="280" rx="10" fill="#0a1a0a" stroke="#2a5a2a" stroke-width="1.5"/>
+  <text x="640" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">가상 스레드 (Java 21+)</text>
+  <text x="640" y="106" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">newVirtualThreadPerTaskExecutor()</text>
+
+  <!-- Carrier threads (platform) -->
+  <rect x="480" y="118" width="80" height="36" rx="6" fill="#1a2a1a" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="520" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">Carrier T1</text>
+  <text x="520" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">VT1 실행 중</text>
+  <rect x="570" y="118" width="80" height="36" rx="6" fill="#1a2a1a" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="610" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">Carrier T2</text>
+  <text x="610" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">VT3 실행 중</text>
+  <rect x="660" y="118" width="80" height="36" rx="6" fill="#1a2a1a" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="700" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">Carrier T3</text>
+  <text x="700" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">VT5 실행 중</text>
+
+  <!-- VT pool: I/O waiting -->
+  <rect x="480" y="170" width="310" height="36" rx="6" fill="#0a1a0a" stroke="#1a4a1a" stroke-width="1"/>
+  <text x="635" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">VT2, VT4, VT6 I/O 대기 중 → park()됨</text>
+  <text x="635" y="202" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Carrier 스레드 반납 → 다른 VT 즉시 실행</text>
+
+  <text x="640" y="244" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· OS 스레드와 M:N 매핑</text>
+  <text x="640" y="264" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 메모리: 초기 수 KB (동적 확장)</text>
+  <text x="640" y="284" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· I/O 대기 시 Carrier 스레드 반납</text>
+  <text x="640" y="316" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">수백만 개도 경량으로 처리 가능</text>
+</svg>

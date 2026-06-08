@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">랜덤 백오프로 라이브락 탈출</text>
+
+  <!-- Code block -->
+  <rect x="60" y="60" width="420" height="340" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="76" y="86" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 랜덤 백오프 적용</text>
+  <text x="76" y="106" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">void</tspan> transfer(<tspan fill="#7ec8e3" font-weight="600">int</tspan> amount) {</text>
+  <text x="76" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">int</tspan> retries = 0;</text>
+  <text x="76" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">while</tspan> (retries &lt; MAX_RETRY) {</text>
+  <text x="76" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">if</tspan> (lock.tryLock()) {</text>
+  <text x="76" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">      <tspan fill="#7ec8e3" font-weight="600">try</tspan> {</text>
+  <text x="76" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        doTransfer(amount);</text>
+  <text x="76" y="226" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        <tspan fill="#7ec8e3" font-weight="600">return</tspan>; <tspan fill="#9aa4b8">// 성공</tspan></text>
+  <text x="76" y="246" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">      } <tspan fill="#7ec8e3" font-weight="600">finally</tspan> { lock.unlock(); }</text>
+  <text x="76" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    }</text>
+  <text x="76" y="286" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    // 랜덤 딜레이 후 재시도</text>
+  <text x="76" y="306" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    sleep(rand.nextLong(50L &lt;&lt; retries));</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    retries++;</text>
+  <text x="76" y="346" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  }</text>
+  <text x="76" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">throw new</tspan> LivelockException();</text>
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <!-- Right side: Timeline visualization -->
+  <rect x="520" y="60" width="300" height="340" rx="8" fill="#0d0d1a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="670" y="86" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">재시도 타임라인</text>
+
+  <!-- Timeline labels -->
+  <text x="540" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">시도</text>
+  <text x="600" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">대기(ms)</text>
+  <text x="720" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">결과</text>
+
+  <!-- Retry rows -->
+  <rect x="534" y="122" width="266" height="28" rx="4" fill="#1a1a2e" stroke="none"/>
+  <text x="540" y="141" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff">1회</text>
+  <text x="600" y="141" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8">~50</text>
+  <text x="720" y="141" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">실패</text>
+
+  <rect x="534" y="158" width="266" height="28" rx="4" fill="#1a1a2e" stroke="none"/>
+  <text x="540" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff">2회</text>
+  <text x="600" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8">~100</text>
+  <text x="720" y="177" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">실패</text>
+
+  <rect x="534" y="194" width="266" height="28" rx="4" fill="#1a1a2e" stroke="none"/>
+  <text x="540" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff">3회</text>
+  <text x="600" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#b5cea8">~200</text>
+  <text x="720" y="213" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">성공!</text>
+
+  <!-- Key point box -->
+  <rect x="534" y="258" width="266" height="118" rx="8" fill="#050e05" stroke="#2a4a2a" stroke-width="1"/>
+  <text x="667" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">핵심 포인트</text>
+  <text x="544" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 대기 시간에 랜덤성 추가</text>
+  <text x="544" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 지수 백오프 (2^n × base)</text>
+  <text x="544" y="340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 최대 재시도 횟수 필수</text>
+  <text x="544" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">· 실패 시 예외로 명확히 처리</text>
+</svg>
