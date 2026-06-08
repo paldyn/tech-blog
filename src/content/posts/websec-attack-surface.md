@@ -1,128 +1,189 @@
 ---
-title: "공격 표면 이해하기"
-description: "웹 애플리케이션의 공격 표면(Attack Surface)이 무엇인지, HTTP 엔드포인트·사용자 입력·의존성·관리자 인터페이스 등 진입점별 위험 요소와 표면 축소 전략을 설명합니다."
+title: "공격 표면(Attack Surface) 분석과 축소 전략"
+description: "공격 표면의 개념과 웹 애플리케이션에서 발생하는 다양한 진입점을 분석합니다. 코드, API, 의존성, 인프라 관점에서 공격 표면을 줄이는 실전 전략을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
+pubDate: "2026-06-09"
 archiveOrder: 4
 type: "knowledge"
 category: "Security"
-tags: ["공격표면", "AttackSurface", "보안설계", "의존성보안", "최소권한"]
+tags: ["공격표면", "Attack Surface", "보안강화", "최소화", "의존성관리"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-threat-modeling/)에서 위협 모델링의 첫 단계로 "시스템 분해"를 다뤘다. 이 단계의 핵심 결과물이 바로 **공격 표면(Attack Surface)** 지도다. 공격 표면은 공격자가 시스템에 접근하거나 데이터를 조작할 수 있는 모든 진입점의 합이다. 표면이 클수록 관리해야 할 위험이 많아진다.
+[지난 글](/posts/websec-threat-modeling/)에서 STRIDE와 DREAD로 위협을 체계적으로 분석하는 방법을 배웠다. 위협 모델링이 "어떤 공격이 가능한가?"를 묻는다면, **공격 표면(Attack Surface) 분석**은 "공격자가 접근할 수 있는 모든 진입점이 무엇인가?"를 묻는다. 공격 표면이 넓을수록 취약점이 존재할 가능성도 높아진다. 방어의 첫 번째 원칙은 "막지 못한다면, 줄여라"다.
 
-## 공격 표면이란
+## 공격 표면이란?
 
-공격 표면은 "공격자가 도달할 수 있는 코드·데이터·인터페이스의 총합"이다. 코드 한 줄, 열린 포트 하나, 오래된 라이브러리 하나가 모두 표면의 일부다.
+공격 표면은 시스템에서 **공격자가 데이터를 입력하거나, 데이터를 추출하거나, 명령을 실행할 수 있는 모든 경로의 합**이다. 세 가지 차원으로 나뉜다.
 
-공격 표면을 세 가지 축으로 분류할 수 있다.
+```text
+공격 표면 분류
+├── 디지털 공격 표면 (Digital Attack Surface)
+│   ├── 코드 — 취약한 함수, 안전하지 않은 라이브러리
+│   ├── API — 공개 엔드포인트, 미인증 라우트
+│   └── 포트 — 열려있는 네트워크 포트
+├── 물리적 공격 표면 (Physical Attack Surface)
+│   └── 데이터센터 접근, USB 포트, 악성 내부자
+└── 사회공학적 공격 표면 (Social Engineering)
+    └── 이메일 피싱, 직원 대상 사기
+```
 
-**네트워크 공격 표면**: 인터넷에 노출된 포트, 프로토콜, 서비스. HTTP/HTTPS 외에 불필요하게 열린 SSH, Redis, 관리자 포트가 해당한다.
+웹 보안 관점에서는 주로 디지털 공격 표면을 다룬다.
 
-**소프트웨어 공격 표면**: 코드로 구현된 모든 입력 처리 경로. API 엔드포인트, 폼, URL 파라미터, 파일 업로드, 웹훅.
+## 웹 애플리케이션의 주요 공격 진입점
 
-**인간 공격 표면**: 사회공학 공격의 대상이 되는 사람과 프로세스. 개발자 자격증명, 관리자 계정, 온보딩 절차.
+![공격 표면 맵](/assets/posts/websec-attack-surface-map.svg)
 
-![웹 애플리케이션 공격 표면 전체 지도](/assets/posts/websec-attack-surface-map.svg)
+### 1. 사용자 입력 (User Input)
 
-## 주요 공격 표면 영역
+모든 사용자 입력은 잠재적 공격 벡터다.
 
-### HTTP 엔드포인트 · API
+```http
+# 공격자가 조작할 수 있는 입력 채널
+GET /search?q=<script>alert(1)</script>    # URL 파라미터
+POST /login                                 # 요청 바디
+Cookie: session=stolen_token               # 쿠키
+Referer: http://attacker.com               # HTTP 헤더
+X-Forwarded-For: 127.0.0.1                # 커스텀 헤더
+Content-Type: application/x-www-form-urlencoded  # 콘텐츠 타입
+```
 
-웹 애플리케이션의 가장 큰 공격 표면이다. 모든 URL은 잠재적 공격 벡터다. 특히 위험한 것들은 다음과 같다.
+### 2. API 엔드포인트
 
-- **인증 없는 관리자 엔드포인트**: 개발 편의를 위해 남겨둔 `/admin`, `/debug`, `/health?verbose=true`
-- **GraphQL 인트로스펙션**: 프로덕션에서 활성화되면 전체 스키마가 노출된다
-- **이전 버전 API**: `/api/v1`이 `/api/v2`로 업그레이드됐어도 구버전이 여전히 응답하는 경우
+노출된 API 엔드포인트는 공격자의 주요 탐색 대상이다. 특히 문서화되지 않았거나 비활성화되어야 할 엔드포인트는 위험하다.
 
 ```bash
-# 노출된 엔드포인트 탐색 (정당한 자기 테스트)
-curl -s https://myapp.com/api/ | python3 -m json.tool
-# robots.txt에서 숨겨진 경로 확인
-curl https://myapp.com/robots.txt
-# 웹팩 번들에서 API 경로 추출
-grep -r "api/" dist/main.js | head -20
+# 공격자가 스캔하는 일반적인 경로
+/api/v1/admin
+/api/v2/internal
+/actuator/env          # Spring Boot 관리 엔드포인트
+/debug                 # 디버그 모드
+/.well-known/          # 숨겨진 설정 파일
+/phpinfo.php           # PHP 환경 정보 노출
+/web.config            # IIS 설정 파일
+/.git/config           # Git 설정 파일 (소스 코드 유출!)
 ```
 
-### 사용자 입력
+### 3. 서드파티 의존성
 
-사용자가 제어하는 모든 데이터는 신뢰할 수 없다. 폼 필드, URL 파라미터, HTTP 헤더, 쿠키, 요청 본문 전체가 해당한다.
-
-```python
-# 취약: 사용자 입력을 검증 없이 사용
-@app.route("/user")
-def get_user():
-    user_id = request.args.get("id")  # 공격자가 제어 가능
-    return db.execute(f"SELECT * FROM users WHERE id = {user_id}")
-
-# 안전: 타입 강제 + 파라미터화 쿼리
-@app.route("/user")
-def get_user_safe():
-    try:
-        user_id = int(request.args.get("id", ""))
-    except ValueError:
-        return {"error": "invalid id"}, 400
-    return db.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-```
-
-### 의존성 · 라이브러리
-
-현대 웹 애플리케이션은 수백 개의 외부 패키지에 의존한다. 하나의 취약한 패키지가 전체 시스템을 위험에 빠뜨린다. 2021년 Log4Shell 취약점은 수백만 개 애플리케이션에 영향을 미쳤다.
+현대 웹 앱은 수백~수천 개의 오픈소스 패키지에 의존한다. 각 패키지가 잠재적 취약점 소스다.
 
 ```bash
-# 의존성 취약점 감사
-npm audit --audit-level=high      # Node.js
-pip-audit                         # Python
-mvn dependency-check:check        # Java Maven
-bundle exec bundle audit          # Ruby Bundler
+# Node.js 프로젝트의 의존성 감사
+npm audit
+# 출력 예시: 3 high, 12 moderate severity vulnerabilities
 
-# 오래된 패키지 확인
-npm outdated
-pip list --outdated
+# 의존성 트리 확인
+npm list --depth=0
+
+# Snyk으로 지속적 모니터링
+snyk test
+snyk monitor
 ```
 
-### 관리자 인터페이스
+2021년 Log4Shell 취약점처럼 널리 쓰이는 라이브러리 하나가 수만 개 앱에 영향을 미친다.
 
-관리자 패널은 가장 민감한 기능을 담고 있으면서 공격 빈도도 높다. 기본 관리자 경로(`/admin`, `/wp-admin`, `/_cpanel`)는 자동화 스캐너가 가장 먼저 시도한다.
+### 4. 클라우드·인프라 설정
 
-### 파일 업로드
+```text
+클라우드 공격 표면
+├── 잘못 설정된 S3/GCS 버킷 (공개 읽기 허용)
+├── 과도한 IAM 권한 (AdministratorAccess 남용)
+├── 노출된 메타데이터 API (169.254.169.254)
+├── 기본 자격증명 사용 (admin/admin)
+└── 불필요한 포트 공개 (개발 DB 인터넷 노출)
+```
 
-파일 업로드는 공격자가 악성 코드를 서버에 올릴 수 있는 경로다. 확장자 검사만으로는 충분하지 않다. MIME 타입 검증, 파일 내용 스캔, 격리 저장이 필요하다.
+![공격 표면 축소 전후](/assets/posts/websec-attack-surface-reduction.svg)
 
 ## 공격 표면 축소 전략
 
-![Before vs After 공격 표면 축소](/assets/posts/websec-attack-surface-reduction.svg)
-
-**원칙 1: 불필요한 기능 제거**: 사용하지 않는 API 엔드포인트, 개발용 디버그 라우트, 비활성 서비스를 제거한다. 없애는 것이 막는 것보다 낫다.
-
-**원칙 2: 기본값 닫기(Default Deny)**: 명시적으로 허용하지 않은 모든 것을 차단한다. 방화벽, API 게이트웨이, 인가 레이어 모두 화이트리스트 방식으로 설계한다.
-
-**원칙 3: 최소 권한**: 각 컴포넌트에 필요한 최소한의 권한만. DB 연결은 읽기/쓰기 분리, 마이크로서비스는 자신의 데이터만 접근.
-
-**원칙 4: 공격 표면 정기 측정**: 스프린트마다 새 엔드포인트가 추가된다. 정기적으로 라우트 목록을 리뷰하고, 자동화 스캔 도구(OWASP ZAP, Burp Suite)로 노출 여부를 확인한다.
+### 코드 레벨 축소
 
 ```python
-# Flask 라우트 목록 자동 출력 (정기 감사용)
-from flask import Flask
-app = Flask(__name__)
+# ❌ 과도한 기능 노출
+@app.route('/api/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def users():
+    ...
 
-def audit_routes():
-    for rule in app.url_map.iter_rules():
-        print(f"{rule.methods} {rule.rule} -> {rule.endpoint}")
+# ✅ 필요한 HTTP 메서드만 허용
+@app.route('/api/users', methods=['GET'])
+def list_users():
+    ...
 
-# Django의 경우
-# python manage.py show_urls (django-extensions)
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+@require_auth
+def update_user(user_id):
+    ...
 ```
 
-공격 표면 축소는 일회성 작업이 아니다. 기능을 추가할 때마다 표면이 늘어나므로, CI/CD 파이프라인에 표면 측정을 통합하는 것이 이상적이다. 새 의존성 추가 시 자동 감사, 새 엔드포인트 추가 시 보안 리뷰를 의무화하는 것이 성숙한 보안 문화의 표시다.
+### 의존성 최소화
+
+```text
+의존성 관리 원칙
+1. 필요한 패키지만 설치 (의존성 리뷰 필수)
+2. 정기적인 감사 (npm audit, pip-audit, Snyk)
+3. SBOM (Software Bill of Materials) 유지
+4. 오래된 버전 즉시 업데이트
+5. 신뢰할 수 없는 패키지 차단 (private registry 사용)
+```
+
+### 엔드포인트 보호
+
+```nginx
+# Nginx: 어드민 엔드포인트 내부망 제한
+location /admin {
+    allow 10.0.0.0/8;      # 내부망만 허용
+    allow 192.168.0.0/16;
+    deny all;
+}
+
+# 불필요한 HTTP 메서드 차단
+if ($request_method !~ ^(GET|POST|PUT|DELETE)$) {
+    return 405;
+}
+```
+
+### 정보 최소화 원칙
+
+```python
+# ❌ 상세 오류 메시지 (공격자에게 정보 제공)
+# OperationalError: (1045, "Access denied for user 'root'@'localhost'")
+
+# ✅ 일반화된 오류 응답
+@app.errorhandler(500)
+def internal_error(e):
+    app.logger.error(f"Internal error: {e}")  # 서버에만 로그
+    return {"error": "서비스 오류가 발생했습니다."}, 500
+```
+
+## 공격 표면 모니터링
+
+공격 표면은 코드 배포, 인프라 변경, 의존성 업데이트마다 달라진다. 자동화된 모니터링이 필요하다.
+
+```bash
+# 1. 외부 공격자 시각에서 포트 스캔
+nmap -sV --open -p 1-65535 example.com
+
+# 2. 웹 디렉토리 탐색
+ffuf -w /wordlists/common.txt -u https://example.com/FUZZ
+
+# 3. 의존성 취약점 자동 탐지 (CI/CD 파이프라인)
+# GitHub Actions 예시
+# uses: aquasecurity/trivy-action@master
+
+# 4. 클라우드 설정 감사
+# AWS Security Hub, Google Security Command Center
+```
+
+공격 표면 분석은 한 번 수행하고 끝나는 것이 아니다. 지속적인 자산 발견과 취약점 추적이 필요하다. 다음 글에서는 심층 방어(Defense in Depth) 전략을 통해 공격 표면에 여러 겹의 방어막을 쌓는 방법을 다룬다.
 
 ---
 
-**지난 글:** [위협 모델링 입문](/posts/websec-threat-modeling/)
+**지난 글:** [위협 모델링: 체계적으로 공격을 예측하는 방법](/posts/websec-threat-modeling/)
 
-**다음 글:** [보안 사고방식 기르기](/posts/websec-security-mindset/)
+**다음 글:** [심층 방어(Defense in Depth): 다층 보안 전략](/posts/websec-defense-in-depth/)
 
 <br>
 읽어주셔서 감사합니다. 😊

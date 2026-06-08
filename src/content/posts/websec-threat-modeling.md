@@ -1,8 +1,8 @@
 ---
-title: "위협 모델링 입문"
-description: "STRIDE 프레임워크와 4단계 위협 모델링 프로세스를 활용해 웹 애플리케이션의 보안 위협을 체계적으로 식별하고 우선순위를 정하는 방법을 설명합니다."
+title: "위협 모델링: 체계적으로 공격을 예측하는 방법"
+description: "STRIDE, DREAD, 공격 트리를 활용한 위협 모델링 실전 가이드. DFD 작성부터 위험 우선순위화까지 보안 설계의 핵심을 체계적으로 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-31"
+pubDate: "2026-06-09"
 archiveOrder: 3
 type: "knowledge"
 category: "Security"
@@ -11,118 +11,171 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-cia-triad/)에서 기밀성·무결성·가용성의 의미를 살펴봤다. 이제 이 개념을 실제 시스템에 적용하는 도구가 필요하다. **위협 모델링(Threat Modeling)**은 "어디서 무엇이 잘못될 수 있는가"를 코드를 작성하기 전에 체계적으로 파악하는 프로세스다. 설계 단계에서 발견한 취약점 하나가 배포 후 수정 비용의 30분의 1 수준으로 처리된다.
+[지난 글](/posts/websec-cia-triad/)에서 CIA Triad로 보안의 목표를 정의했다. 그런데 목표를 알아도 "어디부터 어떻게 방어해야 하는가?"라는 질문에는 답하기 어렵다. **위협 모델링(Threat Modeling)**은 이 질문에 체계적으로 답하는 방법론이다. 시스템을 공격자의 시각으로 분석하고, 가장 심각한 위협부터 대응 계획을 세운다.
 
-## 위협 모델링이란
+## 위협 모델링이란?
 
-위협 모델링은 시스템의 자산, 공격자, 공격 경로를 문서화하고 우선순위를 정하는 활동이다. 특정 도구나 방법론에 종속되지 않으며, 팀 전체가 "우리가 무엇을 보호하는가"에 대한 공통 언어를 갖게 해준다.
+위협 모델링은 시스템에서 **무엇이 잘못될 수 있는지**를 구조적으로 파악하는 프로세스다. Adam Shostack의 고전적 정의는 "보안 리뷰를 코드가 아닌 설계 단계에서 수행하는 것"이다. 코드가 완성된 후에 취약점을 패치하는 것보다 설계 단계에서 위협을 제거하는 비용이 훨씬 저렴하다.
 
-핵심 질문은 네 가지다.
+### 언제 수행하는가?
 
-1. **무엇을 만들고 있는가?** — 시스템 구조 파악
-2. **무엇이 잘못될 수 있는가?** — 위협 식별
-3. **잘못됐을 때 어떻게 되는가?** — 영향 평가
-4. **어떻게 막을 것인가?** — 대응책 수립
+```text
+위협 모델링 시점
+├── 설계 단계 (권장) — 아키텍처 결정 전
+├── 스프린트 중 — 새 기능 추가 시
+├── 코드 리뷰 — PR 검토와 병행
+└── 주기적 검토 — 인프라 변경 후
+```
 
-![STRIDE 위협 분류 모델](/assets/posts/websec-threat-modeling-stride.svg)
-
-## STRIDE: 위협 분류 프레임워크
-
-Microsoft가 개발한 STRIDE는 여섯 가지 위협 유형의 약자다.
-
-**Spoofing(스푸핑)**: 다른 사용자나 서비스로 위장한다. 피싱, ARP 스푸핑, 세션 탈취가 해당한다. 대응: MFA, 상호 TLS 인증.
-
-**Tampering(변조)**: 데이터나 코드를 무단으로 수정한다. SQL 인젝션, 파일 시스템 변조가 해당한다. 대응: HMAC, 체크섬, 감사 로그.
-
-**Repudiation(부인)**: 자신이 한 행위를 나중에 부인한다. "그 요청 나 아님"을 주장할 수 있는 상황이다. 대응: 전자 서명, 불변 감사 로그.
-
-**Information Disclosure(정보 노출)**: 권한 없는 자에게 데이터가 노출된다. 에러 메시지의 스택 트레이스, 과도한 API 응답이 해당한다. 대응: 암호화, 최소 노출.
-
-**Denial of Service(서비스 거부)**: 서비스를 사용 불가 상태로 만든다. DDoS, 무한 루프 유발 입력이 해당한다. 대응: Rate Limiting, WAF.
-
-**Elevation of Privilege(권한 상승)**: 허가되지 않은 더 높은 권한을 얻는다. IDOR, 취약한 인가 로직 우회가 해당한다. 대응: 최소 권한, 명시적 인가 확인.
+위협 모델링은 일회성 작업이 아니다. 시스템이 변화할 때마다 모델도 업데이트되어야 한다.
 
 ## 4단계 위협 모델링 프로세스
 
-![위협 모델링 4단계 프로세스](/assets/posts/websec-threat-modeling-process.svg)
+![위협 모델링 프로세스](/assets/posts/websec-threat-modeling-process.svg)
 
-### 1단계: 시스템 분해
+### 1단계: 시스템 정의 — DFD 작성
 
-데이터 흐름도(DFD, Data Flow Diagram)를 작성해 시스템의 구성 요소와 데이터 흐름을 시각화한다. 신뢰 경계(Trust Boundary)를 명확히 표시하는 것이 핵심이다. 신뢰 경계는 "이 경계를 넘을 때 검증이 필요하다"는 표시다.
+데이터 흐름 다이어그램(DFD)은 위협 모델링의 지도다. 다음 요소를 식별한다.
 
-구성 요소: 외부 엔티티(사용자, 외부 API), 프로세스(비즈니스 로직), 데이터 저장소(DB, 캐시), 데이터 흐름(HTTP, DB 쿼리).
+| 요소 | 표기 | 설명 |
+|---|---|---|
+| 외부 개체 | 직사각형 | 사용자, 외부 API, 브라우저 |
+| 프로세스 | 원 | 앱 서버, 마이크로서비스 |
+| 데이터 저장소 | 평행선 | DB, 캐시, 파일 시스템 |
+| 데이터 흐름 | 화살표 | 요청, 응답, 이벤트 |
+| 신뢰 경계 | 점선 | 네트워크 경계, 컨테이너 격리 |
 
-### 2단계: 위협 식별
-
-각 데이터 흐름과 컴포넌트에 STRIDE를 적용한다. "이 흐름에서 S는 어떻게 발생할 수 있는가? T는? I는?"을 반복한다.
-
-```python
-# 간단한 위협 모델링 워크시트 예시 (로그인 기능)
-threat_model = {
-    "component": "POST /api/login",
-    "assets": ["사용자 자격증명", "세션 토큰"],
-    "threats": [
-        {
-            "type": "Spoofing",
-            "description": "다른 사용자 계정으로 로그인 시도",
-            "attack": "크리덴셜 스터핑 · 브루트 포스",
-            "mitigation": "레이트 리미팅 · CAPTCHA · 계정 잠금"
-        },
-        {
-            "type": "Information Disclosure",
-            "description": "존재하지 않는 계정 vs 잘못된 비밀번호 구분",
-            "attack": "사용자 열거(User Enumeration)",
-            "mitigation": "동일한 에러 메시지 반환"
-        },
-        {
-            "type": "Denial of Service",
-            "description": "로그인 엔드포인트 과부하",
-            "attack": "대량 요청 전송",
-            "mitigation": "IP 기반 Rate Limit + WAF"
-        }
-    ]
-}
+```text
+[사용자 브라우저] ──HTTPS──> [Web Server] ──TCP──> [App Server]
+                                                        |
+                                              신뢰 경계 (내부망)
+                                                        |
+                                                   [Database]
+                                                   [Redis Cache]
 ```
 
-### 3단계: 위협 평가
+### 2단계: 위협 식별 — STRIDE 활용
 
-모든 위협을 동일하게 처리할 수 없다. DREAD 점수로 우선순위를 정한다.
+각 DFD 요소에 STRIDE 체크리스트를 적용한다.
 
-- **D**amage(피해 규모): 1-10
-- **R**eproducibility(재현 가능성): 1-10
-- **E**xploitability(악용 난이도): 1-10
-- **A**ffected users(영향 받는 사용자): 1-10
-- **D**iscoverability(발견 가능성): 1-10
+```python
+# 자동화된 위협 식별 예시 (개념 코드)
+STRIDE_CHECKS = {
+    "external_entity": ["Spoofing"],
+    "process":         ["Tampering", "Repudiation", "Elevation"],
+    "data_store":      ["Info_Disclosure", "Tampering"],
+    "data_flow":       ["Info_Disclosure", "Tampering"],
+    "trust_boundary":  ["Spoofing", "Elevation"]
+}
 
-점수 합산 후 5로 나눈 값이 최종 위험도다. 8 이상은 즉시 대응, 6-8은 다음 스프린트, 6 미만은 백로그로 분류하는 방식이 일반적이다.
+def check_threats(element_type, element_name):
+    threats = STRIDE_CHECKS.get(element_type, [])
+    return [f"{element_name}: {t}" for t in threats]
 
-### 4단계: 대응책 수립
+# 예: 사용자 로그인 API 분석
+print(check_threats("data_flow", "POST /login"))
+# ['POST /login: Info_Disclosure', 'POST /login: Tampering']
+```
 
-위협별 대응 전략은 네 가지 중 하나를 선택한다.
+### 3단계: 위험 평가 — DREAD 점수화
 
-**제거(Eliminate)**: 해당 기능 자체를 없앤다. 필요 없는 XML 파서를 제거해 XXE 위협을 근본 제거.
+![DREAD 위험 점수 모델](/assets/posts/websec-threat-modeling-dread.svg)
 
-**완화(Mitigate)**: 발생 가능성이나 영향을 낮춘다. 파라미터화 쿼리로 SQL 인젝션 완화.
+DREAD 모델로 각 위협에 점수를 매긴다.
 
-**수용(Accept)**: 리스크를 이해한 상태에서 감수한다. 낮은 심각도·낮은 가능성 위협에 한해.
+```text
+SQLi 취약점 예시
+D Damage         = 9  (전체 DB 탈취 가능)
+R Reproducibility = 10 (매번 재현 가능)
+E Exploitability  = 8  (자동화 도구 존재)
+A Affected Users  = 10 (전체 사용자)
+D Discoverability = 7  (취약점 스캐너로 감지)
 
-**전가(Transfer)**: 보험이나 제3자 서비스로 책임을 이전한다. DDoS 방어를 CDN 사업자에게 위임.
+DREAD = (9+10+8+10+7) / 5 = 8.8 → 즉시 대응 필요
+```
 
-## 실전 팁
+CVSS(Common Vulnerability Scoring System)도 동일한 목적으로 쓰인다. CVE 데이터베이스의 점수 체계가 바로 CVSS다.
 
-**언제 하는가**: 새 기능 설계 시, 아키텍처 변경 시, 정기 보안 리뷰 시(분기 또는 반기). 아무리 바빠도 새 인증/인가 기능이라면 반드시 수행한다.
+### 4단계: 대응 방안 — 4가지 전략
 
-**누가 하는가**: 개발자, 보안 엔지니어, 아키텍트가 함께. 혼자 하는 위협 모델링은 편향이 생기기 쉽다.
+모든 위협을 완벽하게 막을 수는 없다. 우선순위에 따라 전략을 선택한다.
 
-**어떤 도구를 쓰는가**: Microsoft Threat Modeling Tool(무료), OWASP Threat Dragon(오픈소스), 화이트보드도 충분하다.
+```text
+위협 대응 전략 (4T)
+├── Treat (처치)   — 직접 기술 통제로 위협 제거
+│   예) SQLi → PreparedStatement 사용
+├── Transfer (이전) — 보험, 외부 서비스로 위험 이전
+│   예) DDoS → CDN/WAF 서비스 이용
+├── Terminate (종료) — 위험한 기능 자체를 제거
+│   예) 불필요한 외부 API 노출 엔드포인트 삭제
+└── Tolerate (허용) — 낮은 위험은 모니터링과 함께 수용
+    예) 로우 DREAD 점수 취약점
+```
 
-위협 모델링의 가장 큰 오류는 "나중에 하면 된다"는 생각이다. 코드가 완성된 뒤에는 설계를 바꾸기가 어렵다. 스프린트 계획 단계에서 "이 기능의 위협 모델은?"을 정기적으로 묻는 것만으로 팀의 보안 문화가 달라진다.
+## 실전: 로그인 기능 위협 모델링
+
+실제 웹 애플리케이션의 로그인 기능을 모델링해보자.
+
+```text
+자산: 사용자 계정, 세션 토큰, 개인 데이터
+
+위협 목록
+T01 Spoofing: 타인의 크리덴셜로 로그인 시도 (DREAD: 8.2)
+    → 대응: bcrypt 해싱, 계정 잠금, MFA
+
+T02 Tampering: 세션 토큰 변조 (DREAD: 7.6)
+    → 대응: HMAC 서명, HttpOnly 쿠키
+
+T03 Info Disclosure: 비밀번호 로그 노출 (DREAD: 6.0)
+    → 대응: 로그에서 민감 필드 제외
+
+T04 DoS: 로그인 엔드포인트 대상 무차별 공격 (DREAD: 5.8)
+    → 대응: 속도 제한, reCAPTCHA
+
+T05 Elevation: 관리자 계정 탈취 후 권한 오용 (DREAD: 9.0)
+    → 대응: 최소 권한, 관리자 MFA 강제
+```
+
+## 도구와 프레임워크
+
+```text
+위협 모델링 도구
+├── Microsoft Threat Modeling Tool (무료, Windows)
+│   STRIDE 기반, DFD 시각화
+├── OWASP Threat Dragon (무료, 웹/데스크탑)
+│   오픈소스, STRIDE 지원
+├── IriusRisk (상용)
+│   엔터프라이즈급, 컴플라이언스 연동
+└── 수동 방법
+    └── Miro/FigJam + 화이트보드 세션
+```
+
+## 공격 트리 (Attack Tree)
+
+STRIDE가 "어떤 유형의 공격인가"를 분류한다면, 공격 트리는 "공격자가 어떤 경로로 목표에 도달하는가"를 시각화한다.
+
+```text
+목표: 관리자 계정 탈취
+├── AND: 비밀번호 획득 + MFA 우회
+│   ├── 비밀번호 획득
+│   │   ├── 브루트 포스
+│   │   ├── 피싱
+│   │   └── DB 유출
+│   └── MFA 우회
+│       ├── SIM 스와핑
+│       └── 리커버리 코드 탈취
+└── OR: 세션 하이재킹
+    ├── XSS로 쿠키 탈취
+    └── 네트워크 스니핑
+```
+
+위협 모델링은 보안 전문가만의 영역이 아니다. 개발자가 기능을 설계할 때 "이 기능을 공격한다면 어떻게 할까?"라는 질문을 습관적으로 던지는 것 — 그것이 바로 위협 모델링의 핵심이다.
 
 ---
 
-**지난 글:** [정보보안 3요소(CIA) 완전 이해](/posts/websec-cia-triad/)
+**지난 글:** [CIA Triad — 기밀성·무결성·가용성 완전 해설](/posts/websec-cia-triad/)
 
-**다음 글:** [공격 표면 이해하기](/posts/websec-attack-surface/)
+**다음 글:** [공격 표면(Attack Surface) 분석과 축소 전략](/posts/websec-attack-surface/)
 
 <br>
 읽어주셔서 감사합니다. 😊
