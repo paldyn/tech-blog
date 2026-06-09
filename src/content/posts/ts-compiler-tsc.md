@@ -1,218 +1,187 @@
 ---
-title: "tsc 컴파일러 완전 해부: 동작 원리와 옵션"
-description: "TypeScript 컴파일러 tsc의 내부 파이프라인, 핵심 플래그 사용법, tsconfig.json 주요 옵션을 깊이 있게 다룬다."
+title: "TypeScript 컴파일러 tsc 완전 이해"
+description: "tsc의 내부 동작 원리와 파이프라인, 주요 컴파일러 플래그, 그리고 효율적인 빌드 설정 방법을 심층적으로 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-04"
+pubDate: "2026-06-10"
 archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "tsc", "컴파일러", "tsconfig", "빌드", "타입검사"]
+tags: ["TypeScript", "tsc", "컴파일러", "tsconfig", "빌드"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-setup-install/)에서 TypeScript 개발 환경을 구성했다. 이번 편에서는 `tsc` 컴파일러가 내부적으로 어떻게 동작하는지, 그리고 실무에서 자주 쓰는 옵션과 플래그를 체계적으로 정리한다.
+[지난 글](/posts/ts-setup-install/)에서 TypeScript 환경을 설정했습니다. 이번에는 `tsc`가 내부적으로 어떻게 동작하는지, 그리고 다양한 컴파일러 옵션을 어떻게 활용하는지 깊이 들어가 보겠습니다.
 
-## tsc 컴파일 파이프라인
+![TypeScript 컴파일러 파이프라인](/assets/posts/ts-compiler-tsc-pipeline.svg)
 
-TypeScript 컴파일러는 소스 파일을 받아 4단계로 처리한다.
+## tsc의 내부 5단계
 
-![tsc 컴파일러 파이프라인](/assets/posts/ts-compiler-tsc-pipeline.svg)
+TypeScript 컴파일러는 `.ts` 파일을 받아 `.js`로 변환하기까지 다음 5단계를 거칩니다.
 
-### ① 파싱 (Parsing)
+**1단계 — 파싱(Parsing)**: 소스 코드를 토큰으로 분해하고 AST(Abstract Syntax Tree)를 구성합니다. 문법 오류는 이 단계에서 발견됩니다.
 
-소스 코드를 읽어 **추상 구문 트리(AST, Abstract Syntax Tree)**로 변환한다. 이 단계에서 구문 오류(SyntaxError)가 검출된다.
+**2단계 — 바인딩(Binding)**: 심볼 테이블을 구성하고 변수, 함수, 클래스의 스코프를 분석합니다. 같은 이름의 중복 선언 오류가 이 단계에서 나타납니다.
 
-### ② 심볼 해석 (Symbol Resolution)
+**3단계 — 타입 검사(Type Checking)**: TypeScript의 핵심 단계입니다. 수집된 타입 정보를 바탕으로 타입 불일치, null 참조, 잘못된 속성 접근 등을 감지합니다.
 
-변수, 함수, 타입 선언을 스코프와 연결한다. "이 `name`이라는 변수는 어디서 선언됐는가"를 추적한다.
+**4단계 — 변환(Transformation)**: 타입 어노테이션을 제거하고, ES2015+ 문법을 target 버전에 맞게 다운레벨 변환합니다.
 
-### ③ 타입 검사 (Type Checking)
-
-이 단계가 TypeScript의 핵심이다. 모든 표현식의 타입을 계산하고, 타입 규칙을 위반하는 코드를 찾아낸다. 타입 에러는 여기서 발생한다.
-
-### ④ 출력 (Emit)
-
-타입 정보를 제거하고 JavaScript 파일을 생성한다. 선택적으로 `.d.ts` 타입 선언 파일과 소스맵(`.js.map`)도 생성할 수 있다.
-
-## 주요 CLI 플래그
+**5단계 — 출력(Emit)**: `.js` 파일과 선택적으로 `.d.ts`(타입 선언), `.js.map`(소스맵) 파일을 생성합니다.
 
 ```bash
-# 기본 컴파일 (tsconfig.json 사용)
-npx tsc
-
-# 특정 파일만 컴파일 (tsconfig 무시)
-npx tsc src/index.ts
-
-# 파일 변경 감지 모드
-npx tsc --watch
-
-# 타입 검사만 수행 (파일 출력 없음)
+# 타입 검사만 (파일 미생성) — CI에서 유용
 npx tsc --noEmit
 
-# 상세 출력 보기
-npx tsc --listFiles
-```
+# 전체 컴파일
+npx tsc
 
-`--noEmit`은 CI 파이프라인에서 타입 검사 단계에 자주 쓰인다. 파일을 생성하지 않고 타입 오류만 체크한다.
+# 변경 감지 자동 재컴파일
+npx tsc --watch
+```
 
 ## tsconfig.json 핵심 옵션
 
-![tsconfig.json 핵심 옵션](/assets/posts/ts-compiler-tsc-config.svg)
+![tsconfig.json 핵심 옵션](/assets/posts/ts-compiler-tsc-flags.svg)
 
-### 출력 제어 옵션
+### target: 출력 JavaScript 버전
 
 ```json
 {
   "compilerOptions": {
-    "target": "ES2020",          // 출력 JS 버전
-    "module": "NodeNext",        // 모듈 시스템
-    "moduleResolution": "NodeNext",  // 모듈 탐색 방식
-    "outDir": "./dist",          // 출력 디렉터리
-    "rootDir": "./src",          // 소스 루트
-    "declaration": true,         // .d.ts 생성
-    "declarationMap": true,      // 선언 파일 소스맵
-    "sourceMap": true            // .js.map 소스맵
+    "target": "ES2020"
   }
 }
 ```
 
-`target` 값에 따라 tsc가 최신 JS 문법을 하위 호환 코드로 변환한다. 예를 들어 `target: "ES5"`로 설정하면 화살표 함수가 일반 함수로 변환된다.
+`target`은 컴파일 후 출력되는 JavaScript의 문법 버전을 지정합니다. `async/await`, `class`, 화살표 함수 등의 문법이 지정한 버전으로 다운레벨 변환됩니다.
 
-### 엄격 모드 옵션
+```typescript
+// 소스 (TypeScript)
+const arr = [1, 2, 3];
+const doubled = arr.map(n => n * 2);
+```
 
-`"strict": true`는 6개의 하위 옵션을 한번에 켠다.
+```javascript
+// target: ES5 출력
+var arr = [1, 2, 3];
+var doubled = arr.map(function(n) { return n * 2; });
+
+// target: ES2020 출력 (거의 그대로)
+const arr = [1, 2, 3];
+const doubled = arr.map(n => n * 2);
+```
+
+### module: 모듈 시스템
 
 ```json
-{
-  "compilerOptions": {
-    "strict": true
-    // 아래 6개를 모두 켜는 것과 동일:
-    // "noImplicitAny": true,
-    // "strictNullChecks": true,
-    // "strictFunctionTypes": true,
-    // "strictBindCallApply": true,
-    // "strictPropertyInitialization": true,
-    // "noImplicitThis": true
+"module": "commonjs"    // Node.js 기본
+"module": "ESNext"      // 브라우저 / 최신 번들러
+"module": "Node16"      // Node.js 16+의 ESM 지원
+```
+
+Node.js 백엔드는 `commonjs`, 브라우저 앱(Vite, webpack 등)은 `ESNext` 또는 `ES2020`을 사용합니다.
+
+### strict: 엄격 모드 플래그 번들
+
+```typescript
+// strictNullChecks 효과
+function getLength(str: string | null): number {
+  // strict 없으면: str.length (null 가능성 무시)
+  // strict 있으면: null 체크 강제
+  return str?.length ?? 0;
+}
+
+// noImplicitAny 효과
+function process(data) {     // ❌ strict: data에 any 암시됨
+  return data.value;
+}
+function process(data: unknown) { // ✅ 명시적 타입 필요
+  if (typeof data === "object" && data !== null) {
+    return (data as { value: unknown }).value;
   }
 }
 ```
 
-이 중 가장 중요한 두 가지:
+### paths: 모듈 경로 별칭
 
-**`noImplicitAny`**: 타입을 추론할 수 없을 때 `any`로 묵시적 처리하는 것을 금지한다.
-
-```typescript
-// noImplicitAny: true일 때 에러
-function greet(name) {  // Error: Parameter 'name' implicitly has an 'any' type
-  return `Hello, ${name}`;
-}
-
-// 명시적 타입 추가 필요
-function greet(name: string) {
-  return `Hello, ${name}`;
-}
-```
-
-**`strictNullChecks`**: `null`과 `undefined`를 다른 타입에 할당할 수 없게 한다.
-
-```typescript
-// strictNullChecks: true일 때
-let name: string = null;  // Error: Type 'null' is not assignable to type 'string'
-
-// null을 허용하려면 유니언 타입 사용
-let name: string | null = null;  // OK
-```
-
-### 모듈 관련 옵션
+긴 상대 경로 대신 별칭을 사용할 수 있습니다.
 
 ```json
 {
   "compilerOptions": {
-    "esModuleInterop": true,              // CommonJS 모듈 기본 import 허용
-    "allowSyntheticDefaultImports": true, // 기본 export 없어도 default import 허용
-    "resolveJsonModule": true,            // .json 파일 import 허용
-    "paths": {                            // 경로 별칭
-      "@/*": ["./src/*"]
+    "baseUrl": ".",
+    "paths": {
+      "@/utils/*": ["src/utils/*"],
+      "@/types/*": ["src/types/*"]
     }
   }
 }
 ```
 
-`esModuleInterop`은 `import fs from 'fs'`처럼 CommonJS 모듈을 기본(default) import 방식으로 쓸 수 있게 해준다.
+```typescript
+// 이전: 상대 경로
+import { formatDate } from "../../../utils/date";
 
-### 추가 검사 옵션
-
-```json
-{
-  "compilerOptions": {
-    "noUnusedLocals": true,          // 사용하지 않는 지역변수 에러
-    "noUnusedParameters": true,      // 사용하지 않는 파라미터 에러
-    "noImplicitReturns": true,       // 함수가 항상 값을 반환해야 함
-    "noFallthroughCasesInSwitch": true  // switch 폴스루 금지
-  }
-}
+// 이후: 별칭 사용
+import { formatDate } from "@/utils/date";
 ```
 
-이 옵션들은 `strict`에 포함되지 않지만 코드 품질에 크게 기여한다.
+## 여러 환경을 위한 tsconfig 분리
 
-## 여러 tsconfig 파일 관리
+프로젝트가 커지면 환경별로 tsconfig를 분리하는 패턴이 유용합니다.
 
-프로젝트가 커지면 환경별로 다른 설정이 필요하다.
+```
+tsconfig.json          # 기본 (공통 설정)
+tsconfig.build.json    # 프로덕션 빌드용
+tsconfig.dev.json      # 개발용 (sourceMap, incremental)
+```
 
 ```json
-// tsconfig.base.json - 공통 설정
+// tsconfig.build.json: 기본 설정을 상속
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "strict": true,
-    "lib": ["ES2020"]
-  }
-}
-
-// tsconfig.json - 개발 환경
-{
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "sourceMap": true
+    "noEmit": false,
+    "declaration": true,
+    "sourceMap": false
   },
-  "include": ["src"]
-}
-
-// tsconfig.prod.json - 프로덕션 빌드
-{
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "declaration": true
-  }
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
 }
 ```
 
-`extends`로 기본 설정을 상속하고 각 환경에 필요한 옵션만 오버라이드한다.
+## incremental 빌드로 속도 개선
 
-## 성능 최적화: incremental 컴파일
-
-큰 프로젝트에서 컴파일 속도를 높이려면 증분 컴파일을 활성화한다.
+대규모 프로젝트에서는 증분 빌드를 활성화해 컴파일 속도를 크게 향상시킬 수 있습니다.
 
 ```json
 {
   "compilerOptions": {
     "incremental": true,
-    "tsBuildInfoFile": "./.tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo"
   }
 }
 ```
 
-이전 컴파일 정보를 `.tsbuildinfo`에 캐시해서 변경된 파일만 재컴파일한다.
+첫 컴파일 이후 변경된 파일만 재컴파일하므로 대형 프로젝트에서 빌드 시간이 50~80% 단축됩니다.
 
-다음 편에서는 설치 없이 브라우저에서 TypeScript를 바로 실험할 수 있는 TypeScript Playground를 소개한다.
+## tsc vs 번들러의 타입 검사
+
+실제 프로젝트에서는 tsc 대신 esbuild나 SWC로 트랜스파일하고, 타입 검사만 tsc에 위임하는 패턴이 많습니다.
+
+```bash
+# Vite + TypeScript의 일반적인 workflow
+vite build          # esbuild로 빠른 번들링 (타입 무시)
+tsc --noEmit        # 타입 검사만 별도 실행 (CI에서)
+```
+
+이 방식으로 개발 서버 시작과 HMR 속도를 극대화하면서, CI 파이프라인에서 정확한 타입 검사를 보장할 수 있습니다.
 
 ---
 
-**지난 글:** [TypeScript 설치와 환경 구성: 첫 발을 내딛다](/posts/ts-setup-install/)
+**지난 글:** [TypeScript 설치 및 환경 설정 — 처음부터 시작하기](/posts/ts-setup-install/)
 
-**다음 글:** [TypeScript Playground: 브라우저에서 즉시 실험하기](/posts/ts-playground-repl/)
+**다음 글:** [TypeScript Playground — 브라우저에서 즉시 실험하기](/posts/ts-playground-repl/)
 
 <br>
 읽어주셔서 감사합니다. 😊

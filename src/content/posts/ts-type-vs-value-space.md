@@ -1,172 +1,219 @@
 ---
-title: "타입 공간과 값 공간: TypeScript를 이해하는 핵심 개념"
-description: "TypeScript에는 타입 공간과 값 공간이라는 두 개의 세계가 존재한다. 이 개념을 이해하면 컴파일 에러의 절반이 해결된다."
+title: "타입 공간과 값 공간 — TypeScript의 두 세계"
+description: "TypeScript에서 타입 공간과 값 공간이 무엇인지, 타입이 런타임에 소거되는 원리와 이것이 실제 코딩에 미치는 영향을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-04"
+pubDate: "2026-06-10"
 archiveOrder: 9
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "타입공간", "값공간", "TypeErasure", "타입지우기", "타입시스템"]
+tags: ["TypeScript", "타입공간", "값공간", "타입소거", "런타임"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-editor-setup/)에서 TypeScript 개발 환경을 완성했다. 이번 편에서는 TypeScript를 깊이 이해하기 위한 핵심 개념, **타입 공간(Type Space)**과 **값 공간(Value Space)**의 차이를 명확히 파악한다. 이 개념이 흔들리면 컴파일 에러가 왜 발생하는지, 왜 어떤 코드는 런타임에서 동작하지 않는지 이해하기 어렵다.
+[지난 글](/posts/ts-editor-setup/)에서 TypeScript 에디터 설정을 완성했습니다. 이번 글은 TypeScript를 깊이 이해하기 위한 핵심 개념입니다. 타입 공간과 값 공간을 구분하지 못하면 런타임 오류가 발생하는 코드를 작성하게 됩니다.
 
-## 두 개의 세계
+![타입 공간과 값 공간 다이어그램](/assets/posts/ts-type-vs-value-space-diagram.svg)
 
-TypeScript 코드는 두 종류의 구성요소로 이루어진다.
+## 두 세계가 존재한다
 
-![타입 공간 vs 값 공간](/assets/posts/ts-type-vs-value-space-diagram.svg)
+TypeScript 코드는 두 개의 평행한 세계에서 동작합니다.
 
-**타입 공간(Type Space)**: 컴파일 후 완전히 사라지는 세계
+**타입 공간(Type Space)**: `interface`, `type`, 타입 어노테이션(`: string`), 제네릭 매개변수 등이 속합니다. 컴파일 타임에만 존재하고, 런타임에는 완전히 사라집니다.
 
-- `interface`, `type` 키워드로 정의한 것
-- 타입 주석 (`: string`, `: number`)
-- 타입 단언 (`as Type`)
-- 제네릭 타입 파라미터 (`<T>`)
-- 유틸리티 타입 (`Partial<T>`, `Record<K, V>`)
-
-**값 공간(Value Space)**: 컴파일 후에도 JavaScript로 남는 세계
-
-- 변수, 함수, 클래스 선언
-- `const`, `let`, `var` 키워드로 만든 것
-- `enum` (객체로 변환됨)
-- `import` 문
-
-## 같은 이름, 다른 공간
-
-혼란스러운 점은 같은 이름이 두 공간에 동시에 존재할 수 있다는 것이다.
+**값 공간(Value Space)**: `const`, `let`, `function`, `class`, 리터럴 값 등이 속합니다. 런타임에도 실제로 존재하는 JavaScript 코드입니다.
 
 ```typescript
-// User라는 이름이 두 공간에 동시에 존재
+// 타입 공간 (컴파일 후 사라짐)
+interface User { name: string; }
+type ID = string | number;
 
-// 값 공간의 User (클래스 → 런타임에 존재)
+// 값 공간 (런타임에도 존재)
+const user = { name: "Alice" };
+function greet(name: string) { return `Hi, ${name}`; }
+```
+
+## 타입 소거 (Type Erasure)
+
+![타입 소거 과정](/assets/posts/ts-type-vs-value-space-erasure.svg)
+
+TypeScript가 JavaScript로 컴파일될 때, 타입 공간의 모든 것이 제거됩니다.
+
+```typescript
+// TypeScript 소스
+interface Animal {
+  name: string;
+  species: string;
+}
+
+function describeAnimal(animal: Animal): string {
+  return `${animal.name} (${animal.species})`;
+}
+
+const dog: Animal = { name: "Buddy", species: "Canis familiaris" };
+```
+
+```javascript
+// 컴파일 결과 (타입 정보 없음)
+function describeAnimal(animal) {
+  return `${animal.name} (${animal.species})`;
+}
+
+const dog = { name: "Buddy", species: "Canis familiaris" };
+```
+
+`interface Animal`은 흔적도 없이 사라집니다.
+
+## 이것이 왜 중요한가?
+
+타입 소거를 이해하지 못하면 다음과 같은 실수를 합니다.
+
+```typescript
+interface Cat { name: string; }
+interface Dog { name: string; age: number; }
+
+type Pet = Cat | Dog;
+
+function describe(pet: Pet): string {
+  // ❌ 런타임 오류: interface는 런타임에 없음
+  if (pet instanceof Cat) {    // TypeError!
+    return `고양이: ${pet.name}`;
+  }
+  return `강아지: ${pet.name}`;
+}
+```
+
+`Cat`은 `interface`이므로 런타임에 존재하지 않습니다. `instanceof` 체크가 불가능합니다.
+
+올바른 해결책은 **값으로 타입을 구분**하는 것입니다.
+
+```typescript
+// 방법 1: 판별 유니온 (discriminated union)
+interface Cat { kind: "cat"; name: string; }
+interface Dog { kind: "dog"; name: string; age: number; }
+type Pet = Cat | Dog;
+
+function describe(pet: Pet): string {
+  if (pet.kind === "cat") {   // ✅ 값으로 구분
+    return `고양이: ${pet.name}`;
+  }
+  return `강아지: ${pet.name} (${pet.age}살)`;
+}
+
+// 방법 2: class 사용 (값과 타입 동시 존재)
+class Cat {
+  constructor(public name: string) {}
+}
+class Dog {
+  constructor(public name: string, public age: number) {}
+}
+
+function describe2(pet: Cat | Dog): string {
+  if (pet instanceof Cat) {   // ✅ class는 값으로도 존재
+    return `고양이: ${pet.name}`;
+  }
+  return `강아지: ${(pet as Dog).name}`;
+}
+```
+
+## 두 공간을 동시에 차지하는 것들
+
+일부 TypeScript 구문은 타입 공간과 값 공간 **모두에** 존재합니다.
+
+### class
+
+```typescript
 class User {
   constructor(public name: string) {}
 }
 
-// 타입 공간의 User도 동시에 생성됨 (클래스 인스턴스 타입)
-const u: User = new User("Alice");  // 여기서 User는 타입으로 사용됨
-const v = new User("Bob");           // 여기서 User는 값(생성자)으로 사용됨
+// 값으로 사용 (new로 인스턴스 생성)
+const alice = new User("Alice");
+
+// 타입으로 사용 (타입 어노테이션)
+function greet(user: User): string {
+  return `Hello, ${user.name}`;
+}
+
+// instanceof 가능 (값 공간에도 존재하므로)
+console.log(alice instanceof User); // true
 ```
 
-`class`와 `enum`은 두 공간 모두에 존재하는 특별한 구성요소다.
-
-## 타입 공간만 존재하는 것
-
-`interface`와 `type`은 타입 공간에만 존재한다. 런타임에서 참조하려고 하면 에러가 발생한다.
+### enum
 
 ```typescript
-interface Point {
-  x: number;
-  y: number;
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT"
 }
 
-// 컴파일 타임: 타입으로 사용 가능
-const p: Point = { x: 1, y: 2 };  // OK
+// 타입으로 사용
+function move(dir: Direction): void { /* ... */ }
 
-// 런타임: 값으로 사용 불가
-console.log(Point);        // Error: 'Point' only refers to a type
-const q = new Point();     // Error: 'Point' is not a constructor
-if (p instanceof Point) {} // Error: 'Point' only refers to a type
+// 값으로 사용 (런타임에도 객체로 존재)
+move(Direction.Up);
+console.log(Direction.Up);    // "UP"
+console.log(typeof Direction); // "object" — 런타임에 실제 객체
 ```
 
-`interface Point`는 컴파일 후 사라진다. 런타임에서 `Point`라는 이름은 존재하지 않는다.
+## typeof: 두 공간에서 다른 의미
 
-## 타입 지우기(Type Erasure)
-
-![타입 지우기 시각화](/assets/posts/ts-type-vs-value-space-erasure.svg)
-
-TypeScript 컴파일의 핵심 동작은 **타입 지우기(Type Erasure)**다. 타입 공간의 모든 구성요소가 제거되고 값 공간의 구성요소만 JavaScript로 출력된다.
+`typeof` 연산자는 위치에 따라 다르게 동작합니다.
 
 ```typescript
-// TypeScript 소스
-interface Config {
-  host: string;
-  port: number;
-}
+const point = { x: 1, y: 2 };
 
-type Handler = (req: Request, res: Response) => void;
+// 값 공간의 typeof (JavaScript)
+const typeStr = typeof point;  // "object" — 런타임 값
 
-function createServer(config: Config): void {
-  console.log(`Server at ${config.host}:${config.port}`);
-}
-```
+// 타입 공간의 typeof (TypeScript 전용)
+type Point = typeof point;     // { x: number; y: number }
 
-```javascript
-// JavaScript 출력 (타입 지우기 후)
-function createServer(config) {
-  console.log(`Server at ${config.host}:${config.port}`);
+function printPoint(p: typeof point): void {
+  console.log(`(${p.x}, ${p.y})`);
 }
 ```
 
-`interface Config`, `type Handler`, 파라미터 타입 주석 — 모두 사라졌다.
+타입 공간의 `typeof`는 컴파일 후 사라지고, 값 공간의 `typeof`만 런타임에 실행됩니다.
 
-## `typeof`로 타입 공간과 값 공간 넘나들기
+## 실전 패턴: 타입 가드
 
-TypeScript에서 `typeof`는 두 가지 다른 의미를 가진다.
-
-```typescript
-// 1. 값 공간의 typeof: JavaScript typeof (런타임)
-const name = "Alice";
-console.log(typeof name);  // "string" (런타임 실행)
-
-// 2. 타입 공간의 typeof: TypeScript typeof (컴파일 타임)
-type NameType = typeof name;  // type NameType = string
-```
-
-문맥에 따라 같은 `typeof` 키워드가 다른 역할을 한다. 타입 주석 자리(`: 타입` 위치)에 쓰인 `typeof`는 타입 공간, 표현식에 쓰인 `typeof`는 값 공간이다.
-
-## 실용적 판단 기준
-
-어떤 구성요소가 타입 공간인지 값 공간인지 헷갈릴 때 기준:
-
-> **"컴파일 후에도 JavaScript 파일에 남는가?"**
+타입 소거 때문에 런타임에서 타입 체크는 항상 **값으로** 해야 합니다.
 
 ```typescript
-// 남는 것들 (값 공간)
-const x = 42;           // const x = 42;
-function f() {}         // function f() {}
-class C {}              // class C {}
-enum E { A, B }         // const E = { A: 0, B: 1 }; (변환됨)
-import fs from "fs";    // const fs = require("fs");  (또는 import)
-
-// 사라지는 것들 (타입 공간)
-interface I {}          // 사라짐
-type T = string;        // 사라짐
-const y: number = 1;    // : number 부분만 사라짐 → const y = 1;
-```
-
-## 런타임 타입 검사는 값 공간에서
-
-타입 공간의 것들은 런타임에 없으므로, 런타임 타입 검사는 반드시 값 공간의 방법을 써야 한다.
-
-```typescript
-// 잘못된 방법: interface는 런타임에 없음
-function process(input: string | number) {
-  if (input instanceof string) { // Error: string은 런타임에 없음
-    ...
-  }
+// 사용자 정의 타입 가드
+function isString(value: unknown): value is string {
+  return typeof value === "string";
 }
 
-// 올바른 방법: 값 공간의 typeof 사용
-function process(input: string | number) {
-  if (typeof input === "string") {  // OK: JS typeof 연산자
-    console.log(input.toUpperCase());
-  } else {
-    console.log(input.toFixed(2));
+function isUser(value: unknown): value is User {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "name" in value &&
+    typeof (value as { name: unknown }).name === "string"
+  );
+}
+
+// 사용
+function process(input: unknown): void {
+  if (isString(input)) {
+    console.log(input.toUpperCase()); // string으로 타입 좁혀짐
+  } else if (isUser(input)) {
+    console.log(input.name);         // User로 타입 좁혀짐
   }
 }
 ```
 
-이 개념은 타입 가드(Type Guard)를 배울 때 더 깊이 다룬다. 다음 편에서는 TypeScript의 기본 타입들을 체계적으로 정리한다.
+타입 공간과 값 공간의 구분을 확실히 이해하면, 런타임 오류 없이 타입 시스템을 올바르게 활용할 수 있습니다.
 
 ---
 
-**지난 글:** [에디터 설정: VS Code로 TypeScript 개발 환경 완성](/posts/ts-editor-setup/)
+**지난 글:** [TypeScript 에디터 설정 — VS Code 완벽 최적화](/posts/ts-editor-setup/)
 
-**다음 글:** [TypeScript 기본 타입: 타입 시스템의 첫걸음](/posts/ts-basic-types/)
+**다음 글:** [TypeScript 기본 타입 완벽 가이드](/posts/ts-basic-types/)
 
 <br>
 읽어주셔서 감사합니다. 😊
