@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">비트마스크 DP — 작업 배분 문제</text>
+  <text x="440" y="66" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">n명 작업자 × n개 작업 — 비용 최소화 (직원 i번이 작업 mask 처리 완료)</text>
+
+  <!-- DP state transition -->
+  <text x="60" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">dp[mask] = 완료된 작업 집합이 mask일 때의 최소 비용</text>
+  <text x="60" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">직원 i = popcount(mask) - 1 번 (0-indexed, 현재 배정할 차례)</text>
+
+  <!-- State example for n=3 -->
+  <text x="60" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">n=3, cost[i][j] = 직원 i가 작업 j 처리 비용</text>
+
+  <!-- States -->
+  <rect x="60" y="154" width="100" height="36" fill="#1a3a2a" rx="4" stroke="#55c555" stroke-width="1.5"/>
+  <text x="110" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#55c555">000 = 0</text>
+
+  <rect x="180" y="154" width="100" height="36" fill="#1a2a3a" rx="4" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="230" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">001 = 1</text>
+
+  <rect x="300" y="154" width="100" height="36" fill="#1a2a3a" rx="4" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="350" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">010 = 2</text>
+
+  <rect x="420" y="154" width="100" height="36" fill="#1a2a3a" rx="4" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="470" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">011 = 3</text>
+
+  <rect x="540" y="154" width="100" height="36" fill="#1a2a3a" rx="4" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="590" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">100 = 4</text>
+
+  <rect x="660" y="154" width="100" height="36" fill="#1a2a3a" rx="4" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="710" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">...</text>
+
+  <rect x="780" y="154" width="60" height="36" fill="#2a4a2a" rx="4" stroke="#77dd77" stroke-width="2"/>
+  <text x="810" y="177" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" font-weight="600" fill="#77dd77">111=7</text>
+
+  <!-- Code box -->
+  <rect x="60" y="204" width="760" height="172" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def assign_tasks(cost):  # cost[i][j]: 직원i가 작업j 비용</text>
+  <text x="76" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    n = len(cost)</text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    dp = [float('inf')] * (1 &lt;&lt; n)</text>
+  <text x="76" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    dp[0] = 0</text>
+  <text x="76" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    for mask in range(1, 1 &lt;&lt; n):</text>
+  <text x="76" y="314" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">        i = bin(mask).count('1') - 1  # 현재 직원 인덱스</text>
+  <text x="76" y="332" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">        for j in range(n):            # 작업 j 배정 시도</text>
+  <text x="76" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">            if mask &amp; (1 &lt;&lt; j):</text>
+  <text x="76" y="368" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">                prev = mask ^ (1 &lt;&lt; j)</text>
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">                dp[mask]=min(dp[mask],dp[prev]+cost[i][j])</text>
+</svg>

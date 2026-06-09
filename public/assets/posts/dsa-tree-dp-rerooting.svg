@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">리루팅 기법 (Rerooting DP)</text>
+  <text x="440" y="66" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">각 노드를 루트로 봤을 때의 답 — DFS 2회로 O(n)</text>
+
+  <!-- Step 1: DFS down (subtree size/depth sum) -->
+  <text x="60" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Phase 1: DFS down — 서브트리 정보 수집</text>
+
+  <circle cx="220" cy="140" r="22" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="220" y="146" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">1</text>
+  <line x1="205" y1="158" x2="140" y2="202" stroke="#7ec8e3" stroke-width="1.5"/>
+  <circle cx="130" cy="214" r="22" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="130" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">2</text>
+  <line x1="235" y1="158" x2="300" y2="202" stroke="#7ec8e3" stroke-width="1.5"/>
+  <circle cx="310" cy="214" r="22" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="310" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7ec8e3">3</text>
+  <line x1="115" y1="228" x2="80" y2="274" stroke="#7ec8e3" stroke-width="1.5"/>
+  <circle cx="72" cy="286" r="18" fill="#1a3a2a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="72" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">4</text>
+  <line x1="145" y1="228" x2="175" y2="274" stroke="#7ec8e3" stroke-width="1.5"/>
+  <circle cx="183" cy="286" r="18" fill="#1a3a2a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="183" y="292" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">5</text>
+
+  <text x="70" y="328" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">down[1]=전체 깊이 합 (루트=1 기준)</text>
+  <text x="70" y="346" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">down[2]=자식들 깊이 합</text>
+
+  <!-- Divider -->
+  <line x1="380" y1="88" x2="380" y2="400" stroke="#333" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- Step 2: DFS up (rerooting) -->
+  <text x="400" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Phase 2: DFS up — 부모 방향 기여 전달</text>
+
+  <text x="400" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ans[v] = v를 루트로 볼 때 전체 노드 깊이 합</text>
+  <text x="400" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">ans[child] = ans[parent]</text>
+  <text x="400" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">            - subtree_size[child]</text>
+  <text x="400" y="176" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">            + (n - subtree_size[child])</text>
+
+  <rect x="400" y="192" width="440" height="192" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="416" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve"># 전체 노드에서 각 노드까지 거리 합</text>
+  <text x="416" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">def solve(n, adj):</text>
+  <text x="416" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    sz = [1]*n; down = [0]*n; ans = [0]*n</text>
+  <text x="416" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # Phase 1: subtree size &amp; down[v]</text>
+  <text x="416" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # Phase 2: ans[child] = ans[parent]</text>
+  <text x="416" y="302" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    #           - sz[child] + (n-sz[child])</text>
+  <text x="416" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # 시간: O(n) (DFS 2회)</text>
+  <text x="416" y="338" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # 응용: "Sum of Distances in Tree"</text>
+  <text x="416" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">    return ans  # ans[v] = v 기준 거리 합</text>
+  <text x="416" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">    # (LeetCode 834)</text>
+</svg>
