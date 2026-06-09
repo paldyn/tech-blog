@@ -1,161 +1,126 @@
 ---
-title: "Spring이란 무엇인가 — Java 엔터프라이즈 개발의 판도를 바꾼 프레임워크"
-description: "Spring Framework가 등장한 배경과 해결하고자 했던 문제, 핵심 철학인 POJO·IoC·DI·AOP의 기본 개념을 알기 쉽게 설명합니다."
+title: "Spring Framework란 무엇인가 — 탄생 배경부터 핵심 철학까지"
+description: "EJB의 복잡성을 해결하기 위해 탄생한 Spring Framework의 정의, POJO 기반 개발 철학, IoC/AOP/PSA 3대 원칙을 체계적으로 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-05-25"
+pubDate: "2026-06-09"
 archiveOrder: 1
 type: "knowledge"
 category: "Spring"
-tags: ["Spring", "Java", "IoC", "DI", "AOP", "POJO", "프레임워크"]
+tags: ["Spring", "Spring Framework", "IoC", "AOP", "POJO", "Java"]
 featured: false
 draft: false
 ---
 
-Java로 엔터프라이즈 애플리케이션을 개발해 본 적이 있다면, "코드 한 줄 짜기 위해 설정 파일 열 줄을 써야 하는" 답답함을 느껴본 적이 있을 것이다. Spring Framework는 바로 그 불편함에서 출발했다. 2003년 Rod Johnson이 처음 공개한 이 오픈 소스 프레임워크는 현재 Java 생태계에서 가장 널리 쓰이는 애플리케이션 프레임워크로 자리 잡았으며, Spring Boot·Spring Security·Spring Data 같은 방대한 프로젝트군을 거느리고 있다.
+Java 엔터프라이즈 개발의 역사는 "어떻게 하면 더 단순하게 만들 수 있을까"라는 질문과 함께 흘러왔습니다. Spring Framework는 그 질문에 대한 가장 성공적인 답변 중 하나로, 오늘날 전 세계 수백만 개의 Java 애플리케이션을 지탱하는 기반이 되었습니다. 이 시리즈 첫 글에서는 Spring이 왜 탄생했는지, 어떤 철학으로 설계되었는지를 코드 수준에서 이해합니다.
 
-## Spring 이전의 세계: EJB와 J2EE의 무게
+## Spring Framework란
 
-2000년대 초반 Java 엔터프라이즈 개발의 표준은 **J2EE(Java 2 Enterprise Edition)**였다. J2EE가 제공하는 EJB(Enterprise JavaBeans)는 트랜잭션·보안·분산 처리 같은 기업용 기능을 규격화했지만, 실제로 쓰기 위해서는 엄청난 양의 XML 설정과 인터페이스 구현이 필요했다. 간단한 비즈니스 로직 하나를 짜기 위해 Home Interface, Remote Interface, Bean Class, Deployment Descriptor까지 최소 4개의 파일을 작성해야 했고, EJB 컨테이너에 종속되어 단위 테스트조차 쉽지 않았다.
+Spring Framework는 2003년 Rod Johnson이 출판한 저서 *Expert One-on-One J2EE Design and Development*에 포함된 코드에서 시작된 오픈소스 Java 애플리케이션 프레임워크입니다. EJB(Enterprise JavaBeans)가 지배하던 J2EE 생태계의 복잡성과 무거움에 대한 반성에서 출발했습니다.
 
-Rod Johnson은 저서 『Expert One-on-One J2EE Design and Development』(2002)에서 "대부분의 기업 애플리케이션은 EJB 없이도 충분히 구현 가능하다"고 주장하며, 서적에 포함된 예제 코드를 발전시켜 Spring 프레임워크를 탄생시켰다.
+Spring의 공식 정의는 간결합니다. "Java 플랫폼을 위한 포괄적인 프로그래밍 및 구성 모델(comprehensive programming and configuration model)" — 즉, **어떻게 코드를 구성하고, 객체를 연결하고, 인프라 관심사를 처리할지**에 대한 체계적인 방법론을 제공합니다.
 
-## Spring의 핵심 철학: POJO 기반 개발
+![Spring Framework 개요](/assets/posts/spring-what-is-spring-overview.svg)
 
-Spring의 가장 중요한 원칙은 **POJO(Plain Old Java Object)** 기반 프로그래밍이다. 특정 프레임워크의 클래스를 상속하거나 특수 인터페이스를 구현하지 않아도 되는 평범한 Java 객체를 그대로 사용하자는 것이다.
+## EJB의 문제, Spring의 등장
 
-```java
-// POJO: 어떤 프레임워크도 상속하지 않는 순수 Java 클래스
-public class UserService {
-    private final UserRepository userRepository;
+2000년대 초 J2EE 표준의 핵심이었던 EJB 2.x는 이론적으로는 훌륭했지만 실전에서는 다음과 같은 심각한 문제를 안고 있었습니다.
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+- **침투적 설계(Invasive Design)**: `EntityBean`, `SessionBean` 등 EJB 특정 클래스를 반드시 상속해야 해서 비즈니스 코드와 프레임워크 코드가 뒤섞임
+- **무거운 환경 의존**: WAS(WebLogic, WebSphere 등)를 띄워야만 테스트 가능
+- **배포 복잡성**: `ejb-jar.xml` 등 XML 디스크립터를 작성해야 하는 번거로움
+- **단위 테스트 불가**: 컨테이너 없이 개별 클래스를 테스트할 방법이 없음
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
-    }
-}
-```
+Spring은 이 문제를 **"컨테이너 밖에서도 동작하는 순수 자바 코드"**, 즉 POJO(Plain Old Java Object) 기반 개발로 해결했습니다.
 
-이 클래스에는 Spring 관련 import가 하나도 없다. 그럼에도 Spring 컨테이너에서 완벽하게 관리·동작한다. 덕분에 테스트 시에도 Spring 컨텍스트 없이 단순히 `new UserService(mockRepo)` 형태로 인스턴스를 만들 수 있다.
+## POJO 기반 개발 철학
 
-## Spring이 해결하는 세 가지 문제
-
-![Spring Framework 계층 구조](/assets/posts/spring-what-is-spring-overview.svg)
-
-### 1. 의존성 관리 복잡성 — IoC / DI
-
-객체가 자신의 의존성을 직접 생성하면, 변경이 생길 때마다 연쇄적으로 코드를 수정해야 한다. Spring은 **IoC(Inversion of Control, 제어 역전)** 컨테이너를 통해 객체 생성·조립 책임을 개발자에서 프레임워크로 넘긴다. 개발자는 "무엇이 필요한지"만 선언하고, "어떻게 만들어줄지"는 Spring이 담당한다. 이 방식이 **DI(Dependency Injection, 의존성 주입)**다.
+POJO는 별다른 마법이 없는 개념입니다. 특정 인터페이스를 구현하거나 특정 클래스를 상속하지 않는, 순수한 자바 객체를 말합니다.
 
 ```java
-// Spring이 생성자를 통해 의존성을 자동으로 주입한다
+// Spring POJO 서비스 — 프레임워크 코드 전혀 없음
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final PaymentClient paymentClient;
 
-    // @Autowired 없이도 생성자 하나면 자동 주입
-    public OrderService(OrderRepository orderRepository,
-                        PaymentClient paymentClient) {
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.paymentClient = paymentClient;
+    }
+
+    public Order createOrder(OrderRequest request) {
+        Order order = Order.from(request);
+        return orderRepository.save(order);
     }
 }
 ```
 
-### 2. 반복 코드 — AOP
+이 클래스는 `OrderService`라는 이름의 평범한 자바 클래스입니다. Spring 없이도 `new OrderService(mockRepo)` 형태로 단위 테스트를 작성할 수 있습니다. `@Service` 어노테이션은 Spring에게 "이 클래스를 빈으로 관리해달라"는 힌트이지, 클래스의 동작 자체를 바꾸지는 않습니다.
 
-로깅, 트랜잭션 처리, 보안 검사처럼 여러 메서드에 걸쳐 반복되는 코드를 **횡단 관심사(Cross-cutting Concern)**라 한다. Spring **AOP(Aspect-Oriented Programming)**는 이를 핵심 비즈니스 로직에서 분리해 별도의 Aspect로 관리한다.
+![POJO vs EJB 코드 비교](/assets/posts/spring-what-is-spring-pojo.svg)
+
+## Spring의 3대 핵심 원칙
+
+Spring의 설계 철학은 세 가지 원칙으로 요약됩니다.
+
+### 1. IoC — 제어의 역전 (Inversion of Control)
+
+전통적인 개발에서는 객체가 자신이 필요한 의존 객체를 직접 생성합니다. IoC는 이 "제어권"을 프레임워크에 넘깁니다.
 
 ```java
-@Aspect
-@Component
-public class LoggingAspect {
+// IoC 없음 — 직접 생성
+public class OrderService {
+    private OrderRepository repo = new JpaOrderRepository(); // 강한 결합
+}
 
-    @Around("execution(* com.example.service.*.*(..))")
-    public Object logExecutionTime(ProceedingJoinPoint joinPoint)
-            throws Throwable {
-        long start = System.currentTimeMillis();
-        Object result = joinPoint.proceed();
-        long elapsed = System.currentTimeMillis() - start;
-        System.out.println(joinPoint.getSignature() + " : " + elapsed + "ms");
-        return result;
+// IoC 적용 — 외부에서 주입
+public class OrderService {
+    private final OrderRepository repo; // 인터페이스에 의존
+    
+    public OrderService(OrderRepository repo) { // 생성자 주입
+        this.repo = repo;
     }
 }
 ```
 
-서비스 코드에는 로깅 한 줄 없지만, 모든 서비스 메서드 실행 시간이 자동으로 기록된다.
+Spring IoC 컨테이너(`ApplicationContext`)가 객체의 생명주기를 관리하고, 필요한 의존성을 자동으로 주입합니다.
 
-### 3. 반복적인 인프라 코드 — 템플릿 패턴
+### 2. AOP — 관점 지향 프로그래밍 (Aspect-Oriented Programming)
 
-JDBC로 데이터를 조회할 때마다 Connection 열기 → Statement 생성 → ResultSet 처리 → 예외 변환 → Connection 닫기를 반복해야 했다. Spring의 `JdbcTemplate`은 이 보일러플레이트를 제거한다.
+로깅, 트랜잭션 관리, 보안 체크 등은 여러 클래스에 걸쳐 반복되는 "횡단 관심사(Cross-cutting Concern)"입니다. AOP는 이를 별도 모듈(Aspect)로 분리해 핵심 비즈니스 로직을 오염시키지 않습니다.
 
 ```java
-// JdbcTemplate: try-catch, Connection 관리 없이 쿼리 실행
-@Repository
-public class UserRepository {
-
-    private final JdbcTemplate jdbcTemplate;
-
-    public UserRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public User findById(Long id) {
-        return jdbcTemplate.queryForObject(
-            "SELECT id, name FROM users WHERE id = ?",
-            (rs, rowNum) -> new User(rs.getLong("id"), rs.getString("name")),
-            id
-        );
-    }
+// @Transactional 하나로 트랜잭션 시작/커밋/롤백 자동 처리
+@Transactional
+public Order createOrder(OrderRequest request) {
+    return orderRepository.save(Order.from(request));
 }
 ```
 
-## Spring Framework vs Spring Boot
+메서드 앞뒤로 트랜잭션을 열고 닫는 코드는 AOP가 투명하게 처리합니다.
 
-처음 Spring을 접할 때 "Spring이요? Spring Boot요?" 라는 질문이 자주 나온다. 간단하게 정리하면:
+### 3. PSA — 서비스 추상화 (Portable Service Abstraction)
 
-| | Spring Framework | Spring Boot |
-|---|---|---|
-| 성격 | 핵심 프레임워크 | Spring 기반 생산성 도구 |
-| 설정 | 개발자가 직접 | 자동 설정(Auto-configuration) |
-| 서버 | 외부 WAS 필요 | 내장 Tomcat/Undertow |
-| 진입 장벽 | 높음 | 낮음 |
+Spring은 JDBC, JMS, 캐시, 트랜잭션 등 다양한 기술에 대한 일관된 추상화 레이어를 제공합니다. 덕분에 특정 기술 구현체를 교체해도 비즈니스 코드는 바뀌지 않습니다.
 
-Spring Boot는 Spring Framework의 **대체재가 아니라 상위 레이어**다. Spring Boot를 쓰더라도 내부는 Spring Framework가 동작하므로, Spring의 핵심 개념(IoC, DI, AOP)을 먼저 이해해야 한다. 이 시리즈는 그 순서를 따른다.
+```java
+// PlatformTransactionManager — JDBC/JPA/JMS 모두 동일 인터페이스
+@Autowired
+private PlatformTransactionManager txManager; // 구현체와 무관하게 사용
+```
 
-## Spring의 구성 모듈 개요
+## Spring은 라이브러리인가, 프레임워크인가
 
-![Spring 이전 vs Spring 도입](/assets/posts/spring-what-is-spring-problem.svg)
+Spring은 엄밀히 말해 **프레임워크**입니다. 라이브러리는 내 코드가 라이브러리를 호출하지만, 프레임워크는 프레임워크가 내 코드를 호출합니다(헐리우드 원칙: "Don't call us, we'll call you"). Spring IoC 컨테이너가 빈을 생성하고 의존성을 주입하며 생명주기를 관리하는 방식이 바로 이 원칙을 따릅니다.
 
-Spring Framework는 단일 JAR가 아니라 모듈 집합으로 설계되어 있어 필요한 기능만 선택해 사용할 수 있다. 주요 모듈은 다음과 같다.
+그러나 Spring은 **비침투적(Non-invasive)** 프레임워크로 설계되어, 원하는 모듈만 선택해서 사용할 수 있고, 비즈니스 코드가 Spring에 직접적으로 의존하지 않아도 됩니다.
 
-- **spring-core / spring-beans**: IoC 컨테이너의 핵심. `BeanFactory`와 `ApplicationContext` 포함
-- **spring-context**: 국제화(i18n), 이벤트 발행/구독, 리소스 로딩 등 확장 기능
-- **spring-aop / spring-aspects**: AOP 프록시 기반 구현
-- **spring-webmvc**: MVC 패턴 기반 웹 계층 (DispatcherServlet)
-- **spring-jdbc / spring-tx**: JDBC 추상화, 선언적 트랜잭션
-- **spring-test**: JUnit 통합, Mock 지원
+## 정리
 
-오늘날 프로젝트에서는 이 모듈들을 Maven/Gradle 의존성으로 선언하면 자동으로 가져온다.
-
-## 왜 지금도 Spring인가
-
-다양한 JVM 프레임워크(Quarkus, Micronaut, Vert.x)가 등장했음에도 Spring이 여전히 지배적인 이유는 다음과 같다.
-
-1. **성숙한 생태계**: 20년 이상 축적된 문서, 레퍼런스, 커뮤니티
-2. **엔터프라이즈 통합**: Spring Security, Spring Data, Spring Batch, Spring Cloud 등 검증된 확장 라이브러리
-3. **표준 호환**: Jakarta EE 표준을 충실히 따르면서 생산성을 더함
-4. **Spring Boot의 개발 경험**: 프로젝트 시작에서 배포까지 일관된 개발 방식 제공
-
-다음 글에서는 Spring이 강조하는 핵심 원칙인 **4대 특성(IoC, DI, AOP, PSA)**을 각각 코드 예제와 함께 자세히 살펴본다.
+Spring Framework는 단순한 코드 집합이 아니라 **어떻게 객체를 설계하고 연결할지에 대한 철학**입니다. POJO로 비즈니스 로직을 순수하게 유지하고, IoC로 의존성을 관리하고, AOP로 횡단 관심사를 분리하고, PSA로 기술 변경에 유연하게 대응하는 것 — 이 네 가지가 Spring이 20년 넘게 사랑받는 이유입니다.
 
 ---
 
-**다음 글:** [Spring의 4대 특성 — IoC·DI·AOP·PSA 완전 정복](/posts/spring-four-pillars/)
+**다음 글:** [Spring의 4대 핵심 특징 — IoC·DI·AOP·PSA 완전 해부](/posts/spring-four-pillars/)
 
 <br>
 읽어주셔서 감사합니다. 😊
