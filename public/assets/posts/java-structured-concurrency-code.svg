@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" rx="12" fill="#0a0a0a"/>
+  <text x="440" y="40" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">ShutdownOnFailure 패턴 예제</text>
+
+  <rect x="60" y="58" width="760" height="322" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="80" y="86" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">// 하나라도 실패하면 나머지 즉시 취소</tspan>
+  </text>
+  <text x="80" y="106" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">try</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> scope =</tspan>
+  </text>
+  <text x="80" y="126" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">     </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> StructuredTaskScope.ShutdownOnFailure()) {</tspan>
+  </text>
+  <text x="80" y="154" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    // 서브태스크 포크</tspan>
+  </text>
+  <text x="80" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    var</tspan><tspan fill="#ffffff"> userTask   = scope.fork(() -&gt; fetchUser(id));</tspan>
+  </text>
+  <text x="80" y="194" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    var</tspan><tspan fill="#ffffff"> orderTask  = scope.fork(() -&gt; fetchOrders(id));</tspan>
+  </text>
+  <text x="80" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    // 모든 태스크 완료 대기</tspan>
+  </text>
+  <text x="80" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    scope.join();</tspan>
+  </text>
+  <text x="80" y="262" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    // 실패한 서브태스크 있으면 예외 던짐</tspan>
+  </text>
+  <text x="80" y="282" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    scope.throwIfFailed();</tspan>
+  </text>
+  <text x="80" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    // 이 시점 이후 모든 결과 안전하게 사용 가능</tspan>
+  </text>
+  <text x="80" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return new</tspan><tspan fill="#ffffff"> Dashboard(</tspan>
+  </text>
+  <text x="80" y="350" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">        userTask.get(), orderTask.get());</tspan>
+  </text>
+  <text x="80" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}</tspan>
+  </text>
+</svg>

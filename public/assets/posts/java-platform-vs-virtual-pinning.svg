@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Pinning 방지: synchronized → ReentrantLock</text>
+
+  <!-- Pinning case -->
+  <rect x="60" y="72" width="360" height="180" rx="8" fill="#2a1a1a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">Pinning 발생 (문제)</text>
+  <rect x="76" y="106" width="328" height="136" rx="6" fill="#000000" stroke="#e05555" stroke-width="1"/>
+  <text x="96" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">synchronized</tspan><tspan fill="#ffffff"> (lock) {</tspan>
+  </text>
+  <text x="96" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    // I/O 블로킹 발생</tspan>
+  </text>
+  <text x="96" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    result = socket.read(); </tspan>
+  </text>
+  <text x="96" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#9aa4b8">    // VT가 캐리어에 고정됨!</tspan>
+  </text>
+  <text x="96" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">}</tspan>
+  </text>
+  <text x="240" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555" text-anchor="middle">캐리어 스레드 점유 = 스케일링 제한</text>
+
+  <!-- Fixed case -->
+  <rect x="460" y="72" width="360" height="180" rx="8" fill="#0a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">Pinning 없음 (권장)</text>
+  <rect x="476" y="106" width="328" height="136" rx="6" fill="#000000" stroke="#55c555" stroke-width="1"/>
+  <text x="496" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">var</tspan><tspan fill="#ffffff"> lock = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> ReentrantLock();</tspan>
+  </text>
+  <text x="496" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">lock.lock();</tspan>
+  </text>
+  <text x="496" y="170" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">try</tspan><tspan fill="#ffffff"> {</tspan>
+  </text>
+  <text x="496" y="190" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">    result = socket.read(); </tspan>
+  </text>
+  <text x="496" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">} </tspan><tspan fill="#7ec8e3" font-weight="600">finally</tspan><tspan fill="#ffffff"> { lock.unlock(); }</tspan>
+  </text>
+  <text x="640" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">I/O 중 캐리어 반환 — 최대 확장성</text>
+
+  <!-- Diagnosis -->
+  <rect x="60" y="278" width="760" height="80" rx="6" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Pinning 진단: JVM 플래그로 경고 출력</text>
+  <text x="440" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">-Djdk.tracePinnedThreads=full</text>
+  <text x="440" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">JDK 내부 라이브러리(JDBC 드라이버 등)의 synchronized 사용 시 pinning 발생 가능 — 버전 업에 따라 개선 중</text>
+  <text x="440" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">Java 24+에서 synchronized 내 virtual thread unmount 지원 예정</text>
+</svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="42" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Structured Concurrency 계층 구조</text>
+  <text x="440" y="64" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">부모 범위가 모든 자식 태스크의 생명주기를 완전히 감쌈</text>
+
+  <!-- Parent scope -->
+  <rect x="60" y="82" width="760" height="320" rx="10" fill="none" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="100" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">StructuredTaskScope (부모)</text>
+
+  <!-- Sub-task 1 -->
+  <rect x="100" y="118" width="280" height="120" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">서브태스크 1: fetchUser()</text>
+  <rect x="116" y="152" width="248" height="24" rx="4" fill="#1a2a44" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Virtual Thread에서 실행</text>
+  <rect x="116" y="182" width="248" height="24" rx="4" fill="#0a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="240" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">정상 완료 → subtask.get()</text>
+  <rect x="116" y="212" width="248" height="18" rx="4" fill="#1a2a44" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="240" y="225" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">User 결과 반환</text>
+
+  <!-- Sub-task 2 -->
+  <rect x="500" y="118" width="280" height="120" rx="8" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">서브태스크 2: fetchOrders()</text>
+  <rect x="516" y="152" width="248" height="24" rx="4" fill="#1a2a44" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Virtual Thread에서 실행</text>
+  <rect x="516" y="182" width="248" height="24" rx="4" fill="#0a2a1a" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555" text-anchor="middle">정상 완료 → subtask.get()</text>
+  <rect x="516" y="212" width="248" height="18" rx="4" fill="#1a2a44" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="225" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Orders 결과 반환</text>
+
+  <!-- join() -->
+  <rect x="290" y="270" width="300" height="44" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">scope.join()</text>
+  <text x="440" y="308" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">모든 서브태스크 완료 대기</text>
+
+  <!-- Arrows to join -->
+  <line x1="240" y1="238" x2="340" y2="270" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <line x1="640" y1="238" x2="540" y2="270" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Scope close -->
+  <rect x="290" y="336" width="300" height="44" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">scope.close()</text>
+  <text x="440" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">범위 종료 — 미완료 서브태스크 취소</text>
+  <line x1="440" y1="314" x2="440" y2="336" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+
+  <!-- Bottom rules -->
+  <rect x="60" y="408" width="760" height="52" rx="6" fill="#0f1a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="428" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">구조적 동시성 3대 원칙</text>
+  <text x="440" y="446" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">① 자식은 부모 범위를 벗어날 수 없음  ② 부모 close 시 자식 전부 완료  ③ 예외는 부모에 전파</text>
+  <text x="440" y="456" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555" text-anchor="middle">(Java 21: Preview → Java 25에서 정식 출시 예정)</text>
+</svg>
