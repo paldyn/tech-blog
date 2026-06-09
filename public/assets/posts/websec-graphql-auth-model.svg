@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">GraphQL 필드 수준 인가 모델</text>
+
+  <!-- Resolver hierarchy -->
+  <text x="200" y="78" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">잘못된 방식 (리졸버 없음)</text>
+  <text x="650" y="78" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">올바른 방식 (필드 수준 권한)</text>
+
+  <!-- Bad: all fields exposed -->
+  <rect x="60" y="90" width="280" height="230" rx="8" fill="#1a0a0a" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="200" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">User Type</text>
+
+  <rect x="80" y="124" width="240" height="24" rx="4" fill="#2a1010" stroke="#5a1a1a" stroke-width="1"/>
+  <text x="200" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">id: ID</text>
+
+  <rect x="80" y="152" width="240" height="24" rx="4" fill="#2a1010" stroke="#5a1a1a" stroke-width="1"/>
+  <text x="200" y="169" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">email: String</text>
+
+  <rect x="80" y="180" width="240" height="24" rx="4" fill="#3a1010" stroke="#6a1a1a" stroke-width="2"/>
+  <text x="200" y="197" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">passwordHash: String !</text>
+
+  <rect x="80" y="208" width="240" height="24" rx="4" fill="#3a1010" stroke="#6a1a1a" stroke-width="2"/>
+  <text x="200" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">internalNotes: String !</text>
+
+  <rect x="80" y="236" width="240" height="24" rx="4" fill="#2a1010" stroke="#5a1a1a" stroke-width="1"/>
+  <text x="200" y="253" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">createdAt: DateTime</text>
+
+  <text x="200" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">인증 없이 모든 필드 접근 가능</text>
+
+  <!-- Good: field-level auth -->
+  <rect x="460" y="90" width="360" height="230" rx="8" fill="#0a1a0a" stroke="#2a7a2a" stroke-width="1"/>
+  <text x="640" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">User Type + 필드 권한</text>
+
+  <rect x="480" y="124" width="320" height="24" rx="4" fill="#0d2a0d" stroke="#1a5a1a" stroke-width="1"/>
+  <text x="640" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">id: ID — Public</text>
+
+  <rect x="480" y="152" width="320" height="24" rx="4" fill="#0d2a0d" stroke="#1a5a1a" stroke-width="1"/>
+  <text x="640" y="169" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">email: String — @isAuthenticated</text>
+
+  <rect x="480" y="180" width="320" height="24" rx="4" fill="#1a1a0d" stroke="#4a4a1a" stroke-width="1"/>
+  <text x="640" y="197" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e8e8e8">passwordHash — 완전 제거</text>
+
+  <rect x="480" y="208" width="320" height="24" rx="4" fill="#0d1a2a" stroke="#1a3a5a" stroke-width="1"/>
+  <text x="640" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">internalNotes — @hasRole(ADMIN)</text>
+
+  <rect x="480" y="236" width="320" height="24" rx="4" fill="#0d2a0d" stroke="#1a5a1a" stroke-width="1"/>
+  <text x="640" y="253" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">createdAt — @isAuthenticated</text>
+
+  <text x="640" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">graphql-shield로 필드마다 규칙 선언</text>
+
+  <!-- Code block at bottom -->
+  <rect x="60" y="332" width="760" height="72" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="352" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># graphql-shield (Node.js) 규칙 선언</text>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">const permissions = shield({</text>
+  <text x="76" y="392" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  Query: { users: isAdmin },</text>
+</svg>

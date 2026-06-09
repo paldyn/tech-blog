@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">BOLA / BFLA 공격 시나리오와 방어</text>
+
+  <!-- BOLA column -->
+  <text x="215" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">BOLA 공격 (API1)</text>
+  <text x="665" y="76" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">방어 코드</text>
+
+  <!-- Attack flow -->
+  <rect x="60" y="88" width="310" height="52" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="215" y="110" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e8e8e8">공격자: 자신의 주문 조회</text>
+  <text x="215" y="128" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">GET /api/orders/1001 (자기 것)</text>
+
+  <line x1="215" y1="140" x2="215" y2="164" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <rect x="60" y="164" width="310" height="52" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="215" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">ID 변조 시도</text>
+  <text x="215" y="204" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">GET /api/orders/1002 (타인 것)</text>
+
+  <line x1="215" y1="216" x2="215" y2="240" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <rect x="60" y="240" width="310" height="52" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="215" y="262" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">취약한 응답</text>
+  <text x="215" y="280" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">200 OK + 타인 주문 정보 노출</text>
+
+  <!-- Defense code -->
+  <rect x="460" y="88" width="360" height="206" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="108" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># Django REST Framework 방어</text>
+  <text x="476" y="128" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">class OrderDetail(APIView):</text>
+  <text x="476" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  def get(self, req, pk):</text>
+  <text x="476" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">    # 소유자 필터 포함</text>
+  <text x="476" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    order = Order.objects.filter(</text>
+  <text x="476" y="208" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">      pk=pk, user=req.user</text>
+  <text x="476" y="228" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    ).first()</text>
+  <text x="476" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    if not order:</text>
+  <text x="476" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#b5cea8" xml:space="preserve">      return Response(status=404)</text>
+
+  <!-- BFLA section -->
+  <text x="215" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555">BFLA 공격 (API5)</text>
+
+  <rect x="60" y="342" width="310" height="52" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="215" y="364" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">일반 유저가 관리자 기능 호출</text>
+  <text x="215" y="382" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">DELETE /api/admin/users/999</text>
+
+  <rect x="460" y="314" width="360" height="88" rx="6" fill="#0d1f0d" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="640" y="336" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">BFLA 방어: 역할 기반 인가</text>
+  <text x="476" y="360" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">모든 /admin/* 엔드포인트에</text>
+  <text x="476" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">역할 검사 미들웨어 필수 적용</text>
+  <text x="476" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">UI 숨기는 것으로는 부족 — API 직접 호출 가능</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="428" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">BOLA/BFLA 공통: 서버 측에서 매 요청마다 소유자 + 역할을 독립적으로 검증해야 함</text>
+</svg>

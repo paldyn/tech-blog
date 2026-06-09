@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">API 게이트웨이 보안 설계 패턴</text>
+
+  <!-- Internet -->
+  <rect x="60" y="68" width="100" height="44" rx="6" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="110" y="91" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">인터넷</text>
+  <text x="110" y="105" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">클라이언트</text>
+
+  <!-- Arrow -->
+  <line x1="160" y1="90" x2="195" y2="90" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="193,85 200,90 193,95" fill="#7ec8e3"/>
+
+  <!-- WAF -->
+  <rect x="195" y="68" width="120" height="44" rx="6" fill="#1a0d0d" stroke="#5a2a2a" stroke-width="1"/>
+  <text x="255" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#e05555">WAF</text>
+  <text x="255" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">악성 패턴 차단</text>
+
+  <!-- Arrow -->
+  <line x1="315" y1="90" x2="350" y2="90" stroke="#7ec8e3" stroke-width="2"/>
+  <polygon points="348,85 355,90 348,95" fill="#7ec8e3"/>
+
+  <!-- API Gateway -->
+  <rect x="350" y="60" width="190" height="60" rx="8" fill="#0d1f0d" stroke="#2a5a2a" stroke-width="2"/>
+  <text x="445" y="83" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">API Gateway</text>
+  <text x="445" y="101" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">인증 / 인가 / Rate Limit / Logging</text>
+
+  <!-- Arrows to services -->
+  <line x1="540" y1="90" x2="575" y2="90" stroke="#55c555" stroke-width="2"/>
+  <polygon points="573,85 580,90 573,95" fill="#55c555"/>
+
+  <!-- Services -->
+  <rect x="580" y="68" width="120" height="44" rx="6" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="640" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">서비스 A</text>
+  <text x="640" y="104" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">내부 네트워크</text>
+
+  <rect x="720" y="68" width="100" height="44" rx="6" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="770" y="91" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" font-weight="600" fill="#7ec8e3">서비스 B</text>
+
+  <!-- Code: API Gateway config -->
+  <rect x="60" y="142" width="390" height="240" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># nginx API Gateway 보안 설정</text>
+  <text x="76" y="182" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">location /api/v1/ {</text>
+  <text x="76" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  # JWT 검증</text>
+  <text x="76" y="218" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  auth_jwt "API";</text>
+  <text x="76" y="236" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  auth_jwt_key_file jwks.json;</text>
+  <text x="76" y="254" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  # Rate Limiting</text>
+  <text x="76" y="272" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  limit_req zone=api burst=20;</text>
+  <text x="76" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  # 보안 헤더</text>
+  <text x="76" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  add_header X-Content-Type-Options</text>
+  <text x="76" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">    nosniff;</text>
+  <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  proxy_pass http://backend;</text>
+  <text x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">}</text>
+
+  <!-- Checklist -->
+  <rect x="470" y="142" width="350" height="240" rx="6" fill="#111111" stroke="#222222" stroke-width="1"/>
+  <text x="645" y="165" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">API 보안 체크리스트</text>
+
+  <text x="490" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="190" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">모든 엔드포인트 TLS 강제</text>
+
+  <text x="490" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인증 없는 엔드포인트 명시적 허용만</text>
+
+  <text x="490" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">모든 입력값 서버 측 검증</text>
+
+  <text x="490" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">응답에서 민감 필드 제거</text>
+
+  <text x="490" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">Rate Limiting + Throttling</text>
+
+  <text x="490" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">CORS 화이트리스트 방식 설정</text>
+
+  <text x="490" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">에러 응답에 내부 정보 포함 금지</text>
+
+  <text x="490" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">API 인벤토리 최신 유지</text>
+
+  <text x="490" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714;</text>
+  <text x="508" y="366" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">구버전 API 빠른 Deprecation</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">다음 글에서 REST API, GraphQL, OWASP API Top 10 각 항목을 상세히 다룹니다</text>
+</svg>

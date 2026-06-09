@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Rate Limiting 알고리즘 비교</text>
+
+  <!-- Fixed Window -->
+  <rect x="60" y="64" width="370" height="160" rx="8" fill="#0d1a2e" stroke="#1a3a5e" stroke-width="1"/>
+  <text x="245" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">Fixed Window</text>
+  <text x="245" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">고정 시간 창(1분)에 요청 수 카운트</text>
+
+  <!-- Time bar for fixed window -->
+  <rect x="80" y="120" width="150" height="24" rx="2" fill="#1a3a5e" stroke="#3a6a9e" stroke-width="1"/>
+  <text x="155" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">창 1 (0:00~1:00)</text>
+  <rect x="240" y="120" width="170" height="24" rx="2" fill="#1a3a5e" stroke="#3a6a9e" stroke-width="1"/>
+  <text x="325" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">창 2 (1:00~2:00)</text>
+
+  <!-- Attack burst indicator -->
+  <rect x="155" y="148" width="80" height="16" rx="2" fill="#7a2a2a"/>
+  <text x="195" y="161" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555">100req 폭탄</text>
+  <rect x="240" y="148" width="80" height="16" rx="2" fill="#7a2a2a"/>
+  <text x="280" y="161" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#e05555">100req 폭탄</text>
+
+  <text x="245" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">창 경계에서 200req/s 버스트 허용</text>
+  <text x="245" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">간단하지만 경계 공격에 취약</text>
+
+  <!-- Sliding Window -->
+  <rect x="450" y="64" width="370" height="160" rx="8" fill="#0d2e1a" stroke="#1a5e3a" stroke-width="1"/>
+  <text x="635" y="88" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">Sliding Window Log</text>
+  <text x="635" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">각 요청마다 최근 N분 이내 요청 수 계산</text>
+
+  <rect x="470" y="120" width="320" height="24" rx="2" fill="#1a5e3a" stroke="#2a8e5a" stroke-width="1"/>
+  <text x="630" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">연속 슬라이딩 창 (이동 시간 기준)</text>
+
+  <rect x="520" y="148" width="80" height="16" rx="2" fill="#2a5a2a"/>
+  <text x="560" y="161" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">일정 분산</text>
+  <rect x="610" y="148" width="80" height="16" rx="2" fill="#2a5a2a"/>
+  <text x="650" y="161" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">일정 분산</text>
+  <rect x="700" y="148" width="60" height="16" rx="2" fill="#2a5a2a"/>
+  <text x="730" y="161" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="10" fill="#55c555">분산</text>
+
+  <text x="635" y="192" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">경계 공격 불가 — 항상 직전 N분 기준</text>
+  <text x="635" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">Redis ZSET으로 구현, 메모리 사용 높음</text>
+
+  <!-- Token Bucket -->
+  <rect x="60" y="242" width="370" height="130" rx="8" fill="#1a1a0d" stroke="#4a4a1a" stroke-width="1"/>
+  <text x="245" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#ce9178">Token Bucket</text>
+  <text x="245" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">버킷에 토큰 축적, 요청마다 1토큰 소비</text>
+  <text x="245" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">버킷이 비면 429 반환, 시간이 지나면 보충</text>
+  <text x="245" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#ce9178">버스트 트래픽 허용 + 장기 평균 제한</text>
+  <text x="245" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">AWS API Gateway, Nginx 기본 알고리즘</text>
+  <text x="245" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">구현 간단, 버스트 필요한 API에 적합</text>
+
+  <!-- Leaky Bucket -->
+  <rect x="450" y="242" width="370" height="130" rx="8" fill="#1a0d1a" stroke="#4a1a4a" stroke-width="1"/>
+  <text x="635" y="266" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">Leaky Bucket</text>
+  <text x="635" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">큐에서 일정 속도로 처리, 큐가 차면 드롭</text>
+  <text x="635" y="306" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">출력 속도 일정 — 트래픽 평활화</text>
+  <text x="635" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7777cc">다운스트림 보호에 유리</text>
+  <text x="635" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">큐 오버플로 시 요청 유실 가능</text>
+  <text x="635" y="362" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">백엔드 서비스 보호에 적합</text>
+
+  <!-- Recommendation -->
+  <rect x="60" y="390" width="760" height="74" rx="8" fill="#111111" stroke="#222222" stroke-width="1"/>
+  <text x="440" y="414" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">실무 권장 조합</text>
+  <text x="440" y="436" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">공개 API: Token Bucket(버스트 허용) + Sliding Window(정밀 제한) 이중 적용</text>
+  <text x="440" y="454" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">인증 API: Sliding Window Log + IP + User 두 차원으로 별도 카운터</text>
+</svg>

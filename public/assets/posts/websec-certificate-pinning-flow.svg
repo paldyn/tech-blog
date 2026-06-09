@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">Certificate Pinning 동작 흐름</text>
+
+  <!-- Section labels -->
+  <text x="60" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">일반 TLS (Pinning 없음)</text>
+  <text x="60" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">Certificate Pinning 적용</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="296" x2="820" y2="296" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- === Normal TLS (top) === -->
+  <!-- Client box -->
+  <rect x="60" y="98" width="140" height="52" rx="8" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="130" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">클라이언트</text>
+  <text x="130" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">앱 / 브라우저</text>
+
+  <!-- Arrow 1: client -> CA check -->
+  <line x1="200" y1="124" x2="290" y2="124" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="245" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">인증서 수신</text>
+
+  <!-- CA Verify box -->
+  <rect x="290" y="98" width="160" height="52" rx="8" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="370" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">CA 체인 검증</text>
+  <text x="370" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">신뢰 앵커 확인</text>
+
+  <!-- Arrow 2: CA check -> result -->
+  <line x1="450" y1="124" x2="540" y2="124" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="495" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">통과</text>
+
+  <!-- Connect box -->
+  <rect x="540" y="98" width="160" height="52" rx="8" fill="#0d1f0d" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="620" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">연결 수립</text>
+  <text x="620" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">TLS 세션 확립</text>
+
+  <!-- Warning: MITM possible -->
+  <rect x="720" y="98" width="140" height="52" rx="8" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="790" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">MITM 가능</text>
+  <text x="790" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">악성 CA 인증서</text>
+  <line x1="700" y1="124" x2="720" y2="124" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Explanation text (normal TLS) -->
+  <text x="60" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc">&#x26A0; OS/브라우저가 신뢰하는 어떤 CA도 인증서를 발급할 수 있어 악의적인 CA 경유 공격에 취약</text>
+
+  <!-- === Pinning TLS (bottom) === -->
+  <!-- Client box with pin -->
+  <rect x="60" y="318" width="140" height="66" rx="8" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="130" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">클라이언트</text>
+  <text x="130" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">앱 / 브라우저</text>
+  <text x="130" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">+ 핀 해시 내장</text>
+
+  <!-- Arrow: receive cert -->
+  <line x1="200" y1="351" x2="290" y2="351" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="245" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">인증서 수신</text>
+
+  <!-- CA chain verify -->
+  <rect x="290" y="318" width="160" height="66" rx="8" fill="#141a2e" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="370" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">CA 체인 검증</text>
+  <text x="370" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">신뢰 앵커 확인</text>
+  <text x="370" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">1단계 통과</text>
+
+  <!-- Arrow: to pin check -->
+  <line x1="450" y1="351" x2="540" y2="351" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="495" y="342" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">2단계</text>
+
+  <!-- Pin check box -->
+  <rect x="540" y="318" width="160" height="66" rx="8" fill="#1a1a0d" stroke="#4a4a1a" stroke-width="1"/>
+  <text x="620" y="338" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e8e8e8">핀 해시 비교</text>
+  <text x="620" y="356" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">SPKI 해시 == 내장값?</text>
+  <text x="620" y="374" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">SHA-256 비교</text>
+
+  <!-- Match -> OK -->
+  <line x1="700" y1="338" x2="760" y2="338" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="730" y="330" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">일치</text>
+  <rect x="760" y="318" width="100" height="38" rx="6" fill="#0d1f0d" stroke="#2a5a2a" stroke-width="1"/>
+  <text x="810" y="343" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#55c555">연결 허용</text>
+
+  <!-- Mismatch -> Block -->
+  <line x1="700" y1="368" x2="760" y2="390" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="720" y="395" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#e05555">불일치</text>
+  <rect x="760" y="376" width="100" height="38" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="810" y="401" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">연결 차단</text>
+
+  <!-- Explanation text (pinning) -->
+  <text x="60" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">&#x2714; CA 검증 + 핀 해시 이중 검증 — 악의적인 CA가 발급한 인증서도 핀과 다르면 즉시 차단</text>
+
+  <!-- Legend -->
+  <rect x="60" y="450" width="760" height="52" rx="6" fill="#111111" stroke="#222222" stroke-width="1"/>
+  <text x="80" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3" font-weight="600">핀 (Pin)</text>
+  <text x="130" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">= 인증서 또는 공개키(SPKI)의 SHA-256 해시값. 앱 빌드 시 하드코딩하거나 HPKP 헤더로 전달.</text>
+  <text x="80" y="492" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7777cc" font-weight="600">SPKI Pinning</text>
+  <text x="152" y="492" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">= 인증서 갱신 후에도 키를 유지하면 핀을 바꾸지 않아도 됨 — 인증서 Pinning보다 유연.</text>
+</svg>

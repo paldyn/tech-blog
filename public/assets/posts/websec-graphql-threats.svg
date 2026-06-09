@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">GraphQL 고유 보안 위협</text>
+
+  <!-- Threat 1: Introspection -->
+  <rect x="60" y="66" width="370" height="80" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="245" y="89" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">1. 인트로스펙션 남용</text>
+  <text x="245" y="109" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">__schema 쿼리로 전체 API 구조 노출</text>
+  <text x="245" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">공격자가 숨겨진 필드·뮤테이션 발견 가능</text>
+  <text x="245" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">프로덕션에서 비활성화 권장</text>
+
+  <!-- Threat 2: Depth Attack -->
+  <rect x="450" y="66" width="370" height="80" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="635" y="89" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">2. 중첩 깊이 공격</text>
+  <text x="635" y="109" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">user{ friends{ friends{ friends{...}}}}</text>
+  <text x="635" y="127" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">지수적 DB 쿼리 → 서버 과부하</text>
+  <text x="635" y="141" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">깊이 제한 + 복잡도 제한 필수</text>
+
+  <!-- Threat 3: Batching -->
+  <rect x="60" y="162" width="370" height="80" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="245" y="185" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">3. 배치/별칭 공격</text>
+  <text x="245" y="205" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">a:login(user:"A") b:login(user:"B")...</text>
+  <text x="245" y="223" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">단일 요청으로 Rate Limit 우회</text>
+  <text x="245" y="237" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">브루트포스 자격증명 공격에 악용</text>
+
+  <!-- Threat 4: Field Suggestion -->
+  <rect x="450" y="162" width="370" height="80" rx="6" fill="#2a1010" stroke="#7a2a2a" stroke-width="1"/>
+  <text x="635" y="185" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" font-weight="600" fill="#e05555">4. 필드 제안 정보 노출</text>
+  <text x="635" y="205" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">오타 시 "Did you mean passwordHash?"</text>
+  <text x="635" y="223" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">숨긴 필드명 노출 → 인트로스펙션 대안</text>
+  <text x="635" y="237" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">필드 제안 기능 비활성화</text>
+
+  <!-- Defense code block -->
+  <rect x="60" y="258" width="760" height="198" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="278" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># graphene-django: 깊이 + 복잡도 제한</text>
+  <text x="76" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">from graphql_depth_limit import depth_limit_validator</text>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 최대 깊이 5, 최대 복잡도 100</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">GRAPHENE = {</text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "MIDDLEWARE": ["graphene_django.debug.DjangoDebugMiddleware"],</text>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "VALIDATION_RULES": [depth_limit_validator(5)],</text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "INTROSPECTION": not settings.PRODUCTION,</text>
+  <text x="76" y="408" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">  "RELAY_CONNECTION_MAX_LIMIT": 100,</text>
+  <text x="76" y="426" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+  <text x="76" y="446" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 배치 공격: 별칭(alias) 수 제한 + 뮤테이션별 Rate Limit</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="472" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">REST API와 달리 GraphQL은 단일 엔드포인트 — 전통적 WAF 규칙이 통하지 않아 GraphQL 전용 보안 미들웨어 필요</text>
+</svg>
