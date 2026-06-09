@@ -1,156 +1,137 @@
 ---
-title: "파일 기반 라우팅 완전 정복"
-description: "Next.js App Router에서 폴더와 파일 이름이 URL로 변환되는 규칙, 동적 세그먼트, 라우트 그룹을 완벽하게 정리합니다."
+title: "파일 기반 라우팅 — 폴더가 URL이 되는 마법"
+description: "Next.js App Router의 파일 기반 라우팅을 완전 해설합니다. 정적 라우트, 동적 라우트([param]), 중첩 라우트, Link 컴포넌트 기초를 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
+pubDate: "2026-06-10"
 archiveOrder: 6
 type: "knowledge"
 category: "Next.js"
-tags: ["Next.js", "라우팅", "동적 라우트", "App Router"]
+tags: ["Next.js", "파일기반라우팅", "동적라우트", "중첩라우트", "AppRouter", "라우팅"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/next-special-files/)에서 `app/` 안의 특수 파일 역할을 파악했습니다. 이번에는 그 폴더와 파일이 실제 URL 경로로 어떻게 변환되는지, App Router의 **파일 기반 라우팅** 규칙을 완전히 정리합니다.
+[지난 글](/posts/next-special-files/)에서 page.tsx, layout.tsx 등 특수 파일의 역할을 알아봤다. 이번에는 Next.js의 가장 큰 특징 중 하나인 **파일 기반 라우팅**의 동작 원리를 완전히 파고든다.
 
-## 기본 원리
+## 파일 기반 라우팅이란
 
-Next.js에서 `app/` 폴더의 **디렉토리 이름**이 URL 경로 세그먼트가 됩니다. 해당 경로가 실제로 접근 가능하려면 그 폴더 안에 `page.tsx`(또는 `page.js`, `page.jsx`)가 있어야 합니다.
+전통적인 React SPA에서는 React Router 같은 라이브러리를 사용해 라우트를 직접 정의했다.
 
-![파일 구조 → URL 매핑](/assets/posts/next-file-based-routing-map.svg)
-
-```
-app/page.tsx          →  /
-app/about/page.tsx    →  /about
-app/blog/page.tsx     →  /blog
-app/blog/[slug]/page.tsx  →  /blog/:slug
-```
-
-## 세그먼트 유형
-
-![라우트 세그먼트 유형](/assets/posts/next-file-based-routing-segments.svg)
-
-### 정적 세그먼트
-
-폴더 이름 그대로 URL에 반영됩니다.
-
-```
-app/products/page.tsx  →  /products
-app/docs/intro/page.tsx  →  /docs/intro
+```tsx
+// React Router 방식 — 직접 정의
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/blog" element={<Blog />} />
+  <Route path="/blog/:slug" element={<BlogPost />} />
+</Routes>
 ```
 
-### 동적 세그먼트 `[folder]`
+Next.js App Router는 이 설정 코드가 없다. `app/` 폴더 아래의 **폴더 구조**가 곧 URL 구조가 된다. 폴더 안에 `page.tsx`를 두면 그 경로가 공개 라우트가 된다.
 
-대괄호로 감싼 폴더 이름은 **동적 파라미터**가 됩니다. `params` prop으로 값을 받을 수 있습니다.
+![파일 기반 라우팅 기본](/assets/posts/next-file-based-routing-basics.svg)
+
+## 정적 라우트
+
+가장 단순한 형태다. 폴더명이 그대로 URL 경로가 된다.
+
+```
+app/page.tsx            → /
+app/about/page.tsx      → /about
+app/contact/page.tsx    → /contact
+app/blog/page.tsx       → /blog
+app/blog/tips/page.tsx  → /blog/tips
+```
+
+각 폴더 안에는 `page.tsx` 외에 해당 세그먼트에만 적용되는 `layout.tsx`, `loading.tsx` 등을 함께 둘 수 있다.
+
+## 동적 라우트 — [param]
+
+블로그 포스트, 상품 상세 페이지처럼 URL에 변하는 값이 있을 때 사용한다. 폴더명을 대괄호로 감싸면 동적 세그먼트가 된다.
+
+```
+app/blog/[slug]/page.tsx    → /blog/hello-world, /blog/my-post
+app/users/[id]/page.tsx     → /users/123, /users/456
+app/shop/[category]/[id]/   → /shop/electronics/42
+```
+
+`page.tsx`에서 `params` props를 통해 동적 세그먼트 값을 읽는다.
 
 ```tsx
 // app/blog/[slug]/page.tsx
 export default async function BlogPost({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string }
 }) {
-  const { slug } = await params;
-  return <h1>{slug}</h1>;
+  const post = await getPostBySlug(params.slug)
+  return <article>{post.title}</article>
 }
 ```
-
-> Next.js 15부터 `params`가 **Promise**로 변경됐습니다. `await params`로 받아야 합니다.
-
-### 캐치올 세그먼트 `[...folder]`
-
-점 3개를 붙이면 여러 세그먼트를 **배열**로 받습니다.
-
-```tsx
-// app/docs/[...slug]/page.tsx
-// /docs/a/b/c → params.slug = ['a', 'b', 'c']
-export default async function DocsPage({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}) {
-  const { slug } = await params;
-  return <p>{slug.join('/')}</p>;
-}
-```
-
-캐치올은 최소 1개 이상의 세그먼트를 요구합니다. `/docs` 자체는 매칭되지 않습니다.
-
-### 선택적 캐치올 `[[...folder]]`
-
-이중 대괄호를 사용하면 **0개도 허용**합니다.
-
-```tsx
-// app/[[...slug]]/page.tsx
-// / 와 /a/b/c 모두 매칭
-```
-
-### 라우트 그룹 `(folder)`
-
-괄호로 감싼 폴더는 **URL에 포함되지 않습니다.** 주로 레이아웃을 분리하거나 관련 라우트를 논리적으로 묶을 때 사용합니다.
-
-```
-app/
-├── (marketing)/
-│   ├── layout.tsx   ← 마케팅 전용 레이아웃
-│   ├── page.tsx     → /
-│   └── pricing/
-│       └── page.tsx → /pricing
-└── (app)/
-    ├── layout.tsx   ← 앱 전용 레이아웃 (인증 필요)
-    └── dashboard/
-        └── page.tsx → /dashboard
-```
-
-`(marketing)`과 `(app)` 모두 URL에 나타나지 않으면서, 각각 다른 레이아웃을 가질 수 있습니다.
-
-### 비공개 폴더 `_folder`
-
-언더스코어로 시작하는 폴더는 라우팅 시스템에서 완전히 제외됩니다. `_components/`, `_utils/` 같이 라우트가 아닌 헬퍼 파일을 `app/` 내부에 두고 싶을 때 사용합니다.
 
 ## 중첩 라우트와 레이아웃
 
-폴더가 중첩될수록 URL도 중첩되고, 각 레벨의 `layout.tsx`가 자동으로 중첩됩니다.
+폴더를 중첩하면 레이아웃도 자동으로 중첩된다. `app/blog/layout.tsx`는 `/blog` 하위의 모든 경로에 적용된다.
 
-```
-app/
-├── layout.tsx          ← 전체 공통 레이아웃
-└── blog/
-    ├── layout.tsx      ← /blog/* 레이아웃 (루트 레이아웃 내부에 중첩)
-    ├── page.tsx        → /blog
-    └── [slug]/
-        └── page.tsx   → /blog/:slug
-```
-
-`/blog/hello-world`에 접근하면 렌더 순서는:
-1. `app/layout.tsx` (가장 바깥)
-2. `app/blog/layout.tsx`
-3. `app/blog/[slug]/page.tsx` (가장 안쪽)
-
-## params 타입 자동 추론 팁
-
-TypeScript를 사용한다면 `params` 타입을 제너릭으로 정확히 명시하는 습관을 들이세요.
+![중첩 라우팅 구조](/assets/posts/next-file-based-routing-nested.svg)
 
 ```tsx
-type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-export default async function Page({ params, searchParams }: Props) {
-  const { slug } = await params;
-  const { q } = await searchParams;
-  // ...
+// app/blog/layout.tsx — /blog, /blog/*, /blog/*/*에 모두 적용
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="blog-wrapper">
+      <aside><BlogNav /></aside>
+      <main>{children}</main>
+    </div>
+  )
 }
 ```
 
-`searchParams`는 URL 쿼리 스트링(`?q=nextjs`)을 받는 prop입니다. 이것도 Next.js 15에서 Promise로 바뀌었습니다.
+## 라우트 그룹 — (folder)
+
+URL에는 포함되지 않지만 **레이아웃을 공유**하거나 파일을 논리적으로 그룹화하고 싶을 때 사용한다. 폴더명을 소괄호로 감싸면 된다.
+
+```
+app/
+├── (auth)/           # URL에 포함 안 됨
+│   ├── layout.tsx    # 인증 화면용 레이아웃
+│   ├── login/page.tsx   → /login
+│   └── signup/page.tsx  → /signup
+└── (main)/           # URL에 포함 안 됨
+    ├── layout.tsx    # 메인 레이아웃 (Header + Footer)
+    ├── page.tsx         → /
+    └── about/page.tsx   → /about
+```
+
+로그인/회원가입 페이지에는 `Header`가 없어야 한다면, `(auth)` 그룹에 별도 레이아웃을 두어 깔끔하게 분리할 수 있다.
+
+## 캐치올 라우트 — [...slug]
+
+여러 세그먼트를 한 번에 받아야 할 때 사용한다. `params.slug`는 배열이 된다.
+
+```
+app/docs/[...path]/page.tsx → /docs/intro, /docs/a/b, /docs/a/b/c
+
+// params.path = ['intro'] | ['a', 'b'] | ['a', 'b', 'c']
+```
+
+`[[...slug]]`처럼 이중 대괄호를 사용하면 세그먼트가 없는 경우(`/docs`)도 매칭된다.
+
+## 라우트 충돌 방지
+
+같은 URL 경로에 두 파일이 충돌하면 빌드 오류가 난다. 동적 라우트와 정적 라우트가 겹치는 경우 정적 라우트가 우선한다.
+
+```
+app/blog/page.tsx         → /blog (정적, 우선)
+app/blog/[slug]/page.tsx  → /blog/any-post (동적)
+```
+
+`/blog` 경로는 동적 `[slug]`가 아닌 정적 `blog/page.tsx`가 처리한다.
 
 ---
 
-**지난 글:** [app/ 디렉토리의 특수 파일들 — layout, page, loading, error](/posts/next-special-files/)
+**지난 글:** [App Router 특수 파일 완전 가이드](/posts/next-special-files/)
 
-**다음 글:** [next/link로 페이지 이동하기](/posts/next-link-navigation/)
+**다음 글:** [Link 컴포넌트로 페이지 이동하기](/posts/next-link-navigation/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,91 +1,84 @@
 ---
-title: "Next.js란 무엇인가 — React 위의 풀스택 프레임워크"
-description: "Next.js가 해결하는 문제, 핵심 기능, 그리고 React와의 관계를 명확하게 정리합니다."
+title: "Next.js란 무엇인가 — React를 넘어선 풀스택 프레임워크"
+description: "Next.js가 React와 어떻게 다른지, App Router, SSR/SSG/ISR/CSR 렌더링 방식, 핵심 기능을 완전 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-01"
+pubDate: "2026-06-10"
 archiveOrder: 1
 type: "knowledge"
 category: "Next.js"
-tags: ["Next.js", "React", "SSR", "SSG", "풀스택"]
+tags: ["Next.js", "React", "SSR", "SSG", "AppRouter", "풀스택", "프레임워크"]
 featured: false
 draft: false
 ---
 
-웹 개발을 하다 보면 React만으로는 채워지지 않는 빈자리가 생깁니다. SEO를 위한 서버 렌더링, 이미지 최적화, 파일 기반 라우팅, API 서버 통합… 이 모든 것을 직접 구성하려면 Webpack 설정부터 시작해 수십 가지 라이브러리를 조합해야 합니다. Next.js는 바로 그 빈자리를 채워주는 **React 기반 풀스택 프레임워크**입니다.
+웹 프론트엔드를 공부하다 보면 어느 순간 "Next.js를 써야 한다"는 말을 자주 듣게 된다. React를 이미 아는 상태에서 Next.js를 처음 접하면 "이게 뭐가 다른 거지?" 하는 의문이 자연스럽게 떠오른다. 이 시리즈에서는 Next.js 14/15의 App Router를 기준으로, 개념부터 실전 배포까지 단계별로 완전 정복한다.
 
-## Next.js가 해결하는 문제
+## Next.js란
 
-순수 React(CRA, Vite 등)는 **클라이언트 사이드 렌더링(CSR)** 방식으로 동작합니다. 브라우저가 빈 HTML을 받아 JavaScript를 실행한 뒤 화면을 그립니다. 이 구조는 빠른 개발 경험을 주지만 두 가지 약점이 있습니다.
+Next.js는 Vercel이 개발하고 오픈소스로 운영하는 **React 기반 풀스택 웹 프레임워크**다. React가 UI를 만드는 라이브러리라면, Next.js는 그 위에 올라타서 라우팅·렌더링·데이터 페칭·이미지 최적화·배포까지 처리해 주는 프레임워크다.
 
-1. **SEO 불리**: 검색 크롤러가 빈 HTML을 색인하면 콘텐츠가 누락될 수 있습니다.
-2. **초기 로딩 지연**: 모든 JS가 다운로드·파싱·실행돼야 첫 화면이 나타납니다(FCP 지연).
+![Next.js 아키텍처 레이어](/assets/posts/next-what-is-nextjs-overview.svg)
 
-Next.js는 서버에서 HTML을 미리 생성해 보내는 **서버 사이드 렌더링(SSR)** 과 빌드 타임에 정적 파일을 만드는 **정적 사이트 생성(SSG)** 을 React에 덧붙임으로써 이 두 문제를 해결합니다.
-
-![Next.js 아키텍처 개요](/assets/posts/next-what-is-nextjs-overview.svg)
+React만으로 SPA를 만들면 다음과 같은 문제가 생긴다. **SEO 취약**: 빈 HTML 껍데기에 JavaScript가 실행되어야 콘텐츠가 나타나므로 검색 엔진 크롤러가 내용을 제대로 읽지 못한다. **라우터 설정 직접 구성**: React Router나 TanStack Router를 별도로 설정해야 한다. **서버 사이드 기능 없음**: API 엔드포인트를 Express 같은 별도 서버로 분리해야 한다. Next.js는 이 모든 것을 약속된 파일 구조 하나로 해결한다.
 
 ## React와 Next.js의 관계
 
-Next.js는 React를 *대체*하지 않습니다. React가 **UI 레이어**라면 Next.js는 그 위에 올라서는 **애플리케이션 레이어**입니다. React의 컴포넌트 모델·훅·상태 관리는 그대로 사용하면서, Next.js가 라우팅·렌더링 전략·빌드 최적화를 담당합니다.
+Next.js는 React를 **대체**하지 않는다. React의 컴포넌트 모델, JSX, Hooks, 상태 관리 방식을 그대로 사용하면서 **프레임워크 레이어**를 추가한다. Next.js 13+의 App Router에서 컴포넌트는 기본적으로 **Server Component**다. 서버에서만 실행되므로 `async/await`로 DB를 직접 쿼리하거나 비공개 API를 호출할 수 있다.
 
+```tsx
+// app/page.tsx — 기본이 Server Component
+export default async function Page() {
+  const users = await fetchUsers() // 서버에서 직접 DB 조회 가능
+  return (
+    <ul>
+      {users.map(u => <li key={u.id}>{u.name}</li>)}
+    </ul>
+  )
+}
 ```
-React (컴포넌트·훅)
-  └─ Next.js (라우팅·렌더링·최적화)
-        └─ Node.js / Edge Runtime (실행 환경)
-```
 
-이 구조 덕분에 React 개발자라면 기존 지식을 그대로 활용하면서 프레임워크가 제공하는 최적화를 누릴 수 있습니다.
+`'use client'`를 파일 맨 위에 선언하면 브라우저에서 실행되는 클라이언트 컴포넌트가 된다. useState, useEffect 같은 브라우저 훅은 클라이언트 컴포넌트에서만 사용할 수 있다.
 
-## 핵심 기능 한눈에 보기
+## 핵심 기능 요약
 
-![Next.js 핵심 기능](/assets/posts/next-what-is-nextjs-features.svg)
+**파일 기반 라우팅**: `app/blog/[slug]/page.tsx` 파일을 만들면 `/blog/my-post` URL이 자동으로 생긴다. 라우터 설정 코드가 필요 없다.
 
-### 1. 파일 기반 라우팅
+**다양한 렌더링 방식**: 페이지마다 다른 렌더링 전략을 선택할 수 있다.
 
-`app/` 디렉토리의 폴더·파일 구조가 곧 URL입니다. `app/blog/[slug]/page.tsx` 파일 하나를 만들면 `/blog/:slug` 라우트가 자동 생성됩니다. 라우터 설정 파일을 별도로 관리할 필요가 없습니다.
+![Next.js 렌더링 방식 비교](/assets/posts/next-what-is-nextjs-rendering.svg)
 
-### 2. 하이브리드 렌더링
+- **SSR(Server-Side Rendering)**: 요청마다 서버에서 HTML을 생성해 반환한다. 로그인 후 개인화된 대시보드처럼 항상 최신 데이터가 필요한 페이지에 적합하다.
+- **SSG(Static Site Generation)**: 빌드 시 미리 HTML을 생성한다. 블로그, 마케팅 페이지처럼 자주 바뀌지 않는 콘텐츠에 최적이다.
+- **ISR(Incremental Static Regeneration)**: SSG의 속도와 SSR의 최신성을 결합한다. 설정한 시간마다 백그라운드에서 정적 페이지를 재생성한다.
+- **CSR(Client-Side Rendering)**: `'use client'` + `useEffect`로 브라우저에서 데이터를 가져온다. 인터랙티브한 대시보드 위젯에 사용한다.
 
-페이지마다 렌더링 전략을 다르게 설정할 수 있습니다. 메인 페이지는 SSG, 대시보드는 SSR, 댓글 영역은 CSR — 이 혼합이 한 프로젝트 안에서 가능합니다.
+**이미지 최적화**: `next/image`의 `<Image>` 컴포넌트는 WebP/AVIF 변환, 지연 로딩, 레이아웃 시프트 방지를 자동으로 처리한다.
 
-### 3. 내장 최적화
+**폰트 최적화**: `next/font`를 사용하면 Google Fonts나 로컬 폰트를 레이아웃 시프트 없이 로드한다.
 
-`next/image`는 자동 WebP 변환·지연 로딩·CLS(누적 레이아웃 이동) 방지를 처리하고, `next/font`는 구글 폰트를 FOUC(스타일 없는 텍스트 번쩍임) 없이 로드합니다.
+**API Route Handlers**: `app/api/users/route.ts` 파일 하나로 GET/POST/PUT/DELETE 엔드포인트를 만들 수 있다.
 
-### 4. Server Actions
+**Server Actions**: 폼 제출이나 데이터 변경을 서버 함수로 직접 처리한다. 별도 API 엔드포인트 없이 서버 로직을 실행할 수 있다.
 
-서버에서만 실행되는 비동기 함수를 컴포넌트에서 직접 호출할 수 있습니다. 폼 제출, DB 쓰기, 이메일 발송 등의 서버 로직을 별도 API 엔드포인트 없이 처리합니다.
-
-### 5. App Router vs Pages Router
-
-Next.js 13부터 도입된 **App Router**(`app/`)는 React Server Components를 기반으로 하는 새 아키텍처입니다. 기존 **Pages Router**(`pages/`)도 여전히 지원되지만, 신규 프로젝트는 App Router를 권장합니다. 이 시리즈는 App Router를 중심으로 진행합니다.
+**미들웨어**: 요청이 라우트에 도달하기 전에 인증, 리다이렉트, A/B 테스트 등을 처리한다.
 
 ## 언제 Next.js를 선택해야 할까
 
-| 상황 | 추천 |
-|------|------|
-| SEO가 중요한 마케팅·블로그 사이트 | ✅ Next.js (SSG/SSR) |
-| 대시보드·관리자 페이지 (SEO 불필요) | CRA/Vite도 충분, Next.js도 가능 |
-| 풀스택 앱 (DB·인증·API 포함) | ✅ Next.js (Server Actions, Route Handlers) |
-| React Native 모바일 앱 | ❌ Next.js는 웹 전용 |
+SEO가 중요한 콘텐츠 사이트(블로그, 마케팅, 커머스), 서버 사이드 렌더링이 필요한 동적 데이터, 풀스택 앱을 단일 코드베이스로 관리하고 싶을 때, Vercel에 쉽게 배포하고 싶을 때 Next.js를 적극 고려하자. 반대로 내부 관리자 도구처럼 SEO가 전혀 필요 없고 SPA로 충분하다면 Vite + React만으로도 충분할 수 있다.
 
-## 버전 이야기
+## Next.js 버전 흐름
 
-이 시리즈는 **Next.js 15** 기준으로 작성됩니다. Next.js 15는 React 19를 기본 지원하며 `fetch` 캐싱 동작이 14에서 바뀌었습니다(기본값이 `no-store`). 주요 변경 사항은 각 글에서 언급하겠습니다.
+- **Next.js 1~8**: SSR과 파일 기반 라우팅(`pages/`) 도입
+- **Next.js 9~12**: API Routes, Image 컴포넌트, Middleware 추가
+- **Next.js 13**: App Router(`app/`) 실험적 도입, React Server Components 지원
+- **Next.js 14**: App Router 안정화, Server Actions 정식 지원
+- **Next.js 15**: Turbopack 기본 번들러, React 19 지원, 캐싱 정책 개선
 
-```bash
-# 버전 확인
-npx next --version
-
-# 최신 버전으로 업그레이드
-npm install next@latest react@latest react-dom@latest
-```
-
-Next.js가 어떤 문제를 풀기 위해 태어났는지, 그리고 어떤 무기를 갖고 있는지 파악했습니다. 다음 글에서는 프로젝트를 직접 설치하고 실행해 봅니다.
+이 시리즈는 Next.js 14/15 기준의 App Router를 중심으로 다룬다.
 
 ---
 
-**다음 글:** [Next.js 프로젝트 시작하기 — 설치부터 첫 실행까지](/posts/next-project-setup/)
+**다음 글:** [Next.js 프로젝트 시작하기 — create-next-app 완전 가이드](/posts/next-project-setup/)
 
 <br>
 읽어주셔서 감사합니다. 😊
