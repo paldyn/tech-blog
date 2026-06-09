@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arro" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e0a055"/>
+    </marker>
+  </defs>
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Operator Reconcile Loop</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">Custom Resource → 관찰 → 비교 → 조치 → 반복</text>
+
+  <!-- Custom Resource box (left) -->
+  <rect x="60" y="110" width="200" height="80" rx="8" fill="#0a1020" stroke="#7777cc" stroke-width="2"/>
+  <text x="160" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7777cc" text-anchor="middle">Custom Resource</text>
+  <text x="160" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">kind: MyDatabase</text>
+  <text x="160" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">spec.replicas: 3</text>
+
+  <!-- Arrow: CR → Controller Watches -->
+  <line x1="262" y1="150" x2="318" y2="150" stroke="#7777cc" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="290" y="140" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc" text-anchor="middle">watches</text>
+
+  <!-- Controller Watches box -->
+  <rect x="320" y="110" width="200" height="80" rx="8" fill="#0f0f0f" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="420" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">Controller</text>
+  <text x="420" y="156" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">이벤트 수신</text>
+  <text x="420" y="174" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Reconcile 큐에 추가</text>
+
+  <!-- Arrow: Controller → Reconcile -->
+  <line x1="520" y1="150" x2="578" y2="150" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Reconcile function box -->
+  <rect x="580" y="100" width="240" height="100" rx="8" fill="#111827" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="700" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3" text-anchor="middle">Reconcile()</text>
+  <text x="700" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Desired State 읽기</text>
+  <text x="700" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Current State 조회</text>
+  <text x="700" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">diff 계산</text>
+
+  <!-- Arrow: Reconcile → Compare -->
+  <line x1="700" y1="202" x2="700" y2="246" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Compare / Decision diamond -->
+  <polygon points="700,250 790,290 700,330 610,290" fill="#0f0f1a" stroke="#e0a055" stroke-width="2"/>
+  <text x="700" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">상태 일치?</text>
+  <text x="700" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Desired == Current</text>
+
+  <!-- Yes → No action -->
+  <text x="564" y="288" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">일치</text>
+  <line x1="608" y1="290" x2="542" y2="290" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <rect x="380" y="262" width="160" height="56" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="460" y="287" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">No-op</text>
+  <text x="460" y="305" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">아무것도 하지 않음</text>
+
+  <!-- No → Act -->
+  <text x="716" y="344" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555" text-anchor="start">불일치</text>
+  <line x1="700" y1="332" x2="700" y2="378" stroke="#e05555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Act box -->
+  <rect x="580" y="380" width="240" height="100" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="2"/>
+  <text x="700" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e05555" text-anchor="middle">Act (조치)</text>
+  <text x="700" y="426" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Create / Update / Delete</text>
+  <text x="700" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">API 호출하여 상태 수렴</text>
+  <text x="700" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">Status 업데이트</text>
+
+  <!-- Loop arrow back to Controller -->
+  <path d="M 700 482 L 700 510 L 420 510 L 420 192" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="5,4" fill="none" marker-end="url(#arr)"/>
+  <text x="556" y="526" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3" text-anchor="middle">다음 이벤트 대기 / 재큐</text>
+
+  <!-- No-op loop back -->
+  <path d="M 460 262 L 460 200 L 320 200 L 320 150" stroke="#55c555" stroke-width="1.5" stroke-dasharray="5,4" fill="none"/>
+  <line x1="320" y1="150" x2="320" y2="150" stroke="#55c555" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <!-- Level-triggered note -->
+  <rect x="60" y="250" width="290" height="72" rx="8" fill="#111111" stroke="#333333" stroke-width="1"/>
+  <text x="80" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Level-Triggered 방식</text>
+  <text x="80" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">현재 상태를 항상 전체 조회하여 비교</text>
+  <text x="80" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이벤트 유실에도 안전 (멱등성 보장)</text>
+</svg>

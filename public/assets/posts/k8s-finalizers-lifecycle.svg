@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="560" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Object Deletion Lifecycle — Finalizer 흐름</text>
+
+  <!-- Step 1: DELETE request -->
+  <rect x="60" y="88" width="200" height="60" rx="8" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="160" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">① DELETE 요청</text>
+  <text x="160" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">kubectl delete / API call</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="262" y1="118" x2="318" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: deletionTimestamp set -->
+  <rect x="320" y="88" width="240" height="60" rx="8" fill="#1a1a0a" stroke="#e0a055" stroke-width="2"/>
+  <text x="440" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e0a055" text-anchor="middle">② deletionTimestamp 설정</text>
+  <text x="440" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">오브젝트는 "Terminating" 상태</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="562" y1="118" x2="618" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Finalizer check -->
+  <rect x="620" y="88" width="200" height="60" rx="8" fill="#1a0a1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="720" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">③ Finalizer 목록 확인</text>
+  <text x="720" y="132" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">metadata.finalizers[ ]</text>
+
+  <!-- Arrow 3 down to decision -->
+  <line x1="720" y1="150" x2="720" y2="196" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Decision diamond -->
+  <polygon points="720,200 800,240 720,280 640,240" fill="#0f0f1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="720" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">Finalizer</text>
+  <text x="720" y="254" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">있음?</text>
+
+  <!-- No branch label -->
+  <text x="610" y="238" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555" text-anchor="middle">없음</text>
+  <!-- Yes branch label -->
+  <text x="726" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e0a055" text-anchor="middle">있음</text>
+
+  <!-- No arrow (left) to immediate delete -->
+  <line x1="638" y1="240" x2="522" y2="240" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- Immediate Delete box -->
+  <rect x="320" y="212" width="200" height="56" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="420" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">즉시 삭제</text>
+  <text x="420" y="256" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">etcd에서 오브젝트 제거</text>
+
+  <!-- Yes arrow (down) to Controller runs -->
+  <line x1="720" y1="282" x2="720" y2="328" stroke="#e0a055" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Controller/Finalizer runs cleanup -->
+  <rect x="580" y="330" width="280" height="70" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="720" y="355" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">④ 컨트롤러가 정리 작업 실행</text>
+  <text x="720" y="373" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">외부 리소스 삭제, 종속 오브젝트 처리</text>
+  <text x="720" y="391" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">cleanup logic 수행</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="720" y1="402" x2="720" y2="438" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5: Finalizer removed -->
+  <rect x="580" y="440" width="280" height="60" rx="8" fill="#0a1a1a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="720" y="464" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">⑤ Finalizer 항목 제거</text>
+  <text x="720" y="484" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">컨트롤러가 PATCH로 finalizers 목록에서 삭제</text>
+
+  <!-- Arrow back to decision check (loop) -->
+  <path d="M 878 470 L 878 240" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
+  <line x1="876" y1="240" x2="802" y2="240" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arr)"/>
+  <text x="858" y="365" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">재확인</text>
+
+  <!-- Final Delete -->
+  <line x1="580" y1="470" x2="524" y2="470" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+  <rect x="320" y="443" width="200" height="56" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="420" y="468" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">⑥ 오브젝트 최종 삭제</text>
+  <text x="420" y="487" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">finalizers 목록이 비면 제거</text>
+
+  <!-- connect immediate-delete and final-delete with label -->
+  <line x1="420" y1="268" x2="420" y2="441" stroke="#55c555" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Legend -->
+  <rect x="60" y="350" width="240" height="148" rx="8" fill="#111111" stroke="#333333" stroke-width="1"/>
+  <text x="80" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">핵심 개념</text>
+  <rect x="80" y="386" width="12" height="12" rx="2" fill="#e0a055"/>
+  <text x="100" y="397" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">deletionTimestamp: 삭제 의도 표시</text>
+  <rect x="80" y="408" width="12" height="12" rx="2" fill="#e05555"/>
+  <text x="100" y="419" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Finalizer: 정리 보장 메커니즘</text>
+  <rect x="80" y="430" width="12" height="12" rx="2" fill="#7777cc"/>
+  <text x="100" y="441" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">컨트롤러: 비동기 정리 수행자</text>
+  <rect x="80" y="452" width="12" height="12" rx="2" fill="#55c555"/>
+  <text x="100" y="463" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">최종 삭제: etcd에서 완전 제거</text>
+  <text x="80" y="488" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666">* 모든 Finalizer가 제거되어야 삭제</text>
+</svg>

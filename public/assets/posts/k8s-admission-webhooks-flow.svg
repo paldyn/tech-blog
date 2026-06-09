@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 580" height="580">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="580" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Admission Control 흐름</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">kubectl → API Server → 검증 체인 → etcd</text>
+
+  <!-- kubectl -->
+  <rect x="60" y="90" width="130" height="60" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="125" y="116" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">kubectl</text>
+  <text x="125" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">apply / create</text>
+
+  <!-- Arrow: kubectl -> API Server -->
+  <line x1="190" y1="120" x2="226" y2="120" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- kube-apiserver box (big) -->
+  <rect x="228" y="80" width="590" height="440" rx="10" fill="#0a0f1a" stroke="#7777cc" stroke-width="2"/>
+  <text x="248" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7777cc">kube-apiserver</text>
+
+  <!-- Step 1: Authentication -->
+  <rect x="248" y="116" width="550" height="56" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="523" y="141" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">① Authentication (인증)</text>
+  <text x="523" y="161" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">X.509 인증서 / ServiceAccount 토큰 / OIDC 검증</text>
+
+  <!-- Arrow down -->
+  <line x1="523" y1="172" x2="523" y2="190" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: Authorization -->
+  <rect x="248" y="192" width="550" height="56" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="523" y="217" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">② Authorization (인가)</text>
+  <text x="523" y="237" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">RBAC — Role/ClusterRole 권한 확인</text>
+
+  <!-- Arrow down -->
+  <line x1="523" y1="248" x2="523" y2="266" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Mutating Admission -->
+  <rect x="248" y="268" width="550" height="72" rx="8" fill="#1a100a" stroke="#e05555" stroke-width="2"/>
+  <text x="523" y="293" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">③ Mutating Admission Webhook</text>
+  <text x="523" y="313" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">오브젝트 변경 가능 — 기본값 주입, 사이드카 삽입</text>
+  <text x="523" y="329" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">JSON Patch 응답으로 spec 수정</text>
+
+  <!-- Arrow down -->
+  <line x1="523" y1="340" x2="523" y2="358" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Object Schema Validation -->
+  <rect x="248" y="360" width="550" height="56" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="523" y="385" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">④ Object Schema Validation</text>
+  <text x="523" y="405" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">CRD openAPIV3Schema / 내장 필드 타입 검사</text>
+
+  <!-- Arrow down -->
+  <line x1="523" y1="416" x2="523" y2="434" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5: Validating Admission -->
+  <rect x="248" y="436" width="550" height="72" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="523" y="461" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">⑤ Validating Admission Webhook</text>
+  <text x="523" y="481" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">읽기 전용 — 허용(allow) 또는 거부(deny)만 결정</text>
+  <text x="523" y="497" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">모든 Webhook 응답이 allowed=true여야 통과</text>
+
+  <!-- Arrow after API Server (etcd) -->
+  <line x1="440" y1="520" x2="440" y2="546" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- etcd -->
+  <rect x="300" y="548" width="280" height="22" rx="6" fill="#0a0a0a" stroke="#555" stroke-width="1"/>
+  <text x="440" y="563" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">etcd — 오브젝트 영속 저장</text>
+
+  <!-- Rejected path: right side annotation -->
+  <text x="820" y="304" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">거부 시</text>
+  <text x="820" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">403 반환</text>
+</svg>

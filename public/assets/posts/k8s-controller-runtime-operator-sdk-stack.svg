@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 620">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect fill="#0a0a0a" rx="12" width="880" height="620"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">controller-runtime 스택 구조</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">Manager → Controller → Reconciler 계층 구조</text>
+
+  <!-- ===== LAYER 1: Manager ===== -->
+  <rect x="60" y="95" width="760" height="160" rx="10" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="80" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">Manager</text>
+  <text x="80" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">ctrl.NewManager() — 전체 생명주기 관리, 공유 의존성 제공</text>
+
+  <!-- Manager internals: Cache -->
+  <rect x="84" y="148" width="200" height="90" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="184" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Cache</text>
+  <text x="184" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">SharedInformer 기반</text>
+  <text x="184" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">오브젝트 로컬 캐시</text>
+  <text x="184" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">List / Watch</text>
+
+  <!-- Manager internals: Client -->
+  <rect x="308" y="148" width="200" height="90" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="408" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Client</text>
+  <text x="408" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Get / List / Create</text>
+  <text x="408" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Update / Patch</text>
+  <text x="408" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Delete / StatusClient</text>
+
+  <!-- Manager internals: Scheme -->
+  <rect x="532" y="148" width="200" height="90" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="632" y="170" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Scheme</text>
+  <text x="632" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">GVK ↔ Go 타입 매핑</text>
+  <text x="632" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">직렬화 / 역직렬화</text>
+  <text x="632" y="226" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">AddToScheme 등록</text>
+
+  <!-- Arrow: Manager → Controller -->
+  <line x1="440" y1="255" x2="440" y2="281" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- ===== LAYER 2: Controller ===== -->
+  <rect x="60" y="284" width="760" height="150" rx="10" fill="#0f1a2e" stroke="#55c555" stroke-width="2"/>
+  <text x="80" y="307" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">Controller</text>
+  <text x="80" y="325" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">ctrl.NewControllerManagedBy(mgr) — 이벤트 감시 &amp; 큐 처리</text>
+
+  <!-- Watches box -->
+  <rect x="84" y="337" width="260" height="85" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="214" y="359" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">Watches</text>
+  <text x="214" y="379" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">For() / Owns() / Watches()</text>
+  <text x="214" y="397" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">EventHandler → 이벤트 필터링</text>
+  <text x="214" y="413" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Predicates (변경 감지 조건)</text>
+
+  <!-- Arrow between boxes -->
+  <line x1="344" y1="380" x2="376" y2="380" stroke="#55c555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Workqueue box -->
+  <rect x="380" y="337" width="340" height="85" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="550" y="359" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">WorkQueue</text>
+  <text x="550" y="379" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Rate-limited 큐 (중복 제거 포함)</text>
+  <text x="550" y="397" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">namespace/name Request 저장</text>
+  <text x="550" y="413" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">MaxConcurrentReconciles 병렬 처리</text>
+
+  <!-- Arrow: Controller → Reconciler -->
+  <line x1="440" y1="434" x2="440" y2="460" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- ===== LAYER 3: Reconciler ===== -->
+  <rect x="60" y="463" width="760" height="130" rx="10" fill="#0f1a2e" stroke="#e05555" stroke-width="2"/>
+  <text x="80" y="486" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">Reconciler (Your Code)</text>
+  <text x="80" y="504" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">reconcile.Reconciler 인터페이스 구현 — 실제 비즈니스 로직</text>
+
+  <!-- Reconciler details -->
+  <rect x="84" y="514" width="220" height="65" rx="8" fill="#0a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="194" y="536" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Reconcile(ctx, req)</text>
+  <text x="194" y="556" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Request: namespace/name</text>
+  <text x="194" y="572" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Result + error 반환</text>
+
+  <rect x="328" y="514" width="220" height="65" rx="8" fill="#0a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="438" y="536" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">상태 수렴 로직</text>
+  <text x="438" y="556" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">현재 상태 읽기 (Get)</text>
+  <text x="438" y="572" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">원하는 상태로 조정</text>
+
+  <rect x="572" y="514" width="224" height="65" rx="8" fill="#0a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="684" y="536" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Result 제어</text>
+  <text x="684" y="556" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">RequeueAfter: N분 후 재실행</text>
+  <text x="684" y="572" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Requeue: 즉시 재실행</text>
+
+  <!-- Bottom label -->
+  <text x="440" y="608" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">sigs.k8s.io/controller-runtime</text>
+</svg>
