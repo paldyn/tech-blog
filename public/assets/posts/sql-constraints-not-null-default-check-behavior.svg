@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">제약 조건 위반 처리 흐름</text>
+
+  <defs>
+    <marker id="aflow" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="aerr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="aok" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- INSERT statement -->
+  <rect x="300" y="74" width="280" height="48" fill="#0f1320" stroke="#7777cc" stroke-width="2" rx="6"/>
+  <text x="440" y="100" text-anchor="middle" font-size="14" font-weight="600" fill="#7777cc">INSERT / UPDATE 실행</text>
+  <text x="440" y="116" text-anchor="middle" font-size="11" fill="#888">행 데이터를 저장 요청</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="122" x2="440" y2="148" stroke="#7ec8e3" stroke-width="2" marker-end="url(#aflow)"/>
+
+  <!-- NOT NULL check -->
+  <rect x="300" y="150" width="280" height="48" fill="#0f1320" stroke="#7ec8e3" stroke-width="1.5" rx="6"/>
+  <text x="440" y="174" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">NOT NULL 검사</text>
+  <text x="440" y="190" text-anchor="middle" font-size="11" fill="#888">필수 열에 NULL 있는지 확인</text>
+
+  <!-- NULL fail path -->
+  <line x1="580" y1="174" x2="640" y2="174" stroke="#e05555" stroke-width="2" marker-end="url(#aerr)"/>
+  <text x="608" y="167" text-anchor="middle" font-size="10" fill="#e05555">NULL 있음</text>
+  <rect x="640" y="154" width="180" height="40" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5" rx="6"/>
+  <text x="730" y="179" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">에러: NOT NULL violation</text>
+
+  <!-- Arrow down to DEFAULT -->
+  <line x1="440" y1="198" x2="440" y2="222" stroke="#7ec8e3" stroke-width="2" marker-end="url(#aflow)"/>
+  <text x="470" y="214" font-size="10" fill="#888">값 없으면 DEFAULT 적용</text>
+
+  <!-- DEFAULT apply -->
+  <rect x="300" y="224" width="280" height="48" fill="#0f1320" stroke="#55c555" stroke-width="1.5" rx="6"/>
+  <text x="440" y="248" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">DEFAULT 적용</text>
+  <text x="440" y="264" text-anchor="middle" font-size="11" fill="#888">생략된 열에 기본값 채움</text>
+
+  <!-- Arrow down to CHECK -->
+  <line x1="440" y1="272" x2="440" y2="296" stroke="#7ec8e3" stroke-width="2" marker-end="url(#aflow)"/>
+
+  <!-- CHECK constraint -->
+  <rect x="300" y="298" width="280" height="48" fill="#0f1320" stroke="#7777cc" stroke-width="1.5" rx="6"/>
+  <text x="440" y="322" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">CHECK 조건 평가</text>
+  <text x="440" y="338" text-anchor="middle" font-size="11" fill="#888">등록된 CHECK 표현식 검사</text>
+
+  <!-- CHECK fail -->
+  <line x1="580" y1="322" x2="640" y2="322" stroke="#e05555" stroke-width="2" marker-end="url(#aerr)"/>
+  <text x="608" y="315" text-anchor="middle" font-size="10" fill="#e05555">FALSE</text>
+  <rect x="640" y="302" width="180" height="40" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5" rx="6"/>
+  <text x="730" y="327" text-anchor="middle" font-size="12" font-weight="600" fill="#e05555">에러: CHECK violation</text>
+
+  <!-- Arrow down to success -->
+  <line x1="440" y1="346" x2="440" y2="370" stroke="#55c555" stroke-width="2" marker-end="url(#aok)"/>
+  <text x="470" y="362" font-size="10" fill="#55c555">TRUE 또는 NULL</text>
+
+  <!-- Success -->
+  <rect x="300" y="372" width="280" height="48" fill="#0f1a0f" stroke="#55c555" stroke-width="2" rx="6"/>
+  <text x="440" y="396" text-anchor="middle" font-size="14" font-weight="600" fill="#55c555">행 저장 성공</text>
+  <text x="440" y="412" text-anchor="middle" font-size="11" fill="#888">테이블에 행이 삽입/수정됨</text>
+
+  <!-- CHECK NULL note -->
+  <rect x="30" y="310" width="240" height="56" fill="#0f1320" stroke="#ce9178" stroke-width="1" rx="6"/>
+  <text x="150" y="330" text-anchor="middle" font-size="12" font-weight="600" fill="#ce9178">CHECK(NULL) = 통과</text>
+  <text x="150" y="348" text-anchor="middle" font-size="11" fill="#888">CHECK는 FALSE일 때만 차단</text>
+  <text x="150" y="362" text-anchor="middle" font-size="11" fill="#888">NULL은 UNKNOWN → 통과!</text>
+  <line x1="240" y1="338" x2="298" y2="322" stroke="#ce9178" stroke-width="1.5" stroke-dasharray="4,4"/>
+</svg>

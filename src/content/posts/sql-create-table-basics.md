@@ -1,159 +1,156 @@
 ---
-title: "CREATE TABLE 기초 — 테이블 생성과 구조 설계"
-description: "CREATE TABLE 구문의 전체 구조, 열 정의 방식, 제약조건 이름 붙이기, CREATE TABLE AS SELECT 활용, 그리고 실무에서 자주 발생하는 설계 실수를 정리합니다."
+title: "CREATE TABLE 기초: 테이블 생성의 모든 것"
+description: "CREATE TABLE의 전체 문법, IF NOT EXISTS·CTAS 옵션, 열 제약과 테이블 제약의 차이, 주요 RDBMS별 방언 차이를 코드와 함께 완전 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-09"
+pubDate: "2026-06-10"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "CREATE TABLE", "DDL", "테이블설계", "제약조건", "스키마"]
+tags: ["CREATE TABLE", "DDL", "테이블생성", "스키마정의", "제약조건", "CTAS"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-language-categories/)에서 SQL을 DDL, DML, DCL, TCL로 분류했다. DDL의 핵심은 `CREATE TABLE`이다. 이번 글에서는 테이블 생성 구문을 완전히 해부하고, 열 이름 규칙부터 제약조건 명명, 자동 증가 키, 그리고 실무에서 반복되는 설계 실수까지 정리한다.
+[지난 글](/posts/sql-language-categories/)에서 DDL이 데이터베이스 구조를 정의하는 언어임을 확인했다. DDL의 핵심은 `CREATE TABLE`이다. 테이블 생성에 필요한 모든 문법과 실전 패턴을 이번 글에서 깊이 파고든다.
 
-## CREATE TABLE 기본 구조
+## 기본 문법
 
-`CREATE TABLE` 문은 테이블 이름, 열 정의 목록, 테이블 제약조건으로 구성된다.
-
-![CREATE TABLE 구문 분해](/assets/posts/sql-create-table-basics-syntax.svg)
-
-## 열 정의 규칙
-
-### 이름 규칙
-
-소문자 `snake_case`를 기본으로 한다. `order_id`, `user_name`, `created_at` 같은 형식이다. SQL 예약어(`order`, `group`, `select`)는 열 이름으로 사용하면 쿼터로 감싸야 해서 피하는 것이 좋다.
-
-### NOT NULL과 DEFAULT
-
-대부분의 열은 `NOT NULL`이어야 한다. NULL은 "모른다"를 의미하므로, 비즈니스적으로 반드시 존재해야 하는 값에 NULL을 허용하면 나중에 쿼리에서 `IS NULL` 처리를 빠뜨리는 실수로 이어진다. `DEFAULT`를 함께 설정하면 INSERT 시 생략해도 안전하다.
+![CREATE TABLE 문법 구조](/assets/posts/sql-create-table-basics-syntax.svg)
 
 ```sql
--- 잘못된 설계: 모든 열에 NULL 허용
-CREATE TABLE bad_users (
-    id   INT,
-    name VARCHAR(100),
-    email VARCHAR(255)
-);
-
--- 올바른 설계
-CREATE TABLE users (
-    id         BIGINT       NOT NULL,
-    name       VARCHAR(100) NOT NULL,
-    email      VARCHAR(255) NOT NULL,
-    is_active  BOOLEAN      NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE table_name (
+    column1 data_type [column_constraint ...],
+    column2 data_type [column_constraint ...],
+    ...
+    [table_constraint ...]
 );
 ```
 
-## 자동 증가 기본 키
+**열 제약(column constraint)**은 특정 열에만 적용되는 규칙이다. `NOT NULL`, `DEFAULT`, `CHECK`, `PRIMARY KEY`, `UNIQUE`, `REFERENCES`가 여기 해당한다.
 
-각 DBMS마다 자동 증가 열 문법이 다르다.
-
-```sql
--- PostgreSQL (IDENTITY, SQL:2003 표준)
-CREATE TABLE products (
-    id   INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
-
--- MySQL / MariaDB
-CREATE TABLE products (
-    id   INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
-
--- Oracle (12c 이상)
-CREATE TABLE products (
-    id   NUMBER GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR2(100) NOT NULL,
-    CONSTRAINT pk_products PRIMARY KEY (id)
-);
-
--- SQL Server
-CREATE TABLE products (
-    id   INT IDENTITY(1,1) PRIMARY KEY,
-    name NVARCHAR(100) NOT NULL
-);
-```
-
-## 제약조건 명명 방법
-
-제약조건에 이름을 붙이면 오류 메시지가 명확해지고, `ALTER TABLE`로 제약조건을 수정·삭제할 때 이름으로 참조할 수 있다.
+**테이블 제약(table constraint)**은 여러 열에 걸쳐 적용되거나 이름을 붙이고 싶을 때 사용한다. 예를 들어 복합 기본 키는 테이블 제약으로만 표현할 수 있다.
 
 ```sql
 CREATE TABLE order_items (
-    item_id    BIGINT        NOT NULL,
-    order_id   BIGINT        NOT NULL,
-    product_id INT           NOT NULL,
-    quantity   INT           NOT NULL,
-    unit_price DECIMAL(12,2) NOT NULL,
-
-    CONSTRAINT pk_order_items    PRIMARY KEY (item_id),
-    CONSTRAINT fk_oi_order       FOREIGN KEY (order_id)   REFERENCES orders(order_id),
-    CONSTRAINT fk_oi_product     FOREIGN KEY (product_id) REFERENCES products(id),
-    CONSTRAINT chk_oi_quantity   CHECK (quantity > 0),
-    CONSTRAINT chk_oi_unit_price CHECK (unit_price >= 0)
+    order_id  BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    qty        INTEGER NOT NULL DEFAULT 1,
+    -- 복합 기본 키: 두 열을 묶어 테이블 제약으로 선언
+    CONSTRAINT pk_order_items PRIMARY KEY (order_id, product_id),
+    CONSTRAINT chk_qty CHECK (qty > 0)
 );
 ```
 
-FK 위반 시 오류 메시지에 `fk_oi_order`가 포함되어 어떤 관계가 깨졌는지 즉시 알 수 있다.
-
-## CREATE TABLE AS SELECT
-
-기존 테이블이나 쿼리 결과로 새 테이블을 만들 수 있다.
-
-```sql
--- 구조 + 데이터 복사
-CREATE TABLE orders_backup AS
-SELECT * FROM orders WHERE created_at < '2024-01-01';
-
--- 구조만 복사 (데이터 없음)
-CREATE TABLE orders_empty AS
-SELECT * FROM orders WHERE 1 = 0;
-```
-
-주의할 점은 **제약조건이 복사되지 않는다**는 것이다. PRIMARY KEY, FOREIGN KEY, NOT NULL, DEFAULT가 모두 사라진다. 백업 테이블을 실제 운영에 사용할 계획이라면 제약조건을 별도로 추가해야 한다.
+`CONSTRAINT name` 구문으로 제약에 이름을 붙이면, 나중에 `ALTER TABLE ... DROP CONSTRAINT name`으로 제거할 수 있어 유지보수가 편하다.
 
 ## IF NOT EXISTS
 
-스크립트를 반복 실행해도 오류가 나지 않게 하려면 `IF NOT EXISTS`를 사용한다.
+테이블이 이미 존재하면 에러 대신 조용히 건너뛴다. 마이그레이션 스크립트나 초기화 스크립트에서 유용하다.
 
 ```sql
-CREATE TABLE IF NOT EXISTS config (
-    key   VARCHAR(100) NOT NULL PRIMARY KEY,
-    value TEXT         NOT NULL
+CREATE TABLE IF NOT EXISTS audit_log (
+    id         BIGINT       PRIMARY KEY,
+    action     VARCHAR(50)  NOT NULL,
+    created_at TIMESTAMPTZ  DEFAULT now()
 );
 ```
 
-## 테이블 설계 체크리스트
+주의: `IF NOT EXISTS`는 기존 테이블의 구조가 다르더라도 에러를 내지 않는다. 구조 동기화가 필요하면 `ALTER TABLE`이나 마이그레이션 도구를 써야 한다.
 
-![테이블 설계 체크리스트](/assets/posts/sql-create-table-basics-design.svg)
+## CTAS: 쿼리 결과로 테이블 생성
 
-### 흔한 실수
-
-**VARCHAR(255) 남용**: VARCHAR(255)가 "안전한 길이"라는 잘못된 믿음이 있다. 하지만 인덱스에 포함된 VARCHAR(255) 열은 인덱스 키 크기를 증가시키고, 일부 DBMS에서 행 크기 제한에 걸릴 수 있다. 실제 최대 길이를 추정해서 지정하라.
-
-**FLOAT로 금액 저장**: `FLOAT`과 `DOUBLE`은 부동소수점이라 이진수로 정확히 표현할 수 없는 소수가 있다. `0.1 + 0.2 ≠ 0.3`이 될 수 있다. 금액은 반드시 `DECIMAL(x, y)` 또는 `NUMERIC(x, y)`를 사용하라.
+`CREATE TABLE ... AS SELECT ...` 구문으로 쿼리 결과를 바탕으로 새 테이블을 만들 수 있다.
 
 ```sql
--- 잘못됨
-amount FLOAT NOT NULL
-
--- 올바름
-amount DECIMAL(15, 2) NOT NULL  -- 총 15자리, 소수점 이하 2자리
+-- 2024년 주문만 복사해 아카이브 테이블 생성
+CREATE TABLE orders_2024
+AS SELECT *
+   FROM   orders
+   WHERE  EXTRACT(YEAR FROM created_at) = 2024;
 ```
 
-**updated_at 자동 갱신 누락**: 감사(Audit)나 캐시 무효화를 위해 `updated_at`이 필요한 테이블에서 이를 빠뜨리면 나중에 ALTER TABLE 비용이 크다. 설계 초기에 추가하는 것이 좋다.
+**중요한 제한**: CTAS는 데이터와 컬럼 타입만 복사한다. `NOT NULL`, `CHECK` 같은 제약 조건과 인덱스는 복사되지 않는다. 필요하다면 CTAS 후 별도로 추가해야 한다.
 
-다음 글에서는 테이블에서 가장 중요한 선택 중 하나인 숫자, 문자열, 불리언 데이터 타입을 상세히 다룬다.
+## 실전 예시: 주문 시스템
+
+![CREATE TABLE 실전 예시](/assets/posts/sql-create-table-basics-example.svg)
+
+```sql
+-- PostgreSQL 기준
+CREATE TABLE users (
+    id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email      VARCHAR(200) NOT NULL UNIQUE,
+    name       VARCHAR(100) NOT NULL,
+    created_at TIMESTAMPTZ  DEFAULT now()
+);
+
+CREATE TABLE orders (
+    id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id    BIGINT       NOT NULL,
+    total      NUMERIC(12,2) CHECK (total >= 0),
+    status     VARCHAR(20)  DEFAULT 'pending',
+    created_at TIMESTAMPTZ  DEFAULT now(),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+```
+
+`ON DELETE RESTRICT`는 참조되는 `users` 행을 삭제하려고 하면 에러를 낸다. `ON DELETE CASCADE`로 바꾸면 부모 행 삭제 시 자식 행도 함께 삭제된다.
+
+## 데이터 타입 선택 원칙
+
+| 상황 | 권장 타입 |
+|------|---------|
+| 정수 ID (소규모) | `INTEGER` |
+| 정수 ID (대규모) | `BIGINT` |
+| 고정 소수점 금액 | `NUMERIC(p,s)` |
+| 부동소수점 측정값 | `REAL` / `DOUBLE PRECISION` |
+| 가변 길이 문자열 | `VARCHAR(n)` |
+| 무제한 텍스트 | `TEXT` (PG) / `LONGTEXT` (MySQL) |
+| 날짜만 | `DATE` |
+| 날짜+시간 | `TIMESTAMP` / `TIMESTAMPTZ` |
+| 참/거짓 | `BOOLEAN` |
+
+## DB별 주요 차이
+
+자동 증가 ID 문법은 DB마다 크게 다르다.
+
+```sql
+-- PostgreSQL: SQL 표준 준수
+id BIGINT GENERATED ALWAYS AS IDENTITY
+
+-- MySQL: 독자 문법
+id BIGINT AUTO_INCREMENT
+
+-- Oracle: 시퀀스 + DEFAULT (12c+)
+id NUMBER GENERATED ALWAYS AS IDENTITY
+
+-- SQL Server: IDENTITY
+id BIGINT IDENTITY(1,1)
+```
+
+문자열 타입도 다르다. PostgreSQL의 `TEXT`는 길이 제한 없이 효율적이다. Oracle은 `VARCHAR2`를 권장한다(`VARCHAR`는 나중에 의미가 바뀔 수 있다고 문서에서 경고한다). SQL Server는 유니코드 문자열에 `NVARCHAR`를 사용한다.
+
+## 테이블 생성 후 확인
+
+```sql
+-- PostgreSQL: 테이블 구조 확인
+\d orders           -- psql 클라이언트
+SELECT * FROM information_schema.columns
+WHERE  table_name = 'orders';
+
+-- MySQL
+SHOW CREATE TABLE orders;
+DESCRIBE orders;
+
+-- Oracle
+DESC orders;
+```
 
 ---
 
-**지난 글:** [SQL 언어 분류 — DDL, DML, DCL, TCL](/posts/sql-language-categories/)
+**지난 글:** [SQL 언어 분류: DDL·DML·DCL·TCL·DQL 완전 정리](/posts/sql-language-categories/)
 
-**다음 글:** [데이터 타입 완전 정복 — 숫자, 문자열, 불리언](/posts/sql-data-types-numeric-string-bool/)
+**다음 글:** [데이터 타입 완전 정복: 숫자·문자열·불리언](/posts/sql-data-types-numeric-string-bool/)
 
 <br>
 읽어주셔서 감사합니다. 😊

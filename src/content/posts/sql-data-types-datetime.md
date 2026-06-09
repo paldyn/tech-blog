@@ -1,144 +1,158 @@
 ---
-title: "날짜/시간 데이터 타입 완전 정복"
-description: "DATE, TIME, DATETIME, TIMESTAMP, TIMESTAMPTZ, INTERVAL 타입의 차이를 설명하고, MySQL의 DATETIME vs TIMESTAMP 타임존 함정, 날짜 연산 DBMS별 문법, 그리고 글로벌 서비스에서 UTC 저장이 중요한 이유를 다룹니다."
+title: "데이터 타입 완전 정복: 날짜·시간 타입"
+description: "DATE·TIME·TIMESTAMP·TIMESTAMPTZ·INTERVAL의 차이, 타임존 처리의 함정, 날짜 연산과 EXTRACT, DB별 방언 차이까지 완전 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-09"
+pubDate: "2026-06-10"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "날짜타입", "TIMESTAMP", "DATETIME", "INTERVAL", "타임존", "UTC", "DATE"]
+tags: ["데이터타입", "DATE", "TIMESTAMP", "TIMESTAMPTZ", "타임존", "INTERVAL", "날짜함수"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 숫자, 문자열, 불리언 타입을 살펴봤다. 이번에는 날짜와 시간 타입을 다룬다. 이 영역은 특히 타임존 처리에서 실수가 많이 발생한다. 서비스가 단일 지역에서만 운영될 때는 눈에 띄지 않다가, 글로벌 확장 또는 서버 이전 시 데이터 불일치가 터져 나온다.
+[지난 글](/posts/sql-data-types-numeric-string-bool/)에서 숫자·문자열·불리언 타입을 살펴봤다. 날짜와 시간 타입은 타임존 처리가 얽혀 실수가 잦은 영역이다. 이번 글에서는 DATE부터 TIMESTAMPTZ까지 각 타입의 특성과 올바른 사용법을 짚어본다.
 
-## 날짜/시간 타입 개요
+## 날짜·시간 타입 종류
 
-![날짜/시간 타입 비교](/assets/posts/sql-data-types-datetime-types.svg)
+![날짜·시간 타입 비교](/assets/posts/sql-data-types-datetime-types.svg)
 
-## DATE — 날짜만
+### DATE — 날짜만
 
-날짜(연/월/일)만 저장한다. 시간 정보가 필요 없는 데이터에 사용한다.
+시간 정보 없이 날짜만 저장한다. 생일, 이벤트 날짜, 회계 기간처럼 시간이 의미 없는 경우에 적합하다.
 
 ```sql
--- 생년월일: 시간 불필요
-birth_date DATE NOT NULL
-
--- 비교
-SELECT * FROM users WHERE birth_date = '1990-05-15';
-SELECT * FROM orders WHERE ordered_date BETWEEN '2024-01-01' AND '2024-12-31';
+SELECT CURRENT_DATE;          -- 2026-06-10
+SELECT DATE '2026-06-10';     -- 리터럴
+SELECT '2026-06-10'::DATE;    -- PostgreSQL 캐스팅
 ```
 
-## TIMESTAMP vs DATETIME (MySQL)
+### TIME — 시간만
 
-MySQL을 쓴다면 이 차이를 반드시 알아야 한다.
-
-**`DATETIME`**: 입력한 값을 그대로 저장한다. 타임존 개념이 없다. 서버 설정이 'Asia/Seoul'이든 'UTC'든 저장된 값은 변하지 않는다. 서버 타임존이 변경되면 기존 데이터의 의미가 달라진다.
-
-**`TIMESTAMP`**: 내부적으로 UTC로 변환해 저장하고, 조회할 때 세션의 `time_zone` 설정에 따라 변환해서 반환한다. 2038년 1월 19일 03:14:07 UTC까지만 표현 가능(32비트 제한)하다.
+날짜 없이 시간만 저장한다. 사실 실무에서 자주 쓰이지는 않는다. 영업 시간이나 반복 스케줄처럼 날짜와 무관한 시간 데이터에 사용한다.
 
 ```sql
--- MySQL: 타임존 설정 확인
-SHOW VARIABLES LIKE 'time_zone';
-SET time_zone = '+09:00';  -- KST
+open_time  TIME DEFAULT '09:00:00',
+close_time TIME DEFAULT '18:00:00'
+```
 
--- TIMESTAMP 동작 확인
-CREATE TABLE tz_test (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    dt DATETIME DEFAULT CURRENT_TIMESTAMP
+### TIMESTAMP — 날짜+시간 (타임존 없음)
+
+날짜와 시간을 함께 저장하지만 타임존 정보를 포함하지 않는다. **단일 시간대 환경이 확실할 때만** 사용을 권장한다.
+
+### TIMESTAMPTZ — 날짜+시간+타임존 (권장)
+
+PostgreSQL의 `TIMESTAMPTZ`(= `TIMESTAMP WITH TIME ZONE`)는 내부적으로 UTC로 저장하고, 세션의 타임존 설정에 따라 표시 시간을 변환한다.
+
+```sql
+-- 테이블 설계 권장 패턴
+CREATE TABLE events (
+    id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    event_name VARCHAR(200) NOT NULL,
+    -- 이벤트 발생 시각: 타임존 포함
+    occurred_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    -- 만료 날짜: 날짜만 필요
+    expires_on  DATE
 );
-
-INSERT INTO tz_test () VALUES ();
-
--- time_zone을 UTC로 바꾸면
-SET time_zone = 'UTC';
-SELECT ts, dt FROM tz_test;
--- ts: 9시간 뒤로 당겨진 값 (UTC 변환)
--- dt: 원래 저장된 값 그대로
 ```
 
-## PostgreSQL: TIMESTAMP vs TIMESTAMPTZ
+### INTERVAL — 기간
 
-PostgreSQL에서는 `TIMESTAMP` (타임존 없음)와 `TIMESTAMPTZ` (타임존 있음, 내부는 UTC)로 나뉜다.
+두 시점의 차이나 오프셋을 표현한다.
 
 ```sql
--- PostgreSQL: TIMESTAMPTZ 권장
-created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+SELECT now() + INTERVAL '7 days';        -- 7일 후
+SELECT now() - INTERVAL '1 month';       -- 1개월 전
+SELECT INTERVAL '2 hours 30 minutes';    -- 2시간 30분
 
--- 타임존 변환 조회
-SELECT created_at AT TIME ZONE 'Asia/Seoul' FROM orders;
+-- 만료일 계산
+SELECT id, created_at + INTERVAL '30 days' AS expires_at
+FROM   subscriptions;
+```
 
--- 현재 타임존 설정 확인
-SHOW timezone;
+## 타임존 함정: TIMESTAMP vs TIMESTAMPTZ
+
+![TIMESTAMP vs TIMESTAMPTZ: 타임존 처리](/assets/posts/sql-data-types-datetime-zones.svg)
+
+**TIMESTAMP**는 타임존을 저장하지 않는다. 서버의 타임존이 바뀌거나 다른 지역의 서버로 데이터를 이전하면 같은 값이 다른 시각을 의미하게 된다.
+
+**TIMESTAMPTZ**는 입력 시점의 타임존 오프셋을 반영해 UTC로 환산하여 저장한다. 조회 시에는 현재 세션의 타임존으로 자동 변환해 보여준다.
+
+```sql
+-- 세션 타임존 설정
 SET timezone = 'Asia/Seoul';
+
+-- Seoul 기준 오전 10시 30분 저장
+INSERT INTO events(occurred_at) VALUES ('2026-06-10 10:30:00+09');
+
+-- UTC로 저장됨: 2026-06-10 01:30:00+00
+
+-- Seoul 세션에서 조회
+SELECT occurred_at FROM events;
+-- 결과: 2026-06-10 10:30:00+09
+
+-- LA(UTC-7) 세션에서 조회
+SET timezone = 'America/Los_Angeles';
+SELECT occurred_at FROM events;
+-- 결과: 2026-06-09 18:30:00-07
 ```
 
-`TIMESTAMPTZ`는 입력 시 UTC로 정규화해 저장한다. 조회 시 세션의 `timezone` 설정에 따라 변환된다. 글로벌 서비스에서 `TIMESTAMPTZ`를 쓰면 다른 지역 사용자가 자신의 타임존으로 조회할 수 있다.
+두 값은 같은 시점을 가리킨다. 이것이 TIMESTAMPTZ의 올바른 동작이다.
 
-## Oracle의 날짜 타입
-
-Oracle에서 `DATE` 타입은 표준 SQL과 다르다. **날짜 + 시간(시/분/초)**을 저장한다. 1초 정밀도다. `TIMESTAMP`는 마이크로초(소수 6자리)까지 지원하고, `TIMESTAMP WITH TIME ZONE`은 타임존 정보도 포함한다.
+## 날짜 함수와 EXTRACT
 
 ```sql
--- Oracle DATE 조회 시 시간 포함 여부 주의
-SELECT SYSDATE FROM dual;  -- 2024-03-15 14:30:25
+-- 현재 날짜/시간
+SELECT CURRENT_DATE;           -- SQL 표준
+SELECT CURRENT_TIMESTAMP;      -- SQL 표준
+SELECT now();                  -- PostgreSQL 약식
 
--- Oracle TIMESTAMP
-SELECT SYSTIMESTAMP FROM dual;  -- 2024-03-15 14:30:25.123456 +09:00
+-- 날짜 요소 추출
+SELECT EXTRACT(YEAR  FROM now()),  -- 2026
+       EXTRACT(MONTH FROM now()),  -- 6
+       EXTRACT(DOW   FROM now());  -- 요일 (0=일요일, PostgreSQL)
 
--- 날짜 추출
-SELECT TRUNC(SYSDATE) FROM dual;  -- 오늘 자정 (시간 부분 제거)
-SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') FROM dual;
+-- 날짜 자르기
+SELECT DATE_TRUNC('month', now());  -- 월의 첫날 00:00:00
+SELECT DATE_TRUNC('week',  now());  -- 주의 첫날
+
+-- 두 날짜 사이 일수 차이
+SELECT CURRENT_DATE - '2026-01-01'::DATE;  -- 일 수
+SELECT AGE('2026-12-31', '2026-01-01');    -- 인터벌로 반환
 ```
 
-## INTERVAL — 기간 타입
+## DB별 날짜 타입 차이
 
-표준 SQL의 `INTERVAL` 타입은 기간을 저장한다. PostgreSQL에서 잘 지원된다.
+| 기능 | PostgreSQL | MySQL | Oracle | SQL Server |
+|------|-----------|-------|--------|------------|
+| 날짜 타입 | `DATE` | `DATE` | `DATE` (시분초 포함!) | `DATE` |
+| 날짜+시간 | `TIMESTAMP` | `DATETIME` / `TIMESTAMP` | `TIMESTAMP` | `DATETIME2` |
+| 타임존 포함 | `TIMESTAMPTZ` | `TIMESTAMP` (UTC 자동변환) | `TIMESTAMP WITH TIME ZONE` | `DATETIMEOFFSET` |
+| 현재 시각 | `now()` | `NOW()` | `SYSDATE` | `GETDATE()` |
+
+Oracle의 `DATE` 타입은 특히 주의가 필요하다. 표준 SQL의 `DATE`와 달리 Oracle `DATE`는 시·분·초까지 저장한다. `TRUNC(날짜)`로 시간 부분을 제거해야 하는 경우가 많다.
+
+## 날짜 저장 시 권고사항
+
+1. **모든 TIMESTAMP 컬럼은 TIMESTAMPTZ로**: 단일 시간대가 확실한 경우에만 예외
+2. **애플리케이션에서 UTC로 변환 후 저장**: 서버 타임존 설정에 의존하지 말 것
+3. **`created_at`, `updated_at` 컬럼 표준화**: `TIMESTAMPTZ DEFAULT now()` 패턴
+4. **날짜 비교는 같은 타임존 기준으로**: 혼합 비교 시 명시적 타임존 변환
 
 ```sql
--- PostgreSQL INTERVAL
-SELECT NOW() + INTERVAL '30 days';
-SELECT NOW() - INTERVAL '1 year 3 months';
-SELECT AGE('2024-12-31', '2000-01-01');  -- 24 years 11 mons 30 days
+-- 좋은 예: 타임존 명시
+WHERE occurred_at >= '2026-06-01 00:00:00+09'
+  AND occurred_at <  '2026-07-01 00:00:00+09';
 
--- 만료 체크
-SELECT * FROM subscriptions
-WHERE expired_at < NOW() + INTERVAL '7 days';  -- 7일 이내 만료
+-- 나쁜 예: 타임존 불명확
+WHERE occurred_at >= '2026-06-01';
 ```
-
-## 날짜/시간 연산 함수 비교
-
-![날짜/시간 연산 비교](/assets/posts/sql-data-types-datetime-operations.svg)
-
-## 실무 권장 사항
-
-**1. 항상 UTC로 저장**: 애플리케이션은 UTC로 변환해서 DB에 저장하고, 표시할 때 사용자 타임존으로 변환한다. MySQL `TIMESTAMP`, PostgreSQL `TIMESTAMPTZ`가 이를 지원한다.
-
-**2. MySQL 2038년 문제 대비**: MySQL `TIMESTAMP`의 상한선은 2038년이다. 장기 데이터는 `DATETIME`으로 저장하고 애플리케이션 레벨에서 UTC를 관리하거나, 충분한 범위를 가진 `BIGINT`(Unix epoch ms)로 저장하는 방법도 있다.
-
-**3. Oracle에서 날짜 비교 주의**: Oracle `DATE`에는 시간이 포함되어 있어 `WHERE order_date = '2024-03-15'`가 예상대로 작동하지 않는다. `TRUNC(order_date) = DATE '2024-03-15'`로 써야 한다.
-
-```sql
--- Oracle 날짜 비교 주의
--- 잘못됨: 시간 포함이라 정확히 자정인 행만 매칭
-WHERE order_date = DATE '2024-03-15'
-
--- 올바름: 날짜 부분만 비교
-WHERE TRUNC(order_date) = DATE '2024-03-15'
--- 또는 범위로
-WHERE order_date >= DATE '2024-03-15'
-  AND order_date <  DATE '2024-03-16'
-```
-
-다음 글에서는 테이블 무결성을 보장하는 NOT NULL, DEFAULT, CHECK 제약조건을 상세히 다룬다.
 
 ---
 
-**지난 글:** [데이터 타입 완전 정복 — 숫자, 문자열, 불리언](/posts/sql-data-types-numeric-string-bool/)
+**지난 글:** [데이터 타입 완전 정복: 숫자·문자열·불리언](/posts/sql-data-types-numeric-string-bool/)
 
-**다음 글:** [제약조건 완전 정복 — NOT NULL, DEFAULT, CHECK](/posts/sql-constraints-not-null-default-check/)
+**다음 글:** [제약 조건 기초: NOT NULL·DEFAULT·CHECK](/posts/sql-constraints-not-null-default-check/)
 
 <br>
 읽어주셔서 감사합니다. 😊

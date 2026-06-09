@@ -1,122 +1,164 @@
 ---
-title: "데이터 타입 완전 정복 — 숫자, 문자열, 불리언"
-description: "INT, BIGINT, DECIMAL, FLOAT의 차이와 적합한 용도, CHAR vs VARCHAR 선택 기준, BOOLEAN 타입의 DBMS별 구현 차이를 정리합니다. 금액에 FLOAT를 쓰면 안 되는 이유도 설명합니다."
+title: "데이터 타입 완전 정복: 숫자·문자열·불리언"
+description: "SQL의 숫자 타입(INTEGER·BIGINT·NUMERIC·FLOAT), 문자열 타입(CHAR·VARCHAR·TEXT), 불리언과 NULL의 3값 논리를 실전 코드와 함께 완전 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-09"
+pubDate: "2026-06-10"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "데이터타입", "INT", "DECIMAL", "VARCHAR", "BOOLEAN", "CHAR", "BIGINT"]
+tags: ["데이터타입", "INTEGER", "NUMERIC", "VARCHAR", "BOOLEAN", "NULL", "3값논리"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-create-table-basics/)에서 `CREATE TABLE`의 구문 구조를 살펴봤다. 테이블을 만들 때 가장 중요한 결정 중 하나가 각 열의 **데이터 타입**이다. 잘못된 타입 선택은 나중에 데이터 불일치, 성능 저하, 마이그레이션 비용으로 돌아온다. 이번에는 가장 많이 쓰이는 세 가지 타입 계열 — 숫자, 문자열, 불리언 — 을 깊이 다룬다.
+[지난 글](/posts/sql-create-table-basics/)에서 `CREATE TABLE` 문법을 살펴봤다. 테이블 정의에서 가장 중요한 결정 중 하나가 각 열에 어떤 데이터 타입을 쓸지다. 잘못된 타입 선택은 오류, 성능 저하, 데이터 오염으로 이어진다. 이번 글에서는 숫자·문자열·불리언 타입을 깊이 파고든다.
 
-## 정수 타입
+## 숫자 타입
 
-![숫자 타입 선택 가이드](/assets/posts/sql-data-types-numeric-string-bool-types.svg)
+![숫자 데이터 타입 완전 정리](/assets/posts/sql-data-types-numeric-string-bool-numeric.svg)
 
-정수 타입은 크기에 따라 범위가 다르다. 실무에서 PK에는 `INT` 또는 `BIGINT`를 쓴다.
-
-**INT로 충분한 경우**: 하루 수만 건 이하의 트래픽, 사용자가 수백만 미만인 시스템. INT는 최대 21억 2천만 정도까지 표현 가능하다. 부호 없음(UNSIGNED)으로 설정하면 약 42억까지 가능하다.
-
-**BIGINT를 써야 하는 경우**: 대용량 트래픽, 쇼핑몰 주문처럼 빠르게 쌓이는 이벤트성 데이터, 타임스탬프를 밀리초 단위로 저장하는 경우. INT의 오버플로우는 조용히 일어나 데이터 정합성 문제를 유발한다. 처음부터 BIGINT로 설계하는 것이 안전하다.
-
-## 소수/정밀 숫자 타입
+### 정수형
 
 ```sql
--- DECIMAL(p, s): p = 전체 자릿수, s = 소수점 이하 자릿수
--- 예: DECIMAL(10, 2) → 12345678.99까지 정확히 저장
-
--- 금액 (원화: 소수점 없음)
-price    DECIMAL(15, 0) NOT NULL
-
--- 외화 환율 (소수점 6자리)
-rate     DECIMAL(12, 6) NOT NULL
-
--- 잘못된 예: FLOAT으로 금액 저장
-SELECT 0.1 + 0.2;  -- 0.30000000000000004 (부동소수점 오차)
+-- 용도별 정수 타입 선택
+age      SMALLINT,      -- 0~150, 2 bytes
+user_id  INTEGER,       -- 최대 21억, 4 bytes
+event_id BIGINT,        -- 천문학적 수치, 8 bytes
 ```
 
-`DECIMAL`(또는 `NUMERIC` — 표준 SQL 이름)은 10진수를 정확히 저장한다. `FLOAT`과 `DOUBLE`은 이진 부동소수점이라 근사값이다. 금액 계산에 FLOAT을 쓰면 1원 단위 오차가 누적된다. 정밀도가 필요한 모든 수치에는 `DECIMAL`을 사용하라.
+`SERIAL`(PostgreSQL) / `AUTO_INCREMENT`(MySQL) / `IDENTITY`(SQL Server, Oracle) 는 정수형에 자동 증가 기능을 더한 것이다. 기술적으로는 시퀀스(sequence)를 기반으로 동작한다.
+
+### 고정소수점: NUMERIC(p, s)
+
+금액·비율처럼 **정확한 소수 표현**이 필요할 때 사용한다.
+
+- `p` (precision): 전체 자릿수
+- `s` (scale): 소수점 이하 자릿수
+
+```sql
+price    NUMERIC(12, 2),  -- 99999999.99 까지
+tax_rate NUMERIC(5, 4),   -- 0.0000 ~ 9.9999 (세율)
+```
+
+`DECIMAL`은 `NUMERIC`과 동의어다. SQL 표준이기도 하고, 대부분의 DB에서 완전히 동일하게 동작한다.
+
+### 부동소수점: REAL / DOUBLE PRECISION
+
+**과학 계산, 통계, 측정값**에 사용한다. IEEE 754 표준 부동소수점 연산을 사용하므로 이진수 표현 한계로 인한 오차가 발생한다.
+
+```sql
+-- 절대로 금액에 FLOAT를 쓰지 말 것
+SELECT 0.1 + 0.2;
+-- 결과: 0.30000000000000004  ← 오차 발생!
+
+-- NUMERIC으로 계산하면
+SELECT CAST(0.1 AS NUMERIC) + CAST(0.2 AS NUMERIC);
+-- 결과: 0.3  ← 정확
+```
+
+`FLOAT(n)` 문법도 존재하는데, n이 1~24면 `REAL`, 25~53이면 `DOUBLE PRECISION`에 매핑된다.
 
 ## 문자열 타입
 
-### CHAR vs VARCHAR
+![문자열 & 불리언 타입](/assets/posts/sql-data-types-numeric-string-bool-string.svg)
 
-| | CHAR(n) | VARCHAR(n) |
-|---|---|---|
-| 저장 크기 | 항상 n바이트 | 실제 길이 + 1~2바이트 오버헤드 |
-| 속도 | 고정 길이라 약간 빠름 | 가변 처리 |
-| 적합한 데이터 | ISO 코드(KRW, US, M/F), 해시값, 주민번호 | 이름, 이메일, 주소 |
+### CHAR(n) — 고정 길이
 
-실무에서는 **거의 대부분 VARCHAR**을 쓴다. CHAR는 절대 길이가 고정인 코드 값에만 사용하면 된다.
+선언한 길이보다 짧은 값이 들어오면 **공백으로 패딩(padding)**된다.
 
 ```sql
--- CHAR 적합: ISO 화폐 코드는 항상 3글자
-currency CHAR(3) NOT NULL  -- 'KRW', 'USD', 'EUR'
-
--- VARCHAR 적합: 이름 길이는 사람마다 다름
-name VARCHAR(100) NOT NULL
-
--- TEXT: 길이 제한이 없거나 매우 긴 문자열
--- 인덱스 생성 시 접두사(prefix) 길이 지정 필요
-description TEXT NULL
+CREATE TABLE countries (
+    code CHAR(2) NOT NULL  -- 'KR', 'US', 'JP' 등 항상 2자
+);
 ```
 
-### DBMS별 차이
+`CHAR`의 공백 패딩 동작은 비교 시 혼란을 일으킨다. `CHAR(10)` 컬럼에 `'abc'`를 저장하면 `'abc       '`로 저장되는데, 많은 DB가 비교 시 trailing space를 무시하므로 `'abc' = 'abc  '`가 TRUE가 된다. 코드 값처럼 항상 길이가 동일한 데이터에만 사용하라.
 
-Oracle에서는 `VARCHAR` 대신 `VARCHAR2`를 권장한다(표준 VARCHAR가 미래에 변경될 수 있다는 Oracle의 결정). SQL Server의 `NVARCHAR(n)`은 UTF-16으로 유니코드 문자를 저장하며 바이트 크기가 2배다. 한글을 저장할 때 `VARCHAR`와 `NVARCHAR` 중 어느 것을 쓸지는 DB의 기본 Collation에 따라 다르다.
+### VARCHAR(n) — 가변 길이 (주력)
 
-## BOOLEAN 타입
-
-표준 SQL에서 BOOLEAN은 `TRUE`, `FALSE`, `UNKNOWN`(NULL) 세 값을 가진다.
+가장 많이 사용하는 문자열 타입이다. 실제 값의 길이만큼만 저장한다.
 
 ```sql
--- PostgreSQL: 네이티브 BOOLEAN 타입
-is_active BOOLEAN NOT NULL DEFAULT TRUE
-
--- MySQL: TINYINT(1)로 구현 (0=FALSE, 1=TRUE)
-is_active TINYINT(1) NOT NULL DEFAULT 1
-
--- Oracle: 네이티브 BOOLEAN 없음 (PL/SQL에서는 있음)
--- 관행적으로 CHAR(1) CHECK IN ('Y','N') 또는 NUMBER(1) 사용
-is_active CHAR(1) NOT NULL DEFAULT 'Y' CHECK (is_active IN ('Y','N'))
-
--- SQL Server: BIT 타입 (0 또는 1)
-is_active BIT NOT NULL DEFAULT 1
+name  VARCHAR(100),
+email VARCHAR(200),
+url   VARCHAR(2048)
 ```
 
-MySQL에서 BOOLEAN 조건을 쓸 때 주의할 점이 있다. `WHERE is_active = TRUE`는 `WHERE is_active = 1`과 같다. 하지만 2나 -1도 `TRUE`와 다르다는 점에서, TINYINT에 0과 1 이외의 값이 들어갈 수 있는 상황을 CHECK 제약으로 막는 것이 안전하다.
+`n`은 **문자 수**다(일부 DB는 바이트 수). 한글처럼 멀티바이트 문자를 사용할 때 `n`을 너무 작게 잡지 않도록 주의한다.
 
-## 실전 예시
+### TEXT — 무제한 길이
 
-![타입 선택 실전 예시](/assets/posts/sql-data-types-numeric-string-bool-examples.svg)
-
-## 타입 변환
-
-SQL은 암묵적 타입 변환을 허용하지만 이것이 예기치 못한 인덱스 미사용으로 이어질 수 있다.
+PostgreSQL에서 `TEXT`는 `VARCHAR`와 내부 저장 방식이 동일하며 성능 차이도 없다. 길이 제한만 없다.
 
 ```sql
--- 인덱스가 있는 VARCHAR 열에 숫자를 비교하면
--- 묵시적 변환으로 인해 인덱스를 못 쓸 수 있음
-WHERE user_code = 12345     -- 나쁨: user_code가 VARCHAR일 때
-WHERE user_code = '12345'   -- 좋음: 타입 일치
-
--- 명시적 변환
-SELECT CAST('2024-01-15' AS DATE);
-SELECT CAST(price AS INT);
-SELECT CONVERT(amount, DECIMAL(10,2));  -- MySQL 방식
+body        TEXT,        -- 블로그 본문
+log_message TEXT,        -- 로그 내용
+raw_json    TEXT         -- JSON 문자열 (jsonb 사용이 더 좋음)
 ```
 
-타입을 정확히 일치시키는 것은 인덱스 효율뿐만 아니라 집합 비교, JOIN 조건에서도 중요하다. 다음 글에서는 날짜와 시간 타입을 다룬다.
+MySQL의 경우 TEXT 계열(`TINYTEXT`, `TEXT`, `MEDIUMTEXT`, `LONGTEXT`)은 인덱스 길이 제한이 있어 직접 인덱싱이 제한된다. Oracle은 `CLOB`(Character Large OBject)를 사용한다.
+
+## 불리언과 NULL의 3값 논리
+
+SQL의 불리언은 단순한 true/false가 아니라 **TRUE / FALSE / NULL** 세 가지 값을 갖는다.
+
+NULL은 "값 없음"이 아니라 **"알 수 없음(UNKNOWN)"**이다. 이 때문에 다음과 같은 결과가 나온다.
+
+```sql
+-- NULL 비교는 항상 NULL (TRUE/FALSE가 아님)
+SELECT NULL = NULL;   -- NULL (알 수 없음)
+SELECT NULL IS NULL;  -- TRUE ← NULL 확인은 IS NULL로
+
+-- NULL과의 논리 연산
+SELECT TRUE  AND NULL;   -- NULL
+SELECT FALSE AND NULL;   -- FALSE (한쪽이 FALSE면 확실히 거짓)
+SELECT TRUE  OR  NULL;   -- TRUE  (한쪽이 TRUE면 확실히 참)
+
+-- WHERE 조건에서 NULL
+SELECT * FROM users WHERE deleted_at != '2024-01-01';
+-- deleted_at IS NULL인 행은 결과에 포함되지 않음!
+-- NULL != '2024-01-01' = NULL (조건 불만족으로 처리)
+```
+
+이 NULL 동작을 모르면 조건절에서 NULL 행을 예상치 못하게 걸러내는 버그가 생긴다.
+
+## DB별 불리언 처리
+
+| DB | BOOLEAN 지원 | 실제 저장 |
+|----|------------|---------|
+| PostgreSQL | `BOOLEAN` 네이티브 | 1 byte |
+| MySQL | `TINYINT(1)` | 0 또는 1 |
+| Oracle | 없음 (PL/SQL에만 있음) | `NUMBER(1)` 또는 `CHAR(1)` 관례 |
+| SQL Server | `BIT` | 0 또는 1 |
+
+```sql
+-- MySQL에서 BOOLEAN 컬럼 정의
+is_active BOOLEAN,   -- 내부적으로 TINYINT(1)로 처리됨
+
+-- Oracle에서 불리언 표현
+is_active NUMBER(1) CHECK (is_active IN (0, 1))
+```
+
+## 타입 캐스팅
+
+```sql
+-- 표준 CAST 함수
+SELECT CAST('42' AS INTEGER);
+SELECT CAST(3.14 AS NUMERIC(5,2));
+
+-- PostgreSQL 단축 문법
+SELECT '42'::INTEGER;
+SELECT NOW()::DATE;
+
+-- 문자열 → 숫자 변환 실패 시 에러 (NULL 반환 필요시 try_cast)
+-- SQL Server: TRY_CAST('abc' AS INT) → NULL
+```
 
 ---
 
-**지난 글:** [CREATE TABLE 기초 — 테이블 생성과 구조 설계](/posts/sql-create-table-basics/)
+**지난 글:** [CREATE TABLE 기초: 테이블 생성의 모든 것](/posts/sql-create-table-basics/)
 
-**다음 글:** [날짜/시간 데이터 타입 완전 정복](/posts/sql-data-types-datetime/)
+**다음 글:** [데이터 타입 완전 정복: 날짜·시간 타입](/posts/sql-data-types-datetime/)
 
 <br>
 읽어주셔서 감사합니다. 😊

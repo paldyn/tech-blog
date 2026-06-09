@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">TIMESTAMP vs TIMESTAMPTZ: 타임존 처리</text>
+
+  <defs>
+    <marker id="atz" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="ard" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- Left side: TIMESTAMP (naive) -->
+  <rect x="30" y="70" width="380" height="180" fill="#1a0f0f" stroke="#e05555" stroke-width="2" rx="8"/>
+  <text x="220" y="95" text-anchor="middle" font-size="15" font-weight="700" fill="#e05555">TIMESTAMP (타임존 없음)</text>
+  <text x="220" y="115" text-anchor="middle" font-size="12" fill="#888">저장: 2026-06-10 10:30:00</text>
+  <text x="220" y="133" text-anchor="middle" font-size="12" fill="#888">Seoul 서버에서 저장</text>
+  <text x="220" y="153" text-anchor="middle" font-size="12" fill="#ce9178">&#9888; 서버를 LA로 이전하면?</text>
+  <text x="220" y="173" text-anchor="middle" font-size="11" fill="#888">같은 값 "10:30:00"이 이제 LA 시간으로 해석됨</text>
+  <text x="220" y="191" text-anchor="middle" font-size="11" fill="#888">Seoul(UTC+9) 오전 10시 ≠ LA(UTC-7) 오전 10시</text>
+  <text x="220" y="211" text-anchor="middle" font-size="11" fill="#e05555">글로벌 환경에서 데이터 오염!</text>
+  <text x="220" y="232" text-anchor="middle" font-size="11" fill="#888">로컬 단일 시간대 앱에만 사용 가능</text>
+
+  <!-- Right side: TIMESTAMPTZ -->
+  <rect x="460" y="70" width="390" height="180" fill="#0f1a0f" stroke="#55c555" stroke-width="2" rx="8"/>
+  <text x="655" y="95" text-anchor="middle" font-size="15" font-weight="700" fill="#55c555">TIMESTAMPTZ (타임존 포함)</text>
+  <text x="655" y="115" text-anchor="middle" font-size="12" fill="#888">입력: 2026-06-10 10:30:00+09</text>
+  <text x="655" y="133" text-anchor="middle" font-size="12" fill="#7ec8e3">저장: UTC 2026-06-10 01:30:00</text>
+  <text x="655" y="153" text-anchor="middle" font-size="12" fill="#888">Seoul 세션에서 조회: 10:30:00+09</text>
+  <text x="655" y="171" text-anchor="middle" font-size="12" fill="#888">LA 세션에서 조회: 18:30:00-07</text>
+  <text x="655" y="191" text-anchor="middle" font-size="12" fill="#55c555">&#10003; 항상 동일한 절대 시점</text>
+  <text x="655" y="211" text-anchor="middle" font-size="11" fill="#888">내부는 UTC 에포크 값, 출력만 타임존 변환</text>
+  <text x="655" y="232" text-anchor="middle" font-size="11" fill="#7ec8e3">글로벌 서비스, 이벤트 로그에 필수</text>
+
+  <!-- Code example -->
+  <rect x="30" y="270" width="820" height="158" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="50" y="292" font-size="11" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo',monospace">-- PostgreSQL 타임존 처리 예시</text>
+  <text x="50" y="314" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">-- 세션 타임존 설정</text>
+  <text x="50" y="332" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">SET timezone = 'Asia/Seoul';</text>
+  <text x="50" y="352" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">-- 타임존 변환</text>
+  <text x="50" y="370" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">SELECT created_at AT TIME ZONE 'UTC'</text>
+  <text x="50" y="388" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">FROM   events;</text>
+  <text x="50" y="408" font-size="13" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">-- MySQL: CONVERT_TZ(dt, '+09:00', '+00:00')</text>
+</svg>

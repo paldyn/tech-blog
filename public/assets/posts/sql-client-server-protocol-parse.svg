@@ -1,102 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460"
+     font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">쿼리 파싱 단계 상세</text>
+
+  <!-- SQL string input -->
+  <rect x="60" y="74" width="760" height="44" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="440" y="92" text-anchor="middle" font-size="11" fill="#888" font-family="'JetBrains Mono','Menlo',monospace">입력 SQL</text>
+  <text x="440" y="108" text-anchor="middle" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace">SELECT id, name FROM employees WHERE dept_id = 10</text>
+
   <defs>
-    <marker id="arr3" viewBox="0 0 14 14" refX="12" refY="7"
+    <marker id="da" viewBox="0 0 14 14" refX="12" refY="7"
             markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
       <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
     </marker>
   </defs>
-  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
 
-  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">SQL 파싱 단계 상세</text>
+  <!-- Step 1: Lexer -->
+  <line x1="440" y1="118" x2="440" y2="138" stroke="#7ec8e3" stroke-width="2" marker-end="url(#da)"/>
+  <rect x="160" y="140" width="560" height="60" fill="#0f1320" stroke="#7ec8e3" stroke-width="1.5" rx="6"/>
+  <text x="440" y="163" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">① 렉서(Lexer) — 토큰 분리</text>
+  <text x="440" y="183" text-anchor="middle" font-size="12" font-family="'JetBrains Mono','Menlo',monospace" fill="#ffffff">[SELECT] [id] [,] [name] [FROM] [employees] [WHERE] [dept_id] [=] [10]</text>
 
-  <!-- Stage 1 -->
-  <rect x="60" y="80" width="140" height="70" fill="#111827" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="130" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">SQL 텍스트</text>
-  <text x="130" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">문자열 형태의</text>
-  <text x="130" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">SQL 쿼리</text>
+  <!-- Step 2: Parser -->
+  <line x1="440" y1="200" x2="440" y2="218" stroke="#7ec8e3" stroke-width="2" marker-end="url(#da)"/>
+  <rect x="160" y="220" width="560" height="56" fill="#0f1320" stroke="#55c555" stroke-width="1.5" rx="6"/>
+  <text x="440" y="243" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">② 파서(Parser) — 파스 트리(AST) 생성</text>
+  <text x="440" y="264" text-anchor="middle" font-size="11" fill="#888">SELECT[target: id, name] FROM[table: employees] WHERE[dept_id = 10]</text>
 
-  <path d="M 200 115 L 240 115" fill="none" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr3)"/>
+  <!-- Step 3: Semantic Analysis -->
+  <line x1="440" y1="276" x2="440" y2="294" stroke="#7ec8e3" stroke-width="2" marker-end="url(#da)"/>
+  <rect x="160" y="296" width="560" height="56" fill="#0f1320" stroke="#55c555" stroke-width="1.5" rx="6"/>
+  <text x="440" y="319" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">③ 의미 분석 — 카탈로그 조회</text>
+  <text x="440" y="338" text-anchor="middle" font-size="11" fill="#888">테이블 존재 확인 / 컬럼 타입 검증 / 권한 확인</text>
 
-  <!-- Stage 2 -->
-  <rect x="240" y="80" width="140" height="70" fill="#111827" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="310" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">렉서(Lexer)</text>
-  <text x="310" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">토큰 분리</text>
-  <text x="310" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">SELECT / name / FROM ...</text>
-
-  <path d="M 380 115 L 420 115" fill="none" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr3)"/>
-
-  <!-- Stage 3 -->
-  <rect x="420" y="80" width="140" height="70" fill="#111827" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="490" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">파서(Parser)</text>
-  <text x="490" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">문법 검사</text>
-  <text x="490" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">파스 트리(AST) 생성</text>
-
-  <path d="M 560 115 L 600 115" fill="none" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr3)"/>
-
-  <!-- Stage 4 -->
-  <rect x="600" y="80" width="140" height="70" fill="#111827" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="670" y="108" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">의미 분석</text>
-  <text x="670" y="128" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">테이블/열 존재 확인</text>
-  <text x="670" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#888" text-anchor="middle">권한 검사</text>
-
-  <path d="M 740 115 L 780 115" fill="none" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr3)"/>
-  <text x="800" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#55c555" text-anchor="middle">→ 옵티마이저</text>
-
-  <!-- Code block: example query -->
-  <rect x="60" y="200" width="360" height="160" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="76" y="224" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#9aa4b8">-- 입력 SQL</text>
-  <text x="76" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#7ec8e3" font-weight="600">SELECT</text>
-  <text x="76" y="242" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#ffffff">        name, salary</text>
-  <text x="76" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#7ec8e3" font-weight="600">FROM</text>
-  <text x="76" y="260" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#ffffff">     employees</text>
-  <text x="76" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#7ec8e3" font-weight="600">WHERE</text>
-  <text x="76" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#ffffff">     dept_id = </text>
-  <text x="76" y="278" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#b5cea8">           10</text>
-  <text x="76" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#7ec8e3" font-weight="600">ORDER BY</text>
-  <text x="76" y="296" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#ffffff">          salary</text>
-  <text x="76" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#7ec8e3" font-weight="600">DESC</text>
-  <text x="76" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo',monospace"
-        font-size="13" fill="#ffffff">    ;</text>
-
-  <!-- Parse tree description -->
-  <rect x="460" y="200" width="360" height="160" fill="#111827" rx="8" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="640" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">파스 트리 (개념)</text>
-  <text x="476" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#7ec8e3">SELECT STATEMENT</text>
-  <text x="494" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">├── SELECT LIST: name, salary</text>
-  <text x="494" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">├── FROM: employees</text>
-  <text x="494" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">├── WHERE: dept_id = 10</text>
-  <text x="494" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888">└── ORDER BY: salary DESC</text>
-  <text x="640" y="350" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="11" fill="#55c555" text-anchor="middle">→ 옵티마이저가 이 트리를 받아 실행 계획 생성</text>
+  <!-- Step 4: Query Tree -->
+  <line x1="440" y1="352" x2="440" y2="370" stroke="#7ec8e3" stroke-width="2" marker-end="url(#da)"/>
+  <rect x="160" y="372" width="560" height="56" fill="#0f1320" stroke="#ce9178" stroke-width="1.5" rx="6"/>
+  <text x="440" y="395" text-anchor="middle" font-size="13" font-weight="600" fill="#ce9178">④ 쿼리 트리 → 옵티마이저로 전달</text>
+  <text x="440" y="414" text-anchor="middle" font-size="11" fill="#888">논리 실행 계획 수립 후 최적 물리 계획 선택 (인덱스, 조인 순서)</text>
 </svg>

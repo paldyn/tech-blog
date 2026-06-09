@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480"
+     font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">CREATE TABLE 실전 예시: 주문 시스템</text>
+
+  <!-- Left: users table -->
+  <rect x="30" y="68" width="380" height="198" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="50" y="90" font-size="11" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo',monospace">-- users 테이블</text>
+  <text x="50" y="110" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">CREATE TABLE users (</text>
+  <text x="50" y="128" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  id         BIGINT</text>
+  <text x="240" y="128" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace"> PRIMARY KEY,</text>
+  <text x="50" y="146" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  email      VARCHAR(200)</text>
+  <text x="50" y="164" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">                NOT NULL UNIQUE,</text>
+  <text x="50" y="182" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  name       VARCHAR(100) NOT NULL,</text>
+  <text x="50" y="200" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  created_at TIMESTAMPTZ</text>
+  <text x="50" y="218" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">               DEFAULT now()</text>
+  <text x="50" y="254" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">);</text>
+
+  <!-- Right: orders table -->
+  <rect x="450" y="68" width="400" height="240" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="470" y="90" font-size="11" fill="#9aa4b8" font-family="'JetBrains Mono','Menlo',monospace">-- orders 테이블 (FK 참조)</text>
+  <text x="470" y="110" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">CREATE TABLE orders (</text>
+  <text x="470" y="130" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  id         BIGINT PRIMARY KEY,</text>
+  <text x="470" y="150" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  user_id    BIGINT NOT NULL,</text>
+  <text x="470" y="170" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  total      NUMERIC(12,2)</text>
+  <text x="470" y="188" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">               CHECK (total &gt;= 0),</text>
+  <text x="470" y="206" font-size="13" fill="#ffffff" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  status     VARCHAR(20)</text>
+  <text x="470" y="224" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">               DEFAULT 'pending',</text>
+  <text x="470" y="244" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">  FOREIGN KEY (user_id)</text>
+  <text x="470" y="262" font-size="13" fill="#7777cc" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">    REFERENCES users(id)</text>
+  <text x="470" y="298" font-size="13" fill="#7ec8e3" font-weight="600" font-family="'JetBrains Mono','Menlo',monospace" xml:space="preserve">);</text>
+
+  <!-- Arrow FK -->
+  <defs>
+    <marker id="af" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <path d="M 450 238 L 412 238 L 412 148 L 412 100" stroke="#e05555" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#af)"/>
+  <text x="420" y="174" font-size="10" fill="#e05555">FK</text>
+
+  <!-- Bottom: dialect differences -->
+  <rect x="30" y="330" width="820" height="126" fill="#0f1320" stroke="#2a3a5e" stroke-width="1" rx="8"/>
+  <text x="440" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">DB별 주요 차이점</text>
+
+  <text x="90" y="376" font-size="12" font-weight="600" fill="#7ec8e3">PostgreSQL</text>
+  <text x="90" y="394" font-size="11" fill="#888">GENERATED ALWAYS AS IDENTITY</text>
+  <text x="90" y="410" font-size="11" fill="#888">TIMESTAMPTZ (타임존 포함)</text>
+
+  <text x="290" y="376" font-size="12" font-weight="600" fill="#55c555">MySQL</text>
+  <text x="290" y="394" font-size="11" fill="#888">AUTO_INCREMENT (PK용)</text>
+  <text x="290" y="410" font-size="11" fill="#888">DATETIME vs TIMESTAMP (범위 다름)</text>
+
+  <text x="490" y="376" font-size="12" font-weight="600" fill="#e05555">Oracle</text>
+  <text x="490" y="394" font-size="11" fill="#888">NUMBER(12,2) = NUMERIC</text>
+  <text x="490" y="410" font-size="11" fill="#888">VARCHAR2 권장 (VARCHAR는 예약)</text>
+
+  <text x="690" y="376" font-size="12" font-weight="600" fill="#ce9178">SQL Server</text>
+  <text x="690" y="394" font-size="11" fill="#888">IDENTITY(1,1) (PK용)</text>
+  <text x="690" y="410" font-size="11" fill="#888">NVARCHAR (유니코드), [대괄호] 인용</text>
+
+  <text x="440" y="444" text-anchor="middle" font-size="11" fill="#888">CHECK(total &gt;= 0) 의 &gt;= 는 HTML 엔티티가 아닌 실제 부등호 — SVG 외부에서는 그대로 사용</text>
+</svg>

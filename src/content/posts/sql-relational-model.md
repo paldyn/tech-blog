@@ -1,135 +1,120 @@
 ---
-title: "관계 모델의 수학적 기초 — 릴레이션, 속성, 튜플"
-description: "E. F. Codd가 제안한 관계 모델의 이론적 토대를 살펴봅니다. 도메인, 속성, 튜플, 릴레이션, 스키마의 정의와 관계 대수 6가지 기본 연산이 SQL에 어떻게 대응되는지 설명합니다."
+title: "관계 모델: 집합론 위에 세운 데이터 구조"
+description: "Edgar Codd가 1970년에 제안한 관계 모델의 수학적 토대를 탐구합니다. 릴레이션·도메인·키·관계 대수를 SQL과 연결해 명확히 해설합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-09"
+pubDate: "2026-06-10"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
-tags: ["SQL", "관계모델", "릴레이션", "관계대수", "Codd", "튜플", "도메인"]
+tags: ["관계모델", "RelationalModel", "Codd", "집합론", "관계대수", "SQL이론"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-what-is-rdb/)에서 관계형 데이터베이스의 탄생 배경과 핵심 개념을 개괄적으로 다뤘다. 이번에는 그 수학적 토대인 **관계 모델(Relational Model)**을 좀 더 엄밀하게 살펴본다. 이론이 지루하게 느껴질 수 있지만, 관계 모델을 이해해야 설계와 최적화에서 "왜 이렇게 해야 하는가"라는 질문에 스스로 답할 수 있다.
+[지난 글](/posts/sql-what-is-rdb/)에서 RDB의 기본 구조를 살펴봤다. 그런데 왜 하필 테이블 형태인가, 행과 열은 수학적으로 무엇인가 — 이 질문에 답하려면 1970년 IBM 연구원 에드거 코드(Edgar F. Codd)가 발표한 **관계 모델(Relational Model)**로 돌아가야 한다. SQL의 모든 동작은 이 이론 위에 세워져 있다.
 
-## E. F. Codd와 관계 모델
+## 관계 모델의 탄생
 
-1970년 Edgar F. Codd는 IBM 연구 논문 "A Relational Model of Data for Large Shared Data Banks"에서 관계 모델을 제안했다. 당시 DBMS는 계층형(IMS)이나 망형(CODASYL) 구조였는데, 이들은 데이터에 접근하려면 포인터를 따라가는 네비게이션 방식을 사용했다. Codd는 이를 집합론(Set Theory)과 술어 논리(First-Order Predicate Logic)에 기반한 선언형 방식으로 대체하자고 주장했다.
+1970년 이전 데이터베이스는 계층형(hierarchical)이나 네트워크형(network)이었다. 데이터를 탐색하려면 포인터를 따라가는 순서가 정해져 있었고, 접근 경로가 바뀌면 프로그램 전체를 수정해야 했다.
 
-핵심 아이디어는 간단했다. "사용자는 *무엇*을 원하는지만 기술하고, *어떻게* 찾을지는 시스템이 결정한다."
+코드는 집합론(set theory)과 일차 술어 논리(first-order predicate logic)를 기반으로 **물리적 저장 방식과 논리적 데이터 구조를 분리**하는 관계 모델을 제안했다. 사용자는 데이터가 어떻게 저장되었는지 알 필요 없이 **"무엇을 원하는지"**만 선언하면 된다.
 
-## 도메인 — 값의 허용 집합
+## 핵심 개념
 
-**도메인(Domain)**은 속성이 가질 수 있는 값의 집합이다. 예를 들어 `age` 속성의 도메인은 0 이상 150 이하의 정수, `email` 속성의 도메인은 이메일 형식 문자열이다.
+![관계 모델 핵심 개념](/assets/posts/sql-relational-model-concepts.svg)
 
-도메인의 핵심 조건은 **원자성(Atomicity)**이다. 각 도메인 값은 더 이상 분해할 수 없어야 한다. 하나의 셀에 여러 값을 담거나, 콤마로 구분된 문자열을 저장하는 것은 관계 모델을 위반한다. 이것이 제1정규형(1NF)의 기초가 되는 규칙이다.
+### 릴레이션(Relation)
 
-```sql
--- 위반 예시: 한 셀에 여러 전화번호
--- phones: "010-1234-5678, 02-987-6543"  ← 원자성 위반
+수학적 집합의 개념을 데이터에 적용한 것이다. 중요한 성질이 두 가지 있다.
 
--- 올바른 설계: 별도 테이블로 분리
-CREATE TABLE user_phones (
-    user_id  INT,
-    phone    VARCHAR(20),
-    PRIMARY KEY (user_id, phone)
-);
+- **튜플의 순서가 없다**: SQL에서 `ORDER BY` 없이 결과 순서를 기대하면 안 되는 이유가 바로 여기 있다.
+- **중복 튜플이 없다**: 집합에는 원소가 중복되지 않는다. SQL의 기본 `SELECT`가 중복을 허용하는 것은 성능 때문에 수학적 정의를 느슨하게 한 것이다. 엄밀한 집합 연산이 필요할 때는 `DISTINCT`나 `UNION`(중복 제거)을 쓴다.
+
+### 속성(Attribute)과 도메인(Domain)
+
+속성은 릴레이션의 열이다. 각 속성에는 **도메인**이 있다 — 해당 속성이 취할 수 있는 원자적(atomic) 값들의 집합. `INTEGER`나 `VARCHAR(50)` 같은 데이터 타입이 도메인의 SQL 구현이다.
+
+코드의 1NF(제1 정규형)는 "모든 속성값은 원자적이어야 한다"는 원칙인데, 이는 도메인 값이 더 이상 분해될 수 없어야 한다는 뜻이다.
+
+### 키(Key)의 계층 구조
+
+```
+슈퍼 키(Super Key)
+  └─ 후보 키(Candidate Key)  ← 최소성 만족
+       ├─ 기본 키(Primary Key)   ← 한 개 선택
+       └─ 대체 키(Alternate Key) ← 나머지 후보
 ```
 
-## 속성과 스키마
+- **슈퍼 키**: 튜플을 유일하게 식별하는 속성(들)의 집합 (여분이 있어도 됨)
+- **후보 키**: 슈퍼 키 중 **최소성**을 만족하는 것 — 어떤 속성도 제거하면 유일성이 깨짐
+- **기본 키(PK)**: 후보 키 중 설계자가 선택한 하나
+- **대체 키**: 선택받지 못한 나머지 후보 키 (SQL의 `UNIQUE`로 강제)
 
-**속성(Attribute)**은 이름과 도메인의 쌍이다. 테이블에서는 열(Column)로 구현된다. 속성들의 집합이 릴레이션의 **스키마(Schema)**다. 스키마는 구조를 정의하고, 인스턴스(Instance)는 실제 데이터를 담는다.
+### 외래 키(Foreign Key)와 참조 무결성
+
+외래 키는 한 릴레이션의 속성이 다른 릴레이션의 기본 키를 참조하는 장치다. **참조 무결성(Referential Integrity)**은 외래 키 값이 반드시 참조 대상에 존재해야 한다는 규칙이다.
 
 ```sql
--- 스키마 정의
+CREATE TABLE departments (
+    id   INTEGER PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE employees (
-    emp_id     INT,           -- 속성: 이름=emp_id, 도메인=정수
-    name       VARCHAR(100),  -- 속성: 이름=name, 도메인=문자열
-    hire_date  DATE,          -- 속성: 이름=hire_date, 도메인=날짜
-    salary     DECIMAL(12,2)  -- 속성: 이름=salary, 도메인=소수
+    id      INTEGER PRIMARY KEY,
+    name    VARCHAR(50),
+    dept_id INTEGER REFERENCES departments(id)  -- 외래 키
 );
 ```
 
-## 튜플과 릴레이션
+`dept_id`에 `departments.id`에 없는 값을 넣으면 RDBMS가 거부한다.
 
-**튜플(Tuple)**은 각 속성에 대해 도메인에서 하나의 값을 선택한 순서 없는 쌍의 집합이다. 테이블의 한 행(Row)에 해당한다.
+## 관계 대수(Relational Algebra)
 
-**릴레이션(Relation)**은 헤더(속성의 집합)와 바디(튜플의 집합)로 구성된다. 바디는 수학적 집합이므로 두 가지 성질이 보장된다.
+![관계 대수 연산](/assets/posts/sql-relational-model-operations.svg)
 
-1. **중복 없음**: 완전히 동일한 튜플이 두 개 존재할 수 없다.
-2. **순서 없음**: 행의 순서는 릴레이션에서 의미가 없다. `ORDER BY` 없이 반환되는 행의 순서는 보장되지 않는다.
-
-![관계 모델의 구성 요소](/assets/posts/sql-relational-model-theory.svg)
-
-## NULL의 의미
-
-관계 모델에서 `NULL`은 "값이 없다"가 아니라 "**알 수 없다(Unknown)**"는 의미다. NULL이 포함된 연산은 예상치 못한 결과를 낳는다.
-
-```sql
--- NULL 비교
-SELECT 1 = NULL;    -- NULL (True도 False도 아님)
-SELECT NULL = NULL; -- NULL (두 NULL이 같은지도 알 수 없음)
-
--- NULL 처리
-SELECT COALESCE(salary, 0) FROM employees; -- NULL이면 0으로 대체
-SELECT * FROM employees WHERE salary IS NULL; -- NULL 비교는 IS NULL 사용
-```
-
-이런 특성 때문에 NULL 처리를 잘못하면 WHERE 조건에서 행이 예상치 못하게 필터링된다. 이 부분은 시리즈 후반부에 자세히 다룬다.
-
-## 관계 대수 — SQL의 이론적 토대
-
-Codd는 릴레이션을 다루는 연산 집합인 **관계 대수(Relational Algebra)**를 정의했다. 6가지 기본 연산이 있으며, 이것들의 조합으로 모든 쿼리를 표현할 수 있다.
-
-![관계 대수 6가지 기본 연산](/assets/posts/sql-relational-model-algebra.svg)
+관계 대수는 릴레이션에 적용 가능한 연산들의 집합이다. SQL은 관계 대수의 선언적 표현이다.
 
 | 연산 | 기호 | SQL 대응 |
-|---|---|---|
+|------|------|---------|
 | 선택(Selection) | σ | `WHERE` |
-| 투영(Projection) | π | `SELECT 열목록` |
+| 투영(Projection) | π | `SELECT` (열 지정) |
 | 조인(Join) | ⋈ | `JOIN` |
 | 합집합(Union) | ∪ | `UNION` |
-| 차집합(Difference) | − | `EXCEPT` / `MINUS` |
-| 곱집합(Cartesian Product) | × | `CROSS JOIN` |
+| 차집합(Difference) | − | `EXCEPT` |
+| 교집합(Intersection) | ∩ | `INTERSECT` |
+| 카티션 곱(Cartesian Product) | × | `CROSS JOIN` |
 
-파생 연산인 교집합(∩, `INTERSECT`)과 나누기(÷)도 있지만, 기본 연산의 조합으로 표현 가능하다.
+중요한 점은 관계 대수의 **폐쇄성(closure)**이다 — 모든 연산의 결과도 릴레이션이다. SQL 서브쿼리가 테이블처럼 다루어지는 것이 이 원리 덕분이다.
 
-### 선택과 투영 조합
+## Codd의 12 규칙
 
-```sql
--- σ(selection): 조건 만족하는 튜플
--- π(projection): 특정 속성만 추출
--- 아래 SQL = π_{name,email}(σ_{age > 30}(users))
+코드는 RDBMS가 관계 모델을 제대로 구현했는지 검증하기 위한 **12개 규칙**을 1985년에 발표했다. 전부 만족하는 RDBMS는 사실상 없지만, 이 규칙들은 관계 모델의 이상적 목표를 명확히 보여준다.
 
-SELECT name, email
-FROM users
-WHERE age > 30;
-```
+주요 규칙:
+1. **정보 규칙**: 모든 정보는 테이블의 값으로만 표현된다
+2. **보장된 접근 규칙**: 테이블명 + 기본 키 + 열명으로 모든 데이터에 접근 가능하다
+3. **NULL 처리 규칙**: NULL은 미지 정보를 나타내는 단일 방식으로 지원된다
+4. **데이터 독립성**: 물리적 저장 방식이 바뀌어도 애플리케이션이 영향받지 않는다
 
-### 조인
+## 관계 모델과 실제 SQL의 차이
 
-조인은 두 릴레이션의 튜플을 조건에 따라 결합한다. 관계 대수에서는 `σ(R × S)`로 표현되며, 곱집합 후 선택 연산을 적용하는 것과 같다. 하지만 실제 DBMS는 이를 그대로 실행하지 않고 최적화된 알고리즘(Nested Loop, Hash Join 등)을 사용한다.
+순수한 관계 모델과 SQL에는 차이가 있다.
 
-```sql
--- ⋈ (자연 조인): 같은 이름의 속성을 자동 조인
-SELECT o.order_id, u.name, o.amount
-FROM orders o
-JOIN users u ON o.user_id = u.user_id
-WHERE o.amount > 50000;
-```
+| 관계 모델 이론 | SQL 현실 |
+|-------------|--------|
+| 중복 튜플 없음 | 기본적으로 중복 허용 (`MULTISET`) |
+| 행 순서 없음 | `ORDER BY` 없으면 순서 보장 안 됨 |
+| NULL 없음 | NULL 값 허용 |
+| 속성명은 집합 | 열 순서(ordinal position)가 존재함 |
 
-## 관계 완전성
-
-관계 대수로 표현 가능한 모든 쿼리를 표현할 수 있는 언어를 **관계 완전(Relationally Complete)**하다고 한다. SQL은 관계 완전하며, 여기에 집계(Aggregation)와 정렬(Ordering) 같은 추가 기능을 갖춘다. 따라서 SQL로 표현할 수 없는 관계 대수 쿼리는 없다.
-
-이 이론적 토대를 이해하면, SQL의 이상한 동작이 버그가 아니라 집합론의 자연스러운 결과임을 알 수 있다. 다음 글에서는 SQL 언어 자체의 역사와 표준화 과정을 살펴본다.
+이 차이를 이해하면 "왜 `SELECT *`의 컬럼 순서에 의존하면 안 되는가", "왜 `NULL = NULL`이 `TRUE`가 아닌가" 같은 SQL의 이상한 동작을 자연스럽게 납득할 수 있다.
 
 ---
 
-**지난 글:** [관계형 데이터베이스란 무엇인가](/posts/sql-what-is-rdb/)
+**지난 글:** [RDB란 무엇인가: 관계형 데이터베이스의 본질](/posts/sql-what-is-rdb/)
 
-**다음 글:** [SQL의 역사와 표준 — ANSI SQL부터 SQL:2023까지](/posts/sql-history-and-standard/)
+**다음 글:** [SQL의 역사와 표준: ANSI SQL에서 SQL:2023까지](/posts/sql-history-and-standard/)
 
 <br>
 읽어주셔서 감사합니다. 😊
