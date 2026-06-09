@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-ut" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">useTransition 동작 흐름</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">전환 중에도 현재 UI를 유지하며 다음 상태를 백그라운드에서 준비</text>
+
+  <!-- State 1: Before transition -->
+  <rect x="60" y="88" width="180" height="70" rx="10" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">현재 UI</text>
+  <text x="150" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Tab A 표시 중</text>
+  <text x="150" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">isPending: false</text>
+
+  <line x1="240" y1="123" x2="290" y2="123" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-ut)"/>
+  <text x="265" y="113" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">Tab B 클릭</text>
+
+  <!-- State 2: Pending -->
+  <rect x="290" y="88" width="200" height="70" rx="10" fill="#2a2a1a" stroke="#e8c55a" stroke-width="1.5"/>
+  <text x="390" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8c55a">전환 중</text>
+  <text x="390" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Tab A 여전히 표시 (stale)</text>
+  <text x="390" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e8c55a">isPending: true</text>
+
+  <line x1="490" y1="123" x2="540" y2="123" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-ut)"/>
+  <text x="515" y="113" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">렌더 완료</text>
+
+  <!-- State 3: After transition -->
+  <rect x="540" y="88" width="200" height="70" rx="10" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="116" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">전환 완료</text>
+  <text x="640" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Tab B 표시</text>
+  <text x="640" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">isPending: false</text>
+
+  <!-- Key insight box -->
+  <rect x="60" y="182" width="680" height="56" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="400" y="205" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">핵심: 전환 중에 "이전 UI를 유지하고 새 UI를 백그라운드에서 준비"</text>
+  <text x="400" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">useDeferredValue와 달리: setState를 직접 제어할 때 사용 / Suspense와 자연스럽게 통합</text>
+
+  <!-- Code Block -->
+  <rect x="60" y="258" width="760" height="192" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// useTransition + Suspense 조합 — 가장 강력한 패턴</text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> NavTabs() {</tspan>
+  </text>
+  <text x="76" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [page, setPage] = useState(</tspan>
+    <tspan fill="#ce9178">'home'</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [isPending, startTransition] = useTransition();</tspan>
+  </text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> (</tspan>
+  </text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    &lt;</tspan>
+    <tspan fill="#55c555">Suspense</tspan>
+    <tspan fill="#ffffff"> fallback={&lt;</tspan>
+    <tspan fill="#55c555">Loading</tspan>
+    <tspan fill="#ffffff">/&gt;}&gt;</tspan>
+  </text>
+  <text x="76" y="392" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">      &lt;</tspan>
+    <tspan fill="#55c555">button</tspan>
+    <tspan fill="#ffffff"> onClick={() =&gt; startTransition(() =&gt; setPage(</tspan>
+    <tspan fill="#ce9178">'dashboard'</tspan>
+    <tspan fill="#ffffff">))}</tspan>
+  </text>
+  <text x="76" y="410" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">        style={{ opacity: isPending ? </tspan>
+    <tspan fill="#b5cea8">0.6</tspan>
+    <tspan fill="#ffffff"> : </tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff"> }}&gt;대시보드&lt;/</tspan>
+    <tspan fill="#55c555">button</tspan>
+    <tspan fill="#ffffff">&gt;</tspan>
+  </text>
+  <text x="76" y="428" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">      {page === </tspan>
+    <tspan fill="#ce9178">'dashboard'</tspan>
+    <tspan fill="#ffffff"> &amp;&amp; &lt;</tspan>
+    <tspan fill="#55c555">LazyDashboard</tspan>
+    <tspan fill="#ffffff">/&gt;}</tspan>
+  </text>
+  <text x="76" y="446" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  );</text>
+</svg>

@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-ll" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-opt" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">코드 스플리팅 — 번들 분리 효과</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">React.lazy + Suspense = 필요한 시점에만 청크 로드</text>
+
+  <!-- Without splitting -->
+  <text x="200" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">스플리팅 없음</text>
+
+  <rect x="60" y="108" width="280" height="56" rx="6" fill="#2a1a1e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">main.bundle.js</text>
+  <text x="200" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">App + Dashboard + Settings + Admin (4MB)</text>
+
+  <text x="200" y="182" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">최초 방문자도 모든 코드 다운로드</text>
+  <text x="200" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">→ 초기 로딩 느림, TTI 높음</text>
+
+  <!-- With splitting -->
+  <text x="640" y="96" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">스플리팅 적용</text>
+
+  <rect x="480" y="108" width="160" height="56" rx="6" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="560" y="130" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">main.bundle.js</text>
+  <text x="560" y="148" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">App + Core (1MB)</text>
+
+  <rect x="650" y="108" width="120" height="26" rx="4" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="710" y="124" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">dashboard.chunk (1MB)</text>
+
+  <rect x="650" y="138" width="120" height="26" rx="4" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="710" y="154" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">admin.chunk (2MB)</text>
+
+  <text x="640" y="186" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">방문한 라우트의 청크만 로드</text>
+  <text x="640" y="204" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">→ 초기 로딩 빠름, TTI 개선</text>
+
+  <!-- Code example -->
+  <rect x="60" y="224" width="760" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// React.lazy + Suspense 기본 패턴</text>
+  <text x="76" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> { lazy, Suspense } </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ce9178"> 'react'</tspan>
+    <tspan fill="#ffffff">;</tspan>
+  </text>
+  <text x="76" y="284" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// default export가 있는 컴포넌트만 가능</text>
+  <text x="76" y="302" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> Dashboard = lazy(() =&gt; </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#ce9178">'./pages/Dashboard'</tspan>
+    <tspan fill="#ffffff">));</tspan>
+  </text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> Admin = lazy(() =&gt; </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff">(</tspan>
+    <tspan fill="#ce9178">'./pages/Admin'</tspan>
+    <tspan fill="#ffffff">));</tspan>
+  </text>
+  <text x="76" y="340" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> App() {</tspan>
+  </text>
+  <text x="76" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">Suspense</tspan>
+    <tspan fill="#ffffff"> fallback={&lt;</tspan>
+    <tspan fill="#55c555">PageLoader</tspan>
+    <tspan fill="#ffffff">/&gt;}&gt;</tspan>
+  </text>
+  <text x="76" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    &lt;</tspan>
+    <tspan fill="#55c555">Routes</tspan>
+    <tspan fill="#ffffff">&gt;&lt;</tspan>
+    <tspan fill="#55c555">Route</tspan>
+    <tspan fill="#ffffff"> path=</tspan>
+    <tspan fill="#ce9178">"/dashboard"</tspan>
+    <tspan fill="#ffffff"> element={&lt;</tspan>
+    <tspan fill="#55c555">Dashboard</tspan>
+    <tspan fill="#ffffff">/&gt;}/&gt;&lt;/</tspan>
+    <tspan fill="#55c555">Routes</tspan>
+    <tspan fill="#ffffff">&gt;</tspan>
+  </text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  &lt;/</tspan>
+    <tspan fill="#55c555">Suspense</tspan>
+    <tspan fill="#ffffff">&gt;;</tspan>
+  </text>
+  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="462" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">React.lazy는 동적 import()를 반환하는 함수를 인자로 받음 — named export는 래핑 필요</text>
+</svg>

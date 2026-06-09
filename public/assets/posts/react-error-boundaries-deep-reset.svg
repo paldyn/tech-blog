@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-dr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-reset" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">에러 경계 리셋 패턴</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">에러 발생 후 사용자가 재시도할 수 있는 복구 흐름</text>
+
+  <!-- Flow diagram -->
+  <!-- Step 1: Normal -->
+  <rect x="60" y="90" width="160" height="56" rx="8" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">정상 렌더</text>
+  <text x="140" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">children 표시</text>
+
+  <line x1="220" y1="118" x2="284" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-dr)"/>
+  <text x="252" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#888">에러 throw</text>
+
+  <!-- Step 2: Error caught -->
+  <rect x="284" y="90" width="160" height="56" rx="8" fill="#2a1a1e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="364" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">에러 감지</text>
+  <text x="364" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">hasError = true</text>
+
+  <line x1="444" y1="118" x2="508" y2="118" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-dr)"/>
+
+  <!-- Step 3: Fallback UI -->
+  <rect x="508" y="90" width="160" height="56" rx="8" fill="#2a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="588" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc">Fallback UI</text>
+  <text x="588" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">재시도 버튼 제공</text>
+
+  <!-- Step 4: Reset -->
+  <line x1="668" y1="118" x2="732" y2="118" stroke="#55c555" stroke-width="2" marker-end="url(#arr-reset)"/>
+  <text x="700" y="108" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#55c555">resetErrorBoundary</text>
+
+  <rect x="732" y="90" width="120" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="792" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">복구</text>
+  <text x="792" y="134" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">재렌더</text>
+
+  <!-- resetKeys explanation -->
+  <rect x="60" y="178" width="380" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="200" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// resetKeys: 값 변경 시 자동 리셋</text>
+  <text x="76" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> App() {</tspan>
+  </text>
+  <text x="76" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [userId, setUserId] = useState(</tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">ErrorBoundary</tspan>
+  </text>
+  <text x="76" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">resetKeys</tspan>
+    <tspan fill="#ffffff">={[userId]}</tspan>
+  </text>
+  <text x="76" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">FallbackComponent</tspan>
+    <tspan fill="#ffffff">={ErrorFallback}&gt;...</tspan>
+  </text>
+  <text x="76" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- resetKeys explanation box -->
+  <rect x="460" y="178" width="360" height="130" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="480" y="200" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">resetKeys 동작 방식</text>
+  <text x="480" y="222" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">에러 상태에서 resetKeys의 값이 변경되면</text>
+  <text x="480" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">에러 경계가 자동으로 초기화됩니다.</text>
+  <text x="480" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">예: userId가 바뀌면 에러 경계 리셋</text>
+  <text x="480" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">→ 새 사용자 데이터로 재시도</text>
+  <text x="480" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">✓ 라우트 변경 시 자동 복구에 유용</text>
+
+  <!-- Sentry integration -->
+  <rect x="60" y="336" width="760" height="116" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="358" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// Sentry 연동 예시 (onError 콜백)</text>
+  <text x="76" y="376" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> * </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">as</tspan>
+    <tspan fill="#ffffff"> Sentry </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ce9178"> '@sentry/react'</tspan>
+    <tspan fill="#ffffff">;</tspan>
+  </text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">&lt;</tspan>
+    <tspan fill="#55c555">ErrorBoundary</tspan>
+  </text>
+  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">onError</tspan>
+    <tspan fill="#ffffff">={(err, info) =&gt; Sentry.captureException(err, {</tspan>
+  </text>
+  <text x="76" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    extra: { componentStack: info.componentStack }</tspan>
+  </text>
+  <text x="76" y="448" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  })}&gt;...</text>
+</svg>

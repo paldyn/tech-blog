@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-lc" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">ErrorBoundary 구현 패턴</text>
+
+  <!-- Class component implementation -->
+  <rect x="60" y="72" width="420" height="320" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="94" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 클래스 컴포넌트 기반 구현</text>
+  <text x="76" y="114" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">class</tspan>
+    <tspan fill="#ffffff"> ErrorBoundary </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">extends</tspan>
+    <tspan fill="#ffffff"> Component {</tspan>
+  </text>
+  <text x="76" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  state = { hasError: </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">false</tspan>
+    <tspan fill="#ffffff"> };</tspan>
+  </text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // 에러 발생 시 state 업데이트</text>
+  <text x="76" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  static</tspan>
+    <tspan fill="#ffffff"> getDerivedStateFromError(error) {</tspan>
+  </text>
+  <text x="76" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">return</tspan>
+    <tspan fill="#ffffff"> { hasError: </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">true</tspan>
+    <tspan fill="#ffffff"> };</tspan>
+  </text>
+  <text x="76" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text x="76" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // 에러 로깅 (side effect)</text>
+  <text x="76" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  componentDidCatch(error, info) {</tspan>
+  </text>
+  <text x="76" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    logToSentry(error, info.componentStack);</tspan>
+  </text>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  render() {</tspan>
+  </text>
+  <text x="76" y="312" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    if</tspan>
+    <tspan fill="#ffffff"> (this.state.hasError) {</tspan>
+  </text>
+  <text x="76" y="330" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">      return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">h2</tspan>
+    <tspan fill="#ffffff">&gt;문제가 발생했습니다&lt;/</tspan>
+    <tspan fill="#55c555">h2</tspan>
+    <tspan fill="#ffffff">&gt;;</tspan>
+  </text>
+  <text x="76" y="348" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    }</text>
+  <text x="76" y="366" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">    return</tspan>
+    <tspan fill="#ffffff"> this.props.children;</tspan>
+  </text>
+  <text x="76" y="384" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  }</text>
+  <text x="76" y="402" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Right side: lifecycle flow -->
+  <text x="560" y="95" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">에러 처리 흐름</text>
+
+  <rect x="490" y="110" width="220" height="50" rx="8" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="600" y="132" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">자식 컴포넌트에서 throw</text>
+  <text x="600" y="150" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">렌더 · 생명주기 중 에러</text>
+
+  <line x1="600" y1="160" x2="600" y2="185" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-lc)"/>
+
+  <rect x="490" y="185" width="220" height="50" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="600" y="207" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">getDerivedStateFromError</text>
+  <text x="600" y="225" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">static · state 변경</text>
+
+  <line x1="600" y1="235" x2="600" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-lc)"/>
+
+  <rect x="490" y="260" width="220" height="50" rx="8" fill="#2a1a2a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="600" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">Fallback UI 렌더</text>
+  <text x="600" y="300" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">hasError === true</text>
+
+  <line x1="600" y1="310" x2="600" y2="335" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-lc)"/>
+
+  <rect x="490" y="335" width="220" height="50" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="600" y="357" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">componentDidCatch</text>
+  <text x="600" y="375" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">로깅 · 분석 서비스 전송</text>
+
+  <!-- Note about limitations -->
+  <rect x="490" y="400" width="330" height="60" rx="6" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="510" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">⚠ 에러 경계가 잡지 못하는 경우:</text>
+  <text x="510" y="438" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">이벤트 핸들러 · 비동기 코드(setTimeout)</text>
+  <text x="510" y="455" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SSR · 에러 경계 자체의 에러</text>
+</svg>

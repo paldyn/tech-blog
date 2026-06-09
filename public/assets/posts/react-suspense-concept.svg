@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-sp" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Suspense — 선언적 비동기 UI</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">컴포넌트가 "준비 중"임을 React에 알리면 fallback을 자동으로 표시</text>
+
+  <!-- Without Suspense -->
+  <text x="240" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e05555">기존 방식</text>
+
+  <rect x="60" y="110" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// isLoading 상태 직접 관리</text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> Profile() {</tspan>
+  </text>
+  <text x="76" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [loading, setLoading] = useState(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">true</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [data, setData] = useState(</tspan>
+    <tspan fill="#7ec8e3" font-weight="600">null</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // useEffect + fetch 보일러플레이트...</text>
+  <text x="76" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan>
+    <tspan fill="#ffffff"> (loading) </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">Spinner</tspan>
+    <tspan fill="#ffffff">/&gt;;</tspan>
+  </text>
+  <text x="76" y="240" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  if</tspan>
+    <tspan fill="#ffffff"> (error) </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">ErrorUI</tspan>
+    <tspan fill="#ffffff">/&gt;;</tspan>
+  </text>
+  <text x="76" y="258" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">ProfileCard</tspan>
+    <tspan fill="#ffffff"> data={data}/&gt;;</tspan>
+  </text>
+  <text x="76" y="276" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <rect x="80" y="290" width="320" height="30" rx="6" fill="#2a1a1e" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="309" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">로딩/에러 분기를 컴포넌트마다 반복</text>
+
+  <!-- With Suspense -->
+  <text x="640" y="98" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#55c555">Suspense 방식</text>
+
+  <rect x="460" y="110" width="360" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="132" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 로딩 상태를 밖으로 분리</text>
+  <text x="476" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> Profile() {</tspan>
+  </text>
+  <text x="476" y="168" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> data = use(profilePromise);</tspan>
+  </text>
+  <text x="476" y="186" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // 로딩/에러 없음 — 항상 data 있음</text>
+  <text x="476" y="204" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">ProfileCard</tspan>
+    <tspan fill="#ffffff"> data={data}/&gt;;</tspan>
+  </text>
+  <text x="476" y="222" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+  <text x="476" y="250" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 부모에서 한 번만</text>
+  <text x="476" y="268" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> App() {</tspan>
+  </text>
+  <text x="476" y="286" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">Suspense</tspan>
+    <tspan fill="#ffffff"> fallback={&lt;</tspan>
+    <tspan fill="#55c555">Spinner</tspan>
+    <tspan fill="#ffffff">/&gt;}&gt;...</tspan>
+  </text>
+  <text x="476" y="304" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <rect x="480" y="290" width="320" height="30" rx="6" fill="#1a2a1e" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="309" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">컴포넌트 = "항상 데이터가 있음"을 가정</text>
+
+  <!-- How Suspense works -->
+  <text x="440" y="354" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8">Suspense 동작 원리</text>
+
+  <rect x="60" y="366" width="180" height="56" rx="8" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="150" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">컴포넌트가</text>
+  <text x="150" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">Promise를 throw</text>
+
+  <line x1="240" y1="394" x2="304" y2="394" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-sp)"/>
+
+  <rect x="304" y="366" width="180" height="56" rx="8" fill="#2a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="394" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">Suspense가</text>
+  <text x="394" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#7777cc">fallback 표시</text>
+
+  <line x1="484" y1="394" x2="548" y2="394" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-sp)"/>
+
+  <rect x="548" y="366" width="180" height="56" rx="8" fill="#1a2a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="638" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">Promise 완료 →</text>
+  <text x="638" y="408" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555">컴포넌트 렌더</text>
+
+  <line x1="728" y1="394" x2="792" y2="394" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-sp)"/>
+
+  <rect x="792" y="366" width="44" height="56" rx="8" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="814" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">완료</text>
+
+  <text x="440" y="464" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">현재는 주로 React.lazy + Suspense(코드 스플리팅)와 React Query/SWR의 Suspense 모드에서 사용</text>
+</svg>

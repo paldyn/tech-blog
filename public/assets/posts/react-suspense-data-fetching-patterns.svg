@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-sdf" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Suspense 데이터 페칭 패턴 비교</text>
+
+  <!-- Waterfall -->
+  <text x="200" y="78" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">워터폴 (순차)</text>
+
+  <!-- Timeline bars for waterfall -->
+  <rect x="60" y="90" width="280" height="22" rx="3" fill="#1a1a1a" stroke="#333"/>
+  <text x="70" y="105" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Profile fetch</text>
+  <rect x="170" y="90" width="100" height="22" rx="3" fill="#e05555" opacity="0.8"/>
+
+  <rect x="60" y="120" width="280" height="22" rx="3" fill="#1a1a1a" stroke="#333"/>
+  <text x="70" y="135" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Posts fetch (profile 완료 후)</text>
+  <rect x="270" y="120" width="70" height="22" rx="3" fill="#e05555" opacity="0.8"/>
+
+  <text x="200" y="162" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">총 대기: A + B 시간</text>
+
+  <!-- Parallel -->
+  <text x="200" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">병렬 (동시 시작)</text>
+
+  <rect x="60" y="202" width="280" height="22" rx="3" fill="#1a1a1a" stroke="#333"/>
+  <text x="70" y="217" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Profile fetch</text>
+  <rect x="170" y="202" width="100" height="22" rx="3" fill="#55c555" opacity="0.8"/>
+
+  <rect x="60" y="232" width="280" height="22" rx="3" fill="#1a1a1a" stroke="#333"/>
+  <text x="70" y="247" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Posts fetch (동시)</text>
+  <rect x="170" y="232" width="70" height="22" rx="3" fill="#55c555" opacity="0.8"/>
+
+  <text x="200" y="274" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">총 대기: max(A, B) 시간</text>
+
+  <!-- Code: parallel fetch pattern -->
+  <rect x="380" y="72" width="460" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="396" y="94" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 병렬 fetch - Suspense 친화적</text>
+  <text x="396" y="112" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 요청을 컴포넌트 밖에서 미리 시작</text>
+  <text x="396" y="130" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> profilePromise = fetchProfile(id);</tspan>
+  </text>
+  <text x="396" y="148" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> postsPromise = fetchPosts(id);</tspan>
+  </text>
+  <text x="396" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 컴포넌트에서 use() 로 소비</text>
+  <text x="396" y="192" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> ProfilePage() {</tspan>
+  </text>
+  <text x="396" y="210" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> profile = use(profilePromise);</tspan>
+  </text>
+  <text x="396" y="228" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> posts = use(postsPromise);</tspan>
+  </text>
+  <text x="396" y="246" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">div</tspan>
+    <tspan fill="#ffffff">&gt;...&lt;/</tspan>
+    <tspan fill="#55c555">div</tspan>
+    <tspan fill="#ffffff">&gt;;</tspan>
+  </text>
+  <text x="396" y="264" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+  <text x="396" y="290" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 두 fetch가 동시에 시작됨</text>
+  <text x="396" y="308" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 컴포넌트 렌더 전에 시작하는 것이 핵심</text>
+  <text x="396" y="326" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> App() {</tspan>
+  </text>
+  <text x="396" y="344" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">Suspense</tspan>
+    <tspan fill="#ffffff"> fallback={&lt;</tspan>
+    <tspan fill="#55c555">Loading</tspan>
+    <tspan fill="#ffffff">/&gt;}&gt;</tspan>
+  </text>
+  <text x="396" y="362" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    &lt;</tspan>
+    <tspan fill="#55c555">ProfilePage</tspan>
+    <tspan fill="#ffffff">/&gt;&lt;/</tspan>
+    <tspan fill="#55c555">Suspense</tspan>
+    <tspan fill="#ffffff">&gt;;</tspan>
+  </text>
+  <text x="396" y="380" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Bottom insights -->
+  <rect x="60" y="394" width="760" height="84" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="80" y="416" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">핵심 원칙</text>
+  <text x="80" y="436" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">① fetch를 컴포넌트 렌더 이전에 시작 — "Render-as-You-Fetch" 패턴</text>
+  <text x="80" y="454" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">② useEffect 안 fetch = 렌더 완료 후 시작 → 워터폴 원인</text>
+  <text x="80" y="472" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">③ 실무: React Query useSuspenseQuery가 캐시 + 병렬 + Suspense 통합 처리</text>
+</svg>

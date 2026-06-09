@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="arr-st2" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">stale UI 표시 패턴</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">deferred 값으로 "현재 표시 중인 값이 최신이 아님"을 시각화</text>
+
+  <!-- Code: stale detection -->
+  <rect x="60" y="82" width="500" height="300" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="104" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// query !== deferredQuery = stale 상태</text>
+  <text x="76" y="124" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> SearchPage() {</tspan>
+  </text>
+  <text x="76" y="142" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [query, setQuery] = useState(</tspan>
+    <tspan fill="#ce9178">''</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="160" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> deferredQuery = useDeferredValue(query);</tspan>
+  </text>
+  <text x="76" y="180" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // 두 값이 다르면 stale (결과 업데이트 대기 중)</text>
+  <text x="76" y="198" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> isStale = query !== deferredQuery;</tspan>
+  </text>
+  <text x="76" y="218" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  const</tspan>
+    <tspan fill="#ffffff"> results = useMemo(</tspan>
+  </text>
+  <text x="76" y="236" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    () =&gt; expensiveFilter(deferredQuery),</tspan>
+  </text>
+  <text x="76" y="254" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    [deferredQuery]</tspan>
+  </text>
+  <text x="76" y="272" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  );</text>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> (</tspan>
+  </text>
+  <text x="76" y="310" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">    &lt;</tspan>
+    <tspan fill="#55c555">div</tspan>
+    <tspan fill="#ffffff"> style={{ opacity: isStale ? </tspan>
+    <tspan fill="#b5cea8">0.6</tspan>
+    <tspan fill="#ffffff"> : </tspan>
+    <tspan fill="#b5cea8">1</tspan>
+    <tspan fill="#ffffff"> }}&gt;</tspan>
+  </text>
+  <text x="76" y="328" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">      &lt;</tspan>
+    <tspan fill="#55c555">input</tspan>
+    <tspan fill="#ffffff"> value={query} onChange={e =&gt; setQuery(e.target.value)}/&gt;</tspan>
+  </text>
+  <text x="76" y="346" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">      &lt;</tspan>
+    <tspan fill="#55c555">ResultList</tspan>
+    <tspan fill="#ffffff"> results={results}/&gt;</tspan>
+  </text>
+  <text x="76" y="364" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  );</text>
+  <text x="76" y="382" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">}</text>
+
+  <!-- Right: useMemo requirement note -->
+  <rect x="580" y="82" width="260" height="160" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="600" y="106" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">memo 필수</text>
+  <text x="600" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">useDeferredValue 단독으로는</text>
+  <text x="600" y="144" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">렌더링 최적화가 안 됨.</text>
+  <text x="600" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">memo로 감싼 컴포넌트에</text>
+  <text x="600" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">deferredValue를 prop으로</text>
+  <text x="600" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">전달해야 지연 효과 발생.</text>
+  <text x="600" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">memo 없으면 부모 리렌더 시</text>
+  <text x="600" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">자식도 즉시 리렌더됨.</text>
+
+  <!-- useDeferredValue vs debounce -->
+  <rect x="580" y="258" width="260" height="124" rx="6" fill="#1a2030" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="600" y="278" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">vs 디바운스</text>
+  <text x="600" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">디바운스: n ms 고정 대기</text>
+  <text x="600" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">→ 빠른 기기에서도 불필요한 지연</text>
+  <text x="600" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">useDeferredValue: 브라우저가</text>
+  <text x="600" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">idle 할 때 즉시 처리</text>
+  <text x="600" y="374" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">→ 빠른 기기는 즉각 반응</text>
+</svg>

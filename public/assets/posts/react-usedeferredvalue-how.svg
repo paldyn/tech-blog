@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <defs>
+    <marker id="arr-dv" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">useDeferredValue 동작 원리</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">원래 값보다 "한 박자 뒤처진" 버전을 반환</text>
+
+  <!-- Timeline visualization -->
+  <text x="80" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#888">시간 →</text>
+
+  <!-- query (original) -->
+  <text x="60" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8">query</text>
+  <rect x="130" y="118" width="70" height="28" rx="4" fill="#1a2030" stroke="#7ec8e3"/>
+  <text x="165" y="136" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3">"r"</text>
+  <rect x="210" y="118" width="70" height="28" rx="4" fill="#1a2030" stroke="#7ec8e3"/>
+  <text x="245" y="136" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3">"re"</text>
+  <rect x="290" y="118" width="70" height="28" rx="4" fill="#1a2030" stroke="#7ec8e3"/>
+  <text x="325" y="136" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3">"rea"</text>
+  <rect x="370" y="118" width="70" height="28" rx="4" fill="#1a2030" stroke="#7ec8e3"/>
+  <text x="405" y="136" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3">"reac"</text>
+  <rect x="450" y="118" width="80" height="28" rx="4" fill="#1a2030" stroke="#7ec8e3"/>
+  <text x="490" y="136" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3">"react"</text>
+
+  <!-- deferredQuery (deferred) -->
+  <text x="60" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">deferred</text>
+  <rect x="130" y="162" width="70" height="28" rx="4" fill="#1a1a1a" stroke="#444"/>
+  <text x="165" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#555">""</text>
+  <rect x="210" y="162" width="70" height="28" rx="4" fill="#1a1a1a" stroke="#444"/>
+  <text x="245" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">"r"</text>
+  <rect x="290" y="162" width="70" height="28" rx="4" fill="#1a1a1a" stroke="#444"/>
+  <text x="325" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">"re"</text>
+  <rect x="370" y="162" width="70" height="28" rx="4" fill="#1a1a1a" stroke="#444"/>
+  <text x="405" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">"rea"</text>
+  <rect x="450" y="162" width="80" height="28" rx="4" fill="#1a2a1a" stroke="#55c555"/>
+  <text x="490" y="180" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555">"reac"</text>
+
+  <text x="60" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">input 렌더</text>
+  <text x="60" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">list 렌더</text>
+  <text x="130" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">즉각</text>
+  <text x="130" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">지연</text>
+
+  <!-- Code -->
+  <rect x="60" y="258" width="760" height="190" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="280" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// useDeferredValue 기본 패턴</text>
+  <text x="76" y="300" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">import</tspan>
+    <tspan fill="#ffffff"> { useState, useDeferredValue, useMemo, memo } </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">from</tspan>
+    <tspan fill="#ce9178"> 'react'</tspan>
+    <tspan fill="#ffffff">;</tspan>
+  </text>
+  <text x="76" y="320" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> SlowList = memo(({ query }: { query: string }) =&gt; {</tspan>
+  </text>
+  <text x="76" y="338" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> results = computeExpensive(query);</tspan>
+  </text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;</tspan>
+    <tspan fill="#55c555">ul</tspan>
+    <tspan fill="#ffffff">&gt;{results.map(r =&gt; &lt;</tspan>
+    <tspan fill="#55c555">li</tspan>
+    <tspan fill="#ffffff">&gt;{r}&lt;/</tspan>
+    <tspan fill="#55c555">li</tspan>
+    <tspan fill="#ffffff">&gt;)}&lt;/</tspan>
+    <tspan fill="#55c555">ul</tspan>
+    <tspan fill="#ffffff">&gt;;</tspan>
+  </text>
+  <text x="76" y="374" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">});</text>
+  <text x="76" y="394" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">function</tspan>
+    <tspan fill="#ffffff"> Search() {</tspan>
+  </text>
+  <text x="76" y="412" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> [query, setQuery] = useState(</tspan>
+    <tspan fill="#ce9178">''</tspan>
+    <tspan fill="#ffffff">);</tspan>
+  </text>
+  <text x="76" y="430" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#ffffff">  </tspan>
+    <tspan fill="#7ec8e3" font-weight="600">const</tspan>
+    <tspan fill="#ffffff"> deferredQuery = useDeferredValue(query);</tspan>
+  </text>
+  <text x="76" y="448" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">  return</tspan>
+    <tspan fill="#ffffff"> &lt;&gt;&lt;</tspan>
+    <tspan fill="#55c555">input</tspan>
+    <tspan fill="#ffffff"> value={query} onChange={e =&gt; setQuery(e.target.value)}/&gt;</tspan>
+  </text>
+</svg>
