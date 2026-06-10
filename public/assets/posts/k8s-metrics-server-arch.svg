@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Metrics Server 아키텍처 &amp; 데이터 흐름</text>
+
+  <!-- Node 1 with kubelet -->
+  <rect x="60" y="80" width="160" height="120" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="105" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Node 1</text>
+  <rect x="76" y="114" width="128" height="36" rx="6" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="140" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">kubelet</text>
+  <text x="140" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">/metrics/resource</text>
+  <text x="140" y="178" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CPU/Memory</text>
+
+  <!-- Node 2 with kubelet -->
+  <rect x="60" y="220" width="160" height="120" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="245" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Node 2</text>
+  <rect x="76" y="254" width="128" height="36" rx="6" fill="#111" stroke="#55c555" stroke-width="1"/>
+  <text x="140" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">kubelet</text>
+  <text x="140" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">/metrics/resource</text>
+  <text x="140" y="318" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CPU/Memory</text>
+
+  <!-- arrows to metrics-server -->
+  <line x1="220" y1="140" x2="270" y2="210" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="220" y1="280" x2="270" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Metrics Server -->
+  <rect x="270" y="170" width="180" height="100" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="2"/>
+  <text x="360" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">Metrics Server</text>
+  <text x="360" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">in-memory 저장</text>
+  <text x="360" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">최신 값만 유지</text>
+  <text x="360" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">히스토리 없음</text>
+
+  <!-- arrow to API Server -->
+  <line x1="450" y1="220" x2="498" y2="220" stroke="#55c555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- API Server -->
+  <rect x="498" y="170" width="160" height="100" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="578" y="198" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">kube-apiserver</text>
+  <text x="578" y="218" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">metrics.k8s.io API</text>
+  <text x="578" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">API 집계 등록</text>
+  <text x="578" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">(APIService)</text>
+
+  <!-- arrows from API Server to consumers -->
+  <line x1="658" y1="200" x2="698" y2="160" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrd)"/>
+  <line x1="658" y1="220" x2="698" y2="230" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrd)"/>
+  <line x1="658" y1="240" x2="698" y2="290" stroke="#7777cc" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrd)"/>
+
+  <!-- Consumers -->
+  <rect x="698" y="120" width="160" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="778" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">HPA</text>
+  <text x="778" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">CPU 기반 자동 확장</text>
+
+  <rect x="698" y="200" width="160" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="778" y="226" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">VPA</text>
+  <text x="778" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">리소스 요청 자동 조정</text>
+
+  <rect x="698" y="270" width="160" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="778" y="296" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">kubectl top</text>
+  <text x="778" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">실시간 리소스 확인</text>
+
+  <!-- Metrics Server vs Prometheus note -->
+  <rect x="60" y="380" width="760" height="90" rx="8" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="405" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">Metrics Server vs Prometheus</text>
+
+  <rect x="80" y="418" width="280" height="42" rx="6" fill="#1a3020" stroke="#55c555" stroke-width="1"/>
+  <text x="220" y="436" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555" text-anchor="middle">Metrics Server</text>
+  <text x="220" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">HPA/VPA 필수, kubectl top, 최신 값만</text>
+
+  <rect x="500" y="418" width="300" height="42" rx="6" fill="#2a1a00" stroke="#e05555" stroke-width="1"/>
+  <text x="650" y="436" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">Prometheus</text>
+  <text x="650" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">장기 저장, 커스텀 메트릭, 알림, 대시보드</text>
+</svg>

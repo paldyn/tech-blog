@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Helm Values 레이어 오버라이드 구조</text>
+
+  <!-- Layer 1 (lowest priority) -->
+  <rect x="80" y="70" width="720" height="64" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="200" y="97" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">1. 차트 내장 values.yaml</text>
+  <text x="200" y="119" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">차트에 포함된 기본값 (가장 낮은 우선순위)</text>
+  <text x="760" y="104" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7777cc" text-anchor="end">priority: 1</text>
+
+  <!-- arrow down -->
+  <line x1="440" y1="134" x2="440" y2="152" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 2 -->
+  <rect x="80" y="152" width="720" height="64" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="200" y="179" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">2. -f / --values 파일 (순서대로 적용)</text>
+  <text x="200" y="199" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">helm install -f values-base.yaml -f values-prod.yaml</text>
+  <text x="760" y="186" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#7ec8e3" text-anchor="end">priority: 2</text>
+
+  <!-- arrow down -->
+  <line x1="440" y1="216" x2="440" y2="234" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 3 -->
+  <rect x="80" y="234" width="720" height="64" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="1.5"/>
+  <text x="200" y="261" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">3. --set key=value (점 표기법)</text>
+  <text x="200" y="281" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">helm install --set image.tag=v2.0.0,replicas=3</text>
+  <text x="760" y="268" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" text-anchor="end">priority: 3</text>
+
+  <!-- arrow down -->
+  <line x1="440" y1="298" x2="440" y2="316" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Layer 4 (highest) -->
+  <rect x="80" y="316" width="720" height="64" rx="8" fill="#2a1a00" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="343" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">4. --set-string / --set-file / --set-json</text>
+  <text x="200" y="363" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#888">--set-string port=8080 (문자열 강제), --set-json</text>
+  <text x="760" y="350" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#e05555" text-anchor="end">최고 우선순위</text>
+
+  <!-- Result box -->
+  <rect x="200" y="404" width="480" height="72" rx="8" fill="#101820" stroke="#7ec8e3" stroke-width="2"/>
+  <line x1="440" y1="380" x2="440" y2="404" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8" text-anchor="middle">최종 렌더링 Values</text>
+  <text x="440" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">나중에 지정한 값이 이전 값을 덮어씀 (deep merge)</text>
+  <text x="440" y="468" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#55c555" text-anchor="middle">helm get values &lt;release&gt; --all 로 확인 가능</text>
+</svg>

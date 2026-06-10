@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">PromQL — 핵심 쿼리 패턴</text>
+
+  <!-- PromQL examples -->
+  <rect x="60" y="70" width="760" height="320" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+
+  <text x="76" y="94" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># Pod CPU 사용률 (%)  namespace와 pod 레이블 포함</text>
+  <text x="76" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">100 * sum(rate(container_cpu_usage_seconds_total</text>
+  <text x="76" y="130" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">  {namespace="production",container!=""}[5m])) by (pod)</text>
+  <text x="76" y="148" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" font-weight="600" xml:space="preserve">/ on(pod) kube_pod_container_resource_limits{resource="cpu"}</text>
+
+  <text x="76" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># Pod 메모리 사용량 (MiB)</text>
+  <text x="76" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">container_memory_working_set_bytes</text>
+  <text x="76" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#7ec8e3" font-weight="600" xml:space="preserve">  {namespace="production",container!=""} / 1024 / 1024</text>
+
+  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># HTTP 요청 에러율 (5xx / 전체)</text>
+  <text x="76" y="258" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" font-weight="600" xml:space="preserve">sum(rate(http_requests_total{status=~"5.."}[5m]))</text>
+  <text x="76" y="276" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#e05555" font-weight="600" xml:space="preserve">/ sum(rate(http_requests_total[5m])) * 100</text>
+
+  <text x="76" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># p99 응답 지연시간 (초)</text>
+  <text x="76" y="322" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" font-weight="600" xml:space="preserve">histogram_quantile(0.99,</text>
+  <text x="76" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" font-weight="600" xml:space="preserve">  sum(rate(http_request_duration_seconds_bucket[5m]))</text>
+  <text x="76" y="358" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#55c555" font-weight="600" xml:space="preserve">  by (le, service))</text>
+
+  <text x="76" y="386" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#9aa4b8" xml:space="preserve"># 노드별 디스크 사용률 (%)</text>
+</svg>
