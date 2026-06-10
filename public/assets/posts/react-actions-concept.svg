@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 520" style="background:#0a0a0a;border-radius:12px;">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">React 19 Actions — 폼 비동기 처리</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">form action에 async 함수를 직접 전달</text>
+
+  <!-- Old pattern -->
+  <rect x="60" y="96" width="360" height="36" rx="8" fill="#2a1a0d" stroke="#e05555" stroke-width="1"/>
+  <text x="240" y="119" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Before: onSubmit 패턴</text>
+
+  <rect x="60" y="140" width="360" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="159" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">function</tspan> Form() &#123;</text>
+  <text x="76" y="177" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">const</tspan> [pending, setPending] = useState(<tspan fill="#b5cea8">false</tspan>);</text>
+  <text x="76" y="195" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">async function</tspan> handleSubmit(e) &#123;</text>
+  <text x="76" y="213" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    e.preventDefault();</text>
+  <text x="76" y="231" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    setPending(<tspan fill="#b5cea8">true</tspan>);</text>
+  <text x="76" y="249" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">await</tspan> submitData(data);</text>
+  <text x="76" y="267" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    setPending(<tspan fill="#b5cea8">false</tspan>);</text>
+  <text x="76" y="285" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  &#125;</text>
+  <text x="76" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  // onSubmit={handleSubmit} + pending 수동 관리</text>
+
+  <!-- New pattern -->
+  <rect x="460" y="96" width="360" height="36" rx="8" fill="#0d2a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="640" y="119" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">After: Actions 패턴</text>
+
+  <rect x="460" y="140" width="360" height="162" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="159" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">function</tspan> Form() &#123;</text>
+  <text x="476" y="177" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#9aa4b8">// pending 상태 자동 관리!</tspan></text>
+  <text x="476" y="195" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">async function</tspan> action(formData) &#123;</text>
+  <text x="476" y="213" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">const</tspan> name = formData.get(<tspan fill="#ce9178">'name'</tspan>);</text>
+  <text x="476" y="231" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">await</tspan> submitData(&#123; name &#125;);</text>
+  <text x="476" y="249" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  &#125;</text>
+  <text x="476" y="267" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> (</text>
+  <text x="476" y="285" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    &lt;<tspan fill="#7ec8e3" font-weight="600">form</tspan> action=&#123;action&#125;&gt;</text>
+  <text x="476" y="294" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">      ...</text>
+
+  <!-- Benefits row -->
+  <rect x="60" y="322" width="240" height="70" rx="8" fill="#111111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="180" y="346" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">FormData 자동</text>
+  <text x="180" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">e.preventDefault() 불필요</text>
+  <text x="180" y="382" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">formData 인자로 전달</text>
+
+  <rect x="320" y="322" width="240" height="70" rx="8" fill="#111111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="346" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Pending 자동</text>
+  <text x="440" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">useFormStatus로</text>
+  <text x="440" y="382" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">pending 자동 추적</text>
+
+  <rect x="580" y="322" width="240" height="70" rx="8" fill="#111111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="700" y="346" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Optimistic UI</text>
+  <text x="700" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">useOptimistic과</text>
+  <text x="700" y="382" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">자연스럽게 통합</text>
+
+  <!-- Full pattern code -->
+  <rect x="60" y="412" width="760" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="432" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// useFormStatus로 pending 읽기</text>
+  <text x="76" y="450" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">function</tspan> SubmitBtn() &#123;</text>
+  <text x="76" y="468" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">const</tspan> &#123; pending &#125; = useFormStatus();</text>
+  <text x="76" y="486" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> &lt;<tspan fill="#7ec8e3" font-weight="600">button</tspan> disabled=&#123;pending&#125;&gt;&#123;pending ? <tspan fill="#ce9178">'저장 중...'</tspan> : <tspan fill="#ce9178">'저장'</tspan>&#125;&lt;/<tspan fill="#7ec8e3" font-weight="600">button</tspan>&gt;; &#125;</text>
+</svg>

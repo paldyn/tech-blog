@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480" style="background:#0a0a0a;border-radius:12px;">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">use() + Suspense 데이터 흐름</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">Promise resolve 전후 렌더링 사이클</text>
+
+  <!-- Flow diagram -->
+  <!-- Box: Server/API -->
+  <rect x="60" y="102" width="160" height="60" rx="10" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="140" y="126" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">Server / API</text>
+  <text x="140" y="148" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">데이터 fetch 시작</text>
+
+  <!-- Arrow -->
+  <line x1="220" y1="132" x2="278" y2="132" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="249" y="124" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Promise</text>
+
+  <!-- Box: Parent Component -->
+  <rect x="280" y="102" width="160" height="60" rx="10" fill="#0d1a2d" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="360" y="126" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Parent</text>
+  <text x="360" y="148" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Promise를 props로 전달</text>
+
+  <!-- Arrow -->
+  <line x1="440" y1="132" x2="498" y2="132" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="469" y="124" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Suspense</text>
+
+  <!-- Box: Suspense boundary -->
+  <rect x="500" y="102" width="160" height="60" rx="10" fill="#2a1a0d" stroke="#e05555" stroke-width="2"/>
+  <text x="580" y="126" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Suspense</text>
+  <text x="580" y="148" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">fallback 표시</text>
+
+  <!-- Arrow to child -->
+  <line x1="660" y1="132" x2="718" y2="132" stroke="#55c555" stroke-width="2" marker-end="url(#arrg)"/>
+  <text x="689" y="124" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">resolve</text>
+
+  <!-- Box: Child with use() -->
+  <rect x="720" y="102" width="110" height="60" rx="10" fill="#0d2a0d" stroke="#55c555" stroke-width="2"/>
+  <text x="775" y="122" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Child</text>
+  <text x="775" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">use() 호출</text>
+  <text x="775" y="154" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">렌더링 완료</text>
+
+  <!-- Two state boxes -->
+  <rect x="280" y="194" width="240" height="80" rx="8" fill="#2a1a0d" stroke="#e05555" stroke-width="1"/>
+  <text x="400" y="216" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">Promise Pending</text>
+  <text x="400" y="234" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">use()가 Promise를 throw</text>
+  <text x="400" y="252" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Suspense가 fallback 렌더</text>
+  <text x="400" y="268" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">(로딩 스피너 등)</text>
+
+  <rect x="540" y="194" width="240" height="80" rx="8" fill="#0d2a0d" stroke="#55c555" stroke-width="1"/>
+  <text x="660" y="216" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Promise Resolved</text>
+  <text x="660" y="234" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">use()가 값을 반환</text>
+  <text x="660" y="252" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">컴포넌트 렌더링 재개</text>
+  <text x="660" y="268" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">데이터 표시</text>
+
+  <!-- Code: use with suspense pattern -->
+  <rect x="60" y="298" width="760" height="152" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// 권장 패턴: Promise를 컴포넌트 밖에서 생성</text>
+  <text x="76" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">function</tspan> Page() &#123;</text>
+  <text x="76" y="354" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">const</tspan> userPromise = fetchUser(<tspan fill="#b5cea8">1</tspan>); <tspan fill="#9aa4b8">// 렌더마다 새 Promise X</tspan></text>
+  <text x="76" y="372" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#7ec8e3" font-weight="600">return</tspan> (</text>
+  <text x="76" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    &lt;<tspan fill="#7ec8e3" font-weight="600">Suspense</tspan> fallback=&#123;&lt;Loading /&gt;&#125;&gt;</text>
+  <text x="76" y="408" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      &lt;<tspan fill="#7ec8e3" font-weight="600">UserCard</tspan> promise=&#123;userPromise&#125; /&gt;</text>
+  <text x="76" y="426" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    &lt;/<tspan fill="#7ec8e3" font-weight="600">Suspense</tspan>&gt;</text>
+  <text x="76" y="444" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  );</text>
+</svg>
