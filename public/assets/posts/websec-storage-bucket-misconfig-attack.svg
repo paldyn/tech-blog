@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">S3 버킷 공개 노출 공격 시나리오</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">잘못된 ACL / 버킷 정책으로 인한 데이터 유출 경로</text>
+
+  <!-- Step 1: Discovery -->
+  <rect x="40" y="100" width="180" height="80" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="130" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">1. 버킷 발견</text>
+  <text x="130" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">DNS 브루트포스</text>
+  <text x="130" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">JS에 노출된 URL</text>
+
+  <!-- Arrow 1 -->
+  <line x1="220" y1="140" x2="278" y2="140" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Step 2: List -->
+  <rect x="280" y="100" width="180" height="80" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="370" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">2. 파일 목록 조회</text>
+  <text x="370" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">s3:ListBucket 허용</text>
+  <text x="370" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">모든 객체 이름 노출</text>
+
+  <!-- Arrow 2 -->
+  <line x1="460" y1="140" x2="518" y2="140" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Step 3: Download -->
+  <rect x="520" y="100" width="180" height="80" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="610" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">3. 파일 다운로드</text>
+  <text x="610" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">s3:GetObject 허용</text>
+  <text x="610" y="164" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">개인정보·키·백업 유출</text>
+
+  <!-- Arrow 3 -->
+  <line x1="700" y1="140" x2="758" y2="140" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Step 4: Impact -->
+  <rect x="760" y="100" width="80" height="80" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="800" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555" text-anchor="middle">피해</text>
+  <text x="800" y="150" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#aaa" text-anchor="middle">데이터</text>
+  <text x="800" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#aaa" text-anchor="middle">유출</text>
+
+  <!-- Defense boxes -->
+  <text x="60" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#e8e8e8">방어 설정</text>
+
+  <rect x="40" y="248" width="240" height="90" rx="8" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="160" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Public Access 차단</text>
+  <text x="160" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">Block Public ACLs: true</text>
+  <text x="160" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">Block Public Policy: true</text>
+  <text x="160" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#666" text-anchor="middle">S3 Block Public Access</text>
+
+  <rect x="320" y="248" width="240" height="90" rx="8" fill="#0f1020" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">버킷 정책 최소화</text>
+  <text x="440" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">Principal: 특정 ARN만</text>
+  <text x="440" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">aws:SourceVpc 조건부</text>
+  <text x="440" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#666" text-anchor="middle">Bucket Policy Restriction</text>
+
+  <rect x="600" y="248" width="240" height="90" rx="8" fill="#101020" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="720" y="272" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">암호화 + 버전 관리</text>
+  <text x="720" y="292" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">SSE-KMS 서버 측 암호화</text>
+  <text x="720" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">객체 버전 관리 활성화</text>
+  <text x="720" y="326" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#666" text-anchor="middle">Encryption + Versioning</text>
+
+  <!-- Monitoring -->
+  <rect x="40" y="380" width="800" height="50" rx="8" fill="#101010" stroke="#444" stroke-width="1"/>
+  <text x="440" y="401" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">모니터링: S3 Access Logs + Macie + CloudTrail Data Events</text>
+  <text x="440" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">대규모 GetObject 호출 → GuardDuty 이상 탐지 알람</text>
+</svg>

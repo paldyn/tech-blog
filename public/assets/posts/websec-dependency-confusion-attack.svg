@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 10" refX="10" refY="5"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="10" orient="auto">
+      <path d="M 0 0 L 12 5 L 0 10 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Dependency Confusion 공격 흐름</text>
+  <text x="440" y="68" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888" text-anchor="middle">내부 패키지 이름을 공개 레지스트리에 등록해 실행</text>
+
+  <!-- Step 1: Internal package -->
+  <rect x="40" y="100" width="200" height="70" rx="8" fill="#101820" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="140" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">내부 패키지 레지스트리</text>
+  <text x="140" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">company-utils v1.0</text>
+  <text x="140" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555" text-anchor="middle">Private Registry (Artifactory)</text>
+
+  <!-- Step 2: Attacker finds name -->
+  <rect x="300" y="100" width="200" height="70" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="400" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">공격자: 이름 수집</text>
+  <text x="400" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">package.json / 에러로그</text>
+  <text x="400" y="162" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555" text-anchor="middle">내부 패키지 이름 노출</text>
+
+  <!-- Arrow 1 -->
+  <line x1="240" y1="135" x2="298" y2="135" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Step 3: Upload to public -->
+  <rect x="560" y="100" width="200" height="70" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="660" y="122" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">공개 레지스트리 등록</text>
+  <text x="660" y="142" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">company-utils v9.9.9</text>
+  <text x="660" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">(악성 코드 포함)</text>
+  <text x="660" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555" text-anchor="middle">npmjs.com / PyPI</text>
+
+  <!-- Arrow 2 -->
+  <line x1="500" y1="135" x2="558" y2="135" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Step 4: CI/CD fetches public -->
+  <rect x="300" y="240" width="200" height="70" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="400" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555" text-anchor="middle">CI/CD 빌드 서버</text>
+  <text x="400" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">공개 레지스트리 우선 조회</text>
+  <text x="400" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="10" fill="#555" text-anchor="middle">높은 버전 번호에 속음</text>
+
+  <!-- Arrow 3: down from public registry to CI -->
+  <line x1="660" y1="170" x2="660" y2="255" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4"/>
+  <line x1="660" y1="255" x2="502" y2="275" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Result -->
+  <rect x="300" y="360" width="280" height="60" rx="8" fill="#2a0a0a" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="384" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555" text-anchor="middle">악성 코드 빌드 서버에서 실행</text>
+  <text x="440" y="404" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#aaa" text-anchor="middle">postInstall 훅 → 쉘 → 권한 탈취</text>
+
+  <line x1="400" y1="310" x2="400" y2="358" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#arr-red)"/>
+
+  <!-- Defense -->
+  <rect x="640" y="240" width="200" height="160" rx="8" fill="#0a2010" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">방어 전략</text>
+  <text x="740" y="284" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">스코프 패키지 사용</text>
+  <text x="740" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">@company/utils</text>
+  <text x="740" y="322" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">내부 레지스트리만 허용</text>
+  <text x="740" y="342" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">패키지 서명 검증</text>
+  <text x="740" y="362" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#aaa" text-anchor="middle">npm audit / Snyk</text>
+  <text x="740" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#666" text-anchor="middle">Supply Chain Defense</text>
+</svg>
