@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="520" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Virtual Thread 운영 모범 사례</text>
+
+  <!-- ✅ DO section -->
+  <text x="220" y="76" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">✅ DO — 권장 패턴</text>
+
+  <!-- DO 1 -->
+  <rect x="60" y="90" width="340" height="68" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">1. Thread-per-request 패턴</text>
+  <text x="80" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">각 요청마다 새 Virtual Thread 생성</text>
+  <text x="80" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Executors.newVirtualThreadPerTaskExecutor() 사용</text>
+
+  <!-- DO 2 -->
+  <rect x="60" y="172" width="340" height="68" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">2. Blocking I/O 그냥 사용</text>
+  <text x="80" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">JDBC, HTTP, 파일 I/O — blocking 그대로</text>
+  <text x="80" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Virtual Thread가 자동으로 unmount 처리</text>
+
+  <!-- DO 3 -->
+  <rect x="60" y="254" width="340" height="68" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">3. ReentrantLock / Semaphore</text>
+  <text x="80" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">synchronized 대신 java.util.concurrent.locks</text>
+  <text x="80" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Semaphore로 동시 접속 수 제한 (throttling)</text>
+
+  <!-- DO 4 -->
+  <rect x="60" y="336" width="340" height="68" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">4. ScopedValue 활용</text>
+  <text x="80" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ThreadLocal 대신 ScopedValue (Java 21+)</text>
+  <text x="80" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">불변 + 범위 한정 → VT에 최적</text>
+
+  <!-- DO code -->
+  <rect x="60" y="420" width="340" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="442"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// Semaphore로 DB 접속 제한</text>
+  <text xml:space="preserve" x="76" y="462"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">var</text>
+  <text xml:space="preserve" x="76" y="462"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> sem = </text>
+  <text xml:space="preserve" x="76" y="462"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">new</text>
+  <text xml:space="preserve" x="76" y="462"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> Semaphore(100);</text>
+  <text xml:space="preserve" x="76" y="482"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">sem.acquire(); </text>
+  <text xml:space="preserve" x="76" y="482"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// park → VT 해방</text>
+
+  <!-- divider -->
+  <line x1="440" y1="60" x2="440" y2="500" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ❌ DON'T section -->
+  <text x="660" y="76" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">❌ DON'T — 안티패턴</text>
+
+  <!-- DON'T 1 -->
+  <rect x="460" y="90" width="360" height="68" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="480" y="112" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">1. VT Pool 생성 금지</text>
+  <text x="480" y="130" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">newFixedThreadPool(N)은 Platform Thread용</text>
+  <text x="480" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">VT는 경량 → 필요 시 즉시 생성·폐기</text>
+
+  <!-- DON'T 2 -->
+  <rect x="460" y="172" width="360" height="68" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="480" y="194" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">2. CPU-bound 작업에 VT 남용</text>
+  <text x="480" y="212" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">이미지 처리, 암호화 등 → Platform Thread</text>
+  <text x="480" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">VT는 I/O-bound 작업에만 이점 있음</text>
+
+  <!-- DON'T 3 -->
+  <rect x="460" y="254" width="360" height="68" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="480" y="276" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">3. ThreadLocal 과도 사용</text>
+  <text x="480" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">VT 수백만 개 × ThreadLocal = 메모리 폭발</text>
+  <text x="480" y="312" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ScopedValue 또는 메서드 파라미터로 교체</text>
+
+  <!-- DON'T 4 -->
+  <rect x="460" y="336" width="360" height="68" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="480" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">4. synchronized 장기 보유</text>
+  <text x="480" y="376" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Java 21~22: blocking I/O와 함께 사용 금지</text>
+  <text x="480" y="394" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Java 23+: 해결됨 (JEP 491)</text>
+
+  <!-- DON'T code -->
+  <rect x="460" y="420" width="360" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="476" y="442"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ❌ VT Pool 생성 안티패턴</text>
+  <text xml:space="preserve" x="476" y="462"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555">// BAD:</text>
+  <text xml:space="preserve" x="476" y="482"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">Executors.newFixedThreadPool(N);</text>
+</svg>

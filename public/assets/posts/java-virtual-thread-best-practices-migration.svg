@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="460" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">기존 코드 → Virtual Thread 마이그레이션</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="66" width="220" height="70" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="170" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">① ExecutorService 교체</text>
+  <text x="170" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ThreadPool → VirtualThread</text>
+  <text x="170" y="125" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">PerTaskExecutor</text>
+
+  <line x1="280" y1="101" x2="318" y2="101" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Step 2 -->
+  <rect x="320" y="66" width="220" height="70" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="430" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">② Pinning 탐지</text>
+  <text x="430" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">tracePinnedThreads=full</text>
+  <text x="430" y="125" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">JFR 이벤트 수집</text>
+
+  <line x1="540" y1="101" x2="578" y2="101" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Step 3 -->
+  <rect x="580" y="66" width="240" height="70" rx="8" fill="#0a0a1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="700" y="90" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">③ synchronized 교체</text>
+  <text x="700" y="108" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ReentrantLock으로 변환</text>
+  <text x="700" y="125" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">또는 Java 23+로 업그레이드</text>
+
+  <!-- Before/After code -->
+  <text x="200" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">Before (Platform Thread Pool)</text>
+
+  <rect x="40" y="184" width="360" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="56" y="206"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 기존 방식</text>
+  <text xml:space="preserve" x="56" y="226"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">var</text>
+  <text xml:space="preserve" x="56" y="226"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> pool = Executors</text>
+  <text xml:space="preserve" x="56" y="246"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  .newFixedThreadPool(200);</text>
+  <text xml:space="preserve" x="56" y="266"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// OS 스레드 200개 항시 대기</text>
+  <text xml:space="preserve" x="56" y="286"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// 메모리 ~200MB (1MB/thread)</text>
+
+  <!-- Arrow between Before and After -->
+  <line x1="420" y1="244" x2="456" y2="244" stroke="#55c555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <text x="660" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">After (Virtual Thread)</text>
+
+  <rect x="480" y="184" width="360" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="496" y="206"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// Virtual Thread 방식</text>
+  <text xml:space="preserve" x="496" y="226"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">var</text>
+  <text xml:space="preserve" x="496" y="226"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> pool = Executors</text>
+  <text xml:space="preserve" x="496" y="246"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  .newVirtualThreadPerTask</text>
+  <text xml:space="preserve" x="496" y="266"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">    Executor();</text>
+  <text xml:space="preserve" x="496" y="286"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// VT 수백만 개, ~KB/VT</text>
+
+  <!-- Framework integration -->
+  <text x="440" y="336" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="600" fill="#e8e8e8">프레임워크 통합</text>
+
+  <rect x="60" y="350" width="230" height="80" rx="8" fill="#0a1a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="175" y="372" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Spring Boot 3.2+</text>
+  <text x="175" y="390" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">spring.threads.virtual</text>
+  <text x="175" y="408" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">.enabled=true</text>
+
+  <rect x="330" y="350" width="220" height="80" rx="8" fill="#0a1a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="372" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Tomcat 10.1+</text>
+  <text x="440" y="390" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">executor.setVirtual</text>
+  <text x="440" y="408" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ThreadsEnabled(true)</text>
+
+  <rect x="590" y="350" width="230" height="80" rx="8" fill="#0a1a1a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="705" y="372" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Quarkus / Micronaut</text>
+  <text x="705" y="390" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">각 프레임워크 설정으로</text>
+  <text x="705" y="408" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">VT 활성화 지원</text>
+</svg>

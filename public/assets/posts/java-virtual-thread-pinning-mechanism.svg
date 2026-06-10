@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-red" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="42" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Virtual Thread Pinning 메커니즘</text>
+
+  <!-- LEFT COLUMN: PINNING (synchronized) -->
+  <text x="200" y="80" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">⛔ Pinning 발생 (synchronized)</text>
+
+  <!-- Carrier Thread pool box -->
+  <rect x="60" y="100" width="280" height="56" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="200" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Carrier Thread Pool (ForkJoinPool)</text>
+  <text x="200" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">기본 크기: CPU 코어 수</text>
+
+  <!-- Carrier Thread 1 (blocked) -->
+  <rect x="80" y="178" width="120" height="52" rx="6" fill="#2a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="140" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Carrier #1</text>
+  <text x="140" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">🔒 BLOCKED</text>
+
+  <!-- Virtual Thread pinned on it -->
+  <rect x="82" y="250" width="116" height="48" rx="6" fill="#3a1a0a" stroke="#e05555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="140" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Virtual Thread</text>
+  <text x="140" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">📌 PINNED</text>
+
+  <!-- Arrow: pinned -->
+  <line x1="140" y1="250" x2="140" y2="230" stroke="#e05555" stroke-width="2" marker-end="url(#arr-red)"/>
+  <text x="155" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">고정됨</text>
+
+  <!-- Carrier Thread 2 (waiting) -->
+  <rect x="220" y="178" width="100" height="52" rx="6" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="270" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#888">Carrier #2</text>
+  <text x="270" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#555">대기 중</text>
+
+  <!-- synchronized code box -->
+  <rect x="60" y="320" width="280" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ❌ Pinning 발생 코드</text>
+  <text xml:space="preserve" x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">synchronized</text>
+  <text xml:space="preserve" x="76" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> (lock) &#123;</text>
+  <text xml:space="preserve" x="76" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">  // I/O 블로킹 → Pinning!</text>
+  <text xml:space="preserve" x="76" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">  socket.read(buf);</text>
+  <text xml:space="preserve" x="76" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">&#125;</text>
+
+  <!-- label for pinning cause -->
+  <rect x="80" y="460" width="240" height="52" rx="6" fill="#1a0a0a" stroke="#e05555" stroke-width="1"/>
+  <text x="200" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">Pinning 원인</text>
+  <text x="200" y="498" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">synchronized 블록/메서드 · JNI/native 코드</text>
+
+  <!-- divider -->
+  <line x1="440" y1="70" x2="440" y2="500" stroke="#333" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- RIGHT COLUMN: NO PINNING (ReentrantLock) -->
+  <text x="660" y="80" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">✅ Pinning 없음 (ReentrantLock)</text>
+
+  <!-- Carrier Thread pool box -->
+  <rect x="520" y="100" width="300" height="56" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="670" y="122" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Carrier Thread Pool (ForkJoinPool)</text>
+  <text x="670" y="145" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">동일한 풀 — carrier 재활용 가능</text>
+
+  <!-- Carrier Thread 1 (free) -->
+  <rect x="540" y="178" width="120" height="52" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="600" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Carrier #1</text>
+  <text x="600" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">✅ FREE</text>
+
+  <!-- Carrier Thread 2 (running other VT) -->
+  <rect x="680" y="178" width="120" height="52" rx="6" fill="#0a2a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="740" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Carrier #2</text>
+  <text x="740" y="218" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">다른 VT 실행 중</text>
+
+  <!-- Virtual Thread unmounted (floating) -->
+  <rect x="540" y="250" width="120" height="48" rx="6" fill="#0a1a2a" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="600" y="270" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Virtual Thread</text>
+  <text x="600" y="287" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">⏸ PARKED</text>
+
+  <!-- Arrow: unmounted -->
+  <line x1="600" y1="250" x2="600" y2="232" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arr-blue)"/>
+  <text x="615" y="244" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">분리됨</text>
+
+  <!-- Arrow: carrier freed -->
+  <path d="M 600 250 Q 620 244 640 230" stroke="#55c555" stroke-width="2" fill="none" stroke-dasharray="4,4" marker-end="url(#arr-green)"/>
+
+  <!-- ReentrantLock code box -->
+  <rect x="520" y="320" width="300" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="536" y="342" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// ✅ Pinning 없는 코드</text>
+  <text xml:space="preserve" x="536" y="362" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">lock.lock();</text>
+  <text xml:space="preserve" x="536" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">try</text>
+  <text xml:space="preserve" x="536" y="382" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> &#123; socket.read(buf); &#125;</text>
+  <text xml:space="preserve" x="536" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">finally</text>
+  <text xml:space="preserve" x="536" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"> &#123; lock.unlock(); &#125;</text>
+  <text xml:space="preserve" x="536" y="422" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">// carrier 재사용 가능!</text>
+
+  <!-- result label -->
+  <rect x="540" y="460" width="260" height="52" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1"/>
+  <text x="670" y="480" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">효과</text>
+  <text x="670" y="498" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Carrier 스레드 자유 → 다른 VT 즉시 실행</text>
+</svg>
