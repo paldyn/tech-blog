@@ -1,116 +1,113 @@
 ---
-title: "신호와 인코딩: 비트를 전기 신호로 바꾸는 방법"
-description: "디지털 신호 인코딩(NRZ, Manchester, NRZI)과 아날로그 변조(ASK, FSK, PSK, QAM) 방식, 그리고 현대 Wi-Fi·5G에서 사용하는 고차 변조를 완전 해설합니다."
+title: "신호와 인코딩: 비트가 전선을 타는 방법"
+description: "디지털 신호의 기초, NRZ·Manchester·4B/5B·8B/10B·PAM4 인코딩 방식의 원리와 사용처, 클록 동기화 문제를 완전히 이해한다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-11"
 archiveOrder: 7
 type: "knowledge"
 category: "Network"
-tags: ["신호인코딩", "NRZ", "Manchester", "QAM", "변조", "디지털신호", "물리계층"]
+tags: ["신호인코딩", "NRZ", "Manchester", "4B5B", "8B10B", "PAM4", "물리계층"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-circuit-vs-packet-switching/)에서 패킷 교환이 인터넷의 근본 원리임을 살펴봤다. 패킷이 목적지로 가려면 결국 물리 매체를 통해 **신호(Signal)**로 전달돼야 한다. 이번 글에서는 0과 1이라는 디지털 데이터를 전선이나 공기를 통해 전달할 수 있는 신호로 바꾸는 방법, 즉 **인코딩(Encoding)**과 **변조(Modulation)**를 다룬다.
+[지난 글](/posts/network-circuit-vs-packet-switching/)에서 패킷 교환이 어떻게 동작하는지 살펴봤다. 패킷이 링크를 통해 이동할 때, 컴퓨터가 이해하는 이진수 0과 1은 실제로 어떻게 전기 신호로 바뀌는가? 이것이 OSI 1계층, 물리 계층이 다루는 핵심 문제다.
 
-## 디지털 신호 인코딩
+## 디지털 신호의 기초
 
-유선 환경에서 비트를 전압 수준으로 표현하는 방식이다. 선택 기준은 클록 동기화, DC 성분(직류 성분), 대역폭 효율성이다.
+디지털 신호는 이산적인 전압 레벨로 비트를 표현한다. 가장 단순한 방법은 1=고전압, 0=저전압으로 약속하는 것이다. 그러나 이 단순한 방법에는 두 가지 문제가 있다.
 
-![디지털 신호 인코딩 방식 비교](/assets/posts/network-signaling-encoding-types.svg)
+1. **연속 같은 비트 문제**: `000000`이 계속되면 신호 변화가 없어 수신측이 클록을 맞추기 어렵다.
+2. **DC 편향(DC bias)**: 긴 1 스트림이 평균 전압을 높여 AC 결합 링크에서 문제를 일으킨다.
 
-### NRZ-L (Non-Return to Zero Level)
+이를 해결하기 위해 다양한 **라인 인코딩(Line Encoding)** 방식이 개발됐다.
 
-가장 단순한 방식이다. `1 = 고전압`, `0 = 저전압`으로 표현한다.
+![디지털 신호 인코딩 방식](/assets/posts/network-signaling-encoding-types.svg)
 
-```text
-비트:   1  0  1  1  0  0  1  0
-신호:  ─┐ └─ ┌─ ─  └─ ─  ┌─ └─
+## NRZ (Non-Return-to-Zero)
 
-장점: 구현 간단
-단점: - DC 성분 발생 (커패시터 연결 불가)
-      - 연속 0/1에서 클록 동기화 어려움
-사용: 초기 직렬 통신
-```
-
-### Manchester 인코딩 (이더넷 사용)
-
-각 비트 중간에 반드시 전이(Transition)가 발생한다. `1 = 저→고 전이`, `0 = 고→저 전이`다.
+가장 단순한 인코딩이다. 1=고전압, 0=저전압을 유지하며, 비트 사이에 0V로 복귀하지 않는다.
 
 ```text
-비트:   1     0     1     1
-신호:  _┌─  ─┐_  _┌─  _┌─
-       ↑     ↑     ↑     ↑
-      중간 전이 → 클록 자동 동기화
-
-장점: 자체 클록 동기화, DC 성분 없음
-단점: 2배 대역폭 필요 (1Mbps 데이터 → 2MHz 신호)
-사용: 10BASE-T 이더넷, RFID
+데이터: 1  0  1  1  0  0  1
+신호:  +V -V +V +V -V -V +V
 ```
 
-### NRZI (Non-Return to Zero Inverted)
+단순하지만 연속된 같은 비트에서 동기화 문제가 발생한다. 주로 짧은 거리 또는 추가 동기화 메커니즘이 있는 환경에서 쓰인다.
 
-`1 = 현재 수준에서 전이`, `0 = 전이 없음`으로 표현한다.
+## Manchester 인코딩
+
+각 비트 구간 **중앙에서 에지 전환**을 만들어 클록 정보를 데이터에 내포한다.
 
 ```text
-비트:  1  0  1  1  0  0  1
-전이:  ↕  -  ↕  ↕  -  -  ↕
-신호: ─┐ ┌─  ┐┌─ ┌─ ─── ┌─
-
-장점: 연속 1은 동기화 가능, USB 채택
-단점: 연속 0은 동기화 불가 → 비트 스터핑(Bit Stuffing) 필요
-사용: USB, 광섬유(4B/5B 결합)
+1 = 구간 중앙에서 고→저 하강 에지
+0 = 구간 중앙에서 저→고 상승 에지
 ```
 
-## 아날로그 변조 (Modulation)
+에지가 항상 발생하므로 수신측이 클록을 잃지 않는다. 10BASE-T(10Mbps 이더넷)에서 사용됐다. 단점은 각 비트에 두 번의 신호 변화가 필요해 필요 대역폭이 NRZ의 두 배라는 점이다.
 
-무선 환경에서는 반송파(Carrier Wave) 위에 정보를 실어 나른다. 정현파의 세 가지 특성(진폭·주파수·위상)을 변화시켜 데이터를 표현한다.
+## 4B/5B + NRZI (Fast Ethernet)
 
-![아날로그 변조 방식](/assets/posts/network-signaling-encoding-digital.svg)
-
-| 방식 | 변화 요소 | 장단점 | 사용처 |
-|------|-----------|--------|--------|
-| ASK | 진폭 | 구현 간단, 잡음에 취약 | 광통신, 적외선 |
-| FSK | 주파수 | 잡음에 강함, 대역폭 효율 낮음 | 모뎀, Bluetooth |
-| PSK | 위상 | 효율적, 동기화 필요 | Wi-Fi, LTE |
-
-### QAM: 현대 고속 통신의 핵심
-
-**QAM(Quadrature Amplitude Modulation)**은 진폭(ASK)과 위상(PSK)을 동시에 변화시켜 심볼당 여러 비트를 전송한다.
+100Mbps Fast Ethernet(100BASE-TX)에서 사용하는 방식이다.
 
 ```text
-16-QAM:  4비트/심볼  (Wi-Fi 4 사용)
-64-QAM:  6비트/심볼  (LTE 업링크)
-256-QAM: 8비트/심볼  (Wi-Fi 5, LTE-A)
-1024-QAM: 10비트/심볼 (Wi-Fi 6, 5G NR)
-4096-QAM: 12비트/심볼 (Wi-Fi 7)
+4B/5B: 4비트 데이터를 5비트 코드로 치환
+       → 연속 0 비트 최대 3개로 제한 (클록 동기 보장)
+
+NRZI(Non-Return-to-Zero Inverted): 1에서만 신호 전환
+       → 5비트 코드와 결합해 DC 밸런스 유지
 ```
 
-차수가 높을수록 이론적 속도는 빨라지지만, 각 성상도 점이 가까워져 잡음에 취약해진다. 신호 강도(SNR)가 좋아야만 고차 QAM을 쓸 수 있다. Wi-Fi 공유기 가까이 있을 때 속도가 빠른 이유가 바로 이것이다.
+4비트 → 5비트 변환으로 오버헤드 25%가 발생한다. 물리 링크는 125Mbps로 동작해 사용자에게 100Mbps를 제공한다.
 
-```python
-# SNR과 최대 이론 채널 용량 (Shannon's Theorem)
-import math
+## 8B/10B (Gigabit Ethernet, Fibre Channel)
 
-def channel_capacity(bandwidth_hz, snr_db):
-    """Shannon-Hartley 정리: C = B * log2(1 + SNR)"""
-    snr_linear = 10 ** (snr_db / 10)
-    capacity_bps = bandwidth_hz * math.log2(1 + snr_linear)
-    return capacity_bps
+4B/5B의 진화형이다. 8비트를 10비트로 확장하며, 두 가지 목표를 달성한다.
 
-# Wi-Fi 6: 80 MHz 채널, SNR 30 dB
-cap = channel_capacity(80_000_000, 30)
-print(f"이론 최대 용량: {cap / 1e6:.1f} Mbps")
-# → 약 797 Mbps (1개 스트림 기준)
+- **런닝 디스패리티(Running Disparity)**: 누적된 1과 0의 차이를 추적해 DC 밸런스 유지
+- **특수 심볼**: 프레임 구분자(Comma 문자)를 10비트 코드로 표현 가능
+
+오버헤드 25%로 1Gbps 링크는 실제 1.25Gbps로 클록한다.
+
+## PAM4 — 고속 인터페이스의 현재
+
+NRZ가 400Gbps 이상에서 한계에 부딪히자 **PAM4(Pulse Amplitude Modulation 4-level)**가 등장했다.
+
+![NRZ vs PAM4](/assets/posts/network-signaling-encoding-pam4.svg)
+
+```text
+NRZ:  2개 전압 레벨 → 1 bit/symbol
+PAM4: 4개 전압 레벨 → 2 bit/symbol
+
+PAM4 심볼-비트 매핑:
+  +3V = 11
+  +1V = 10
+  -1V = 01
+  -3V = 00
 ```
 
-다음 글에서는 전송 중 발생하는 비트 오류를 어떻게 탐지하고 정정하는지, 특히 이더넷 FCS에 쓰이는 CRC를 상세히 살펴본다.
+같은 클록 속도에서 PAM4는 NRZ의 **2배 데이터**를 전송한다. 400G 이더넷, PCIe 4.0/5.0, USB 4.0에서 사용된다. 대신 4개 레벨을 구분하려면 높은 신호 대 잡음비(SNR)가 필요해 전송 거리가 짧고 고품질 케이블이 필요하다.
+
+## 아날로그 신호와 변조
+
+전통적 전화망이나 DSL, 케이블TV 인프라에서 디지털 데이터를 아날로그 신호에 실으려면 **변조(Modulation)**가 필요하다.
+
+```text
+ASK (Amplitude Shift Keying): 진폭으로 비트 표현
+FSK (Frequency Shift Keying): 주파수로 비트 표현
+PSK (Phase Shift Keying):     위상으로 비트 표현
+QAM (Quadrature AM):          진폭+위상 동시 변조 → 고효율
+  → 802.11ac Wi-Fi: 256-QAM (8bit/symbol)
+  → 802.11ax Wi-Fi: 1024-QAM (10bit/symbol)
+```
+
+인코딩과 변조를 이해하면 "왜 이 케이블로는 1Gbps가 안 되는가", "왜 Wi-Fi 6가 더 빠른가"에 대한 물리적 근거를 파악할 수 있다.
 
 ---
 
 **지난 글:** [회선 교환 vs 패킷 교환](/posts/network-circuit-vs-packet-switching/)
 
-**다음 글:** [오류 검출과 CRC: 네트워크 무결성 보장 원리](/posts/network-error-detection-crc/)
+**다음 글:** [오류 감지: CRC와 체크섬의 원리](/posts/network-error-detection-crc/)
 
 <br>
 읽어주셔서 감사합니다. 😊

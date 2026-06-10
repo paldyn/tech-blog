@@ -1,82 +1,108 @@
 ---
-title: "TCP/IP 4계층 모델: 인터넷이 동작하는 실제 구조"
-description: "TCP/IP 4계층(응용·전송·인터넷·네트워크접근)의 역할, 프로토콜, OSI 7계층과의 대응 관계를 완전 해설합니다."
+title: "TCP/IP 4계층 모델: 인터넷이 실제로 동작하는 방식"
+description: "TCP/IP 4계층 모델의 구조와 각 계층의 역할, OSI 모델과의 차이, 웹 요청이 계층을 거치는 실제 흐름을 완전히 이해한다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-11"
 archiveOrder: 3
 type: "knowledge"
 category: "Network"
-tags: ["TCP/IP", "4계층", "인터넷계층", "전송계층", "응용계층", "네트워크모델", "OSI비교"]
+tags: ["TCP/IP", "4계층모델", "인터넷계층", "전송계층", "네트워크", "프로토콜스택"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-osi-7-layers/)에서 OSI 7계층의 각 계층 역할과 캡슐화 과정을 살펴봤다. 이론적으로 정교한 OSI 모델과 달리, 실제 인터넷을 움직이는 구조는 **TCP/IP 4계층 모델**이다. 1970년대 DARPA의 ARPANET 프로젝트에서 실용적으로 설계된 이 모델은 OSI보다 먼저 인터넷 표준으로 자리 잡았으며, 오늘날 모든 인터넷 통신의 기반이다.
+[지난 글](/posts/network-osi-7-layers/)에서 OSI 7계층 모델을 살펴봤다. OSI는 이론적 참조 모델이고, 실제 인터넷은 **TCP/IP 4계층 모델**로 동작한다. 1970년대 DARPA가 군용 네트워크 ARPANET을 위해 개발한 이 모델이 오늘날 인터넷의 기반이 됐다.
 
 ## TCP/IP 4계층 구조
 
-![TCP/IP 4계층 모델](/assets/posts/network-tcp-ip-model-layers.svg)
+TCP/IP 모델은 OSI의 7계층을 4개로 압축한다.
 
-TCP/IP는 OSI의 7계층을 4계층으로 통합했다. OSI의 세션·표현·응용 계층이 TCP/IP의 응용 계층 하나로 합쳐진 것이 가장 큰 차이다.
+![TCP/IP 4계층과 OSI 비교](/assets/posts/network-tcp-ip-model-layers.svg)
 
-### 4계층: 응용 계층 (Application Layer)
+### 1. 네트워크 접근 계층 (Network Access / Link Layer)
 
-사용자와 직접 상호작용하는 계층이다. HTTP, HTTPS, FTP, SMTP, DNS, SSH 등 우리가 일상적으로 접하는 모든 서비스 프로토콜이 여기에 있다. 데이터 형식과 표현(OSI 6계층)도 이 계층에서 처리한다.
+물리적 네트워크와 직접 상호작용하는 계층이다. 이더넷, Wi-Fi, PPP 등 실제 전송 매체를 다루며, MAC 주소 기반으로 같은 네트워크 내 프레임을 전달한다. OSI의 1~2계층을 합친 것이다.
 
-```bash
-# HTTP 요청 헤더 확인 (curl -v)
-curl -v https://example.com 2>&1 | head -20
-# > GET / HTTP/2
-# > Host: example.com
-# > User-Agent: curl/8.x
+### 2. 인터넷 계층 (Internet Layer)
+
+IP 주소를 사용해 서로 다른 네트워크 간 패킷을 라우팅한다. OSI 3계층에 해당한다. 핵심 특성은 **Best-Effort 전달** — 패킷 도착 보장이나 순서 보장을 하지 않는다. 그 책임은 상위 전송 계층이 진다.
+
+```text
+주요 프로토콜: IP (IPv4/IPv6), ICMP, ARP, BGP, OSPF
 ```
 
-### 3계층: 전송 계층 (Transport Layer)
+### 3. 전송 계층 (Transport Layer)
 
-포트 번호를 이용해 프로세스 간 통신을 담당한다. TCP는 연결 지향적이고 신뢰성 있는 전송을, UDP는 빠르고 가벼운 전송을 제공한다. TCP의 3-way 핸드셰이크, 흐름 제어, 혼잡 제어가 이 계층에서 이뤄진다.
+종단 간(End-to-End) 데이터 전달을 담당한다. 포트 번호로 프로세스를 구분하고, 두 가지 프로토콜을 제공한다.
 
-### 2계층: 인터넷 계층 (Internet Layer)
+- **TCP**: 연결 지향, 순서 보장, 재전송, 흐름 제어 — 신뢰성이 필요한 통신
+- **UDP**: 비연결, 최소 오버헤드 — 실시간 스트리밍, DNS, 게임
 
-서로 다른 네트워크를 넘나드는 **패킷 라우팅**을 담당한다. IP 주소를 기반으로 최적 경로를 찾아 패킷을 전달한다. IPv4, IPv6, ICMP, ARP, BGP, OSPF가 이 계층에 속한다.
+### 4. 응용 계층 (Application Layer)
 
-```python
-# Python으로 IP 패킷 TTL 확인 (scapy)
-from scapy.all import IP, ICMP, sr1
-pkt = IP(dst="8.8.8.8", ttl=64) / ICMP()
-response = sr1(pkt, timeout=2, verbose=0)
-if response:
-    print(f"TTL in response: {response.ttl}")
+사용자와 직접 상호작용하는 모든 프로토콜이 위치한다. OSI의 5~7계층을 통합한 층이다.
+
+```text
+HTTP/HTTPS — 웹
+DNS         — 도메인 이름 해석
+SMTP/IMAP   — 이메일
+SSH         — 원격 접속
+FTP/SFTP    — 파일 전송
 ```
 
-### 1계층: 네트워크 접근 계층 (Network Access Layer)
+## 웹 요청이 계층을 통과하는 흐름
 
-물리적 전송 매체와 직접 통신하는 계층이다. OSI의 데이터링크 계층과 물리 계층을 합친 것으로, 이더넷 프레임 구성, MAC 주소 기반 전달, 케이블 신호 규격이 모두 이 계층의 역할이다.
+브라우저에서 `https://example.com`을 요청할 때 각 계층이 어떻게 동작하는지 살펴보자.
 
-## OSI vs TCP/IP 대응 관계
+![웹 요청 계층별 흐름](/assets/posts/network-tcp-ip-model-flow.svg)
 
-![OSI vs TCP/IP 비교](/assets/posts/network-tcp-ip-model-vs-osi.svg)
+```text
+[Browser → Server]
+App:       HTTP GET / HTTP 요청 생성
+Transport: TCP 헤더 추가 (src port: 49152, dst port: 443)
+Internet:  IP 헤더 추가 (src: 내 IP, dst: 서버 IP)
+Link:      이더넷 프레임 생성 (dst MAC: 게이트웨이)
 
-| OSI 계층 | TCP/IP 계층 | 프로토콜 예시 |
-|---------|------------|-------------|
-| 7 응용 | 응용 | HTTP, HTTPS, FTP |
-| 6 표현 | 응용 | TLS/SSL, JPEG, Unicode |
-| 5 세션 | 응용 | RPC, NetBIOS |
-| 4 전송 | 전송 | TCP, UDP |
-| 3 네트워크 | 인터넷 | IP, ICMP, BGP |
-| 2 데이터링크 | 네트워크접근 | 이더넷, Wi-Fi |
-| 1 물리 | 네트워크접근 | 케이블, 광섬유 |
+[경유 라우터]
+Link:      프레임 수신, MAC 헤더 제거
+Internet:  IP 라우팅 테이블 조회, Next Hop 결정
+Link:      새 MAC 헤더 붙여 다음 라우터로 전송
 
-## TCP/IP가 OSI를 이긴 이유
+[Server 수신]
+Link → Internet → Transport → App 순으로 역캡슐화
+App:       HTTP 요청 처리 → HTTP 200 OK 응답
+```
 
-TCP/IP의 승리는 **먼저 작동하는 구현**이 있었기 때문이다. OSI는 명세 완성 전에 TCP/IP가 ARPANET을 통해 이미 운영 중이었고, 벤더들이 TCP/IP 기반 장비와 소프트웨어를 대거 출시한 상태였다. "이론적으로 더 좋은 모델"보다 "지금 돌아가는 구현"이 시장을 지배한다는 역사적 교훈이다.
+라우터는 L3(인터넷 계층)까지만 처리한다. HTTP 내용은 읽지 않는다. 이것이 **계층 독립성**의 핵심이다.
 
-다음 글에서는 네트워크 성능을 측정하는 핵심 지표인 대역폭, 처리량, 지연 시간을 자세히 살펴본다.
+## TCP/IP vs OSI: 실용적 차이
+
+| 측면 | OSI | TCP/IP |
+|------|-----|--------|
+| 계층 수 | 7 | 4 |
+| 목적 | 이론적 참조 | 실제 구현 |
+| 등장 시기 | 1984 | 1970년대 |
+| 현재 사용 | 교육·진단 | 실제 인터넷 |
+
+현장에서는 "L3 스위치", "L4 로드밸런서" 같이 OSI 계층 번호를 그대로 사용한다. TCP/IP 모델로 치면 인터넷 계층, 전송 계층이지만 관행적으로 OSI 번호를 쓴다.
+
+## 계층을 알아야 하는 이유
+
+네트워크 문제는 대부분 특정 계층에서 발생한다.
+
+```text
+핑(ping)이 안 된다 → L3 문제 (IP, 라우팅)
+포트 연결이 안 된다 → L4 문제 (TCP, 방화벽)
+HTTP 응답이 이상하다 → L7 문제 (앱, 프록시)
+```
+
+계층을 알면 문제를 격리(Isolation)할 수 있고, 진단 명령어도 계층별로 따로 있다. 이 시리즈를 통해 각 계층의 핵심 개념을 차례로 살펴볼 것이다.
 
 ---
 
-**지난 글:** [OSI 7계층 모델 완전 정복](/posts/network-osi-7-layers/)
+**지난 글:** [OSI 7계층 모델 완전 해설](/posts/network-osi-7-layers/)
 
-**다음 글:** [대역폭·처리량·지연 시간 완전 정복](/posts/network-bandwidth-throughput-latency/)
+**다음 글:** [대역폭·처리량·지연: 네트워크 성능의 세 축](/posts/network-bandwidth-throughput-latency/)
 
 <br>
 읽어주셔서 감사합니다. 😊

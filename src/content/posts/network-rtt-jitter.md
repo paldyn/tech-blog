@@ -1,106 +1,115 @@
 ---
-title: "RTT와 지터: 네트워크 지연 변동성 완전 이해"
-description: "RTT(왕복 시간)의 측정 원리와 계산법, 지터(Jitter)의 정의와 영향, VoIP·스트리밍 품질과의 관계를 코드와 그림으로 완전 해설합니다."
+title: "RTT와 지터: 지연을 정밀하게 측정하는 방법"
+description: "RTT(왕복 지연)와 Jitter(지터)의 정의, 측정 방법, 실시간 통신에 미치는 영향, ping 출력을 읽는 법을 완전히 이해한다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-11"
 archiveOrder: 5
 type: "knowledge"
 category: "Network"
-tags: ["RTT", "지터", "Jitter", "지연", "네트워크성능", "VoIP", "ping", "mtr"]
+tags: ["RTT", "지터", "Jitter", "ping", "지연", "네트워크성능", "실시간통신"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-bandwidth-throughput-latency/)에서 대역폭·처리량·지연 시간의 개념과 측정법을 살펴봤다. 이번 글에서는 지연 시간의 두 가지 핵심 세부 지표인 **RTT(Round Trip Time)**와 **지터(Jitter)**를 깊게 파헤친다. 이 두 지표는 실시간 통신(VoIP, 화상회의, 온라인 게임)의 품질을 결정하는 핵심 요소다.
+[지난 글](/posts/network-bandwidth-throughput-latency/)에서 지연(Latency)이 네트워크 성능에서 얼마나 중요한지 살펴봤다. 이번에는 지연을 더 정밀하게 측정하는 두 지표인 **RTT(Round-Trip Time)**와 **지터(Jitter)**를 다룬다.
 
-## RTT(Round Trip Time): 왕복 시간
+## RTT(Round-Trip Time)란
 
-RTT는 패킷이 송신자에서 수신자로 갔다가 응답이 돌아올 때까지 걸리는 시간이다. 단방향 지연(One-way Latency)과 달리 양방향 경로를 모두 포함하므로, 타임스탬프 동기화 없이 측정할 수 있어 실용적이다.
-
-![RTT 측정 원리](/assets/posts/network-rtt-jitter-rtt.svg)
-
-```bash
-# ping으로 RTT 측정 (20회 샘플)
-ping -c 20 google.com
-
-# 출력 예시:
-# PING google.com (142.250.X.X): 56 data bytes
-# 64 bytes from ...: icmp_seq=1 ttl=116 time=12.4 ms
-# ...
-# --- google.com ping statistics ---
-# 20 packets transmitted, 20 received, 0% packet loss
-# rtt min/avg/max/mdev = 11.2/13.8/21.4/2.1 ms
-#                                           ^^^ 이게 지터!
-```
-
-RTT 측정 결과 해석:
-- **min**: 네트워크가 최적 상태일 때의 RTT (전파 지연 기준값)
-- **avg**: 평균 RTT (일반적인 성능 지표)
-- **max**: 최악의 경우 (혼잡, 큐잉 지연 포함)
-- **mdev**: 표준편차 = 지터(Jitter)
-
-단방향 지연은 `RTT / 2`로 추정한다. 단, 이는 경로가 대칭이라는 가정 아래서만 유효하다. 비대칭 경로(예: 이동통신망)에서는 오차가 크다.
-
-## 지터(Jitter): RTT의 변동성
-
-지터는 연속된 RTT 값들 사이의 변동이다. 통계적으로는 표준편차(Standard Deviation)나 평균 편차(Mean Deviation)로 표현한다.
-
-![지터 시각화](/assets/posts/network-rtt-jitter-jitter.svg)
-
-```bash
-# mtr로 실시간 경로 지연 + 지터 측정
-mtr --report --report-cycles 50 google.com
-
-# 출력 예시 (각 홉별):
-# HOST              Loss%  Snt   Avg  Best  Wrst StDev
-# 1. 192.168.1.1    0.0%   50    1.2   0.9   2.4  0.3
-# 2. 10.0.0.1       0.0%   50    5.4   4.8   8.1  0.6
-# ...
-# 15. google.com    0.0%   50   13.8  11.2  21.4  2.1
-#                                               ^^^ 지터
-```
-
-## 지터가 실시간 서비스에 미치는 영향
-
-지터가 문제가 되는 이유는 실시간 서비스가 일정한 도착 간격을 기대하기 때문이다.
+RTT는 패킷이 출발지에서 목적지까지 갔다가 **응답이 돌아오는 데 걸린 총 시간**이다. 편도 지연(one-way latency)의 약 2배다.
 
 ```text
-# VoIP 패킷 정상 도착 (저 지터)
-t=0ms  → 패킷1 도착
-t=20ms → 패킷2 도착
-t=40ms → 패킷3 도착  ← 일정하게 20ms 간격
-
-# 고 지터 상황
-t=0ms  → 패킷1 도착
-t=8ms  → 패킷2 도착  ← 너무 빨리
-t=55ms → 패킷3 도착  ← 너무 늦게 → 끊김 발생
+RTT = 요청 편도 지연 + 서버 처리 시간 + 응답 편도 지연
+    ≈ 편도 지연 × 2 (처리 시간이 무시 가능한 경우)
 ```
 
-**지터 버퍼(Jitter Buffer)**는 수신 측에서 패킷을 일시적으로 버퍼링해 이 변동을 흡수한다. 버퍼 크기를 크게 하면 지터에 강해지지만 전체 지연(End-to-End Latency)이 늘어나는 트레이드오프가 있다.
+![RTT와 지터 개념](/assets/posts/network-rtt-jitter-diagram.svg)
 
-## ITU-T 품질 기준 (G.114)
+`ping` 명령이 측정하는 값이 바로 RTT다. ICMP Echo Request를 보내고 Echo Reply가 돌아오기까지의 시간을 ms 단위로 보고한다.
+
+## RTT가 중요한 이유
+
+TCP는 ACK(수신 확인)가 돌아와야 다음 데이터를 보낼 수 있다. RTT가 크면 매 ACK마다 긴 대기가 생겨 처리량이 떨어진다. HTTP/1.1은 요청-응답이 순차적이어서 RTT의 영향을 특히 많이 받는다.
 
 ```text
-서비스별 지연/지터 권고값:
-┌──────────────────┬──────────────┬──────────────┐
-│ 서비스           │ 최대 단방향  │ 최대 지터     │
-├──────────────────┼──────────────┼──────────────┤
-│ VoIP (음성)      │ 150 ms       │ 30 ms         │
-│ 화상회의         │ 200 ms       │ 50 ms         │
-│ 온라인 게임      │ 50 ms 이하   │ 10 ms 이하    │
-│ 스트리밍 (버퍼)  │ 제한 없음    │ 제한 없음     │
-└──────────────────┴──────────────┴──────────────┘
+단순 HTTP 요청 최소 소요 시간:
+DNS 조회(1 RTT) + TCP 연결(1 RTT) + HTTP 요청/응답(1 RTT) = 3 RTT 이상
+
+RTT 200ms → 최소 600ms 소요 (콘텐츠 크기 무관)
+RTT 10ms  → 최소 30ms 소요
 ```
 
-스트리밍(Netflix, YouTube)은 수~수십 초 버퍼를 사용하기 때문에 지터에 무관하다. 반면 Zoom이나 Discord는 수백 ms의 엄격한 지연 요건을 가진다.
+## 지터 (Jitter)
 
-다음 글에서는 네트워크가 어떻게 데이터를 전달하는 두 가지 근본적인 방식인 회선 교환과 패킷 교환을 비교한다.
+지터는 **패킷 도착 간격의 변동**이다. 모든 패킷이 정확히 일정한 간격으로 도착하면 지터는 0이다. 네트워크 혼잡, 큐잉 지연 변동 등으로 패킷마다 도착 시간이 달라지면 지터가 발생한다.
+
+```text
+패킷 1: 30ms 후 도착
+패킷 2: 45ms 후 도착  ← 15ms 지연 증가
+패킷 3: 28ms 후 도착  ← 17ms 지연 감소
+지터 = 이 변동폭의 통계적 측정값
+```
+
+지터가 크면 음성·영상 통화에서 음질 저하, 버퍼링, 끊김이 발생한다. VoIP는 패킷이 일정한 간격으로 도착해야 자연스러운 음성이 재생되기 때문이다.
+
+## ping으로 RTT와 지터 측정하기
+
+![ping 출력 분석](/assets/posts/network-rtt-jitter-measurement.svg)
+
+```bash
+# 5번 전송
+ping -c 5 google.com
+
+# 출력 해석
+# rtt min/avg/max/mdev = 29.8/31.1/33.1/1.1 ms
+# min  = 가장 빠른 RTT (이상적 조건)
+# avg  = 평균 RTT
+# max  = 가장 느린 RTT (혼잡 피크)
+# mdev = 평균 편차 → 사실상 지터 지표
+```
+
+`mdev`(mean deviation)가 낮을수록 RTT가 일정하다는 의미다. `mdev`가 높으면 네트워크 혼잡이나 경로 불안정을 의심할 수 있다.
+
+## 상세 지터 측정: mtr
+
+```bash
+# mtr: ping + traceroute 결합 도구
+mtr --report --report-cycles 20 google.com
+
+# 출력:
+# HOST          Loss%  Snt  Last  Avg  Best  Wrst  StDev
+# 192.168.0.1   0.0%   20   0.5  0.6   0.4   0.9   0.1
+# 58.x.x.x      0.0%   20   3.1  3.2   3.0   3.5   0.1
+# ...
+# google.com    0.0%   20  31.0 31.1  29.8  33.1   0.9
+```
+
+`StDev`(표준편차)가 각 홉의 지터를 나타낸다. 특정 홉에서 StDev가 갑자기 커지면 그 구간이 병목이다.
+
+## 실용 기준값
+
+| 애플리케이션 | RTT 목표 | 지터 목표 |
+|-------------|---------|---------|
+| 온라인 FPS 게임 | < 30ms | < 5ms |
+| 화상 통화 (Zoom) | < 150ms | < 30ms |
+| VoIP | < 150ms | < 20ms |
+| 웹 브라우징 | < 200ms | 민감하지 않음 |
+| 파일 전송 | 관대 | 관대 |
+
+## 지터 완화: 재생 버퍼 (Jitter Buffer)
+
+실시간 애플리케이션은 도착한 패킷을 즉시 재생하지 않고, 짧은 버퍼에 모아 일정한 속도로 재생한다. 이 **재생 버퍼(Playout Buffer)**가 지터를 흡수한다. 단, 버퍼가 클수록 추가 지연이 생기므로 균형이 필요하다.
+
+```text
+지터 버퍼 전략:
+- 고정 버퍼: 항상 N ms 기다렸다가 재생 (단순, 지연 고정)
+- 적응형 버퍼: 측정된 지터에 따라 버퍼 크기 동적 조정 (더 나은 품질)
+```
 
 ---
 
-**지난 글:** [대역폭·처리량·지연 시간 완전 정복](/posts/network-bandwidth-throughput-latency/)
+**지난 글:** [대역폭·처리량·지연](/posts/network-bandwidth-throughput-latency/)
 
-**다음 글:** [회선 교환 vs 패킷 교환: 인터넷의 근본 원리](/posts/network-circuit-vs-packet-switching/)
+**다음 글:** [회선 교환 vs 패킷 교환: 인터넷의 선택](/posts/network-circuit-vs-packet-switching/)
 
 <br>
 읽어주셔서 감사합니다. 😊

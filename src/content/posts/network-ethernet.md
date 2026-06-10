@@ -1,121 +1,101 @@
 ---
-title: "이더넷 완전 정복: 프레임 구조와 CSMA/CD"
-description: "이더넷 II 프레임 구조(프리앰블·MAC·EtherType·FCS), CSMA/CD 충돌 감지 알고리즘, 지수 백오프, 속도별 이더넷 표준까지 완전 해설합니다."
+title: "이더넷: LAN의 표준 프로토콜"
+description: "이더넷의 역사, 프레임 구조, EtherType, CSMA/CD, 전이중 통신, 표준 속도별 케이블 규격을 완전히 이해한다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-06-11"
 archiveOrder: 10
 type: "knowledge"
 category: "Network"
-tags: ["이더넷", "Ethernet", "CSMACD", "프레임구조", "MTU", "FCS", "IEEE802.3"]
+tags: ["이더넷", "Ethernet", "프레임", "CSMA/CD", "IEEE802.3", "LAN", "케이블"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-mac-address/)에서 MAC 주소의 구조와 역할을 살펴봤다. MAC 주소가 이더넷 프레임의 핵심 필드 중 하나라면, 이번 글에서는 이더넷 프레임 전체 구조와 이더넷이 공유 매체에서 충돌을 어떻게 처리하는지, 즉 **CSMA/CD(Carrier Sense Multiple Access with Collision Detection)** 알고리즘을 완전히 해부한다.
+[지난 글](/posts/network-mac-address/)에서 MAC 주소의 구조와 역할을 살펴봤다. MAC 주소가 쓰이는 프로토콜이 바로 **이더넷(Ethernet)**이다. 1970년대 제록스에서 시작해 오늘날 전 세계 LAN의 사실상 표준이 된 이더넷을 깊이 이해한다.
 
-## 이더넷 역사: 제록스 PARC에서 IEEE 표준까지
+## 이더넷의 역사
 
-이더넷은 1973년 Bob Metcalfe가 제록스 PARC에서 발명한 LAN 기술이다. 1980년 DEC, Intel, Xerox가 최초 버전을 발표하고, 1983년 IEEE 802.3으로 표준화됐다. 현재 버전인 **이더넷 II(DIX)** 프레임 형식이 가장 널리 사용된다.
+1973년 로버트 멧칼프(Robert Metcalfe)가 제록스 PARC에서 최초 이더넷을 개발했다. 이후 DEC, Intel, Xerox(DIX)가 공동으로 이더넷 II 표준을 발표했고, 1983년 IEEE가 802.3으로 표준화했다. 현재는 10Mbps에서 400Gbps, 800Gbps까지 속도가 확장됐지만 프레임 구조는 수십 년 전과 본질적으로 동일하다.
 
 ## 이더넷 II 프레임 구조
 
 ![이더넷 프레임 구조](/assets/posts/network-ethernet-frame.svg)
 
+각 필드의 역할:
+
+- **Preamble (7byte)**: `10101010` 패턴의 반복. NIC가 클록을 동기화하는 데 사용.
+- **SFD (1byte, Start Frame Delimiter)**: `10101011`. 프레임 시작 경계를 알림.
+- **Dst/Src MAC (6byte 각각)**: 목적지/출발지 MAC 주소.
+- **EtherType (2byte)**: 페이로드의 상위 프로토콜을 알림. `0x0800`=IPv4, `0x86DD`=IPv6, `0x0806`=ARP.
+- **Payload (46~1500byte)**: 실제 데이터 (대부분 IP 패킷).
+- **FCS (4byte)**: CRC-32로 프레임 오류 감지.
+
 ```text
-┌──────────┬─────┬──────────┬──────────┬──────────┬──────────────┬──────────┐
-│ 프리앰블  │ SFD │ Dest MAC │  Src MAC │EtherType │   페이로드    │   FCS    │
-│  7 bytes │ 1B  │  6 bytes │  6 bytes │  2 bytes │  46-1500 B   │  4 bytes │
-└──────────┴─────┴──────────┴──────────┴──────────┴──────────────┴──────────┘
+최소 프레임: 64byte (헤더 18byte + 패딩 포함 최소 46byte 페이로드)
+최대 프레임: 1518byte (페이로드 최대 1500byte, jumbo frame 제외)
+MTU: 1500 byte (Maximum Transmission Unit)
 ```
 
-**프리앰블(Preamble)**: 7바이트의 `10101010` 패턴. 수신 측 클록 동기화를 위한 신호다.
+## CSMA/CD: 충돌 처리
 
-**SFD(Start Frame Delimiter)**: 1바이트 `10101011`. 프리앰블 끝과 실제 프레임 시작을 알리는 구분자다.
+초기 이더넷은 여러 장치가 하나의 동축 케이블(버스)을 공유했다. 이때 필요한 충돌 처리 메커니즘이 **CSMA/CD**다.
 
-**목적지/출발지 MAC**: 각 6바이트. 앞의 글에서 상세히 다뤘다.
-
-**EtherType**: 2바이트. 페이로드에 담긴 상위 계층 프로토콜을 식별한다. 0x0800=IPv4, 0x86DD=IPv6, 0x0806=ARP.
-
-**페이로드**: 46~1500바이트. 최소 46바이트 미만이면 패딩(Padding)을 추가한다. 최대 1500바이트가 이더넷 MTU다.
-
-**FCS(Frame Check Sequence)**: 4바이트 CRC-32. 프레임 전송 중 발생한 오류를 검출한다. 수신 측이 불일치를 검출하면 프레임을 폐기한다.
-
-## MTU (Maximum Transmission Unit)
-
-이더넷의 기본 MTU는 **1500 bytes**다. IP 패킷이 이 크기를 초과하면 **분할(Fragmentation)**이 발생한다. MTU Discovery와 단편화는 이후 IP 분할 글에서 상세히 다룬다.
+![CSMA/CD 알고리즘](/assets/posts/network-ethernet-csma-cd.svg)
 
 ```bash
-# 인터페이스별 MTU 확인
-ip link show
-# ... mtu 1500 ...
+# 충돌 통계 확인 (레거시 환경)
+ethtool -S eth0 | grep collision
+# collisions: 0  ← 스위치 환경에서는 항상 0
+```
 
-# MTU 변경 (점보 프레임: 9000 bytes, 서버-서버 고속 연결)
+현대 스위치 환경에서 각 포트는 **전이중(Full-Duplex)**으로 동작한다. 송신과 수신이 독립적인 쌍(페어)을 사용하므로 충돌이 발생하지 않는다. CSMA/CD는 사실상 역사 속으로 사라졌다.
+
+## 자동 협상 (Auto-Negotiation)
+
+이더넷 포트는 연결 상대와 속도 및 이중(Duplex) 모드를 자동으로 협상한다.
+
+```bash
+# 현재 링크 속도 및 이중 모드 확인
+ethtool eth0 | grep -E "Speed|Duplex"
+# Speed: 1000Mb/s
+# Duplex: Full
+
+# 수동 설정 (권장하지 않음)
+ethtool -s eth0 speed 1000 duplex full autoneg off
+```
+
+자동 협상이 실패하면 한쪽은 1000Mbps Full-Duplex, 다른 쪽은 Half-Duplex로 연결되는 **Duplex Mismatch**가 발생한다. 이 경우 대역폭은 극히 낮아진다.
+
+## 케이블 표준
+
+| 표준 | 속도 | 케이블 | 최대 거리 |
+|------|------|--------|-----------|
+| 10BASE-T | 10 Mbps | CAT3 | 100m |
+| 100BASE-TX | 100 Mbps | CAT5 | 100m |
+| 1000BASE-T | 1 Gbps | CAT5e/CAT6 | 100m |
+| 10GBASE-T | 10 Gbps | CAT6a | 100m |
+| 10GBASE-SR | 10 Gbps | 광섬유 (MMF) | 300m |
+| 100GBASE-LR4 | 100 Gbps | 광섬유 (SMF) | 10km |
+
+데이터센터에서는 DAC(Direct Attach Copper) 케이블로 25G/100G 연결을 짧은 거리에서 저비용으로 구성한다.
+
+## 점보 프레임 (Jumbo Frame)
+
+표준 MTU 1500byte를 초과하는 프레임이다. 일반적으로 9000byte를 사용한다.
+
+```bash
+# 점보 프레임 설정
 ip link set eth0 mtu 9000
+
+# 현재 MTU 확인
+ip link show eth0 | grep mtu
 ```
 
-## CSMA/CD: 공유 매체에서의 충돌 감지
-
-초기 이더넷은 **반이중(Half-Duplex)** 방식으로, 한 링크를 여러 장치가 공유했다. 동시에 전송하면 신호가 충돌해 데이터가 손상되므로 CSMA/CD 알고리즘이 필요했다.
-
-![CSMA/CD 동작 흐름](/assets/posts/network-ethernet-csmacd.svg)
-
-```text
-CSMA/CD 알고리즘:
-1. CS (Carrier Sense): 채널이 사용 중인지 감지
-   - 사용 중 → 사용 완료까지 대기
-   - 비어있음 → 전송 시작
-
-2. MA (Multiple Access): 비어있으면 즉시 전송
-
-3. CD (Collision Detection): 전송 중 충돌 감지
-   - 충돌 감지 → JAM 신호(48비트) 전송으로 충돌 알림
-   - 충돌 없음 → 전송 완료
-
-4. Exponential Backoff (지수 백오프):
-   재시도 횟수 k에서 [0, 2^k - 1] 중 무작위 슬롯 대기
-   k=1: [0, 1] * 51.2μs
-   k=2: [0, 3] * 51.2μs
-   ...
-   k=10: [0, 1023] * 51.2μs (최대)
-   16회 실패 → 프레임 폐기, 상위 계층에 오류 보고
-```
-
-```python
-import random
-import time
-
-def ethernet_backoff(attempt: int, slot_time_us: float = 51.2) -> float:
-    """이더넷 지수 백오프 대기 시간 계산 (μs)"""
-    k = min(attempt, 10)  # 최대 2^10 = 1024
-    max_slots = (2 ** k) - 1
-    slots = random.randint(0, max_slots)
-    wait_us = slots * slot_time_us
-    return wait_us
-
-for attempt in range(1, 6):
-    wait = ethernet_backoff(attempt)
-    print(f"재시도 {attempt}회: {wait:.1f} μs 대기")
-```
-
-## 현대 이더넷: 전이중과 스위치
-
-현대 이더넷은 스위치와 **전이중(Full-Duplex)** 모드를 사용하므로 CSMA/CD가 필요 없다. 각 포트가 점대점(Point-to-Point) 전용 링크로 연결되어 충돌이 발생하지 않기 때문이다.
-
-```text
-속도별 이더넷 표준:
-10BASE-T    : 10 Mbps    (Cat3 UTP)   1990년대
-100BASE-TX  : 100 Mbps   (Cat5 UTP)   Fast Ethernet
-1000BASE-T  : 1 Gbps     (Cat5e UTP)  Gigabit Ethernet
-10GBASE-T   : 10 Gbps    (Cat6a UTP)  10G Ethernet
-100GBASE-SR : 100 Gbps   (멀티모드 광섬유)
-400GBASE-DR4: 400 Gbps   (단일모드 광섬유) 데이터센터
-```
-
-이더넷이 이렇게 진화할 수 있었던 배경에는 하위 호환성이 있다. 케이블 규격만 업그레이드하면 기존 소프트웨어와 프로토콜을 그대로 사용할 수 있다는 점이 이더넷이 수십 년간 지배적인 LAN 기술로 남아있는 핵심 이유다.
+같은 경로의 모든 장비(NIC, 스위치, 라우터)가 동일한 MTU를 지원해야 한다. 불일치하면 패킷 단편화 또는 드롭이 발생한다. 스토리지 네트워크(iSCSI, NFS)에서 처리량 향상을 위해 활용한다.
 
 ---
 
-**지난 글:** [MAC 주소 완전 정복](/posts/network-mac-address/)
+**지난 글:** [MAC 주소: 이더넷의 물리적 식별자](/posts/network-mac-address/)
 
 <br>
 읽어주셔서 감사합니다. 😊
