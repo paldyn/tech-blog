@@ -1,187 +1,158 @@
 ---
-title: "TypeScript 컴파일러 tsc 완전 이해"
-description: "tsc의 내부 동작 원리와 파이프라인, 주요 컴파일러 플래그, 그리고 효율적인 빌드 설정 방법을 심층적으로 설명합니다."
+title: "tsc 컴파일러 완전 이해"
+description: "TypeScript 컴파일러 tsc의 내부 파이프라인, 주요 CLI 옵션, tsconfig.json 핵심 설정을 이해합니다. noEmit, incremental 빌드, watch 모드까지 실용적인 사용법을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
+pubDate: "2026-06-11"
 archiveOrder: 5
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "tsc", "컴파일러", "tsconfig", "빌드"]
+tags: ["TypeScript", "tsc", "컴파일러", "tsconfig", "빌드", "파이프라인"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-setup-install/)에서 TypeScript 환경을 설정했습니다. 이번에는 `tsc`가 내부적으로 어떻게 동작하는지, 그리고 다양한 컴파일러 옵션을 어떻게 활용하는지 깊이 들어가 보겠습니다.
+[지난 글](/posts/ts-setup-install/)에서 TypeScript 설치와 환경 구성을 마쳤습니다. 이번 글에서는 TypeScript 컴파일러 `tsc`가 내부적으로 어떻게 동작하는지, 어떤 옵션들이 있는지 자세히 살펴봅니다.
 
-![TypeScript 컴파일러 파이프라인](/assets/posts/ts-compiler-tsc-pipeline.svg)
+## tsc 컴파일 파이프라인
 
-## tsc의 내부 5단계
+TypeScript 컴파일러는 소스 파일을 읽어서 JavaScript를 출력하기까지 여러 단계를 거칩니다.
 
-TypeScript 컴파일러는 `.ts` 파일을 받아 `.js`로 변환하기까지 다음 5단계를 거칩니다.
+![tsc 컴파일러 파이프라인](/assets/posts/ts-compiler-tsc-pipeline.svg)
 
-**1단계 — 파싱(Parsing)**: 소스 코드를 토큰으로 분해하고 AST(Abstract Syntax Tree)를 구성합니다. 문법 오류는 이 단계에서 발견됩니다.
+1. **스캐너(Scanner)**: 소스 코드를 토큰(예약어, 식별자, 연산자 등)으로 분리
+2. **파서(Parser)**: 토큰을 추상 구문 트리(AST, Abstract Syntax Tree)로 변환
+3. **바인더(Binder)**: 심볼 테이블 구성, 스코프 분석, 선언과 참조 연결
+4. **타입 검사기(Type Checker)**: 타입 추론 실행, 타입 오류 탐지, 타입 호환성 검사
+5. **이미터(Emitter)**: AST를 JavaScript(.js), 타입 선언(.d.ts), 소스맵(.map)으로 출력
 
-**2단계 — 바인딩(Binding)**: 심볼 테이블을 구성하고 변수, 함수, 클래스의 스코프를 분석합니다. 같은 이름의 중복 선언 오류가 이 단계에서 나타납니다.
+이 파이프라인을 이해하면 `tsc`의 옵션이 어느 단계에 영향을 주는지 파악할 수 있습니다.
 
-**3단계 — 타입 검사(Type Checking)**: TypeScript의 핵심 단계입니다. 수집된 타입 정보를 바탕으로 타입 불일치, null 참조, 잘못된 속성 접근 등을 감지합니다.
-
-**4단계 — 변환(Transformation)**: 타입 어노테이션을 제거하고, ES2015+ 문법을 target 버전에 맞게 다운레벨 변환합니다.
-
-**5단계 — 출력(Emit)**: `.js` 파일과 선택적으로 `.d.ts`(타입 선언), `.js.map`(소스맵) 파일을 생성합니다.
+## 주요 CLI 명령
 
 ```bash
-# 타입 검사만 (파일 미생성) — CI에서 유용
-npx tsc --noEmit
-
-# 전체 컴파일
+# 기본 컴파일 (tsconfig.json 기준)
 npx tsc
 
-# 변경 감지 자동 재컴파일
+# 특정 파일 컴파일 (tsconfig.json 무시)
+npx tsc src/index.ts
+
+# 타입 검사만 (JS 출력 없음) — CI에서 주로 사용
+npx tsc --noEmit
+
+# 파일 변경 감지 자동 재컴파일
 npx tsc --watch
+
+# tsconfig.json 생성
+npx tsc --init
+
+# 현재 tsconfig 설정 확인
+npx tsc --showConfig
+
+# 특정 tsconfig 지정
+npx tsc --project tsconfig.prod.json
 ```
 
 ## tsconfig.json 핵심 옵션
 
-![tsconfig.json 핵심 옵션](/assets/posts/ts-compiler-tsc-flags.svg)
+![tsconfig 핵심 옵션](/assets/posts/ts-compiler-tsc-options.svg)
 
-### target: 출력 JavaScript 버전
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020"
-  }
-}
-```
-
-`target`은 컴파일 후 출력되는 JavaScript의 문법 버전을 지정합니다. `async/await`, `class`, 화살표 함수 등의 문법이 지정한 버전으로 다운레벨 변환됩니다.
-
-```typescript
-// 소스 (TypeScript)
-const arr = [1, 2, 3];
-const doubled = arr.map(n => n * 2);
-```
-
-```javascript
-// target: ES5 출력
-var arr = [1, 2, 3];
-var doubled = arr.map(function(n) { return n * 2; });
-
-// target: ES2020 출력 (거의 그대로)
-const arr = [1, 2, 3];
-const doubled = arr.map(n => n * 2);
-```
-
-### module: 모듈 시스템
-
-```json
-"module": "commonjs"    // Node.js 기본
-"module": "ESNext"      // 브라우저 / 최신 번들러
-"module": "Node16"      // Node.js 16+의 ESM 지원
-```
-
-Node.js 백엔드는 `commonjs`, 브라우저 앱(Vite, webpack 등)은 `ESNext` 또는 `ES2020`을 사용합니다.
-
-### strict: 엄격 모드 플래그 번들
-
-```typescript
-// strictNullChecks 효과
-function getLength(str: string | null): number {
-  // strict 없으면: str.length (null 가능성 무시)
-  // strict 있으면: null 체크 강제
-  return str?.length ?? 0;
-}
-
-// noImplicitAny 효과
-function process(data) {     // ❌ strict: data에 any 암시됨
-  return data.value;
-}
-function process(data: unknown) { // ✅ 명시적 타입 필요
-  if (typeof data === "object" && data !== null) {
-    return (data as { value: unknown }).value;
-  }
-}
-```
-
-### paths: 모듈 경로 별칭
-
-긴 상대 경로 대신 별칭을 사용할 수 있습니다.
+### 출력 관련 옵션
 
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationDir": "./types",
+    "sourceMap": true,
+    "noEmit": false
+  }
+}
+```
+
+- `target`: 출력 JavaScript의 ECMAScript 버전. `ES2022`는 최신 Node.js LTS에서 지원
+- `module`: 모듈 시스템. Node.js 18+는 `NodeNext` 또는 `Node16`
+- `declaration`: `.d.ts` 타입 선언 파일 생성. 라이브러리 배포 시 필수
+- `sourceMap`: `.map` 파일 생성. 디버깅 시 TS 소스 위치를 JS 실행 위치에 매핑
+
+### strict 모드 플래그
+
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+`strict: true`는 여러 엄격 검사 플래그를 한 번에 활성화합니다.
+
+- `strictNullChecks`: `null`과 `undefined`를 독립된 타입으로 취급
+- `noImplicitAny`: 타입 추론 불가 시 암묵적 `any` 금지
+- `strictFunctionTypes`: 함수 매개변수 공변/반변 엄격 검사
+- `useUnknownInCatchVariables`: catch 블록 변수를 `any` 대신 `unknown`으로
+
+신규 프로젝트라면 반드시 `strict: true`로 시작하는 것을 권장합니다.
+
+### 경로 관련 옵션
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
     "paths": {
-      "@/utils/*": ["src/utils/*"],
-      "@/types/*": ["src/types/*"]
+      "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"]
     }
   }
 }
 ```
 
-```typescript
-// 이전: 상대 경로
-import { formatDate } from "../../../utils/date";
+`paths`로 절대 경로 임포트를 설정할 수 있습니다. 단, 런타임에서 경로 해석은 tsc가 하지 않으므로 webpack/vite/tsconfig-paths 등의 추가 설정이 필요합니다.
 
-// 이후: 별칭 사용
-import { formatDate } from "@/utils/date";
-```
+## noEmit과 번들러 조합
 
-## 여러 환경을 위한 tsconfig 분리
-
-프로젝트가 커지면 환경별로 tsconfig를 분리하는 패턴이 유용합니다.
-
-```
-tsconfig.json          # 기본 (공통 설정)
-tsconfig.build.json    # 프로덕션 빌드용
-tsconfig.dev.json      # 개발용 (sourceMap, incremental)
-```
+현대 프론트엔드 개발에서 TypeScript 컴파일은 주로 Vite, webpack, esbuild 같은 번들러가 담당합니다. 이 경우 `tsc`는 타입 검사 역할만 합니다.
 
 ```json
-// tsconfig.build.json: 기본 설정을 상속
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noEmit": false,
-    "declaration": true,
-    "sourceMap": false
-  },
-  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+    "noEmit": true,
+    "strict": true
+  }
 }
 ```
 
-## incremental 빌드로 속도 개선
+```bash
+# CI 파이프라인에서
+npx tsc --noEmit  # 타입 오류 있으면 exit code 1로 종료
+```
 
-대규모 프로젝트에서는 증분 빌드를 활성화해 컴파일 속도를 크게 향상시킬 수 있습니다.
+## incremental 빌드
+
+대규모 프로젝트에서 컴파일 속도를 높이려면 `incremental` 빌드를 활성화합니다.
 
 ```json
 {
   "compilerOptions": {
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": "./dist/.tsbuildinfo"
   }
 }
 ```
 
-첫 컴파일 이후 변경된 파일만 재컴파일하므로 대형 프로젝트에서 빌드 시간이 50~80% 단축됩니다.
+처음 빌드 후 `.tsbuildinfo` 파일에 상태를 저장하고, 변경된 파일만 재컴파일합니다. 대형 코드베이스에서 빌드 시간을 50~80% 단축할 수 있습니다.
 
-## tsc vs 번들러의 타입 검사
-
-실제 프로젝트에서는 tsc 대신 esbuild나 SWC로 트랜스파일하고, 타입 검사만 tsc에 위임하는 패턴이 많습니다.
-
-```bash
-# Vite + TypeScript의 일반적인 workflow
-vite build          # esbuild로 빠른 번들링 (타입 무시)
-tsc --noEmit        # 타입 검사만 별도 실행 (CI에서)
-```
-
-이 방식으로 개발 서버 시작과 HMR 속도를 극대화하면서, CI 파이프라인에서 정확한 타입 검사를 보장할 수 있습니다.
+`tsc`는 단순한 변환 도구가 아닙니다. 프로젝트의 타입 안전성을 보장하는 게이트키퍼 역할을 합니다. 옵션을 잘 이해하면 빌드 속도와 타입 안전성 모두를 최적화할 수 있습니다.
 
 ---
 
-**지난 글:** [TypeScript 설치 및 환경 설정 — 처음부터 시작하기](/posts/ts-setup-install/)
+**지난 글:** [TypeScript 설치와 환경 구성](/posts/ts-setup-install/)
 
-**다음 글:** [TypeScript Playground — 브라우저에서 즉시 실험하기](/posts/ts-playground-repl/)
+**다음 글:** [TypeScript Playground로 빠르게 배우기](/posts/ts-playground-repl/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,247 +1,164 @@
 ---
 title: "첫 TypeScript 프로그램 작성하기"
-description: "Hello World를 넘어 실질적인 TypeScript 코드를 작성해봅니다. 인터페이스, 함수 타입, 기본 타입 어노테이션을 직접 손으로 써가며 익힙니다."
+description: "실제 로컬 환경에서 TypeScript 파일을 만들고, 인터페이스와 함수에 타입을 추가하고, tsc로 컴파일해서 Node.js로 실행하는 전체 흐름을 처음부터 함께 따라합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
+pubDate: "2026-06-11"
 archiveOrder: 7
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "입문", "실습", "인터페이스", "함수타입"]
+tags: ["TypeScript", "첫프로그램", "interface", "함수", "실습", "Node.js"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-playground-repl/)에서 TypeScript Playground를 소개했습니다. 이번에는 직접 손을 움직여 의미 있는 TypeScript 코드를 작성해보겠습니다. 단순한 Hello World를 넘어, 실제 프로젝트에서 쓸 법한 패턴을 연습합니다.
-
-![첫 TypeScript 프로그램](/assets/posts/ts-first-program-code.svg)
+[지난 글](/posts/ts-playground-repl/)에서 TypeScript Playground로 브라우저에서 실험했습니다. 이번 글에서는 로컬 환경에서 첫 TypeScript 프로그램을 처음부터 작성하고 실행해 봅니다.
 
 ## 프로젝트 준비
 
-앞서 설정한 환경이 있다면 그대로 사용하고, 없다면 빠르게 준비합니다.
+이전 글에서 만든 TypeScript 환경을 사용합니다. 없다면 아래 명령으로 빠르게 준비하세요.
 
 ```bash
-mkdir ts-first-program && cd ts-first-program
+mkdir my-first-ts && cd my-first-ts
 npm init -y
-npm install --save-dev typescript
+npm install --save-dev typescript @types/node
 npx tsc --init
 mkdir src
 ```
 
-## 1단계: 기본 타입 어노테이션
+`tsconfig.json`의 `strict: true`가 설정되어 있는지 확인합니다.
 
-`src/step1.ts`를 만들고 가장 기본적인 타입 어노테이션을 연습합니다.
+## 첫 번째 파일: 사용자 관리 모듈
 
-```typescript
-// src/step1.ts
+`src/index.ts` 파일을 만들고 아래 코드를 작성합니다.
 
-// 변수 타입 어노테이션
-const language: string = "TypeScript";
-const version: number = 5.4;
-const isAwesome: boolean = true;
-
-// 함수 매개변수와 반환 타입
-function greet(name: string, times: number = 1): string {
-  return Array(times).fill(`Hello, ${name}!`).join(" ");
-}
-
-console.log(greet("World"));        // Hello, World!
-console.log(greet("TypeScript", 3)); // Hello, TypeScript! Hello, TypeScript! Hello, TypeScript!
-
-// greet(42);        // ❌ 타입 에러
-// greet("World", "2"); // ❌ 타입 에러
-```
-
-## 2단계: 인터페이스로 객체 모양 정의
+![첫 TypeScript 프로그램 해부](/assets/posts/ts-first-program-anatomy.svg)
 
 ```typescript
-// src/step2.ts
+// src/index.ts
 
-interface Address {
-  street: string;
-  city: string;
-  country: string;
-  zipCode?: string;  // ? 는 선택적 프로퍼티
-}
-
+// ① 인터페이스로 데이터 구조 정의
 interface User {
   id: number;
   name: string;
   email: string;
-  address: Address;
-  createdAt: Date;
+  role: "admin" | "user" | "guest";
 }
 
-function formatUser(user: User): string {
-  return `[${user.id}] ${user.name} <${user.email}>
-  주소: ${user.address.city}, ${user.address.country}`;
+// ② 함수 타입 주석
+function greetUser(user: User): string {
+  return `안녕하세요, ${user.name}님! (역할: ${user.role})`;
 }
 
+function isAdmin(user: User): boolean {
+  return user.role === "admin";
+}
+
+// ③ 타입이 있는 변수
 const alice: User = {
   id: 1,
   name: "Alice",
   email: "alice@example.com",
-  address: {
-    street: "강남대로 123",
-    city: "서울",
-    country: "대한민국"
-  },
-  createdAt: new Date()
+  role: "admin",
 };
 
-console.log(formatUser(alice));
-```
+const bob: User = {
+  id: 2,
+  name: "Bob",
+  email: "bob@example.com",
+  role: "user",
+};
 
-인터페이스를 사용하면 객체의 "모양"을 미리 정의할 수 있고, 빠진 프로퍼티나 잘못된 타입을 즉시 발견할 수 있습니다.
+// ④ 배열 타입
+const users: User[] = [alice, bob];
 
-## 3단계: 함수 타입과 콜백
-
-```typescript
-// src/step3.ts
-
-// 함수 타입 표현
-type Transformer<T, U> = (value: T) => U;
-type Predicate<T> = (value: T) => boolean;
-
-function filter<T>(arr: T[], pred: Predicate<T>): T[] {
-  return arr.filter(pred);
-}
-
-function map<T, U>(arr: T[], fn: Transformer<T, U>): U[] {
-  return arr.map(fn);
-}
-
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const evens = filter(numbers, n => n % 2 === 0);
-// evens: number[] = [2, 4, 6, 8, 10]
-
-const doubled = map(evens, n => n * 2);
-// doubled: number[] = [4, 8, 12, 16, 20]
-
-console.log(doubled);
-```
-
-## 4단계: 유니온 타입과 타입 가드
-
-```typescript
-// src/step4.ts
-
-type Shape =
-  | { kind: "circle"; radius: number }
-  | { kind: "rectangle"; width: number; height: number }
-  | { kind: "triangle"; base: number; height: number };
-
-function getArea(shape: Shape): number {
-  switch (shape.kind) {
-    case "circle":
-      return Math.PI * shape.radius ** 2;
-    case "rectangle":
-      return shape.width * shape.height;
-    case "triangle":
-      return (shape.base * shape.height) / 2;
+// ⑤ 실행
+users.forEach((user) => {
+  console.log(greetUser(user));
+  if (isAdmin(user)) {
+    console.log(`  → ${user.name}은(는) 관리자입니다.`);
   }
-}
-
-const shapes: Shape[] = [
-  { kind: "circle", radius: 5 },
-  { kind: "rectangle", width: 4, height: 6 },
-  { kind: "triangle", base: 3, height: 4 }
-];
-
-shapes.forEach(s => {
-  console.log(`${s.kind}: ${getArea(s).toFixed(2)}`);
 });
-// circle: 78.54
-// rectangle: 24.00
-// triangle: 6.00
 ```
 
-## 5단계: 비동기 함수
+## 컴파일 후 실행
 
-```typescript
-// src/step5.ts
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
-
-async function fetchPost(id: number): Promise<Post> {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`
-  );
-
-  if (!response.ok) {
-    throw new Error(`HTTP error: ${response.status}`);
-  }
-
-  return response.json() as Promise<Post>;
-}
-
-async function main(): Promise<void> {
-  try {
-    const post = await fetchPost(1);
-    console.log(`제목: ${post.title}`);
-    console.log(`작성자: ${post.userId}`);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(`오류: ${error.message}`);
-    }
-  }
-}
-
-main();
-```
-
-## 개발 워크플로
-
-![TypeScript 개발 워크플로](/assets/posts/ts-first-program-flow.svg)
-
-ts-node를 설치하면 컴파일 없이 TypeScript 파일을 직접 실행할 수 있어 개발이 빨라집니다.
+![빌드 및 실행 흐름](/assets/posts/ts-first-program-flow.svg)
 
 ```bash
-npm install --save-dev ts-node @types/node
+# TypeScript → JavaScript 컴파일
+npx tsc
 
-# 직접 실행
-npx ts-node src/step1.ts
-
-# nodemon으로 변경 시 자동 재실행
-npm install --save-dev nodemon
-npx nodemon --exec ts-node src/step5.ts
+# dist/index.js 생성됨
+node dist/index.js
 ```
 
-## 자주 하는 실수
+출력:
+```
+안녕하세요, Alice님! (역할: admin)
+  → Alice은(는) 관리자입니다.
+안녕하세요, Bob님! (역할: user)
+```
+
+## 타입 오류를 직접 만들어보기
+
+TypeScript의 진가를 느끼려면 의도적으로 오류를 만들어봐야 합니다.
 
 ```typescript
-// ❌ 잘못된 예: 타입 단언 남용
-const data = JSON.parse(json) as User; // 런타임 검증 없음
+// 잘못된 role 값 — 컴파일 타임 오류
+const charlie: User = {
+  id: 3,
+  name: "Charlie",
+  email: "charlie@example.com",
+  role: "superuser", // TS2322: '"superuser"'는 '"admin" | "user" | "guest"'에 할당 불가
+};
 
-// ✅ 올바른 예: 런타임 검증
-function isUser(obj: unknown): obj is User {
-  return (
-    typeof obj === "object" &&
-    obj !== null &&
-    "id" in obj &&
-    "name" in obj
-  );
-}
+// 속성 누락 — 컴파일 타임 오류
+const dave: User = {
+  id: 4,
+  name: "Dave",
+  // email 누락: TS2322: Property 'email' is missing in type '...'
+  role: "user",
+};
 
-const parsed = JSON.parse(json);
-if (isUser(parsed)) {
-  // 여기서는 parsed가 User 타입으로 보장됨
-  console.log(parsed.name);
+// 잘못된 인자 타입 — 컴파일 타임 오류
+greetUser("hello");
+// TS2345: Argument of type 'string' is not assignable to parameter of type 'User'
+```
+
+이 오류들은 모두 코드를 실행하기 전에 발견됩니다.
+
+## ts-node로 빠르게 실행
+
+개발 중에는 컴파일 없이 직접 TypeScript를 실행할 수 있습니다.
+
+```bash
+npm install --save-dev ts-node
+
+# 컴파일 없이 바로 실행
+npx ts-node src/index.ts
+```
+
+또는 `package.json`에 스크립트를 추가합니다.
+
+```json
+{
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  }
 }
 ```
 
-코드를 직접 타이핑하면서 IDE의 자동완성과 오류 표시가 얼마나 도움이 되는지 경험해보세요. TypeScript는 손에 익히는 시간이 필요하지만, 익히고 나면 없던 시절로 돌아가기 어렵습니다.
+## 다음 단계
+
+이제 TypeScript로 코드를 작성하고 실행하는 기본 흐름을 알았습니다. 앞으로 배울 내용들이 이 기반 위에서 쌓입니다. 인터페이스를 더 복잡하게 정의하는 방법, 제네릭으로 재사용성 높이는 방법, 유니온 타입으로 분기 처리하는 방법 등을 하나씩 다뤄갑니다.
 
 ---
 
-**지난 글:** [TypeScript Playground — 브라우저에서 즉시 실험하기](/posts/ts-playground-repl/)
+**지난 글:** [TypeScript Playground로 빠르게 배우기](/posts/ts-playground-repl/)
 
-**다음 글:** [TypeScript 에디터 설정 — VS Code 최적화](/posts/ts-editor-setup/)
+**다음 글:** [VS Code + TypeScript 에디터 설정](/posts/ts-editor-setup/)
 
 <br>
 읽어주셔서 감사합니다. 😊
