@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="410" viewBox="0 0 880 410">
+  <rect width="880" height="410" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arrG" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#dd9955"/>
+    </marker>
+  </defs>
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">종단 간 vs 홉 단위 — 두 인코딩의 작동 범위</text>
+    <!-- Actors -->
+    <rect x="70" y="70" width="170" height="46" rx="8" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1.5"/>
+    <text x="155" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">클라이언트</text>
+    <rect x="355" y="70" width="170" height="46" rx="8" fill="#1f173a" stroke="#7777cc" stroke-width="1.5"/>
+    <text x="440" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#9b8fe8">프록시 / CDN</text>
+    <rect x="640" y="70" width="170" height="46" rx="8" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1.5"/>
+    <text x="725" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">원본 서버</text>
+    <!-- Lifelines -->
+    <line x1="155" y1="116" x2="155" y2="280" stroke="#333333" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="440" y1="116" x2="440" y2="280" stroke="#333333" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="725" y1="116" x2="725" y2="280" stroke="#333333" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <!-- Lane 1: Content-Encoding end-to-end -->
+    <text x="440" y="156" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#55c555">Content-Encoding: gzip — 종단 간 유지, 중간 변경 금지</text>
+    <line x1="725" y1="176" x2="157" y2="176" stroke="#55c555" stroke-width="2.5" marker-end="url(#arrG)"/>
+    <!-- Lane 2: Transfer-Encoding hop-by-hop -->
+    <text x="582" y="226" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#dd9955">Transfer-Encoding: chunked</text>
+    <line x1="725" y1="246" x2="442" y2="246" stroke="#dd9955" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrO)"/>
+    <text x="297" y="226" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#dd9955">Content-Length: 28416</text>
+    <line x1="438" y1="246" x2="157" y2="246" stroke="#dd9955" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrO)"/>
+    <text x="440" y="306" text-anchor="middle" font-size="12" fill="#888">전송 인코딩은 홉마다 다시 결정된다 — 프록시가 chunked를 풀어 Content-Length로 바꿔도 무방</text>
+    <!-- Summary -->
+    <text x="440" y="358" text-anchor="middle" font-size="12" fill="#888">Content-Encoding은 표현(representation)의 일부 · Transfer-Encoding은 한 구간의 운송 포장</text>
+    <text x="440" y="376" text-anchor="middle" font-size="11" fill="#555">그래서 ETag·Content-Length·캐시는 Content-Encoding이 적용된 표현을 기준으로 계산된다</text>
+  </g>
+</svg>

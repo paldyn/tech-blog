@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450">
+  <rect width="880" height="450" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arrB" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">fetch 스트리밍 소비 파이프라인</text>
+    <!-- Pipeline boxes -->
+    <rect x="60" y="80" width="170" height="62" rx="8" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1.5"/>
+    <text x="145" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">서버</text>
+    <text x="145" y="126" text-anchor="middle" font-size="11" fill="#888">조각 단위 write()</text>
+    <line x1="230" y1="111" x2="264" y2="111" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <rect x="266" y="80" width="170" height="62" rx="8" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1.5"/>
+    <text x="351" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">네트워크</text>
+    <text x="351" y="126" text-anchor="middle" font-size="11" fill="#888">chunked / DATA 프레임</text>
+    <line x1="436" y1="111" x2="470" y2="111" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <rect x="472" y="80" width="170" height="62" rx="8" fill="#1f173a" stroke="#7777cc" stroke-width="1.5"/>
+    <text x="557" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#9b8fe8">response.body</text>
+    <text x="557" y="126" text-anchor="middle" font-size="11" fill="#888">ReadableStream</text>
+    <line x1="642" y1="111" x2="676" y2="111" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <rect x="678" y="80" width="142" height="62" rx="8" fill="#2a1f0f" stroke="#aa7a3a" stroke-width="1.5"/>
+    <text x="749" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#dd9955">UI</text>
+    <text x="749" y="126" text-anchor="middle" font-size="11" fill="#888">도착분부터 표시</text>
+    <!-- Code box -->
+    <rect x="60" y="172" width="760" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+    <text x="76" y="199" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> res = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> fetch(</tspan><tspan fill="#ce9178">'/stream'</tspan><tspan fill="#ffffff">);</tspan></text>
+    <text x="76" y="219" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> reader = res.body.getReader();</tspan></text>
+    <text x="76" y="239" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> dec = </tspan><tspan fill="#7ec8e3" font-weight="600">new</tspan><tspan fill="#ffffff"> TextDecoder();</tspan></text>
+    <text x="76" y="264" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">while</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#b5cea8">true</tspan><tspan fill="#ffffff">) {</tspan></text>
+    <text x="76" y="284" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> { done, value } = </tspan><tspan fill="#7ec8e3" font-weight="600">await</tspan><tspan fill="#ffffff"> reader.read();</tspan></text>
+    <text x="76" y="304" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> (done) </tspan><tspan fill="#7ec8e3" font-weight="600">break</tspan><tspan fill="#ffffff">;</tspan></text>
+    <text x="76" y="324" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    render(dec.decode(value, { stream: </tspan><tspan fill="#b5cea8">true</tspan><tspan fill="#ffffff"> }));</tspan></text>
+    <text x="76" y="344" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">}</tspan><tspan fill="#9aa4b8">   // 응답이 끝나기 전부터 화면이 채워진다</tspan></text>
+    <!-- Summary -->
+    <text x="440" y="404" text-anchor="middle" font-size="12" fill="#888">read()가 돌려주는 value의 경계는 보장되지 않는다 — 줄·JSON 경계는 직접 버퍼링해서 찾을 것</text>
+    <text x="440" y="422" text-anchor="middle" font-size="11" fill="#555">TextDecoder의 stream: true가 조각 사이에서 잘린 멀티바이트 문자를 안전하게 이어붙인다</text>
+  </g>
+</svg>

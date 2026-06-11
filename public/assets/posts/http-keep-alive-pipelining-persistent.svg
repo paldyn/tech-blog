@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">비영속 연결 vs Keep-Alive 영속 연결</text>
+    <!-- Left column: non-persistent -->
+    <text x="235" y="86" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">연결당 요청 1개 (HTTP/1.0 기본)</text>
+    <rect x="60" y="100" width="350" height="26" rx="5" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1"/>
+    <text x="235" y="118" text-anchor="middle" font-size="12" fill="#7ec8e3">TCP 핸드셰이크 (1 RTT)</text>
+    <rect x="60" y="130" width="350" height="26" rx="5" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1"/>
+    <text x="235" y="148" text-anchor="middle" font-size="12" fill="#55c555">요청 1 → 응답 1</text>
+    <rect x="60" y="160" width="350" height="26" rx="5" fill="#2a0f0f" stroke="#aa3a3a" stroke-width="1"/>
+    <text x="235" y="178" text-anchor="middle" font-size="12" fill="#e05555">연결 종료 (FIN)</text>
+    <rect x="60" y="190" width="350" height="26" rx="5" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1"/>
+    <text x="235" y="208" text-anchor="middle" font-size="12" fill="#7ec8e3">TCP 핸드셰이크 (1 RTT)</text>
+    <rect x="60" y="220" width="350" height="26" rx="5" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1"/>
+    <text x="235" y="238" text-anchor="middle" font-size="12" fill="#55c555">요청 2 → 응답 2</text>
+    <rect x="60" y="250" width="350" height="26" rx="5" fill="#2a0f0f" stroke="#aa3a3a" stroke-width="1"/>
+    <text x="235" y="268" text-anchor="middle" font-size="12" fill="#e05555">연결 종료 (FIN)</text>
+    <rect x="60" y="280" width="350" height="26" rx="5" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1"/>
+    <text x="235" y="298" text-anchor="middle" font-size="12" fill="#7ec8e3">TCP 핸드셰이크 (1 RTT)</text>
+    <rect x="60" y="310" width="350" height="26" rx="5" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1"/>
+    <text x="235" y="328" text-anchor="middle" font-size="12" fill="#55c555">요청 3 → 응답 3</text>
+    <rect x="60" y="340" width="350" height="26" rx="5" fill="#2a0f0f" stroke="#aa3a3a" stroke-width="1"/>
+    <text x="235" y="358" text-anchor="middle" font-size="12" fill="#e05555">연결 종료 (FIN)</text>
+    <text x="235" y="392" text-anchor="middle" font-size="12" fill="#888">요청 3개 = 핸드셰이크 3회 + 종료 3회</text>
+    <!-- Right column: keep-alive -->
+    <text x="645" y="86" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">Keep-Alive (HTTP/1.1 기본)</text>
+    <rect x="470" y="100" width="350" height="26" rx="5" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1"/>
+    <text x="645" y="118" text-anchor="middle" font-size="12" fill="#7ec8e3">TCP 핸드셰이크 (1 RTT) — 단 1회</text>
+    <rect x="470" y="130" width="350" height="26" rx="5" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1"/>
+    <text x="645" y="148" text-anchor="middle" font-size="12" fill="#55c555">요청 1 → 응답 1</text>
+    <rect x="470" y="160" width="350" height="26" rx="5" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1"/>
+    <text x="645" y="178" text-anchor="middle" font-size="12" fill="#55c555">요청 2 → 응답 2</text>
+    <rect x="470" y="190" width="350" height="26" rx="5" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1"/>
+    <text x="645" y="208" text-anchor="middle" font-size="12" fill="#55c555">요청 3 → 응답 3</text>
+    <rect x="470" y="220" width="350" height="26" rx="5" fill="#0a0a0a" stroke="#555555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <text x="645" y="238" text-anchor="middle" font-size="12" fill="#888">연결 유지 (idle) — 다음 요청 대기</text>
+    <text x="645" y="276" text-anchor="middle" font-size="12" fill="#888">요청마다 1 RTT + 슬로 스타트 워밍업 절약</text>
+    <!-- Summary -->
+    <text x="440" y="432" text-anchor="middle" font-size="12" fill="#888">RTT 100ms라면 요청 3개에서 200ms 이상 단축 — 연결 재사용은 혼잡 윈도도 데워진 상태로 유지</text>
+    <text x="440" y="450" text-anchor="middle" font-size="11" fill="#555">HTTP/1.1은 Connection: close를 보내기 전까지 연결을 유지하는 것이 기본값</text>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400">
+  <rect width="880" height="400" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arrG" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">If-Range — 안전한 다운로드 이어받기</text>
+    <!-- Request code box -->
+    <rect x="60" y="72" width="760" height="100" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+    <text x="76" y="99" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"># 2MB 중 500KB 받고 끊김 → 이어받기 요청</text>
+    <text x="76" y="119" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">GET</tspan><tspan fill="#ffffff"> /video.mp4 HTTP/1.1</tspan></text>
+    <text x="76" y="139" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">Range</tspan><tspan fill="#ffffff">: bytes=512000-</tspan></text>
+    <text x="76" y="159" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">If-Range</tspan><tspan fill="#ffffff">: &quot;v1&quot;</tspan><tspan fill="#9aa4b8">  # 받던 버전의 강한 ETag</tspan></text>
+    <!-- Branch arrows -->
+    <line x1="380" y1="172" x2="240" y2="220" stroke="#55c555" stroke-width="2" marker-end="url(#arrG)"/>
+    <line x1="500" y1="172" x2="640" y2="220" stroke="#e05555" stroke-width="2" marker-end="url(#arrR)"/>
+    <!-- Left outcome: match -->
+    <rect x="60" y="222" width="350" height="88" rx="8" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1.5"/>
+    <text x="235" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">ETag 일치 — 파일 그대로</text>
+    <text x="235" y="266" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">206 Partial Content</text>
+    <text x="235" y="284" text-anchor="middle" font-size="11" fill="#888">Content-Range: bytes 512000-2097151/2097152</text>
+    <text x="235" y="302" text-anchor="middle" font-size="11" fill="#888">받은 512KB에 이어붙이면 완성</text>
+    <!-- Right outcome: changed -->
+    <rect x="470" y="222" width="350" height="88" rx="8" fill="#2a0f0f" stroke="#aa3a3a" stroke-width="1.5"/>
+    <text x="645" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">ETag 불일치 — 파일 변경됨</text>
+    <text x="645" y="266" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">200 OK (전체 본문)</text>
+    <text x="645" y="284" text-anchor="middle" font-size="11" fill="#888">기존 조각과 섞으면 파일이 깨지므로</text>
+    <text x="645" y="302" text-anchor="middle" font-size="11" fill="#888">처음부터 전체를 다시 전송</text>
+    <!-- Summary -->
+    <text x="440" y="350" text-anchor="middle" font-size="12" fill="#888">If-Range가 없으면 변경된 파일의 뒷부분이 옛 조각에 붙어 손상된 파일이 된다</text>
+    <text x="440" y="368" text-anchor="middle" font-size="11" fill="#555">If-Range에는 강한 ETag 또는 HTTP-date 하나만 — 약한 ETag(W/)는 절대 일치하지 않음</text>
+  </g>
+</svg>

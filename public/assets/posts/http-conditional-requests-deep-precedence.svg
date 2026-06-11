@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="570" viewBox="0 0 880 570">
+  <rect width="880" height="570" fill="#0a0a0a" rx="12"/>
+  <defs>
+    <marker id="arrB" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#dd9955"/>
+    </marker>
+  </defs>
+  <g font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+    <text x="440" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">조건부 헤더 평가 순서 (RFC 9110 §13.2.2)</text>
+    <!-- Step 1 -->
+    <rect x="90" y="80" width="400" height="58" rx="8" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1.5"/>
+    <text x="290" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">① If-Match</text>
+    <text x="290" y="124" text-anchor="middle" font-size="11" fill="#888">강한 비교 — 하나도 일치하지 않으면 중단</text>
+    <line x1="490" y1="109" x2="598" y2="109" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrR)"/>
+    <rect x="600" y="80" width="220" height="58" rx="8" fill="#2a0f0f" stroke="#aa3a3a" stroke-width="1.5"/>
+    <text x="710" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">412</text>
+    <text x="710" y="124" text-anchor="middle" font-size="11" fill="#888">Precondition Failed</text>
+    <line x1="290" y1="138" x2="290" y2="168" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <!-- Step 2 -->
+    <rect x="90" y="170" width="400" height="58" rx="8" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1.5"/>
+    <text x="290" y="194" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">② If-Unmodified-Since</text>
+    <text x="290" y="214" text-anchor="middle" font-size="11" fill="#888">If-Match가 없을 때만 평가 — 그 이후 수정됐으면 중단</text>
+    <line x1="490" y1="199" x2="598" y2="199" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrR)"/>
+    <rect x="600" y="170" width="220" height="58" rx="8" fill="#2a0f0f" stroke="#aa3a3a" stroke-width="1.5"/>
+    <text x="710" y="194" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">412</text>
+    <text x="710" y="214" text-anchor="middle" font-size="11" fill="#888">Precondition Failed</text>
+    <line x1="290" y1="228" x2="290" y2="258" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <!-- Step 3 -->
+    <rect x="90" y="260" width="400" height="58" rx="8" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1.5"/>
+    <text x="290" y="284" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">③ If-None-Match</text>
+    <text x="290" y="304" text-anchor="middle" font-size="11" fill="#888">약한 비교 — 일치하면 중단</text>
+    <line x1="490" y1="289" x2="598" y2="289" stroke="#dd9955" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrO)"/>
+    <rect x="600" y="260" width="220" height="58" rx="8" fill="#2a1f0f" stroke="#aa7a3a" stroke-width="1.5"/>
+    <text x="710" y="284" text-anchor="middle" font-size="13" font-weight="600" fill="#dd9955">GET·HEAD → 304</text>
+    <text x="710" y="304" text-anchor="middle" font-size="11" fill="#888">그 외 메서드 → 412</text>
+    <line x1="290" y1="318" x2="290" y2="348" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <!-- Step 4 -->
+    <rect x="90" y="350" width="400" height="58" rx="8" fill="#0f1f3a" stroke="#4a7aaa" stroke-width="1.5"/>
+    <text x="290" y="374" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">④ If-Modified-Since</text>
+    <text x="290" y="394" text-anchor="middle" font-size="11" fill="#888">If-None-Match 없는 GET·HEAD만 — 수정 없으면 중단</text>
+    <line x1="490" y1="379" x2="598" y2="379" stroke="#dd9955" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrO)"/>
+    <rect x="600" y="350" width="220" height="58" rx="8" fill="#2a1f0f" stroke="#aa7a3a" stroke-width="1.5"/>
+    <text x="710" y="374" text-anchor="middle" font-size="13" font-weight="600" fill="#dd9955">304</text>
+    <text x="710" y="394" text-anchor="middle" font-size="11" fill="#888">Not Modified</text>
+    <line x1="290" y1="408" x2="290" y2="438" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrB)"/>
+    <!-- Step 5 -->
+    <rect x="90" y="440" width="400" height="58" rx="8" fill="#0f2a1a" stroke="#3aaa5a" stroke-width="1.5"/>
+    <text x="290" y="464" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">⑤ If-Range (Range 헤더와 함께일 때)</text>
+    <text x="290" y="484" text-anchor="middle" font-size="11" fill="#888">일치 → 206 부분 응답 · 불일치 → 200 전체 응답</text>
+    <!-- Summary -->
+    <text x="440" y="532" text-anchor="middle" font-size="12" fill="#888">모든 전제조건 통과 시 요청을 정상 처리 — 평가는 항상 이 순서를 따른다</text>
+    <text x="440" y="550" text-anchor="middle" font-size="11" fill="#555">조건부 헤더는 대상 리소스가 존재할 때만 평가된다 (404가 412보다 먼저)</text>
+  </g>
+</svg>
