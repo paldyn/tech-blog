@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <!-- Background -->
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">스크립트 .d.ts vs 모듈 .d.ts — 전역의 경계</text>
+
+  <!-- Left: script file -->
+  <rect x="60" y="76" width="360" height="252" fill="#111827" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="240" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">스크립트 파일 — 자동으로 전역</text>
+
+  <rect x="76" y="116" width="328" height="150" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// globals.d.ts</text>
+  <text x="92" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// import/export 없음!</text>
+  <text x="92" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="92" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">declare const VERSION:</text>
+  <text x="92" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  string;</text>
+  <text x="92" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// 모든 파일에서 사용 가능</text>
+  <text x="92" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+
+  <text x="240" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">파일 전체가 전역 스코프에 그대로 합쳐진다</text>
+
+  <!-- Right: module file -->
+  <rect x="460" y="76" width="360" height="252" fill="#111827" rx="8" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="102" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">모듈 파일 — declare global 필요</text>
+
+  <rect x="476" y="116" width="328" height="150" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// env.d.ts</text>
+  <text x="492" y="158" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">export {};</text>
+  <text x="492" y="176" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">declare global {</text>
+  <text x="492" y="194" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  interface Window {</text>
+  <text x="492" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    __DATA__: string;</text>
+  <text x="492" y="230" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  }</text>
+  <text x="492" y="248" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">}</text>
+
+  <text x="640" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">모듈 안에서 전역을 만지려면 명시적 블록으로</text>
+
+  <!-- Bottom note -->
+  <rect x="60" y="356" width="760" height="62" fill="#111827" rx="8" stroke="#334155" stroke-width="1.5"/>
+  <text x="440" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e8e8e8" text-anchor="middle">판정 기준은 하나 — 파일에 최상위 import/export가 있는가</text>
+  <text x="440" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">하나라도 있으면 모듈이 되어 전역 선언이 조용히 무력화된다 — .d.ts 디버깅 1순위 체크포인트</text>
+</svg>

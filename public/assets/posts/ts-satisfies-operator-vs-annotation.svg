@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="450" viewBox="0 0 880 450">
+  <!-- Background -->
+  <rect width="880" height="450" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">타입 주석 vs satisfies — 추론 보존 비교</text>
+
+  <!-- Left: annotation -->
+  <rect x="60" y="72" width="360" height="248" fill="#111827" rx="8" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555" text-anchor="middle">타입 주석 — 추론을 덮어씀</text>
+
+  <rect x="76" y="110" width="328" height="150" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="92" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">type Color = string | RGB;</text>
+  <text x="92" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">const c: Record&lt;string, Color&gt;</text>
+  <text x="92" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  = {</text>
+  <text x="92" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    red: [255, 0, 0],</text>
+  <text x="92" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  };</text>
+  <text x="92" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#e05555" xml:space="preserve">c.red.at(0); // Error!</text>
+  <text x="92" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// c.red 타입은 Color</text>
+
+  <text x="76" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">선언 시점에 타입이 Color로 넓어져서</text>
+  <text x="76" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">배열 전용 메서드를 쓸 수 없음</text>
+
+  <!-- Right: satisfies -->
+  <rect x="460" y="72" width="360" height="248" fill="#111827" rx="8" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="98" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">satisfies — 추론을 유지</text>
+
+  <rect x="476" y="110" width="328" height="150" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="492" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">const c = {</text>
+  <text x="492" y="152" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">    red: [255, 0, 0],</text>
+  <text x="492" y="170" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve">  } satisfies</text>
+  <text x="492" y="188" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">    Record&lt;string, Color&gt;;</text>
+  <text x="492" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff" xml:space="preserve"> </text>
+  <text x="492" y="224" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#55c555" xml:space="preserve">c.red.at(0); // OK</text>
+  <text x="492" y="242" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8" xml:space="preserve">// c.red 타입은 number[]</text>
+
+  <text x="476" y="282" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Color 제약을 검사하면서도</text>
+  <text x="476" y="302" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">추론된 리터럴 타입 number[]를 보존</text>
+
+  <!-- Bottom summary -->
+  <rect x="60" y="350" width="760" height="70" fill="#111827" rx="8" stroke="#334155" stroke-width="1.5"/>
+  <text x="440" y="378" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">satisfies = 검사는 주석처럼 엄격하게, 타입은 추론한 그대로</text>
+  <text x="440" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">TypeScript 4.9에서 도입 — 제약 검증과 정밀한 추론을 동시에 얻는다</text>
+</svg>
