@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <rect width="880" height="540" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">로그 수집 아키텍처 3가지 패턴</text>
+
+  <!-- column 1: node agent -->
+  <rect x="60" y="90" width="240" height="56" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="2"/>
+  <text x="180" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">① 노드 에이전트</text>
+  <text x="180" y="133" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">DaemonSet — 실무 기본값</text>
+
+  <rect x="60" y="158" width="240" height="100" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="180" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">노드마다 에이전트 1개 배치</text>
+  <text x="180" y="206" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="12" fill="#ce9178" text-anchor="middle">/var/log/pods</text>
+  <text x="180" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">를 통째로 읽어 백엔드 전송</text>
+
+  <rect x="60" y="270" width="240" height="74" rx="6" fill="#0f1a12" stroke="#55c555" stroke-width="1"/>
+  <text x="76" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">장점</text>
+  <text x="76" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 앱 수정 불필요, 전 파드 자동 커버</text>
+  <text x="76" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 노드당 1개 — 리소스 효율 최고</text>
+
+  <rect x="60" y="356" width="240" height="74" rx="6" fill="#1a0f10" stroke="#e05555" stroke-width="1"/>
+  <text x="76" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">단점</text>
+  <text x="76" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· stdout/stderr 로그만 수집 가능</text>
+  <text x="76" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 파일에 쓰는 앱 로그는 못 봄</text>
+
+  <!-- column 2: sidecar -->
+  <rect x="320" y="90" width="240" height="56" rx="8" fill="#1a2a3a" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">② 사이드카</text>
+  <text x="440" y="133" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">파드 단위 보완 패턴</text>
+
+  <rect x="320" y="158" width="240" height="100" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="440" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">파드에 로깅 컨테이너 추가</text>
+  <text x="440" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">공유 볼륨의 파일 로그를</text>
+  <text x="440" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">tail 해서 stdout 또는 백엔드로</text>
+
+  <rect x="320" y="270" width="240" height="74" rx="6" fill="#0f1a12" stroke="#55c555" stroke-width="1"/>
+  <text x="336" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">장점</text>
+  <text x="336" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 파일 로그 · 특수 포맷 대응</text>
+  <text x="336" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 앱별 파싱 · 필터 커스터마이즈</text>
+
+  <rect x="320" y="356" width="240" height="74" rx="6" fill="#1a0f10" stroke="#e05555" stroke-width="1"/>
+  <text x="336" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">단점</text>
+  <text x="336" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 파드마다 컨테이너 1개 추가 비용</text>
+  <text x="336" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 매니페스트 복잡도 증가</text>
+
+  <!-- column 3: direct -->
+  <rect x="580" y="90" width="240" height="56" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="2"/>
+  <text x="700" y="113" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">③ 직접 전송</text>
+  <text x="700" y="133" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">앱 레벨 — 특수한 경우만</text>
+
+  <rect x="580" y="158" width="240" height="100" rx="6" fill="#0f1520" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="700" y="184" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">앱이 로깅 SDK · appender로</text>
+  <text x="700" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">로그 백엔드에 직접 전송</text>
+  <text x="700" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#ffffff" text-anchor="middle">(Kubernetes 인프라 미경유)</text>
+
+  <rect x="580" y="270" width="240" height="74" rx="6" fill="#0f1a12" stroke="#55c555" stroke-width="1"/>
+  <text x="596" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#55c555">장점</text>
+  <text x="596" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 구조화 · 메타데이터 제어 자유</text>
+  <text x="596" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 인프라 의존 없음</text>
+
+  <rect x="580" y="356" width="240" height="74" rx="6" fill="#1a0f10" stroke="#e05555" stroke-width="1"/>
+  <text x="596" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e05555">단점</text>
+  <text x="596" y="400" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· 앱과 로깅 인프라 강결합</text>
+  <text x="596" y="418" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">· kubectl logs로 못 봄</text>
+
+  <!-- bottom -->
+  <rect x="60" y="456" width="760" height="56" rx="8" fill="#0f1520" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="480" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">기본 선택은 ① 노드 에이전트</text>
+  <text x="440" y="500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">앱은 stdout으로만 로그를 쓰고, 수집은 인프라(DaemonSet)에 맡기는 것이 12-Factor 원칙</text>
+</svg>
