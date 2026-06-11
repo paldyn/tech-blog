@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" style="background:#0a0a0a;border-radius:12px;">
+  <defs>
+    <marker id="arrBlue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrYellow" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8c800"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Mutation과 캐시 무효화 흐름</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">변경 성공 후 관련 쿼리를 다시 가져와 화면을 동기화한다</text>
+
+  <!-- Step 1 -->
+  <rect x="70" y="100" width="320" height="70" rx="8" fill="#0d1a2d" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="230" y="128" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">1. mutate(newTodo)</text>
+  <text x="230" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">사용자 액션 — 할 일 추가 버튼</text>
+
+  <!-- Step 2 -->
+  <rect x="490" y="100" width="320" height="70" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="650" y="128" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">2. 서버 요청 성공</text>
+  <text x="650" y="150" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">onSuccess 콜백 실행</text>
+
+  <!-- Step 3 -->
+  <rect x="490" y="240" width="320" height="70" rx="8" fill="#1a1a00" stroke="#e8c800" stroke-width="2"/>
+  <text x="650" y="268" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#e8c800">3. invalidateQueries</text>
+  <text x="650" y="290" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="11" fill="#888">{ queryKey: ['todos'] }</text>
+
+  <!-- Step 4 -->
+  <rect x="70" y="240" width="320" height="70" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="230" y="268" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">4. 활성 쿼리 자동 refetch</text>
+  <text x="230" y="290" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">목록 화면이 최신 데이터로 갱신</text>
+
+  <!-- Arrows -->
+  <line x1="390" y1="135" x2="490" y2="135" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <line x1="650" y1="170" x2="650" y2="240" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+  <line x1="490" y1="275" x2="390" y2="275" stroke="#e8c800" stroke-width="2" marker-end="url(#arrYellow)"/>
+
+  <text x="440" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">"데이터를 바꿨으면 관련 캐시를 무효화한다" — 이 한 가지 규칙이면 충분하다</text>
+</svg>

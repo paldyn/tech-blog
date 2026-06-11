@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 400" style="background:#0a0a0a;border-radius:12px;">
+  <defs>
+    <marker id="arrBlue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrYellow" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e8c800"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">쿼리 캐시 라이프사이클</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">fresh → stale → inactive → 캐시 삭제</text>
+
+  <!-- Row: fresh / stale / inactive -->
+  <rect x="70" y="110" width="180" height="70" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="160" y="132" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#55c555">fresh</text>
+  <text x="160" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">신선한 데이터</text>
+  <text x="160" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">refetch 발생 안 함</text>
+
+  <rect x="350" y="110" width="180" height="70" rx="8" fill="#1a1a00" stroke="#e8c800" stroke-width="2"/>
+  <text x="440" y="132" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#e8c800">stale</text>
+  <text x="440" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">오래된 데이터</text>
+  <text x="440" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">트리거 시 refetch</text>
+
+  <rect x="630" y="110" width="180" height="70" rx="8" fill="#12121f" stroke="#7777cc" stroke-width="2"/>
+  <text x="720" y="132" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7777cc">inactive</text>
+  <text x="720" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">구독 컴포넌트 없음</text>
+  <text x="720" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">캐시는 아직 보관</text>
+
+  <!-- Forward arrows -->
+  <line x1="250" y1="145" x2="350" y2="145" stroke="#e8c800" stroke-width="2" marker-end="url(#arrYellow)"/>
+  <text x="300" y="127" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">staleTime 경과</text>
+  <line x1="530" y1="145" x2="630" y2="145" stroke="#7777cc" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <text x="580" y="127" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">구독자 0</text>
+
+  <!-- Refetch loop (dashed) -->
+  <path d="M 440 180 C 390 235, 210 235, 160 180" fill="none"
+        stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrGreen2)"/>
+  <marker id="arrGreen2" viewBox="0 0 14 14" refX="12" refY="7"
+          markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+    <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+  </marker>
+  <text x="300" y="262" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">트리거 발생 → refetch 성공 시 다시 fresh</text>
+
+  <!-- GC -->
+  <line x1="720" y1="180" x2="720" y2="270" stroke="#e05555" stroke-width="2" marker-end="url(#arrRed)"/>
+  <text x="738" y="229" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">gcTime 경과 (기본 5분)</text>
+  <rect x="630" y="270" width="180" height="60" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="2"/>
+  <text x="720" y="294" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e05555">캐시 삭제</text>
+  <text x="720" y="314" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">메모리에서 제거</text>
+
+  <text x="440" y="364" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">fresh 상태인 동안에는 어떤 트리거가 와도 네트워크 요청이 발생하지 않는다</text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 420" style="background:#0a0a0a;border-radius:12px;">
+  <defs>
+    <marker id="arrBlue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">renderHook의 동작 원리</text>
+  <text x="440" y="68" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">훅은 컴포넌트 밖에서 실행될 수 없다 — 그래서 컴포넌트를 만들어 준다</text>
+
+  <!-- Hook box -->
+  <rect x="50" y="110" width="240" height="70" rx="8" fill="#200d0d" stroke="#e05555" stroke-width="2"/>
+  <text x="170" y="132" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#e05555">useCounter()</text>
+  <text x="170" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ffffff">테스트에서 단독 호출 불가</text>
+  <text x="170" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Rules of Hooks 위반</text>
+
+  <!-- renderHook box -->
+  <rect x="320" y="110" width="240" height="70" rx="8" fill="#0d1a2d" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="440" y="132" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#7ec8e3">renderHook(...)</text>
+  <text x="440" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ffffff">보이지 않는 테스트 컴포넌트를</text>
+  <text x="440" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ffffff">만들어 그 안에서 훅을 호출</text>
+
+  <!-- result box -->
+  <rect x="590" y="110" width="240" height="70" rx="8" fill="#0d2010" stroke="#55c555" stroke-width="2"/>
+  <text x="710" y="132" text-anchor="middle"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" font-weight="600" fill="#55c555">result.current</text>
+  <text x="710" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#ffffff">항상 최신 반환값을 가리키는</text>
+  <text x="710" y="168" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">살아 있는 참조</text>
+
+  <line x1="290" y1="145" x2="320" y2="145" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <line x1="560" y1="145" x2="590" y2="145" stroke="#55c555" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- Code box -->
+  <rect x="180" y="250" width="520" height="78" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="204" y="280" text-anchor="start" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">const</tspan> { result } = renderHook(() =&gt; useCounter());</text>
+  <text x="204" y="304" text-anchor="start" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">expect(result.current.count).toBe(<tspan fill="#b5cea8">0</tspan>);</text>
+
+  <text x="440" y="380" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">UI가 없을 뿐, 훅은 진짜 React 렌더 사이클 안에서 실행된다</text>
+</svg>
