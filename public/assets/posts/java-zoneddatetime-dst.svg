@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">DST 경계의 두 가지 사건 (America/New_York)</text>
+
+  <!-- Gap (spring forward) -->
+  <rect x="60" y="80" width="360" height="130" rx="8" fill="#1a140a" stroke="#e0a040" stroke-width="1.5"/>
+  <text x="240" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e0a040">Gap — 봄, 시계가 앞으로 점프</text>
+  <text x="240" y="130" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">3/8 02:00 → 03:00 (02시대가 사라짐)</text>
+  <text x="240" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">02:30은 존재하지 않는 시각</text>
+  <text x="240" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">atZone()이 gap 길이만큼 앞으로 보정</text>
+  <text x="240" y="190" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e0a040">결과: 03:30-04:00 (예외 없음, 조용히)</text>
+
+  <!-- Overlap (fall back) -->
+  <rect x="460" y="80" width="360" height="130" rx="8" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">Overlap — 가을, 시계가 뒤로 복귀</text>
+  <text x="640" y="130" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">11/1 02:00 → 01:00 (01시대가 반복됨)</text>
+  <text x="640" y="150" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">01:30이 두 번 존재 (-04:00과 -05:00)</text>
+  <text x="640" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">기본값: 이른 쪽 오프셋(-04:00) 선택</text>
+  <text x="640" y="190" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">withLaterOffsetAtOverlap()로 변경 가능</text>
+
+  <!-- Code example -->
+  <rect x="60" y="244" width="760" height="146" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="270" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> ny = ZoneId.of(<tspan fill="#ce9178">"America/New_York"</tspan>);</text>
+  <text x="76" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 존재하지 않는 02:30을 변환하면?</text>
+  <text x="76" y="313" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">var</tspan> z = LocalDateTime.of(<tspan fill="#b5cea8">2026</tspan>,<tspan fill="#b5cea8">3</tspan>,<tspan fill="#b5cea8">8</tspan>,<tspan fill="#b5cea8">2</tspan>,<tspan fill="#b5cea8">30</tspan>)</text>
+  <text x="76" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">            .atZone(ny);</text>
+  <text x="76" y="356" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 2026-03-08T03:30-04:00[America/New_York]</text>
+  <text x="76" y="375" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// 1시간 앞으로 자동 보정되어 03:30이 됨</text>
+</svg>

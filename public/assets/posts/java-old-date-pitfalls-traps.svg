@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">레거시 날짜 API의 4대 함정</text>
+
+  <!-- Trap 1: 0-based month -->
+  <rect x="60" y="76" width="360" height="150" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="104" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">① 월은 0부터 시작</text>
+  <rect x="80" y="118" width="320" height="48" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="94" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">cal.set(<tspan fill="#b5cea8">2026</tspan>, <tspan fill="#b5cea8">6</tspan>, <tspan fill="#b5cea8">12</tspan>);</text>
+  <text x="94" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">// 6월이 아니라 7월 12일!</text>
+  <text x="240" y="194" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">0 = 1월, 11 = 12월 — off-by-one의 온상</text>
+  <text x="240" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">java.time은 1 = 1월</text>
+
+  <!-- Trap 2: mutable -->
+  <rect x="460" y="76" width="360" height="150" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="104" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">② 가변 객체</text>
+  <rect x="480" y="118" width="320" height="48" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="494" y="138" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">someMethod(sharedDate);</text>
+  <text x="494" y="156" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">// 내부에서 setTime() 호출?</text>
+  <text x="640" y="194" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전달한 객체가 어디서든 변경될 수 있다</text>
+  <text x="640" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">방어적 복사 없이는 캡슐화 붕괴</text>
+
+  <!-- Trap 3: SimpleDateFormat -->
+  <rect x="60" y="256" width="360" height="150" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="240" y="284" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">③ SimpleDateFormat 스레드 불안전</text>
+  <rect x="80" y="298" width="320" height="48" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="94" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff"><tspan fill="#7ec8e3" font-weight="600">static</tspan> SimpleDateFormat FMT</text>
+  <text x="94" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">// 동시 호출 시 결과 뒤섞임</text>
+  <text x="240" y="374" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">내부 Calendar 상태를 공유 — 간헐적 오류</text>
+  <text x="240" y="392" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">재현 어려운 프로덕션 버그의 단골</text>
+
+  <!-- Trap 4: getYear -->
+  <rect x="460" y="256" width="360" height="150" rx="8" fill="#1a0a0a" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="284" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">④ getYear()는 1900을 뺀다</text>
+  <rect x="480" y="298" width="320" height="48" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="494" y="318" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#ffffff">date.getYear()  <tspan fill="#9aa4b8">// 126</tspan></text>
+  <text x="494" y="336" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8">// 2026이 아니라 2026-1900</text>
+  <text x="640" y="374" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">toString()도 JVM 타임존으로 출력되어</text>
+  <text x="640" y="392" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">타임존이 있는 것처럼 보이는 착시까지</text>
+</svg>
