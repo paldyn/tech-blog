@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arrBlue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="560" rx="12" fill="#0a0a0a"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">HPACK 인덱스 테이블과 헤더 치환</text>
+
+  <!-- Static table -->
+  <text x="60" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">정적 테이블 (61개 고정)</text>
+  <rect x="60" y="112" width="340" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="78" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">idx   header</text>
+  <text x="78" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">2</tspan>     :method: GET</text>
+  <text x="78" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">4</tspan>     :path: /</text>
+  <text x="78" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">17</tspan>    :scheme: https</text>
+  <text x="78" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">28</tspan>    content-length</text>
+  <text x="78" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">...   (양쪽 모두 동일)</text>
+  <text x="78" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" font-weight="600" xml:space="preserve">읽기 전용 · 협상 불필요</text>
+
+  <!-- Dynamic table -->
+  <text x="500" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">동적 테이블 (연결별, 가변)</text>
+  <rect x="500" y="112" width="320" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="518" y="142" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">idx   header (등장 순 등록)</text>
+  <text x="518" y="168" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">62</tspan>    cookie: session=ab12</text>
+  <text x="518" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">63</tspan>    user-agent: Moz/5.0</text>
+  <text x="518" y="212" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#b5cea8">64</tspan>    referer: example.com</text>
+  <text x="518" y="256" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">상한 초과 시 FIFO 제거</text>
+  <text x="518" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">처음 등장한 헤더가 등록됨</text>
+
+  <!-- Request 1 -->
+  <text x="60" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">첫 요청 — 전체 전송 + 동적 테이블 등록</text>
+  <rect x="60" y="386" width="340" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="78" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">:method</tspan> GET     → idx <tspan fill="#b5cea8">2</tspan></text>
+  <text x="78" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">cookie</tspan> session=ab12</text>
+  <text x="78" y="458" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  값은 허프만 인코딩 후 전송</text>
+  <text x="78" y="488" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">  → 동적 테이블 62번에 등록</text>
+
+  <!-- Request 2 -->
+  <text x="500" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8">다음 요청 — 인덱스만 전송</text>
+  <rect x="500" y="386" width="320" height="120" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="518" y="414" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">:method GET   → <tspan fill="#b5cea8">2</tspan></text>
+  <text x="518" y="436" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">cookie ...    → <tspan fill="#b5cea8">62</tspan></text>
+  <text x="518" y="458" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">700 bytes → 수 bytes</text>
+  <text x="518" y="488" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">반복 헤더 중복 제거 완료</text>
+
+  <!-- arrows: register and reference -->
+  <line x1="288" y1="386" x2="540" y2="320" stroke="#55c555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrGreen)"/>
+  <line x1="660" y1="312" x2="640" y2="386" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrBlue)"/>
+</svg>

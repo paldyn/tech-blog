@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520">
+  <defs>
+    <marker id="arrFlow" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="520" rx="12" fill="#0a0a0a"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">패킷 손실 시 — TCP HOL vs QUIC 독립 전달</text>
+
+  <!-- TCP side -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e05555">TCP (HTTP/2) — 한 줄 순서 강제</text>
+  <line x1="60" y1="200" x2="800" y2="200" stroke="#888888" stroke-width="2" marker-end="url(#arrFlow)"/>
+  <text x="60" y="232" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">시간 →</text>
+
+  <!-- packets row TCP -->
+  <rect x="70" y="120" width="70" height="60" rx="6" fill="#000000" stroke="#55c555" stroke-width="1.5"/>
+  <text x="105" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">S5</text>
+  <text x="105" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555" text-anchor="middle">도착</text>
+
+  <rect x="160" y="120" width="70" height="60" rx="6" fill="#000000" stroke="#e05555" stroke-width="2"/>
+  <text x="195" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">S3</text>
+  <text x="195" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555" text-anchor="middle">유실</text>
+
+  <rect x="250" y="120" width="70" height="60" rx="6" fill="#000000" stroke="#888888" stroke-width="1.5"/>
+  <text x="285" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">S5</text>
+  <text x="285" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">대기</text>
+
+  <rect x="340" y="120" width="70" height="60" rx="6" fill="#000000" stroke="#888888" stroke-width="1.5"/>
+  <text x="375" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">S7</text>
+  <text x="375" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">대기</text>
+
+  <rect x="430" y="120" width="370" height="60" rx="6" fill="#000000" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="615" y="146" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" font-weight="600" text-anchor="middle">S3 재전송될 때까지 전부 정지</text>
+  <text x="615" y="168" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888" text-anchor="middle">멀쩡히 도착한 S5·S7도 응용 계층에 못 올라감 (HOL)</text>
+
+  <!-- QUIC side -->
+  <text x="60" y="300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555">QUIC (HTTP/3) — 스트림별 독립</text>
+  <line x1="60" y1="430" x2="800" y2="430" stroke="#888888" stroke-width="2" marker-end="url(#arrFlow)"/>
+  <text x="60" y="462" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">시간 →</text>
+
+  <!-- QUIC stream 3 (blocked only) -->
+  <rect x="70" y="320" width="160" height="44" rx="6" fill="#000000" stroke="#e05555" stroke-width="2"/>
+  <text x="150" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" text-anchor="middle">스트림 3: S3 유실</text>
+
+  <rect x="250" y="320" width="200" height="44" rx="6" fill="#000000" stroke="#e05555" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="350" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" font-weight="600" text-anchor="middle">스트림 3만 재전송 대기</text>
+
+  <!-- QUIC stream 5 (flows) -->
+  <rect x="470" y="320" width="160" height="44" rx="6" fill="#000000" stroke="#55c555" stroke-width="1.5"/>
+  <text x="550" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="600" text-anchor="middle">스트림 5: 계속 전달</text>
+
+  <rect x="650" y="320" width="150" height="44" rx="6" fill="#000000" stroke="#55c555" stroke-width="1.5"/>
+  <text x="725" y="347" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555" font-weight="600" text-anchor="middle">스트림 7: 계속</text>
+
+  <rect x="70" y="376" width="730" height="40" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="435" y="401" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">유실된 스트림만 멈추고 나머지는 응용 계층으로 정상 전달 → 전송 HOL 해소</text>
+</svg>

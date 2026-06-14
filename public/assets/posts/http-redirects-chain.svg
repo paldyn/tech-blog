@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <defs>
+    <marker id="rdc-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="rdc-arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="rdc-arr-r" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+
+  <text x="60" y="48" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">리다이렉트 체인과 무한 루프</text>
+
+  <!-- Section A: healthy chain -->
+  <text x="60" y="96" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555">정상 체인 — 짧을수록 좋다</text>
+
+  <!-- A node 1 -->
+  <rect x="60" y="116" width="200" height="56" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text x="76" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">http://example/old</tspan></text>
+  <text x="76" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">301 → HTTPS</text>
+
+  <!-- arrow A1->A2 -->
+  <line x1="260" y1="144" x2="328" y2="144" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rdc-arr)"/>
+
+  <!-- A node 2 -->
+  <rect x="340" y="116" width="200" height="56" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text x="356" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">https://example/old</tspan></text>
+  <text x="356" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">301 → /new</text>
+
+  <!-- arrow A2->A3 -->
+  <line x1="540" y1="144" x2="608" y2="144" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rdc-arr)"/>
+
+  <!-- A node 3 -->
+  <rect x="620" y="116" width="200" height="56" fill="#000000" stroke="#55c555" stroke-width="1.5" rx="6"/>
+  <text x="636" y="140" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">https://example/new</tspan></text>
+  <text x="636" y="160" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#55c555">200 OK · 최종</text>
+
+  <!-- Section B: loop -->
+  <text x="60" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e05555">무한 루프 — 규칙이 서로를 가리킬 때</text>
+
+  <!-- B node 1 -->
+  <rect x="190" y="276" width="220" height="56" fill="#000000" stroke="#e05555" stroke-width="1.5" rx="6"/>
+  <text x="206" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">www.example.com</tspan></text>
+  <text x="206" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">301 → non-www</text>
+
+  <!-- B node 2 -->
+  <rect x="490" y="276" width="220" height="56" fill="#000000" stroke="#e05555" stroke-width="1.5" rx="6"/>
+  <text x="506" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">example.com</tspan></text>
+  <text x="506" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">301 → www</text>
+
+  <!-- loop arrow top: B1 -> B2 -->
+  <path d="M 410 294 L 488 294" stroke="#e05555" stroke-width="2.5" stroke-dasharray="4,4" fill="none" marker-end="url(#rdc-arr-r)"/>
+  <!-- loop arrow bottom: B2 -> B1 -->
+  <path d="M 490 316 L 412 316" stroke="#e05555" stroke-width="2.5" stroke-dasharray="4,4" fill="none" marker-end="url(#rdc-arr-r)"/>
+
+  <text x="450" y="368" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">서로를 무한히 가리킴 → ERR_TOO_MANY_REDIRECTS</text>
+
+  <text x="60" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#9aa4b8">해결: 정규화는 한 방향으로만. 프록시 뒤에선 X-Forwarded-Proto 로 원래 스킴 판별.</text>
+</svg>

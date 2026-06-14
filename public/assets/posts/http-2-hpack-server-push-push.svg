@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrR" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">서버 푸시 — PUSH_PROMISE로 선제 전송</text>
+
+  <!-- Client box -->
+  <rect x="60" y="100" width="180" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="150" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">클라이언트</text>
+  <text x="150" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">브라우저</text>
+
+  <!-- Server box -->
+  <rect x="640" y="100" width="180" height="60" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="730" y="126" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e8e8e8" text-anchor="middle">서버</text>
+  <text x="730" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888" text-anchor="middle">HTTP/2</text>
+
+  <!-- vertical lifelines -->
+  <line x1="150" y1="160" x2="150" y2="450" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="3,4"/>
+  <line x1="730" y1="160" x2="730" y2="450" stroke="#7777cc" stroke-width="1.5" stroke-dasharray="3,4"/>
+
+  <!-- 1: request index.html -->
+  <line x1="150" y1="200" x2="730" y2="200" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrR)"/>
+  <text x="160" y="190" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">GET /index.html  (stream 1)</text>
+
+  <!-- 2: PUSH_PROMISE css -->
+  <line x1="730" y1="250" x2="150" y2="250" stroke="#55c555" stroke-width="2" marker-end="url(#arrG)"/>
+  <text x="180" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">PUSH_PROMISE → /style.css (stream 4)</text>
+
+  <!-- 3: PUSH_PROMISE js -->
+  <line x1="730" y1="300" x2="150" y2="300" stroke="#55c555" stroke-width="2" marker-end="url(#arrG)"/>
+  <text x="180" y="290" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" font-weight="600" xml:space="preserve">PUSH_PROMISE → /app.js (stream 6)</text>
+
+  <!-- 4: html body -->
+  <line x1="730" y1="350" x2="150" y2="350" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrR)"/>
+  <text x="180" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">DATA index.html  (stream 1)</text>
+
+  <!-- 5: css/js pushed -->
+  <line x1="730" y1="400" x2="150" y2="400" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrR)"/>
+  <text x="180" y="390" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">DATA style.css / app.js (요청 없이 도착)</text>
+
+  <text x="60" y="448" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#e05555" xml:space="preserve">⚠ 캐시에 이미 있어도 서버는 모르고 푸시 → 낭비. 크롬 2022 비활성화</text>
+</svg>
