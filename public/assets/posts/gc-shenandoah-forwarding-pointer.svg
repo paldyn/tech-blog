@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="fwd" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="acc" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Forwarding(Brooks) 포인터 — 동시 이동의 핵심</text>
+
+  <!-- From region label -->
+  <text x="230" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">From-space (수집 대상)</text>
+  <!-- To region label -->
+  <text x="650" y="92" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">To-space (대피 목적지)</text>
+
+  <!-- From object -->
+  <rect x="120" y="120" width="220" height="120" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
+  <rect x="136" y="136" width="188" height="30" rx="4" fill="#3a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="230" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">forwarding word</text>
+  <text x="230" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">field: name</text>
+  <text x="230" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">field: age</text>
+  <text x="230" y="232" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">(옛 복사본 — stale)</text>
+
+  <!-- To object -->
+  <rect x="540" y="120" width="220" height="120" rx="8" fill="#0e1a0e" stroke="#55c555" stroke-width="1.5"/>
+  <rect x="556" y="136" width="188" height="30" rx="4" fill="#143a14" stroke="#55c555" stroke-width="1"/>
+  <text x="650" y="156" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">forwarding → self</text>
+  <text x="650" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">field: name</text>
+  <text x="650" y="212" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">field: age</text>
+  <text x="650" y="232" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">(새 복사본 — live)</text>
+
+  <!-- forwarding pointer from From.header to To object -->
+  <path d="M 324 151 L 534 151" stroke="#7ec8e3" stroke-width="2.5" fill="none" marker-end="url(#fwd)"/>
+  <text x="429" y="138" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">forwarding pointer</text>
+
+  <!-- Mutator access -->
+  <rect x="120" y="300" width="220" height="56" rx="8" fill="#0e0e1a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="230" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">애플리케이션 스레드</text>
+  <text x="230" y="344" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">obj.name 읽기 / 쓰기</text>
+
+  <!-- access tries from-copy first -->
+  <path d="M 230 296 L 230 244" stroke="#7777cc" stroke-width="2" fill="none" marker-end="url(#acc)"/>
+  <text x="246" y="276" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7777cc">접근</text>
+
+  <!-- barrier redirect: from from-region down-around to to-object -->
+  <path d="M 340 328 C 460 328 460 328 540 280 L 620 244" stroke="#7777cc" stroke-width="2.5" stroke-dasharray="4,4" fill="none" marker-end="url(#acc)"/>
+  <text x="450" y="372" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7777cc">load/store 배리어가 forwarding 따라 새 복사본으로 리다이렉트</text>
+
+  <!-- Note box -->
+  <rect x="120" y="408" width="640" height="64" rx="8" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="434" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">초기 Shenandoah는 객체마다 별도 forwarding word를 두었다</text>
+  <text x="440" y="456" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">현대 Shenandoah(JDK 13+)는 이 포인터를 객체 헤더 안으로 옮겨 메모리 오버헤드를 제거</text>
+</svg>

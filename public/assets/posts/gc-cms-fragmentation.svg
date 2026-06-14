@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="frag-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+    <marker id="frag-arr-warn" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">CMS의 한계 — 단편화와 Concurrent Mode Failure</text>
+
+  <!-- Stage 1: Concurrent Sweep result = fragmented old gen -->
+  <text x="60" y="90" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">1. Concurrent Sweep 후 Old Gen — 회수는 하되 compaction은 안 함</text>
+
+  <rect x="60" y="104" width="760" height="56" rx="8" fill="#101010" stroke="#333" stroke-width="1"/>
+  <!-- live + free interleaved -->
+  <rect x="74" y="116" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="104" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">live</text>
+  <rect x="144" y="116" width="44" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="166" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <rect x="198" y="116" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="228" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">live</text>
+  <rect x="268" y="116" width="36" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="286" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <rect x="314" y="116" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="344" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">live</text>
+  <rect x="384" y="116" width="50" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="409" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <rect x="444" y="116" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="474" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">live</text>
+  <rect x="514" y="116" width="40" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="534" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <rect x="564" y="116" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="594" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">live</text>
+  <rect x="634" y="116" width="44" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="656" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <rect x="688" y="116" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="718" y="137" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">live</text>
+
+  <text x="60" y="184" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">총 free 공간은 충분해도 작은 조각으로 흩어짐 → 큰 객체를 담을 연속 공간이 없다</text>
+  <text x="60" y="204" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">빈 조각은 free list로 관리 → 할당이 bump pointer가 아니라 적합 조각 탐색 비용 발생</text>
+
+  <!-- arrow down -->
+  <line x1="440" y1="218" x2="440" y2="250" stroke="#e05555" stroke-width="2" marker-end="url(#frag-arr-warn)"/>
+  <text x="455" y="240" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">단편화 누적 + 승격 속도 &gt; 회수 속도</text>
+
+  <!-- Stage 2: Concurrent Mode Failure -->
+  <rect x="200" y="258" width="480" height="62" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="284" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">Concurrent Mode Failure</text>
+  <text x="440" y="306" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">동시 수집이 채우는 속도를 못 따라가거나, 연속 공간 확보 실패</text>
+
+  <!-- arrow down to fallback -->
+  <line x1="440" y1="320" x2="440" y2="352" stroke="#e05555" stroke-width="2" marker-end="url(#frag-arr-warn)"/>
+  <text x="455" y="342" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">폴백 (fallback)</text>
+
+  <!-- Stage 3: Serial Old Full GC -->
+  <rect x="160" y="360" width="560" height="70" rx="8" fill="#2a1414" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="386" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">STW Full GC — Serial Old (단일 스레드 compaction)</text>
+  <text x="440" y="408" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전 스레드 정지 후 단일 스레드로 전체 압축 → 단편화는 해소되지만</text>
+  <text x="440" y="424" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">CMS가 피하려던 바로 그 길고 무거운 STW가 발생한다</text>
+
+  <!-- compacted result strip -->
+  <rect x="160" y="446" width="200" height="24" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="260" y="463" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#55c555">live 압축됨</text>
+  <rect x="360" y="446" width="360" height="24" rx="4" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="540" y="463" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#7ec8e3">연속된 빈 공간</text>
+
+  <!-- deprecation note box -->
+  <rect x="60" y="488" width="760" height="36" rx="8" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="511" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#7ec8e3">JDK 9에서 deprecated → JDK 14에서 완전 제거 · 후계자는 G1 GC</text>
+</svg>

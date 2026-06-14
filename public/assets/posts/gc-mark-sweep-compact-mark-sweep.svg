@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="ms-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+    <marker id="ms-arr-info" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Mark-Sweep &amp; Mark-Compact</text>
+
+  <!-- Roots -->
+  <text x="70" y="92" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">GC Roots</text>
+  <rect x="70" y="100" width="120" height="36" rx="6" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="130" y="123" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">스택 · static</text>
+
+  <!-- arrow roots -> mark heap -->
+  <line x1="130" y1="136" x2="130" y2="166" stroke="#7ec8e3" stroke-width="2" marker-end="url(#ms-arr-info)"/>
+
+  <!-- ===== STAGE 1: MARK ===== -->
+  <text x="70" y="183" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">1. Mark — 도달 가능한 객체 표시</text>
+
+  <rect x="70" y="196" width="740" height="56" rx="8" fill="#101010" stroke="#333" stroke-width="1"/>
+  <!-- live (marked) -->
+  <rect x="84" y="208" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="114" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">A ✓</text>
+  <!-- dead -->
+  <rect x="154" y="208" width="60" height="32" rx="4" fill="#2a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="184" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">X</text>
+  <!-- live -->
+  <rect x="224" y="208" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="254" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">B ✓</text>
+  <!-- dead -->
+  <rect x="294" y="208" width="60" height="32" rx="4" fill="#2a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="324" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">X</text>
+  <!-- live -->
+  <rect x="364" y="208" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="394" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">C ✓</text>
+  <!-- dead -->
+  <rect x="434" y="208" width="60" height="32" rx="4" fill="#2a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="464" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">X</text>
+  <!-- live -->
+  <rect x="504" y="208" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="534" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">D ✓</text>
+  <!-- dead -->
+  <rect x="574" y="208" width="60" height="32" rx="4" fill="#2a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="604" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">X</text>
+  <!-- live -->
+  <rect x="644" y="208" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="674" y="229" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">E ✓</text>
+
+  <text x="800" y="190" text-anchor="end"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">✓ = 도달 가능(생존) · X = 도달 불가(쓰레기)</text>
+
+  <!-- arrow mark -> sweep -->
+  <line x1="440" y1="252" x2="440" y2="282" stroke="#7777cc" stroke-width="2" marker-end="url(#ms-arr)"/>
+
+  <!-- ===== STAGE 2: SWEEP ===== -->
+  <text x="70" y="299" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">2. Sweep — 죽은 객체 회수 (단편화 발생)</text>
+
+  <rect x="70" y="312" width="740" height="56" rx="8" fill="#101010" stroke="#333" stroke-width="1"/>
+  <!-- live A -->
+  <rect x="84" y="324" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="114" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">A</text>
+  <!-- free hole -->
+  <rect x="154" y="324" width="60" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="184" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <!-- live B -->
+  <rect x="224" y="324" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="254" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">B</text>
+  <!-- free hole -->
+  <rect x="294" y="324" width="60" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="324" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <!-- live C -->
+  <rect x="364" y="324" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="394" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">C</text>
+  <!-- free hole -->
+  <rect x="434" y="324" width="60" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="464" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <!-- live D -->
+  <rect x="504" y="324" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="534" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">D</text>
+  <!-- free hole -->
+  <rect x="574" y="324" width="60" height="32" rx="4" fill="#0a0a0a" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="604" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="11" fill="#888">free</text>
+  <!-- live E -->
+  <rect x="644" y="324" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="674" y="345" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">E</text>
+
+  <text x="724" y="345" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">큰 객체가 못 들어감</text>
+
+  <!-- arrow sweep -> compact -->
+  <line x1="440" y1="368" x2="440" y2="398" stroke="#7777cc" stroke-width="2" marker-end="url(#ms-arr)"/>
+
+  <!-- ===== STAGE 3: COMPACT ===== -->
+  <text x="70" y="415" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8">3. Compact — 생존 객체를 한쪽으로 밀어 정리</text>
+
+  <rect x="70" y="428" width="740" height="56" rx="8" fill="#101010" stroke="#333" stroke-width="1"/>
+  <!-- live packed -->
+  <rect x="84" y="440" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="114" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">A</text>
+  <rect x="154" y="440" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="184" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">B</text>
+  <rect x="224" y="440" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="254" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">C</text>
+  <rect x="294" y="440" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="324" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">D</text>
+  <rect x="364" y="440" width="60" height="32" rx="4" fill="#1a3a1a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="394" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">E</text>
+  <!-- one big contiguous free -->
+  <rect x="434" y="440" width="362" height="32" rx="4" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="615" y="461" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#7ec8e3">연속된 빈 공간 (bump pointer 할당 가능)</text>
+
+  <!-- bottom note -->
+  <text x="70" y="516" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Mark-Sweep: 단편화를 남김 · free list로 관리</text>
+  <text x="70" y="538" text-anchor="start"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">Mark-Compact: 단편화 제거 · 대신 객체 이동 + 포인터 갱신 비용</text>
+</svg>

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="42" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">Serial GC 구조 — DefNew &amp; Tenured</text>
+
+  <!-- Young generation box -->
+  <rect x="60" y="78" width="360" height="206" rx="8" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="240" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">Young 세대 — DefNew</text>
+  <text x="240" y="128" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">단일 스레드 복사(copying) 수집기</text>
+
+  <rect x="84" y="146" width="180" height="48" rx="6" fill="#10303a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="174" y="167" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8">Eden</text>
+  <text x="174" y="185" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">새 객체 할당</text>
+
+  <rect x="276" y="146" width="58" height="48" rx="6" fill="#10303a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="305" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">S0</text>
+  <rect x="342" y="146" width="58" height="48" rx="6" fill="#10303a" stroke="#7ec8e3" stroke-width="1"/>
+  <text x="371" y="170" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">S1</text>
+
+  <text x="240" y="226" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">Minor GC: 살아남은 객체를 Survivor로 복사</text>
+  <text x="240" y="246" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">빈 공간만 남으므로 단편화가 없다</text>
+  <text x="240" y="266" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">나이가 차면 Old로 승격(promotion)</text>
+
+  <!-- Old generation box -->
+  <rect x="460" y="78" width="360" height="206" rx="8" fill="#1a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="640" y="106" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e05555">Old 세대 — Tenured</text>
+  <text x="640" y="128" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">단일 스레드 Mark-Sweep-Compact</text>
+
+  <rect x="484" y="146" width="100" height="48" rx="6" fill="#3a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="534" y="167" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Mark</text>
+  <text x="534" y="185" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">생존 표시</text>
+
+  <rect x="590" y="146" width="100" height="48" rx="6" fill="#3a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="640" y="167" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Sweep</text>
+  <text x="640" y="185" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">쓰레기 회수</text>
+
+  <rect x="696" y="146" width="100" height="48" rx="6" fill="#3a1414" stroke="#e05555" stroke-width="1"/>
+  <text x="746" y="167" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" font-weight="600" fill="#e8e8e8">Compact</text>
+  <text x="746" y="185" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">압축 정리</text>
+
+  <text x="640" y="226" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">Major / Full GC 시 동작</text>
+  <text x="640" y="246" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">압축으로 단편화 제거, 할당 빨라짐</text>
+  <text x="640" y="266" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">힙이 크면 이 단계 STW가 길어진다</text>
+
+  <!-- Promotion arrow Young -> Old -->
+  <defs>
+    <marker id="arrInfo" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <line x1="420" y1="181" x2="460" y2="181" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrInfo)"/>
+  <text x="440" y="164" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">승격</text>
+
+  <!-- Flag / code box -->
+  <rect x="60" y="312" width="360" height="84" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="340" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#9aa4b8"># Serial GC 활성화 플래그</tspan></text>
+  <text x="76" y="362" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff">java <tspan fill="#7ec8e3" font-weight="600">-XX:+UseSerialGC</tspan> -jar app.jar</text>
+  <text x="76" y="384" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#ffffff"><tspan fill="#9aa4b8"># Young=DefNew, Old=Tenured</tspan></text>
+
+  <!-- Use cases box -->
+  <rect x="460" y="312" width="360" height="84" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="640" y="338" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">언제 쓰나</text>
+  <text x="640" y="362" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">작은 힙 · 단일 코어 · 클라이언트/CLI 앱</text>
+  <text x="640" y="382" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">CPU 1개 컨테이너에서 ergonomics 자동 선택</text>
+
+  <!-- Summary strip -->
+  <rect x="60" y="416" width="760" height="116" rx="8" fill="#101018" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="442" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc">핵심 — 단순함이 곧 장점</text>
+  <text x="440" y="468" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">전 과정이 STW이고 GC 스레드는 항상 1개 — 동기화 비용이 없어 구현이 단순하고 메모리 오버헤드가 최소다.</text>
+  <text x="440" y="490" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">힙이 작을 때는 스레드를 늘리는 다른 GC보다 오히려 효율적이지만, 힙이 커지면 단일 스레드 STW가 길어진다.</text>
+  <text x="440" y="512" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Young은 복사로 단편화가 없고, Old는 Compact로 단편화를 제거한다.</text>
+</svg>

@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="arrG" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrI" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrA" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">G1 수집 주기 — Young · Concurrent Mark · Mixed</text>
+
+  <text x="440" y="70" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">정지 시간 목표(-XX:MaxGCPauseMillis, 기본 200ms)가 한 번에 비울 region 수를 결정한다</text>
+
+  <!-- ===== Young collection box ===== -->
+  <rect x="60" y="96" width="760" height="78" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="80" y="124"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">Young Collection (STW · evacuation)</text>
+  <text x="80" y="146"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Eden/Survivor의 산 객체를 빈 region으로 복사(copying) — 복사가 곧 compaction이라 단편화가 없다</text>
+  <text x="80" y="164"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">앱이 살아 있는 동안 가장 자주 일어나는 기본 수집. old 점유율이 임계에 닿으면 marking 주기를 깨운다</text>
+
+  <!-- arrow Young -> Concurrent Mark cycle -->
+  <line x1="440" y1="174" x2="440" y2="200" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrI)"/>
+  <text x="560" y="192" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#7ec8e3">IHOP 임계 도달 시 동시 마킹 시작</text>
+
+  <!-- ===== Concurrent Mark cycle container ===== -->
+  <rect x="60" y="208" width="760" height="170" rx="8" fill="#0a141a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="80" y="234"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">Concurrent Marking Cycle</text>
+
+  <!-- 4 phase boxes -->
+  <!-- 1 Initial Mark -->
+  <rect x="78" y="252" width="168" height="106" rx="6" fill="#3a1414" stroke="#e05555" stroke-width="1.5"/>
+  <text x="162" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">Initial Mark</text>
+  <text x="162" y="304" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">STW (짧음)</text>
+  <text x="162" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">root 직접 참조 마킹</text>
+  <text x="162" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">young 수집에 piggyback</text>
+
+  <!-- 2 Concurrent Mark -->
+  <rect x="270" y="252" width="168" height="106" rx="6" fill="#0a1a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="354" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Concurrent Mark</text>
+  <text x="354" y="304" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#55c555">동시 (앱과 병행)</text>
+  <text x="354" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">그래프 전체 추적</text>
+  <text x="354" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SATB barrier로 변경 추적</text>
+
+  <!-- 3 Remark -->
+  <rect x="462" y="252" width="168" height="106" rx="6" fill="#3a1414" stroke="#e05555" stroke-width="1.5"/>
+  <text x="546" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e05555">Remark</text>
+  <text x="546" y="304" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#e05555">STW (짧음)</text>
+  <text x="546" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">SATB 잔여분 마무리</text>
+  <text x="546" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">마킹 일관성 확정</text>
+
+  <!-- 4 Cleanup -->
+  <rect x="654" y="252" width="148" height="106" rx="6" fill="#141a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="728" y="282" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#9a9ae0">Cleanup</text>
+  <text x="728" y="304" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9a9ae0">짧은 STW + 동시</text>
+  <text x="728" y="324" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">region별 산 객체 집계</text>
+  <text x="728" y="342" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">빈 old region 즉시 회수</text>
+
+  <!-- phase arrows -->
+  <line x1="246" y1="305" x2="270" y2="305" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrI)"/>
+  <line x1="438" y1="305" x2="462" y2="305" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrI)"/>
+  <line x1="630" y1="305" x2="654" y2="305" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrI)"/>
+
+  <!-- arrow Cleanup -> Mixed -->
+  <line x1="440" y1="378" x2="440" y2="404" stroke="#7777cc" stroke-width="2" marker-end="url(#arrA)"/>
+  <text x="585" y="396" text-anchor="middle"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9a9ae0">쓰레기 많은 old region 목록 확보</text>
+
+  <!-- ===== Mixed collection box ===== -->
+  <rect x="60" y="412" width="760" height="92" rx="8" fill="#1a1410" stroke="#c8a24a" stroke-width="1.5"/>
+  <text x="80" y="440"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#c8a24a">Mixed Collection (STW · garbage-first)</text>
+  <text x="80" y="462"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">young region 전부 + 회수 이득이 큰 old region을 골라 함께 evacuation — "쓰레기가 많은 곳 먼저"</text>
+  <text x="80" y="480"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">한 번에 몇 개의 old region을 비울지는 정지 시간 목표 안에 들어오도록 G1이 동적으로 결정한다</text>
+  <text x="80" y="498"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">여러 번의 Mixed GC로 나눠 old를 정리한 뒤 다시 Young 수집으로 돌아간다</text>
+
+  <!-- loop back arrow Mixed -> Young (dashed) -->
+  <path d="M 60 458 C 24 458 24 135 56 135" fill="none" stroke="#7777cc" stroke-width="2.5"
+        stroke-dasharray="4,4" marker-end="url(#arrA)"/>
+  <text x="40" y="300" text-anchor="middle" transform="rotate(-90 40 300)"
+        font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#9a9ae0">정리 후 일상 Young 수집으로 복귀</text>
+</svg>
