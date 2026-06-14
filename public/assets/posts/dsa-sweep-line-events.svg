@@ -1,0 +1,37 @@
+<svg width="880" height="380" viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="evArr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" rx="12" fill="#0a0a0a"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">두 자료구조: 정렬된 사건 큐 + 활성 집합</text>
+
+  <!-- event queue box -->
+  <rect x="60" y="84" width="340" height="80" rx="8" fill="#000000" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="76" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#7ec8e3" font-weight="600">① 사건 큐 (x좌표 정렬)</text>
+  <text x="76" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">[ (x, type, id), … ]  오름차순</tspan></text>
+  <text x="76" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># 모든 시작·끝·교차점</tspan></text>
+
+  <!-- active set box -->
+  <rect x="480" y="84" width="340" height="80" rx="8" fill="#000000" stroke="#55c555" stroke-width="2"/>
+  <text x="496" y="110" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" fill="#55c555" font-weight="600">② 활성 집합 (y정렬 BST)</text>
+  <text x="496" y="136" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">현재 sweep line이 지나는 선분들</tspan></text>
+  <text x="496" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># insert/erase/이웃조회 O(log n)</tspan></text>
+
+  <line x1="420" y1="124" x2="478" y2="124" stroke="#7ec8e3" stroke-width="2" marker-end="url(#evArr)"/>
+
+  <!-- loop code box -->
+  <rect x="60" y="190" width="760" height="130" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> ev </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> sorted(events):        </tspan><tspan fill="#9aa4b8"># x 증가 순</tspan></text>
+  <text x="76" y="238" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    if</tspan><tspan fill="#ffffff"> ev.type == START:  active.insert(seg); check(이웃)</tspan></text>
+  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    elif</tspan><tspan fill="#ffffff"> ev.type == END: active.erase(seg);  check(이웃끼리)</tspan></text>
+  <text x="76" y="282" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    else</tspan><tspan fill="#ffffff">:                   report 교차; swap 순서</tspan></text>
+  <text x="76" y="308" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># 인접한 선분끼리만 교차 검사 → O((n+k) log n)</tspan></text>
+
+  <text x="60" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">모든 쌍 O(n²) 대신, 활성 집합에서 위·아래 이웃만 비교하는 것이 핵심 절약</text>
+</svg>

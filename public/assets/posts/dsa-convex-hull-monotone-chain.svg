@@ -1,0 +1,43 @@
+<svg width="880" height="420" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="mcPop" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">모노톤 체인: 우회전이면 스택에서 pop</text>
+
+  <!-- diagram -->
+  <circle cx="120" cy="330" r="5" fill="#55c555"/><text x="106" y="352" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">P1</text>
+  <circle cx="240" cy="280" r="5" fill="#55c555"/><text x="228" y="270" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">P2</text>
+  <circle cx="340" cy="320" r="6" fill="#e05555"/><text x="346" y="338" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">P3 (우회전 → pop)</text>
+  <circle cx="430" cy="200" r="5" fill="#7ec8e3"/><text x="436" y="196" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#888">P4</text>
+
+  <!-- kept hull edges -->
+  <line x1="120" y1="330" x2="240" y2="280" stroke="#55c555" stroke-width="2.5"/>
+  <!-- bad edges dashed red -->
+  <line x1="240" y1="280" x2="340" y2="320" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="340" y1="320" x2="430" y2="200" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4"/>
+  <!-- corrected edge -->
+  <line x1="240" y1="280" x2="430" y2="200" stroke="#55c555" stroke-width="2.5" marker-end="url(#mcPop)"/>
+  <text x="320" y="234" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#55c555">P3 제거 후 직접 연결</text>
+
+  <!-- code box -->
+  <rect x="500" y="84" width="320" height="252" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="516" y="112" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">def</tspan><tspan fill="#ffffff"> half(pts):</tspan></text>
+  <text x="516" y="134" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  st = []</tspan></text>
+  <text x="516" y="156" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  for</tspan><tspan fill="#ffffff"> p </tspan><tspan fill="#7ec8e3" font-weight="600">in</tspan><tspan fill="#ffffff"> pts:</tspan></text>
+  <text x="516" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">    while</tspan><tspan fill="#ffffff"> len(st) &gt;= 2 </tspan><tspan fill="#7ec8e3" font-weight="600">and</tspan><tspan fill="#ffffff"> \</tspan></text>
+  <text x="516" y="200" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">      ccw(st[-2],st[-1],p)&lt;=0:</tspan></text>
+  <text x="516" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#e05555" font-weight="600">      st.pop()</tspan><tspan fill="#9aa4b8">   # 우회전 제거</tspan></text>
+  <text x="516" y="244" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">    st.append(p)</tspan></text>
+  <text x="516" y="266" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> st</tspan></text>
+  <text x="516" y="296" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># 아래·위 체인 각각 만들어</tspan></text>
+  <text x="516" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8"># 이어붙이면 전체 껍질</tspan></text>
+
+  <text x="60" y="396" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">x좌표로 정렬 → 아래 체인, 위 체인을 각각 스택으로 쌓는다. 전체 O(n log n) (정렬이 지배)</text>
+</svg>
