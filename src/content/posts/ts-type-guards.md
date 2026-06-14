@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입가드", "타입좁히기", "제어흐름분석", "타입술어", "instanceof"]
 featured: false
 draft: false

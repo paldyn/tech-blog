@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "ECMAScript", "private fields", "#", "캡슐화", "WeakMap", "클래스"]
 featured: false
 draft: false

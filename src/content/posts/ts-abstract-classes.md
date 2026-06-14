@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "추상클래스", "abstract", "OOP", "템플릿메서드", "상속"]
 featured: false
 draft: false

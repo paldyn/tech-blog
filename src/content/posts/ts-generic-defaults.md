@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 1
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "제네릭기본값", "Generic Defaults", "타입파라미터", "고급타입"]
 featured: false
 draft: false

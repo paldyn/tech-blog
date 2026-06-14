@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "moduleResolution", "모듈해석", "node_modules", "bundler", "tsconfig"]
 featured: false
 draft: false

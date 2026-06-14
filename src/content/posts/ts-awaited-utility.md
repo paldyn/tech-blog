@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-09"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유틸리티 타입", "Awaited", "Promise", "async", "비동기"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "typeof", "instanceof", "타입가드", "TypeGuard", "클래스계층"]
 featured: false
 draft: false

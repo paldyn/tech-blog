@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입좁히기", "Narrowing", "TypeGuard", "타입서술어"]
 featured: false
 draft: false

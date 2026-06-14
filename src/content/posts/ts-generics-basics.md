@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "제네릭", "타입매개변수", "타입추론", "재사용성", "추상화"]
 featured: false
 draft: false

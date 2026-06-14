@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "const enum", "컴파일최적화", "isolatedModules", "enum"]
 featured: false
 draft: false

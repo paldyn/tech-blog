@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "DefinitelyTyped", "@types", "npm", "typeRoots", "TS7016"]
 featured: false
 draft: false

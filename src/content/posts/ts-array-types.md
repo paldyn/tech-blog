@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 1
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "배열타입", "Array", "제네릭", "타입안전성"]
 featured: false
 draft: false

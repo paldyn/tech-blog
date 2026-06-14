@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "선언병합", "declaration-merging", "interface", "namespace", "Window확장"]
 featured: false
 draft: false

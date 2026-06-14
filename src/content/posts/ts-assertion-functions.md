@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "단언함수", "assertion functions", "asserts", "불변식", "타입좁히기"]
 featured: false
 draft: false

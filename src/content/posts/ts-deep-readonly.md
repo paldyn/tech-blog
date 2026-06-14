@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-09"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유틸리티 타입", "DeepReadonly", "불변성", "재귀 타입", "Mapped Type"]
 featured: false
 draft: false

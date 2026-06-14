@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "제네릭클래스", "generic class", "T", "컨테이너", "Stack", "Queue", "상속"]
 featured: false
 draft: false

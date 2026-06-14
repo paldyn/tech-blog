@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입추론", "TypeInference", "문맥적타이핑", "ContextualTyping"]
 featured: false
 draft: false

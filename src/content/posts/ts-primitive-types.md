@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["원시타입", "string", "number", "boolean", "TypeScript완전정복", "null", "undefined"]
 featured: false
 draft: false

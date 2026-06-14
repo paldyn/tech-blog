@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "NodeNext", "Node16", "ESM", "CommonJS", "exports", "moduleResolution"]
 featured: false
 draft: false

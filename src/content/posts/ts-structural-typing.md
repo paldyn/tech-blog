@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "구조적타이핑", "structural typing", "덕타이핑", "타입호환성", "공변반변"]
 featured: false
 draft: false

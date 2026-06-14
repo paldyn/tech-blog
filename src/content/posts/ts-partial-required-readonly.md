@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-09"
 archiveOrder: 1
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유틸리티 타입", "Partial", "Required", "Readonly", "Mapped Type"]
 featured: false
 draft: false

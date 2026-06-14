@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 1
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입단언", "TypeAssertion", "as", "NonNull", "타입가드"]
 featured: false
 draft: false

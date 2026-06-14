@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "함수타입", "FunctionType", "콜시그니처", "고차함수"]
 featured: false
 draft: false

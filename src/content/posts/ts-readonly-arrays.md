@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "ReadonlyArray", "불변성", "readonly", "배열타입"]
 featured: false
 draft: false

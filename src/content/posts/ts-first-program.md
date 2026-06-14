@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript시작", "TypeScript첫프로그램", "TypeScript완전정복", "타입추론", "타입어노테이션"]
 featured: false
 draft: false

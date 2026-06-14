@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript설치", "TypeScript환경설정", "tsconfig", "TypeScript완전정복", "Node.js"]
 featured: false
 draft: false

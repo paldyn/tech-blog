@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "기본타입", "타입좁히기", "unknown", "never", "튜플", "enum"]
 featured: false
 draft: false

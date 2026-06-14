@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "파라미터프로퍼티", "parameter properties", "생성자", "클래스", "단축문법"]
 featured: false
 draft: false

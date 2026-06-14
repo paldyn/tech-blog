@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "keyof", "typeof", "타입연산자", "키추출", "타입추론"]
 featured: false
 draft: false

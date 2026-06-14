@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "공변", "반변", "분산성", "Variance", "in out", "구조적타입", "고급타입"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "데코레이터", "메타데이터", "DI", "AOP", "experimentalDecorators"]
 featured: false
 draft: false

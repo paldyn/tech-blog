@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "튜플", "tuple", "명명된튜플", "분해할당"]
 featured: false
 draft: false

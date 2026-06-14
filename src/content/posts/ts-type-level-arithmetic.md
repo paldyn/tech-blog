@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입산술", "재귀타입", "튜플", "Add", "GTE", "타입체조", "고급타입"]
 featured: false
 draft: false

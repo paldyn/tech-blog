@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "JavaScript", "TypeScriptvsJavaScript", "TypeScript완전정복", "언어비교"]
 featured: false
 draft: false

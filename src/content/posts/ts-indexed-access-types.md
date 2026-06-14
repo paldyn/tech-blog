@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "인덱스접근타입", "indexed access", "T[K]", "타입추출", "DRY"]
 featured: false
 draft: false

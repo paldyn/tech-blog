@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "in연산자", "InOperator", "타입가드", "판별유니언", "DiscriminatedUnion"]
 featured: false
 draft: false

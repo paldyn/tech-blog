@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 1
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "완전성검사", "exhaustiveness", "never타입", "switch", "판별유니언"]
 featured: false
 draft: false

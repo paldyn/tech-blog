@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "verbatimModuleSyntax", "import-elision", "isolatedModules", "tsconfig", "ESM"]
 featured: false
 draft: false

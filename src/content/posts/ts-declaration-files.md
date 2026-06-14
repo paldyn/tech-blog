@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "d.ts", "선언파일", "declaration", "declare", "declarationMap", "라이브러리"]
 featured: false
 draft: false

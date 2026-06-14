@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "가변인자튜플", "VariadicTuples", "스프레드타입", "TypeScript4"]
 featured: false
 draft: false

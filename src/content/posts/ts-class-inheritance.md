@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "상속", "extends", "super", "override", "다형성", "클래스"]
 featured: false
 draft: false

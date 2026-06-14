@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "매핑타입", "수정자", "as절", "키재매핑", "Readonly", "Required", "고급타입"]
 featured: false
 draft: false

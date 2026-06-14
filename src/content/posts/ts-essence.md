@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입시스템", "구조적타이핑", "타입추론", "컴파일러", "tsconfig"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "마이그레이션", "점진적도입", "allowJs", "JSDoc", "ts-migrate", "설정"]
 featured: false
 draft: false

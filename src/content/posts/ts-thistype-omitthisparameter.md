@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-09"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유틸리티 타입", "ThisType", "OmitThisParameter", "this", "Vue"]
 featured: false
 draft: false

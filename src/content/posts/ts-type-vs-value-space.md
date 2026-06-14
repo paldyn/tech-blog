@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-01"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입공간", "값공간", "typeof", "컴파일타임"]
 featured: false
 draft: false

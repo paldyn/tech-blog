@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "NoInfer", "제네릭", "타입추론", "TS5.4", "유틸리티타입"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "declare-module", "앰비언트모듈", "와일드카드모듈", "에셋타입", "vite-client"]
 featured: false
 draft: false

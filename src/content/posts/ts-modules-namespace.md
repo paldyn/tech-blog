@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "모듈", "네임스페이스", "import-type", "declaration", "경로별칭", ".d.ts"]
 featured: false
 draft: false

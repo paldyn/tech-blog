@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "객체타입", "옵셔널프로퍼티", "인덱스시그니처", "readonly"]
 featured: false
 draft: false

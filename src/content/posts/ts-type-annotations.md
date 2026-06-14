@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "타입어노테이션", "TypeAnnotation", "타입추론", "베스트프랙티스"]
 featured: false
 draft: false

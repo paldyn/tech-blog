@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "초과프로퍼티검사", "excess property", "객체리터럴", "타입체크", "TS2345"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "인덱스시그니처", "index signature", "Record", "동적키", "딕셔너리"]
 featured: false
 draft: false

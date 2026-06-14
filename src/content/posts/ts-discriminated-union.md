@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "판별유니언", "discriminated-union", "상태모델링", "완전성검사", "리듀서"]
 featured: false
 draft: false

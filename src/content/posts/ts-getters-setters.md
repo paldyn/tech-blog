@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "getter", "setter", "get", "set", "접근자", "프로퍼티", "캡슐화"]
 featured: false
 draft: false

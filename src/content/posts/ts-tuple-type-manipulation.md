@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "튜플타입", "Variadic", "Zip", "Reverse", "커링타입", "고급타입", "타입체조"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "interface", "type alias", "선언병합", "확장", "설계패턴"]
 featured: false
 draft: false

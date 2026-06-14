@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "템플릿리터럴타입", "문자열타입", "Capitalize", "infer", "고급타입"]
 featured: false
 draft: false

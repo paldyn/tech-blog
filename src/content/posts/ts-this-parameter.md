@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "this매개변수", "ThisParameter", "noImplicitThis", "다형적this"]
 featured: false
 draft: false

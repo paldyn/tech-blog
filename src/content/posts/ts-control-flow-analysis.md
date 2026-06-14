@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "제어흐름분석", "ControlFlowAnalysis", "CFA", "타입좁히기", "Narrowing"]
 featured: false
 draft: false

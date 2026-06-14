@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "import-type", "export-type", "isolatedModules", "타입제거", "순환참조"]
 featured: false
 draft: false

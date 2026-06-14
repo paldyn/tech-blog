@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["tsc", "TypeScript컴파일러", "TypeScript완전정복", "tsconfig", "컴파일파이프라인"]
 featured: false
 draft: false

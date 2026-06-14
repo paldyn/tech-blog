@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "TypeScript장점", "정적타입", "TypeScript완전정복", "버그예방"]
 featured: false
 draft: false

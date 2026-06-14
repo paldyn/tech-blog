@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "infer", "조건부타입", "ReturnType", "Awaited", "튜플", "고급타입"]
 featured: false
 draft: false

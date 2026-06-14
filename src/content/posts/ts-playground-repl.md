@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-31"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScriptPlayground", "TypeScript학습", "TypeScript완전정복", "타입실험"]
 featured: false
 draft: false

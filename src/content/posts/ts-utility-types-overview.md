@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유틸리티타입", "Partial", "Omit", "Awaited", "ReturnType", "내장타입", "완전정복"]
 featured: false
 draft: false

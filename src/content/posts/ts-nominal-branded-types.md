@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "브랜드타입", "branded types", "명목적타입", "타입안전", "유니크심볼"]
 featured: false
 draft: false

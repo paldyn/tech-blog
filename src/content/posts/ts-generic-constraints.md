@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "제네릭제약", "extends", "keyof", "인덱스타입", "타입안전성"]
 featured: false
 draft: false

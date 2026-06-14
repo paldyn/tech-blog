@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-12"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "declare", "앰비언트선언", "declare-global", "전역타입", "d.ts"]
 featured: false
 draft: false

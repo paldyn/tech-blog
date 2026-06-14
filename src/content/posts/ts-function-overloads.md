@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 3
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "함수오버로드", "FunctionOverload", "오버로드시그니처", "메서드오버로드"]
 featured: false
 draft: false

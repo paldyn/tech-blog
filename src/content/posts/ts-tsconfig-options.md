@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 9
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "tsconfig", "컴파일러옵션", "strict", "moduleResolution", "paths", "설정"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-09"
 archiveOrder: 2
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유틸리티 타입", "Pick", "Omit", "타입 설계"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-05"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "선택적매개변수", "기본값매개변수", "OptionalParams", "DefaultParams"]
 featured: false
 draft: false

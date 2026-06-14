@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-16"
 archiveOrder: 4
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "unknown", "never", "any", "타입계층", "완전성검사", "타입안전성"]
 featured: false
 draft: false

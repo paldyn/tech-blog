@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "재귀타입", "DeepReadonly", "DeepPartial", "JSON타입", "고급타입", "무한깊이"]
 featured: false
 draft: false

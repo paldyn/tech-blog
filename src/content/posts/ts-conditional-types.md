@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 10
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "조건부타입", "infer", "분배", "유틸리티타입", "고급타입"]
 featured: false
 draft: false

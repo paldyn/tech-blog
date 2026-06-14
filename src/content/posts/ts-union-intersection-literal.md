@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-05-15"
 archiveOrder: 6
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "유니언타입", "인터섹션타입", "리터럴타입", "판별유니언", "타입시스템"]
 featured: false
 draft: false

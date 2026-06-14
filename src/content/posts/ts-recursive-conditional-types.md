@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 7
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "재귀조건부타입", "infer", "Flatten", "UnionToIntersection", "고급타입", "타입체조"]
 featured: false
 draft: false

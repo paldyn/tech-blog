@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-07"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "static", "정적멤버", "싱글턴", "팩토리", "클래스", "공유상태"]
 featured: false
 draft: false

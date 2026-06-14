@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-08"
 archiveOrder: 5
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "인트린직타입", "Uppercase", "Lowercase", "Capitalize", "문자열타입", "고급타입"]
 featured: false
 draft: false

@@ -5,7 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-06-01"
 archiveOrder: 8
 type: "knowledge"
-category: "JavaScript"
+category: "TypeScript"
 tags: ["TypeScript", "VS Code", "에디터설정", "ESLint", "Prettier"]
 featured: false
 draft: false
