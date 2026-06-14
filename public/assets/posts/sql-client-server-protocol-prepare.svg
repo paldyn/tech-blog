@@ -1,76 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="360" viewBox="0 0 880 360">
-  <defs>
-    <marker id="arr" viewBox="0 0 14 14" refX="12" refY="7"
-            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
-      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
-    </marker>
-  </defs>
-  <rect width="880" height="360" fill="#0a0a0a" rx="12"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500"
+     style="font-family:'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
 
-  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Simple vs Prepared Statement</text>
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">Simple vs Extended Query Protocol</text>
+  <text x="440" y="68" text-anchor="middle" font-size="14" fill="#888">Simple Query (문자열 전송) vs Prepared Statement (파싱 캐시)</text>
 
-  <!-- Simple -->
-  <text x="210" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="15" font-weight="600" fill="#e05555" text-anchor="middle">Simple Statement</text>
+  <!-- Left: Simple Query -->
+  <rect x="60" y="90" width="360" height="280" fill="#0f1520" rx="8" stroke="#1e3a5a" stroke-width="1.5"/>
+  <text x="240" y="118" text-anchor="middle" font-size="15" font-weight="600" fill="#e05555">Simple Query</text>
+  <text x="240" y="138" text-anchor="middle" font-size="12" fill="#888">매 실행마다 전체 SQL 전송</text>
 
-  <rect x="60" y="94" width="300" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="76" y="116" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- SQL 인젝션 위험!</text>
-  <text x="76" y="136" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
-    <tspan fill="#ffffff">query = </tspan>
-    <tspan fill="#ce9178">"SELECT * FROM users"</tspan>
-  </text>
-  <text x="76" y="156" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
-    <tspan fill="#ffffff">       + </tspan>
-    <tspan fill="#ce9178">" WHERE id = "</tspan>
-  </text>
-  <text x="76" y="176" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
-    <tspan fill="#ffffff">       + user_input;</tspan>
-  </text>
-  <text x="76" y="196" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 매 실행마다 파싱+최적화</text>
-  <text x="76" y="216" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">-- 인젝션: id = "1 OR 1=1"</text>
+  <!-- Simple step boxes -->
+  <rect x="80" y="152" width="320" height="36" fill="#1a0f0f" rx="5" stroke="#3a1e1e"/>
+  <text x="240" y="175" text-anchor="middle" font-size="12" fill="#e8e8e8">SQL 문자열 전송 (매번)</text>
 
-  <!-- Prepared -->
-  <text x="670" y="80" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="15" font-weight="600" fill="#55c555" text-anchor="middle">Prepared Statement</text>
+  <line x1="240" y1="188" x2="240" y2="200" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="234,200 246,200 240,208" fill="#e05555"/>
 
-  <rect x="520" y="94" width="300" height="160" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
-  <text x="536" y="116" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 1단계: 준비 (파싱+최적화 1회)</text>
-  <text x="536" y="136" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
-    <tspan fill="#7ec8e3" font-weight="600">PREPARE</tspan>
-    <tspan fill="#ffffff"> stmt</tspan>
-    <tspan fill="#7ec8e3" font-weight="600"> FROM</tspan>
-  </text>
-  <text x="536" y="156" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
-    <tspan fill="#ffffff">  </tspan>
-    <tspan fill="#ce9178">'SELECT * FROM users WHERE id = ?'</tspan>
-    <tspan fill="#ffffff">;</tspan>
-  </text>
-  <text x="536" y="176" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">-- 2단계: 실행 (바인딩만)</text>
-  <text x="536" y="196" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
-    <tspan fill="#7ec8e3" font-weight="600">EXECUTE</tspan>
-    <tspan fill="#ffffff"> stmt</tspan>
-    <tspan fill="#7ec8e3" font-weight="600"> USING</tspan>
-    <tspan fill="#ffffff"> @user_id;</tspan>
-  </text>
-  <text x="536" y="216" xml:space="preserve"
-        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">-- 값은 데이터로만 처리됨</text>
+  <rect x="80" y="208" width="320" height="36" fill="#1a0f0f" rx="5" stroke="#3a1e1e"/>
+  <text x="240" y="231" text-anchor="middle" font-size="12" fill="#e8e8e8">파싱 (매번)</text>
 
-  <!-- Benefits -->
-  <rect x="60" y="274" width="760" height="64" rx="8" fill="#111827" stroke="#55c555" stroke-width="1.5"/>
-  <text x="440" y="298" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">Prepared Statement 장점</text>
-  <text x="440" y="320" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
-        font-size="12" fill="#888" text-anchor="middle">SQL 인젝션 방어 · 반복 실행 시 파싱 비용 절감 · 플랜 캐시 재사용</text>
+  <line x1="240" y1="244" x2="240" y2="256" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="234,256 246,256 240,264" fill="#e05555"/>
+
+  <rect x="80" y="264" width="320" height="36" fill="#1a0f0f" rx="5" stroke="#3a1e1e"/>
+  <text x="240" y="287" text-anchor="middle" font-size="12" fill="#e8e8e8">실행 계획 생성 (매번)</text>
+
+  <line x1="240" y1="300" x2="240" y2="312" stroke="#e05555" stroke-width="1.5"/>
+  <polygon points="234,312 246,312 240,320" fill="#e05555"/>
+
+  <rect x="80" y="320" width="320" height="36" fill="#1a0f0f" rx="5" stroke="#3a1e1e"/>
+  <text x="240" y="343" text-anchor="middle" font-size="12" fill="#e8e8e8">실행 → 결과 반환</text>
+
+  <rect x="80" y="368" width="320" height="36" fill="#2a0f0f" rx="5" stroke="#5a1e1e"/>
+  <text x="240" y="391" text-anchor="middle" font-size="12" fill="#e05555">SQL Injection 취약 (파라미터 미바인딩 시)</text>
+
+  <!-- Center arrow -->
+  <polygon points="430,268 450,268 450,254 470,278 450,302 450,288 430,288"
+           fill="#7777cc" stroke="#0a0a0a" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- Right: Extended (Prepared) Query -->
+  <rect x="480" y="90" width="360" height="280" fill="#0f1a10" rx="8" stroke="#1e5a1e" stroke-width="1.5"/>
+  <text x="660" y="118" text-anchor="middle" font-size="15" font-weight="600" fill="#55c555">Extended Query (Prepared)</text>
+  <text x="660" y="138" text-anchor="middle" font-size="12" fill="#888">파싱·실행 계획을 서버에 캐시</text>
+
+  <!-- Extended step boxes -->
+  <rect x="500" y="152" width="320" height="36" fill="#0a1a0a" rx="5" stroke="#1e3a1e"/>
+  <text x="660" y="175" text-anchor="middle" font-size="12" fill="#55c555">1회: Parse (SQL + 파라미터 타입)</text>
+
+  <line x1="660" y1="188" x2="660" y2="200" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="654,200 666,200 660,208" fill="#55c555"/>
+
+  <rect x="500" y="208" width="320" height="36" fill="#0a1a0a" rx="5" stroke="#1e3a1e"/>
+  <text x="660" y="231" text-anchor="middle" font-size="12" fill="#55c555">1회: Bind (값 바인딩)</text>
+
+  <line x1="660" y1="244" x2="660" y2="256" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="654,256 666,256 660,264" fill="#55c555"/>
+
+  <rect x="500" y="264" width="320" height="36" fill="#0a1a0a" rx="5" stroke="#1e3a1e"/>
+  <text x="660" y="287" text-anchor="middle" font-size="12" fill="#55c555">N회: Execute (파싱 재사용)</text>
+
+  <line x1="660" y1="300" x2="660" y2="312" stroke="#55c555" stroke-width="1.5"/>
+  <polygon points="654,312 666,312 660,320" fill="#55c555"/>
+
+  <rect x="500" y="320" width="320" height="36" fill="#0a1a0a" rx="5" stroke="#1e3a1e"/>
+  <text x="660" y="343" text-anchor="middle" font-size="12" fill="#55c555">결과 반환 → Close/Sync</text>
+
+  <rect x="500" y="368" width="320" height="36" fill="#0a2a0a" rx="5" stroke="#1e5a1e"/>
+  <text x="660" y="391" text-anchor="middle" font-size="12" fill="#55c555">SQL Injection 방어 + 성능 향상</text>
+
+  <!-- Code block -->
+  <rect x="60" y="398" width="760" height="64" fill="#000000" rx="6" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#9aa4b8" xml:space="preserve">-- Prepared Statement (JDBC 예시 — SQL Injection 방어)</text>
+  <text x="80" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#7ec8e3" xml:space="preserve">PreparedStatement</text>
+  <text x="224" y="438" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve"> ps = conn.prepareStatement(</text>
+  <text x="80" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ce9178" xml:space="preserve">    "SELECT * FROM users WHERE id = ?"</text>
+  <text x="580" y="456" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13"
+        fill="#ffffff" xml:space="preserve">);</text>
+
+  <!-- Footer -->
 </svg>

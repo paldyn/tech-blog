@@ -1,122 +1,41 @@
 ---
-title: "VS Code + TypeScript 에디터 설정"
-description: "VS Code의 TypeScript IntelliSense 기능(자동완성, 타입 힌트, 오류 표시, F12 이동)을 최대한 활용하는 설정 방법과 생산성을 높이는 필수 확장 프로그램을 소개합니다."
+title: "TypeScript 에디터 환경 최적화 — VS Code 완전 설정"
+description: "VS Code에서 TypeScript 개발 생산성을 극대화하는 설정을 안내합니다. 필수 확장 설치, settings.json 최적화, 단축키, 프로젝트별 TypeScript 버전 관리까지 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-11"
+pubDate: "2026-06-01"
 archiveOrder: 8
 type: "knowledge"
 category: "JavaScript"
-tags: ["TypeScript", "VSCode", "IntelliSense", "에디터", "개발환경", "확장"]
+tags: ["TypeScript", "VS Code", "에디터설정", "ESLint", "Prettier"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-first-program/)에서 첫 TypeScript 프로그램을 작성하고 실행했습니다. 이번 글에서는 VS Code를 TypeScript 개발에 최적화하는 설정을 다룹니다. 에디터 설정 하나하나가 개발 생산성에 직접 영향을 줍니다.
+[지난 글](/posts/ts-first-program/)에서 TypeScript로 첫 번째 프로그램을 작성했다. 이제 더 효율적으로 TypeScript를 개발할 수 있도록 에디터 환경을 최적화한다. VS Code를 기준으로 설명하지만 WebStorm, Zed 등 다른 에디터에서도 핵심 개념은 동일하다.
 
-## VS Code는 TypeScript로 만들어졌다
+## VS Code와 TypeScript의 관계
 
-VS Code 자체가 TypeScript로 작성된 에디터입니다. 따라서 TypeScript 지원이 기본 내장되어 있으며, 별도의 TypeScript 확장을 설치하지 않아도 됩니다. TypeScript Language Server(tsserver)가 내장되어 있어 설치 즉시 자동완성, 타입 힌트, 오류 표시가 동작합니다.
+VS Code는 TypeScript로 작성된 에디터다. 그리고 TypeScript에 대한 최고 수준의 지원을 내장하고 있다. 별도 플러그인 없이도 다음 기능이 바로 된다.
 
-![VS Code TypeScript 기능](/assets/posts/ts-editor-setup-features.svg)
+- 실시간 타입 오류 강조 표시
+- 자동완성 (IntelliSense)
+- 호버 타입 정보
+- Go to Definition (F12)
+- Find References (Shift+F12)
+- Symbol Rename (F2)
 
-## IntelliSense 주요 기능
+VS Code에는 자체 TypeScript 언어 서버(tsserver)가 내장되어 있다. 프로젝트에 TypeScript를 설치하지 않아도 기본적인 타입 검사가 된다. 하지만 프로젝트의 로컬 TypeScript 버전을 사용하는 것이 권장된다.
 
-### 자동완성 (Ctrl+Space)
+![VS Code TypeScript 개발 환경](/assets/posts/ts-editor-setup-vscode.svg)
 
-객체의 속성이나 메서드를 입력할 때 `.`을 누르면 타입 정보를 기반으로 정확한 자동완성 목록이 표시됩니다.
+## 로컬 TypeScript 버전 사용
 
-```typescript
-interface Config {
-  host: string;
-  port: number;
-  timeout: number;
-  retries: number;
-}
+VS Code가 프로젝트에 설치된 TypeScript 버전을 쓰도록 설정한다.
 
-const config: Config = {
-  host: "localhost",
-  port: 3000,
-  timeout: 5000,
-  retries: 3,
-};
+1. `Cmd+Shift+P` (macOS) / `Ctrl+Shift+P` (Windows) → `TypeScript: Select TypeScript Version` 검색
+2. `Use Workspace Version` 선택
 
-config. // ← host, port, timeout, retries 자동완성
-```
-
-### 마우스 호버 타입 정보
-
-변수나 함수 위에 마우스를 올리면 추론된 타입 정보가 팝업으로 표시됩니다. 복잡한 타입을 이해하는 데 매우 유용합니다.
-
-### 정의로 이동 (F12)
-
-함수나 타입 위에서 `F12`를 누르면 정의된 파일로 즉시 이동합니다. 외부 라이브러리의 경우 `.d.ts` 파일로 이동하여 타입 정의를 확인할 수 있습니다.
-
-```typescript
-// fetch 위에서 F12 → lib.dom.d.ts로 이동
-const response = await fetch("/api/data");
-```
-
-### 심볼 이름 변경 (F2)
-
-변수나 함수 위에서 `F2`를 누르면 프로젝트 전체에서 해당 심볼의 이름을 안전하게 변경합니다. 모든 참조가 동시에 업데이트됩니다.
-
-### 코드 액션 (Ctrl+.)
-
-오류 또는 경고가 있는 줄에서 `Ctrl+.`를 누르면 빠른 수정 제안이 표시됩니다. 누락된 `import` 자동 추가, 타입 오류 수정 제안, 리팩토링 옵션 등이 포함됩니다.
-
-## settings.json 권장 설정
-
-`Ctrl+Shift+P` → "Open User Settings (JSON)"으로 설정 파일을 열고 아래 내용을 추가합니다.
-
-```json
-{
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.inlayHints.enabled": "on",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "explicit"
-  },
-  "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.suggest.autoImports": true,
-  "typescript.inlayHints.parameterNames.enabled": "literals",
-  "typescript.inlayHints.variableTypes.enabled": true,
-  "javascript.suggest.autoImports": true
-}
-```
-
-- `inlayHints`: 코드 옆에 추론된 타입을 회색으로 표시 (선택 사항)
-- `updateImportsOnFileMove`: 파일 이동 시 `import` 경로 자동 업데이트
-- `organizeImports`: 저장 시 사용하지 않는 import 정리
-
-## 필수 확장 프로그램
-
-![필수 확장 목록](/assets/posts/ts-editor-setup-extensions.svg)
-
-```bash
-# VS Code에서 설치: Ctrl+Shift+X 후 검색
-# 또는 CLI
-code --install-extension dbaeumer.vscode-eslint
-code --install-extension esbenp.prettier-vscode
-code --install-extension usernamehw.errorlens
-```
-
-**ESLint**: TypeScript 코드 품질 검사. `@typescript-eslint` 플러그인과 함께 사용
-
-**Prettier**: 일관된 코드 포맷. TypeScript, JSON, CSS 모두 지원
-
-**Error Lens**: 오류와 경고를 코드 줄 옆에 인라인으로 표시. 물결선 위에 마우스를 올리지 않아도 됩니다
-
-## 프로젝트에서 사용할 TypeScript 버전 고정
-
-VS Code는 기본적으로 내장된 TypeScript를 사용합니다. 프로젝트의 `node_modules`에 설치된 TypeScript 버전을 사용하도록 설정하는 것을 권장합니다.
-
-1. TypeScript 파일을 열고 `Ctrl+Shift+P`
-2. "TypeScript: Select TypeScript Version" 선택
-3. "Use Workspace Version" 선택
-
-또는 프로젝트 `.vscode/settings.json`에 명시합니다.
+또는 `.vscode/settings.json` 에 직접 설정한다.
 
 ```json
 {
@@ -124,13 +43,117 @@ VS Code는 기본적으로 내장된 TypeScript를 사용합니다. 프로젝트
 }
 ```
 
-에디터 설정은 개인 취향에 따라 다르지만, ESLint + Prettier + Error Lens 조합은 TypeScript 생산성을 크게 높이는 표준 설정으로 널리 사용됩니다.
+이 설정을 프로젝트에 커밋해 두면 팀원 모두가 같은 TypeScript 버전으로 개발한다.
+
+## 필수 확장 설치
+
+### ESLint
+
+```bash
+# 확장 ID: dbaeumer.vscode-eslint
+# 터미널에서 설치
+code --install-extension dbaeumer.vscode-eslint
+```
+
+ESLint는 TypeScript 코드의 품질을 강제한다. `@typescript-eslint/eslint-plugin` 과 함께 사용하면 TypeScript 전용 린트 규칙을 적용할 수 있다.
+
+```bash
+npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint
+```
+
+`eslint.config.js`:
+```javascript
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+
+export default [
+  {
+    files: ['**/*.ts'],
+    languageOptions: { parser: tsParser },
+    plugins: { '@typescript-eslint': tsPlugin },
+    rules: { ...tsPlugin.configs.recommended.rules },
+  },
+];
+```
+
+### Prettier
+
+코드 포맷팅을 자동화한다.
+
+```bash
+code --install-extension esbenp.prettier-vscode
+npm install --save-dev prettier
+```
+
+`.prettierrc`:
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5"
+}
+```
+
+## settings.json 최적화
+
+VS Code의 사용자 설정(`Cmd+Shift+P` → `Open User Settings JSON`)에 다음을 추가한다.
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.variableTypes.enabled": true
+}
+```
+
+주요 설정 설명:
+
+- **formatOnSave** — 저장 시 Prettier 자동 실행
+- **organizeImports** — 저장 시 import 자동 정렬 및 미사용 import 제거
+- **updateImportsOnFileMove** — 파일 이동 시 import 경로 자동 업데이트
+- **inlayHints** — 추론된 타입을 코드 안에 인라인으로 표시
+
+## 개발 워크플로
+
+![TypeScript 개발 워크플로](/assets/posts/ts-editor-setup-workflow.svg)
+
+효율적인 TypeScript 개발 워크플로는 다음과 같다.
+
+1. VS Code에서 `.ts` 파일 편집
+2. 실시간으로 타입 오류 확인 및 수정
+3. 파일 저장 → Prettier 자동 포매팅 + ESLint 자동 수정
+4. 터미널에서 `tsc --watch` 로 백그라운드 컴파일
+5. `ts-node` 또는 컴파일된 `.js` 로 실행
+
+## 유용한 단축키
+
+| 단축키 (macOS) | 기능 |
+|---|---|
+| `F12` | 정의로 이동 (Go to Definition) |
+| `Shift+F12` | 참조 찾기 (Find All References) |
+| `F2` | 심벌 이름 변경 (Rename Symbol) |
+| `Cmd+.` | 빠른 수정 (Quick Fix) |
+| `Ctrl+Space` | 자동완성 수동 트리거 |
+| `Shift+Alt+O` | Import 정리 (Organize Imports) |
+
+## WebStorm / IntelliJ 사용자
+
+WebStorm은 TypeScript를 기본 지원한다. TypeScript 언어 서비스가 내장되어 있어 별도 설정 없이 자동완성, 타입 검사, 리팩터링이 모두 동작한다. VS Code와 동등한 수준의 TypeScript 개발 경험을 제공한다.
+
+환경 설정이 완료됐다. 다음 글부터는 TypeScript 타입 시스템의 핵심인 **타입 공간과 값 공간**의 구분부터 시작해 타입 시스템을 체계적으로 학습한다.
 
 ---
 
-**지난 글:** [첫 TypeScript 프로그램 작성하기](/posts/ts-first-program/)
+**지난 글:** [TypeScript로 첫 번째 프로그램 작성하기](/posts/ts-first-program/)
 
-**다음 글:** [타입 공간과 값 공간: TypeScript의 두 세계](/posts/ts-type-vs-value-space/)
+**다음 글:** [타입 공간과 값 공간 — TypeScript의 두 세계](/posts/ts-type-vs-value-space/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,131 +1,176 @@
 ---
-title: "SQL 클라이언트-서버 프로토콜과 쿼리 처리 흐름"
-description: "애플리케이션이 SQL을 보내면 DB 서버가 연결 관리·파싱·옵티마이징·실행 단계를 거쳐 결과를 반환하는 전체 흐름과, JDBC·libpq 같은 드라이버 계층을 해설합니다."
+title: "클라이언트-서버 모델과 와이어 프로토콜"
+description: "SQL 쿼리가 애플리케이션에서 DBMS 서버까지 어떻게 전달되는지 살펴봅니다. TCP/IP 위에서 동작하는 DBMS별 와이어 프로토콜, Simple vs Extended Query Protocol, 커넥션 풀의 역할을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
+pubDate: "2026-04-26"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
-tags: ["클라이언트서버", "JDBC", "libpq", "쿼리처리", "파서", "옵티마이저", "SQL프로토콜"]
+tags: ["sql", "클라이언트서버", "프로토콜", "jdbc", "odbc", "prepared-statement", "커넥션풀"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-history-and-standard/)에서 SQL 표준의 역사를 살펴봤다. 이번에는 애플리케이션 코드에서 `connection.execute("SELECT ...")` 를 호출하는 순간부터 결과가 돌아오기까지 내부에서 일어나는 일을 단계별로 추적한다. 이 흐름을 이해하면 느린 쿼리의 원인을 찾거나 커넥션 풀을 올바르게 설정하는 근거가 생긴다.
+[지난 글](/posts/sql-history-and-standard/)에서 SQL이 어떻게 표준화됐는지 살펴봤습니다. 그런데 우리가 코드에서 `connection.execute("SELECT ...")` 한 줄을 실행할 때, 실제로는 무슨 일이 벌어질까요? SQL 문자열이 어떻게 DBMS에 전달되고, 결과가 어떻게 돌아오는지 이해하면 성능 튜닝과 보안 취약점 방어 모두에서 큰 그림이 보입니다.
 
-## 드라이버 계층: 애플리케이션과 서버 사이
+## 클라이언트-서버 모델
 
-애플리케이션이 SQL을 직접 TCP로 보내지는 않는다. **드라이버(driver)**가 중간에서 애플리케이션 언어의 API를 DB 전용 와이어 프로토콜로 변환한다.
+DBMS는 전형적인 **클라이언트-서버 아키텍처**로 동작합니다.
 
-| 계층 | Java | Python | Node.js |
-|------|------|--------|---------|
-| 표준 API | JDBC | DB-API 2.0 | 없음 (비표준) |
-| PostgreSQL 드라이버 | pgjdbc | psycopg2/3 | node-postgres |
-| MySQL 드라이버 | Connector/J | mysql-connector | mysql2 |
-| 범용 추상화 | JPA/Hibernate | SQLAlchemy | Sequelize/Prisma |
+![SQL 쿼리의 여행 — 클라이언트에서 결과까지](/assets/posts/sql-client-server-protocol-flow.svg)
 
-드라이버는 세 가지 일을 한다.
+클라이언트(애플리케이션)는 SQL을 문자열로 생성하고, **드라이버(JDBC, ODBC, libpq 등)**가 이를 DBMS별 바이너리 프로토콜로 직렬화해 TCP 소켓으로 전송합니다. 서버는 수신된 패킷을 파싱하고, 실행 계획을 수립한 후, 스토리지에서 데이터를 읽어 결과를 돌려줍니다.
 
-1. **연결 수립**: TCP 소켓을 열고 DB 전용 핸드셰이크(handshake) 수행, 인증
-2. **쿼리 전송**: SQL 문자열을 와이어 프로토콜 패킷으로 직렬화
-3. **결과 수신**: 응답 패킷을 파싱해 애플리케이션 언어의 객체로 변환
+### DBMS별 기본 포트
 
-## 와이어 프로토콜
+| DBMS | 프로토콜 | 기본 포트 |
+|------|---------|---------|
+| PostgreSQL | Frontend-Backend Protocol (FBP) | 5432 |
+| MySQL / MariaDB | MySQL Client-Server Protocol | 3306 |
+| Oracle | TNS (Transparent Network Substrate) | 1521 |
+| SQL Server | TDS (Tabular Data Stream) | 1433 |
+| SQLite | 해당 없음 (파일 직접 접근) | — |
 
-각 RDBMS는 자체 바이너리 프로토콜을 사용한다.
+SQLite는 클라이언트-서버 모델이 없습니다. 프로세스가 파일을 직접 열어 읽고 씁니다. 이것이 SQLite가 단일 프로세스 환경에 적합하고 고동시성에 취약한 이유입니다.
 
-- **PostgreSQL**: libpq Wire Protocol (TCP 5432). 프론트엔드/백엔드 메시지 스트림.
-- **MySQL**: MySQL Client/Server Protocol (TCP 3306). HandshakeV9 기반.
-- **Oracle**: TNS(Transparent Network Substrate) (TCP 1521).
-- **SQL Server**: TDS(Tabular Data Stream) (TCP 1433). Microsoft 독점.
+## Simple Query vs Extended Query (Prepared Statement)
+
+![Simple vs Extended Query Protocol](/assets/posts/sql-client-server-protocol-prepare.svg)
+
+### Simple Query Protocol
+
+클라이언트가 SQL 문자열 전체를 매번 전송합니다.
+
+```sql
+-- Simple Query: 서버가 매번 파싱·계획 수립
+SELECT * FROM orders WHERE customer_id = 42;
+SELECT * FROM orders WHERE customer_id = 99;
+SELECT * FROM orders WHERE customer_id = 100;
+-- → 동일한 구조인데 3번 파싱됨
+```
+
+- 장점: 구현이 단순, 1회성 쿼리에 적합
+- 단점: 반복 실행 시 파싱 오버헤드, SQL Injection 위험
+
+### Extended Query Protocol (Prepared Statement)
+
+SQL 구조와 실행을 분리합니다.
+
+```sql
+-- 1단계: 서버에 쿼리 등록 (파싱·계획 수립 1회)
+PREPARE get_orders(int) AS
+  SELECT order_id, amount
+  FROM   orders
+  WHERE  customer_id = $1      -- PostgreSQL 파라미터 바인딩
+  ORDER  BY created_at DESC;
+
+-- 2단계: 값만 바꿔 N회 실행 (파싱 재사용)
+EXECUTE get_orders(42);
+EXECUTE get_orders(99);
+EXECUTE get_orders(100);
+
+-- 사용 후 해제
+DEALLOCATE get_orders;
+```
+
+대부분의 JDBC/ORM 라이브러리는 내부적으로 Prepared Statement를 사용합니다. PostgreSQL의 경우 같은 쿼리를 5회 이상 실행하면 자동으로 서버 측 캐시로 전환합니다(auto-prepared).
+
+### SQL Injection과 파라미터 바인딩
+
+Prepared Statement가 SQL Injection을 막는 원리는 단순합니다. SQL 구조와 데이터를 **별도 채널**로 전송해 값이 SQL로 해석되지 않습니다.
 
 ```python
-# psycopg2 — PostgreSQL 와이어 프로토콜 사용 예
-import psycopg2
+# 취약한 코드: 문자열 직접 포맷
+user_input = "'; DROP TABLE users; --"
+query = f"SELECT * FROM users WHERE name = '{user_input}'"
+# → SELECT * FROM users WHERE name = ''; DROP TABLE users; --'
 
-conn = psycopg2.connect("host=localhost dbname=mydb user=app password=secret")
-cur = conn.cursor()
-cur.execute("SELECT id, name FROM employees WHERE dept_id = %s", (10,))
-rows = cur.fetchall()
-conn.close()
+# 안전한 코드: 파라미터 바인딩
+cursor.execute(
+    "SELECT * FROM users WHERE name = %s",
+    (user_input,)   # 값이 SQL로 해석되지 않음
+)
 ```
 
-`%s` 플레이스홀더는 **파라미터 바인딩(parameter binding)**을 사용한다. SQL 문자열과 데이터가 분리된 채 서버에 전송되므로 SQL 인젝션이 원천 차단된다.
+DBMS는 SQL 구조 파싱이 완료된 후 바인딩 값을 데이터로만 취급합니다. 어떤 값을 넣어도 쿼리 구조를 바꿀 수 없습니다.
 
-## 서버 내부: 쿼리 처리 파이프라인
+## 드라이버 레이어
 
-![SQL 클라이언트-서버 프로토콜 흐름](/assets/posts/sql-client-server-protocol-flow.svg)
+애플리케이션이 직접 TCP 소켓을 다루지 않는 이유는 **드라이버(Driver)**가 복잡성을 숨겨주기 때문입니다.
 
-서버가 SQL을 받으면 다음 단계를 순서대로 거친다.
+```java
+// JDBC (Java Database Connectivity) 예시
+String url = "jdbc:postgresql://localhost:5432/mydb";
+Connection conn = DriverManager.getConnection(url, "user", "pass");
 
-### 1. 연결 관리자(Connection Manager)
+// PreparedStatement: 내부적으로 Extended Query Protocol 사용
+PreparedStatement ps = conn.prepareStatement(
+    "SELECT * FROM orders WHERE customer_id = ? AND status = ?"
+);
+ps.setInt(1, 42);
+ps.setString(2, "PAID");
+ResultSet rs = ps.executeQuery();
 
-가장 먼저 **인증(authentication)**을 처리한다. PostgreSQL은 `pg_hba.conf`, MySQL은 `user` 테이블, Oracle은 `DBA_USERS`로 사용자를 검증한다. 인증이 통과하면 **세션(session)**이 생성된다.
-
-**커넥션 풀(connection pool)**이 중요한 이유가 여기 있다. 매 요청마다 TCP 핸드셰이크와 DB 인증을 거치면 수십~수백 ms가 낭비된다. PgBouncer, HikariCP, c3p0 같은 풀러는 커넥션을 미리 만들어 두고 재사용한다.
-
-### 2. 파싱(Parsing)
-
-![쿼리 파싱 단계 상세](/assets/posts/sql-client-server-protocol-parse.svg)
-
-SQL 문자열이 파서에 도달하면 두 단계를 거친다.
-
-- **렉서(Lexer)**: 문자열을 토큰(SELECT, id, FROM, ...)으로 분리
-- **파서(Parser)**: 토큰을 문법 규칙에 따라 AST(Abstract Syntax Tree)로 조합
-
-파싱 후 **의미 분석(semantic analysis)**에서 테이블·컬럼 존재 여부와 데이터 타입, 권한을 검증한다. 문법은 맞지만 존재하지 않는 테이블을 참조하는 쿼리는 이 단계에서 에러가 난다.
-
-### 3. 옵티마이저(Optimizer)
-
-**가장 중요한 단계다.** 옵티마이저는 동일한 결과를 낼 수 있는 여러 실행 방법 중 비용(cost)이 가장 낮은 실행 계획을 선택한다.
-
-```sql
--- 이 쿼리를 실행하는 방법은 최소 두 가지
-SELECT * FROM employees WHERE dept_id = 10;
-
--- 방법 A: 풀스캔 (dept_id 인덱스 없을 때)
---   employees 테이블 전체를 읽어 dept_id = 10 필터링
-
--- 방법 B: 인덱스 스캔 (idx_emp_dept_id 인덱스 있을 때)
---   인덱스로 dept_id = 10인 행 위치 파악 → 해당 행만 읽기
+while (rs.next()) {
+    System.out.println(rs.getInt("order_id"));
+}
 ```
 
-옵티마이저는 통계 정보(테이블 행 수, 컬럼 값 분포)를 사용해 비용을 추정한다. `EXPLAIN` 명령으로 선택된 실행 계획을 확인할 수 있다.
+**ODBC(Open Database Connectivity)**는 드라이버 추상화 레이어입니다. 언어에 무관하게 동일한 API로 다양한 DBMS에 접속할 수 있습니다. Python의 `pyodbc`, C의 `sqlsrv` 드라이버가 대표적입니다.
 
-### 4. 실행기(Executor)와 스토리지
+## 커넥션과 커넥션 풀
 
-실행 계획대로 데이터를 읽는다. **버퍼 캐시(buffer cache)**에 데이터가 있으면 디스크 I/O 없이 메모리에서 직접 읽는다. 캐시 히트율이 높을수록 쿼리가 빠르다.
+TCP 연결 수립(`3-way handshake`) + DBMS 인증 과정은 수십~수백 ms가 걸립니다. 웹 서버가 요청마다 새 커넥션을 맺으면 성능이 크게 저하됩니다.
 
-## Prepared Statement: 파싱 비용 절감
+**커넥션 풀(Connection Pool)**은 미리 여러 커넥션을 만들어 두고 재사용합니다.
 
-같은 구조의 쿼리를 반복 실행할 때 매번 파싱하면 낭비다. **Prepared Statement**는 파싱·의미 분석·최적화까지만 미리 수행하고, 실제 값(파라미터)만 바꿔서 실행한다.
-
-```sql
--- PostgreSQL: Prepared Statement
-PREPARE get_emp (INTEGER) AS
-    SELECT id, name FROM employees WHERE dept_id = $1;
-
-EXECUTE get_emp(10);
-EXECUTE get_emp(20);
+```yaml
+# HikariCP (Spring Boot 기본 커넥션 풀) 설정 예시
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 10      # 최대 커넥션 수
+      minimum-idle: 5            # 최소 유지 수
+      connection-timeout: 30000  # 획득 대기 최대 30초
+      idle-timeout: 600000       # 유휴 10분 후 해제
+      max-lifetime: 1800000      # 커넥션 최대 수명 30분
 ```
 
-JDBC의 `PreparedStatement`, psycopg2의 `execute()` (자동 prepare)가 이 방식을 사용한다. 파싱 오버헤드를 줄이는 동시에 SQL 인젝션도 차단하므로 프로덕션 코드에서는 항상 Prepared Statement를 써야 한다.
+커넥션 풀 크기 공식으로 유명한 것은 HikariCP 권고입니다:
 
-## 연결 수 관리
+```
+pool_size = (core_count × 2) + effective_spindle_count
+```
 
-RDBMS는 동시 연결 수에 제한이 있다.
+대부분의 웹 애플리케이션 서버에서는 **10~20개** 정도로 시작해서 모니터링으로 조정하는 것이 실용적입니다.
 
-- PostgreSQL: `max_connections` (기본 100)
-- MySQL: `max_connections` (기본 151)
-- Oracle: 라이선스·메모리에 따라 가변
+## 트랜잭션과 커넥션의 관계
 
-연결 하나당 서버 메모리(PostgreSQL은 약 5~10 MB)를 소비하므로 무작정 늘릴 수 없다. 커넥션 풀을 통해 애플리케이션 스레드 수보다 훨씬 적은 DB 커넥션으로 처리량을 확보하는 것이 올바른 설계다.
+트랜잭션은 **하나의 커넥션** 위에서 실행됩니다. 커넥션이 풀로 반환되기 전에 트랜잭션이 커밋 또는 롤백돼야 합니다.
+
+```python
+# 트랜잭션 범위 = 커넥션 보유 범위
+with connection.cursor() as cur:
+    try:
+        cur.execute("UPDATE accounts SET balance = balance - 100 WHERE id = 1")
+        cur.execute("UPDATE accounts SET balance = balance + 100 WHERE id = 2")
+        connection.commit()    # 트랜잭션 완료 → 커넥션 반환 가능
+    except Exception:
+        connection.rollback()  # 실패 시 롤백
+        raise
+```
+
+트랜잭션을 길게 유지하면 커넥션이 풀에서 점유되고, 다른 요청이 커넥션을 기다리는 **커넥션 고갈(connection starvation)**이 발생합니다. 트랜잭션은 가능한 짧게 유지하는 것이 원칙입니다.
+
+## 정리
+
+SQL 쿼리 한 줄이 실행되기까지 TCP 연결, 프로토콜 직렬화, 파싱, 실행 계획, 스토리지 접근, 결과 직렬화, TCP 전송이 모두 이루어집니다. Prepared Statement는 이 과정에서 파싱 비용을 줄이고 SQL Injection을 막는 핵심 메커니즘입니다. 커넥션 풀은 TCP 연결 비용을 분산해 성능을 높입니다. 다음 글에서는 SQL을 DDL·DML·DCL·TCL로 분류하는 **언어 카테고리**를 살펴보겠습니다.
 
 ---
 
-**지난 글:** [SQL의 역사와 표준: ANSI SQL에서 SQL:2023까지](/posts/sql-history-and-standard/)
+**지난 글:** [SQL의 역사와 표준 — ANSI/ISO/JIS](/posts/sql-history-and-standard/)
 
-**다음 글:** [SQL 언어 분류: DDL·DML·DCL·TCL·DQL 완전 정리](/posts/sql-language-categories/)
+**다음 글:** [SQL 언어 분류 — DDL · DML · DCL · TCL](/posts/sql-language-categories/)
 
 <br>
 읽어주셔서 감사합니다. 😊

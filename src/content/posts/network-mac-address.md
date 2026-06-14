@@ -1,119 +1,119 @@
 ---
-title: "MAC 주소: 이더넷의 물리적 식별자"
-description: "MAC 주소의 48비트 구조, OUI와 NIC 식별자, 유니캐스트/멀티캐스트/브로드캐스트 구분, IP 주소와의 차이, 조회 명령어를 완전히 이해한다."
+title: "MAC 주소란 무엇인가"
+description: "네트워크 인터페이스 카드에 부여된 고유 하드웨어 주소 MAC 주소의 구조, OUI, 브로드캐스트, 스위치 학습 과정을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-11"
-archiveOrder: 9
+pubDate: "2026-05-31"
+archiveOrder: 5
 type: "knowledge"
 category: "Network"
-tags: ["MAC주소", "이더넷", "OUI", "ARP", "L2", "네트워크", "물리주소"]
+tags: ["MAC 주소", "이더넷", "스위치", "OUI", "데이터링크"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-error-detection-crc/)에서 이더넷 프레임의 FCS를 통해 오류를 감지하는 방법을 살펴봤다. 이더넷 프레임이 목적지를 찾아가려면 주소가 필요하다. L2에서 사용하는 주소가 **MAC 주소(Media Access Control Address)**다.
+[지난 글](/posts/network-bandwidth-throughput-latency/)에서 네트워크 성능을 측정하는 세 가지 지표를 살펴봤습니다. 이번에는 계층을 한 단계 내려가 데이터링크 계층에서 장치를 식별하는 **MAC 주소(Media Access Control Address)** 를 다룹니다. IP 주소가 논리적 주소라면 MAC 주소는 하드웨어에 직접 새겨진 **물리적 주소**입니다.
 
 ## MAC 주소란
 
-MAC 주소는 네트워크 인터페이스 카드(NIC)에 부여된 **48비트 물리 주소**다. 제조 시 하드웨어에 새겨지기 때문에 **하드웨어 주소** 또는 **물리 주소**라고도 한다.
+MAC 주소는 **네트워크 인터페이스 카드(NIC)에 제조 시 부여되는 48비트 고유 식별자**입니다. 흔히 이더넷 주소, 하드웨어 주소라고도 부릅니다. IEEE 802 표준에 따라 전 세계에서 고유하게 관리됩니다.
 
 ```text
-표기 형식:
-00:1A:2B:3C:4D:5E  (콜론 구분, 각 바이트 16진수)
-00-1A-2B-3C-4D-5E  (하이픈, Windows 스타일)
-001A.2B3C.4D5E     (Cisco 스타일)
+표기 방식 (모두 동일한 주소):
+  콜론 구분:   00:1A:2B:3C:4D:5E   (Linux/macOS)
+  하이픈 구분: 00-1A-2B-3C-4D-5E   (Windows)
+  점 구분:     001A.2B3C.4D5E       (Cisco)
 ```
 
 ![MAC 주소 구조](/assets/posts/network-mac-address-structure.svg)
 
-## OUI와 NIC 식별자
+## OUI — 제조사 식별자
 
-MAC 주소는 두 부분으로 나뉜다.
-
-- **상위 24비트 (OUI, Organizationally Unique Identifier)**: IEEE가 제조사에 할당하는 식별자
-- **하위 24비트**: 제조사가 각 NIC에 부여하는 고유 번호
-
-```bash
-# OUI 데이터베이스로 제조사 확인
-# 예: 00:50:56은 VMware
-curl -s "https://api.macvendors.com/00:50:56:aa:bb:cc"
-# → VMware, Inc.
-```
-
-## 특수 비트: U/L과 I/G
-
-첫 번째 옥텟의 두 비트가 MAC 주소의 특성을 결정한다.
+MAC 주소의 앞 3바이트(24비트)는 **OUI(Organizationally Unique Identifier)** 로, IEEE가 각 제조사에 고유하게 부여합니다. 뒤 3바이트는 제조사가 자체적으로 관리하는 일련번호입니다.
 
 ```text
-첫 번째 옥텟: XX:......
-비트 0 (LSB) — I/G 비트:
-  0 = 유니캐스트 (특정 NIC 하나)
-  1 = 멀티캐스트 또는 브로드캐스트
+MAC 주소: 00:1A:2B:3C:4D:5E
+          ├─────────┤ ├─────────┤
+          OUI        NIC 일련번호
+          (제조사)    (장치 고유)
 
-비트 1 — U/L 비트:
-  0 = 전역 고유 (OUI 기반, 제조사 할당)
-  1 = 로컬 관리 (소프트웨어로 임의 설정)
+OUI 00:1A:2B → Cisco Systems
+OUI 3C:22:FB → Apple, Inc.
+OUI F4:5C:89 → Samsung Electronics
 ```
 
-가상화 환경(VM, Docker)의 가상 NIC는 U/L 비트를 1로 설정해 OUI 충돌을 피한다.
+실무에서 OUI를 알면 패킷 캡처 시 장치 종류를 빠르게 파악할 수 있습니다.
 
-## 특수 주소
+## 유니캐스트·브로드캐스트·멀티캐스트
+
+MAC 주소의 최하위 바이트(첫 번째 옥텟)의 마지막 비트로 전달 방식을 구분합니다.
+
+| 구분 | MAC 주소 | 설명 |
+|------|---------|------|
+| 유니캐스트 | 일반 주소 | 특정 장치 1개에게만 전달 |
+| 브로드캐스트 | `FF:FF:FF:FF:FF:FF` | 같은 네트워크의 모든 장치에게 전달 |
+| 멀티캐스트 | `01:xx:xx:xx:xx:xx` | 특정 그룹에게 전달 |
+
+브로드캐스트는 ARP 요청처럼 "이 IP를 가진 사람 누구?"라고 전체에게 물어볼 때 사용합니다.
+
+## 스위치의 MAC 주소 학습
+
+MAC 주소가 가장 중요하게 사용되는 곳은 **스위치**입니다. 스위치는 수신한 프레임의 **출발지 MAC 주소와 수신 포트**를 CAM(Content Addressable Memory) 테이블에 학습합니다.
+
+![스위치 MAC 주소 테이블](/assets/posts/network-mac-address-switch.svg)
+
+스위치 동작 과정:
 
 ```text
-FF:FF:FF:FF:FF:FF  → 이더넷 브로드캐스트 (같은 LAN 전체)
-01:00:5E:xx:xx:xx  → IPv4 멀티캐스트 (하위 23비트는 IP 멀티캐스트 주소)
-33:33:xx:xx:xx:xx  → IPv6 멀티캐스트
+1. PC-A가 프레임 전송
+   → 스위치가 포트1에서 수신
+   → "포트1 = AA:AA:AA:AA:AA:AA" 학습
+
+2. 목적지 MAC이 테이블에 있으면 해당 포트로만 전송
+   (목적지 MAC이 테이블에 없으면 전체 포트로 플러딩)
+
+3. 학습 후에는 포트2(PC-B)로만 포워딩 — 불필요한 트래픽 없음
 ```
 
-브로드캐스트 프레임은 스위치가 모든 포트로 전달하며, 모든 NIC가 수신한다. ARP, DHCP 요청이 브로드캐스트를 사용하는 대표적 예다.
+이것이 **허브**와의 차이점입니다. 허브는 모든 포트로 복사·전달하지만, 스위치는 학습된 MAC 테이블 기반으로 **정확한 포트에만** 전달합니다.
 
-## MAC 주소 vs IP 주소
-
-![MAC 주소 vs IP 주소](/assets/posts/network-mac-address-vs-ip.svg)
-
-핵심 차이: **MAC 주소는 같은 LAN 내에서만 유효하다.** 이더넷 프레임이 라우터를 넘어가면, 라우터는 새로운 MAC 주소로 새 이더넷 프레임을 만든다. IP 주소는 변하지 않는다.
-
-## 실전 명령어
+## MAC 주소 확인 방법
 
 ```bash
-# Linux: MAC 주소 확인
+# Linux / macOS
 ip link show
 # 또는
-ip addr show eth0 | grep ether
-
-# macOS
-ifconfig en0 | grep ether
+ifconfig
 
 # Windows
-ipconfig /all | findstr "Physical"
+ipconfig /all
 
-# Linux: MAC 주소 임시 변경 (재부팅 시 초기화)
-ip link set dev eth0 down
-ip link set dev eth0 address 02:00:00:00:00:01
-ip link set dev eth0 up
+# 출력 예시 (Linux):
+# 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP>
+#     link/ether 00:1a:2b:3c:4d:5e brd ff:ff:ff:ff:ff:ff
+
+# macOS
+# en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST>
+#         ether 3c:22:fb:aa:bb:cc
 ```
 
-## MAC 스푸핑
+## MAC 주소는 변경할 수 있는가
 
-MAC 주소는 소프트웨어로 변경할 수 있다. 이를 **MAC 스푸핑**이라 한다. 프라이버시 보호(Wi-Fi 추적 방지), 네트워크 접근 우회, 로드 밸런싱 테스트 등 다양한 용도로 사용된다.
+MAC 주소는 하드웨어에 새겨진(burned-in) 값이지만, 운영체제 수준에서 **소프트웨어로 변경(spoofing)** 이 가능합니다. 이를 MAC 스푸핑이라 하며 개인정보 보호, 네트워크 테스트 등에 사용됩니다.
 
 ```bash
-# NetworkManager로 무작위 MAC 주소 설정 (Linux)
-# /etc/NetworkManager/conf.d/random-mac.conf
-[device]
-wifi.scan-rand-mac-address=yes
-
-[connection]
-wifi.cloned-mac-address=random
+# Linux에서 MAC 주소 임시 변경
+sudo ip link set dev eth0 down
+sudo ip link set dev eth0 address 02:00:00:00:00:01
+sudo ip link set dev eth0 up
 ```
 
-현대 스마트폰(iOS 14+, Android 10+)은 Wi-Fi 스캔 시 무작위 MAC 주소를 사용해 사용자 추적을 방지한다.
+단, MAC 주소는 **동일 네트워크 세그먼트(로컬) 내에서만 유효**합니다. 라우터를 넘어가면 MAC 주소는 교체되고(3계층 라우팅), IP 주소만 남습니다. 다음 글에서는 이 MAC 주소를 기반으로 동작하는 **이더넷** 기술을 살펴봅니다.
 
 ---
 
-**지난 글:** [오류 감지: CRC와 체크섬](/posts/network-error-detection-crc/)
+**지난 글:** [대역폭, 처리량, 지연이란](/posts/network-bandwidth-throughput-latency/)
 
-**다음 글:** [이더넷: LAN의 표준 프로토콜](/posts/network-ethernet/)
+**다음 글:** [이더넷 완전 이해](/posts/network-ethernet/)
 
 <br>
 읽어주셔서 감사합니다. 😊

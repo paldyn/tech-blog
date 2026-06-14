@@ -1,144 +1,143 @@
 ---
-title: "환경 변수 완전 정복 — 서버·클라이언트 범위 이해하기"
-description: "Next.js 환경 변수의 NEXT_PUBLIC_ 접두사, .env 파일 우선순위, 서버 전용 vs 클라이언트 노출 범위, TypeScript 타입 안전성까지 완전 해설합니다."
+title: "환경 변수 완전 정복 — .env 파일부터 NEXT_PUBLIC까지"
+description: "Next.js에서 환경 변수를 안전하게 관리하는 방법을 정리합니다. 파일 우선순위, NEXT_PUBLIC_ 접두사, 서버/클라이언트 접근 범위, TypeScript 타입 선언까지 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
+pubDate: "2026-06-01"
 archiveOrder: 9
 type: "knowledge"
 category: "Next.js"
-tags: ["Next.js", "환경변수", "NEXT_PUBLIC", ".env", "서버시크릿", "보안", "TypeScript"]
+tags: ["Next.js", "환경 변수", ".env", "NEXT_PUBLIC", "보안"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/next-userouter-navigation/)에서 클라이언트 컴포넌트에서 프로그래매틱 네비게이션을 구현하는 방법을 배웠다. 이번에는 데이터베이스 URL, API 키, 외부 서비스 엔드포인트 같은 설정값을 코드에 하드코딩하지 않고 안전하게 관리하는 **환경 변수** 시스템을 완전히 파악한다.
-
-## 환경 변수란
-
-환경 변수(Environment Variable)는 코드 외부에서 주입되는 설정값이다. DB 접속 정보나 API 키를 코드에 직접 쓰면 GitHub에 노출되는 순간 보안 사고가 발생할 수 있다. 환경 변수는 이 문제를 해결한다.
-
-```bash
-# 위험 — DB 비밀번호가 코드에 노출됨
-const db = new Database("postgresql://user:mysecretpassword@localhost/mydb")
-
-# 안전 — 환경 변수로 분리
-const db = new Database(process.env.DATABASE_URL)
-```
-
-## 환경 변수 노출 범위 — 가장 중요한 개념
-
-Next.js 환경 변수의 핵심 규칙은 단순하다.
-
-**`NEXT_PUBLIC_` 접두사가 있으면** → 클라이언트(브라우저) 번들에 포함됨. 누구나 볼 수 있음.
-
-**`NEXT_PUBLIC_` 접두사가 없으면** → 서버에서만 접근 가능. 브라우저에는 전달되지 않음.
-
-![환경 변수 노출 범위](/assets/posts/next-environment-variables-scope.svg)
-
-```bash
-# .env.local 예시
-
-# 서버 전용 (DB, API 시크릿)
-DATABASE_URL="postgresql://user:pass@host/db"
-JWT_SECRET="my-super-secret-key"
-STRIPE_SECRET_KEY="sk_live_..."
-
-# 클라이언트에 노출됨 (공개해도 되는 것만)
-NEXT_PUBLIC_API_URL="https://api.example.com"
-NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
-NEXT_PUBLIC_SITE_URL="https://example.com"
-```
-
-실수로 `NEXT_PUBLIC_DATABASE_URL`처럼 DB 비밀번호를 클라이언트에 노출하면 심각한 보안 문제가 된다. 이 규칙을 반드시 지키자.
+[지난 글](/posts/next-userouter-navigation/)에서 코드로 페이지를 이동하는 방법을 익혔습니다. 이번에는 API 키, 데이터베이스 URL 같은 설정값을 코드에 하드코딩하지 않고 관리하는 **환경 변수** 시스템을 정리합니다.
 
 ## .env 파일 종류와 우선순위
 
 ![.env 파일 우선순위](/assets/posts/next-environment-variables-files.svg)
 
-Next.js는 여러 `.env` 파일을 지원하며, 더 구체적인(우선순위가 높은) 파일이 덜 구체적인 파일을 덮어쓴다.
+Next.js는 여러 `.env` 파일을 지원하며, **더 구체적인 파일이 일반 파일을 덮어씁니다.**
 
 ```
-.env.local          # 개인 설정 (최우선, git 제외 필수)
-.env.production     # 프로덕션 환경 (NODE_ENV=production)
-.env.development    # 개발 환경 (NODE_ENV=development)
-.env                # 모든 환경 기본값
+우선순위 (높음 → 낮음)
+.env.local  >  .env.development (또는 .env.production)  >  .env
 ```
 
-```bash
-# .env (공통 기본값 — git에 커밋 가능, 비밀값 금지)
-NEXT_PUBLIC_SITE_NAME="My App"
-LOG_LEVEL="info"
+실제로 많이 쓰는 패턴은 다음과 같습니다.
 
-# .env.local (개인/로컬 설정 — git 제외)
-DATABASE_URL="postgresql://localhost/myapp_dev"
-NEXT_PUBLIC_API_URL="http://localhost:3001"
+```
+.env              → 기본값 (공통 설정, git 추적 가능)
+.env.local        → 로컬 개발 전용 비밀값 (.gitignore 필수)
+.env.production   → 프로덕션 기본값 (시크릿 제외)
 ```
 
-`.env.local`은 팀원마다 다른 로컬 DB URL이나 개인 API 키를 저장한다. `.gitignore`에 이미 포함되어 있으니 실수로 커밋될 걱정은 없다.
+## NEXT_PUBLIC_ 접두사 — 클라이언트 노출 제어
 
-## 컴포넌트에서 사용하기
+환경 변수가 클라이언트 번들에 포함되는지 여부는 **변수 이름의 접두사**로 결정됩니다.
+
+![서버 전용 vs 클라이언트 노출](/assets/posts/next-environment-variables-access.svg)
+
+```env
+# .env.local
+
+# 서버에서만 접근 가능 (클라이언트에서는 undefined)
+DATABASE_URL=postgres://user:pass@localhost/mydb
+JWT_SECRET=supersecret
+
+# 클라이언트·서버 모두 접근 가능 (빌드 시 번들에 인라인)
+NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+### 규칙 요약
+
+| 접두사 | 서버에서 접근 | 클라이언트에서 접근 | 번들 포함 |
+|--------|-------------|-----------------|---------|
+| 없음 | ✅ | ❌ | ❌ |
+| `NEXT_PUBLIC_` | ✅ | ✅ | ✅ |
+
+**`NEXT_PUBLIC_`에는 절대 비밀값을 넣지 마세요.** 클라이언트 번들에 문자열 그대로 포함되어 누구나 확인할 수 있습니다.
+
+## 사용 방법
 
 ```tsx
-// Server Component — 서버 전용 변수 접근 가능
-export default async function DatabaseStatus() {
-  // process.env.DATABASE_URL 접근 가능 (서버에서만 실행)
-  const isConnected = await checkDbConnection(process.env.DATABASE_URL!)
-  return <span>DB: {isConnected ? '연결됨' : '오류'}</span>
+// 서버 컴포넌트 (서버 전용 변수 접근 가능)
+export default async function Page() {
+  const db = await connectDb(process.env.DATABASE_URL!);
+  return <div>{/* ... */}</div>;
 }
 ```
 
 ```tsx
-// Client Component — NEXT_PUBLIC_ 변수만 접근 가능
-'use client'
+// 클라이언트 컴포넌트 (NEXT_PUBLIC_ 변수만 접근)
+'use client';
 
-export default function ApiStatus() {
-  // NEXT_PUBLIC_ 이 있어야 클라이언트에서 접근 가능
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-  return <span>API: {apiUrl}</span>
+export function ApiStatus() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  return <p>API: {apiUrl}</p>;
 }
 ```
 
-서버 전용 변수를 클라이언트 컴포넌트에서 사용하면 `undefined`가 된다. 런타임 오류보다는 조용히 실패하므로 주의해야 한다.
+> `NEXT_PUBLIC_` 변수는 **빌드 타임에 인라인**됩니다. 런타임에 값을 변경해도 반영되지 않습니다. 재빌드가 필요합니다.
 
-## TypeScript 타입 안전성
+## TypeScript 타입 선언
 
-환경 변수는 기본적으로 `string | undefined` 타입이다. 필수 환경 변수가 없을 때 빌드 시점에 잡으려면 유효성 검사를 추가하는 것이 좋다.
+`process.env.*`의 기본 타입은 `string | undefined`입니다. 서버 시작 시 필수 변수를 검증하면 런타임 에러를 예방할 수 있습니다.
 
-```typescript
-// src/lib/env.ts — 환경 변수 유효성 검사
-function getEnv(key: string): string {
-  const value = process.env[key]
+```ts
+// src/lib/env.ts
+function requireEnv(key: string): string {
+  const value = process.env[key];
   if (!value) {
-    throw new Error(`환경 변수 ${key}가 설정되지 않았습니다`)
+    throw new Error(`Missing required environment variable: ${key}`);
   }
-  return value
+  return value;
 }
 
-// 서버 시작 시 검증
 export const env = {
-  databaseUrl: getEnv('DATABASE_URL'),
-  jwtSecret: getEnv('JWT_SECRET'),
-  // 클라이언트 변수는 NEXT_PUBLIC_ 포함
+  databaseUrl: requireEnv('DATABASE_URL'),
+  jwtSecret: requireEnv('JWT_SECRET'),
   apiUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000',
-}
+} as const;
 ```
 
-또는 `zod`를 사용한 더 강력한 유효성 검사도 인기가 높다.
+또는 [t3-env](https://env.t3.gg/), [zod](https://zod.dev/) 같은 라이브러리로 스키마 기반 검증을 하면 더 안전합니다.
 
-## Vercel 배포 시 환경 변수 설정
+```ts
+// src/lib/env.ts (zod 버전)
+import { z } from 'zod';
 
-로컬의 `.env.local`은 Vercel에 자동으로 배포되지 않는다. Vercel 대시보드의 **Settings → Environment Variables**에서 직접 설정해야 한다. 개발/프리뷰/프로덕션 환경별로 다른 값을 설정할 수 있다.
+const envSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  JWT_SECRET: z.string().min(32),
+  NEXT_PUBLIC_API_URL: z.string().url(),
+});
 
-```bash
-# Vercel CLI로 환경 변수 추가
-vercel env add DATABASE_URL production
+export const env = envSchema.parse(process.env);
+```
+
+## Vercel 배포 시 환경 변수
+
+`.env.local`은 로컬 전용이라 배포 서버에 자동으로 올라가지 않습니다. Vercel에 배포할 때는 **프로젝트 설정 → Environment Variables** 탭에서 직접 추가해야 합니다.
+
+- `Development`, `Preview`, `Production` 환경별로 다른 값을 설정할 수 있습니다.
+- 변경 후 재배포해야 적용됩니다.
+
+## .env.local을 gitignore에 추가하기
+
+create-next-app으로 생성하면 `.gitignore`에 `.env*.local`이 이미 포함돼 있습니다. 수동으로 프로젝트를 구성한 경우 반드시 확인하세요.
+
+```gitignore
+# .gitignore
+.env*.local
 ```
 
 ---
 
-**지난 글:** [useRouter로 프로그래밍 방식 네비게이션 구현하기](/posts/next-userouter-navigation/)
+**지난 글:** [useRouter로 프로그래매틱 내비게이션 하기](/posts/next-userouter-navigation/)
 
-**다음 글:** [레이아웃 시스템 완전 해설 — 중첩 레이아웃과 상태 보존](/posts/next-layouts/)
+**다음 글:** [Next.js 레이아웃 — 중첩 레이아웃과 루트 레이아웃](/posts/next-layouts/)
 
 <br>
 읽어주셔서 감사합니다. 😊

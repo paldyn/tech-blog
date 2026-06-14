@@ -1,167 +1,193 @@
 ---
-title: "useRouter로 프로그래밍 방식 네비게이션 구현하기"
-description: "Next.js App Router의 useRouter, usePathname, useSearchParams 훅을 완전 해설합니다. 버튼 클릭, 폼 제출 후 이동, 쿼리 파라미터 읽기까지 실전 패턴을 다룹니다."
+title: "useRouter로 프로그래매틱 내비게이션 하기"
+description: "next/navigation의 useRouter, usePathname, useSearchParams, useParams 훅을 활용해 코드로 페이지를 이동하고 URL 상태를 관리하는 방법을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
+pubDate: "2026-06-01"
 archiveOrder: 8
 type: "knowledge"
 category: "Next.js"
-tags: ["Next.js", "useRouter", "usePathname", "useSearchParams", "프로그래매틱네비게이션", "AppRouter"]
+tags: ["Next.js", "useRouter", "usePathname", "useSearchParams", "내비게이션"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/next-link-navigation/)에서 `<Link>` 컴포넌트로 페이지 간 이동을 구현하는 방법을 배웠다. 링크 클릭이 아닌 버튼 클릭, 폼 제출 완료, 타이머 만료 등 **코드로 직접 네비게이션**을 제어해야 할 때는 `useRouter` 훅을 사용한다.
+[지난 글](/posts/next-link-navigation/)에서 `<Link>` 컴포넌트로 선언적으로 페이지를 이동하는 방법을 배웠습니다. 이번에는 **코드로 이동**해야 하는 상황 — 폼 제출 후 리다이렉트, 로그인 성공 후 대시보드 이동 등 — 에 사용하는 `next/navigation` 훅들을 다룹니다.
 
-## App Router의 세 가지 네비게이션 훅
+## Pages Router와의 중요한 차이점
 
-App Router는 클라이언트 컴포넌트에서 사용할 수 있는 세 가지 훅을 제공한다.
+`next/router`(Pages Router)와 `next/navigation`(App Router)은 **완전히 다른 패키지**입니다. App Router 프로젝트에서 `next/router`를 import하면 오류가 발생합니다. 반드시 `next/navigation`에서 import하세요.
 
-![App Router 네비게이션 훅](/assets/posts/next-userouter-hooks.svg)
+```ts
+// ❌ Pages Router 전용
+import { useRouter } from 'next/router';
 
-모두 `next/navigation`에서 가져온다. `next/router`(Pages Router용)와 경로가 다르니 주의한다.
-
-```tsx
-'use client' // 세 훅 모두 클라이언트 컴포넌트 필수
-
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+// ✅ App Router 전용
+import { useRouter } from 'next/navigation';
 ```
 
-## useRouter — 프로그래매틱 이동
+## next/navigation 훅 4종
 
-버튼 클릭이나 비동기 작업 완료 후 특정 경로로 이동해야 할 때 사용한다.
+![App Router 내비게이션 훅](/assets/posts/next-userouter-navigation-hooks.svg)
+
+### useRouter
+
+이동·새로고침을 코드로 트리거합니다.
 
 ```tsx
-'use client'
+'use client';
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
-export default function LoginForm() {
-  const router = useRouter()
+export function LoginForm() {
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    await login(formData)
-    router.push('/dashboard') // 로그인 성공 후 이동
+    e.preventDefault();
+    await loginUser(/* ... */);
+    router.push('/dashboard');         // 히스토리에 추가하며 이동
+    // router.replace('/dashboard');   // 히스토리 대체
+    // router.back();                  // 뒤로가기
+    // router.forward();               // 앞으로가기
+    // router.refresh();               // 서버 컴포넌트 리페치
   }
 
-  return <form onSubmit={handleSubmit}>...</form>
+  return <form onSubmit={handleSubmit}>{/* ... */}</form>;
 }
 ```
 
-![useRouter 메서드 비교](/assets/posts/next-userouter-methods.svg)
+`router.refresh()`는 현재 URL을 유지한 채 서버 컴포넌트를 다시 실행합니다. 데이터 뮤테이션 후 화면을 갱신할 때 활용합니다.
 
-**router.push(url)**: 새 히스토리 항목 추가 후 이동. 뒤로 가기로 이전 페이지 복귀 가능.
+### usePathname
 
-**router.replace(url)**: 현재 히스토리 항목을 교체. 뒤로 가기로 이전 페이지로 돌아갈 수 없다. 로그인 완료, 결제 완료 같은 "돌아가면 안 되는" 경우에 사용.
-
-**router.back()** / **router.forward()**: 브라우저 뒤로/앞으로 버튼과 동일.
-
-**router.refresh()**: 현재 라우트를 서버에서 재렌더링한다. Server Components의 데이터를 갱신할 때 유용하다. 클라이언트 상태(useState)는 유지된다.
-
-## usePathname — 현재 경로 읽기
-
-현재 URL 경로명을 문자열로 반환한다. 활성 링크 스타일링, 조건부 렌더링에 자주 쓰인다.
+현재 URL의 경로를 문자열로 반환합니다.
 
 ```tsx
-'use client'
+'use client';
 
-import { usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation';
 
-export default function Breadcrumb() {
-  const pathname = usePathname()
-  // pathname === '/blog/my-post'
-
-  const segments = pathname.split('/').filter(Boolean)
-  // ['blog', 'my-post']
+export function Breadcrumb() {
+  const pathname = usePathname();
+  // '/blog/hello-world' → ['blog', 'hello-world']
+  const segments = pathname.split('/').filter(Boolean);
 
   return (
-    <nav>
-      {segments.map((seg, i) => {
-        const href = '/' + segments.slice(0, i + 1).join('/')
-        return <span key={href}><a href={href}>{seg}</a></span>
-      })}
-    </nav>
-  )
+    <ol>
+      {segments.map((seg, i) => (
+        <li key={i}>{seg}</li>
+      ))}
+    </ol>
+  );
 }
 ```
 
-## useSearchParams — 쿼리 파라미터 읽기
+### useSearchParams
 
-`/blog?page=2&sort=latest` 같은 URL의 쿼리 파라미터를 읽는 데 사용한다.
+URL 쿼리 스트링(`?key=value`)을 읽는 훅입니다. 반환값은 브라우저 네이티브 `URLSearchParams` 인터페이스를 구현합니다.
 
 ```tsx
-'use client'
+'use client';
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { useCallback } from 'react'
+import { useSearchParams } from 'next/navigation';
 
-export default function BlogFilter() {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const router = useRouter()
+export function SearchResults() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('q');     // 단일 값
+  const tags = searchParams.getAll('tag'); // 복수 값 배열
 
-  const currentPage = Number(searchParams.get('page') ?? '1')
+  return <p>검색어: {query}</p>;
+}
+```
 
-  const setPage = useCallback((page: number) => {
-    const params = new URLSearchParams(searchParams.toString())
-    params.set('page', String(page))
-    router.push(`${pathname}?${params.toString()}`)
-  }, [searchParams, pathname, router])
+> `useSearchParams`를 사용하는 컴포넌트는 반드시 `<Suspense>` 경계로 감싸야 합니다. 그렇지 않으면 빌드 시 경고 혹은 에러가 발생합니다.
+
+```tsx
+// page.tsx
+import { Suspense } from 'react';
+import { SearchResults } from './SearchResults';
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<p>로딩 중...</p>}>
+      <SearchResults />
+    </Suspense>
+  );
+}
+```
+
+### useParams
+
+클라이언트 컴포넌트에서 동적 라우트 파라미터를 읽습니다. 서버 컴포넌트에서는 `props.params`를 사용하면 됩니다.
+
+```tsx
+'use client';
+
+import { useParams } from 'next/navigation';
+
+export function PostActions() {
+  const params = useParams<{ slug: string }>();
+  return <button>슬러그: {params.slug}</button>;
+}
+```
+
+## URL 쿼리를 상태로 사용하기
+
+검색 필터, 페이지 번호 등 UI 상태를 URL 쿼리로 관리하면 공유·새로고침 시에도 상태가 유지됩니다.
+
+![쿼리 파라미터 업데이트 패턴](/assets/posts/next-userouter-navigation-searchparams.svg)
+
+```tsx
+'use client';
+
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+
+export function SearchBar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  function handleChange(q: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (q) {
+      params.set('q', q);
+    } else {
+      params.delete('q');
+    }
+    // replace로 히스토리 오염 없이 쿼리 업데이트
+    router.replace(`${pathname}?${params.toString()}`);
+  }
 
   return (
-    <div>
-      <span>페이지 {currentPage}</span>
-      <button onClick={() => setPage(currentPage + 1)}>다음</button>
-    </div>
-  )
+    <input
+      defaultValue={searchParams.get('q') ?? ''}
+      onChange={e => handleChange(e.target.value)}
+      placeholder="검색..."
+    />
+  );
 }
 ```
 
-`URLSearchParams`를 활용하면 기존 파라미터를 유지하면서 특정 값만 변경할 수 있다.
+## redirect (서버 컴포넌트에서)
 
-## useSearchParams와 Suspense
-
-`useSearchParams`를 사용하는 컴포넌트는 **Suspense 경계** 안에 있어야 한다. 그렇지 않으면 Next.js가 빌드 시 경고를 낸다.
+서버 컴포넌트나 Server Action에서 이동하려면 `next/navigation`의 `redirect`를 씁니다.
 
 ```tsx
-// app/blog/page.tsx
-import { Suspense } from 'react'
-import BlogFilter from './BlogFilter'
+import { redirect } from 'next/navigation';
 
-export default function BlogPage() {
-  return (
-    <div>
-      <h1>블로그</h1>
-      <Suspense fallback={<div>필터 로딩중...</div>}>
-        <BlogFilter />  {/* useSearchParams 사용 컴포넌트 */}
-      </Suspense>
-    </div>
-  )
+export default async function DashboardPage() {
+  const session = await getSession();
+  if (!session) redirect('/login'); // 서버에서 바로 리다이렉트
+  return <Dashboard />;
 }
 ```
 
-## Pages Router와의 차이
-
-Pages Router의 `useRouter`는 `query`, `pathname`, `push`, `replace` 등을 하나의 객체로 제공했다. App Router에서는 이것이 세 개의 훅으로 분리됐다. Pages Router에서 `router.pathname`으로 읽던 것이 App Router에서는 `usePathname()`이 됐고, `router.query`는 `useSearchParams()`가 됐다.
-
-```tsx
-// Pages Router (구 방식)
-import { useRouter } from 'next/router'
-const { pathname, query, push } = useRouter()
-
-// App Router (현재)
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-const router = useRouter()
-const pathname = usePathname()
-const searchParams = useSearchParams()
-```
+`redirect()`는 Next.js 내부에서 예외를 던지는 방식으로 동작합니다. `try-catch` 블록 안에서 호출하면 catch로 잡히므로 주의하세요.
 
 ---
 
-**지난 글:** [Link 컴포넌트로 페이지 이동하기](/posts/next-link-navigation/)
+**지난 글:** [next/link로 페이지 이동하기](/posts/next-link-navigation/)
 
-**다음 글:** [환경 변수 완전 정복 — 서버·클라이언트 범위 이해하기](/posts/next-environment-variables/)
+**다음 글:** [환경 변수 완전 정복 — .env 파일부터 NEXT_PUBLIC까지](/posts/next-environment-variables/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,173 +1,190 @@
 ---
-title: "JSX란 무엇인가? — HTML이 아닌 JavaScript"
-description: "JSX 문법, Babel이 어떻게 변환하는지, 중괄호 표현식 삽입 규칙, className과 camelCase 속성 등 JSX를 처음 배울 때 꼭 알아야 할 모든 것을 다룹니다."
+title: "JSX 문법 이해하기"
+description: "JSX가 JavaScript로 변환되는 과정과 React Element 객체 구조, 그리고 JSX 작성 시 지켜야 할 핵심 규칙을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
+pubDate: "2026-05-31"
 archiveOrder: 2
 type: "knowledge"
 category: "React"
-tags: ["JSX", "Babel", "React", "컴포넌트", "표현식", "프론트엔드"]
+tags: ["React", "JSX", "Babel", "createElement", "문법"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-what-is-react/)에서 React가 무엇인지, 왜 만들어졌는지 살펴봤다. React 코드를 처음 열면 가장 먼저 눈에 들어오는 것이 이상한 문법이다. JavaScript 안에 HTML처럼 생긴 코드가 섞여 있다. 이것이 바로 **JSX**다. JSX는 문법 설탕(syntactic sugar)이며, 빌드 단계에서 평범한 JavaScript 함수 호출로 변환된다.
+[지난 글](/posts/react-what-is-react/)에서 React가 선언형 UI 라이브러리임을 확인했습니다. React 코드를 작성할 때 가장 먼저 마주치는 낯선 문법이 바로 **JSX**입니다. HTML처럼 보이지만 사실 JavaScript 파일 안에 있는 이 문법이 어떻게 작동하는지 살펴봅니다.
 
-## JSX는 HTML이 아니다
+---
 
-겉모습은 HTML과 비슷하지만 JSX는 HTML이 아니다. `class` 대신 `className`을 쓰고, 모든 태그는 반드시 닫아야 하며, 이벤트 핸들러는 camelCase로 쓴다. 브라우저가 직접 해석하는 것도 아니다. **Babel**이 JSX를 일반 JavaScript로 변환한 뒤 브라우저에 전달한다.
+## JSX란
+
+**JSX(JavaScript XML)**는 JavaScript 파일 안에서 HTML과 유사한 마크업을 작성할 수 있게 해주는 문법 확장입니다. 브라우저는 JSX를 직접 이해하지 못하므로, Babel이나 SWC 같은 **트랜스파일러**가 JSX를 순수 JavaScript로 변환합니다.
 
 ```jsx
-// JSX
-function Button() {
-  return <button className="btn">클릭</button>;
-}
+// 개발자가 작성하는 JSX
+const element = <h1 className="title">Hello, React!</h1>;
+```
 
-// Babel이 변환한 결과
-function Button() {
-  return React.createElement('button', { className: 'btn' }, '클릭');
+위 한 줄은 컴파일 과정을 거쳐 아래와 같이 변환됩니다.
+
+```javascript
+// 트랜스파일러가 생성하는 JavaScript (React 17+ 자동 변환)
+import { jsx as _jsx } from 'react/jsx-runtime';
+const element = _jsx('h1', { className: 'title', children: 'Hello, React!' });
+```
+
+---
+
+## JSX → React Element 변환 과정
+
+![JSX 변환 과정](/assets/posts/react-jsx-transform.svg)
+
+변환의 최종 결과물은 **React Element**라는 순수 JavaScript 객체입니다. 이 객체는 `type`(태그 이름 또는 컴포넌트 함수), `props`(속성), `key` 등을 담고 있으며, React가 이를 읽어 실제 DOM을 구성합니다.
+
+```javascript
+// React Element 객체의 실제 모습
+{
+  $$typeof: Symbol(react.element),
+  type: 'h1',
+  props: { className: 'title', children: 'Hello, React!' },
+  key: null,
+  ref: null
 }
 ```
 
-React 17 이후에는 `import React from 'react'`를 안 써도 되는 새 JSX 변환 방식이 도입됐다. 내부적으로 `_jsx()`를 호출하지만 개발자 입장에서는 차이가 없다.
+React Element는 값싼 **설계도(Blueprint)**입니다. 실제 DOM 노드보다 훨씬 가볍고 빠르게 생성할 수 있어서, React가 상태 변경 시마다 새 Element 트리를 만들어 이전과 비교(diff)할 수 있습니다.
 
-![JSX 변환 과정](/assets/posts/react-jsx-syntax.svg)
+---
 
-## JSX 핵심 규칙 4가지
+## JSX 핵심 규칙
 
-### 1. 최상위 요소는 반드시 하나
+![JSX 핵심 규칙](/assets/posts/react-jsx-rules.svg)
 
-반환값이 여러 요소를 직접 나열할 수 없다. `<div>`로 감싸거나, 불필요한 DOM 노드를 추가하기 싫으면 `<>...</>` (Fragment)를 쓴다.
+### 1. 반드시 하나의 루트 요소
+
+컴포넌트의 `return` 문은 항상 단일 루트 요소를 반환해야 합니다. 여러 요소를 반환해야 할 때는 `<>...</>` **Fragment**로 감쌉니다.
 
 ```jsx
-// ❌ 에러 — 최상위 요소 2개
-function Wrong() {
+// ❌ 두 개의 루트 — 컴파일 오류
+function Bad() {
   return (
     <h1>제목</h1>
-    <p>내용</p>
+    <p>설명</p>
   );
 }
 
 // ✅ Fragment로 감싸기
-function Right() {
+function Good() {
   return (
     <>
       <h1>제목</h1>
-      <p>내용</p>
+      <p>설명</p>
     </>
   );
 }
 ```
 
-### 2. 모든 태그는 닫아야 한다
+### 2. 빈 태그는 자기 닫기(`/`)
 
-HTML에서 `<br>`, `<img>`, `<input>`은 닫는 태그를 생략해도 됐다. JSX에서는 자기 닫기 슬래시를 반드시 붙여야 한다.
+`<img>`, `<input>`, `<br>` 같은 HTML 빈 요소는 JSX에서 반드시 `/>`로 닫아야 합니다.
 
 ```jsx
-// ❌ HTML 방식 — JSX에서 에러
-<img src="photo.jpg">
-<input type="text">
-<br>
-
-// ✅ JSX 방식
-<img src="photo.jpg" />
+<img src="photo.jpg" alt="사진" />
 <input type="text" />
 <br />
 ```
 
-### 3. HTML 속성은 camelCase
+### 3. 속성은 camelCase
 
-JSX는 JavaScript 맥락이기 때문에 속성 이름도 JavaScript 관례를 따른다.
-
-| HTML | JSX |
-|---|---|
-| `class` | `className` |
-| `for` | `htmlFor` |
-| `onclick` | `onClick` |
-| `tabindex` | `tabIndex` |
-
-`data-*`와 `aria-*`는 예외로 그대로 쓴다.
-
-### 4. style은 객체
-
-HTML에서 `style="color: red"`처럼 문자열로 썼다면, JSX에서는 JavaScript 객체를 전달한다. 속성 이름도 camelCase다.
+HTML 속성 이름과 달리 JSX는 JavaScript 객체 키를 따르므로 camelCase를 사용합니다.
 
 ```jsx
-// ❌ 문자열 방식 (JSX에서 에러)
-<div style="background-color: blue; font-size: 16px">...</div>
-
-// ✅ 객체 방식
-<div style={{ backgroundColor: 'blue', fontSize: '16px' }}>...</div>
+// class → className, for → htmlFor
+<label htmlFor="email" className="label">이메일</label>
+<input id="email" type="email" onChange={handleChange} />
 ```
 
-이중 중괄호 `{{ }}`가 낯설게 보이지만 `{표현식}` 안에 `{객체 리터럴}`이 들어간 것뿐이다.
+단, `data-*`와 `aria-*` 속성은 그대로 사용합니다.
 
-## 중괄호 `{}` — JavaScript 표현식 삽입
+### 4. 중괄호 `{}`로 JavaScript 표현식 삽입
 
-JSX 안에서 `{}` 안에는 JavaScript **표현식**을 자유롭게 쓸 수 있다. 변수, 연산, 함수 호출, 삼항 연산자 모두 가능하다.
+JSX 안의 `{}`에는 유효한 JavaScript **표현식(expression)**을 넣을 수 있습니다. 변수, 함수 호출, 삼항 연산자, 템플릿 리터럴 모두 가능합니다. 단, `if`문이나 `for`문 같은 **문(statement)**은 표현식이 아니므로 직접 넣을 수 없습니다.
 
 ```jsx
-function Greeting({ user }) {
-  const isLoggedIn = user !== null;
+const user = { name: 'Alice', score: 42 };
+const isAdmin = true;
+
+function UserCard() {
   return (
-    <div>
-      <h1>{user.name}</h1>
-      <p>{isLoggedIn ? '로그인 상태' : '비로그인'}</p>
-      <img src={user.avatarUrl} alt={user.name} />
+    <div className={`card ${isAdmin ? 'admin' : ''}`}>
+      <h2>{user.name}</h2>
+      <p>점수: {user.score.toFixed(1)}</p>
+      {isAdmin && <span className="badge">관리자</span>}
     </div>
   );
 }
 ```
 
-단, `if` 문, `for` 루프, `switch` 문처럼 **값을 반환하지 않는 문(statement)**은 중괄호 안에 직접 쓸 수 없다. 조건 처리는 삼항 연산자나 `&&` 단축 평가, 또는 중괄호 밖에서 변수로 계산해 놓는 방식으로 해결한다.
+### 5. 속성값의 따옴표와 중괄호
 
-![JSX 표현식 삽입](/assets/posts/react-jsx-expressions.svg)
-
-## 조건부 렌더링과 목록 렌더링 미리보기
-
-조건부 렌더링과 목록 렌더링은 JSX의 자주 쓰이는 패턴으로, 각자 독립된 글로 깊이 다룬다. 여기서는 개념만 훑는다.
+문자열 값은 따옴표로, JavaScript 표현식은 중괄호로 전달합니다. 둘을 동시에 쓰지 않습니다.
 
 ```jsx
-// 조건부: && 단축 평가
-function Notice({ hasNew }) {
-  return (
-    <div>
-      {hasNew && <span>새 알림이 있습니다</span>}
-    </div>
-  );
-}
+// 문자열: 따옴표
+<div className="container">
 
-// 목록: map()으로 렌더
-function List({ items }) {
-  return (
-    <ul>
-      {items.map(item => (
-        <li key={item.id}>{item.name}</li>
-      ))}
-    </ul>
-  );
-}
+// JavaScript 표현식: 중괄호 (따옴표 없음)
+<img src={user.avatarUrl} alt={user.name} />
+
+// ❌ 혼합 불가
+<div className={"container"}>  {/* 동작하지만 불필요 */}
 ```
-
-## JSX가 없어도 React를 쓸 수 있다
-
-JSX는 필수가 아니다. `React.createElement`를 직접 호출해도 된다. 하지만 중첩 구조가 깊어질수록 코드가 극도로 복잡해지므로 모든 프로젝트가 JSX를 채택한다. JSX는 표준 JavaScript가 아니지만, Vite·Create React App·Next.js 등 모든 React 빌드 도구가 기본으로 지원한다.
-
-## 정리
-
-- JSX는 HTML과 비슷하지만 JavaScript 확장 문법이다
-- Babel이 빌드 단계에 JSX를 `React.createElement()` 호출로 변환한다
-- 최상위 요소 하나, 모든 태그 닫기, className, camelCase 이벤트 — 4가지 규칙
-- `{}` 안에는 JS 표현식을 자유롭게 넣을 수 있다
-- `if`, `for` 같은 문(statement)은 `{}` 안에 직접 쓸 수 없다
-
-다음 글에서는 JSX가 내부적으로 어떻게 동작하는지, `React.createElement`와 JSX Element 객체를 더 깊이 파헤친다.
 
 ---
 
-**지난 글:** [React란 무엇인가? — UI를 만드는 JavaScript 라이브러리](/posts/react-what-is-react/)
+## 주석 작성 방법
 
-**다음 글:** [JSX 깊이 보기 — createElement와 JSX Element 객체](/posts/react-jsx-deep/)
+JSX 안에서 주석은 `{/* */}` 형식을 사용합니다.
+
+```jsx
+function App() {
+  return (
+    <div>
+      {/* 이것이 JSX 주석입니다 */}
+      <h1>Hello</h1>
+    </div>
+  );
+}
+```
+
+---
+
+## 조건부·반복 렌더링 미리보기
+
+`{}`에는 삼항 연산자, 단락 평가(`&&`), 배열 `map()`을 넣어 조건부·반복 렌더링을 처리합니다. 이 주제는 이후 글에서 자세히 다루겠습니다.
+
+```jsx
+function Preview({ items, loading }) {
+  return (
+    <section>
+      {loading ? (
+        <p>로딩 중...</p>
+      ) : (
+        <ul>
+          {items.map(item => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+```
+
+---
+
+**지난 글:** [React란 무엇인가](/posts/react-what-is-react/)
+
+**다음 글:** [컴포넌트의 개념](/posts/react-components/)
 
 <br>
 읽어주셔서 감사합니다. 😊

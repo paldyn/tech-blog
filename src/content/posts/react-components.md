@@ -1,125 +1,205 @@
 ---
-title: "컴포넌트 완전 정복 — 함수 컴포넌트와 설계 원칙"
-description: "React 함수 컴포넌트의 구조, 순수 함수 원칙, 컴포넌트 합성 트리 설계, 언제 컴포넌트를 나눠야 하는지 실전 기준을 다룹니다."
+title: "컴포넌트의 개념"
+description: "React 컴포넌트의 정의와 함수 컴포넌트 작성법, 컴포넌트 트리로 UI를 조합하는 방법을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
-archiveOrder: 5
+pubDate: "2026-05-31"
+archiveOrder: 3
 type: "knowledge"
 category: "React"
-tags: ["컴포넌트", "함수컴포넌트", "합성", "순수함수", "React", "설계"]
+tags: ["React", "컴포넌트", "함수형컴포넌트", "JSX", "트리"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-fragments/)에서 Fragment로 불필요한 DOM 노드를 없애는 방법을 봤다. React 개발의 본질은 **컴포넌트를 잘 만들고, 잘 조합하는 것**이다. 이 글에서는 함수 컴포넌트의 구조와 동작 방식, 언제 어떻게 컴포넌트를 나눠야 하는지 설계 원칙까지 다룬다.
+[지난 글](/posts/react-jsx/)에서 JSX가 JavaScript로 변환되는 과정을 살펴봤습니다. 이번에는 React의 가장 기본 단위인 **컴포넌트**가 무엇인지, 어떻게 만들고 조합하는지 알아봅니다.
 
-## 함수 컴포넌트의 구조
+---
 
-React 컴포넌트는 다음 형태의 함수다. Props를 받아서 JSX를 반환한다.
+## 컴포넌트란
+
+컴포넌트(Component)는 **UI의 한 조각**입니다. 버튼 하나, 카드 하나, 페이지 레이아웃 하나 — 모두 컴포넌트가 될 수 있습니다. React 애플리케이션은 이 컴포넌트들을 레고 블록처럼 조합해 전체 화면을 구성합니다.
+
+컴포넌트는 다음 두 가지를 갖습니다.
+- **입력**: `props`(부모로부터 전달된 데이터)와 `state`(컴포넌트 내부 상태)
+- **출력**: JSX(화면에 렌더링될 UI 설계도)
+
+---
+
+## 함수 컴포넌트
+
+현재 React에서 컴포넌트를 만드는 표준 방식은 **함수 컴포넌트**입니다. props를 인자로 받아 JSX를 반환하는 순수 함수입니다.
 
 ```jsx
-function UserCard({ name, role }) {
-  // ① 훅 — 렌더 사이에 정보 유지
-  const [open, setOpen] = useState(false);
+// 가장 단순한 함수 컴포넌트
+function Greeting() {
+  return <h1>안녕하세요!</h1>;
+}
+```
 
-  // ② 파생 계산 — state/props로 결정되는 값
-  const label = role === 'admin' ? '관리자' : '일반';
+조금 더 실용적인 예시로, 재사용 가능한 `Button` 컴포넌트를 만들어 봅니다.
 
-  // ③ JSX 반환
+```jsx
+function Button({ label, onClick, disabled = false }) {
   return (
-    <div onClick={() => setOpen(!open)}>
-      <span>{name}</span>
-      <span>{label}</span>
-      {open && <p>상세 정보</p>}
-    </div>
+    <button
+      className="btn"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {label}
+    </button>
   );
 }
 ```
 
-컴포넌트 함수 내부는 크게 세 구역으로 나뉜다. 훅 선언 → 파생 값 계산 → JSX 반환. 이 순서를 지키면 코드 읽기가 훨씬 쉬워진다.
-
-![React 함수 컴포넌트 해부](/assets/posts/react-components-anatomy.svg)
-
-## 컴포넌트는 순수 함수여야 한다
-
-React 컴포넌트에는 중요한 규칙이 있다. **같은 props와 state에 대해 항상 동일한 JSX를 반환해야 한다.** 수학의 순수 함수처럼 입력이 같으면 출력이 같아야 한다.
+화살표 함수로도 동일하게 작성할 수 있습니다.
 
 ```jsx
-// ❌ 순수하지 않음 — 외부 변수를 렌더 중 변경
-let count = 0;
-function BadCounter() {
-  count += 1;  // 렌더마다 외부 상태를 변경
-  return <p>{count}</p>;
-}
+const Button = ({ label, onClick, disabled = false }) => (
+  <button className="btn" onClick={onClick} disabled={disabled}>
+    {label}
+  </button>
+);
+```
 
-// ✅ 순수함 — useState로 내부에서 관리
-function GoodCounter() {
-  const [count, setCount] = useState(0);
-  return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+![컴포넌트 구조 해부](/assets/posts/react-components-anatomy.svg)
+
+---
+
+## 컴포넌트 두 가지 필수 규칙
+
+### 1. 이름은 반드시 대문자로 시작
+
+React는 태그 이름의 첫 글자가 소문자이면 HTML 기본 태그로, 대문자이면 컴포넌트로 해석합니다.
+
+```jsx
+// ❌ 소문자 — <card>라는 HTML 태그로 취급 (미작동)
+function card() { return <div>카드</div>; }
+
+// ✅ 대문자 — Card 컴포넌트로 인식
+function Card() { return <div>카드</div>; }
+```
+
+### 2. JSX 또는 null 반환
+
+컴포넌트는 반드시 JSX를 반환해야 합니다. 아무것도 렌더링하지 않으려면 `null`을 반환합니다.
+
+```jsx
+function ConditionalBanner({ show }) {
+  if (!show) return null;  // 아무것도 렌더링하지 않음
+  return <div className="banner">공지사항</div>;
 }
 ```
 
-렌더 중에 외부 상태를 바꾸거나, API 호출을 하거나, 무작위 값을 직접 쓰는 등의 행위는 부수 효과(side effect)다. 부수 효과는 `useEffect`나 이벤트 핸들러 안에서만 처리해야 한다. React 18 Strict Mode는 개발 환경에서 렌더 함수를 의도적으로 두 번 호출해 이 규칙 위반을 잡아낸다.
+---
 
-## 컴포넌트 합성 — 레고처럼 조립하기
+## 컴포넌트 조합 — 트리 구조
 
-React 앱은 컴포넌트 트리로 구성된다. 최상위 `App` 컴포넌트 아래에 `Header`, `Main`, `Footer`가 있고, `Main` 아래에 `PostList`와 `Sidebar`가 있는 식이다.
+실제 애플리케이션은 수십~수백 개의 컴포넌트가 **트리(Tree)** 구조로 중첩되어 구성됩니다.
+
+![컴포넌트 트리](/assets/posts/react-components-tree.svg)
 
 ```jsx
+function ArticleCard({ title, summary, author }) {
+  return (
+    <article className="card">
+      <h2>{title}</h2>
+      <p>{summary}</p>
+      <footer>By {author}</footer>
+    </article>
+  );
+}
+
+function ArticleList({ articles }) {
+  return (
+    <section>
+      {articles.map(article => (
+        <ArticleCard
+          key={article.id}
+          title={article.title}
+          summary={article.summary}
+          author={article.author}
+        />
+      ))}
+    </section>
+  );
+}
+
 function App() {
   return (
     <>
       <Header />
-      <Main>
-        <PostList posts={posts} />
+      <main>
+        <ArticleList articles={data} />
         <Sidebar />
-      </Main>
+      </main>
       <Footer />
     </>
   );
 }
 ```
 
-각 컴포넌트는 자신이 필요한 데이터만 props로 받는다. 너무 많은 props를 받으면 컴포넌트가 너무 많은 것을 알고 있다는 신호다.
-
-![컴포넌트 합성 트리](/assets/posts/react-components-composition.svg)
-
-## 언제 컴포넌트를 나눠야 할까
-
-**단일 책임 원칙**: 컴포넌트는 한 가지 일만 해야 한다. 한 컴포넌트가 너무 많은 UI 조각을 담당하거나, 로직과 UI가 섞여 읽기 어려워졌다면 분리 신호다.
-
-구체적인 기준:
-
-| 상황 | 판단 |
-|---|---|
-| 같은 UI 패턴이 두 군데 이상 반복된다 | 컴포넌트로 추출 |
-| 컴포넌트 함수가 100줄을 넘는다 | 분리 검토 |
-| 내부 상태가 UI 일부에만 관련된다 | 해당 부분만 분리 |
-| 서로 다른 관심사가 섞여 있다 | 분리 |
-
-반대로 너무 잘게 나누면 props 전달이 복잡해지고 코드 추적이 어려워진다. 과도한 분리도 피해야 한다.
-
-## 컴포넌트 이름 규칙
-
-- **반드시 대문자로 시작한다** — 앞서 봤듯이, 소문자는 DOM 태그로 해석된다
-- 컴포넌트가 하는 일을 명사 또는 명사구로 표현한다 (`UserCard`, `PostList`, `LoadingSpinner`)
-- 불린 props는 `is`, `has`, `can`으로 시작하는 것이 관례다 (`isLoading`, `hasError`)
-
-## 정리
-
-- 함수 컴포넌트는 props → 훅 → 파생 계산 → JSX 반환 구조다
-- 같은 입력에 같은 출력 — 순수 함수 원칙을 지켜야 한다
-- 렌더 중 부수 효과는 금지. `useEffect` 또는 이벤트 핸들러에서 처리한다
-- 작은 컴포넌트를 조합해 트리를 구성한다 (합성)
-- 단일 책임, 반복 패턴, 100줄 기준으로 분리를 판단한다
-
-다음 글에서는 `children` prop을 더 깊이 탐구하고, 컴포넌트가 내부 내용을 위임받는 패턴을 다룬다.
+트리에서 **상위 컴포넌트**(부모)는 하위 컴포넌트(자식)에게 `props`를 통해 데이터를 전달합니다. 이 단방향 흐름 덕분에 데이터가 어디서 오는지 추적하기 쉽습니다.
 
 ---
 
-**지난 글:** [Fragment — 불필요한 DOM 노드 없애기](/posts/react-fragments/)
+## 컴포넌트 파일 구성
 
-**다음 글:** [children prop 완전 정복 — 컴포넌트 슬롯 패턴](/posts/react-children/)
+실무에서는 보통 컴포넌트 하나당 파일 하나를 만들고, 컴포넌트 이름과 파일 이름을 일치시킵니다.
+
+```
+src/
+  components/
+    Button.jsx        # Button 컴포넌트
+    ArticleCard.jsx   # ArticleCard 컴포넌트
+    Header.jsx        # Header 컴포넌트
+  pages/
+    App.jsx           # 루트 App 컴포넌트
+```
+
+컴포넌트 파일 맨 아래에 `export default` 또는 `export`로 내보내고 다른 파일에서 `import`해 사용합니다.
+
+```jsx
+// Button.jsx
+export default function Button({ label, onClick }) {
+  return <button onClick={onClick}>{label}</button>;
+}
+
+// App.jsx
+import Button from './components/Button';
+
+function App() {
+  return <Button label="클릭" onClick={() => alert('클릭!')} />;
+}
+```
+
+---
+
+## 순수 함수로 생각하기
+
+React 컴포넌트는 가능한 한 **순수 함수**처럼 작성해야 합니다. 동일한 props와 state가 주어지면 항상 동일한 JSX를 반환하고, 렌더링 중 외부 상태를 바꾸지 않는 것이 이상적입니다.
+
+```jsx
+// 순수: 입력이 같으면 출력이 항상 같음
+function PureGreeting({ name }) {
+  return <p>안녕하세요, {name}님!</p>;
+}
+
+// 비순수: 렌더링마다 외부를 변경 — React가 경고
+let renderCount = 0;
+function ImpureCounter() {
+  renderCount++;  // ❌ 렌더링 중 외부 변수 수정
+  return <p>렌더: {renderCount}</p>;
+}
+```
+
+사이드 이펙트(데이터 페칭, DOM 접근 등)는 나중에 배울 `useEffect`를 통해 처리합니다.
+
+---
+
+**지난 글:** [JSX 문법 이해하기](/posts/react-jsx/)
+
+**다음 글:** [props로 데이터 전달하기](/posts/react-props/)
 
 <br>
 읽어주셔서 감사합니다. 😊

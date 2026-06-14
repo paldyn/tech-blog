@@ -1,34 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 460" style="background:#0a0a0a">
-  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">실전 조건부 렌더링 패턴</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" viewBox="0 0 880 480"
+     style="background:#0a0a0a" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect width="880" height="480" fill="#0a0a0a" rx="12"/>
 
-  <!-- Loading state pattern -->
-  <rect x="60" y="68" width="370" height="130" rx="12" fill="#0f1825" stroke="#7ec8e3" stroke-width="1.5"/>
-  <text x="245" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#7ec8e3">비동기 상태 패턴 (로딩/에러/성공)</text>
-  <rect x="76" y="106" width="338" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="92" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">if</tspan><tspan fill="#ffffff"> (isLoading) </tspan><tspan font-weight="600" fill="#7ec8e3">return</tspan><tspan fill="#ffffff"> &lt;</tspan><tspan fill="#55c555">Spinner</tspan><tspan fill="#ffffff"> /&gt;;</tspan></text>
-  <text x="92" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">if</tspan><tspan fill="#ffffff"> (error) </tspan><tspan font-weight="600" fill="#7ec8e3">return</tspan><tspan fill="#ffffff"> &lt;</tspan><tspan fill="#55c555">Error</tspan><tspan fill="#ffffff"> msg={error} /&gt;;</tspan></text>
-  <text x="92" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">if</tspan><tspan fill="#ffffff"> (!data) </tspan><tspan font-weight="600" fill="#7ec8e3">return</tspan><tspan fill="#ffffff"> &lt;</tspan><tspan fill="#55c555">Empty</tspan><tspan fill="#ffffff"> /&gt;;</tspan></text>
-  <text x="92" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" fill="#9aa4b8" xml:space="preserve">// early return 패턴으로 깔끔하게 분기</text>
+  <!-- Title -->
+  <text x="440" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#e8e8e8">조건부 렌더링 — 3가지 패턴</text>
 
-  <!-- View toggle pattern -->
-  <rect x="450" y="68" width="370" height="130" rx="12" fill="#0d2a1a" stroke="#55c555" stroke-width="1.5"/>
-  <text x="635" y="92" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#55c555">뷰 전환 패턴 (탭/모드)</text>
-  <rect x="466" y="106" width="338" height="80" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="482" y="126" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">const</tspan><tspan fill="#ffffff"> TABS = {</tspan></text>
-  <text x="482" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  home: &lt;</tspan><tspan fill="#55c555">HomeTab</tspan><tspan fill="#ffffff"> /&gt;,</tspan></text>
-  <text x="482" y="166" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">  profile: &lt;</tspan><tspan fill="#55c555">ProfileTab</tspan><tspan fill="#ffffff"> /&gt;,</tspan></text>
-  <text x="482" y="178" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="12" xml:space="preserve"><tspan fill="#ffffff">}; </tspan><tspan font-weight="600" fill="#7ec8e3">return</tspan><tspan fill="#ffffff"> {TABS[activeTab] ?? &lt;</tspan><tspan fill="#55c555">NotFound</tspan><tspan fill="#ffffff"> /&gt;}</tspan></text>
+  <!-- Pattern 1: if/else outside JSX -->
+  <rect x="60" y="64" width="240" height="190" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="180" y="88" text-anchor="middle" font-size="13" font-weight="600" fill="#7ec8e3">① if/else (JSX 외부)</text>
+  <rect x="72" y="100" width="216" height="142" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="84" y="120" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> Alert({ type }) {</tspan>
+    <tspan x="84" dy="16" fill="#7ec8e3" font-weight="600">  if</tspan><tspan fill="#ffffff"> (type === </tspan><tspan fill="#ce9178">'error'</tspan><tspan fill="#ffffff">) {</tspan>
+    <tspan x="84" dy="16" fill="#7ec8e3" font-weight="600">    return</tspan><tspan fill="#ffffff"> (</tspan>
+    <tspan x="84" dy="16" fill="#ffffff">      </tspan><tspan fill="#ce9178">&lt;div</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3">className</tspan><tspan fill="#ffffff">=</tspan><tspan fill="#ce9178">"error"</tspan><tspan fill="#ce9178">&gt;</tspan>
+    <tspan x="84" dy="16" fill="#ffffff">        오류 발생</tspan>
+    <tspan x="84" dy="16" fill="#ce9178">      &lt;/div&gt;</tspan>
+    <tspan x="84" dy="16" fill="#ffffff">    );</tspan>
+    <tspan x="84" dy="16" fill="#ffffff">  }</tspan>
+    <tspan x="84" dy="16" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">&lt;div&gt;</tspan><tspan fill="#ffffff">정상</tspan><tspan fill="#ce9178">&lt;/div&gt;</tspan><tspan fill="#ffffff">;</tspan>
+  </text>
+  <text x="180" y="270" text-anchor="middle" font-size="11" fill="#888">복잡한 조건 분기에 적합</text>
 
-  <!-- Null return pattern -->
-  <rect x="60" y="218" width="760" height="220" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
-  <text x="76" y="240" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// null 반환 — 컴포넌트를 완전히 숨기기 (DOM에서도 제거)</text>
-  <text x="76" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan font-weight="600" fill="#7ec8e3">function</tspan><tspan fill="#ffffff"> Toast({ message, isVisible }) {</tspan></text>
-  <text x="76" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan font-weight="600" fill="#7ec8e3">if</tspan><tspan fill="#ffffff"> (!isVisible) </tspan><tspan font-weight="600" fill="#7ec8e3">return</tspan><tspan fill="#ffffff"> </tspan><tspan font-weight="600" fill="#7ec8e3">null</tspan><tspan fill="#ffffff">;  </tspan><tspan fill="#9aa4b8">// DOM에서 완전 제거</tspan></text>
-  <text x="76" y="300" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#ffffff">  </tspan><tspan font-weight="600" fill="#7ec8e3">return</tspan><tspan fill="#ffffff"> &lt;</tspan><tspan fill="#55c555">div</tspan><tspan fill="#ffffff"> className=</tspan><tspan fill="#ce9178">"toast"</tspan><tspan fill="#ffffff">&gt;{message}&lt;/</tspan><tspan fill="#55c555">div</tspan><tspan fill="#ffffff">&gt;;</tspan></text>
-  <text x="76" y="320" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">}</text>
-  <text x="76" y="340" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve"> </text>
-  <text x="76" y="360" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">// CSS visibility:hidden vs null 반환 차이</text>
-  <text x="76" y="380" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// null:</tspan><tspan fill="#ffffff">  DOM에서 완전 제거 (마운트/언마운트, 상태 초기화)</tspan></text>
-  <text x="76" y="400" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">// hidden:</tspan><tspan fill="#ffffff"> DOM 유지, 화면만 숨김 (상태 보존, 애니메이션 가능)</tspan></text>
-  <text x="76" y="420" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#e0c044">// 모달·드로어 같은 애니메이션 UI는 null 대신 CSS로 숨기길 권장</tspan></text>
+  <!-- Pattern 2: Ternary -->
+  <rect x="320" y="64" width="240" height="190" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="440" y="88" text-anchor="middle" font-size="13" font-weight="600" fill="#55c555">② 삼항 연산자 (JSX 내부)</text>
+  <rect x="332" y="100" width="216" height="142" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="344" y="120" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> Status({ isOnline }) {</tspan>
+    <tspan x="344" dy="16" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> (</tspan>
+    <tspan x="344" dy="16" fill="#ffffff">    </tspan><tspan fill="#ce9178">&lt;span&gt;</tspan>
+    <tspan x="344" dy="16" fill="#ffffff">      {isOnline</tspan>
+    <tspan x="344" dy="16" fill="#ffffff">        ? </tspan><tspan fill="#ce9178">'온라인'</tspan>
+    <tspan x="344" dy="16" fill="#ffffff">        : </tspan><tspan fill="#ce9178">'오프라인'</tspan><tspan fill="#ffffff">}</tspan>
+    <tspan x="344" dy="16" fill="#ce9178">    &lt;/span&gt;</tspan>
+    <tspan x="344" dy="16" fill="#ffffff">  );</tspan>
+    <tspan x="344" dy="16" fill="#ffffff">}</tspan>
+  </text>
+  <text x="440" y="270" text-anchor="middle" font-size="11" fill="#888">두 갈래 분기에 간결</text>
+
+  <!-- Pattern 3: && short-circuit -->
+  <rect x="580" y="64" width="240" height="190" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <text x="700" y="88" text-anchor="middle" font-size="13" font-weight="600" fill="#7777cc">③ &amp;&amp; 단락 평가</text>
+  <rect x="592" y="100" width="216" height="142" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="12" xml:space="preserve">
+    <tspan x="604" y="120" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> Inbox({ count }) {</tspan>
+    <tspan x="604" dy="16" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> (</tspan>
+    <tspan x="604" dy="16" fill="#ffffff">    </tspan><tspan fill="#ce9178">&lt;div&gt;</tspan>
+    <tspan x="604" dy="16" fill="#ffffff">      </tspan><tspan fill="#ce9178">&lt;h1&gt;</tspan><tspan fill="#ffffff">메시지</tspan><tspan fill="#ce9178">&lt;/h1&gt;</tspan>
+    <tspan x="604" dy="16" fill="#ffffff">      {count &gt; </tspan><tspan fill="#b5cea8">0</tspan><tspan fill="#ffffff"> &amp;&amp; (</tspan>
+    <tspan x="604" dy="16" fill="#ffffff">        </tspan><tspan fill="#ce9178">&lt;Badge&gt;</tspan><tspan fill="#ffffff">{count}</tspan><tspan fill="#ce9178">&lt;/Badge&gt;</tspan>
+    <tspan x="604" dy="16" fill="#ffffff">      )}</tspan>
+    <tspan x="604" dy="16" fill="#ce9178">    &lt;/div&gt;</tspan>
+    <tspan x="604" dy="16" fill="#ffffff">  );</tspan>
+  </text>
+  <text x="700" y="270" text-anchor="middle" font-size="11" fill="#888">보여주거나/안 보여주거나</text>
+
+  <!-- Warning about && with 0 -->
+  <rect x="60" y="296" width="760" height="64" rx="8" fill="#2a1a00" stroke="#e05555" stroke-width="1"/>
+  <text x="440" y="320" text-anchor="middle" font-size="13" font-weight="600" fill="#e05555">⚠ &amp;&amp; 패턴의 함정 — 왼쪽에 숫자 0을 쓰지 마세요</text>
+  <text x="440" y="346" text-anchor="middle" font-size="13" fill="#888">{count &amp;&amp; &lt;Badge&gt;} 에서 count가 0이면 "0"이 화면에 출력됨 — {count &gt; 0 &amp;&amp; &lt;Badge&gt;} 처럼 Boolean으로 변환할 것</text>
+
+  <!-- null return pattern -->
+  <rect x="60" y="380" width="760" height="80" rx="8" fill="#111827" stroke="#374151" stroke-width="1"/>
+  <text x="440" y="402" text-anchor="middle" font-size="13" font-weight="600" fill="#e8e8e8">④ null 반환 — 렌더링 자체를 건너뜀</text>
+  <rect x="76" y="414" width="728" height="34" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo',monospace" font-size="13" xml:space="preserve">
+    <tspan x="92" y="436" fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> Banner({ show }) { </tspan><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> (!show) </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#b5cea8">null</tspan><tspan fill="#ffffff">; </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ce9178">&lt;div&gt;</tspan><tspan fill="#ffffff">배너</tspan><tspan fill="#ce9178">&lt;/div&gt;</tspan><tspan fill="#ffffff">; }</tspan>
+  </text>
 </svg>

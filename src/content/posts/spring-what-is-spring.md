@@ -1,44 +1,78 @@
 ---
-title: "Spring Framework란 무엇인가 — 탄생 배경부터 핵심 철학까지"
-description: "EJB의 복잡성을 해결하기 위해 탄생한 Spring Framework의 정의, POJO 기반 개발 철학, IoC/AOP/PSA 3대 원칙을 체계적으로 설명합니다."
+title: "스프링이란 무엇인가 — EJB의 한계와 POJO 철학"
+description: "자바 엔터프라이즈 개발의 복잡도를 낮춘 스프링의 탄생 배경과 POJO 철학을 깊이 이해합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-09"
+pubDate: "2026-04-26"
 archiveOrder: 1
 type: "knowledge"
 category: "Spring"
-tags: ["Spring", "Spring Framework", "IoC", "AOP", "POJO", "Java"]
+tags: ["spring", "pojo", "ejb", "ioc", "di"]
 featured: false
 draft: false
 ---
 
-Java 엔터프라이즈 개발의 역사는 "어떻게 하면 더 단순하게 만들 수 있을까"라는 질문과 함께 흘러왔습니다. Spring Framework는 그 질문에 대한 가장 성공적인 답변 중 하나로, 오늘날 전 세계 수백만 개의 Java 애플리케이션을 지탱하는 기반이 되었습니다. 이 시리즈 첫 글에서는 Spring이 왜 탄생했는지, 어떤 철학으로 설계되었는지를 코드 수준에서 이해합니다.
+자바로 엔터프라이즈 애플리케이션을 처음 만들던 시절, 개발자들은 공통된 고통을 겪었습니다. 트랜잭션 관리, 보안, 원격 호출 같은 기반 기술을 직접 구현해야 했고, Sun Microsystems가 제시한 해답인 **EJB(Enterprise JavaBeans)** 는 오히려 복잡성을 극한으로 끌어올렸습니다. 이번 글에서는 그 배경을 살펴보고, 스프링이 어떤 철학으로 그 문제를 해결했는지 알아봅니다.
 
-## Spring Framework란
+## EJB가 약속한 것과 현실
 
-Spring Framework는 2003년 Rod Johnson이 출판한 저서 *Expert One-on-One J2EE Design and Development*에 포함된 코드에서 시작된 오픈소스 Java 애플리케이션 프레임워크입니다. EJB(Enterprise JavaBeans)가 지배하던 J2EE 생태계의 복잡성과 무거움에 대한 반성에서 출발했습니다.
+1990년대 후반, 자바 엔터프라이즈 세계에는 큰 기대가 있었습니다. EJB는 "선언적 트랜잭션", "분산 컴포넌트", "컨테이너 관리 보안"을 약속했습니다. 이론상으로는 개발자가 비즈니스 로직만 작성하면 컨테이너가 알아서 처리해 주는 세상이었습니다.
 
-Spring의 공식 정의는 간결합니다. "Java 플랫폼을 위한 포괄적인 프로그래밍 및 구성 모델(comprehensive programming and configuration model)" — 즉, **어떻게 코드를 구성하고, 객체를 연결하고, 인프라 관심사를 처리할지**에 대한 체계적인 방법론을 제공합니다.
-
-![Spring Framework 개요](/assets/posts/spring-what-is-spring-overview.svg)
-
-## EJB의 문제, Spring의 등장
-
-2000년대 초 J2EE 표준의 핵심이었던 EJB 2.x는 이론적으로는 훌륭했지만 실전에서는 다음과 같은 심각한 문제를 안고 있었습니다.
-
-- **침투적 설계(Invasive Design)**: `EntityBean`, `SessionBean` 등 EJB 특정 클래스를 반드시 상속해야 해서 비즈니스 코드와 프레임워크 코드가 뒤섞임
-- **무거운 환경 의존**: WAS(WebLogic, WebSphere 등)를 띄워야만 테스트 가능
-- **배포 복잡성**: `ejb-jar.xml` 등 XML 디스크립터를 작성해야 하는 번거로움
-- **단위 테스트 불가**: 컨테이너 없이 개별 클래스를 테스트할 방법이 없음
-
-Spring은 이 문제를 **"컨테이너 밖에서도 동작하는 순수 자바 코드"**, 즉 POJO(Plain Old Java Object) 기반 개발로 해결했습니다.
-
-## POJO 기반 개발 철학
-
-POJO는 별다른 마법이 없는 개념입니다. 특정 인터페이스를 구현하거나 특정 클래스를 상속하지 않는, 순수한 자바 객체를 말합니다.
+그러나 현실은 달랐습니다. EJB 2.x 기준으로 하나의 비즈니스 컴포넌트를 만들려면 다음이 필요했습니다.
 
 ```java
-// Spring POJO 서비스 — 프레임워크 코드 전혀 없음
-@Service
+// EJB 2.x — 주문 서비스 하나를 만들기 위한 코드
+public interface OrderHome extends EJBHome {
+    Order create() throws CreateException, RemoteException;
+}
+
+public interface Order extends EJBObject {
+    void place(Long itemId) throws RemoteException;
+}
+
+public class OrderBean implements SessionBean {
+    private SessionContext ctx;
+
+    public void ejbCreate() {}
+    public void ejbRemove() {}
+    public void ejbActivate() {}
+    public void ejbPassivate() {}
+    public void setSessionContext(SessionContext ctx) {
+        this.ctx = ctx;
+    }
+
+    // 실제 비즈니스 로직은 이 메서드 하나
+    public void place(Long itemId) {
+        // ...
+    }
+}
+```
+
+이 코드 전체에서 **비즈니스 로직은 `place()` 메서드 단 하나**입니다. 나머지는 모두 EJB 컨테이너를 만족시키기 위한 의식(ceremony)입니다. 게다가 EJB 컴포넌트는 컨테이너 없이 테스트조차 할 수 없었습니다. 로컬 환경에서 테스트하려면 무거운 WAS를 항상 띄워야 했습니다.
+
+![EJB의 한계와 스프링의 POJO 철학 비교](/assets/posts/spring-what-is-spring-ejb-vs-spring.svg)
+
+## 로드 존슨의 질문
+
+2002년, 로드 존슨(Rod Johnson)은 저서 *Expert One-on-One J2EE Design and Development*에서 이런 질문을 던졌습니다.
+
+> "J2EE 명세서에 있는 것이 항상 해결책일까? 아니면 단순한 자바 객체로도 충분하지 않을까?"
+
+그는 약 3만 줄의 예제 코드와 함께 EJB 없이도 엔터프라이즈 수준의 애플리케이션을 구축할 수 있음을 보여줬습니다. 이 코드베이스가 스프링 프레임워크의 원형이 됩니다.
+
+핵심 주장은 간단했습니다. **기반 기술(트랜잭션, 보안, 원격 호출)은 프레임워크가 처리하고, 개발자는 순수한 자바 객체(POJO)에 비즈니스 로직만 작성하면 된다.**
+
+## POJO — Plain Old Java Object
+
+**POJO**라는 용어 자체는 마틴 파울러, 레베카 파슨스, 조시 맥켄지가 2000년에 만들었습니다. "왜 사람들이 시스템에 일반 객체를 사용하지 않는지 의아했다. 그래서 멋진 이름을 붙여줬더니 잘 팔렸다"라고 파울러는 회고했습니다.
+
+POJO의 조건은 단순합니다.
+
+- 특정 인터페이스를 구현할 필요 없음
+- 특정 클래스를 상속할 필요 없음
+- 특정 어노테이션이 없어도 동작
+
+```java
+// 이것이 POJO입니다 — 어떤 프레임워크에도 종속되지 않음
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -47,80 +81,92 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order createOrder(OrderRequest request) {
-        Order order = Order.from(request);
-        return orderRepository.save(order);
+    public Order placeOrder(Long itemId, int quantity) {
+        Item item = orderRepository.findItem(itemId);
+        return new Order(item, quantity);
     }
 }
 ```
 
-이 클래스는 `OrderService`라는 이름의 평범한 자바 클래스입니다. Spring 없이도 `new OrderService(mockRepo)` 형태로 단위 테스트를 작성할 수 있습니다. `@Service` 어노테이션은 Spring에게 "이 클래스를 빈으로 관리해달라"는 힌트이지, 클래스의 동작 자체를 바꾸지는 않습니다.
+이 클래스는 `main()` 메서드에서도, JUnit 테스트에서도, 스프링 컨텍스트에서도 동일하게 동작합니다. 특정 환경에 묶이지 않습니다.
 
-![POJO vs EJB 코드 비교](/assets/posts/spring-what-is-spring-pojo.svg)
+## 스프링이 실제로 하는 일
 
-## Spring의 3대 핵심 원칙
-
-Spring의 설계 철학은 세 가지 원칙으로 요약됩니다.
-
-### 1. IoC — 제어의 역전 (Inversion of Control)
-
-전통적인 개발에서는 객체가 자신이 필요한 의존 객체를 직접 생성합니다. IoC는 이 "제어권"을 프레임워크에 넘깁니다.
+스프링은 POJO 객체들을 모아 애플리케이션을 조립하는 **조립 공장**입니다. 개발자가 어떤 객체가 어떤 객체를 필요로 하는지 선언해 두면, 스프링이 그 객체들을 만들고 연결해 줍니다. 이것이 IoC(Inversion of Control)입니다.
 
 ```java
-// IoC 없음 — 직접 생성
+// 스프링이 관리하는 POJO — 어노테이션은 "나를 스프링이 관리해줘"라는 표시
+@Service
 public class OrderService {
-    private OrderRepository repo = new JpaOrderRepository(); // 강한 결합
-}
 
-// IoC 적용 — 외부에서 주입
-public class OrderService {
-    private final OrderRepository repo; // 인터페이스에 의존
-    
-    public OrderService(OrderRepository repo) { // 생성자 주입
-        this.repo = repo;
+    private final OrderRepository orderRepository;
+
+    // 스프링이 OrderRepository 구현체를 자동으로 주입
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
+    public Order placeOrder(Long itemId, int quantity) {
+        Item item = orderRepository.findItem(itemId);
+        return new Order(item, quantity);
     }
 }
 ```
 
-Spring IoC 컨테이너(`ApplicationContext`)가 객체의 생명주기를 관리하고, 필요한 의존성을 자동으로 주입합니다.
+`@Service` 어노테이션이 없어도 이 클래스는 순수한 자바 코드로 동작합니다. 어노테이션은 스프링에게 "이 객체를 관리해달라"고 알리는 힌트일 뿐, 비즈니스 로직 자체를 오염시키지 않습니다.
 
-### 2. AOP — 관점 지향 프로그래밍 (Aspect-Oriented Programming)
+![스프링 POJO 철학 — 스프링이 제공하는 것](/assets/posts/spring-what-is-spring-pojo-philosophy.svg)
 
-로깅, 트랜잭션 관리, 보안 체크 등은 여러 클래스에 걸쳐 반복되는 "횡단 관심사(Cross-cutting Concern)"입니다. AOP는 이를 별도 모듈(Aspect)로 분리해 핵심 비즈니스 로직을 오염시키지 않습니다.
+## 스프링의 핵심 가치: 비침투성(Non-Invasiveness)
+
+스프링 설계 철학의 핵심은 **비침투성**입니다. 프레임워크가 도메인 코드에 흔적을 남기지 않는다는 의미입니다.
+
+| 구분 | EJB 2.x | 스프링 |
+|------|---------|--------|
+| 상속 강제 | `SessionBean` 구현 필수 | 없음 |
+| 예외 처리 | `RemoteException` 강제 | 선택 |
+| 테스트 | WAS 필요 | JUnit 직접 실행 |
+| 설정 | XML 수백 줄 | 어노테이션 또는 간결한 Java Config |
+| 특정 WAS 종속 | 높음 | 없음 |
+
+스프링을 걷어내도 비즈니스 로직 코드는 그대로 살아남습니다. 이것이 스프링이 2003년 등장 이후 20년 넘게 자바 생태계의 표준이 된 이유입니다.
+
+## 의존성 역전 — 제어의 주도권
+
+전통적인 프로그래밍에서는 개발자 코드가 프레임워크를 호출합니다. 스프링은 이를 뒤집습니다. 개발자는 컴포넌트를 작성하고, **스프링 컨테이너가 그 컴포넌트를 호출**합니다. 할리우드 원칙("Don't call us, we'll call you")과 같습니다.
 
 ```java
-// @Transactional 하나로 트랜잭션 시작/커밋/롤백 자동 처리
-@Transactional
-public Order createOrder(OrderRequest request) {
-    return orderRepository.save(Order.from(request));
+// 개발자는 서비스를 등록만 한다
+@Component
+public class EmailNotificationService implements NotificationService {
+    public void notify(String message) {
+        // 이메일 발송 로직
+    }
+}
+
+// 스프링이 알아서 주입해서 호출한다
+@Service
+public class OrderProcessor {
+    // 구현체가 바뀌어도 이 코드는 변경 불필요
+    private final NotificationService notificationService;
+
+    public OrderProcessor(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 }
 ```
 
-메서드 앞뒤로 트랜잭션을 열고 닫는 코드는 AOP가 투명하게 처리합니다.
-
-### 3. PSA — 서비스 추상화 (Portable Service Abstraction)
-
-Spring은 JDBC, JMS, 캐시, 트랜잭션 등 다양한 기술에 대한 일관된 추상화 레이어를 제공합니다. 덕분에 특정 기술 구현체를 교체해도 비즈니스 코드는 바뀌지 않습니다.
-
-```java
-// PlatformTransactionManager — JDBC/JPA/JMS 모두 동일 인터페이스
-@Autowired
-private PlatformTransactionManager txManager; // 구현체와 무관하게 사용
-```
-
-## Spring은 라이브러리인가, 프레임워크인가
-
-Spring은 엄밀히 말해 **프레임워크**입니다. 라이브러리는 내 코드가 라이브러리를 호출하지만, 프레임워크는 프레임워크가 내 코드를 호출합니다(헐리우드 원칙: "Don't call us, we'll call you"). Spring IoC 컨테이너가 빈을 생성하고 의존성을 주입하며 생명주기를 관리하는 방식이 바로 이 원칙을 따릅니다.
-
-그러나 Spring은 **비침투적(Non-invasive)** 프레임워크로 설계되어, 원하는 모듈만 선택해서 사용할 수 있고, 비즈니스 코드가 Spring에 직접적으로 의존하지 않아도 됩니다.
+`OrderProcessor`는 `EmailNotificationService`를 직접 알지 못합니다. `NotificationService`라는 추상화만 알고 있습니다. 구현체를 `SmsNotificationService`로 바꿔도 `OrderProcessor` 코드는 한 줄도 변경할 필요가 없습니다.
 
 ## 정리
 
-Spring Framework는 단순한 코드 집합이 아니라 **어떻게 객체를 설계하고 연결할지에 대한 철학**입니다. POJO로 비즈니스 로직을 순수하게 유지하고, IoC로 의존성을 관리하고, AOP로 횡단 관심사를 분리하고, PSA로 기술 변경에 유연하게 대응하는 것 — 이 네 가지가 Spring이 20년 넘게 사랑받는 이유입니다.
+스프링이 해결하려 했던 문제는 단순합니다. **"개발자가 자신의 문제에 집중할 수 있게 하자."** EJB가 강요하는 의식적인 코드(ceremony code), 특정 환경 종속, 테스트 불가능한 구조를 제거하고, 순수한 자바 객체로 엔터프라이즈 수준의 기능을 누릴 수 있게 했습니다.
+
+이 POJO 철학은 스프링의 모든 기능을 관통하는 원칙입니다. 다음 글에서는 이 철학을 구체화하는 스프링의 4대 핵심 개념인 IoC, DI, AOP, PSA를 살펴봅니다.
 
 ---
 
-**다음 글:** [Spring의 4대 핵심 특징 — IoC·DI·AOP·PSA 완전 해부](/posts/spring-four-pillars/)
+**다음 글:** [스프링의 4대 핵심 — IoC, DI, AOP, PSA](/posts/spring-four-pillars/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,104 +1,101 @@
 ---
-title: "RDB란 무엇인가: 관계형 데이터베이스의 본질"
-description: "관계형 데이터베이스(RDB)의 핵심 개념인 테이블·행·열·기본 키를 명확히 정리하고, RDBMS가 SQL 쿼리를 처리하는 흐름을 완전 해설합니다."
+title: "데이터베이스란 무엇인가 — 파일 시스템과의 차이"
+description: "파일 시스템과 데이터베이스를 비교하며 DBMS가 왜 필요한지, ANSI/SPARC 3단계 아키텍처가 어떻게 데이터 독립성을 보장하는지 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
+pubDate: "2026-04-26"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
-tags: ["RDB", "관계형데이터베이스", "RDBMS", "SQL기초", "테이블구조"]
+tags: ["sql", "rdb", "dbms", "파일시스템", "데이터베이스"]
 featured: false
 draft: false
 ---
 
-데이터를 다루는 직군이라면 "RDB를 쓴다"는 말을 하루에도 수십 번 듣는다. 그런데 RDB가 정확히 어떤 구조로 데이터를 저장하고, RDBMS가 SQL을 받아 어떻게 결과를 돌려주는지 한 번이라도 제대로 살펴본 사람은 의외로 드물다. 이 시리즈의 첫 번째 글에서는 바로 그 질문에 답한다.
+## 왜 데이터베이스가 필요할까?
 
-## 관계형 데이터베이스란
+1990년대 초 한 유통 회사가 있었다고 상상해 보세요. 상품 목록은 `products.csv`, 고객 정보는 `customers.txt`, 주문은 `orders.dat`. 세 팀이 각자의 파일을 담당했고, 매달 말 정산 보고서를 만들려면 개발자가 직접 파이썬 스크립트를 돌려 파일 세 개를 합쳐야 했습니다. 그러던 어느 날 두 팀이 동시에 `customers.txt`에 쓰기를 시도했고, 파일이 절반만 갱신된 채 망가졌습니다.
 
-RDB(Relational Database)는 **데이터를 테이블(table) 형태로 저장**하고, 테이블 간 관계(relation)를 키(key)로 연결하는 데이터베이스다. 1970년 IBM 연구원 에드거 코드(Edgar F. Codd)가 집합론을 토대로 제안한 **관계 모델**을 구현한 것이다.
+이것이 **파일 시스템 기반 데이터 관리의 한계**입니다. 데이터베이스 관리 시스템(DBMS)은 이런 문제를 구조적으로 해결하기 위해 탄생했습니다.
 
-핵심 특징은 세 가지다.
+## 파일 시스템의 다섯 가지 문제
 
-- **구조화된 스키마**: 데이터를 저장하기 전에 열(column)의 이름과 타입을 미리 정의한다.
-- **SQL 인터페이스**: 데이터 조회·조작·정의를 표준화된 SQL 언어 하나로 수행한다.
-- **참조 무결성**: 외래 키(FK)를 통해 테이블 간 데이터 일관성을 데이터베이스가 자동으로 보장한다.
+![파일 시스템 vs 데이터베이스 비교](/assets/posts/sql-what-is-rdb-filesystem-vs-db.svg)
 
-## 테이블의 해부학
+### 1. 데이터 중복과 불일치
 
-![관계형 테이블 구조](/assets/posts/sql-what-is-rdb-structure.svg)
+파일 시스템에서는 각 애플리케이션이 독립적인 파일을 갖습니다. 고객 이름이 `customers.csv`에도, `invoices.csv`에도 있습니다. 한쪽만 고치면 두 파일 사이에 불일치가 생깁니다. DBMS는 **하나의 테이블에 한 번만 저장**하고, 참조(외래 키)로 연결해 중복을 제거합니다.
 
-RDB에서 데이터의 기본 단위는 **테이블(table)**이다. 수학적으로는 릴레이션(relation)이라고 부른다.
+### 2. 동시 접근 제어 불가
 
-| 용어 | 다른 이름 | 설명 |
-|------|-----------|------|
-| 테이블 | 릴레이션(relation) | 행과 열의 2차원 구조 |
-| 열(column) | 속성(attribute) | 테이블이 저장하는 데이터 항목 |
-| 행(row) | 튜플(tuple), 레코드 | 하나의 완전한 데이터 단위 |
-| 셀(cell) | 값(value) | 특정 행·열의 교차점에 저장된 값 |
-| 기본 키(PK) | Primary Key | 각 행을 유일하게 식별하는 열 |
+파일 잠금(file lock)은 너무 거칩니다. 파일 전체를 잠그거나, 잠금이 없거나 둘 중 하나입니다. DBMS는 **행 수준 잠금(row-level locking)**과 **트랜잭션 격리 수준**으로 수천 개의 동시 요청을 안전하게 처리합니다.
 
-**도메인(domain)**은 특정 열이 가질 수 있는 값의 집합이다. 예를 들어 `age` 열의 도메인은 0 이상의 정수다. 도메인에 맞지 않는 값은 RDBMS가 거부한다.
+### 3. 장애 시 데이터 손상
 
-**카디널리티(cardinality)**는 테이블이 가진 행의 수, **차수(degree)**는 열의 수를 뜻한다.
+파일에 절반만 쓰다가 전원이 나가면 파일은 망가집니다. DBMS는 **WAL(Write-Ahead Log)**을 통해 트랜잭션 단위로 원자적(atomic)으로 쓰고, 장애 후 재시작 시 자동으로 복구합니다.
 
-## 왜 파일 시스템이 아닌 RDB인가
+### 4. 보안 제어의 어려움
 
-파일에 데이터를 저장하면 안 되는 이유는 크게 세 가지다.
+파일 시스템 권한은 디렉터리·파일 단위입니다. DBMS는 **테이블, 컬럼, 심지어 행 수준**까지 접근을 제한할 수 있습니다(`GRANT`, `REVOKE`, Row-Level Security).
 
-**첫째, 중복(redundancy).** 파일마다 같은 데이터를 복사하면 수정 시 한 곳만 바뀌고 다른 곳은 구식이 된다.
+### 5. 데이터와 프로그램의 결합
 
-**둘째, 무결성 보장 불가.** 프로그래머가 직접 유효성 검사 코드를 작성해야 하며, 팀이 커질수록 규칙이 제각각이 된다.
+파일 구조가 바뀌면 그 파일을 읽는 모든 프로그램을 수정해야 합니다. DBMS는 아래의 3단계 아키텍처로 이 문제를 해결합니다.
 
-**셋째, 동시성 처리.** 여러 사용자가 같은 파일을 동시에 쓰면 데이터가 깨진다. RDBMS는 트랜잭션과 잠금(lock)으로 이를 자동 관리한다.
+## ANSI/SPARC 3단계 아키텍처
 
-## RDBMS의 SQL 처리 흐름
+![ANSI/SPARC 3단계 아키텍처](/assets/posts/sql-what-is-rdb-three-schema.svg)
 
-![RDBMS 쿼리 처리 흐름](/assets/posts/sql-what-is-rdb-rdbms.svg)
+1970년대 ANSI/SPARC 위원회가 제안한 이 구조는 오늘날 모든 RDBMS의 기본 뼈대입니다.
 
-클라이언트가 SQL을 보내면 RDBMS 내부에서 다음 단계를 거친다.
+| 단계 | 역할 | 독립성 |
+|------|------|--------|
+| **외부 단계** | 사용자·앱별 맞춤 뷰 | 논리적 독립성 ↕ |
+| **개념 단계** | 전체 DB 논리 구조 (스키마) | — |
+| **내부 단계** | 실제 파일·인덱스·블록 | 물리적 독립성 ↕ |
 
-1. **파서(Parser)**: SQL 문자열을 토큰으로 분리하고 구문 트리를 만든다. 문법 오류가 있으면 이 단계에서 에러가 반환된다.
-2. **옵티마이저(Optimizer)**: 통계 정보를 바탕으로 가장 효율적인 실행 계획(execution plan)을 선택한다. 인덱스를 쓸지, 어떤 조인 알고리즘을 쓸지 결정한다.
-3. **실행기(Executor)**: 실행 계획대로 스토리지 관리자를 호출해 데이터를 읽거나 쓴다.
-4. **스토리지 관리자**: 버퍼 캐시를 확인하고, 캐시 미스 시 디스크 I/O를 수행한다.
+- **논리적 독립성**: 개념 스키마(테이블 구조)가 바뀌어도 앱의 외부 뷰는 유지됩니다.
+- **물리적 독립성**: 디스크를 SSD로 교체하거나 인덱스를 추가해도 SQL 쿼리는 그대로 동작합니다.
+
+## DBMS가 제공하는 핵심 기능
 
 ```sql
--- 가장 단순한 RDB 예시
-CREATE TABLE employees (
-    id        INTEGER     PRIMARY KEY,
-    name      VARCHAR(50) NOT NULL,
-    email     VARCHAR(100) UNIQUE,
-    dept_id   INTEGER
-);
+-- 1. 선언형 질의 — "어떻게"가 아니라 "무엇을" 기술
+SELECT c.name, COUNT(o.id) AS order_count
+FROM   customers c
+JOIN   orders o ON o.customer_id = c.id
+WHERE  o.created_at >= '2026-01-01'
+GROUP  BY c.name
+ORDER  BY order_count DESC;
 
-INSERT INTO employees VALUES (1, '김철수', 'chulsoo@corp.io', 10);
+-- 2. 트랜잭션 — 원자성 보장
+BEGIN;
+  UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT; -- 둘 다 성공하거나 둘 다 실패
 
-SELECT name, email
-FROM   employees
-WHERE  dept_id = 10;
+-- 3. 제약 조건 — DBMS가 무결성 보장
+ALTER TABLE orders
+  ADD CONSTRAINT fk_customer
+  FOREIGN KEY (customer_id) REFERENCES customers(id);
 ```
 
-위 세 문장이 각각 DDL(테이블 정의), DML(데이터 삽입), DQL(데이터 조회)에 해당한다. SQL 분류는 이후 글에서 자세히 다룬다.
+파일 시스템으로는 위 세 가지를 구현하려면 수천 줄의 애플리케이션 코드가 필요합니다. DBMS는 이를 커널 수준에서 처리합니다.
 
-## 주요 RDBMS 비교
+## 데이터베이스 vs DBMS vs RDBMS
 
-| RDBMS | 라이선스 | 주요 특징 |
-|-------|----------|-----------|
-| PostgreSQL | 오픈소스 | 표준 준수, 확장성, JSON 지원 |
-| MySQL / MariaDB | 오픈소스 | 웹 서비스에 광범위 채용 |
-| Oracle | 상용 | 엔터프라이즈, RAC, 파티셔닝 |
-| SQL Server | 상용 | Windows 생태계, T-SQL |
-| SQLite | 오픈소스 | 임베디드, 단일 파일 |
+헷갈리기 쉬운 용어를 정리합니다.
 
-이 시리즈는 표준 SQL을 중심으로 진행하되, PostgreSQL·MySQL·Oracle·SQL Server의 방언(dialect) 차이를 필요할 때마다 짚어준다.
+- **데이터베이스(Database)**: 체계적으로 조직된 데이터의 집합체.
+- **DBMS(Database Management System)**: 데이터베이스를 생성·관리·조작하는 소프트웨어 시스템. Oracle, PostgreSQL, MySQL이 DBMS입니다.
+- **RDBMS(Relational DBMS)**: 관계형 모델(테이블·행·열·관계)을 기반으로 하는 DBMS. 현재 엔터프라이즈 환경의 90% 이상이 RDBMS입니다.
 
 ## 정리
 
-RDB는 데이터를 테이블로 저장하고 SQL로 다루는 데이터베이스다. 테이블 = 릴레이션, 행 = 튜플, 열 = 속성이라는 수학적 용어를 익혀두면 이후 관계 모델 이론을 읽을 때 훨씬 수월하다. RDBMS는 SQL을 파서 → 옵티마이저 → 실행기 → 스토리지 순으로 처리한다.
+파일 시스템은 단순한 데이터 저장에는 충분하지만, **동시성·무결성·복구·보안** 측면에서 근본적인 한계를 가집니다. DBMS는 ANSI/SPARC 3단계 아키텍처를 통해 데이터 독립성을 확보하고, SQL이라는 표준 선언형 언어로 복잡한 저수준 처리를 추상화합니다. 다음 글에서는 관계형 모델의 이론적 근거인 **관계·튜플·속성** 개념을 깊이 들여다봅니다.
 
 ---
 
-**다음 글:** [관계 모델: 집합론 위에 세운 데이터 구조](/posts/sql-relational-model/)
+**다음 글:** [관계형 모델 이론 — 관계·튜플·속성](/posts/sql-relational-model/)
 
 <br>
 읽어주셔서 감사합니다. 😊

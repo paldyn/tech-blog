@@ -1,130 +1,146 @@
 ---
-title: "왜 오케스트레이션이 필요한가 — 컨테이너 운영의 현실"
-description: "컨테이너 수가 늘어날수록 수동 운영이 왜 한계에 부딪히는지, 오케스트레이션이 어떻게 이 문제를 해결하는지 실제 시나리오로 설명합니다."
+title: "왜 컨테이너 오케스트레이션이 필요한가?"
+description: "마이크로서비스 환경에서 컨테이너 수가 늘어날수록 발생하는 운영 복잡성과, 쿠버네티스 오케스트레이션이 이 문제를 어떻게 해결하는지 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-07"
+pubDate: "2026-05-31"
 archiveOrder: 2
 type: "knowledge"
 category: "Kubernetes"
-tags: ["Kubernetes", "오케스트레이션", "컨테이너", "DevOps", "자동화", "SRE"]
+tags: ["kubernetes", "k8s", "orchestration", "microservices", "container", "devops"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-what-is-kubernetes/)에서 Kubernetes가 무엇인지 개념을 살펴봤다. 이번 글에서는 "왜 오케스트레이션이 필요한가"라는 더 근본적인 질문에 답한다. Docker만으로도 컨테이너를 실행할 수 있는데, 굳이 Kubernetes까지 써야 하는 이유가 무엇일까?
+[지난 글](/posts/k8s-what-is-kubernetes/)에서 Kubernetes가 무엇인지 개념을 살펴봤다. 이번에는 "왜 오케스트레이션이 필요한가?"라는 질문에 좀 더 구체적으로 답해본다. 모든 기술 도입에는 이유가 있다. K8s를 도입해야 하는 이유를 이해하면, K8s의 각 기능이 왜 그렇게 설계되었는지도 자연스럽게 이해된다.
 
-## 컨테이너 한 개는 쉽다
+## 모노리스에서 마이크로서비스로
 
-컨테이너 기술은 분명 강력하다. 개발 환경을 코드로 정의하고, 어디서든 동일하게 실행할 수 있다. 문제는 컨테이너가 **단 하나**일 때만 이야기가 깔끔하다는 것이다.
+초기 서비스는 보통 **모노리스(Monolith)** 형태로 시작한다. 하나의 코드베이스에 모든 기능이 담겨있고, 한 서버에서 실행된다. 간단하고 배포하기 쉽다.
+
+하지만 서비스가 성장하면 문제가 생긴다. 한 기능을 배포하려면 전체를 재배포해야 한다. 주문 서비스의 버그가 결제 서비스까지 다운시킨다. 트래픽이 몰리는 기능만 따로 확장할 수 없다.
+
+이 문제를 해결하기 위해 **마이크로서비스(Microservices)** 아키텍처로 전환한다. 각 기능을 독립된 서비스로 분리해 개별 배포·확장이 가능하게 한다. 그런데 서비스를 분리하는 순간 새로운 문제가 등장한다.
+
+![마이크로서비스 확장의 현실](/assets/posts/k8s-why-orchestration-problem.svg)
+
+## 컨테이너 수가 늘면 생기는 문제들
+
+서비스 5개가 각각 3개의 복제본으로 실행된다면 컨테이너는 15개다. 100개 서비스라면 300개가 넘는다. 이 상황에서 맞닥뜨리는 문제를 구체적으로 살펴보자.
+
+### 1. 배치 문제: 어떤 서버에 실행할까?
+
+서버가 5대 있고 컨테이너를 새로 배포해야 한다. 어느 서버에 실행해야 CPU와 메모리를 효율적으로 쓸 수 있을까? 매번 `df`, `top`, `free` 명령으로 서버 상태를 확인하고 직접 결정해야 한다.
 
 ```bash
-# 한 개는 이렇게 간단하다
-docker run -d -p 80:80 --name web nginx:1.25
-
-# 죽으면? 직접 재시작
-docker start web
+# 수동 배치의 현실 — 서버마다 상태 확인 후 결정
+ssh server1 "docker stats --no-stream"
+ssh server2 "docker stats --no-stream"
+# ... 적절한 서버 선택 후
+ssh server3 "docker run -d myapp:1.0"
 ```
 
-이 단순함은 컨테이너가 10개, 50개, 100개가 되는 순간 무너진다.
+서버가 10대, 20대로 늘어나면 이 과정 자체가 배포 병목이 된다.
 
-## 컨테이너 100개를 수동으로 운영한다면
+### 2. 고가용성 문제: 장애 시 어떻게 복구할까?
 
-실제 마이크로서비스 아키텍처에서 컨테이너 100개를 수동으로 운영하는 상황을 상상해보자.
-
-```
-현실적인 하루 운영 업무 목록
-─────────────────────────────
-- 06:30 auth-service 컨테이너 크래시 알림 수신
-- 06:35 SSH 접속 → docker restart auth-service-1
-- 09:00 마케팅 캠페인 시작 → 트래픽 5배 급증
-- 09:05 product-api 컨테이너 메모리 부족으로 OOM
-- 09:10 수동으로 컨테이너 5개 추가 실행
-- 14:00 새 버전 배포 → 서비스 중단 2분 발생
-- 23:00 야간 트래픽 감소 → 컨테이너 수 수동 축소
+```bash
+# 장애 감지조차 수동
+watch -n 5 "docker ps | grep myapp"
+# 컨테이너 죽으면 알림 받고 → 수동 재시작
+docker restart <container-id>
 ```
 
-매일 이런 작업을 반복한다면 엔지니어가 운영에만 집중하게 되고, 정작 중요한 개발은 뒷전으로 밀린다.
+새벽 2시에 장애가 나면 온콜 담당자를 깨워야 한다. 서비스가 복구될 때까지 수십 분~수 시간이 소요된다.
 
-![컨테이너 확산이 부르는 운영 복잡도](/assets/posts/k8s-why-orchestration-problem.svg)
+### 3. 스케일링 문제: 트래픽 폭증 대응
 
-## 수동 운영의 4가지 핵심 문제
+이벤트로 갑자기 트래픽이 10배로 늘어났다. 컨테이너를 늘려야 하지만, 어느 서버에 얼마나 늘려야 할지 계산해서 직접 실행해야 한다. 트래픽이 줄면 다시 수동으로 줄여야 한다.
 
-![오케스트레이션이 해결하는 4가지 문제](/assets/posts/k8s-why-orchestration-benefits.svg)
+### 4. 서비스 연결 문제: IP가 바뀌면 어떻게?
 
-### 1. 배포 실수
+마이크로서비스끼리 통신할 때 IP 주소를 직접 쓰면, 컨테이너가 재시작될 때마다 IP가 바뀌어 연결이 끊긴다. 서비스 레지스트리, 헬스체크, 로드밸런서를 별도로 구축해야 한다.
 
-사람이 직접 서버에 SSH 접속해서 docker 명령을 실행하면 실수가 생긴다. 잘못된 이미지 태그, 환경 변수 누락, 포트 충돌. 그리고 이 실수는 대부분 밤 12시에 발견된다.
+## 오케스트레이션이 주는 해답
 
-### 2. 장애 복구 지연
+![오케스트레이션이 해결하는 문제](/assets/posts/k8s-why-orchestration-solution.svg)
 
-컨테이너가 죽으면 알림을 받고 → 접속하고 → 원인 파악하고 → 재시작하는데 최소 몇 분이 걸린다. 그 사이 사용자들은 오류 화면을 본다.
+K8s는 위 문제들을 시스템 레벨에서 해결한다.
 
-### 3. 리소스 낭비
+**배치 → Scheduler**: 각 노드의 CPU/메모리 여유를 계산해 최적의 노드를 자동 선택한다. `kubectl apply` 한 번이면 끝이다.
 
-트래픽이 낮은 새벽에도 피크 타임을 위한 서버를 모두 켜두어야 한다. 자동으로 줄였다가 늘릴 방법이 없기 때문이다.
+**고가용성 → Self-healing**: kubelet이 각 파드의 상태를 지속 감시한다. 파드가 죽으면 즉시 재시작하고, 노드가 죽으면 다른 노드에 자동으로 이동시킨다.
 
-### 4. 무중단 배포 불가
+**스케일링 → HPA**: CPU/메모리 사용률 기반으로 파드 수를 자동 조절한다. 트래픽이 몰리면 수십 초 안에 파드가 추가된다.
 
-기존 컨테이너를 멈추고 새 컨테이너를 시작하는 사이 서비스가 중단된다. 그래서 많은 팀이 심야에만 배포하는 습관이 생긴다.
-
-## Kubernetes가 이 문제를 어떻게 푸는가
+**서비스 연결 → Service + DNS**: K8s Service 오브젝트가 안정적인 DNS 이름과 가상 IP를 제공한다. 파드 IP가 바뀌어도 서비스 이름으로 항상 연결된다.
 
 ```yaml
-# 이 YAML 하나로 4가지 문제를 모두 해결
+# 오케스트레이션이 적용된 실제 구성 예시
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service
+  name: user-service
 spec:
-  replicas: 3                    # 항상 3개 유지 (자가 치유)
-  strategy:
-    type: RollingUpdate          # 무중단 업데이트
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: auth-service
+      app: user-service
   template:
-    metadata:
-      labels:
-        app: auth-service
     spec:
       containers:
-      - name: auth-service
-        image: myrepo/auth:v2.1  # 배포 실수 방지 — 태그 명시
+      - name: app
+        image: user-service:2.1
         resources:
           requests:
-            memory: "128Mi"
-            cpu: "250m"
-          limits:
+            cpu: "200m"
             memory: "256Mi"
-            cpu: "500m"
-        livenessProbe:           # 자동 재시작 트리거
+        livenessProbe:
           httpGet:
-            path: /health
+            path: /healthz
             port: 8080
-          initialDelaySeconds: 15
+          initialDelaySeconds: 10
           periodSeconds: 10
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: user-service-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: user-service
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
 ```
 
-이 Deployment를 적용하면:
-- **자가 치유**: Pod가 죽으면 수초 내 자동으로 새 Pod 생성
-- **무중단 배포**: RollingUpdate로 하나씩 교체
-- **리소스 제어**: requests/limits로 낭비 방지
-- **자동 스케일링**: HPA를 추가하면 CPU 기준으로 replica 자동 조정
+이 YAML 하나로 user-service는 항상 3~20개 사이로 자동 유지되고, 장애 시 자동 복구되며, 서비스 이름(`user-service`)으로 다른 서비스에서 접근할 수 있게 된다.
 
-## 오케스트레이션은 선택이 아니다
+## 오케스트레이션 도입의 트레이드오프
 
-Google은 내부 클러스터 관리 시스템 Borg로 하루 **20억 개**의 컨테이너를 실행한다. 이것이 오케스트레이션 없이 가능했을까? Netflix, Airbnb, Spotify는 수천 개의 마이크로서비스를 Kubernetes로 운영한다.
+K8s가 모든 문제를 해결해주지만, 도입 자체의 비용도 있다.
 
-규모가 작더라도 서비스가 성장 궤도에 있다면, 지금부터 오케스트레이션 기반으로 설계하는 것이 나중에 전환 비용을 아끼는 길이다.
+| 항목 | 비용 |
+|---|---|
+| 학습 곡선 | 컨셉이 많다 (Pod, Deployment, Service, Ingress, ...) |
+| 초기 설정 | 클러스터 구성, 네트워크, 스토리지 설정 |
+| 운영 부담 | etcd 백업, 노드 업그레이드, 모니터링 |
+| 리소스 | 컨트롤 플레인 자체도 CPU/메모리를 사용 |
+
+이 비용은 서비스 규모가 클수록 운영 자동화 이득이 훨씬 크기 때문에 상쇄된다. 반대로 소규모 서비스라면 Docker Compose가 더 합리적인 선택일 수 있다.
 
 ---
 
-**지난 글:** [Kubernetes란 무엇인가?](/posts/k8s-what-is-kubernetes/)
+**지난 글:** [쿠버네티스란 무엇인가?](/posts/k8s-what-is-kubernetes/)
 
-**다음 글:** [Kubernetes vs Docker Compose — 무엇을 선택할까](/posts/k8s-vs-docker-compose/)
+**다음 글:** [쿠버네티스 클러스터 아키텍처](/posts/k8s-cluster-architecture/)
 
 <br>
 읽어주셔서 감사합니다. 😊

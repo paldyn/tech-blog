@@ -1,153 +1,179 @@
 ---
-title: "Kubernetes Pod 기초 — 컨테이너의 실행 단위"
-description: "K8s 최소 배포 단위인 Pod의 내부 구조, 네트워크/볼륨 공유 방식, 멀티 컨테이너 패턴, 그리고 자주 쓰는 kubectl 명령을 정리합니다."
+title: "쿠버네티스 파드(Pod) 기초"
+description: "쿠버네티스의 최소 배포 단위인 Pod의 구조(컨테이너 공유 네트워크/볼륨, sidecar 패턴, init 컨테이너), 생명주기 상태, 실전 YAML 작성법을 다룹니다."
 author: "PALDYN Team"
-pubDate: "2026-06-07"
-archiveOrder: 6
+pubDate: "2026-05-24"
+archiveOrder: 5
 type: "knowledge"
 category: "Kubernetes"
-tags: ["Kubernetes", "Pod", "컨테이너", "kubectl", "사이드카", "멀티컨테이너"]
+tags: ["kubernetes", "k8s", "pod", "sidecar", "init-container", "lifecycle"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-yaml-manifests/)에서 YAML 매니페스트 작성법을 익혔다. 이제 Kubernetes에서 가장 핵심이 되는 오브젝트인 **Pod**를 깊이 이해해보자. Pod는 K8s에서 컨테이너를 실행하는 **최소 단위**다.
+[지난 글](/posts/k8s-vs-docker-compose/)에서 Docker Compose와 Kubernetes의 차이를 비교했다. K8s를 이해하는 첫 번째 단계는 **Pod**다. Pod는 K8s가 배포·관리하는 최소 단위이며, 컨테이너를 직접 관리하는 대신 항상 Pod 안에 컨테이너를 넣어 실행한다.
 
-## Pod란 무엇인가
+## Pod = 컨테이너의 껍데기
 
-Pod는 **하나 이상의 컨테이너를 묶은 단위**다. Kubernetes는 컨테이너를 개별로 배포하지 않고, 항상 Pod 단위로 배포한다. Pod 안의 컨테이너들은 다음을 공유한다.
+![쿠버네티스 파드 구조](/assets/posts/k8s-pod-basics-anatomy.svg)
 
-- **네트워크 네임스페이스**: 같은 IP 주소와 포트 공간. 컨테이너끼리 `localhost`로 통신 가능
-- **볼륨**: 공유 스토리지 마운트
-- **IPC 네임스페이스**: 프로세스 간 통신 가능
+Pod는 하나 이상의 컨테이너를 묶은 그룹이다. 같은 Pod 안의 컨테이너는 다음을 공유한다.
 
-반면 **프로세스 네임스페이스**는 기본적으로 분리된다(shareProcessNamespace 옵션으로 공유 가능).
+- **네트워크 네임스페이스**: 같은 IP를 공유하므로 `localhost`로 서로 통신 가능
+- **볼륨**: `emptyDir`, PVC를 공유하면 파일 공유 가능
+- **생명주기**: Pod가 종료되면 모든 컨테이너가 종료됨
 
-![Pod 내부 구조](/assets/posts/k8s-pod-basics-anatomy.svg)
-
-## 단일 컨테이너 Pod (가장 흔한 패턴)
+Docker와 달리 컨테이너 이름으로 통신하지 않고 `localhost`를 사용한다는 점이 핵심이다.
 
 ```yaml
+# 기본 Pod YAML
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod
+  name: myapp
   labels:
-    app: nginx
+    app: myapp
 spec:
   containers:
-  - name: nginx
-    image: nginx:1.25
+  - name: app
+    image: myapp:1.0
     ports:
-    - containerPort: 80
+    - containerPort: 8080
     resources:
       requests:
-        cpu: "100m"
-        memory: "64Mi"
+        cpu: "0.5"
+        memory: "256Mi"
       limits:
-        cpu: "200m"
-        memory: "128Mi"
+        cpu: "1"
+        memory: "512Mi"
 ```
-
-대부분의 워크로드는 Pod 하나에 컨테이너 하나다. 하지만 직접 Pod를 작성하는 경우는 드물고, 보통 Deployment나 StatefulSet을 통해 Pod를 관리한다.
-
-## 멀티 컨테이너 Pod
-
-하나의 Pod에 여러 컨테이너를 넣는 경우는 두 컨테이너가 **강하게 결합**되어 있을 때다. 대표 패턴이 **사이드카(Sidecar)** 패턴이다.
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: app-with-sidecar
-spec:
-  containers:
-  # 메인 앱 컨테이너
-  - name: app
-    image: myapp:v1
-    volumeMounts:
-    - name: shared-logs
-      mountPath: /var/log/app
-
-  # 사이드카: 로그 수집
-  - name: log-collector
-    image: fluentd:v1.16
-    volumeMounts:
-    - name: shared-logs
-      mountPath: /var/log/app  # 같은 볼륨 마운트
-
-  volumes:
-  - name: shared-logs
-    emptyDir: {}               # Pod 수명과 함께하는 임시 볼륨
-```
-
-두 컨테이너가 `/var/log/app` 볼륨을 공유한다. 앱이 로그를 파일에 쓰면, 사이드카가 그 파일을 읽어 로그 수집 시스템에 전송한다.
-
-## Pod는 왜 직접 생성하지 않나?
-
-Pod를 직접 `kubectl apply -f pod.yaml`로 생성하면, 해당 Pod가 죽었을 때 자동으로 재생성되지 않는다. Pod는 **임시적(ephemeral)**이다. 그래서 실제 운영에서는 Pod를 관리하는 **상위 오브젝트**를 사용한다.
-
-| 상위 오브젝트 | 용도 |
-|---|---|
-| Deployment | 무상태 앱, 롤링 업데이트 |
-| StatefulSet | 데이터베이스 등 유상태 앱 |
-| DaemonSet | 모든 노드에 하나씩 실행 |
-| Job/CronJob | 일회성/주기적 배치 작업 |
-
-## Pod 내 컨테이너 통신
-
-같은 Pod 안의 컨테이너는 `localhost`로 통신한다.
-
-```bash
-# Pod 내 nginx(80번)와 sidecar(3000번)가 공존할 때
-# nginx 컨테이너에서
-curl http://localhost:3000
-
-# sidecar 컨테이너에서
-curl http://localhost:80
-```
-
-포트 충돌에 주의해야 한다. 두 컨테이너가 같은 포트를 열 수 없다.
-
-## kubectl로 Pod 다루기
-
-![Pod 자주 쓰는 kubectl 명령](/assets/posts/k8s-pod-basics-commands.svg)
 
 ```bash
 # Pod 생성
-kubectl run nginx --image=nginx:1.25 --port=80
+kubectl apply -f pod.yaml
 
-# Pod YAML 생성 (실제 생성 없이)
-kubectl run nginx --image=nginx:1.25 --dry-run=client -o yaml
+# Pod 목록 확인
+kubectl get pods -o wide
 
-# 포트 포워딩 (로컬 테스트)
-kubectl port-forward pod/nginx-pod 8080:80
-# 이후 http://localhost:8080 접근 가능
+# Pod 상세 정보
+kubectl describe pod myapp
 
-# Pod 삭제
-kubectl delete pod nginx-pod
-kubectl delete -f pod.yaml
+# 로그 확인
+kubectl logs myapp -c app
 ```
 
-## Pod 상태 확인
+## Sidecar 패턴
+
+같은 Pod에 보조 컨테이너(sidecar)를 붙이는 패턴이 자주 사용된다. 메인 앱 컨테이너와 같은 네트워크·볼륨을 공유하므로 프록시, 로그 수집, 모니터링 등의 역할을 맡기기 좋다.
+
+```yaml
+spec:
+  containers:
+  - name: app
+    image: myapp:1.0
+    ports:
+    - containerPort: 8080
+
+  # nginx를 앞단 리버스 프록시로 붙이기
+  - name: proxy
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: nginx-config
+      mountPath: /etc/nginx/conf.d
+
+  volumes:
+  - name: nginx-config
+    configMap:
+      name: nginx-proxy-config
+```
+
+sidecar 내부에서 메인 앱에 접근할 때 `http://localhost:8080`으로 접근한다.
+
+## Init 컨테이너
+
+메인 컨테이너 시작 전에 완료해야 하는 초기화 작업을 `initContainers`에 정의한다. 모든 init 컨테이너가 순서대로 성공해야 메인 컨테이너가 시작된다.
+
+```yaml
+spec:
+  initContainers:
+  - name: wait-for-db
+    image: busybox
+    command: ["sh", "-c",
+      "until nc -z db-service 5432; do echo waiting; sleep 2; done"]
+
+  - name: db-migrate
+    image: myapp:1.0
+    command: ["node", "scripts/migrate.js"]
+    env:
+    - name: DB_URL
+      valueFrom:
+        secretKeyRef:
+          name: db-secret
+          key: url
+
+  containers:
+  - name: app
+    image: myapp:1.0
+```
+
+## 파드 생명주기
+
+![파드 생명주기](/assets/posts/k8s-pod-basics-lifecycle.svg)
+
+`kubectl get pod` 의 STATUS 필드 변화:
+
+| 상태 | 의미 |
+|---|---|
+| `Pending` | 노드 스케줄링 대기 중, 이미지 풀 중 |
+| `Init:N/M` | N번째 init 컨테이너 실행 중 |
+| `Running` | 모든 컨테이너 실행 중 |
+| `Succeeded` | 모든 컨테이너 exit 0으로 종료 |
+| `Failed` | 하나 이상 컨테이너가 비정상 종료 |
+| `CrashLoopBackOff` | 반복 재시작 후 지수 백오프 중 |
 
 ```bash
-kubectl get pods
+# 상태 추이 실시간 모니터링
+kubectl get pod myapp -w
 
-# 출력 예시
-NAME          READY   STATUS    RESTARTS   AGE
-nginx-pod     1/1     Running   0          2m
-app-pod       0/2     Pending   0          10s
-broken-pod    0/1     Error     3          5m
+# CrashLoopBackOff 원인 찾기
+kubectl logs myapp --previous   # 이전 실행 로그
+kubectl describe pod myapp      # Events 섹션 확인
+
+# Pod 강제 삭제
+kubectl delete pod myapp --grace-period=0 --force
 ```
 
-`READY` 컬럼은 `실행중컨테이너/전체컨테이너`를 나타낸다. `2/2`면 두 컨테이너 모두 정상, `0/2`면 모두 비정상이다. `STATUS`가 `Pending`이면 스케줄링 대기 중이고, `CrashLoopBackOff`면 반복 충돌 중이다.
+## livenessProbe · readinessProbe
+
+```yaml
+containers:
+- name: app
+  image: myapp:1.0
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    failureThreshold: 3    # 3회 실패 시 컨테이너 재시작
+
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 5        # 실패 시 서비스 트래픽에서 제외 (재시작 X)
+```
+
+`livenessProbe` 실패 → 컨테이너 재시작, `readinessProbe` 실패 → 서비스 엔드포인트에서 제거(재시작 없음). 둘 다 설정하는 것이 실전 권장 패턴이다.
 
 ---
 
-**지난 글:** [Kubernetes YAML 매니페스트 작성법](/posts/k8s-yaml-manifests/)
+**지난 글:** [Kubernetes vs Docker Compose: 무엇을 선택해야 할까?](/posts/k8s-vs-docker-compose/)
 
-**다음 글:** [Pod 라이프사이클 — Pending부터 Terminating까지](/posts/k8s-pod-lifecycle/)
+**다음 글:** [쿠버네티스 Deployment 기초](/posts/k8s-deployment-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -1,154 +1,159 @@
 ---
-title: "제약 조건 기초: NOT NULL·DEFAULT·CHECK"
-description: "데이터 무결성의 첫 번째 방어선인 NOT NULL·DEFAULT·CHECK 제약 조건의 동작 원리, CHECK와 NULL의 3값 논리, ALTER TABLE로 제약을 추가·제거하는 방법을 완전 해설합니다."
+title: "컬럼 제약 조건 — NOT NULL · DEFAULT · CHECK"
+description: "NOT NULL로 빈 값을 막고, DEFAULT로 기본값을 설정하고, CHECK로 범위를 검증하는 세 가지 컬럼 제약 조건의 동작 원리와 실전 패턴을 정리합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-10"
-archiveOrder: 9
+pubDate: "2026-04-29"
+archiveOrder: 1
 type: "knowledge"
 category: "SQL"
-tags: ["제약조건", "NOT NULL", "DEFAULT", "CHECK", "데이터무결성", "ALTER TABLE"]
+tags: ["sql", "constraint", "not-null", "default", "check", "ddl", "3vl", "제약조건"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-data-types-datetime/)에서 날짜·시간 타입을 살펴봤다. 올바른 타입 선택으로도 잡을 수 없는 데이터 품질 문제가 있다 — 예를 들어 가격이 음수이거나, 이름이 NULL이거나. 제약 조건(constraint)은 이 두 번째 방어선이다.
+[지난 글](/posts/sql-data-types-datetime/)에서 DATE, TIMESTAMP 같은 날짜·시간 타입을 살펴봤다. 이번에는 컬럼 정의에 붙이는 세 가지 기본 제약 조건 — NOT NULL, DEFAULT, CHECK — 을 다룬다. 테이블 설계의 첫 번째 방어선이다.
 
-## 왜 제약 조건인가
+---
 
-애플리케이션 코드에서 유효성 검사를 하면 충분하지 않을까? 충분하지 않다. 이유는 세 가지다.
+## 왜 제약 조건이 필요한가
 
-1. **여러 진입점**: 애플리케이션 외에도 관리 도구, 데이터 마이그레이션 스크립트, 직접 SQL 접속 등 다양한 경로로 데이터가 삽입된다.
-2. **코드 버그**: 애플리케이션 검증 로직에 버그가 있을 수 있다.
-3. **DB가 보장**: 제약 조건은 RDBMS 레벨에서 강제되므로 어떤 경로로 삽입해도 일관성이 유지된다.
+데이터베이스는 "믿을 수 있는 데이터"를 보장해야 한다. 애플리케이션 레이어에서 검증하더라도, DB가 직접 규칙을 강제하지 않으면 잘못된 데이터가 스며드는 경로는 수없이 많다 — 마이그레이션 스크립트, 직접 SQL, 레거시 배치 등. 제약 조건은 **데이터가 어떤 경로로 들어오든 규칙을 지키게** 만드는 안전망이다.
+
+![컬럼 제약 조건 개요](/assets/posts/sql-constraints-not-null-default-check-overview.svg)
+
+---
 
 ## NOT NULL
 
-열에 NULL 값이 저장되는 것을 금지한다.
-
-![NOT NULL · DEFAULT · CHECK 제약 조건](/assets/posts/sql-constraints-not-null-default-check-overview.svg)
+`NOT NULL`은 컬럼에 NULL을 저장할 수 없게 막는다. INSERT 또는 UPDATE 시 해당 컬럼이 NULL이면 오류가 발생한다.
 
 ```sql
--- NOT NULL: 항상 값이 있어야 하는 열
-CREATE TABLE users (
-    id    BIGINT PRIMARY KEY,
-    email VARCHAR(200) NOT NULL,   -- 이메일은 필수
-    phone VARCHAR(20)              -- 전화번호는 선택 (NULL 허용)
+CREATE TABLE members (
+    member_id  INTEGER      NOT NULL,
+    email      VARCHAR(255) NOT NULL,
+    nickname   VARCHAR(50)  -- NULL 허용
 );
 ```
 
-**어디에 써야 할까?** 비즈니스 로직상 "반드시 있어야 하는" 모든 열에 붙인다. 기본 키는 자동으로 NOT NULL이다.
+`nickname`처럼 선택 항목은 NULL을 허용하고, `email`처럼 필수 항목은 NOT NULL로 막는 것이 일반적인 패턴이다.
 
-`NOT NULL`을 빠뜨리면 해당 열은 NULL을 허용하고, 이후 쿼리에서 `IS NULL` 확인을 빠뜨린 코드가 예상치 못한 결과를 낼 수 있다.
+### NULL의 의미
+
+NULL은 "값이 없음"을 나타내며, 빈 문자열(`''`)이나 0과는 다르다. `NULL = NULL`은 FALSE가 아니라 UNKNOWN이다. 이 세 값 논리(Three-Valued Logic, 3VL)를 이해하면 이후 CHECK 동작도 자연스럽게 이해된다.
+
+---
 
 ## DEFAULT
 
-값을 제공하지 않았을 때 자동으로 채울 값이나 표현식을 지정한다.
+`DEFAULT`는 INSERT 시 값을 생략했을 때 자동으로 채워 넣을 기본값을 지정한다.
 
 ```sql
 CREATE TABLE orders (
-    id         BIGINT PRIMARY KEY,
-    status     VARCHAR(20) DEFAULT 'pending',    -- 상수
-    created_at TIMESTAMPTZ DEFAULT now(),        -- 함수
-    is_active  BOOLEAN     DEFAULT TRUE,          -- 불리언
-    version    INTEGER     DEFAULT 0             -- 숫자
+    order_id   INTEGER,
+    status     VARCHAR(20)  DEFAULT 'PENDING',
+    created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN      DEFAULT FALSE
 );
 
--- DEFAULT를 사용하는 INSERT
-INSERT INTO orders (id) VALUES (1);
--- status='pending', created_at=현재시각, is_active=TRUE, version=0 자동 입력
+-- status, created_at, is_deleted를 생략해도 기본값이 들어간다
+INSERT INTO orders (order_id) VALUES (1001);
 ```
 
-DEFAULT 값은 저장 시점에 딱 한 번 평가된다. `now()`처럼 함수를 쓰면 INSERT 시점의 값이 저장된다.
+기본값으로 리터럴 상수 외에 `CURRENT_TIMESTAMP`, `CURRENT_DATE`, `CURRENT_USER` 같은 함수도 사용할 수 있다(DBMS마다 지원 범위가 다르다).
 
-**주의**: `DEFAULT`는 열이 INSERT 문에서 생략되었을 때만 작동한다. `NULL`을 명시적으로 넣으면(`INSERT INTO t (col) VALUES (NULL)`) DEFAULT가 적용되지 않는다.
+### DEFAULT와 NOT NULL의 조합
+
+```sql
+-- DEFAULT만 있으면: 생략 시 기본값, 명시적으로 NULL 삽입 가능
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+-- DEFAULT + NOT NULL: 생략 시 기본값, 명시적 NULL 삽입도 거부
+created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+```
+
+감사 컬럼(created_at, updated_at)처럼 항상 값이 있어야 한다면 `NOT NULL DEFAULT`를 함께 쓰는 것이 안전하다.
+
+---
 
 ## CHECK
 
-열의 값이 지정한 조건식을 만족하는지 검사한다.
+`CHECK`는 불리언 표현식을 지정하고, 결과가 FALSE면 삽입·수정을 거부한다.
 
 ```sql
-CREATE TABLE products (
-    id    BIGINT PRIMARY KEY,
-    price NUMERIC(12,2) NOT NULL CHECK (price > 0),
-    stock INTEGER       DEFAULT 0 CHECK (stock >= 0),
-    -- 여러 열에 걸친 테이블 제약
-    CONSTRAINT chk_discount CHECK (discounted_price < price)
+CREATE TABLE employees (
+    emp_id  INTEGER,
+    salary  NUMERIC(12,2) CHECK (salary > 0),
+    age     INTEGER       CHECK (age BETWEEN 18 AND 65),
+    grade   CHAR(1)       CHECK (grade IN ('A','B','C','D','F'))
 );
 ```
 
-### CHECK와 NULL의 3값 논리
+### CHECK와 NULL — 반드시 알아야 할 함정
 
-![제약 조건 위반 처리 흐름](/assets/posts/sql-constraints-not-null-default-check-behavior.svg)
+![NULL 처리와 세 값 논리](/assets/posts/sql-constraints-not-null-default-check-null-behavior.svg)
 
-CHECK 제약의 중요한 특성: **조건식 결과가 FALSE일 때만 에러**를 낸다. NULL(UNKNOWN)은 에러가 아니다.
+CHECK는 표현식이 **FALSE일 때만** 거부한다. NULL이 포함된 비교는 UNKNOWN을 반환하고, UNKNOWN은 거부되지 않는다.
 
 ```sql
--- age NULLABLE 열에 CHECK (age >= 0) 설정된 경우
-INSERT INTO t (age) VALUES (NULL);   -- 통과! NULL >= 0 = NULL (UNKNOWN)
-INSERT INTO t (age) VALUES (-5);     -- 에러! -5 >= 0 = FALSE
-INSERT INTO t (age) VALUES (25);     -- 통과! 25 >= 0 = TRUE
+-- salary 컬럼에 NOT NULL 없이 CHECK만 있다면:
+INSERT INTO employees (salary) VALUES (NULL);
+-- NULL > 0 → UNKNOWN → 통과! (의도와 다를 수 있음)
+
+-- NULL도 막으려면 NOT NULL을 함께 사용
+salary NUMERIC(12,2) NOT NULL CHECK (salary > 0)
 ```
 
-이 동작이 의도와 다르면 `NOT NULL`과 `CHECK`를 함께 써야 한다.
+이 동작은 버그가 아니라 SQL 표준의 의도된 설계다. NULL은 "알 수 없는 값"이므로 규칙을 위반한다고 단정할 수 없다는 논리다. 그러나 실무에서는 의도치 않은 NULL 허용으로 이어지기 쉬우니, 범위 제약이 필요한 컬럼은 NOT NULL을 함께 붙이는 습관을 들이는 게 좋다.
 
-## 제약에 이름 붙이기
+### 테이블 수준 CHECK
 
-이름 있는 제약은 나중에 제거하거나 에러 메시지에서 어떤 제약이 위반됐는지 파악하기 쉽다.
+여러 컬럼을 교차 검증할 때는 컬럼이 아닌 테이블 수준에 CHECK를 선언한다.
 
 ```sql
-CREATE TABLE payments (
-    id     BIGINT PRIMARY KEY,
-    amount NUMERIC(12,2)
-        CONSTRAINT chk_amount_positive CHECK (amount > 0)
+CREATE TABLE reservations (
+    start_date DATE NOT NULL,
+    end_date   DATE NOT NULL,
+    CONSTRAINT chk_date_range CHECK (end_date >= start_date)
 );
-```
-
-에러 발생 시 메시지에 `chk_amount_positive`가 표시되어 디버깅이 수월하다.
-
-## ALTER TABLE로 제약 추가·제거
-
-기존 테이블에도 제약 조건을 추가하거나 제거할 수 있다.
-
-```sql
--- NOT NULL 추가 (기존 데이터에 NULL이 없어야 성공)
-ALTER TABLE users ALTER COLUMN phone SET NOT NULL;
-
--- DEFAULT 추가
-ALTER TABLE products ALTER COLUMN stock SET DEFAULT 0;
-
--- CHECK 제약 추가
-ALTER TABLE products
-ADD CONSTRAINT chk_price CHECK (price > 0);
-
--- 제약 제거 (이름이 필요)
-ALTER TABLE products DROP CONSTRAINT chk_price;
-
--- DEFAULT 제거
-ALTER TABLE products ALTER COLUMN stock DROP DEFAULT;
-
--- NOT NULL 제거 (NULL 허용으로 변경)
-ALTER TABLE users ALTER COLUMN phone DROP NOT NULL;
-```
-
-## 기존 데이터와 제약 추가
-
-NOT NULL이나 CHECK를 기존 테이블에 추가할 때는 기존 데이터가 제약을 위반하면 실패한다. 대규모 테이블에서는 전체 스캔이 발생하므로 운영 중 부하가 생길 수 있다.
-
-```sql
--- PostgreSQL: NOT VALID 옵션으로 기존 데이터 검증 건너뜀
--- 새로 삽입·수정되는 데이터에만 제약 적용
-ALTER TABLE products
-ADD CONSTRAINT chk_price CHECK (price > 0) NOT VALID;
-
--- 나중에 유휴 시간에 기존 데이터 검증
-ALTER TABLE products VALIDATE CONSTRAINT chk_price;
 ```
 
 ---
 
-**지난 글:** [데이터 타입 완전 정복: 날짜·시간 타입](/posts/sql-data-types-datetime/)
+## 제약 조건 이름 지정
 
-**다음 글:** [기본 키 설계: 자연 키 vs 대리 키](/posts/sql-primary-key-design/)
+이름을 지정하면 에러 메시지가 명확해지고, 나중에 ALTER TABLE로 제약을 수정·삭제할 때 편리하다.
+
+```sql
+CREATE TABLE products (
+    price  NUMERIC(12,2)
+        CONSTRAINT nn_products_price     NOT NULL
+        CONSTRAINT chk_products_price    CHECK (price >= 0),
+    status VARCHAR(20)
+        CONSTRAINT df_products_status    DEFAULT 'ACTIVE'
+        CONSTRAINT chk_products_status   CHECK (status IN ('ACTIVE','INACTIVE'))
+);
+```
+
+이름 규칙은 팀마다 다르지만 `{타입}_{테이블}_{컬럼}` 형식이 흔히 쓰인다.
+
+---
+
+## 실전 체크리스트
+
+| 상황 | 권장 |
+|---|---|
+| 반드시 값이 있어야 하는 컬럼 | `NOT NULL` |
+| 값 없이도 의미 있는 컬럼 | NULL 허용 |
+| 삽입 시 자주 생략되는 컬럼 | `DEFAULT` |
+| 기본값도 있고 NULL도 막아야 | `NOT NULL DEFAULT` |
+| 값의 범위·목록 제한 | `CHECK` |
+| CHECK 대상 컬럼에 NULL도 불허 | `NOT NULL CHECK` |
+
+NOT NULL, DEFAULT, CHECK는 PRIMARY KEY나 FOREIGN KEY에 비해 단순해 보이지만, 데이터 품질을 지키는 가장 직접적인 수단이다. 다음 글에서는 테이블의 식별자 역할을 하는 PRIMARY KEY를 설계하는 방법을 다룬다.
+
+---
+
+**다음 글:** [기본 키 설계 — PRIMARY KEY의 본질과 전략](/posts/sql-primary-key-design/)
 
 <br>
 읽어주셔서 감사합니다. 😊

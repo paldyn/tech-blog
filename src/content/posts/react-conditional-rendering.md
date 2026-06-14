@@ -1,173 +1,174 @@
 ---
-title: "조건부 렌더링 — 삼항 연산자부터 얼리 리턴까지"
-description: "if/else 얼리 리턴, 삼항 연산자, && 단축 평가, JSX 변수 패턴까지 React 조건부 렌더링의 모든 패턴과 0 렌더링 함정을 다룹니다."
+title: "조건부 렌더링"
+description: "if/else, 삼항 연산자, && 단락 평가 등 React에서 조건에 따라 다른 UI를 렌더링하는 다양한 패턴과 주의사항을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
-archiveOrder: 9
+pubDate: "2026-05-31"
+archiveOrder: 5
 type: "knowledge"
 category: "React"
-tags: ["조건부렌더링", "삼항연산자", "단락평가", "얼리리턴", "React", "JSX패턴"]
+tags: ["React", "조건부렌더링", "JSX", "삼항연산자", "단락평가"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-props-spreading/)에서 props spreading의 올바른 사용법을 살펴봤다. 실제 앱에서 UI는 거의 항상 조건에 따라 달라진다. 로그인 여부, 로딩 상태, 에러 유무에 따라 완전히 다른 화면을 보여줘야 한다. React에서 조건부 렌더링은 별도 문법이 아니라 **순수 JavaScript 조건 표현식**을 JSX 안에서 활용하는 것이다.
+[지난 글](/posts/react-props/)에서 props로 데이터를 전달하는 방법을 배웠습니다. 이번에는 상황에 따라 다른 UI를 보여주는 **조건부 렌더링** 패턴들을 살펴봅니다. React에서는 별도의 템플릿 문법 없이 JavaScript 표현식만으로 조건부 렌더링을 처리합니다.
 
-## 4가지 패턴
+---
 
-### ① if/else — 얼리 리턴
+## 패턴 1 — if/else (JSX 외부)
 
-컴포넌트 함수 안에서 일반 `if` 문을 사용한다. 특히 로딩·에러 가드에 최적이다.
+가장 명확한 방법은 `return` 이전에 일반 `if/else`로 분기하는 것입니다.
 
 ```jsx
-function PostPage({ postId }) {
-  const { data, isLoading, error } = usePost(postId);
+function Notification({ type, message }) {
+  if (type === 'error') {
+    return (
+      <div className="alert alert-error">
+        <strong>오류:</strong> {message}
+      </div>
+    );
+  }
 
-  if (isLoading) return <Spinner />;
-  if (error) return <ErrorMessage message={error.message} />;
+  if (type === 'success') {
+    return (
+      <div className="alert alert-success">
+        ✓ {message}
+      </div>
+    );
+  }
 
+  return <div className="alert">{message}</div>;
+}
+```
+
+케이스가 셋 이상이거나 조건 로직이 복잡할 때 이 패턴이 가장 읽기 쉽습니다.
+
+---
+
+## 패턴 2 — 삼항 연산자
+
+JSX 안에서 `조건 ? 참 : 거짓` 형태로 인라인 분기합니다.
+
+```jsx
+function StatusBadge({ isOnline }) {
   return (
-    <article>
-      <h1>{data.title}</h1>
-      <p>{data.body}</p>
-    </article>
+    <span className={`badge ${isOnline ? 'badge-green' : 'badge-gray'}`}>
+      {isOnline ? '온라인' : '오프라인'}
+    </span>
   );
 }
 ```
 
-"행복 경로"(정상 케이스)를 마지막에 두고 예외 케이스를 앞에서 처리하는 구조다. 코드가 위에서 아래로 선형적으로 읽혀 이해하기 쉽다.
-
-### ② 삼항 연산자 — 두 가지 중 하나
-
-JSX 안에서 인라인으로 A 또는 B를 선택할 때 쓴다.
+A와 B 중 하나를 선택할 때 간결합니다. 단, 삼항을 **중첩**하면 가독성이 급격히 떨어지므로 2단 이상은 피합니다.
 
 ```jsx
-function AuthButton({ isLoggedIn }) {
-  return (
-    <header>
-      <h1>My App</h1>
-      {isLoggedIn ? (
-        <button onClick={logout}>로그아웃</button>
-      ) : (
-        <button onClick={login}>로그인</button>
-      )}
-    </header>
-  );
-}
+// ❌ 중첩 삼항 — 읽기 어려움
+{loading ? <Spinner /> : error ? <ErrorMsg /> : <Content />}
+
+// ✅ if/else로 분리하거나 변수로 추출
+let content;
+if (loading) content = <Spinner />;
+else if (error) content = <ErrorMsg />;
+else content = <Content />;
+return <div>{content}</div>;
 ```
 
-두 가지 분기가 명확할 때 적합하다. 중첩 삼항 연산자는 가독성을 급격히 떨어뜨리므로 피해야 한다.
+![조건부 렌더링 패턴](/assets/posts/react-conditional-rendering-patterns.svg)
 
-### ③ && 단축 평가 — 있거나 없거나
+---
 
-조건이 참일 때만 무언가를 렌더하고, 거짓이면 아무것도 렌더하지 않을 때 쓴다.
+## 패턴 3 — && 단락 평가
+
+조건이 참일 때만 렌더링하고, 거짓이면 아무것도 보이지 않아야 할 때 씁니다.
 
 ```jsx
-function Notification({ hasNew }) {
+function Inbox({ messages }) {
   return (
     <div>
-      <span>알림</span>
-      {hasNew && <span className="badge">새 알림</span>}
+      <h1>받은 편지함</h1>
+      {messages.length > 0 && (
+        <p className="badge">{messages.length}개의 새 메시지</p>
+      )}
     </div>
   );
 }
 ```
 
-### ④ 변수에 JSX 저장
+### ⚠ 숫자 0의 함정
 
-세 가지 이상의 분기가 필요하거나 복잡한 조건 로직이 있을 때 변수에 JSX를 미리 저장한다.
-
-```jsx
-function StatusMessage({ status }) {
-  let content;
-  if (status === 'loading') content = <Spinner />;
-  else if (status === 'error') content = <ErrorIcon />;
-  else if (status === 'empty') content = <EmptyState />;
-  else content = <CheckIcon />;
-
-  return <div className="status">{content}</div>;
-}
-```
-
-복잡한 로직을 JSX 반환 부분에서 분리할 수 있어 읽기 쉬워진다.
-
-![조건부 렌더링 4가지 패턴](/assets/posts/react-conditional-patterns.svg)
-
-## && 연산자의 함정 — 0이 화면에 나타난다
-
-`&&` 단축 평가를 숫자나 빈 문자열에 사용하면 예상치 못한 결과가 생긴다.
+`&&` 왼쪽에 숫자를 그대로 두면 0일 때 화면에 `0`이 출력됩니다. JavaScript에서 `0`은 falsy이지만, React는 숫자 `0`을 텍스트 노드로 렌더링합니다.
 
 ```jsx
-const count = 0;
-
-// ❌ 잘못된 코드 — 화면에 "0"이 나타남
+// ❌ count가 0이면 "0"이 화면에 나타남
 {count && <Badge>{count}</Badge>}
 
-// 이유: 0 && <Badge> === 0 (false가 아니라 숫자 0)
-// React는 숫자 0을 DOM에 렌더한다
-```
-
-JavaScript `&&`의 결과가 `false`이면 React가 렌더하지 않지만, `0`, `NaN`, `""` 같은 falsy 값은 **React가 텍스트 노드로 렌더**한다.
-
-```jsx
 // ✅ Boolean으로 명시적 변환
+{count > 0 && <Badge>{count}</Badge>}
+// 또는
 {!!count && <Badge>{count}</Badge>}
-
-// ✅ 삼항 연산자로 명확하게
-{count > 0 ? <Badge>{count}</Badge> : null}
 ```
-
-![&& 연산자 함정](/assets/posts/react-conditional-pitfalls.svg)
-
-## null과 false를 반환하면 아무것도 렌더되지 않는다
-
-컴포넌트가 `null`이나 `false`를 반환하면 React는 DOM에 아무것도 추가하지 않는다. `undefined`를 반환하면 에러가 발생하므로 조심해야 한다.
-
-```jsx
-// null 반환 → DOM에서 완전히 제거
-function Banner({ show }) {
-  if (!show) return null;
-  return <div className="banner">이벤트 배너</div>;
-}
-
-// undefined 반환 → ⚠️ React 에러
-function Bad() {
-  // return이 없으면 undefined 반환 — 에러!
-}
-```
-
-## 복잡한 조건은 컴포넌트로 분리
-
-삼항 연산자나 `&&`이 JSX 안에서 3줄 이상을 차지하거나 중첩된다면 별도 컴포넌트로 분리하는 것이 낫다.
-
-```jsx
-// ❌ 읽기 어려운 중첩 삼항
-{isLoading ? <Spinner /> : error ? <Error msg={error} /> : data ? <List items={data} /> : null}
-
-// ✅ 컴포넌트로 분리
-function PostContent({ isLoading, error, data }) {
-  if (isLoading) return <Spinner />;
-  if (error) return <Error msg={error} />;
-  if (!data) return null;
-  return <List items={data} />;
-}
-```
-
-## 정리
-
-- 로딩·에러 가드에는 얼리 리턴 패턴이 가장 명확하다
-- A/B 선택에는 삼항 연산자, 있거나 없거나에는 `&&` 단축 평가를 쓴다
-- `&&`를 숫자/빈 문자열에 쓰면 0이나 빈 텍스트가 렌더될 수 있다. `!!` 또는 삼항으로 해결한다
-- 복잡한 조건 로직은 변수나 별도 컴포넌트로 분리한다
-- `null` 반환 = DOM에서 제거. `undefined` 반환 = 에러
-
-다음 글에서는 배열 데이터를 화면에 나열하는 **목록 렌더링** 패턴을 다룬다.
 
 ---
 
-**지난 글:** [Props Spreading — 편리함과 위험성 사이](/posts/react-props-spreading/)
+## 패턴 4 — null 반환
 
-**다음 글:** [목록 렌더링 — map()과 배열 처리 패턴](/posts/react-list-rendering/)
+컴포넌트 자체를 아무것도 렌더링하지 않으려면 `null`을 반환합니다.
+
+```jsx
+function Tooltip({ text, visible }) {
+  if (!visible) return null;
+  return <div className="tooltip">{text}</div>;
+}
+```
+
+`null`을 반환해도 컴포넌트는 여전히 마운트된 상태입니다. 완전히 제거하려면 부모에서 컴포넌트 자체를 렌더링하지 않아야 합니다.
+
+---
+
+## 변수에 JSX 저장
+
+복잡한 조건 분기 결과를 변수에 저장하면 JSX를 깔끔하게 유지할 수 있습니다.
+
+```jsx
+function Dashboard({ user, loading, error }) {
+  let content;
+
+  if (loading) {
+    content = <LoadingSpinner />;
+  } else if (error) {
+    content = <ErrorBoundaryMessage error={error} />;
+  } else if (!user) {
+    content = <LoginPrompt />;
+  } else {
+    content = <UserDashboard user={user} />;
+  }
+
+  return (
+    <main className="dashboard">
+      <Header />
+      {content}
+      <Footer />
+    </main>
+  );
+}
+```
+
+---
+
+## 패턴 선택 가이드
+
+![조건부 렌더링 패턴 선택 가이드](/assets/posts/react-conditional-rendering-comparison.svg)
+
+- **케이스가 여러 개**: `if/else` 또는 JSX 변수
+- **A 또는 B**: 삼항 연산자
+- **보여주거나 숨기거나**: `&&` (숫자 조건은 Boolean 변환)
+- **중첩 삼항**: 피하고 변수/컴포넌트로 분리
+
+---
+
+**지난 글:** [props로 데이터 전달하기](/posts/react-props/)
+
+**다음 글:** [리스트 렌더링](/posts/react-list-rendering/)
 
 <br>
 읽어주셔서 감사합니다. 😊

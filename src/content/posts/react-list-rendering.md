@@ -1,29 +1,60 @@
 ---
-title: "목록 렌더링 — map()과 배열 처리 패턴"
-description: "배열을 JSX로 변환하는 map() 기본 패턴, filter() 조합, 빈 배열 처리, 중첩 목록 컴포넌트 분리, 배열 메서드 선택 기준까지 완전히 정리합니다."
+title: "리스트 렌더링"
+description: "React에서 배열 데이터를 .map()으로 렌더링하는 방법, filter와 조합하는 패턴, 빈 배열 처리, 중첩 리스트 구현을 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-08"
-archiveOrder: 10
+pubDate: "2026-05-31"
+archiveOrder: 6
 type: "knowledge"
 category: "React"
-tags: ["목록렌더링", "map", "filter", "배열", "React", "JSX패턴"]
+tags: ["React", "리스트렌더링", "map", "filter", "key"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-conditional-rendering/)에서 조건부 렌더링 패턴을 모두 살펴봤다. 실제 앱에서 리스트 UI는 빠질 수 없다. 게시글 목록, 댓글 목록, 카테고리 메뉴 — 모두 배열을 JSX로 변환하는 패턴으로 만든다. React에서 목록 렌더링은 별도 디렉티브 없이 JavaScript `map()`을 그대로 쓴다.
+[지난 글](/posts/react-conditional-rendering/)에서 조건에 따라 다른 UI를 보여주는 패턴을 살펴봤습니다. 이번에는 배열 데이터를 화면에 나열하는 **리스트 렌더링**을 다룹니다. React에서는 JavaScript의 `.map()`이 핵심 도구입니다.
 
-## 기본 패턴: map()
+---
 
-배열에서 각 항목을 JSX Element로 변환하는 가장 기본적인 패턴이다.
+## 기본 패턴 — .map()
+
+React에서 배열 데이터를 렌더링할 때는 `.map()`으로 각 항목을 JSX 요소로 변환합니다.
 
 ```jsx
-function PostList({ posts }) {
+const fruits = ['사과', '바나나', '체리'];
+
+function FruitList() {
   return (
     <ul>
-      {posts.map(post => (
-        <li key={post.id}>
-          <a href={`/posts/${post.slug}`}>{post.title}</a>
+      {fruits.map((fruit, index) => (
+        <li key={index}>{fruit}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+`.map()`의 반환값(JSX 배열)을 `{}`으로 감싸면 React가 자동으로 각 요소를 렌더링합니다.
+
+---
+
+## 객체 배열 렌더링
+
+실무에서는 대부분 객체 배열을 다룹니다. 각 객체의 고유 `id`를 `key`로 사용합니다.
+
+```jsx
+const products = [
+  { id: 1, name: '노트북', price: 1_200_000 },
+  { id: 2, name: '마우스', price: 35_000 },
+  { id: 3, name: '모니터', price: 450_000 },
+];
+
+function ProductList() {
+  return (
+    <ul className="product-list">
+      {products.map(product => (
+        <li key={product.id} className="product-item">
+          <span className="name">{product.name}</span>
+          <span className="price">{product.price.toLocaleString()}원</span>
         </li>
       ))}
     </ul>
@@ -31,141 +62,142 @@ function PostList({ posts }) {
 }
 ```
 
-`map()`이 JSX Element의 배열을 반환하고, React가 이를 순서대로 렌더한다. **`key` prop은 필수**다. 없으면 경고가 뜨고 성능이 저하된다. (key에 대해서는 다음 글에서 전면적으로 다룬다.)
+![리스트 렌더링 map 패턴](/assets/posts/react-list-rendering-map.svg)
 
-## filter() + map() 조합
+---
 
-먼저 `filter()`로 렌더할 항목을 추려낸 다음 `map()`으로 변환하는 것이 일반적이다.
+## 컴포넌트로 분리하기
+
+리스트 항목이 복잡할수록 별도 컴포넌트로 분리하면 코드가 깔끔해집니다.
 
 ```jsx
-function PublishedPostList({ posts }) {
+function ProductCard({ id, name, price, category }) {
   return (
-    <ul>
-      {posts
-        .filter(post => post.published)
-        .map(post => (
-          <PostCard key={post.id} post={post} />
-        ))
-      }
-    </ul>
+    <article className="card" aria-labelledby={`product-${id}`}>
+      <h3 id={`product-${id}`}>{name}</h3>
+      <p className="category">{category}</p>
+      <p className="price">{price.toLocaleString()}원</p>
+    </article>
+  );
+}
+
+function ProductGrid({ products }) {
+  return (
+    <div className="grid">
+      {products.map(product => (
+        <ProductCard key={product.id} {...product} />
+      ))}
+    </div>
   );
 }
 ```
 
-`.filter()` → `.map()` 체인은 선언적이고 읽기 쉽다. 성능이 걱정된다면 `useMemo`로 결과를 메모이제이션한다.
+---
 
-![목록 렌더링 패턴](/assets/posts/react-list-rendering-map.svg)
+## filter + map 조합
 
-## 빈 배열 처리
-
-`map()`은 빈 배열에도 오류 없이 동작해 아무것도 렌더하지 않는다. 사용자에게 "데이터 없음" 메시지를 보여주려면 명시적으로 처리해야 한다.
+조건에 맞는 항목만 렌더링할 때는 `.filter()` 뒤에 `.map()`을 연결합니다.
 
 ```jsx
-function PostList({ posts }) {
-  if (posts.length === 0) {
-    return <p className="empty">작성된 글이 없습니다.</p>;
+function PremiumProducts({ products }) {
+  return (
+    <section>
+      <h2>프리미엄 상품</h2>
+      <ul>
+        {products
+          .filter(p => p.price >= 100_000)
+          .map(p => (
+            <li key={p.id}>{p.name} — {p.price.toLocaleString()}원</li>
+          ))}
+      </ul>
+    </section>
+  );
+}
+```
+
+---
+
+## 빈 배열 처리 (Empty State)
+
+배열이 비었을 때 "항목 없음" UI를 보여주는 것은 좋은 UX의 기본입니다.
+
+```jsx
+function CommentList({ comments }) {
+  if (comments.length === 0) {
+    return (
+      <div className="empty-state">
+        <p>아직 댓글이 없습니다. 첫 번째 댓글을 남겨보세요!</p>
+      </div>
+    );
   }
 
   return (
     <ul>
-      {posts.map(post => (
-        <PostCard key={post.id} post={post} />
+      {comments.map(comment => (
+        <li key={comment.id}>
+          <strong>{comment.author}</strong>: {comment.text}
+        </li>
       ))}
     </ul>
   );
 }
 ```
-
-얼리 리턴으로 빈 상태를 먼저 처리하면 주된 렌더 로직이 깔끔해진다.
-
-## 컴포넌트로 분리
-
-`map()` 안에 긴 JSX를 쓰면 가독성이 떨어진다. 각 항목을 별도 컴포넌트로 분리한다.
-
-```jsx
-// ❌ map 안에 긴 JSX
-{items.map(item => (
-  <div key={item.id} className="card">
-    <img src={item.thumbnail} alt={item.title} />
-    <div className="card-body">
-      <h3>{item.title}</h3>
-      <p>{item.summary}</p>
-      <span>{item.date}</span>
-    </div>
-  </div>
-))}
-
-// ✅ 컴포넌트로 분리
-{items.map(item => (
-  <PostCard key={item.id} post={item} />
-))}
-```
-
-컴포넌트로 분리하면 `map` 부분이 간결해지고, `PostCard` 내부 로직도 독립적으로 관리할 수 있다.
-
-## 중첩 목록
-
-중첩 데이터를 렌더할 때는 각 계층을 별도 컴포넌트로 분리하는 것이 명확하다.
-
-```jsx
-function CategoryList({ categories }) {
-  return (
-    <ul>
-      {categories.map(cat => (
-        <CategoryItem key={cat.id} category={cat} />
-      ))}
-    </ul>
-  );
-}
-
-function CategoryItem({ category }) {
-  return (
-    <li>
-      <span>{category.name}</span>
-      <ul>
-        {category.items.map(item => (
-          <li key={item.id}>{item.title}</li>
-        ))}
-      </ul>
-    </li>
-  );
-}
-```
-
-![중첩 목록과 컴포넌트 분리](/assets/posts/react-list-rendering-nested.svg)
-
-## 인덱스를 key로 쓰면 안 되는 경우
-
-`map()`의 두 번째 인자로 오는 인덱스를 key로 쓰면 쉽지만 위험하다.
-
-```jsx
-// ⚠️ 항목이 추가/삭제/정렬될 수 있다면 인덱스 key는 위험
-{items.map((item, index) => (
-  <Item key={index} item={item} />
-))}
-
-// ✅ 안정적인 고유 ID 사용
-{items.map(item => (
-  <Item key={item.id} item={item} />
-))}
-```
-
-인덱스를 key로 쓰면 항목이 재정렬되거나 삽입/삭제될 때 React가 잘못된 컴포넌트를 재사용해 상태 버그와 성능 문제가 생긴다. (이 주제는 다음 키 글에서 깊이 다룬다.)
-
-## 정리
-
-- `map()`으로 배열을 JSX 배열로 변환한다
-- `key` prop은 필수이며 배열 내에서 안정적으로 고유해야 한다
-- `filter()` → `map()` 체인으로 조건부 목록을 만든다
-- 빈 배열은 얼리 리턴이나 삼항으로 명시적으로 처리한다
-- 항목이 복잡하면 컴포넌트로 분리해 `map()` 안을 단순하게 유지한다
-- 항목이 재정렬될 수 있다면 인덱스 key는 사용하지 않는다
-
-다음 글에서는 `key` prop이 정확히 무엇을 하는지, 잘못된 key가 어떤 버그를 만드는지 완전히 파헤친다.
 
 ---
 
-**지난 글:** [조건부 렌더링 — 삼항 연산자부터 얼리 리턴까지](/posts/react-conditional-rendering/)
+## 중첩 리스트
+
+카테고리 안에 아이템이 있는 구조처럼 중첩 리스트도 `.map()` 안에 `.map()`을 씁니다. 각 수준의 요소에 별도로 `key`를 지정합니다.
+
+```jsx
+function CategoryMenu({ categories }) {
+  return (
+    <nav>
+      {categories.map(category => (
+        <section key={category.id}>
+          <h2>{category.name}</h2>
+          <ul>
+            {category.items.map(item => (
+              <li key={item.id}>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </nav>
+  );
+}
+```
+
+![리스트 렌더링 패턴](/assets/posts/react-list-rendering-patterns.svg)
+
+---
+
+## key에 대한 오해
+
+`key`는 React 내부에서만 사용하며, 컴포넌트의 `props`로 전달되지 않습니다. 자식 컴포넌트에서 `key` 값을 사용하려면 별도 prop으로 명시적으로 내려야 합니다.
+
+```jsx
+// key는 props.key로 접근 불가
+function Item({ id, name }) {
+  // ❌ props.key로 받을 수 없음
+  return <li data-id={id}>{name}</li>;
+}
+
+// 렌더링 시: key와 id를 둘 다 전달
+{items.map(item => (
+  <Item key={item.id} id={item.id} name={item.name} />
+))}
+```
+
+`key`에 대한 더 자세한 내용은 다음 글에서 다룹니다.
+
+---
+
+**지난 글:** [조건부 렌더링](/posts/react-conditional-rendering/)
+
+**다음 글:** [key의 역할과 올바른 사용](/posts/react-keys/)
 
 <br>
 읽어주셔서 감사합니다. 😊

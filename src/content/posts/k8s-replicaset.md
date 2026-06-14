@@ -1,134 +1,139 @@
 ---
-title: "ReplicaSet — Pod 복제본을 유지하는 메커니즘"
-description: "Kubernetes ReplicaSet의 조정 루프(Reconcile Loop), selector.matchLabels 동작 방식, Deployment와의 관계, 그리고 직접 사용해야 할 상황을 설명합니다."
+title: "쿠버네티스 ReplicaSet 완전 이해"
+description: "Kubernetes에서 Pod 복제본 수를 유지하는 ReplicaSet의 컨트롤 루프 동작 원리, YAML 구조, 스케일링 방법, Deployment와의 관계를 설명합니다."
 author: "PALDYN Team"
-pubDate: "2026-06-07"
-archiveOrder: 10
+pubDate: "2026-06-02"
+archiveOrder: 5
 type: "knowledge"
 category: "Kubernetes"
-tags: ["Kubernetes", "ReplicaSet", "Pod", "Deployment", "조정루프", "고가용성"]
+tags: ["Kubernetes", "ReplicaSet", "Pod", "스케일링", "컨트롤 루프", "자가 치유"]
 featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-owner-references/)에서 ownerReferences로 오브젝트 소유 관계를 표현하는 방법을 배웠다. ReplicaSet은 그 대표적인 예로, Pod들의 오너가 되어 지정된 수를 항상 유지한다.
+[지난 글](/posts/k8s-owner-references/)에서 소유권 체인과 가비지 컬렉션을 살펴봤습니다. 이번에는 그 소유권 체인의 핵심 구성 요소인 **ReplicaSet**을 깊이 다룹니다. ReplicaSet은 지정한 수의 Pod 복제본을 항상 유지하는 오브젝트입니다. Pod가 삭제되거나 노드 장애로 사라지면 즉시 새 Pod를 생성해 desired state를 회복합니다.
 
-## ReplicaSet이란
+## ReplicaSet의 역할
 
-ReplicaSet(RS)은 **지정된 수의 Pod 복제본을 항상 실행 상태로 유지**하는 오브젝트다. Pod가 죽으면 새로 만들고, 너무 많으면 지운다. 이 작업을 수행하는 것이 **조정 루프(Reconcile Loop)**다.
+ReplicaSet이 보장하는 것은 단 하나입니다. **selector와 일치하는 Pod가 항상 `replicas`에 지정된 수만큼 Running 상태여야 한다.**
+
+Pod를 직접 만들어 사용하면 노드 장애 시 해당 Pod는 영구적으로 사라집니다. ReplicaSet은 이를 방지합니다. 컨트롤 루프가 지속적으로 desired 상태와 actual 상태를 비교해 부족하면 Pod를 추가하고, 초과하면 Pod를 제거합니다.
+
+![ReplicaSet 컨트롤 루프](/assets/posts/k8s-replicaset-controller-loop.svg)
+
+## ReplicaSet YAML 구조
 
 ```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: my-app-rs
+  name: web-rs
+  namespace: default
 spec:
-  replicas: 3                    # 유지할 Pod 수
+  replicas: 3
   selector:
     matchLabels:
-      app: my-app
-      version: v1
-  template:                      # 생성할 Pod 템플릿
+      app: web
+  template:
     metadata:
       labels:
-        app: my-app
-        version: v1
+        app: web
     spec:
       containers:
-      - name: app
-        image: myapp:v1
+      - name: web
+        image: nginx:1.25
         ports:
-        - containerPort: 8080
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
 ```
 
-`selector.matchLabels`와 `template.metadata.labels`는 **반드시 일치**해야 한다. 이 레이블로 RS가 "자기 Pod"를 식별하기 때문이다.
+`spec.selector`와 `spec.template.metadata.labels`는 반드시 일치해야 합니다. 불일치 시 ReplicaSet 생성이 거부됩니다. selector가 이미 다른 Pod를 선택하고 있다면 ReplicaSet이 그 Pod들을 인수(adopt)합니다.
 
-## 조정 루프 동작
-
-![ReplicaSet 조정 루프](/assets/posts/k8s-replicaset-reconcile.svg)
-
-RS 컨트롤러는 etcd에서 이벤트를 감지하면 즉시 조정을 시작한다.
+## kubectl로 ReplicaSet 관리
 
 ```bash
-# 실시간 확인: RS 상태
-kubectl get rs my-app-rs -w
+# 목록 확인 (DESIRED / CURRENT / READY)
+kubectl get replicaset
+kubectl get rs
 
-# 출력:
-# NAME        DESIRED   CURRENT   READY   AGE
-# my-app-rs   3         3         3       5m
-#
-# Pod 하나 강제 삭제 시
-# my-app-rs   3         2         2       5m
-# my-app-rs   3         3         2       5m   (즉시 새 Pod 생성)
-# my-app-rs   3         3         3       5m   (새 Pod Ready)
+# 상세 확인 (이벤트, 조건 포함)
+kubectl describe rs web-rs
+
+# 스케일 조정
+kubectl scale rs web-rs --replicas=5
+
+# 적용된 매니페스트로 스케일 조정
+kubectl apply -f web-rs.yaml  # replicas 값을 변경한 후
 ```
 
-현재 수가 목표보다 적으면 부족한 만큼 Pod를 **병렬**로 생성한다. 많으면 임의로 선택해서 삭제한다.
-
-## selector — Pod 수 계산의 핵심
-
-RS는 ownerReferences가 자신을 가리키는 Pod만 세지 않는다. **matchLabels 조건을 만족하는 모든 Pod를 자기 Pod로 간주**한다.
-
-```bash
-# 이 레이블을 가진 Pod가 10개 있으면
-# RS는 3개만 원하므로 7개 삭제!
-kubectl run rogue-pod --image=nginx \
-  --labels="app=my-app,version=v1"
-```
-
-외부에서 RS selector와 동일한 레이블을 가진 Pod를 만들면, RS가 목표를 초과했다고 판단해 **임의 Pod를 삭제**한다. 이 경우 방금 만든 rogue-pod가 삭제될 수도 있고, 기존 Pod가 삭제될 수도 있다.
+![ReplicaSet YAML 구조와 kubectl 명령](/assets/posts/k8s-replicaset-yaml.svg)
 
 ## ReplicaSet vs Deployment
 
-![ReplicaSet vs Deployment](/assets/posts/k8s-replicaset-vs-deployment.svg)
+실무에서 ReplicaSet을 직접 생성하는 경우는 드뭅니다. Deployment를 사용하면 Deployment가 ReplicaSet을 자동으로 생성하고 관리합니다. ReplicaSet을 직접 다룰 때는 주로 다음 상황입니다.
 
-Deployment는 내부적으로 ReplicaSet을 생성한다. 이미지를 업데이트하면 새 RS를 만들고 이전 RS를 축소하는 방식으로 롤링 업데이트를 구현한다.
-
-```bash
-# Deployment가 만든 RS 확인
-kubectl get rs
-# NAME                     DESIRED   CURRENT   READY   AGE
-# my-deploy-7d4b9c6f9      3         3         3       10m   (현재 버전)
-# my-deploy-5c8b7d4a3      0         0         0       1h    (이전 버전, 롤백용 보존)
-
-# 이전 버전으로 롤백 (RS를 이전 것으로 교체)
-kubectl rollout undo deployment my-deploy
-```
-
-## ReplicaSet 직접 사용 시나리오
-
-RS를 직접 사용하는 경우는 드물지만, 다음 상황에서 고려한다.
-
-1. **커스텀 업데이트 전략이 필요할 때**: Deployment의 Rolling/Recreate 외 다른 전략
-2. **Deployment 없이 단순 복제만 필요할 때**: 실험적 환경
-3. **RS를 다른 컨트롤러가 관리할 때**: 커스텀 오퍼레이터
+- Deployment 롤아웃 중 이전 ReplicaSet이 남아 있는지 확인
+- 롤백 대상 ReplicaSet의 상태 확인
+- 직접 ReplicaSet을 만들어야 하는 특수한 경우
 
 ```bash
-# RS 직접 scale (Deployment를 통하지 않는 경우)
-kubectl scale rs my-app-rs --replicas=5
+# Deployment가 관리하는 ReplicaSet 확인
+kubectl get rs -l app=web
 
-# RS 상세 상태
-kubectl describe rs my-app-rs
+# RS별 revision 확인
+kubectl get rs -o wide
 
-# RS가 생성한 Pod 목록
-kubectl get pods -l app=my-app,version=v1
+# 특정 RS가 소유한 Pod 확인
+kubectl get pods -l app=web
 ```
 
-## Pod 삭제 시 RS 동작 확인
+## 자가 치유 동작 확인
+
+ReplicaSet의 자가 치유 동작을 직접 확인해보겠습니다.
 
 ```bash
-# 테스트: Pod 하나 강제 삭제
-kubectl delete pod $(kubectl get pod -l app=my-app -o jsonpath='{.items[0].metadata.name}')
+# ReplicaSet 배포
+kubectl apply -f web-rs.yaml
 
-# RS가 즉시 새 Pod 생성하는지 확인
-kubectl get pods -l app=my-app -w
+# Pod 목록 확인 (3개 Running)
+kubectl get pods -l app=web
+
+# Pod 하나 강제 삭제
+kubectl delete pod web-rs-abc
+
+# 즉시 새 Pod 생성됨 확인 (여전히 3개)
+kubectl get pods -l app=web
+
+# 이벤트로 생성 기록 확인
+kubectl get events --field-selector reason=SuccessfulCreate
 ```
 
-이 테스트로 RS의 자가 치유가 실제로 동작하는 것을 확인할 수 있다. 보통 수초 내에 새 Pod가 Pending → Running으로 전환된다.
+Pod를 삭제해도 ReplicaSet이 즉시 새 Pod를 생성합니다. 특정 Pod를 영구적으로 제거하려면 `kubectl scale rs web-rs --replicas=2`로 먼저 replicas를 줄여야 합니다.
+
+## Adoption과 Quarantine
+
+ReplicaSet의 selector와 일치하는 Pod가 이미 존재하면 ReplicaSet이 해당 Pod를 소유(adopt)합니다. 반대로 기존 Pod에서 labels를 제거하면 ReplicaSet은 그 Pod를 관리 대상에서 제외(quarantine)하고 새 Pod를 생성합니다.
+
+```bash
+# Pod labels 제거 → ReplicaSet이 새 Pod 생성 (디버깅 목적으로 유용)
+kubectl label pod web-rs-abc app-
+
+# 이제 web-rs-abc는 ReplicaSet 관리 밖
+# 새 Pod web-rs-xyz가 생성됨
+kubectl get pods -l app=web  # 3개 (abc 제외)
+kubectl get pod web-rs-abc   # 여전히 존재, labels만 없음
+```
+
+이 패턴은 장애 Pod를 종료시키지 않고 격리해 디버깅하는 데 활용할 수 있습니다.
 
 ---
 
-**지난 글:** [Owner Reference — Kubernetes 오브젝트 소유권 관계](/posts/k8s-owner-references/)
+**지난 글:** [쿠버네티스 Owner References와 가비지 컬렉션](/posts/k8s-owner-references/)
+
+**다음 글:** [ReplicationController vs Deployment — 진화의 역사](/posts/k8s-replicationcontroller-vs-deployment/)
 
 <br>
 읽어주셔서 감사합니다. 😊
