@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="eb-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="eb-arg" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">etcd 스냅샷 — 저장과 복구의 흐름</text>
+
+  <!-- backup row label -->
+  <text x="60" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3">백업 (snapshot save)</text>
+
+  <rect x="60" y="116" width="200" height="74" rx="8" fill="#1a3a4a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="160" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3" text-anchor="middle">etcd 클러스터</text>
+  <text x="160" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">전체 키-값 상태</text>
+
+  <rect x="340" y="116" width="200" height="74" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">snapshot.db</text>
+  <text x="440" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">시점 일관성 있는 단일 파일</text>
+
+  <rect x="620" y="116" width="200" height="74" rx="8" fill="#201a10" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="720" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178" text-anchor="middle">오프-클러스터 저장소</text>
+  <text x="720" y="172" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">S3 · 외부 볼륨</text>
+
+  <line x1="260" y1="153" x2="340" y2="153" stroke="#7ec8e3" stroke-width="2" marker-end="url(#eb-arr)"/>
+  <line x1="540" y1="153" x2="620" y2="153" stroke="#7ec8e3" stroke-width="2" marker-end="url(#eb-arr)"/>
+
+  <!-- restore row label -->
+  <text x="60" y="262" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555">복구 (snapshot restore)</text>
+
+  <rect x="60" y="278" width="200" height="74" rx="8" fill="#201a10" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="160" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#ce9178" text-anchor="middle">snapshot.db 회수</text>
+  <text x="160" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">저장소에서 가져오기</text>
+
+  <rect x="340" y="278" width="200" height="74" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc" text-anchor="middle">새 data-dir 생성</text>
+  <text x="440" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">restore → 디렉터리 재구성</text>
+
+  <rect x="620" y="278" width="200" height="74" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="2"/>
+  <text x="720" y="310" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555" text-anchor="middle">etcd 재기동</text>
+  <text x="720" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">새 data-dir로 가리킴</text>
+
+  <line x1="260" y1="315" x2="340" y2="315" stroke="#55c555" stroke-width="2" marker-end="url(#eb-arg)"/>
+  <line x1="540" y1="315" x2="620" y2="315" stroke="#55c555" stroke-width="2" marker-end="url(#eb-arg)"/>
+
+  <!-- footer note -->
+  <text x="440" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">복구는 스냅샷 시점으로 되돌리는 것 — 이후 변경분은 사라진다 (RPO = 마지막 스냅샷 이후 경과 시간)</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <defs>
+    <marker id="cu-arr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="440" rx="12" fill="#0a0a0a"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">업그레이드 순서 — 컨트롤 플레인 먼저, 노드는 하나씩</text>
+
+  <!-- phase 1: control plane -->
+  <rect x="50" y="90" width="780" height="90" rx="10" fill="#1a3020" stroke="#55c555" stroke-width="2"/>
+  <text x="70" y="120" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#55c555">1단계 — 컨트롤 플레인 업그레이드</text>
+  <text x="70" y="148" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">kubeadm upgrade plan → apply → API 서버·컨트롤러·스케줄러·etcd 갱신</text>
+  <text x="70" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">멀티 마스터면 첫 노드 apply 후 나머지는 upgrade node</text>
+
+  <line x1="440" y1="180" x2="440" y2="210" stroke="#7ec8e3" stroke-width="2" marker-end="url(#cu-arr)"/>
+
+  <!-- phase 2: node loop -->
+  <rect x="50" y="210" width="780" height="160" rx="10" fill="#13151c" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="70" y="240" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="15" font-weight="700" fill="#7ec8e3">2단계 — 워커 노드, 한 번에 하나씩 반복</text>
+
+  <rect x="74" y="258" width="170" height="86" rx="8" fill="#201a10" stroke="#ce9178" stroke-width="1.5"/>
+  <text x="159" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#ce9178" text-anchor="middle">drain</text>
+  <text x="159" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod 비우기</text>
+  <text x="159" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">스케줄링 차단</text>
+
+  <rect x="280" y="258" width="170" height="86" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="365" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc" text-anchor="middle">kubelet 갱신</text>
+  <text x="365" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">upgrade node</text>
+  <text x="365" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">kubelet 재시작</text>
+
+  <rect x="486" y="258" width="170" height="86" rx="8" fill="#1a3020" stroke="#55c555" stroke-width="1.5"/>
+  <text x="571" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">uncordon</text>
+  <text x="571" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">스케줄링 재개</text>
+  <text x="571" y="332" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">Pod 복귀</text>
+
+  <rect x="692" y="258" width="116" height="86" rx="8" fill="#1a3a4a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="750" y="290" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3" text-anchor="middle">다음 노드</text>
+  <text x="750" y="316" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">반복</text>
+
+  <line x1="244" y1="301" x2="280" y2="301" stroke="#7ec8e3" stroke-width="2" marker-end="url(#cu-arr)"/>
+  <line x1="450" y1="301" x2="486" y2="301" stroke="#7ec8e3" stroke-width="2" marker-end="url(#cu-arr)"/>
+  <line x1="656" y1="301" x2="692" y2="301" stroke="#7ec8e3" stroke-width="2" marker-end="url(#cu-arr)"/>
+
+  <text x="440" y="410" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888" text-anchor="middle">한 번에 한 노드만 비우면 나머지 노드가 워크로드를 받아 무중단 유지 — PodDisruptionBudget이 보호</text>
+</svg>
