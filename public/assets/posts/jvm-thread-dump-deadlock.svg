@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="340" viewBox="0 0 880 340" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect x="0" y="0" width="880" height="340" rx="12" fill="#0a0a0a"/>
+  <text x="60" y="46" font-size="22" font-weight="700" fill="#e8e8e8">데드락 — 순환 대기</text>
+
+  <defs>
+    <marker id="holdArr" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="waitArr" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <!-- threads -->
+  <rect x="70" y="135" width="160" height="70" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="150" y="167" font-size="15" font-weight="600" fill="#e8e8e8" text-anchor="middle">Thread-1</text>
+  <text x="150" y="188" font-size="12" fill="#888" text-anchor="middle">A 쥠, B 대기</text>
+
+  <rect x="650" y="135" width="160" height="70" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="730" y="167" font-size="15" font-weight="600" fill="#e8e8e8" text-anchor="middle">Thread-2</text>
+  <text x="730" y="188" font-size="12" fill="#888" text-anchor="middle">B 쥠, A 대기</text>
+
+  <!-- locks -->
+  <rect x="370" y="92" width="140" height="58" rx="8" fill="#1a1408" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="440" y="127" font-size="15" font-weight="600" fill="#e0a055" text-anchor="middle">Lock A</text>
+
+  <rect x="370" y="202" width="140" height="58" rx="8" fill="#1a1408" stroke="#e0a055" stroke-width="1.5"/>
+  <text x="440" y="237" font-size="15" font-weight="600" fill="#e0a055" text-anchor="middle">Lock B</text>
+
+  <!-- T1 holds A (solid green) -->
+  <line x1="232" y1="152" x2="368" y2="121" stroke="#55c555" stroke-width="2" marker-end="url(#holdArr)"/>
+  <text x="290" y="124" font-size="12" fill="#55c555">쥠</text>
+  <!-- T1 waits B (dashed red) -->
+  <line x1="232" y1="188" x2="368" y2="231" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#waitArr)"/>
+  <text x="278" y="228" font-size="12" fill="#e05555">대기</text>
+
+  <!-- T2 holds B (solid green) -->
+  <line x1="648" y1="152" x2="512" y2="231" stroke="#55c555" stroke-width="2" marker-end="url(#holdArr)"/>
+  <text x="572" y="228" font-size="12" fill="#55c555">쥠</text>
+  <!-- T2 waits A (dashed red) -->
+  <line x1="648" y1="188" x2="512" y2="121" stroke="#e05555" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#waitArr)"/>
+  <text x="588" y="124" font-size="12" fill="#e05555">대기</text>
+
+  <text x="440" y="305" font-size="13" fill="#888" text-anchor="middle">서로가 쥔 락을 기다림 → 두 스레드 모두 영원히 진행 불가</text>
+</svg>

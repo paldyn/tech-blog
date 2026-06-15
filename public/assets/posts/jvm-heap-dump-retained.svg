@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="380" viewBox="0 0 880 380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect x="0" y="0" width="880" height="380" rx="12" fill="#0a0a0a"/>
+  <text x="60" y="46" font-size="22" font-weight="700" fill="#e8e8e8">Shallow heap vs Retained heap</text>
+
+  <defs>
+    <marker id="rtArr" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <!-- retained set enclosure (behind nodes) -->
+  <rect x="115" y="150" width="270" height="210" rx="12" fill="#7777cc" fill-opacity="0.10" stroke="#7777cc" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="250" y="172" font-size="12" fill="#a0a0e0" text-anchor="middle">A의 retained set = {A, B, C, D}</text>
+
+  <!-- nodes -->
+  <rect x="200" y="74" width="100" height="38" rx="8" fill="#14241a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="250" y="98" font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">GC Root</text>
+
+  <rect x="210" y="182" width="80" height="40" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="250" y="207" font-size="14" fill="#e8e8e8" text-anchor="middle">A</text>
+
+  <rect x="135" y="262" width="70" height="40" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="170" y="287" font-size="14" fill="#e8e8e8" text-anchor="middle">B</text>
+
+  <rect x="295" y="262" width="70" height="40" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="330" y="287" font-size="14" fill="#e8e8e8" text-anchor="middle">C</text>
+
+  <rect x="215" y="312" width="70" height="40" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="250" y="337" font-size="14" fill="#e8e8e8" text-anchor="middle">D</text>
+
+  <!-- edges -->
+  <line x1="250" y1="112" x2="250" y2="180" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rtArr)"/>
+  <line x1="232" y1="222" x2="185" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rtArr)"/>
+  <line x1="268" y1="222" x2="315" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rtArr)"/>
+  <line x1="178" y1="302" x2="232" y2="324" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rtArr)"/>
+  <line x1="322" y1="302" x2="268" y2="324" stroke="#7ec8e3" stroke-width="2" marker-end="url(#rtArr)"/>
+
+  <!-- right explanation -->
+  <rect x="470" y="90" width="350" height="56" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="488" y="116" font-size="14" font-weight="600" fill="#7ec8e3">Shallow heap (A)</text>
+  <text x="488" y="136" font-size="13" fill="#bbb">A 객체 자체가 차지하는 크기</text>
+
+  <rect x="470" y="162" width="350" height="76" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="488" y="188" font-size="14" font-weight="600" fill="#e0a055">Retained heap (A)</text>
+  <text x="488" y="208" font-size="13" fill="#bbb">A를 지우면 함께 사라지는 모든 객체</text>
+  <text x="488" y="228" font-size="13" fill="#bbb">= A + B + C + D 의 합</text>
+
+  <rect x="470" y="254" width="350" height="76" rx="8" fill="#0f1626" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="488" y="280" font-size="14" font-weight="600" fill="#55c555">Retained heap (B) = {B}</text>
+  <text x="488" y="300" font-size="13" fill="#bbb">D는 C로도 도달 가능 → B만 회수됨</text>
+  <text x="488" y="320" font-size="13" fill="#bbb">누수 범인은 retained heap이 큰 객체</text>
+</svg>
