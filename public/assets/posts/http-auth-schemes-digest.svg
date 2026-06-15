@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="640" viewBox="0 0 880 640" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <defs>
+    <marker id="arrInfo" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrSuccess" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="640" rx="12" fill="#0a0a0a"/>
+
+  <text x="60" y="52" font-size="22" font-weight="700" fill="#e8e8e8">Digest 인증 흐름 — nonce 기반 challenge-response</text>
+  <text x="60" y="78" font-size="13" fill="#888">비밀번호를 평문으로 보내지 않고 해시 다이제스트로 증명한다</text>
+
+  <!-- Step 1: server issues nonce -->
+  <text x="60" y="116" font-size="16" font-weight="600" fill="#e8e8e8">1. 서버 → 401, nonce 발급</text>
+  <rect x="60" y="130" width="760" height="92" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="156" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># 401 Unauthorized 응답 헤더</text>
+  <text x="76" y="176" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">WWW-Authenticate: Digest</text>
+  <text x="76" y="196" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">  realm="api", nonce="dcd98b7...",</text>
+  <text x="76" y="216" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">  qop="auth", algorithm=SHA-256</text>
+
+  <line x1="440" y1="222" x2="440" y2="250" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrInfo)"/>
+
+  <!-- Step 2: client computes digest -->
+  <text x="60" y="270" font-size="16" font-weight="600" fill="#e8e8e8">2. 클라이언트 → 다이제스트 계산</text>
+  <rect x="60" y="284" width="760" height="132" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="310" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># nc=요청카운터, cnonce=클라이언트 nonce</text>
+  <text x="76" y="330" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">A1</text>
+  <text x="76" y="330" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">   = H(user:realm:pass)</text>
+  <text x="76" y="350" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">A2</text>
+  <text x="76" y="350" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">   = H(method:uri)</text>
+  <text x="76" y="370" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#7ec8e3" font-weight="600" xml:space="preserve">response</text>
+  <text x="76" y="370" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve"> = H(A1:nonce:nc:cnonce:qop:A2)</text>
+  <text x="76" y="396" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#9aa4b8" xml:space="preserve"># H = SHA-256 (또는 레거시 MD5)</text>
+
+  <line x1="440" y1="416" x2="440" y2="444" stroke="#55c555" stroke-width="2" marker-end="url(#arrSuccess)"/>
+
+  <!-- Step 3: send Authorization -->
+  <text x="60" y="464" font-size="16" font-weight="600" fill="#e8e8e8">3. 클라이언트 → Authorization 전송, 서버 검증</text>
+  <rect x="60" y="478" width="760" height="92" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="504" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff" xml:space="preserve">Authorization: Digest user="mo",</text>
+  <text x="76" y="524" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">  nonce="dcd98b7...", nc=00000001,</text>
+  <text x="76" y="544" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">  cnonce="0a4f...", qop=auth,</text>
+  <text x="76" y="564" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ce9178" xml:space="preserve">  response="6629fae4...d8e"</text>
+
+  <!-- replay protection label -->
+  <line x1="60" y1="592" x2="820" y2="592" stroke="#333" stroke-width="1"/>
+  <rect x="60" y="604" width="14" height="14" rx="3" fill="#7777cc"/>
+  <text x="84" y="616" font-size="13" fill="#888" xml:space="preserve">Replay 방지: 서버 nonce + 클라이언트 cnonce + 증가하는 nc(nonce-count)로 같은 다이제스트 재사용을 차단</text>
+</svg>

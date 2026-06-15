@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <defs>
+    <marker id="arrInfo" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrWarn" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+    <marker id="arrSucc" viewBox="0 0 14 14" refX="12" refY="7" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">HTTP 인증 Challenge-Response 흐름</text>
+
+  <!-- Actor: Client -->
+  <rect x="120" y="74" width="180" height="44" rx="8" fill="#0f1a2e" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="210" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3">클라이언트</text>
+
+  <!-- Actor: Server -->
+  <rect x="580" y="74" width="180" height="44" rx="8" fill="#0f1a2e" stroke="#55c555" stroke-width="2"/>
+  <text x="670" y="102" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#55c555">서버</text>
+
+  <!-- Lifelines -->
+  <line x1="210" y1="118" x2="210" y2="520" stroke="#333" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <line x1="670" y1="118" x2="670" y2="520" stroke="#333" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: GET protected -->
+  <text x="440" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">① 보호된 자원 요청 (인증 없음)</text>
+  <line x1="210" y1="172" x2="670" y2="172" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrInfo)"/>
+  <text x="436" y="190" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">GET /account HTTP/1.1</text>
+
+  <!-- Step 2: 401 challenge -->
+  <text x="440" y="240" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">② 401 + WWW-Authenticate (challenge)</text>
+  <line x1="670" y1="256" x2="210" y2="256" stroke="#e05555" stroke-width="2" marker-end="url(#arrWarn)"/>
+  <text x="440" y="274" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">401 Unauthorized</text>
+  <text x="440" y="292" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">WWW-Authenticate: Basic realm="api"</text>
+
+  <!-- Step 3: re-request with Authorization -->
+  <text x="440" y="346" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">③ Authorization 헤더로 재요청</text>
+  <line x1="210" y1="362" x2="670" y2="362" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrInfo)"/>
+  <text x="440" y="380" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">GET /account HTTP/1.1</text>
+  <text x="440" y="398" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">Authorization: Basic dXNlcjpwYXNz</text>
+
+  <!-- Step 4: 200 OK -->
+  <text x="440" y="452" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">④ 자격 검증 성공 → 자원 응답</text>
+  <line x1="670" y1="468" x2="210" y2="468" stroke="#55c555" stroke-width="2" marker-end="url(#arrSucc)"/>
+  <text x="440" y="486" text-anchor="middle" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8">200 OK</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="534" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">서버가 challenge로 인증 스킴을 알리면, 클라이언트가 그 스킴에 맞는 자격을 Authorization으로 응답한다</text>
+</svg>

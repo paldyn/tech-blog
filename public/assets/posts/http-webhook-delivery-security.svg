@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560">
+  <rect width="880" height="560" fill="#0a0a0a" rx="12"/>
+
+  <defs>
+    <marker id="aInfo" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="aSucc" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="aWarn" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <text x="440" y="44" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">웹훅 전달과 서명 검증</text>
+
+  <!-- 1. 이벤트 발생 (송신측) -->
+  <rect x="60" y="78" width="220" height="70" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="170" y="100" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">① 이벤트 발생 (송신 서버)</text>
+  <text x="170" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">결제 완료 · 배포 성공 등</text>
+  <text x="170" y="136" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">HMAC-SHA256으로 서명 생성</text>
+
+  <!-- 화살표 1 -> 코드박스 -->
+  <line x1="170" y1="148" x2="170" y2="176" stroke="#55c555" stroke-width="2" marker-end="url(#aSucc)"/>
+  <text x="300" y="166" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#55c555" text-anchor="middle">서명된 POST 전송</text>
+
+  <!-- 코드 박스: POST 요청 -->
+  <rect x="60" y="180" width="420" height="200" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1.5"/>
+  <text x="78" y="206" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8"># 수신측 callback URL로 전송</text>
+  <text x="78" y="228" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#7ec8e3" font-weight="600">POST</tspan><tspan fill="#ffffff"> /callback  HTTP/1.1</tspan>
+  </text>
+  <text x="78" y="250" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">Content-Type: application/json</tspan>
+  </text>
+  <text x="78" y="272" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">X-Webhook-Id: </tspan><tspan fill="#ce9178">evt_8f3a1c</tspan>
+  </text>
+  <text x="78" y="294" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">X-Signature: </tspan><tspan fill="#ce9178">sha256=9b1d…f02</tspan>
+  </text>
+  <text x="78" y="324" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">{ </tspan><tspan fill="#ce9178">"id"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"evt_8f3a1c"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="78" y="346" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#ce9178">"type"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#ce9178">"payment.ok"</tspan><tspan fill="#ffffff">,</tspan>
+  </text>
+  <text x="78" y="368" xml:space="preserve"
+        font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13">
+    <tspan fill="#ffffff">  </tspan><tspan fill="#ce9178">"amount"</tspan><tspan fill="#ffffff">: </tspan><tspan fill="#b5cea8">29000</tspan><tspan fill="#ffffff"> }</tspan>
+  </text>
+
+  <!-- 화살표 코드박스 -> 수신측 검증 -->
+  <line x1="480" y1="280" x2="538" y2="280" stroke="#7ec8e3" stroke-width="2" marker-end="url(#aInfo)"/>
+
+  <!-- 2. 수신측 HMAC 검증 -->
+  <rect x="540" y="180" width="280" height="100" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="680" y="206" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">② 수신측 HMAC 검증</text>
+  <text x="680" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">공유 secret으로 본문 재서명</text>
+  <text x="680" y="246" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">X-Signature와 일치하는가?</text>
+  <text x="680" y="264" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">위변조·스푸핑 차단</text>
+
+  <!-- 검증 -> 멱등성 체크 -->
+  <line x1="680" y1="280" x2="680" y2="308" stroke="#7ec8e3" stroke-width="2" marker-end="url(#aInfo)"/>
+
+  <!-- 3. 멱등성 -->
+  <rect x="540" y="312" width="280" height="68" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="680" y="336" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#e8e8e8" text-anchor="middle">③ 멱등성 처리 (event id)</text>
+  <text x="680" y="356" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">evt_8f3a1c 이미 처리됨? → 무시</text>
+
+  <!-- 멱등 -> ack -->
+  <line x1="680" y1="380" x2="680" y2="416" stroke="#55c555" stroke-width="2" marker-end="url(#aSucc)"/>
+
+  <!-- 4. ack -->
+  <rect x="540" y="420" width="280" height="60" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="680" y="444" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555" text-anchor="middle">④ 2xx 응답 = ack</text>
+  <text x="680" y="464" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">큐에 적재 후 빠르게 200 반환</text>
+
+  <!-- 재시도: ack 실패 시 송신측으로 점선 루프백 -->
+  <path d="M 540 450 C 360 450 360 470 170 470" fill="none" stroke="#e05555" stroke-width="2"
+        stroke-dasharray="4,4" marker-end="url(#aWarn)"/>
+  <text x="355" y="500" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e05555" text-anchor="middle">2xx 못 받으면 재시도 (at-least-once)</text>
+
+  <!-- 송신측 재시도 진입점 표시 -->
+  <rect x="60" y="450" width="220" height="40" rx="8" fill="#0a0a0a" stroke="#e05555" stroke-width="1.2"/>
+  <text x="170" y="475" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e8e8e8" text-anchor="middle">지수 백오프로 재전송</text>
+
+  <text x="440" y="534" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">서명으로 진위 검증 · event id로 중복 무시 · 큐로 비동기 처리</text>
+</svg>
