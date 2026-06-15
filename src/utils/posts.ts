@@ -113,6 +113,7 @@ export function thumbFor(post: Post): string {
 
 const CATEGORY_LOGOS: Record<string, string> = {
   JavaScript: '/assets/logos/javascript.jpeg',
+  TypeScript: '/assets/logos/typescript.svg',
   AI: '/assets/logos/ai.jpg',
   Nexacro: '/assets/logos/nexacro.png',
   Spring: '/assets/logos/spring.png',
