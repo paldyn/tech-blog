@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect x="0" y="0" width="880" height="430" rx="12" fill="#0a0a0a"/>
+  <text x="60" y="52" font-size="22" font-weight="700" fill="#e8e8e8">Context 기본값 문제와 커스텀 훅 가드</text>
+  <text x="60" y="78" font-size="13" fill="#888">undefined 기본값 + 가드 훅으로 "Provider 밖 사용"을 타입과 런타임 모두에서 차단</text>
+
+  <rect x="60" y="100" width="760" height="200" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text xml:space="preserve" x="76" y="128" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace"><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> AuthContext =</tspan></text>
+  <text xml:space="preserve" x="76" y="150" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff">  createContext&lt;AuthValue | undefined&gt;(undefined);</text>
+  <text xml:space="preserve" x="76" y="186" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace"><tspan fill="#7ec8e3" font-weight="600">function</tspan><tspan fill="#ffffff"> useAuth() {</tspan></text>
+  <text xml:space="preserve" x="76" y="208" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">const</tspan><tspan fill="#ffffff"> ctx = useContext(AuthContext);</tspan></text>
+  <text xml:space="preserve" x="76" y="230" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">if</tspan><tspan fill="#ffffff"> (ctx === </tspan><tspan fill="#7ec8e3" font-weight="600">undefined</tspan><tspan fill="#ffffff">)</tspan></text>
+  <text xml:space="preserve" x="76" y="252" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace"><tspan fill="#ffffff">    </tspan><tspan fill="#7ec8e3" font-weight="600">throw new</tspan><tspan fill="#ffffff"> Error(</tspan><tspan fill="#ce9178">"Provider 밖에서 호출됨"</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text xml:space="preserve" x="76" y="274" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace"><tspan fill="#ffffff">  </tspan><tspan fill="#7ec8e3" font-weight="600">return</tspan><tspan fill="#ffffff"> ctx; </tspan><tspan fill="#9aa4b8">// 여기서 AuthValue로 좁혀짐</tspan></text>
+  <text xml:space="preserve" x="76" y="296" font-size="13" font-family="'JetBrains Mono','Menlo','Consolas',monospace" fill="#ffffff">}</text>
+
+  <rect x="60" y="320" width="370" height="84" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="76" y="348" font-size="14" font-weight="600" fill="#e05555">가짜 기본값을 쓰면</text>
+  <text x="76" y="370" font-size="13" fill="#ffffff">{} as AuthValue → null 체크 사라지고</text>
+  <text x="76" y="390" font-size="13" fill="#ffffff">Provider 밖 실수가 런타임까지 숨는다</text>
+
+  <rect x="450" y="320" width="370" height="84" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="466" y="348" font-size="14" font-weight="600" fill="#55c555">undefined 기본값 + 가드</text>
+  <text x="466" y="370" font-size="13" fill="#ffffff">throw 이후 ctx는 AuthValue로 좁혀져</text>
+  <text x="466" y="390" font-size="13" fill="#ffffff">사용처에서 ? 없이 바로 쓴다</text>
+</svg>
