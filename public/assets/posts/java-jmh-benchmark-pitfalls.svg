@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="300" viewBox="0 0 880 300" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif">
+  <rect x="0" y="0" width="880" height="300" rx="12" fill="#0a0a0a"/>
+  <text x="40" y="48" font-size="22" font-weight="700" fill="#e8e8e8">손코딩 벤치의 함정과 JMH의 방어</text>
+
+  <text x="40" y="84" font-size="14" font-weight="600" fill="#e05555">손으로 짠 벤치 (틀리는 이유)</text>
+  <rect x="40" y="96" width="380" height="170" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="58" y="124" fill="#7ec8e3" font-weight="600">long</tspan><tspan fill="#ffffff"> t = System.nanoTime();</tspan>
+    <tspan x="58" y="148" fill="#7ec8e3" font-weight="600">for</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#7ec8e3" font-weight="600">int</tspan><tspan fill="#ffffff"> i=0; i&lt;N; i++)</tspan>
+    <tspan x="58" y="170" fill="#ffffff">    compute(x);  </tspan><tspan fill="#9aa4b8">// 결과 안 씀</tspan>
+    <tspan x="58" y="200" fill="#9aa4b8">// 데드코드 제거로 통째 삭제</tspan>
+    <tspan x="58" y="222" fill="#9aa4b8">// x 상수면 상수 폴딩</tspan>
+    <tspan x="58" y="244" fill="#9aa4b8">// 웜업 없이 인터프리터 측정</tspan>
+  </text>
+
+  <text x="460" y="84" font-size="14" font-weight="600" fill="#55c555">JMH 방식</text>
+  <rect x="460" y="96" width="380" height="170" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve">
+    <tspan x="478" y="124" fill="#9aa4b8">@Benchmark</tspan>
+    <tspan x="478" y="146" fill="#7ec8e3" font-weight="600">public</tspan><tspan fill="#ffffff"> Object run(Blackhole bh){</tspan>
+    <tspan x="478" y="168" fill="#7ec8e3" font-weight="600">  return</tspan><tspan fill="#ffffff"> compute(state.x);</tspan>
+    <tspan x="478" y="190" fill="#ffffff">}</tspan>
+    <tspan x="478" y="220" fill="#9aa4b8">// 반환·Blackhole로 DCE 방지</tspan>
+    <tspan x="478" y="242" fill="#9aa4b8">// @State로 상수 폴딩 차단</tspan>
+  </text>
+</svg>
