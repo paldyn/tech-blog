@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arrA" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arrD" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- title -->
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">Gradle 빌드 흐름 — Task DAG</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">Task Graph · 증분 빌드 · 데몬</text>
+
+  <!-- gradle build command box -->
+  <rect x="320" y="92" width="240" height="52" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="114" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">./gradlew build</text>
+  <text x="440" y="134" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Gradle Wrapper 실행</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="144" x2="440" y2="172" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arrA)"/>
+
+  <!-- Task DAG label -->
+  <text x="440" y="170" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Task DAG 구성</text>
+
+  <!-- Three task boxes in a row: compileJava, test, jar -->
+  <rect x="60" y="182" width="180" height="52" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="150" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">compileJava</text>
+  <text x="150" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">소스 컴파일</text>
+
+  <rect x="350" y="182" width="180" height="52" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="440" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">test</text>
+  <text x="440" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">단위 테스트 실행</text>
+
+  <rect x="640" y="182" width="180" height="52" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="730" y="204" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">jar</text>
+  <text x="730" y="224" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">아티팩트 생성</text>
+
+  <!-- Arrows from DAG to tasks -->
+  <line x1="350" y1="168" x2="200" y2="182" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrB)"/>
+  <line x1="440" y1="172" x2="440" y2="182" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrB)"/>
+  <line x1="530" y1="168" x2="680" y2="182" stroke="#55c555" stroke-width="1.5" marker-end="url(#arrB)"/>
+
+  <!-- Dependency arrow: compileJava → test -->
+  <line x1="240" y1="208" x2="350" y2="208" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrA)"/>
+  <text x="295" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">depends</text>
+
+  <!-- Dependency arrow: test → jar -->
+  <line x1="530" y1="208" x2="640" y2="208" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrA)"/>
+  <text x="585" y="202" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888" text-anchor="middle">depends</text>
+
+  <!-- Three feature boxes below -->
+  <rect x="60" y="272" width="220" height="70" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="170" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc" text-anchor="middle">증분 빌드</text>
+  <text x="170" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">입출력 변경 없으면</text>
+  <text x="170" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8" text-anchor="middle">UP-TO-DATE 스킵</text>
+
+  <rect x="330" y="272" width="220" height="70" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">빌드 캐시</text>
+  <text x="440" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">원격/로컬 캐시에서</text>
+  <text x="440" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8" text-anchor="middle">출력 재사용 FROM-CACHE</text>
+
+  <rect x="600" y="272" width="220" height="70" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="710" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555" text-anchor="middle">Gradle Daemon</text>
+  <text x="710" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">JVM 상주로 기동 비용</text>
+  <text x="710" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8" text-anchor="middle">절감 · 3시간 자동 종료</text>
+
+  <!-- DSL choice box at bottom -->
+  <rect x="60" y="370" width="348" height="98" rx="8" fill="#0a0a0a" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="234" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8" text-anchor="middle">Groovy DSL</text>
+  <text x="234" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">build.gradle</text>
+  <text x="234" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8" text-anchor="middle">동적 · 간결 · 오래된 생태계</text>
+  <text x="234" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">Gradle 전통 방식</text>
+
+  <rect x="472" y="370" width="348" height="98" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="646" y="392" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3" text-anchor="middle">Kotlin DSL (권장)</text>
+  <text x="646" y="412" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">build.gradle.kts</text>
+  <text x="646" y="432" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8" text-anchor="middle">타입 안전 · IDE 자동완성</text>
+  <text x="646" y="452" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">현재 공식 권장</text>
+</svg>

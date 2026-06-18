@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="540" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">JVM 기동 단계별 소요 시간</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">클래스 로딩 → 인터프리터 → JIT 단계를 거치며 처음 수초가 소모된다</text>
+
+  <!-- Phase timeline bar -->
+  <!-- Phase 1: Class Loading -->
+  <rect x="60" y="110" width="185" height="64" rx="8" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="152" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7ec8e3">클래스 로딩</text>
+  <text x="152" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">ClassLoader·링킹·검증</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="245" y1="142" x2="268" y2="142" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <!-- Phase 2: Bytecode Interpretation -->
+  <rect x="270" y="110" width="185" height="64" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="362" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#7777cc">바이트코드 실행</text>
+  <text x="362" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">인터프리터 모드 (느림)</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="455" y1="142" x2="478" y2="142" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-gray)"/>
+
+  <!-- Phase 3: Tiered JIT -->
+  <rect x="480" y="110" width="185" height="64" rx="8" fill="#1a1a2e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="572" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">JIT 컴파일 워밍업</text>
+  <text x="572" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">C1 → C2 티어드 컴파일</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="665" y1="142" x2="688" y2="142" stroke="#e05555" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- Phase 4: Steady State -->
+  <rect x="690" y="110" width="130" height="64" rx="8" fill="#0d2011" stroke="#55c555" stroke-width="1.5"/>
+  <text x="755" y="136" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#55c555">최적화 완료</text>
+  <text x="755" y="156" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">네이티브 코드 실행</text>
+
+  <!-- Time labels below phases -->
+  <text x="152" y="195" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">~500ms (대형 앱)</text>
+  <text x="362" y="195" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">초기 수백ms</text>
+  <text x="572" y="195" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#e05555">수초 (Spring 등)</text>
+  <text x="755" y="195" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">피크 성능</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="220" x2="820" y2="220" stroke="#222" stroke-width="1"/>
+
+  <!-- Section title: Optimization Techniques -->
+  <text x="60" y="248" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">기동 단축 기법</text>
+
+  <!-- Technique boxes: left column -->
+  <!-- CDS/AppCDS -->
+  <rect x="60" y="264" width="240" height="80" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="84" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">CDS / AppCDS</text>
+  <text x="84" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">클래스 메타데이터 공유 아카이브</text>
+  <text x="84" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-Xshare:dump → -Xshare:on</text>
+  <text x="280" y="308" text-anchor="end" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">로딩 30~50% 단축</text>
+
+  <!-- Tiered Compilation -->
+  <rect x="60" y="360" width="240" height="80" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="84" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">Tiered Compilation</text>
+  <text x="84" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-XX:+TieredCompilation (기본 ON)</text>
+  <text x="84" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">C1이 먼저 컴파일해 초기 속도 확보</text>
+
+  <!-- AOT (JEP 483) -->
+  <rect x="60" y="456" width="240" height="64" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="84" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">AOT 캐시 (JEP 483)</text>
+  <text x="84" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">JDK 24+ 컴파일된 코드 저장·재사용</text>
+
+  <!-- Middle column -->
+  <rect x="320" y="264" width="240" height="80" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="344" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Lazy Initialization</text>
+  <text x="344" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">필요할 때만 빈(Bean) 초기화</text>
+  <text x="344" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">spring.main.lazy-initialization=true</text>
+
+  <rect x="320" y="360" width="240" height="80" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="344" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">클래스패스 최소화</text>
+  <text x="344" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">불필요한 JAR 제거·모듈화</text>
+  <text x="344" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">jlink 커스텀 런타임 이미지</text>
+
+  <rect x="320" y="456" width="240" height="64" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="344" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7777cc">Native Image (GraalVM)</text>
+  <text x="344" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">AOT 컴파일 → 밀리초 단위 기동</text>
+
+  <!-- Right column -->
+  <rect x="580" y="264" width="240" height="80" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="604" y="286" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">Spring Boot 최적화</text>
+  <text x="604" y="306" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">컴포넌트 스캔 범위 한정</text>
+  <text x="604" y="324" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">@Import 직접 지정으로 스캔 회피</text>
+
+  <rect x="580" y="360" width="240" height="80" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="604" y="382" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">측정 먼저</text>
+  <text x="604" y="402" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-Xlog:class+load*=info</text>
+  <text x="604" y="420" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">startupRecorder / Spring Actuator</text>
+
+  <rect x="580" y="456" width="240" height="64" rx="8" fill="#0d2011" stroke="#55c555" stroke-width="1"/>
+  <text x="604" y="478" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">목표: 1초 미만 기동</text>
+  <text x="604" y="498" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">CDS + Lazy + 클래스패스 조합</text>
+</svg>

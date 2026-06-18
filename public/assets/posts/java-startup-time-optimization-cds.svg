@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-main" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-dash" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" fill="#0a0a0a" rx="12"/>
+
+  <!-- Title -->
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">AppCDS 워크플로 &amp; 주요 JVM 플래그</text>
+  <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888">아카이브 생성(1회) → 이후 기동 시 공유 메모리에서 즉시 로드</text>
+
+  <!-- == LEFT: AppCDS Flow == -->
+  <text x="60" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">AppCDS 흐름</text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="116" width="340" height="56" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="84" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">1단계: 클래스 목록 수집</text>
+  <text x="84" y="158" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-XX:DumpLoadedClassList=classes.lst 로 실행</text>
+
+  <!-- Arrow down -->
+  <line x1="230" y1="172" x2="230" y2="192" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-main)"/>
+
+  <!-- Step 2 -->
+  <rect x="60" y="194" width="340" height="56" rx="8" fill="#111" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="84" y="216" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#7ec8e3">2단계: 아카이브 생성</text>
+  <text x="84" y="236" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-Xshare:dump -XX:SharedArchiveFile=app.jsa</text>
+
+  <!-- Arrow down -->
+  <line x1="230" y1="250" x2="230" y2="270" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-main)"/>
+
+  <!-- Step 3 -->
+  <rect x="60" y="272" width="340" height="56" rx="8" fill="#0d2011" stroke="#55c555" stroke-width="1.5"/>
+  <text x="84" y="294" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="600" fill="#55c555">3단계: 공유 아카이브로 기동</text>
+  <text x="84" y="314" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">-Xshare:on -XX:SharedArchiveFile=app.jsa</text>
+
+  <!-- Benefit box -->
+  <rect x="60" y="348" width="340" height="60" rx="8" fill="#1a1a2e" stroke="#7777cc" stroke-width="1"/>
+  <text x="84" y="370" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">효과: 클래스 로딩 단계를 메모리 매핑으로 대체</text>
+  <text x="84" y="390" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7777cc">디스크 I/O 없이 공유 메모리에서 즉시 사용 가능</text>
+
+  <!-- Vertical separator -->
+  <line x1="440" y1="100" x2="440" y2="470" stroke="#222" stroke-width="1"/>
+
+  <!-- == RIGHT: Code box == -->
+  <text x="460" y="104" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#e8e8e8">주요 JVM 플래그</text>
+
+  <!-- Code box 1: CDS flags -->
+  <rect x="460" y="116" width="360" height="144" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="136" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 아카이브 생성 / 사용</text>
+  <text x="476" y="155" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-Xshare:dump</text>
+  <text x="476" y="174" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-Xshare:on</text>
+  <text x="476" y="193" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 클래스 목록 덤프</text>
+  <text x="476" y="212" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-XX:DumpLoadedClassList</text>
+  <text x="476" y="231" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-XX:SharedArchiveFile</text>
+
+  <!-- Code box 2: Tiered / logging -->
+  <rect x="460" y="274" width="360" height="144" rx="6" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="476" y="294" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 티어드 컴파일 (기본 ON)</text>
+  <text x="476" y="313" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-XX:+TieredCompilation</text>
+  <text x="476" y="332" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#b5cea8">-XX:TieredStopAtLevel=</text>
+  <text x="476" y="351" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 클래스 로딩 로그</text>
+  <text x="476" y="370" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-Xlog:class+load*=info</text>
+  <text x="476" y="389" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#9aa4b8"># 기동 시간 측정</text>
+  <text x="476" y="408" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace"
+        font-size="13" fill="#7ec8e3" font-weight="600">-XX:+PrintCompilation</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="458" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#888">JDK 17+ 기본 CDS 아카이브 내장 — -Xshare:on 만으로도 JDK 클래스 로딩 가속</text>
+</svg>

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500">
+  <defs>
+    <marker id="arr-g" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#55c555"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+    <marker id="arr-p" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7777cc"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" rx="12" fill="#0a0a0a"/>
+
+  <!-- Title -->
+  <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">GraalVM 사용 결정 트리</text>
+  <text x="440" y="68" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#888">워크로드 특성을 기준으로 실행 모드를 선택하는 흐름</text>
+
+  <!-- Start -->
+  <rect x="330" y="88" width="220" height="48" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="2"/>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc">내 워크로드 특성은?</text>
+
+  <!-- Arrow down -->
+  <line x1="440" y1="136" x2="440" y2="164" stroke="#7777cc" stroke-width="2" marker-end="url(#arr-p)"/>
+
+  <!-- Decision 1: Startup critical? -->
+  <rect x="300" y="170" width="280" height="48" rx="8" fill="#141420" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="440" y="190" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">기동 시간이 핵심인가?</text>
+  <text x="440" y="208" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(서버리스, CLI, 컨테이너 스케일-아웃)</text>
+
+  <!-- Yes left arrow -->
+  <line x1="300" y1="194" x2="240" y2="194" stroke="#55c555" stroke-width="2"/>
+  <line x1="240" y1="194" x2="240" y2="260" stroke="#55c555" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="268" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Yes</text>
+
+  <!-- No right arrow -->
+  <line x1="580" y1="194" x2="640" y2="194" stroke="#7ec8e3" stroke-width="2"/>
+  <line x1="640" y1="194" x2="640" y2="260" stroke="#7ec8e3" stroke-width="2" marker-end="url(#arr-b)"/>
+  <text x="592" y="230" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">No</text>
+
+  <!-- Left branch: Native Image -->
+  <rect x="100" y="266" width="280" height="72" rx="8" fill="#0a1a0a" stroke="#55c555" stroke-width="2"/>
+  <text x="240" y="290" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#55c555">Native Image 권장</text>
+  <text x="240" y="310" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Quarkus / Micronaut / Spring AOT</text>
+  <text x="240" y="326" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">단, 리플렉션 메타데이터 준비 필요</text>
+
+  <!-- Right branch: Next question -->
+  <rect x="500" y="266" width="280" height="48" rx="8" fill="#141420" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="640" y="286" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#e8e8e8">장기 실행 + 처리량이 최우선?</text>
+  <text x="640" y="304" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">(대용량 API 서버, 배치, 스트리밍)</text>
+
+  <!-- Yes2 arrow down left -->
+  <line x1="500" y1="290" x2="450" y2="290" stroke="#7ec8e3" stroke-width="1.5"/>
+  <line x1="450" y1="290" x2="450" y2="360" stroke="#7ec8e3" stroke-width="1.5" marker-end="url(#arr-b)"/>
+  <text x="454" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#55c555">Yes</text>
+
+  <!-- No2 arrow down right -->
+  <line x1="780" y1="290" x2="820" y2="290" stroke="#888" stroke-width="1.5"/>
+  <line x1="820" y1="290" x2="820" y2="360" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+  <text x="784" y="330" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#7ec8e3">No</text>
+
+  <!-- JIT HotSpot box -->
+  <rect x="330" y="366" width="240" height="72" rx="8" fill="#0a1828" stroke="#7ec8e3" stroke-width="2"/>
+  <text x="450" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7ec8e3">JIT / HotSpot 권장</text>
+  <text x="450" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">표준 OpenJDK 또는 GraalVM JIT</text>
+  <text x="450" y="426" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">적응형 최적화로 최고 처리량 확보</text>
+
+  <!-- GraalVM JIT box -->
+  <rect x="686" y="366" width="174" height="72" rx="8" fill="#1a1a2a" stroke="#7777cc" stroke-width="2"/>
+  <text x="773" y="390" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#7777cc">GraalVM JIT</text>
+  <text x="773" y="410" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">폴리글랏이 필요하거나</text>
+  <text x="773" y="426" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="11" fill="#888">Truffle 언어 사용 시</text>
+
+  <!-- Bottom note -->
+  <text x="440" y="470" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#555">프레임워크: Spring Boot 3(AOT) · Quarkus · Micronaut 모두 Native Image를 공식 지원</text>
+</svg>
