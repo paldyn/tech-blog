@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="426" viewBox="0 0 880 426">
+  <defs>
+    <marker id="mmA" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#7ec8e3"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="426" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8" text-anchor="middle">멀티 모듈 프로젝트 구조</text>
+  <text x="440" y="70" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="16" font-weight="600" fill="#7ec8e3" text-anchor="middle">루트 + 하위 모듈 + 모듈 간 의존</text>
+
+  <!-- root -->
+  <rect x="330" y="92" width="220" height="60" rx="8" fill="#0a0a0a" stroke="#e8e8e8" stroke-width="1.5"/>
+  <text x="440" y="118" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e8e8e8" text-anchor="middle">root (settings.gradle.kts)</text>
+  <text x="440" y="138" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">모듈 포함 · 공통 설정</text>
+
+  <!-- modules -->
+  <rect x="60" y="200" width="220" height="74" rx="8" fill="#0a0a0a" stroke="#7777cc" stroke-width="1.5"/>
+  <text x="170" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7777cc" text-anchor="middle">:domain</text>
+  <text x="170" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">엔티티 · 순수 비즈니스</text>
+  <text x="170" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">의존 없음</text>
+
+  <rect x="330" y="200" width="220" height="74" rx="8" fill="#0a0a0a" stroke="#7ec8e3" stroke-width="1.5"/>
+  <text x="440" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#7ec8e3" text-anchor="middle">:service</text>
+  <text x="440" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">유스케이스 · 트랜잭션</text>
+  <text x="440" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">domain 의존</text>
+
+  <rect x="600" y="200" width="220" height="74" rx="8" fill="#0a0a0a" stroke="#55c555" stroke-width="1.5"/>
+  <text x="710" y="228" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#55c555" text-anchor="middle">:web</text>
+  <text x="710" y="250" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#888" text-anchor="middle">컨트롤러 · 엔트리포인트</text>
+  <text x="710" y="266" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8" text-anchor="middle">service 의존</text>
+
+  <!-- root to modules -->
+  <line x1="380" y1="152" x2="200" y2="200" stroke="#555" stroke-width="1.5"/>
+  <line x1="440" y1="152" x2="440" y2="200" stroke="#555" stroke-width="1.5"/>
+  <line x1="500" y1="152" x2="680" y2="200" stroke="#555" stroke-width="1.5"/>
+
+  <!-- dependency arrows: web -> service -> domain -->
+  <line x1="600" y1="237" x2="550" y2="237" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#mmA)"/>
+  <line x1="330" y1="237" x2="280" y2="237" stroke="#7ec8e3" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#mmA)"/>
+
+  <!-- bottom note -->
+  <rect x="60" y="306" width="760" height="96" rx="8" fill="#000000" stroke="#3a4a6e" stroke-width="1"/>
+  <text x="80" y="334" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" font-weight="700" fill="#e8e8e8">단방향 의존: web → service → domain</text>
+  <text x="80" y="358" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8">· 안쪽(domain)일수록 안정적이고 변하지 않음</text>
+  <text x="80" y="380" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="13" fill="#9aa4b8">· 순환 의존 금지 — Gradle이 빌드 시 에러로 차단</text>
+</svg>
