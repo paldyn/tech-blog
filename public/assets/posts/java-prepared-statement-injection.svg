@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
+  <rect width="880" height="430" fill="#0a0a0a" rx="12"/>
+  <text x="60" y="52" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">문자열 결합 vs 매개변수 바인딩</text>
+
+  <!-- vulnerable -->
+  <text x="60" y="88" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#e05555">위험 — 문자열 결합 (Statement)</text>
+  <rect x="60" y="100" width="760" height="106" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text x="76" y="128" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">String sql = <tspan fill="#ce9178">"SELECT * FROM member WHERE name = '"</tspan></text>
+  <text x="76" y="150" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">            + input + <tspan fill="#ce9178">"'"</tspan>;</text>
+  <text x="76" y="178" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// input = "' OR '1'='1"  →  WHERE name = '' OR '1'='1'</text>
+  <text x="76" y="196" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555">// 전체 회원이 노출 — SQL 인젝션</text>
+
+  <!-- safe -->
+  <text x="60" y="252" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#55c555">안전 — 매개변수 바인딩 (PreparedStatement)</text>
+  <rect x="60" y="264" width="760" height="106" fill="#000000" stroke="#3a4a6e" stroke-width="1" rx="6"/>
+  <text x="76" y="292" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">String sql = <tspan fill="#ce9178">"SELECT * FROM member WHERE name = ?"</tspan>;</text>
+  <text x="76" y="314" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff">ps.setString(<tspan fill="#b5cea8">1</tspan>, input);</text>
+  <text x="76" y="342" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8">// input은 항상 '값' 하나로만 취급 — SQL 구조 변경 불가</text>
+  <text x="76" y="360" xml:space="preserve" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555">// 이름이 "' OR '1'='1" 인 회원만 찾는다 (없음)</text>
+
+  <text x="60" y="406" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="13" fill="#888">값과 SQL 구조를 분리하는 것이 인젝션 방어의 핵심이다.</text>
+</svg>
