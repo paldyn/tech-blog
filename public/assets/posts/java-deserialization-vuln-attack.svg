@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420">
+  <defs>
+    <marker id="dsArr" viewBox="0 0 14 14" refX="12" refY="7"
+            markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 0 0 L 13 7 L 0 14 z" fill="#e05555"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="420" fill="#0a0a0a" rx="12"/>
+
+  <text x="440" y="46" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="22" font-weight="700" fill="#e8e8e8">역직렬화 공격의 원리</text>
+  <text x="440" y="72" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" fill="#888">readObject가 객체를 복원하는 과정에서 임의 코드가 실행된다</text>
+
+  <!-- Step boxes vertical -->
+  <rect x="220" y="96" width="440" height="52" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e05555">1. 공격자가 조작된 바이트 스트림 전송</text>
+  <text x="440" y="138" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">가젯 체인이 담긴 직렬화 데이터</text>
+
+  <line x1="440" y1="150" x2="440" y2="176" stroke="#e05555" stroke-width="2" marker-end="url(#dsArr)"/>
+
+  <rect x="220" y="178" width="440" height="52" rx="8" fill="#1a1a10" stroke="#e0b055" stroke-width="1.5"/>
+  <text x="440" y="200" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e0b055">2. 서버가 ObjectInputStream.readObject() 호출</text>
+  <text x="440" y="220" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">클래스 검증 없이 객체 그래프 복원 시작</text>
+
+  <line x1="440" y1="232" x2="440" y2="258" stroke="#e05555" stroke-width="2" marker-end="url(#dsArr)"/>
+
+  <rect x="220" y="260" width="440" height="52" rx="8" fill="#1a1a10" stroke="#e0b055" stroke-width="1.5"/>
+  <text x="440" y="282" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="600" fill="#e0b055">3. 복원 중 readObject/readResolve 자동 실행</text>
+  <text x="440" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">클래스패스의 가젯들이 연쇄 호출됨</text>
+
+  <line x1="440" y1="314" x2="440" y2="340" stroke="#e05555" stroke-width="2" marker-end="url(#dsArr)"/>
+
+  <rect x="220" y="342" width="440" height="52" rx="8" fill="#2a1010" stroke="#e05555" stroke-width="2"/>
+  <text x="440" y="364" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="14" font-weight="700" fill="#e05555">4. 원격 코드 실행 (RCE)</text>
+  <text x="440" y="384" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif"
+        font-size="12" fill="#9aa4b8">Runtime.exec() 등으로 서버 장악</text>
+</svg>
