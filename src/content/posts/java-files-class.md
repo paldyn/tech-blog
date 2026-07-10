@@ -230,5 +230,7 @@ try (BufferedWriter bw = Files.newBufferedWriter(
 
 **지난 글:** [BufferedReader/Writer — 버퍼링 IO와 줄 단위 처리](/posts/java-bufferedreader-writer/)
 
+**다음 글:** [Path API — 경로 표현의 표준](/posts/java-paths-and-path/)
+
 <br>
 읽어주셔서 감사합니다. 😊

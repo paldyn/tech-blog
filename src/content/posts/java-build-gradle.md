@@ -146,5 +146,7 @@ Gradle은 Task DAG, 증분 빌드, 빌드 캐시, Daemon이라는 네 가지 메
 
 **지난 글:** [Maven 플러그인 — 빌드를 확장하는 법](/posts/java-maven-plugins/)
 
+**다음 글:** [Gradle Task — 빌드의 최소 실행 단위](/posts/java-gradle-tasks/)
+
 <br>
 읽어주셔서 감사합니다. 😊

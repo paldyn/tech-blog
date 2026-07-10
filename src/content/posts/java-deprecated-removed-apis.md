@@ -132,5 +132,7 @@ ZonedDateTime seoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
 
 **지난 글:** [Java 17 → 21 마이그레이션](/posts/java-migration-17-to-21/)
 
+**다음 글:** [레거시 코드 현대화 전략](/posts/java-legacy-modernization/)
+
 <br>
 읽어주셔서 감사합니다. 😊

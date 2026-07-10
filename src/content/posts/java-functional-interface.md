@@ -196,13 +196,13 @@ stream
     .forEach(System.out::println);        // Consumer<String>
 ```
 
-람다와 메서드 참조가 각각 적절한 함수형 인터페이스 타입으로 변환되기 때문에 이런 체이닝이 가능하다. 다음 글에서는 메서드 참조를 더 깊이 들여다보고, 이어서 `java.util.function`의 나머지 인터페이스(`BiFunction`, `BiPredicate` 등)까지 살펴볼 것이다.
+람다와 메서드 참조가 각각 적절한 함수형 인터페이스 타입으로 변환되기 때문에 이런 체이닝이 가능하다. 다음 글에서는 메서드가 하나도 없는 빈 인터페이스로 타입을 표시하는 **마커 인터페이스** 패턴을 살펴볼 것이다.
 
 ---
 
 **지난 글:** [Java 인터페이스 private 메서드 — 구현 캡슐화와 중복 제거](/posts/java-private-methods-interface/)
 
-**다음 글:** [Java 메서드 참조 — 람다의 축약 표현 4가지](/posts/java-method-reference/)
+**다음 글:** [Java 마커 인터페이스 — 빈 몸체로 타입을 마킹하는 설계 패턴](/posts/java-marker-interface/)
 
 <br>
 읽어주셔서 감사합니다. 😊

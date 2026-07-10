@@ -209,5 +209,7 @@ set.remove(1);   // UnsupportedOperationException
 
 **지난 글:** [Java Comparable과 Comparator — 자연 순서와 커스텀 정렬](/posts/java-comparable-comparator/)
 
+**다음 글:** [Java 제네릭 완전 정복 — 타입 매개변수의 기초](/posts/java-generics-basics/)
+
 <br>
 읽어주셔서 감사합니다. 😊

@@ -222,5 +222,7 @@ if (deadlockedIds != null) {
 
 **지난 글:** [스레드 안전 컬렉션 — ConcurrentHashMap부터 BlockingQueue까지](/posts/java-thread-safe-collections/)
 
+**다음 글:** [라이브락과 기아 현상: 교착 상태의 사촌들](/posts/java-livelock-starvation/)
+
 <br>
 읽어주셔서 감사합니다. 😊

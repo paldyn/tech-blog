@@ -130,5 +130,7 @@ public @interface Retry {
 
 **지난 글:** [내장 애너테이션 — @Override·@Deprecated·@SuppressWarnings](/posts/java-built-in-annotations/)
 
+**다음 글:** [커스텀 애너테이션 만들기 — @interface로 직접 선언하기](/posts/java-custom-annotations/)
+
 <br>
 읽어주셔서 감사합니다. 😊

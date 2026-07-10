@@ -142,5 +142,7 @@ bq.poll(100, java.util.concurrent.TimeUnit.MILLISECONDS);
 
 **지난 글:** [ConcurrentHashMap — 고성능 동시성 맵](/posts/java-map-concurrenthashmap/)
 
+**다음 글:** [PriorityQueue — 우선순위 큐의 힙 구조와 활용](/posts/java-priority-queue/)
+
 <br>
 읽어주셔서 감사합니다. 😊

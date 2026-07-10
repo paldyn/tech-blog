@@ -188,5 +188,7 @@ Java는 계속 진화합니다. 6개월 릴리스 사이클로 새 기능이 꾸
 
 **지난 글:** [Java 21 핵심 기능 정리 (LTS)](/posts/java-21-features/)
 
+**다음 글:** [java.time 개요 — 모던 날짜·시간 API의 설계 철학](/posts/java-date-time-overview/)
+
 <br>
 읽어주셔서 감사합니다. 😊

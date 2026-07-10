@@ -101,5 +101,7 @@ MyBatis는 SQL을 직접 작성하되 파라미터 바인딩과 결과 매핑의
 
 **지난 글:** [jOOQ — 타입 안전한 SQL을 자바로 작성하기](/posts/java-jooq/)
 
+**다음 글:** [소켓 기초 — TCP 통신의 출발점](/posts/java-socket-basics/)
+
 <br>
 읽어주셔서 감사합니다. 😊

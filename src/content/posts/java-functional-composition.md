@@ -194,5 +194,7 @@ List<String> errors = inputValidator.validate(userInput);
 
 **지난 글:** [BiFunction·BiPredicate·BiConsumer — 두 입력 처리](/posts/java-bifunction-bipredicate/)
 
+**다음 글:** [커링(Currying) — 다중 인자 함수를 단계적 함수로 분해하기](/posts/java-currying-java/)
+
 <br>
 읽어주셔서 감사합니다. 😊

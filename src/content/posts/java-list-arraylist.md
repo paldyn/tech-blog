@@ -155,5 +155,7 @@ fixed.set(0, "x");   // OK
 
 **지난 글:** [컬렉션 프레임워크 개요 — Java Collections의 전체 구조](/posts/java-collection-framework/)
 
+**다음 글:** [LinkedList — 이중 연결 리스트의 구조와 실전 활용](/posts/java-list-linkedlist/)
+
 <br>
 읽어주셔서 감사합니다. 😊

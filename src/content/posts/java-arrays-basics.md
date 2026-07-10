@@ -146,7 +146,9 @@ System.out.println(a[0]); // 99 ← a 불변
 
 ---
 
-**다음 글:** [Java 다차원 배열 완전 정복](/posts/java-multi-dimensional-array/)
+**지난 글:** [Java 패턴 매칭 switch 완전 정리](/posts/java-pattern-matching-switch/)
+
+**다음 글:** [Java 다차원 배열 완전 정복 — 2D 배열부터 가변 배열까지](/posts/java-multi-dimensional-array/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -382,5 +382,7 @@ public class AllInOne implements Printer, Scanner, Copier {
 
 **지난 글:** [Java 추상 클래스 완전 정복 — abstract와 설계 계약](/posts/java-abstract-class/)
 
+**다음 글:** [Java default 메서드 완전 정복 — 인터페이스의 진화](/posts/java-default-methods/)
+
 <br>
 읽어주셔서 감사합니다. 😊

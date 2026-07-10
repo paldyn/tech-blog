@@ -176,5 +176,7 @@ try (var db = new DatabaseConnection(url)) {
 
 **지난 글:** [Checked vs Unchecked 예외 — 언제 무엇을 써야 하나](/posts/java-checked-vs-unchecked/)
 
+**다음 글:** [try-with-resources — 자원 자동 해제의 모든 것](/posts/java-try-with-resources/)
+
 <br>
 읽어주셔서 감사합니다. 😊

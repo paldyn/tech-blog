@@ -220,5 +220,7 @@ Map<String, String> namesByDept = employees.stream()
 
 **지난 글:** [Stream 종료 연산 — collect·reduce·forEach·count·find·match](/posts/java-stream-terminal/)
 
+**다음 글:** [groupingBy 심화 — 다운스트림 Collector 조합과 다중 레벨 그루핑](/posts/java-stream-collectors-grouping/)
+
 <br>
 읽어주셔서 감사합니다. 😊

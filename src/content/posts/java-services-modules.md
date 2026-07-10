@@ -92,5 +92,7 @@ for (Plugin p : loader) {
 
 **지난 글:** [requires와 exports — 모듈 의존과 공개 제어](/posts/java-requires-exports/)
 
+**다음 글:** [jlink — 모듈로 맞춤형 런타임 이미지 만들기](/posts/java-jlink/)
+
 <br>
 읽어주셔서 감사합니다. 😊

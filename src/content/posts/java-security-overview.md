@@ -94,7 +94,7 @@ public Optional<User> login(String username, String password) {
 
 ---
 
-**지난 글:** [gRPC — 고성능 RPC 프레임워크](/posts/java-grpc/)
+**지난 글:** [Java와 Kotlin 상호운용](/posts/java-interop-kotlin/)
 
 **다음 글:** [JCA — Java 암호화 아키텍처](/posts/java-cryptography-jca/)
 

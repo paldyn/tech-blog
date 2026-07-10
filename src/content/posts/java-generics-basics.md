@@ -117,6 +117,8 @@ List<Integer> list = new ArrayList<>(); // OK — 래퍼 타입 사용
 
 ---
 
+**지난 글:** [Java 불변 객체 — Immutable Object 설계와 활용](/posts/java-immutable-objects/)
+
 **다음 글:** [제네릭 클래스 — 타입 매개변수를 가진 클래스 설계](/posts/java-generic-class/)
 
 <br>

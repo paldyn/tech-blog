@@ -125,5 +125,7 @@ AssertJ는 `assertThat`을 진입점으로 대상을 먼저 읽고 단언을 체
 
 **지난 글:** [Mockito 스터빙과 검증 심화](/posts/java-mockito-mocking/)
 
+**다음 글:** [Testcontainers — 진짜 의존성으로 통합 테스트하기](/posts/java-testcontainers/)
+
 <br>
 읽어주셔서 감사합니다. 😊

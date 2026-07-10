@@ -227,5 +227,7 @@ Java 17+ 프로젝트라면 다중 줄 문자열 리터럴이 필요할 때 Text
 
 **지난 글:** [Java StringBuilder · StringBuffer 완전 정복 — 가변 문자열의 모든 것](/posts/java-stringbuilder-stringbuffer/)
 
+**다음 글:** [Java 클래스와 객체 — 설계도와 실체의 세계](/posts/java-class-and-object/)
+
 <br>
 읽어주셔서 감사합니다. 😊

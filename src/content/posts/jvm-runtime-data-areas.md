@@ -169,13 +169,13 @@ jcmd <pid> VM.native_memory summary
 | JVM Stack | 전용 | 메서드 프레임 (지역변수·피연산자 스택) | SOE |
 | Native Method Stack | 전용 | C/C++ 네이티브 프레임 | SOE |
 
-런타임 데이터 영역을 이해하면 OOM이나 SOE 같은 에러가 발생했을 때 "어디서 무엇이 차고 있는지"를 구체적으로 진단할 수 있습니다. 다음 글에서는 Heap 내부의 실행 엔진인 **JVM 실행 엔진**의 인터프리터와 JIT 컴파일러 동작을 살펴봅니다.
+런타임 데이터 영역을 이해하면 OOM이나 SOE 같은 에러가 발생했을 때 "어디서 무엇이 차고 있는지"를 구체적으로 진단할 수 있습니다. 다음 글에서는 그중 가장 크고 중요한 **Heap의 내부 구조** — Young/Old 영역 구분과 객체의 생애주기를 자세히 살펴봅니다.
 
 ---
 
 **지난 글:** [클래스 로더 위임 모델 심화](/posts/jvm-class-loader-delegation/)
 
-**다음 글:** [JVM 실행 엔진](/posts/jvm-execution-engine/)
+**다음 글:** [JVM Heap 구조 완전 분석](/posts/jvm-heap-structure/)
 
 <br>
 읽어주셔서 감사합니다. 😊

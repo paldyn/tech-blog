@@ -109,5 +109,7 @@ java -Xlog:gc*:file=gc.log:time,uptime,level,tags MyApp
 
 **지난 글:** [JVM 메모리 모델 — GC를 이해하기 위한 지도](/posts/jvm-memory-model/)
 
+**다음 글:** [GC 기본 알고리즘 — Mark-Sweep, Mark-Compact, Copying](/posts/gc-mark-sweep-compact/)
+
 <br>
 읽어주셔서 감사합니다. 😊

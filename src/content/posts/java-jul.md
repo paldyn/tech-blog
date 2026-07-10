@@ -88,5 +88,7 @@ java.util.logging은 JDK에 내장되어 의존성 없이 바로 쓸 수 있는 
 
 **지난 글:** [Log4Shell — Log4j 2 원격 코드 실행 취약점](/posts/java-log4j-vulnerability/)
 
+**다음 글:** [MDC로 로그 추적하기 — 요청을 처음부터 끝까지 잇는 컨텍스트](/posts/java-mdc-tracing/)
+
 <br>
 읽어주셔서 감사합니다. 😊

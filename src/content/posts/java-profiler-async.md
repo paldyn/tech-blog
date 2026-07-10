@@ -65,5 +65,7 @@ async-profiler는 `perf_events`와 `AsyncGetCallTrace`를 이용해 세이프포
 
 **지난 글:** [클래스 데이터 공유(CDS) — JVM 기동을 빠르게](/posts/java-class-data-sharing/)
 
+**다음 글:** [자바 기동 시간 최적화 — 빠르게 시작하는 JVM](/posts/java-startup-time-optimization/)
+
 <br>
 읽어주셔서 감사합니다. 😊

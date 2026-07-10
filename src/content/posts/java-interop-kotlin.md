@@ -81,5 +81,7 @@ Kotlin의 `companion object` 멤버는 기본적으로는 자바에서 `MathUtil
 
 **지난 글:** [Java vs Scala — 함수형의 무게](/posts/java-vs-scala/)
 
+**다음 글:** [Java 보안 개요 — 심층 방어와 보안 3대 목표](/posts/java-security-overview/)
+
 <br>
 읽어주셔서 감사합니다. 😊

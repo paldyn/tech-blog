@@ -270,5 +270,7 @@ Java 30년 역사를 돌아보면 몇 가지 패턴이 보입니다.
 
 **지난 글:** [Java란 무엇인가](/posts/java-what-is-java/)
 
+**다음 글:** [Java 플랫폼 에디션 — SE · ME · Jakarta EE](/posts/java-platform-edition/)
+
 <br>
 읽어주셔서 감사합니다. 😊

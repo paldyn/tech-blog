@@ -260,5 +260,7 @@ for (Thread t : threads) t.join();
 
 **지난 글:** [스레드 기초 — 동시성 프로그래밍의 시작](/posts/java-threads-basics/)
 
+**다음 글:** [Java 스레드 생명주기 — 6가지 상태와 전이 조건](/posts/java-thread-lifecycle/)
+
 <br>
 읽어주셔서 감사합니다. 😊
