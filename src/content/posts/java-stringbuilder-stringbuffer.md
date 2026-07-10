@@ -139,7 +139,7 @@ class LogCollector {
 
 ## 세 클래스 선택 기준 정리
 
-```
+```text
 단순 상수 / 변경 없는 값       → String
 단일 스레드 문자열 조작        → StringBuilder  (기본 선택)
 여러 스레드가 공유하며 수정    → StringBuffer   (또는 외부 동기화)

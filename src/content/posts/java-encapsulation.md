@@ -229,7 +229,7 @@ class EvilCounter extends Counter {
 
 캡슐화를 올바르게 적용했는지 확인하는 기준이다.
 
-```
+```text
 1. 모든 필드가 private인가?
    → 예외는 불변 record 정도
 

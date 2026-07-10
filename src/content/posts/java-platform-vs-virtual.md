@@ -72,7 +72,7 @@ java -Djdk.tracePinnedThreads=full -jar app.jar
 ```
 
 출력 예:
-```
+```text
 Thread[#123,ForkJoinPool-1-worker-1,5,CarrierThreads]
     com.example.MyService.processRequest(MyService.java:45)
     ...

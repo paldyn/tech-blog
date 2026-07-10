@@ -85,7 +85,7 @@ try {
 
 스택 트레이스 출력 시 `Caused by:` 섹션이 바로 이 체인을 보여준다.
 
-```
+```text
 OrderServiceException: 주문 서비스 오류
     at OrderServiceImpl.processOrder(...)
 Caused by: OrderRepositoryException: 주문 조회 실패

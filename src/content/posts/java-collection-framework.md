@@ -15,7 +15,7 @@ draft: false
 
 ## 전체 계층 구조
 
-```
+```text
 Iterable<E>
   └─ Collection<E>
        ├─ List<E>         — 순서 있는 시퀀스, 중복 허용

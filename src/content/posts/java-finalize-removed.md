@@ -37,7 +37,7 @@ class NativeResource {
 
 ## 폐기 타임라인
 
-```
+```text
 Java 1.0 (1996) : finalize() 도입
 Java 9  (2017)  : @Deprecated 지정
 Java 18 (2022)  : @Deprecated(forRemoval=true) 강화

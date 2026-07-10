@@ -32,7 +32,7 @@ Object obj = objectInputStream.readObject(); // 절대 금지!
 
 Java 직렬화는 리플렉션 기반으로 동작한다. 클래스 메타데이터, 전체 객체 그래프를 탐색하는 오버헤드가 크다.
 
-```
+```text
 벤치마크 참고 (JMH 기준, 간단한 POJO 1만 건):
 Java 직렬화:    ~450 MB/s 처리량
 Jackson JSON:   ~800 MB/s 처리량
@@ -89,7 +89,7 @@ try (ObjectInputStream ois = new ObjectInputStream(in)) {
 - `!*` — 나머지 모두 거부
 
 JVM 전역 필터는 시스템 프로퍼티로 설정한다:
-```
+```text
 -Djdk.serialFilter=com.example.*;java.lang.*;!*
 ```
 

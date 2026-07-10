@@ -53,7 +53,7 @@ dependencies {
 
 모듈 시스템의 또 다른 영향은 `sun.misc.Unsafe` 같은 **JDK 내부 API 접근이 제한** 된 것이다. Java 11에서는 이런 접근이 경고를 발생시키며, 이후 버전에서는 아예 막힌다.
 
-```
+```text
 WARNING: An illegal reflective access operation has occurred
 WARNING: Illegal reflective access by com.example.SomeLib
 WARNING: Please consider reporting this to the maintainers

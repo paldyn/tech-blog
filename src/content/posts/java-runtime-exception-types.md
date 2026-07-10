@@ -42,7 +42,7 @@ user.getAddress().getCity().toUpperCase(); // 어느 단계든 null이면 NPE
 
 Java 14부터 NPE 메시지가 **어떤 변수가 null인지** 명시한다.
 
-```
+```text
 NullPointerException: Cannot invoke "String.length()" because "s" is null
 NullPointerException: Cannot invoke "Address.getCity()" because the return
   value of "User.getAddress()" is null

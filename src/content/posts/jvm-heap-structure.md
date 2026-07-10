@@ -44,7 +44,7 @@ void processRequest(Request req) {
 
 Eden에 객체를 할당할 때마다 포인터를 이동시키는 작업은 멀티스레드 환경에서 경합이 발생할 수 있습니다. JVM은 이를 막기 위해 각 스레드에게 Eden의 작은 구획을 미리 할당합니다. 이것이 TLAB입니다. 스레드는 자신의 TLAB 안에서 lock 없이 포인터만 전진시켜 객체를 빠르게 할당합니다.
 
-```
+```text
 -XX:+UseTLAB          # 기본값 true, 거의 항상 ON
 -XX:TLABSize=512k     # 스레드별 버퍼 크기 (기본값은 JVM이 자동 조정)
 ```
@@ -57,7 +57,7 @@ TLAB가 꽉 차면 새 TLAB를 요청하거나(여유가 있으면 빠름) Eden 
 
 Minor GC를 반복해서 살아남아 age가 임계값에 도달하면 객체는 Old Generation으로 **Promotion**됩니다. 기본 임계값은 15이지만, JVM이 Survivor 공간 사용률에 따라 동적으로 낮출 수도 있습니다.
 
-```
+```text
 # Promotion 관련 옵션
 -XX:MaxTenuringThreshold=15   # age 임계값 (G1GC 기본 15)
 -XX:+PrintTenuringDistribution # Minor GC마다 age 분포 출력
@@ -81,7 +81,7 @@ byte[] bigBuffer = new byte[4 * 1024 * 1024]; // 4MB
 
 Java 8부터 PermGen이 사라지고 Metaspace가 그 역할을 대신합니다. 클래스 메타데이터, 메서드 바이트코드, 런타임 상수 풀, `static` 변수가 저장됩니다. Heap이 아닌 **Native Memory**를 사용하므로 기본적으로 OS가 허용하는 만큼 늘어납니다.
 
-```
+```text
 -XX:MetaspaceSize=128m        # 초기 Metaspace 크기 (첫 GC 트리거 임계값)
 -XX:MaxMetaspaceSize=512m     # 상한선 (설정 안 하면 무제한)
 ```
@@ -90,7 +90,7 @@ Java 8부터 PermGen이 사라지고 Metaspace가 그 역할을 대신합니다.
 
 ## 핵심 JVM Heap 옵션 정리
 
-```
+```text
 # 크기
 -Xms2g -Xmx2g          # 초기·최대 동일하게 → 크기 재조정 비용 제거
 -XX:NewRatio=2          # Young : Old = 1 : 2 (기본값)

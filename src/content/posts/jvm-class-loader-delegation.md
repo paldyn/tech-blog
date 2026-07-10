@@ -120,7 +120,7 @@ Thread worker = new Thread(() -> {
 
 Java 9 이전에는 classpath의 모든 클래스가 Application ClassLoader 하나의 관할이었습니다. Java 9부터 **Named Module**이 도입되며 클래스 로더 계층에 모듈 경계가 추가됩니다.
 
-```
+```text
 // module-info.java 예시
 module com.example.app {
     requires java.sql;           // java.sql 모듈 의존
@@ -152,7 +152,7 @@ myModule.addOpens("com.example.internal",
 
 **Apache Tomcat**은 웹 애플리케이션마다 별도의 `WebappClassLoader`를 사용합니다. 기본 동작은 `WEB-INF/lib`를 먼저 검색하고 그다음 부모에게 위임하는 **역방향 위임**입니다. 각 웹 앱이 서로 다른 버전의 라이브러리를 격리하여 사용할 수 있게 됩니다.
 
-```
+```text
 Tomcat ClassLoader 계층
 ────────────────────────
 Bootstrap CL

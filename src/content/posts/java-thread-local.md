@@ -36,7 +36,7 @@ System.out.println(userId.get()); // "bob"
 
 `ThreadLocal`의 값은 `ThreadLocal` 객체 자체에 저장되지 않습니다. 값은 **`Thread` 객체 안의 `ThreadLocalMap`** 에 저장됩니다. `ThreadLocal` 인스턴스는 이 맵의 **키(key) 역할만** 합니다.
 
-```
+```text
 Thread 객체
 └── ThreadLocalMap (WeakReference 키 사용)
     ├── (ThreadLocal1) → "alice"

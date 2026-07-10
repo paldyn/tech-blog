@@ -31,7 +31,7 @@ Function<String, Integer> f2 = String::length;
 
 ## 유형 1 — 정적 메서드 참조
 
-```
+```text
 클래스명::정적메서드명
 ```
 
@@ -59,7 +59,7 @@ List<Integer> ints = numbers.stream()
 
 ## 유형 2 — 특정 객체의 인스턴스 메서드 참조
 
-```
+```text
 특정객체::인스턴스메서드명
 ```
 
@@ -87,7 +87,7 @@ list.forEach(log);
 
 ## 유형 3 — 임의 객체의 인스턴스 메서드 참조
 
-```
+```text
 클래스명::인스턴스메서드명
 ```
 
@@ -117,7 +117,7 @@ names.stream().filter(Predicate.not(String::isEmpty)).collect(toList());
 
 ## 유형 4 — 생성자 참조
 
-```
+```text
 클래스명::new
 ```
 

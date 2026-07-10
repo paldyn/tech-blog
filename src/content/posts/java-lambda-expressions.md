@@ -36,7 +36,7 @@ Runnable r2 = () -> System.out.println("Hello");
 
 람다는 세 부분으로 구성된다.
 
-```
+```text
 (파라미터 목록) -> 본문
 ```
 

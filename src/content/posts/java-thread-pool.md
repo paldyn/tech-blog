@@ -80,7 +80,7 @@ int poolSize = cpus + 1; // 4코어 시스템 → 5
 
 DB 쿼리, HTTP 요청, 파일 읽기처럼 I/O 대기가 많은 작업에는 스레드를 더 많이 둘 수 있습니다.
 
-```
+```text
 poolSize = N × (1 + W/C)
 N: CPU 코어 수
 W: 평균 I/O 대기 시간

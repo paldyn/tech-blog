@@ -131,7 +131,7 @@ static ImmutableConfig config = new ImmutableConfig("localhost", 8080);
 
 happens-before의 가장 강력한 특성은 **이행성**입니다.
 
-```
+```text
 A happens-before B  AND  B happens-before C
 →  A happens-before C
 ```

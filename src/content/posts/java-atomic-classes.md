@@ -17,7 +17,7 @@ draft: false
 
 Atomic 클래스의 핵심은 CPU가 제공하는 **CAS 명령(x86의 `CMPXCHG`)**이다. 단일 CPU 명령이므로 중간에 인터럽트될 수 없다.
 
-```
+```text
 if (메모리[addr] == expected) {
     메모리[addr] = newValue;
     return true;

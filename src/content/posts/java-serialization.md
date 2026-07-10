@@ -154,7 +154,7 @@ System.out.println(r1 == r2); // true — 같은 인스턴스
 
 Java 직렬화 스트림은 `AC ED 00 05`로 시작하는 매직 넘버를 포함한다. 이 패턴은 역직렬화 공격의 식별 지표로 사용되기도 한다.
 
-```
+```text
 AC ED       - STREAM_MAGIC
 00 05       - STREAM_VERSION
 73 72       - TC_OBJECT, TC_CLASSDESC

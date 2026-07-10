@@ -119,7 +119,7 @@ module com.example.app {
 
 클래스패스에 올린 JAR는 **무명 모듈**(unnamed module)이 되어 모든 named 모듈 패키지에 접근할 수 없습니다.
 
-```
+```text
 named module → named module: exports/requires 규칙 적용
 named module → unnamed module: 접근 불가 (기본)
 unnamed module → named module: exports된 패키지만 접근 가능

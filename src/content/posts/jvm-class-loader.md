@@ -57,7 +57,7 @@ public class ClassLoaderDemo {
 
 클래스 로더의 핵심 보안 원칙입니다. `loadClass(name)` 호출이 들어오면 **먼저 부모에게 위임**하고, 부모가 찾지 못할 때만 자신이 직접 로드를 시도합니다.
 
-```
+```text
 loadClass("com.example.App") 호출
   → Application CL: "내가 직접 로드하기 전에 부모에게 먼저"
   → Platform CL: "나도 부모에게 먼저"

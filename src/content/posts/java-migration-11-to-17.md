@@ -21,7 +21,7 @@ draft: false
 
 11에서 이런 경고를 보고도 무시했다면 17에서 문제가 표면화된다.
 
-```
+```text
 // Java 11: 경고만 출력, 동작은 계속
 WARNING: An illegal reflective access operation has occurred
 

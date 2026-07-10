@@ -130,7 +130,7 @@ dogs.sort(animalComp); // ? super Dog — Animal super Dog → OK
 
 ## 암기법 요약
 
-```
+```text
 내가 컬렉션에서 꺼낸다 (읽는다) → extends  (Producer Extends)
 내가 컬렉션에 넣는다   (쓴다)   → super    (Consumer Super)
 둘 다 안 함            → ?

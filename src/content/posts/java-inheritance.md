@@ -121,7 +121,7 @@ System.out.println(c.getName()); // "나비" — 상속된 메서드
 
 Java의 모든 클래스는 명시적 `extends`가 없더라도 `java.lang.Object`를 암묵적으로 상속한다. 따라서 상속 체인은 항상 `Object`에서 끝난다.
 
-```
+```text
 Object
   └── Animal
         ├── Dog

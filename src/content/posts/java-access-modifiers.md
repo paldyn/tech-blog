@@ -196,7 +196,7 @@ public class DatabaseConnection {
 
 접근 제어자 선택의 핵심 원칙은 **최소 권한(Principle of Least Privilege)** 이다. 필요한 최소한의 범위만 열어라. 처음에는 `private`으로 두고, 진짜 필요할 때 단계적으로 넓혀라.
 
-```
+```text
 private → default → protected → public
 (가장 제한적)               (가장 개방적)
 ```

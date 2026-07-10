@@ -19,7 +19,7 @@ draft: false
 
 JDK, JRE, JVM은 서로 별개가 아니라 **중첩된 구조(포함 관계)** 입니다.
 
-```
+```text
 JDK (Java Development Kit)
 ├── 개발 도구: javac, javadoc, jar, jshell, jlink …
 └── JRE (Java Runtime Environment)
@@ -74,7 +74,7 @@ JVM이 사용하는 메모리 영역입니다. 주요 영역은 다음과 같습
 - **Interpreter**: 바이트코드를 한 줄씩 해석해 실행. 시작이 빠르지만 반복 실행 시 느림.
 - **JIT(Just-In-Time) Compiler**: 자주 실행되는 핫(hot) 메서드를 네이티브 코드로 컴파일해 캐싱. 이후 호출은 C/C++ 수준 속도로 동작.
 
-```
+```text
 첫 100번: Interpreter로 실행
 이후: JIT 컴파일된 네이티브 코드로 실행 → 수십 배 빠름
 ```
@@ -165,7 +165,7 @@ jpackage --name MyApp --input out/ --main-jar app.jar
 
 Java 프로그램이 실행되는 과정을 단계별로 따라가 봅니다.
 
-```
+```text
 1. 개발자 작성:  Hello.java (소스 코드)
 2. javac 컴파일: Hello.class (바이트코드, 플랫폼 무관)
 3. java 실행:    JVM 시작 → Class Loader가 Hello.class 메모리에 로드

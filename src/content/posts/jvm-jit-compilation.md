@@ -105,7 +105,7 @@ JIT 컴파일러는 프로파일 정보를 기반으로 **추측적 최적화(Sp
 
 이때 JVM은 **Deoptimization**을 수행합니다. 해당 컴파일된 코드를 무효화하고 다시 Interpreter 모드로 전환합니다. 충분한 새 프로파일 데이터가 쌓이면 재컴파일(Recompilation)이 이루어지며, 이번에는 새 타입도 고려한 더 범용적인 코드가 생성됩니다.
 
-```
+```text
 # Deoptimization 발생 확인 로그 옵션
 -XX:+PrintDeoptimization
 -XX:+TraceDeoptimization

@@ -107,7 +107,7 @@ addIntegers(objects); // Object super Integer → OK
 
 ## 세 가지 와일드카드 선택 기준
 
-```
+```text
 읽기만 (데이터 소비) → ? extends T
 쓰기만 (데이터 생산) → ? super T
 읽지도 쓰지도 않음  → ?

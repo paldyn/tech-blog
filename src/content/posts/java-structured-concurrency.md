@@ -72,7 +72,7 @@ try (var scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
 
 ## 취소 전파 구조
 
-```
+```text
 handleRequest()  ←── scope.join() 블로킹 중
    ├── fetchUser()  ← 실패! → scope.shutdown() 호출
    └── fetchOrders() ← 자동 인터럽트
@@ -123,7 +123,7 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
 
 Structured Concurrency를 사용하면 스레드 덤프에서 서브태스크 트리가 계층 구조로 표시됩니다.
 
-```
+```text
 Thread[#12, request-handler]: handleRequest(id=42)
   └── VT[#13]: fetchUser(id=42)
   └── VT[#14]: fetchOrders(id=42) — 완료 대기 중

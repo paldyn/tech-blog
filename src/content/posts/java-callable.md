@@ -201,7 +201,7 @@ Callable<String> callable = Executors.callable(runnable, "done");
 
 ## 언제 Callable을 쓸까?
 
-```
+```text
 비동기 작업에서:
 ├── 결과값이 필요하다 → Callable<T>
 ├── checked 예외가 발생한다 → Callable<T>

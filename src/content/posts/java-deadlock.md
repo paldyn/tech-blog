@@ -170,7 +170,7 @@ jstack <PID> > thread_dump.txt
 
 스레드 덤프에서 교착 상태를 발견하면 다음과 같이 표시된다.
 
-```
+```text
 Found one Java-level deadlock:
 "Thread-1":
   waiting to lock monitor 0x... (object 0x..., a java.lang.Object)

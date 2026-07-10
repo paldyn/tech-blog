@@ -39,7 +39,7 @@ HotSpot JVM은 컴파일 수준을 0~4단계(Level)로 정의합니다.
 
 애플리케이션이 급속히 워밍업될 때 C2 컴파일 큐가 포화될 수 있습니다. 이 경우 JVM은 Level 3 코드를 Level 1(프로파일링 없는 C1)로 **강등**합니다. 이렇게 하면 즉각적인 성능 저하 없이 C2 큐 부담을 낮추고, C2 여유가 생기면 Level 3 재진입 → Level 4 전환이 다시 시작됩니다.
 
-```
+```text
 # 전환 경로 요약
 0 → 3 → 4          일반 경로
 0 → 1               Trivial Method
@@ -57,13 +57,13 @@ HotSpot JVM은 컴파일 수준을 0~4단계(Level)로 정의합니다.
 
 출력 형식은 다음과 같습니다.
 
-```
+```text
 <타임스탬프ms>  <컴파일ID>  <Flags>  <Level>  <클래스::메서드>  (<크기>bytes)
 ```
 
 중요 플래그 의미:
 
-```
+```text
 %   OSR 컴파일 (On-Stack Replacement, 루프 실행 중 전환)
 !   예외 핸들러 포함
 s   synchronized 메서드

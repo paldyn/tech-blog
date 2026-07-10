@@ -96,7 +96,7 @@ JShell에는 `/`로 시작하는 내장 명령이 있습니다. 코드가 아니
 
 ![JShell 대화형 세션과 주요 명령어](/assets/posts/java-jshell-commands.svg)
 
-```
+```text
 /list       — 이 세션에서 입력한 스니펫 목록
 /vars       — 선언된 변수 목록
 /methods    — 정의된 메서드 목록

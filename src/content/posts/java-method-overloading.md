@@ -64,7 +64,7 @@ show(42L);  // long 리터럴 → show(long) 선택 (1단계)
 
 정확 일치가 없을 때, 손실 없는 자동 확대 변환을 적용해 일치하는 메서드를 찾는다. Java 확대 변환 순서는 다음과 같다.
 
-```
+```text
 byte → short → int → long → float → double
 char → int
 ```
