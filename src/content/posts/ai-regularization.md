@@ -49,7 +49,7 @@ def train_epoch(model, loader, optimizer, criterion, train=True):
 
 가장 기본적인 정규화. 손실 함수에 파라미터의 제곱 합을 패널티로 추가한다.
 
-```
+```text
 L_total = L + λ·Σ wᵢ²
 ```
 

@@ -31,7 +31,7 @@ Copilot과 비슷하게 인라인 제안이 나타나지만, Cursor의 Tab은 **
 
 ### Chat 패널 (Ctrl+L)
 
-```
+```text
 @codebase 인증 관련 코드 어디에 있어?
 @file:services/auth.py 이 코드에서 refreshToken 로직 설명해줘
 @web https://fastapi.tiangolo.com/tutorial/security/ 참고해서 OAuth2 구현해줘

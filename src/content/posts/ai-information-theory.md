@@ -19,7 +19,7 @@ draft: false
 
 이 직관을 수식으로 표현한 것이 **정보량(Information Content 또는 Self-Information)**이다.
 
-```
+```text
 I(x) = −log₂ P(x)  [단위: bits]
 ```
 
@@ -54,7 +54,7 @@ for name, p in events.items():
 
 개별 사건의 정보량을 확률 가중 평균한 것이 **엔트로피(Entropy)**다. 확률 분포 전체가 얼마나 불확실한지를 하나의 숫자로 나타낸다.
 
-```
+```text
 H(X) = −Σ P(x) · log P(x)  = E[−log P(X)]
 ```
 
@@ -92,7 +92,7 @@ LLM에서 **Perplexity(복잡도)**는 `exp(평균 교차 엔트로피)`다. 언
 
 실제 데이터 분포 P와 모델이 학습한 분포 Q 사이의 차이를 측정하는 것이 **KL 발산(Kullback-Leibler Divergence)**이다.
 
-```
+```text
 D_KL(P ‖ Q) = Σ P(x) · log(P(x) / Q(x))
 ```
 
@@ -125,7 +125,7 @@ VAE(변분 오토인코더)의 손실 함수는 `재구성 손실 + D_KL(q(z|x) 
 
 **교차 엔트로피(Cross-Entropy)**는 KL 발산과 엔트로피의 합이다.
 
-```
+```text
 H(P, Q) = H(P) + D_KL(P ‖ Q) = −Σ P(x) · log Q(x)
 ```
 
@@ -159,7 +159,7 @@ print(f"Perplexity: {perplexity:.2f}")
 
 **상호 정보량(Mutual Information)**은 두 확률 변수 X, Y가 서로 얼마나 정보를 공유하는지를 측정한다.
 
-```
+```text
 I(X; Y) = H(X) + H(Y) − H(X, Y) = D_KL(P(X,Y) ‖ P(X)·P(Y))
 ```
 

@@ -17,7 +17,7 @@ draft: false
 
 베이즈 정리는 한 줄로 표현된다.
 
-```
+```text
 P(H|E) = P(E|H) · P(H) / P(E)
 ```
 
@@ -158,6 +158,8 @@ RAG(Retrieval-Augmented Generation)는 이 관점에서 더 풍부한 증거를 
 ---
 
 **지난 글:** [AI를 위한 확률론 기초: 불확실성을 다루는 언어](/posts/ai-probability-basics/)
+
+**다음 글:** [정보 이론: AI가 불확실성을 측정하는 방법](/posts/ai-information-theory/)
 
 <br>
 읽어주셔서 감사합니다. 😊

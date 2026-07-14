@@ -39,7 +39,7 @@ llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0.3)
 researcher = Agent(
     role="AI 연구 전문가",
     goal="최신 AI 트렌드와 기술 정보를 정확하게 수집하고 분석한다",
-    backstory="""당신은 10년 경력의 AI 연구원으로, 학술 논문과 기술 블로그를
+    backstory="""당신은 10년 경력의 AI 연구원으로, 학술 논문과 기술 블로그에서
                 최신 동향을 파악하는 전문가입니다. 항상 출처를 검증합니다.""",
     llm=llm,
     tools=[],           # 사용할 도구 목록

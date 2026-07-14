@@ -213,7 +213,7 @@ async def read_resource(uri: str) -> str:
 
 ## 에이전트 vs 단순 도구 사용
 
-```
+```text
 단순 도구 호출:
   사용자 → "날씨 알려줘" → LLM → 날씨 API → LLM → 답변
 

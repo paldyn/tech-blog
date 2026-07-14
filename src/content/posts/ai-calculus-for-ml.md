@@ -17,7 +17,7 @@ draft: false
 
 **도함수(Derivative)**는 함수 f(x)가 x의 변화에 얼마나 민감하게 반응하는지를 나타낸다.
 
-```
+```text
 f′(x) = df/dx = lim[Δx→0] (f(x+Δx) − f(x)) / Δx
 ```
 
@@ -58,7 +58,7 @@ ML에서 자주 쓰이는 도함수를 외워두면 유용하다.
 
 신경망의 파라미터는 수백만 개다. 변수가 여러 개일 때 한 변수에 대해서만 미분하는 것이 **편미분(Partial Derivative)**이다.
 
-```
+```text
 ∂f/∂xᵢ : 다른 변수는 상수로 취급하고 xᵢ만 변화시킬 때의 변화율
 ```
 
@@ -86,7 +86,7 @@ print(f"∂L/∂w2 = {w2.grad:.1f}")  # 2w1 + 2w2 = 4+6 = 10 (대칭)
 
 **연쇄 법칙(Chain Rule)**은 합성 함수를 미분하는 규칙이다.
 
-```
+```text
 z = f(g(x)) 일 때:
 dz/dx = dz/dy · dy/dx   (y = g(x))
 ```
@@ -122,7 +122,7 @@ print("layer2 grad shape:", layer2.weight.grad.shape)  # [1, 4]
 
 벡터→벡터 함수의 미분은 **야코비안 행렬(Jacobian Matrix)**이다.
 
-```
+```text
 f: Rⁿ → Rᵐ 일 때
 J[i,j] = ∂fᵢ/∂xⱼ   → (m×n) 행렬
 ```

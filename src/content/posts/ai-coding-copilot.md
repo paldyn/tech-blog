@@ -19,7 +19,7 @@ draft: false
 
 Copilot의 핵심 기술은 **FIM(Fill-In-Middle)**이다. 기존 언어 모델은 앞에서 뒤로만 생성하지만, FIM은 커서 앞(prefix)과 뒤(suffix)를 모두 프롬프트로 주고 그 사이의 코드를 생성한다. 함수 중간에 커서를 두고 완성을 요청할 때도 전후 맥락을 모두 활용할 수 있는 이유다.
 
-```
+```text
 <PRE> ... 앞의 코드 ... <SUF> ... 뒤의 코드 ... <MID>
                                                    ↑ 여기를 생성
 ```
@@ -57,7 +57,7 @@ def calculate_discount(price: float, customer_tier: str) -> float:
 
 컨텍스트 변수:
 
-```
+```text
 @workspace 이 프로젝트에서 JWT 인증을 어떻게 구현했어?
 #file:auth.py 의 토큰 검증 로직 설명해줘
 #selection 이 코드의 시간복잡도는?
@@ -67,7 +67,7 @@ def calculate_discount(price: float, customer_tier: str) -> float:
 
 여러 파일에 걸친 수정을 자연어로 요청한다. 결과는 diff 형식으로 보여줘 선택적으로 적용할 수 있다.
 
-```
+```text
 "UserService에 이메일 인증 로직 추가하고,
  관련 테스트 파일도 업데이트해줘"
 → UserService.java, UserServiceTest.java 동시 수정

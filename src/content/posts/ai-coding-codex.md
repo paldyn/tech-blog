@@ -209,7 +209,7 @@ codex --approval-mode auto-edit "테스트 파일 작성해줘"
 
 ChatGPT의 **Canvas** 기능은 코드를 별도 패널에서 실시간으로 편집할 수 있게 한다. 코드를 작성한 후 특정 부분을 선택해 수정 요청, 버그 수정, 주석 추가를 요청할 수 있다.
 
-```
+```text
 Canvas 활용 패턴:
 1. "Python으로 파일 업로드 API 만들어줘" → Canvas에 코드 생성
 2. validate_file 함수 선택 → "파일 크기 제한 로직 추가해줘"
