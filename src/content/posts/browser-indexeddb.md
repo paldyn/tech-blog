@@ -231,6 +231,8 @@ await tx2.done; // 커밋 대기
 
 ---
 
+**지난 글:** [Cookie API 완전 이해](/posts/browser-cookie-api/)
+
 **다음 글:** [Cache API 완전 이해](/posts/browser-cache-api/)
 
 <br>

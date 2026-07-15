@@ -34,7 +34,7 @@ cd my-app && npm install && npm run dev
 
 생성되는 기본 구조:
 
-```
+```text
 my-app/
 ├── public/          # 정적 파일 (Vite가 변환하지 않음)
 ├── src/
@@ -93,7 +93,7 @@ export default defineConfig(({ mode }) => {
 
 Vite는 `.env` 파일을 자동으로 로드합니다. 클라이언트 코드에 노출되는 변수는 **`VITE_` 접두사**가 필수입니다.
 
-```
+```ini
 # .env
 VITE_API_URL=https://api.example.com
 DB_PASSWORD=secret    # VITE_ 없음 → 클라이언트 노출 안 됨

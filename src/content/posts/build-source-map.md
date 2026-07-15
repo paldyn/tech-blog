@@ -19,7 +19,7 @@ draft: false
 
 ![소스맵 구조와 동작 원리](/assets/posts/build-source-map-structure.svg)
 
-```
+```js
 // 번들 파일 맨 끝에 추가되는 주석
 //# sourceMappingURL=app.js.map
 

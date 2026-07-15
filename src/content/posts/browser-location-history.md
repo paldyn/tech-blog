@@ -19,7 +19,7 @@ draft: false
 
 `window.location`은 현재 URL의 각 부분을 파싱해 제공합니다.
 
-```
+```text
 https://example.com:8080/path/page?q=hello&lang=ko#section
 ```
 

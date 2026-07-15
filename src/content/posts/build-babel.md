@@ -171,7 +171,7 @@ npm install --save @babel/runtime-corejs3
 
 `@babel/preset-env`의 `targets`는 [browserslist](https://browsersl.ist/) 쿼리를 받습니다. `package.json`이나 `.browserslistrc`로 분리하면 ESLint, PostCSS, Autoprefixer와 공유할 수 있습니다.
 
-```
+```text
 // .browserslistrc
 > 0.5%
 last 2 versions

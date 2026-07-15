@@ -89,7 +89,7 @@ deleteCookie('theme');
 
 `Secure` 속성이 있으면 HTTPS 연결에서만 쿠키가 전송됩니다. `localhost`는 예외적으로 HTTP에서도 작동합니다.
 
-```
+```http
 Set-Cookie: session=abc; Secure
 ```
 
@@ -103,7 +103,7 @@ Set-Cookie: session=abc; Secure
 
 크로스 사이트 요청에서 쿠키 전송 여부를 제어해 CSRF 공격을 방어합니다.
 
-```
+```text
 Strict: 같은 사이트 요청에만 전송
 Lax:    탑레벨 GET 요청(링크 클릭)은 허용, 그 외 크로스 사이트는 제한 (기본값)
 None:   모든 크로스 사이트 요청 허용 (반드시 Secure 필요)
@@ -204,6 +204,8 @@ function getCookieDecoded(name) {
 ---
 
 **지난 글:** [localStorage · sessionStorage 완전 이해](/posts/browser-storage-local-session/)
+
+**다음 글:** [IndexedDB 완전 이해](/posts/browser-indexeddb/)
 
 <br>
 읽어주셔서 감사합니다. 😊

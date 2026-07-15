@@ -71,7 +71,7 @@ PR 브랜치가 base 브랜치보다 오래되면 머지를 차단한다. race c
 
 하나의 규칙을 여러 브랜치에 적용할 때 패턴을 사용한다.
 
-```
+```text
 main           # main 브랜치 정확 매칭
 release/*      # release/1.0, release/2.x 등
 v[0-9]*        # v1, v2.0 등 버전 태그/브랜치
@@ -93,7 +93,7 @@ v[0-9]*        # v1, v2.0 등 버전 태그/브랜치
 
 ## 실전 권장 설정 (main 브랜치)
 
-```
+```text
 ✓ Require a pull request before merging
   ✓ Required approvals: 1
   ✓ Dismiss stale pull request approvals when new commits are pushed

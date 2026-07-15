@@ -134,5 +134,7 @@ echo "${STR^^}"                # HELLO WORLD (대문자)
 
 **지난 글:** [Bash 셔뱅과 스크립트 실행 방식](/posts/bash-shebang-and-execution/)
 
+**다음 글:** [Bash 배열 완전 정복](/posts/bash-arrays/)
+
 <br>
 읽어주셔서 감사합니다. 😊
