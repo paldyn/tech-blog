@@ -109,7 +109,7 @@ SELECT server_id, repl_delay, repl_status
 FROM   db_ha_apply_info;
 ```
 
-```
+```ini
 # cubrid.conf HA 설정 예시
 [service]
 service=server,broker,manager,heartbeat

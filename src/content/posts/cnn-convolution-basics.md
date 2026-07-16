@@ -61,7 +61,7 @@ $$H_{out} = \left\lfloor\frac{H_{in} - K + 2P}{S}\right\rfloor + 1$$
 
 Conv2d 레이어의 파라미터 수는 다음으로 계산한다:
 
-```
+```text
 파라미터 수 = K × K × C_in × C_out + C_out (bias)
 ```
 

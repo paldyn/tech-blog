@@ -76,7 +76,7 @@ git commit -m "review: 에러 응답에 WWW-Authenticate 헤더 추가"
 
 코멘트에 우선순위를 명시하면 작성자가 무엇부터 처리할지 알 수 있다.
 
-```
+```text
 # Blocker (필수 수정)
 이 코드에서 SQL 인젝션이 발생할 수 있습니다.
 prepared statement 사용이 필요합니다.
@@ -93,12 +93,12 @@ nit: 변수명 `d`보다 `date`가 명확할 것 같아요
 
 GitHub의 **Suggested Changes** 기능을 사용하면 코멘트에 구체적인 코드 수정안을 넣을 수 있다. 작성자는 1클릭으로 해당 코드를 커밋에 반영할 수 있다.
 
-```diff
+````diff
 # GitHub 코멘트 박스에서
 ```suggestion
 const expiryDate = new Date(token.exp * 1000);
 ```
-```
+````
 
 ## 머지 방식 선택
 

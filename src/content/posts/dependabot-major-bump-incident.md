@@ -39,7 +39,7 @@ PR 로 와서 같이 머지 가능한 상태**였다.
 `gh pr merge --squash --delete-branch` 로 일괄 머지 후, 릴리스 오케스트레이터에
 새 릴리스 태그를 push 했다. 워크플로우 결과:
 
-```
+```text
 === 인증 서비스 ===
 Error: Unable to resolve action `aquasecurity/trivy-action@0.24.0`,
 unable to find version `0.24.0`
@@ -59,7 +59,7 @@ did not complete successfully: exit code: 100
 
 로컬 Java 빌드도 줄줄이 깨졌다.
 
-```
+```text
 > Could not resolve all files for configuration ':compileClasspath'.
    > Could not find org.springframework.boot:spring-boot-starter-aop:.
      Required by:
@@ -206,7 +206,7 @@ frontend 쪽도 동일하게 react / electron / vite / fortawesome 메이저 ign
 
 fix 릴리스 태그 push 후 모니터링:
 
-```
+```text
 === 릴리스 워크플로우 ===
 completed	success	8m55s
 
