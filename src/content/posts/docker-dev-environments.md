@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-test-in-container/)에서 컨테이너 안에서 테스트를 실행하는 패턴을 살펴봤다. 테스트뿐 아니라 **개발 자체**를 컨테이너 안��서 할 수 있다. "내 컴퓨터에서는 됐는데"를 완전히 없애려면 개발 환경도 컨테이너화해야 한다. Docker Compose로 앱 컨테이너와 DB·캐시 등 부속 서비스를 한 번에 띄우면 팀 전체가 동일한 개발 환경을 쓸 수 있다.
+[지난 글](/posts/docker-test-in-container/)에서 컨테이너 안에서 테스트를 실행하는 패턴을 살펴봤다. 테스트뿐 아니라 **개발 자체**를 컨테이너 안에서 할 수 있다. "내 컴퓨터에서는 됐는데"를 완전히 없애려면 개발 환경도 컨테이너화해야 한다. Docker Compose로 앱 컨테이너와 DB·캐시 등 부속 서비스를 한 번에 띄우면 팀 전체가 동일한 개발 환경을 쓸 수 있다.
 
 ## 개발 환경 구성 요소
 
@@ -19,7 +19,7 @@ draft: false
 
 핵심은 **bind mount**다. 호스트의 소스 코드를 컨테이너 안으로 마운트해 파일이 변경되면 즉시 컨테이너에 반영된다. 개발 서버가 hot reload를 지원하면 저장 즉시 변경 사항을 볼 수 있다.
 
-## 멀티 스테��지 Dockerfile — dev/prod 분리
+## 멀티 스테이지 Dockerfile — dev/prod 분리
 
 ```dockerfile
 # Dockerfile
@@ -53,7 +53,7 @@ services:
   app:
     build:
       context: .
-      target: dev        # dev 스테이��� 사용
+      target: dev        # dev 스테이지 사용
     volumes:
       - .:/app           # bind mount: 소스 실시간 반영
       - /app/node_modules  # 익명 볼륨: 호스트 node_modules 무시
@@ -97,7 +97,7 @@ volumes:
   - /app/node_modules    # node_modules는 컨테이너 내부 유지
 ```
 
-호스트 OS(특히 macOS)의 `node_modules`와 Linux 컨테이너 안의 `node_modules`는 바이너리 호환이 안 될 �� 있다. 컨테이너 안에서 설치한 `node_modules`를 익명 볼륨으로 보호해 호스트 디렉터리가 덮어쓰지 않도록 한다.
+호스트 OS(특히 macOS)의 `node_modules`와 Linux 컨테이너 안의 `node_modules`는 바이너리 호환이 안 될 수 있다. 컨테이너 안에서 설치한 `node_modules`를 익명 볼륨으로 보호해 호스트 디렉터리가 덮어쓰지 않도록 한다.
 
 Python에서는 `__pycache__`를 같은 방식으로 처리하는 경우도 있다.
 
@@ -142,7 +142,7 @@ CMD ["air"]
 ## 개발 환경 시작/종료 명령
 
 ```bash
-# ��발 환경 시작 (백그라운드)
+# 개발 환경 시작 (백그라운드)
 docker compose up -d
 
 # 로그 실시간 확인
@@ -151,7 +151,7 @@ docker compose logs -f app
 # 앱 컨테이너만 재시작 (소스 변경이 아닌 환경 변수 등 변경 시)
 docker compose restart app
 
-# 이미지 재빌드가 ��요한 경우 (Dockerfile·의존성 변경)
+# 이미지 재빌드가 필요한 경우 (Dockerfile·의존성 변경)
 docker compose up -d --build app
 
 # 전체 종료 및 볼륨 삭제 (DB 초기화 포함)
@@ -161,7 +161,7 @@ docker compose down -v
 ## compose.override.yml — 로컬 커스터마이징
 
 ```yaml
-# compose.override.yml (gitignore에 추���)
+# compose.override.yml (gitignore에 추가)
 services:
   app:
     environment:
@@ -171,12 +171,12 @@ services:
       - "3001:3000"   # 내 로컬 포트 충돌 해결
 ```
 
-`compose.override.yml`은 `docker compose up` 시 자동으로 `compose.yaml`에 병합된다. 팀은 공통 `compose.yaml`을 공유하고, 개인 설정은 `.gitignore`에 추가한 `compose.override.yml`에��� 관���한다.
+`compose.override.yml`은 `docker compose up` 시 자동으로 `compose.yaml`에 병합된다. 팀은 공통 `compose.yaml`을 공유하고, 개인 설정은 `.gitignore`에 추가한 `compose.override.yml`에서 관리한다.
 
 ## 실전 팁: 데이터베이스 마이그레이션 자동화
 
 ```yaml
-# compose.yaml에 init 서비��� 추가
+# compose.yaml에 init 서비스 추가
 services:
   migrate:
     build: .

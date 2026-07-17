@@ -27,7 +27,7 @@ docker history nginx:latest
 
 ## 출력 컬럼 해석
 
-```
+```text
 IMAGE         CREATED       CREATED BY              SIZE
 e5e16e1a5897  2 days ago    /bin/sh -c #(nop)…      0B
 <missing>     2 days ago    /bin/sh -c nginx…        2.3MB

@@ -49,7 +49,7 @@ docker image history myapp:latest
 
 Docker는 여러 레이어를 하나의 파일시스템으로 합쳐 컨테이너에 제공하기 위해 **OverlayFS**를 사용한다. OverlayFS는 Linux 커널의 유니온 마운트 구현체다.
 
-```
+```text
 merged = upperdir (쓰기 레이어) + lowerdir (이미지 레이어들)
 ```
 
@@ -95,7 +95,7 @@ Docker 이미지는 세 가지 핵심 요소로 구성된다.
 
 ## 이미지 vs 컨테이너
 
-```
+```text
 이미지 (불변)
   ├── Layer 0 (읽기 전용)
   ├── Layer 1 (읽기 전용)

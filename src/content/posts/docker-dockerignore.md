@@ -34,7 +34,7 @@ docker build --no-cache . 2>&1 | grep "Sending build context"
 
 `.gitignore`와 동일한 glob 패턴을 사용한다.
 
-```
+```text
 # 주석
 
 # 특정 파일/디렉터리
@@ -61,7 +61,7 @@ node_modules
 
 **Node.js**
 
-```
+```text
 # 의존성 (가장 중요 — 수백 MB)
 node_modules
 
@@ -89,7 +89,7 @@ coverage
 
 **Python**
 
-```
+```text
 # 캐시 및 컴파일 파일
 __pycache__
 *.py[cod]
@@ -117,7 +117,7 @@ coverage.xml
 
 **Go**
 
-```
+```text
 # 바이너리
 *.exe
 *.out
@@ -159,7 +159,7 @@ RUN npm run build
 
 `.dockerignore`가 없으면 `.env`나 인증서 파일이 빌드 레이어에 포함될 수 있다. 이미지를 레지스트리에 푸시하면 누구나 접근 가능해진다.
 
-```
+```text
 # 절대로 포함되면 안 되는 파일들
 .env
 .env.*
@@ -184,7 +184,7 @@ docker run --rm myapp:latest find / -name "*.env" 2>/dev/null
 
 큰 저장소에서 필요한 파일만 선택적으로 포함할 수 있다.
 
-```
+```text
 # 모든 것을 제외하고
 *
 

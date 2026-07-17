@@ -15,14 +15,14 @@ draft: false
 
 ## 오류 메시지 전문
 
-```
+```text
 Cannot connect to the Docker daemon at unix:///var/run/docker.sock.
 Is the docker daemon running?
 ```
 
 또는:
 
-```
+```text
 permission denied while trying to connect to the Docker daemon socket
 at unix:///var/run/docker.sock
 ```
@@ -206,6 +206,8 @@ docker version && echo "✓ 연결 성공" || echo "✗ 연결 실패"
 ---
 
 **지난 글:** [.dockerignore — 빌드 컨텍스트를 최소화하는 방법](/posts/docker-dockerignore/)
+
+**다음 글:** [Docker Permission Denied 에러 완전 해결 가이드](/posts/docker-permission-denied/)
 
 <br>
 읽어주셔서 감사합니다. 😊

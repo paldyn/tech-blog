@@ -81,7 +81,7 @@ crictl --runtime-endpoint unix:///var/run/crio/crio.sock pods
 
 K8s 1.24(2022년 5월)에 `dockershim`이 kubelet 코드에서 제거됐다. 이는 Docker를 CRI 없이 직접 K8s에서 사용하는 방식의 종료를 의미한다.
 
-```
+```text
 K8s 1.24 이전:
   kubelet → dockershim(내장) → dockerd → containerd → runc
 
@@ -133,7 +133,7 @@ crictl rmi --prune
 
 Pod를 생성할 때의 내부 흐름을 따라가면 다음과 같다.
 
-```
+```text
 1. kubectl apply -f pod.yaml
 2. API Server → etcd 저장
 3. Scheduler → 노드 선정

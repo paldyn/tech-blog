@@ -95,7 +95,7 @@ docker tag myapp:build myusername/myapp:main
 
 CI에서 가장 자주 만나는 오류가 Rate Limit다:
 
-```
+```text
 toomanyrequests: You have reached your pull rate limit.
 You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit
 ```

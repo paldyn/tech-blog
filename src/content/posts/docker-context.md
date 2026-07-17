@@ -178,5 +178,7 @@ Context 설정은 `~/.docker/contexts/` 디렉터리에 저장됩니다.
 
 **지난 글:** [Docker Rootless 모드 — root 없이 안전하게 실행하기](/posts/docker-rootless-mode/)
 
+**다음 글:** [docker run 기초 — 컨테이너 실행의 시작](/posts/docker-run-basics/)
+
 <br>
 읽어주셔서 감사합니다. 😊
