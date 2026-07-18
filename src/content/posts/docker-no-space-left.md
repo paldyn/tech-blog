@@ -58,7 +58,7 @@ Docker는 크게 네 가지 리소스가 디스크를 차지한다.
 
 ```bash
 # 컨테이너별 로그 크기 확인
-du -sh /var/lib/docker/containers/*/logs/*.log | sort -rh | head -10
+du -sh /var/lib/docker/containers/*/*-json.log | sort -rh | head -10
 
 # 실행 중인 컨테이너의 로그 경로
 docker inspect --format='{{.LogPath}}' <컨테이너명>

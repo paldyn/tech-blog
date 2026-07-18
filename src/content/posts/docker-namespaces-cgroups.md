@@ -1,6 +1,6 @@
 ---
 title: "Linux Namespaces & cgroups — Docker 격리의 진짜 원리"
-description: "Docker 컨테이너가 어떻게 프로세스·네트워크·파일시스템·자원을 격리하는지, Linux Namespaces 7종과 cgroup v2 컨트롤러 구조를 실습과 함께 설명합니다."
+description: "Docker 컨테이너가 어떻게 프로세스·네트워크·파일시스템·자원을 격리하는지, Linux Namespaces 8종과 cgroup v2 컨트롤러 구조를 실습과 함께 설명합니다."
 author: "PALDYN Team"
 pubDate: "2026-05-27"
 archiveOrder: 1
@@ -148,6 +148,8 @@ cat /proc/<호스트PID>/status | grep ^Uid
 ```
 
 ---
+
+**지난 글:** [Docker BuildKit 심화 — 내부 구조와 고급 기능](/posts/docker-buildkit-deepdive/)
 
 **다음 글:** [OverlayFS — 컨테이너 파일시스템의 비밀](/posts/docker-overlayfs/)
 

@@ -127,6 +127,8 @@ docker ps --format "table {{.Names}}\t{{.Ports}}"
 
 ---
 
+**지난 글:** [Docker 포트 매핑 완전 정복: -p와 --expose](/posts/docker-network-port-mapping/)
+
 **다음 글:** [Docker 네트워크 격리: 컨테이너 간 통신 제어](/posts/docker-network-isolation/)
 
 <br>

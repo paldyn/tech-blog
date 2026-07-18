@@ -114,6 +114,8 @@ Docker Compose는 `docker-compose.yml`에 정의된 서비스들을 위한 **전
 
 ---
 
+**지난 글:** [Docker 볼륨 함정과 해결책: 자주 만나는 문제들](/posts/docker-volume-pitfalls/)
+
 **다음 글:** [Docker bridge 네트워크 완전 분석](/posts/docker-network-bridge/)
 
 <br>

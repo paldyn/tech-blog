@@ -33,7 +33,7 @@ docker ps -a
 docker inspect web --format '{{range .NetworkSettings.Networks}}{{.NetworkID}} {{.IPAddress}}{{end}}'
 ```
 
-컨테이너가 `Exiting` 상태이면 네트워크 문제 전에 앱 자체가 죽은 것이다. `docker logs web`으로 앱 로그부터 확인한다.
+컨테이너가 `Exited` 상태이면 네트워크 문제 전에 앱 자체가 죽은 것이다. `docker logs web`으로 앱 로그부터 확인한다.
 
 ## 2단계: 네트워크 소속 확인
 
