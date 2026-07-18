@@ -145,8 +145,8 @@ docker images --format '{{.Repository}}:{{.Tag}}' | \
   xargs -I{} podman pull {}
 
 # 3. 볼륨 데이터 마이그레이션
-docker run --rm -v myvolume:/src alpine tar cf - /src | \
-  podman run --rm -i -v myvolume:/dst alpine tar xf - -C /
+docker run --rm -v myvolume:/src alpine tar cf - -C /src . | \
+  podman run --rm -i -v myvolume:/dst alpine tar xf - -C /dst
 
 # 4. 소켓 경로 변경 (CI 도구용)
 export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
