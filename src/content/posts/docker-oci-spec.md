@@ -98,7 +98,7 @@ cat config.json | python3 -m json.tool | head -50
 
 OCI Runtime Spec은 컨테이너의 생명주기를 다음 상태로 정의한다.
 
-```
+```text
 creating → created → running → stopped
 ```
 

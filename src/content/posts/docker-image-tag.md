@@ -17,7 +17,7 @@ draft: false
 
 Docker 이미지의 완전한 참조 형식은 다음과 같다.
 
-```
+```text
 [registry/][namespace/]name[:tag][@digest]
 ```
 
@@ -27,10 +27,10 @@ Docker 이미지의 완전한 참조 형식은 다음과 같다.
 - **tag:** 버전 레이블 (생략 시 `latest`)
 - **digest:** 콘텐츠 기반 해시, tag와 함께 또는 단독 사용 가능
 
-```
+```text
 nginx                              → docker.io/library/nginx:latest
 myorg/myapp:v1.2.3                → docker.io/myorg/myapp:v1.2.3
-ghcr.io/company/app:sha256:abc..  → ghcr.io의 특정 digest
+ghcr.io/company/app@sha256:abc..  → ghcr.io의 특정 digest
 ```
 
 ![이미지 태그 구조](/assets/posts/docker-image-tag-naming.svg)
@@ -61,7 +61,7 @@ docker tag a1b2c3d4e5f6 myapp:stable
 
 **SemVer 패턴:**
 
-```
+```text
 myapp:1.2.3     # 정확한 버전
 myapp:1.2       # 마이너 버전 floating
 myapp:1         # 메이저 버전 floating
@@ -83,7 +83,7 @@ docker tag myapp:$SHA myapp:$(git rev-parse --abbrev-ref HEAD)
 
 **베이스 이미지 변형 구분:**
 
-```
+```text
 myapp:1.2.3           # 기본 Debian 베이스
 myapp:1.2.3-alpine    # Alpine 베이스 (더 작음)
 myapp:1.2.3-slim      # slim 변형

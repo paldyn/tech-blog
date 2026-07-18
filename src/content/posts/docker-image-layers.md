@@ -29,7 +29,7 @@ COPY  nginx.conf /etc/       # → Layer 3: 설정 파일 추가
 
 Linux 커널의 **OverlayFS**(또는 그 이전의 AUFS 등 Union File System)가 여러 레이어를 마치 하나의 파일 시스템처럼 보이게 한다.
 
-```
+```text
 컨테이너 레이어(RW)    ← 새 파일 쓰기
 ─────────────────────   ← Union Mount 경계
 이미지 Layer 3(RO)

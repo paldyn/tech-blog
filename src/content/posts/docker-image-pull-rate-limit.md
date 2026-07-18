@@ -15,7 +15,7 @@ draft: false
 
 ## 에러 메시지
 
-```
+```text
 Error response from daemon: toomanyrequests:
 You have reached your pull rate limit.
 You may increase the limit by authenticating and upgrading:
@@ -51,7 +51,7 @@ curl -s --head \
 ```
 
 응답 헤더 예시:
-```
+```text
 RateLimit-Limit: 100;w=21600
 RateLimit-Remaining: 76;w=21600
 ```

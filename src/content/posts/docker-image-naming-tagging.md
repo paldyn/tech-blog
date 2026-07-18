@@ -17,7 +17,7 @@ draft: false
 
 Docker 이미지의 완전한 이름은 네 부분으로 이루어진다.
 
-```
+```text
 ghcr.io / myorg / myapp : v2.1.0
    ↑         ↑       ↑       ↑
 Registry  Namespace  Repo   Tag

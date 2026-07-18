@@ -15,7 +15,7 @@ draft: false
 
 ## 에러 메시지 읽기
 
-```
+```text
 $ docker run hello-world
 docker: Got permission denied while trying to connect to the
 Docker daemon socket at unix:///var/run/docker.sock:

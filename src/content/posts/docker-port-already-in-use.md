@@ -15,7 +15,7 @@ draft: false
 
 ## 에러 메시지
 
-```
+```text
 Error response from daemon: driver failed programming external
 connectivity on endpoint mycontainer:
 Bind for 0.0.0.0:8080 failed: port is already allocated.
@@ -51,7 +51,7 @@ tasklist /fi "PID eq <PID>"
 
 출력 예시:
 
-```
+```text
 COMMAND   PID   USER   TYPE  DEVICE  NODE NAME
 node     1234  alice  IPv4  12345   TCP  *:8080 (LISTEN)
 ```

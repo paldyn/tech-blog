@@ -19,7 +19,7 @@ CPU 아키텍처(x86_64, ARM64, ARM v7 등)마다 실행 파일 형식이 다르
 
 과거에는 아키텍처별로 다른 이미지를 관리했다.
 
-```
+```text
 myapp:latest-amd64
 myapp:latest-arm64
 myapp:latest-armv7

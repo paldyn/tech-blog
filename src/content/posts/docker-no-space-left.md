@@ -15,7 +15,7 @@ draft: false
 
 ## 에러 메시지 패턴
 
-```
+```text
 Error response from daemon: write /var/lib/docker/overlay2/.../work/work:
 no space left on device
 
@@ -148,7 +148,7 @@ sudo systemctl restart docker
 
 Docker Desktop을 쓰는 경우 VM 디스크 이미지 크기가 제한되어 있다.
 
-```
+```text
 Docker Desktop → Settings → Resources → Disk image size
 ```
 

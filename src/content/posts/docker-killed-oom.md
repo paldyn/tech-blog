@@ -64,7 +64,7 @@ docker inspect <컨테이너명> \
 # 실행 시 메모리 지정
 docker run --memory=1g --memory-swap=1g myapp
 
-# 스왑 비활성화 (메모리만 사용)
+# 스왑 무제한 허용
 docker run --memory=1g --memory-swap=-1 myapp
 
 # Compose

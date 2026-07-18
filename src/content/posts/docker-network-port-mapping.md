@@ -164,5 +164,7 @@ services:
 
 **지난 글:** [Docker 네트워크 DNS: 컨테이너 이름 해석 원리](/posts/docker-network-dns/)
 
+**다음 글:** [Docker -p (publish)와 EXPOSE의 차이: 포트 공개의 진실](/posts/docker-network-publish-vs-expose/)
+
 <br>
 읽어주셔서 감사합니다. 😊

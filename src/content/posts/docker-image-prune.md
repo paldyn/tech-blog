@@ -113,7 +113,7 @@ docker system prune --volumes
 
 `prune` 명령은 실행 후 삭제된 이미지 수와 회수된 용량을 출력한다.
 
-```
+```text
 Deleted Images:
 untagged: <none>@sha256:abc...
 deleted:  sha256:abc...

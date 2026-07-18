@@ -53,7 +53,7 @@ trivy image myapp:latest
 
 ### Trivy 출력 해석
 
-```
+```text
 node:20-alpine (alpine 3.19.0)
 Total: 3 (HIGH: 1, MEDIUM: 2)
 

@@ -29,7 +29,7 @@ docker login registry.example.com
 
 **2. 이미지 이름 형식:** 이미지 이름에 레지스트리 주소와 네임스페이스가 포함되어야 한다.
 
-```
+```text
 [registry/][namespace/]name:tag
 ```
 

@@ -15,7 +15,7 @@ draft: false
 
 ## 에러 패턴
 
-```
+```text
 open /app/data/config.json: permission denied
 
 또는

@@ -42,7 +42,7 @@ docker images nginx
 
 출력에서 IMAGE ID가 같은 항목이 여러 개 나타날 수 있다. 이는 **같은 이미지에 여러 태그가 붙어 있다**는 의미다.
 
-```
+```text
 REPOSITORY   TAG       IMAGE ID
 nginx        alpine    e5e16e1a5897
 nginx        latest    e5e16e1a5897  ← 같은 ID
@@ -54,7 +54,7 @@ nginx        latest    e5e16e1a5897  ← 같은 ID
 
 `<none>:<none>`으로 표시되는 이미지는 **댕글링(dangling) 이미지**다.
 
-```
+```text
 REPOSITORY   TAG     IMAGE ID
 <none>       <none>  c3d4e5f6a7b8
 ```
@@ -145,6 +145,8 @@ docker system df
 ---
 
 **지난 글:** [docker image tag — 이미지 태그 관리](/posts/docker-image-tag/)
+
+**다음 글:** [docker rmi — 이미지 삭제](/posts/docker-image-rmi/)
 
 <br>
 읽어주셔서 감사합니다. 😊

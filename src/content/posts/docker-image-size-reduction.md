@@ -138,7 +138,7 @@ CMD ["/myapp"]
 
 빌드 컨텍스트에서 불필요한 파일을 제외한다.
 
-```
+```gitignore
 # .dockerignore
 node_modules/
 dist/
@@ -235,6 +235,8 @@ RUN pip install --no-cache-dir wheel && \
 ---
 
 **지난 글:** [Docker Rootless Mode: daemon 자체를 비루트로 실행](/posts/docker-rootless-security/)
+
+**다음 글:** [Distroless 이미지: 셸 없는 경량 보안 컨테이너](/posts/docker-distroless/)
 
 <br>
 읽어주셔서 감사합니다. 😊

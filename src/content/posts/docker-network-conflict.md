@@ -17,7 +17,7 @@ draft: false
 
 VPN을 연결하면 Docker 컨테이너에서 외부로 요청이 나가지 않거나, 회사 내부 서비스에 접근이 안 된다. 또는 `docker-compose up` 시 아래 에러가 발생한다.
 
-```
+```text
 Error response from daemon: could not find an available,
 non-overlapping IPv4 address pool among the defaults
 to assign to the network

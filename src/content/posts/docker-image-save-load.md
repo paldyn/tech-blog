@@ -68,7 +68,7 @@ docker load < myapp.tar
 
 로드 성공 시 이미지 이름과 태그가 원래대로 복원된다.
 
-```
+```text
 Loaded image: myapp:v1.0
 Loaded image: redis:7
 ```
@@ -110,7 +110,7 @@ docker run myapp:v1.0
 
 `tar tf myapp.tar`로 내부를 확인해보면 이미지의 구성 요소가 보인다.
 
-```
+```text
 manifest.json           ← 이미지 목록과 레이어 매핑
 repositories            ← 태그 정보
 <layer-sha256>/layer.tar  ← 각 레이어 파일

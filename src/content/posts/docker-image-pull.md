@@ -22,7 +22,7 @@ draft: false
 3. **병렬 다운로드:** 없는 레이어만 병렬로 다운로드한다. 각 레이어는 tar.gz 형태로 수신되어 압축 해제 후 저장된다.
 4. **검증 & 저장:** 다운로드한 레이어의 SHA-256을 검증하고 `/var/lib/docker/overlay2/`에 저장한다.
 
-```
+```text
 nginx:alpine: Pulling from library/nginx
 2a92d6ac9f4c: Already exists   ← 로컬 캐시 재사용
 3b94b5a9ea48: Pull complete     ← 새로 다운로드
@@ -102,7 +102,7 @@ docker pull --platform linux/arm64 nginx:alpine
 
 Docker Hub는 비인증 요청에 대해 IP당 100회/6시간 제한을 두고 있다. CI/CD 파이프라인에서 자주 만나는 문제다.
 
-```
+```text
 toomanyrequests: You have reached your pull rate limit
 ```
 
