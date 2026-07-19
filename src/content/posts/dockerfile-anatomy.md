@@ -65,7 +65,7 @@ FROM microsoft/nanoserver
 COPY testfile.txt c:\
 ```
 
-`# key=value` 형식의 주석처럼 생긴 지시자로, Dockerfile의 **첫 줄**에만 위치할 수 있다. `syntax`는 BuildKit 프론트엔드를 지정하고, `escape`는 줄 이음 문자를 변경한다(Windows 경로와 충돌 방지).
+`# key=value` 형식의 주석처럼 생긴 지시자로, 다른 인스트럭션이나 일반 주석보다 앞서 Dockerfile **최상단**에만 위치할 수 있다(지시자별로 한 줄씩). `syntax`는 BuildKit 프론트엔드를 지정하고, `escape`는 줄 이음 문자를 변경한다(Windows 경로와 충돌 방지).
 
 ## 인스트럭션 실행 순서와 레이어
 

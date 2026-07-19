@@ -19,7 +19,7 @@ Docker 이미지는 읽기 전용 레이어로 구성된다. 컨테이너를 실
 
 ```bash
 # 컨테이너 안에서 파일 생성
-docker run --name test-container ubuntu bash -c "echo 'hello' > /data/test.txt"
+docker run --name test-container ubuntu bash -c "mkdir /data && echo 'hello' > /data/test.txt"
 
 # 컨테이너 삭제
 docker rm test-container

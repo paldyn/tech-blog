@@ -83,8 +83,9 @@ docker run --read-only \
   --tmpfs /run:rw,noexec,nosuid \
   --tmpfs /var/log/nginx:rw,noexec,nosuid,size=50m \
   --tmpfs /tmp:rw,noexec,nosuid,size=100m \
-  -v uploads:/app/uploads \        # 영구 보관이 필요하면 named volume
+  -v uploads:/app/uploads \
   myapp:latest
+# uploads처럼 영구 보관이 필요한 경로는 named volume 사용
 ```
 
 ## Compose 설정

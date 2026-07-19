@@ -21,7 +21,7 @@ prune 전에 먼저 무엇이 얼마나 공간을 차지하는지 확인한다.
 docker system df
 ```
 
-```
+```text
 TYPE            TOTAL   ACTIVE   SIZE      RECLAIMABLE
 Images          24      5        8.432GB   6.1GB (72%)
 Containers      12      3        245MB     234MB (95%)

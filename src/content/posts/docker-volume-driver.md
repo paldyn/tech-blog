@@ -59,9 +59,8 @@ docker volume create \
 더 많은 기능이 필요하면 Docker 플러그인을 설치한다.
 
 ```bash
-# 플러그인 검색
+# 설치된 플러그인 확인
 docker plugin ls
-docker search --filter type=plugin volume
 
 # 예시: vieux/sshfs 플러그인 (SSH 마운트)
 docker plugin install vieux/sshfs

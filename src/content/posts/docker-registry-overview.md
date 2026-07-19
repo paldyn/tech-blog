@@ -136,9 +136,9 @@ gcloud auth configure-docker asia-northeast3-docker.pkg.dev
 docker push asia-northeast3-docker.pkg.dev/project-id/repo/myapp:v1
 ```
 
-### Harbor (셀프 호스팅)
+### 셀프 호스팅 (registry:2, Harbor)
 
-오픈소스 레지스트리. 온프레미스나 프라이빗 클라우드 환경.
+오픈소스 레지스트리. 온프레미스나 프라이빗 클라우드 환경. 아래는 기본 registry:2 예시로, UI·권한 관리가 필요하면 Harbor를 사용한다.
 
 ```bash
 docker run -d --name registry -p 5000:5000 registry:2
@@ -148,7 +148,7 @@ docker push localhost:5000/myapp:latest
 
 ## 레지스트리 선택 기준
 
-```
+```text
 팀이 GitHub 중심으로 일한다면:   GHCR
 AWS 인프라를 쓴다면:             ECR
 GCP 인프라를 쓴다면:             Artifact Registry

@@ -124,7 +124,7 @@ docker run --volumes-from original-container \
 
 # 단, --volumes-from은 deprecated 패턴이다
 # 아래처럼 Named Volume을 직접 지정하는 것이 명확하다
-docker run -v original-data:/data new-container ubuntu
+docker run -v original-data:/data --name new-container ubuntu
 ```
 
 ## 볼륨 삭제
@@ -133,7 +133,7 @@ docker run -v original-data:/data new-container ubuntu
 # 특정 볼륨 삭제 (사용 중이면 실패)
 docker volume rm my-data
 
-# 강제 삭제 (컨테이너가 사용 중이어도)
+# 강제 삭제 (없는 볼륨·드라이버 오류 무시 — 사용 중인 볼륨은 -f로도 삭제 불가)
 docker volume rm -f my-data
 
 # 모든 미사용 볼륨 삭제

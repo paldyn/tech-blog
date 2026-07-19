@@ -23,7 +23,7 @@ docker rm $(docker ps -aq)       # 모든 중지된 컨테이너 삭제
 
 `docker rm`은 **중지(Exited) 상태**의 컨테이너만 삭제합니다. 실행 중인 컨테이너를 삭제하려 하면 오류가 반환됩니다.
 
-```
+```text
 Error response from daemon: You cannot remove a running container ...
 ```
 
@@ -45,7 +45,7 @@ docker rm -f web     # SIGKILL → 즉시 종료 후 삭제
 docker rm -v temp_container
 ```
 
-컨테이너와 함께 **익명(anonymous) 볼륨**도 함께 삭제합니다. `--name`이나 `-v myname:/path`로 생성한 **명명된 볼륨**은 삭제되지 않습니다. 임시 컨테이너 실행 후 깔끔하게 정리할 때 유용합니다.
+컨테이너와 함께 **익명(anonymous) 볼륨**도 함께 삭제합니다. `docker volume create`나 `-v myname:/path`로 생성한 **명명된 볼륨**은 삭제되지 않습니다. 임시 컨테이너 실행 후 깔끔하게 정리할 때 유용합니다.
 
 ## 일괄 삭제 패턴
 

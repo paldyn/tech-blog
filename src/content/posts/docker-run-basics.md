@@ -17,7 +17,7 @@ draft: false
 
 `docker run`은 크게 네 부분으로 구성됩니다.
 
-```
+```text
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 ```
 

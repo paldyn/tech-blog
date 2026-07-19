@@ -126,7 +126,7 @@ USER nobody
 
 ## scratch vs distroless/static 선택 기준
 
-```
+```text
 scratch 선택 조건:
   ✓ 완전한 제어 필요 (어떤 파일이 들어가는지 명확히 알고 싶을 때)
   ✓ 이미지 크기를 최대한 줄여야 할 때

@@ -64,7 +64,7 @@ COPY src ./src
 
 ## .dockerignore로 캐시 보호
 
-```
+```gitignore
 # .dockerignore
 node_modules/
 .git/

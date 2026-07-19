@@ -84,7 +84,7 @@ USER appuser
 
 ```bash
 # 위험
-RUN --build-arg API_KEY=xxx npm ci
+docker build --build-arg API_KEY=xxx .
 
 # 안전
 RUN --mount=type=secret,id=apikey ...

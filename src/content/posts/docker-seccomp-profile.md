@@ -34,9 +34,9 @@ Docker는 기본적으로 약 300개의 syscall을 허용하고 나머지를 차
 # 기본 프로파일 확인 (moby GitHub에서)
 # https://github.com/moby/moby/blob/master/profiles/seccomp/default.json
 
-# 특정 syscall이 기본 프로파일에서 허용되는지 확인
-docker run --rm ubuntu:22.04 sh -c \
-  "apt-get install -qq libseccomp2 && scmp_sys_resolver $(cat /proc/sys/kernel/random/uuid)" 2>/dev/null
+# 특정 syscall이 기본 프로파일에서 허용되는지 확인 (default.json에서 검색)
+curl -s https://raw.githubusercontent.com/moby/moby/master/profiles/seccomp/default.json \
+  | grep '"reboot"'
 ```
 
 ## 기본 프로파일 비활성화

@@ -129,7 +129,7 @@ Shell 폼은 `/bin/sh -c`를 통해 실행되므로 PID 1이 sh가 된다. `dock
 - 빌드 컨텍스트 전송 시간 증가
 - `node_modules` 변경 시 `COPY . .` 캐시 무효화
 
-```
+```gitignore
 # .dockerignore
 node_modules/
 .git/
