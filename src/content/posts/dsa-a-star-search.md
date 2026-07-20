@@ -15,7 +15,7 @@ draft: false
 
 ## 핵심 공식
 
-```
+```text
 f(n) = g(n) + h(n)
 ```
 

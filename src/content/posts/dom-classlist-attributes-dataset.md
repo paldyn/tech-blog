@@ -243,5 +243,7 @@ el.style.removeProperty('color');
 
 **지난 글:** [DOM 요소 생성·삽입·제거 — createElement부터 replaceWith까지](/posts/dom-create-insert-remove/)
 
+**다음 글:** [DocumentFragment — 배치 삽입으로 리플로우 줄이기](/posts/dom-document-fragment/)
+
 <br>
 읽어주셔서 감사합니다. 😊

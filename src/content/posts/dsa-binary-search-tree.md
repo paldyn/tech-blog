@@ -145,5 +145,7 @@ def kth_smallest(root: Optional[BST], k: int) -> int:
 
 **지난 글:** [트리 순회 (Tree Traversal)](/posts/dsa-tree-traversal/)
 
+**다음 글:** [AVL 트리](/posts/dsa-avl-tree/)
+
 <br>
 읽어주셔서 감사합니다. 😊

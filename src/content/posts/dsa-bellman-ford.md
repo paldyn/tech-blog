@@ -23,7 +23,7 @@ draft: false
 
 ## 완화(Relaxation) 규칙
 
-```
+```text
 if dist[u] + w < dist[v]:
     dist[v] = dist[u] + w
 ```

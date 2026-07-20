@@ -61,7 +61,7 @@ HTML의 태그 사이 공백과 줄바꿈도 `TEXT_NODE`로 표현됩니다. 이
 
 ## Node 인터페이스 계층
 
-```
+```text
 EventTarget
   └─ Node
        ├─ Document
@@ -180,7 +180,7 @@ const divs = document.getElementsByTagName('div'); // 실시간 HTMLCollection
 
 DOM 트리는 브라우저 렌더링의 시작점입니다.
 
-```
+```text
 HTML 파싱
    ↓
 DOM 트리 생성

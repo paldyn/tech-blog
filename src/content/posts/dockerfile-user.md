@@ -164,5 +164,7 @@ USER appuser
 
 **지난 글:** [VOLUME 인스트럭션 완전 정복](/posts/dockerfile-volume/)
 
+**다음 글:** [HEALTHCHECK 인스트럭션 완전 정복](/posts/dockerfile-healthcheck/)
+
 <br>
 읽어주셔서 감사합니다. 😊

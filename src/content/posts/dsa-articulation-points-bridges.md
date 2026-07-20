@@ -22,7 +22,7 @@ draft: false
 
 ## low 값의 의미
 
-```
+```text
 low[u] = min(
   disc[u],              # 자기 자신 발견 시각
   disc[w] for w in 역방향 간선(back edge),  # 조상에 직접 연결

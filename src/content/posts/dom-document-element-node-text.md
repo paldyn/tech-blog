@@ -19,7 +19,7 @@ draft: false
 
 DOM은 인터페이스 기반 계층 구조를 따릅니다.
 
-```
+```text
 EventTarget
   └── Node
        ├── Document → HTMLDocument

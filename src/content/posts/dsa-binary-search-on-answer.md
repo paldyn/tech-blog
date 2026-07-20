@@ -142,5 +142,7 @@ answer = lo
 
 **지난 글:** [이진 탐색(Binary Search)](/posts/dsa-binary-search/)
 
+**다음 글:** [삼분 탐색 (Ternary Search)](/posts/dsa-ternary-search/)
+
 <br>
 읽어주셔서 감사합니다. 😊

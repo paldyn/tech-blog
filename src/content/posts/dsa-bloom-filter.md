@@ -81,7 +81,7 @@ print("dave@example.com" in bf)    # False or True (FP 가능)
 
 거짓 양성률(FPR)은 다음 근사식으로 계산합니다.
 
-```
+```text
 FPR ≈ (1 - e^(-kn/m))^k
 ```
 
