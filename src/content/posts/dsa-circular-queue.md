@@ -30,7 +30,7 @@ arr = [_, _, _, A, B, None, None]
 
 나머지 연산(%)으로 인덱스가 배열 끝을 넘어가면 앞으로 순환합니다.
 
-```
+```text
 rear = (rear + 1) % capacity
 front = (front + 1) % capacity
 ```

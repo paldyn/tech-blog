@@ -17,7 +17,7 @@ draft: false
 
 해시 테이블은 **해시 함수(hash function)**로 키를 정수 인덱스로 변환해 배열의 해당 위치(버킷)에 값을 저장합니다.
 
-```
+```text
 인덱스 = hash(key) % capacity
 ```
 
@@ -27,7 +27,7 @@ draft: false
 
 ## 로드 팩터 (Load Factor)
 
-```
+```text
 로드 팩터 α = 저장된 원소 수 n / 배열 용량 capacity
 ```
 

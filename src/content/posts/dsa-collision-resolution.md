@@ -23,7 +23,7 @@ draft: false
 
 각 버킷은 하나의 **헤드 포인터**를 가지며, 같은 해시값을 갖는 모든 원소가 그 버킷의 링크드 리스트에 연결됩니다.
 
-```
+```text
 버킷 인덱스 = h(key) % capacity
 ```
 
@@ -135,6 +135,8 @@ static final int UNTREEIFY_THRESHOLD = 6;
 다음 글에서는 충돌 해결의 또 다른 주요 전략인 **개방 주소법(Open Addressing)**을 다룹니다.
 
 ---
+
+**지난 글:** [해시 함수 (Hash Function)](/posts/dsa-hash-function/)
 
 **다음 글:** [개방 주소법 (Open Addressing)](/posts/dsa-open-addressing/)
 

@@ -17,7 +17,7 @@ draft: false
 
 해시 함수 h는 임의 크기의 데이터(키)를 고정 크기 정수(해시값)로 변환합니다.
 
-```
+```text
 h: key → integer
 ```
 
@@ -176,6 +176,8 @@ print(d[p2])                  # "origin" — 동일 키로 인식
 ---
 
 **지난 글:** [해시 테이블](/posts/dsa-hash-table/)
+
+**다음 글:** [충돌 해결 — 분리 체이닝 (Collision Resolution: Separate Chaining)](/posts/dsa-collision-resolution/)
 
 <br>
 읽어주셔서 감사합니다. 😊

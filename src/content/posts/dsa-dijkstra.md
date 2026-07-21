@@ -154,6 +154,8 @@ def solve():
 
 ---
 
+**지난 글:** [유니온 파인드 (Disjoint Set Union)](/posts/dsa-union-find/)
+
 **다음 글:** [A* 탐색 알고리즘 — 휴리스틱으로 더 빠르게](/posts/dsa-a-star-search/)
 
 <br>

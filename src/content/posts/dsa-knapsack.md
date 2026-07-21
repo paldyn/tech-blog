@@ -31,7 +31,7 @@ draft: false
 
 따라서 점화식은:
 
-```
+```text
 dp[i][w] = dp[i-1][w]                                   if w[i] > w
 dp[i][w] = max(dp[i-1][w], dp[i-1][w - w[i]] + v[i])   if w[i] ≤ w
 ```

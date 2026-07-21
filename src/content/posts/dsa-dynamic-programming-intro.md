@@ -130,5 +130,7 @@ def climb_stairs(n):
 
 **지난 글:** [허프만 코딩 (Huffman Coding)](/posts/dsa-huffman-coding/)
 
+**다음 글:** [메모이제이션 vs 타뷸레이션: DP 구현 전략 완전 비교](/posts/dsa-memoization-vs-tabulation/)
+
 <br>
 읽어주셔서 감사합니다. 😊

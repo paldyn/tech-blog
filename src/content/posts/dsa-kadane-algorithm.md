@@ -17,7 +17,7 @@ draft: false
 
 "현재 원소를 포함하는 최대 부분 배열 합"을 `current`로 정의합니다.
 
-```
+```text
 current = max(A[i], current + A[i])
 ```
 
@@ -68,7 +68,7 @@ def kadane_with_range(A):
 
 카데인 알고리즘은 DP 점화식의 단순화입니다.
 
-```
+```text
 dp[i] = i번째 원소로 끝나는 최대 부분 배열 합
 dp[i] = max(A[i], dp[i-1] + A[i])
 answer = max(dp[0], dp[1], ..., dp[N-1])

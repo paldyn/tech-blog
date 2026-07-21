@@ -113,7 +113,7 @@ def replacement_selection(data_stream, heap_size):
 
 디스크 읽기와 CPU 처리를 겹쳐(Overlapping) I/O 대기 시간을 숨깁니다.
 
-```
+```text
 버퍼A: 처리 중  |  버퍼B: 다음 청크 읽는 중
     → 처리 완료 시 버퍼B 사용 시작, 버퍼A로 다음 읽기
 ```

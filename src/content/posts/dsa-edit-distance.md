@@ -179,7 +179,7 @@ def weighted_edit(s1, s2, w_ins=1, w_del=1, w_rep=2):
 
 LCS 길이를 `l`이라 하면:
 
-```
+```text
 edit_distance = m + n - 2 * l   (삽입·삭제만 허용 시)
 ```
 

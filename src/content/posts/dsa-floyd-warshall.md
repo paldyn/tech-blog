@@ -15,7 +15,7 @@ draft: false
 
 ## 핵심 아이디어 — DP 점화식
 
-```
+```text
 dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
 ```
 
