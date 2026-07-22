@@ -19,7 +19,7 @@ draft: false
 
 예를 들어 (이름, 점수) 레코드를 점수 기준으로 정렬할 때:
 
-```
+```text
 입력: [Alice:3, Bob:1, Carol:3, Dave:2, Eve:1]
 
 안정 정렬 후: [Bob:1, Eve:1, Dave:2, Alice:3, Carol:3]

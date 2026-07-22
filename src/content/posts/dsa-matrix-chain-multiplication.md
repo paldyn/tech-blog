@@ -28,7 +28,7 @@ draft: false
 `dp[i][j]` = 행렬 i번부터 j번까지 곱하는 **최소 스칼라 곱셈 횟수** (1-indexed).
 `dims[0..n]` = 크기 배열 (행렬 i의 크기는 `dims[i-1] × dims[i]`).
 
-```
+```text
 dp[i][i] = 0                                         (단일 행렬)
 dp[i][j] = min over k (i ≤ k < j):
              dp[i][k] + dp[k+1][j] + dims[i-1]*dims[k]*dims[j]

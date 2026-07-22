@@ -86,7 +86,7 @@ max_net = total_profit - dinic(s, t)
 
 간선 컷이 아니라 노드를 제거해 s-t를 차단하는 최소 노드 컷을 구할 때, 각 노드를 in/out 두 노드로 분리하고 in→out 간선 용량 = 1로 설정합니다. 간선은 out→in 방향으로 용량 ∞로 연결합니다.
 
-```
+```text
 노드 v → v_in, v_out (용량 1)
 간선 (u,v) → (u_out → v_in) 용량 ∞
 ```

@@ -41,7 +41,7 @@ def poly_hash(s, base, mod):
 
 윈도우 `[i, i+m-1]`에서 `[i+1, i+m]`으로 이동:
 
-```
+```text
 h_new = (h_old - s[i] * B^(m-1)) * B + s[i+m]  (mod MOD)
 ```
 

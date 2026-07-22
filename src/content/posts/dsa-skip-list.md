@@ -126,7 +126,7 @@ class SkipList:
 
 Redis의 ZADD, ZRANGE, ZRANK 등이 스킵 리스트를 기반으로 동작합니다.
 
-```
+```text
 ZADD leaderboard 100 "Alice"
 ZADD leaderboard 200 "Bob"
 ZADD leaderboard 150 "Charlie"
