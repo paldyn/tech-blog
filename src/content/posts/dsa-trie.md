@@ -127,7 +127,7 @@ print(trie.autocomplete('ca'))   # ['car', 'card', 'care', 'cat']
 
 단일 자식만 가진 노드 체인을 하나의 에지로 압축합니다.
 
-```
+```text
 일반 트라이:   r→e→d (3노드)
 압축 트라이:   "red" (1에지)
 ```

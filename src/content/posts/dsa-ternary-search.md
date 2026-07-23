@@ -25,7 +25,7 @@ draft: false
 
 구간 `[lo, hi]`를 세 등분하는 두 점 `m1`, `m2`를 잡습니다.
 
-```
+```text
 m1 = lo + (hi - lo) / 3
 m2 = hi - (hi - lo) / 3
 ```

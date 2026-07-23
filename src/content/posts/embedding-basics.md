@@ -19,7 +19,7 @@ draft: false
 
 **원-핫 인코딩(One-Hot Encoding)**은 가장 단순한 해결책이다. 어휘 크기 V가 128K이면, 각 토큰을 128K 차원 벡터로 표현하고 해당 인덱스만 1, 나머지는 0으로 채운다.
 
-```
+```text
 "개" (ID=3024): [0, 0, ..., 1, ..., 0]  ← 128K 차원, 3024번 위치만 1
 ```
 
@@ -68,7 +68,7 @@ vec("서울") - vec("한국") + vec("일본") ≈ vec("도쿄")
 
 벡터 공간에서 두 임베딩의 의미적 유사성을 측정하는 표준 지표는 **코사인 유사도**다:
 
-```
+```text
 similarity(a, b) = (a · b) / (‖a‖ · ‖b‖)
 ```
 
@@ -109,7 +109,7 @@ sim_dog_car = F.cosine_similarity(vec_dog, vec_car, dim=-1)
 
 임베딩 행렬은 큰 메모리를 차지한다:
 
-```
+```text
 LLaMA 3 8B: 128,256 × 4,096 × 2bytes(bf16) ≈ 1 GB
 GPT-3:      50,257 × 12,288 × 2bytes ≈ 1.2 GB
 ```
@@ -126,6 +126,8 @@ model.lm_head.weight = model.embedding.weight
 ---
 
 **지난 글:** [tiktoken: OpenAI의 빠른 BPE 토크나이저](/posts/tokenizer-tiktoken/)
+
+**다음 글:** [Word2Vec: 신경망으로 단어 의미를 학습하다](/posts/embedding-word2vec/)
 
 <br>
 읽어주셔서 감사합니다. 😊

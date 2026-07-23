@@ -137,5 +137,7 @@ button.addEventListener('click', async e => {
 
 **지난 글:** [이벤트 캡처·버블 — 전파 단계 완전 이해](/posts/event-capture-bubble/)
 
+**다음 글:** [preventDefault · stopPropagation 완전 이해](/posts/event-prevent-stop-propagation/)
+
 <br>
 읽어주셔서 감사합니다. 😊

@@ -31,7 +31,7 @@ Hard Prompt에는 근본적인 한계가 있다. 첫째, 자연어 어휘는 연
 
 일반적인 Self-Attention은 입력 시퀀스 X로부터 K와 V를 만들고 그 위에서 Attention을 계산한다. Prefix Tuning에서는 각 레이어 l에 대해 학습 가능한 접두사 행렬 P_k^l과 P_v^l을 정의하고, 이를 K와 V 앞에 이어붙인다.
 
-```
+```text
 # 일반 Self-Attention
 Attention(Q, K, V) = softmax(QKᵀ / √d) V
 

@@ -172,7 +172,7 @@ el.addEventListener('pointerup', () => {
 
 터치 기기에서 탭(tap)하면 이벤트 발생 순서는 다음과 같습니다.
 
-```
+```text
 pointerdown → touchstart → pointerup → touchend → click
 ```
 

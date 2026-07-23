@@ -43,7 +43,7 @@ Stanford Alpaca 논문(2023)이 대중화한 형식이다. `instruction`, `input
 
 실제 학습 시에는 이 세 필드를 하나의 프롬프트 템플릿으로 연결한다:
 
-```
+```text
 ### Instruction:
 다음 문장을 영어로 번역하라.
 

@@ -30,7 +30,7 @@ LoRA(Low-Rank Adaptation)는 2021년 Microsoft 연구팀이 제안했다. 핵심
 
 기존 가중치 행렬 W(d×d)를 직접 업데이트하는 대신, **업데이트량 ΔW를 두 개의 저랭크 행렬 B(d×r)와 A(r×d)의 곱으로 표현**한다.
 
-```
+```text
 W' = W + ΔW = W + B × A
 ```
 

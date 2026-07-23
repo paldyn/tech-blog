@@ -70,7 +70,7 @@ print(f"총 스텝: {total_steps}, Warmup 스텝: {warmup_steps}")
 
 LLM 파인튜닝에서는 큰 배치 크기가 안정적인 그래디언트 추정과 빠른 수렴에 도움을 준다. 하지만 GPU 메모리 한계로 인해 직접 큰 배치를 사용하기 어렵다. 이때 **그래디언트 누적(Gradient Accumulation)**을 활용한다.
 
-```
+```text
 실효 배치 크기 = per_device_batch × gradient_accumulation × num_gpus
 ```
 
@@ -274,7 +274,7 @@ MLflow를 선호한다면 `report_to="mlflow"`로 변경하면 된다. 로컬에
 
 이론보다 빠른 시작이 필요하다면 다음 기본값으로 시작한다. 대부분의 태스크에서 합리적인 결과를 낸다:
 
-```
+```text
 lr = 2e-4, batch = 32(누적 포함), epochs = 3,
 warmup = 5%, cosine decay, weight_decay = 0.01
 ```
