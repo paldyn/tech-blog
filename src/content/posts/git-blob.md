@@ -23,7 +23,7 @@ blob(Binary Large Object)은 **파일 내용 그 자체**를 저장하는 오브
 
 Git이 blob을 디스크에 쓸 때 실제로 저장하는 바이트는 다음 구조다.
 
-```
+```text
 blob {size}\0{content}
 ```
 

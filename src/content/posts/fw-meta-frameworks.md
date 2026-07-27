@@ -38,7 +38,7 @@ draft: false
 
 `app/` 디렉터리 하위에 폴더와 파일을 두면 자동으로 라우트가 됩니다.
 
-```
+```text
 app/
   page.tsx          → /
   about/
@@ -310,7 +310,7 @@ Astro는 React, Vue, Svelte, Solid, Preact 컴포넌트를 한 페이지에서 *
 
 ### 배포 환경
 
-```
+```text
 Vercel 사용     → Next.js (최적화)
 Cloudflare     → SvelteKit (adapter-cloudflare)
                → Remix (빌트인 지원)

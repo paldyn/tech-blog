@@ -17,7 +17,7 @@ draft: false
 
 가장 널리 쓰이는 구조는 `<타입>/<설명>` 형태다.
 
-```
+```text
 feature/user-auth
 fix/login-null-pointer
 hotfix/payment-crash

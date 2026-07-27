@@ -41,7 +41,7 @@ git add --patch src/auth.js
 
 실행하면 Git이 첫 번째 헝크를 보여주고 프롬프트를 출력한다.
 
-```
+```text
 Stage this hunk [y,n,q,a,d,/,s,e,?]?
 ```
 
@@ -86,7 +86,7 @@ git commit -m "chore: remove debug log"
 
 두 변경이 맞닿아 있거나 3줄 이내에 붙어 있으면 Git이 하나의 헝크로 묶는다. 이때 `s`를 누르면 더 작은 단위로 나눈다.
 
-```
+```text
 Stage this hunk [y,n,q,a,d,/,s,e,?]? s
 Split into 2 hunks.
 @@ -1,4 +1,5 @@

@@ -294,7 +294,7 @@ async function ProductList() {
 
 실제로는 **단일 전략을 고집하지 않는 것**이 좋습니다. Next.js App Router는 라우트 단위로 전략을 달리 적용할 수 있습니다. 마케팅 홈은 SSG, 상품 목록은 ISR, 주문 내역은 SSR, 대시보드는 CSR — 이렇게 혼합 운영이 가능합니다.
 
-```
+```text
 app/
 ├── page.tsx          → SSG (정적 홈)
 ├── shop/

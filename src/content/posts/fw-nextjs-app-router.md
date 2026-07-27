@@ -112,7 +112,7 @@ export default function Error({
 
 폴더 이름을 `(괄호)`로 감싸면 **URL에 포함되지 않는 그룹**을 만들 수 있습니다. 레이아웃을 공유하는 페이지들을 논리적으로 묶을 때 유용합니다.
 
-```
+```text
 app/
 ├── (marketing)/
 │   ├── layout.tsx      ← 마케팅 공통 레이아웃

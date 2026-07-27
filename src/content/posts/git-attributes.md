@@ -17,7 +17,7 @@ draft: false
 
 `.gitattributes`는 저장소 내 파일 패턴과 Git 속성을 연결하는 설정 파일이다. `.gitignore`처럼 저장소 루트에 두고 커밋하면 팀 전체에 적용된다. 속성 우선순위는 파일 위치가 깊을수록 높으며, 각 사용자의 `~/.config/git/attributes`(전역 설정)보다 저장소 내 파일이 우선한다.
 
-```
+```text
 # 기본 구조
 <패턴>  <속성1>  <속성2>  ...
 ```
@@ -28,7 +28,7 @@ draft: false
 
 가장 기본적인 설정이다. Git은 텍스트 파일에 줄 끝 변환을 적용하고, 바이너리는 그대로 보존한다.
 
-```
+```text
 # 모든 파일에 자동 감지 적용 (권장 기본값)
 *   text=auto
 
@@ -47,7 +47,7 @@ draft: false
 
 크로스 플랫폼 팀에서 가장 자주 쓰는 속성이다.
 
-```
+```text
 # 스크립트는 항상 LF (Windows에서도)
 *.sh    text eol=lf
 *.bash  text eol=lf
@@ -71,7 +71,7 @@ Makefile text eol=lf
 
 언어별로 최적화된 diff를 사용할 수 있다.
 
-```
+```text
 # Python: 함수 이름을 hunk 헤더에 표시
 *.py  diff=python
 
@@ -89,7 +89,7 @@ Git에는 `python`, `java`, `ruby`, `bibtex` 등 내장 드라이버가 있어 �
 
 충돌이 잦은 파일에 특별한 병합 전략을 지정한다.
 
-```
+```text
 # lock 파일은 항상 "우리 버전" 사용 (충돌 무시)
 package-lock.json  merge=ours
 yarn.lock          merge=ours
@@ -108,7 +108,7 @@ git config --global merge.ours.driver true
 
 `git archive`나 GitHub 릴리스 ZIP에 포함하지 않을 파일을 지정한다.
 
-```
+```text
 # 아카이브에서 제외할 파일
 .gitattributes  export-ignore
 .gitignore      export-ignore
@@ -120,7 +120,7 @@ docs/internal/  export-ignore
 
 GitHub 언어 통계와 코드 하이라이팅에 영향을 준다.
 
-```
+```text
 # 생성된 파일을 언어 통계에서 제외
 dist/**    linguist-generated=true
 vendor/**  linguist-vendored=true
@@ -131,7 +131,7 @@ vendor/**  linguist-vendored=true
 
 ## 실용적인 .gitattributes 템플릿
 
-```
+```text
 # 기본 텍스트 처리
 *   text=auto eol=lf
 
