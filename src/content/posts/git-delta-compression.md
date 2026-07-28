@@ -37,17 +37,17 @@ delta 데이터는 두 종류의 명령어로 구성된다.
 
 pack 파일 안에는 두 가지 방식의 delta 타입이 존재한다.
 
-**OFS_DELTA**: base 오브젝트를 같은 pack 파일 내 **오프셋**으로 참조한다. 오프셋은 pack 파일 내 절대 위치이므로, SHA 조회 없이 바로 base를 찾을 수 있어 더 효율적이다. `git gc`가 기본으로 생성하는 방식이다.
+**OFS_DELTA**: base 오브젝트를 같은 pack 파일 내 **오프셋**으로 참조한다. 오프셋은 pack 파일 내 상대 위치이므로, SHA 조회 없이 바로 base를 찾을 수 있어 더 효율적이다. `git gc`가 기본으로 생성하는 방식이다.
 
 **REF_DELTA**: base 오브젝트를 **SHA**로 참조한다. 다른 pack 파일이나 loose 오브젝트를 base로 사용할 수 있어 유연하지만, SHA 조회 비용이 있다. `git bundle`이나 얕은 복제(shallow clone)에서 주로 사용된다.
 
 ```bash
 # OFS_DELTA 사용 여부 확인 (기본: true)
-git config pack.allowOfsDelta
+git config repack.useDeltaBaseOffset
 # true
 
 # REF_DELTA만 사용하도록 강제 (비권장, 테스트용)
-git config pack.allowOfsDelta false
+git config repack.useDeltaBaseOffset false
 git repack -adf
 ```
 

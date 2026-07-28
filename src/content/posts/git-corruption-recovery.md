@@ -65,7 +65,7 @@ git fetch --all --tags
 git fsck --full 2>&1 | grep -v "^Checking\|^dangling"
 
 # 손상된 loose object 파일 직접 삭제 후 fetch로 재취득
-rm .git/objects/91/a3c8<나머지40자리>
+rm .git/objects/91/a3c8<나머지 34자리>
 git fetch origin
 git fsck  # 다시 확인
 ```

@@ -65,7 +65,7 @@ git config --list | grep credential
 git config --global credential.helper 'cache --timeout=28800'
 
 # 캐시 즉시 삭제
-git credential-cache --daemon exit
+git credential-cache exit
 ```
 
 ## credential 갱신·삭제

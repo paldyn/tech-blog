@@ -82,7 +82,7 @@ git clone -b develop https://github.com/user/repo.git
 
 ```bash
 git clone --depth 1 https://github.com/user/repo.git
-# 최신 커밋 하나만 받음 — 클론 속도 대폭 감소
+# 최신 커밋 하나만 받음 — 클론 시간 대폭 감소
 ```
 
 수백 MB의 이력이 있는 대형 저장소에서 CI 빌드 시간을 수십 초 단축할 수 있다. 단, 이력 탐색이 필요한 작업(git log, git blame 등)은 제한된다.

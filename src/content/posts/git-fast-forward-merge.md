@@ -23,7 +23,7 @@ main: C1 → C2
 feature:           C3 → C4
 ```
 
-이 상황에서 `main`을 `feature`에 병합하면, Git은 그냥 `main` 포인터를 `C4`로 **앞으로 이동**시킬 수 있다. 새 커밋을 만들 필요가 없다. 이것이 **Fast-Forward**다.
+이 상황에서 `feature`를 `main`에 병합하면, Git은 그냥 `main` 포인터를 `C4`로 **앞으로 이동**시킬 수 있다. 새 커밋을 만들 필요가 없다. 이것이 **Fast-Forward**다.
 
 ```text
 main: C1 → C2 → C3 → C4

@@ -117,7 +117,7 @@ git ls-files --eol | head -20
 실수로 CRLF가 저장소에 들어가는 것을 방지한다.
 
 ```bash
-# CRLF가 저장소에 들어가면 경고
+# CRLF 변환이 비가역이면 커밋을 오류로 거부
 git config --global core.safecrlf true
 
 # 경고만 (커밋은 허용)

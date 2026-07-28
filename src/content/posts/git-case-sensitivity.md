@@ -44,7 +44,7 @@ git commit -m "rename: Readme.md -> readme.md"
 
 ```bash
 # 대소문자 무시하고 중복된 경로 찾기
-git ls-files | sort -f | uniq -if | head
+git ls-files | sort -f | uniq -di | head
 
 # 불필요한 쪽을 인덱스에서 제거 (정확한 케이스로 지정)
 git rm --cached Readme.md
@@ -73,7 +73,7 @@ git config core.ignorecase false
 
 ```bash
 # CI에서 대소문자 중복을 검사해 사고를 조기에 차단
-git ls-files | sort -f | uniq -Dif
+git ls-files | sort -f | uniq -Di
 # 출력이 있으면 중복 — 빌드를 실패시킨다
 ```
 
