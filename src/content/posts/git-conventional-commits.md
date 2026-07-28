@@ -15,7 +15,7 @@ draft: false
 
 ## 메시지 형식
 
-```
+```text
 <type>(<scope>)!: <description>
 
 [body]
@@ -38,7 +38,7 @@ draft: false
 
 ## 타입 종류
 
-```
+```text
 feat:     새 기능 추가
 fix:      버그 수정
 docs:     문서만 변경
@@ -58,7 +58,7 @@ revert:   이전 커밋 되돌리기
 
 ### 방법 1: type 뒤에 `!`
 
-```
+```text
 feat(api)!: 응답 구조를 v2로 변경
 
 v1 클라이언트는 업데이트 필요
@@ -66,7 +66,7 @@ v1 클라이언트는 업데이트 필요
 
 ### 방법 2: footer에 `BREAKING CHANGE:`
 
-```
+```text
 feat(api): 응답 구조를 v2로 변경
 
 데이터 필드명을 camelCase로 통일함.
@@ -83,7 +83,7 @@ Conventional Commits의 가장 큰 장점은 **자동 버전 범프**다.
 
 ![커밋 타입과 버전 범프 관계](/assets/posts/git-conventional-commits-types.svg)
 
-```
+```text
 feat  → MINOR 범프  (1.2.0 → 1.3.0)
 fix   → PATCH 범프  (1.2.0 → 1.2.1)
 BREAKING CHANGE → MAJOR 범프  (1.2.0 → 2.0.0)
@@ -93,7 +93,7 @@ BREAKING CHANGE → MAJOR 범프  (1.2.0 → 2.0.0)
 
 ## body와 footer 활용
 
-```
+```text
 fix(auth): 토큰 만료 후 로그인 루프 문제 수정
 
 expires_at 타임스탬프가 UTC 기준이 아닌 로컬 시간으로
@@ -108,7 +108,7 @@ Reviewed-by: Alice <alice@example.com>
 
 ## 실제 사용 예시
 
-```
+```text
 feat(user): 이메일 인증 플로우 추가
 fix(cart): 수량 0 이하 입력 시 에러 처리
 docs(readme): 로컬 개발 환경 설정 가이드 추가

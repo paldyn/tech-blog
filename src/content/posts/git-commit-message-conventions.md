@@ -23,7 +23,7 @@ draft: false
 
 현재 업계에서 가장 널리 쓰이는 커밋 메시지 규격이다. [conventionalcommits.org](https://www.conventionalcommits.org)에서 공식 사양을 확인할 수 있다.
 
-```
+```text
 type(scope): subject
 
 body
@@ -41,7 +41,7 @@ subject(첫 번째 줄)는 50자 이하로 쓰는 것이 권장된다. GitHub �
 
 동사는 **명령형**(imperative mood)을 사용한다.
 
-```
+```text
 # 올바른 형태
 add user authentication
 fix null pointer in parser
@@ -72,7 +72,7 @@ I removed the deprecated endpoint
 
 scope는 어떤 모듈이나 파일이 바뀌었는지를 괄호 안에 표시한다.
 
-```
+```text
 feat(auth): add OAuth2 login
 fix(api): handle empty response body
 chore(deps): bump eslint to 9.0
@@ -94,7 +94,7 @@ Singleton pool reduces connection count from ~500 to ~20."
 
 ## footer: 이슈 연결과 BREAKING CHANGE
 
-```
+```text
 feat(api)!: remove v1 endpoints
 
 BREAKING CHANGE: /api/v1/* endpoints removed.

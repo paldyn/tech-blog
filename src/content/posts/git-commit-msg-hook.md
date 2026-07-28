@@ -32,7 +32,7 @@ echo "검증할 메시지: $MSG"
 
 커밋 메시지 형식 표준으로 **Conventional Commits**가 널리 사용된다.
 
-```
+```text
 type(scope): subject
 
 body (선택)
@@ -46,7 +46,7 @@ footer (선택)
 
 예시:
 
-```
+```text
 feat(auth): add Google OAuth2 login
 fix(api): handle null payment gateway response
 docs(readme): update installation guide

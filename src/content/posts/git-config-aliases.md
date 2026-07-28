@@ -59,7 +59,7 @@ git config --global alias.s "status -s"
 
 명령어로 하나씩 등록하는 대신 `~/.gitconfig`를 직접 열어 `[alias]` 섹션을 편집하면 편리하다.
 
-```
+```ini
 [alias]
     st      = status
     co      = checkout

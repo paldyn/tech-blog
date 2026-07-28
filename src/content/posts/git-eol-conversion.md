@@ -47,7 +47,7 @@ git config --global core.autocrlf false
 
 `core.autocrlf`는 개인 설정이라 팀원마다 다를 수 있다. 누군가 설정을 잊으면 문제가 재발한다. **`.gitattributes`로 저장소 레벨에서 규칙을 고정하면 개인 설정을 덮어쓴다.**
 
-```
+```gitattributes
 # .gitattributes
 # 기본: 텍스트 파일 자동 감지 + LF로 정규화
 *   text=auto

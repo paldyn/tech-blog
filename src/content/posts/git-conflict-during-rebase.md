@@ -31,7 +31,7 @@ git rebase main
 
 X2를 적용하다가 충돌이 나면 Git은 멈추고 메시지를 출력한다.
 
-```
+```text
 CONFLICT (content): Merge conflict in src/auth.py
 error: could not apply d3f4e5c... feat: add token refresh
 hint: Resolve all conflicts manually, mark them with

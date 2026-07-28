@@ -17,13 +17,13 @@ draft: false
 
 정상 상태에서 HEAD는 브랜치를 가리키고, 브랜치가 특정 커밋을 가리킨다.
 
-```
+```text
 HEAD → main → C3
 ```
 
 Detached HEAD는 HEAD가 브랜치를 거치지 않고 커밋을 직접 가리키는 상태다.
 
-```
+```text
 HEAD → C2 (브랜치 없음)
 ```
 
@@ -47,7 +47,7 @@ git checkout origin/main       # 로컬 브랜치 없이 원격 상태 확인
 
 ## 진입 시 Git의 경고
 
-```
+```text
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
 state without impacting any branches by switching back to a branch.
@@ -65,7 +65,7 @@ git commit -m "실험적 변경"  # 어떤 브랜치도 이 커밋을 가리키�
 git switch main              # 이 시점에 경고 메시지 출력
 ```
 
-```
+```text
 Warning: you are leaving 1 commit behind, not connected to any of your branches:
   abc1234 실험적 변경
 ```

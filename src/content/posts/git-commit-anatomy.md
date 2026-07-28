@@ -21,7 +21,7 @@ git cat-file -p HEAD
 
 출력 예시:
 
-```
+```text
 tree b2c4e8f9da3a71e5c8d0f2b3a4c5d6e7f8a9b0c1
 parent 7f1e3c2a8b4d6e0f1a2b3c4d5e6f7a8b9c0d1e2
 author PALDYN <dev@paldyn.com> 1746748800 +0900
@@ -81,7 +81,7 @@ git log --format="%H %an / %cn"
 
 ## 타임스탬프의 구조
 
-```
+```text
 1746748800 +0900
 ```
 

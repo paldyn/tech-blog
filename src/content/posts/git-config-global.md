@@ -121,7 +121,7 @@ git config --local user.email "work@company.com"
 
 또는 `~/.gitconfig`에 디렉토리 조건부 설정을 추가할 수 있다.
 
-```
+```ini
 # ~/.gitconfig
 [includeIf "gitdir:~/work/"]
     path = ~/.gitconfig-work

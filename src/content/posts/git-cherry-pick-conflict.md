@@ -17,7 +17,7 @@ draft: false
 
 cherry-pick은 지정한 커밋이 "만들어낸 diff"를 현재 브랜치에 재적용한다. 원본 커밋이 만들어진 시점과 지금 브랜치의 상태가 다르면, 동일한 위치에 이미 다른 변경이 존재할 수 있다. Git이 두 변경사항을 자동으로 합치지 못하면 충돌이 생긴다.
 
-```
+```text
 feature: A → B → C(충돌 대상)
 main:    A → B → D → E  ← E에서 C와 같은 줄을 이미 수정했다면?
 ```
@@ -28,7 +28,7 @@ cherry-pick C를 main에 적용할 때 E의 수정과 C의 수정이 같은 줄�
 
 충돌이 생기면 cherry-pick 작업이 중단되고 터미널에 다음과 같은 메시지가 나타난다.
 
-```
+```text
 error: could not apply abc1234... fix: 인증 토큰 만료 버그
 hint: After resolving the conflicts, mark them with
 hint: "git add/rm <pathspec>", then run

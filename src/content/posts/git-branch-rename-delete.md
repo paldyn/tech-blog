@@ -58,7 +58,7 @@ git branch -D feature-login
 
 `-d`는 병합되지 않은 커밋이 있으면 다음처럼 오류를 낸다.
 
-```
+```text
 error: The branch 'feature-login' is not fully merged.
 If you are sure you want to delete it, run 'git branch -D feature-login'.
 ```

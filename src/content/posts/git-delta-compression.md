@@ -55,7 +55,7 @@ git repack -adf
 
 delta 오브젝트 자체가 다른 delta를 base로 삼을 수 있다. 이렇게 체인이 이어지면 depth가 깊어진다.
 
-```
+```text
 base (depth 0) → delta1 (depth 1) → delta2 (depth 2) → ...
 ```
 

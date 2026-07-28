@@ -17,7 +17,7 @@ draft: false
 
 충돌이 발생하면 Git은 해당 파일에 자동으로 마커를 삽입한다. 에디터로 파일을 열면 다음 패턴이 보인다.
 
-```
+```text
 <<<<<<< HEAD
     return 30       ← 현재 브랜치(HEAD)의 내용
 =======
@@ -66,7 +66,7 @@ grep -rn ">>>>>>>" src/
 
 모든 충돌이 같은 패턴은 아니다. 파일이 한 브랜치에서 삭제되고 다른 브랜치에서 수정됐을 때는 다른 형태로 나타난다.
 
-```
+```text
 CONFLICT (modify/delete): config.py deleted in feature
 and modified in HEAD.
 ```

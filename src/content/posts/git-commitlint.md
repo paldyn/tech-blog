@@ -105,7 +105,7 @@ module.exports = {
 
 commitlint가 실패하면 구체적인 오류를 출력한다.
 
-```
+```text
 ⧗   input: Update user profile
 ✖   subject may not be empty [subject-empty]
 ✖   type must be one of [feat, fix, docs, style, refactor,

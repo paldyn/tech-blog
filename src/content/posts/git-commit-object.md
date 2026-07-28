@@ -17,7 +17,7 @@ draft: false
 
 `git cat-file -p HEAD`를 실행하면 commit 오브젝트의 원문을 볼 수 있다.
 
-```
+```text
 tree   abc123def456…
 parent fff000aaa111…
 author Alice <alice@example.com> 1716681600 +0900
