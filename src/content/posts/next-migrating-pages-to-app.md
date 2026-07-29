@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/next-production-isr/)에서 프로덕션 ISR 패턴을 살펴봤다. 이번 글은 시리즈의 마지막으로, **기존 Pages Router 프로젝트를 App Router로 옮기는 마이그레이션 전략**을 다룬다. Next.js는 pages/와 app/ 디렉토리를 동시에 지원하기 때문에 한 번에 전환하지 않아도 된다. 라우트 단위로 천천히 옮길 수 있다.
+[지난 글](/posts/next-production-isr/)에서 프로덕션 ISR 패턴을 살펴봤다. 이번 글에서는 **기존 Pages Router 프로젝트를 App Router로 옮기는 마이그레이션 전략**을 다룬다. Next.js는 pages/와 app/ 디렉토리를 동시에 지원하기 때문에 한 번에 전환하지 않아도 된다. 라우트 단위로 천천히 옮길 수 있다.
 
 ## 왜 마이그레이션하는가
 

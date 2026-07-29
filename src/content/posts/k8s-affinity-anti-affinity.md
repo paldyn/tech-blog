@@ -105,7 +105,7 @@ affinity:
 
 `podAffinity`와 `podAntiAffinity`는 Scheduler가 모든 기존 Pod의 레이블을 확인해야 하므로 클러스터가 커질수록 연산 비용이 높다. 수천 개 Pod가 있는 클러스터에서 `required` podAntiAffinity를 광범위하게 사용하면 스케줄링 지연이 발생할 수 있다. 가능하면 `preferred`를 우선 사용하고, `required`는 꼭 필요한 경우에만 쓴다.
 
-Pod 수가 많은 환경에서는 다음 편에서 소개할 **Topology Spread Constraints**가 더 효율적인 대안이 된다.
+Pod 수가 많은 환경에서는 다음 글에서 소개할 **Topology Spread Constraints**가 더 효율적인 대안이 된다.
 
 ## nodeAffinity vs nodeSelector 선택 기준
 

@@ -164,7 +164,7 @@ counter.decrement(); // 11
 counter.value();     // 11
 ```
 
-`increment`는 `makeCounter`가 반환된 후에도 `count`가 있는 스코프를 체인을 통해 참조합니다. 클로저에 대해서는 이후 시리즈에서 별도로 깊이 다룹니다.
+`increment`는 `makeCounter`가 반환된 후에도 `count`가 있는 스코프를 체인을 통해 참조합니다. 클로저에 대해서는 이후 별도의 글에서 깊이 다룹니다.
 
 ## 스코프 체인 최적화
 

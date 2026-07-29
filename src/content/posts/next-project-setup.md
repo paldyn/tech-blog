@@ -22,7 +22,7 @@ node -v   # v18.17.0 이상
 npm -v    # 9.x 이상 권장
 ```
 
-패키지 매니저는 npm·yarn·pnpm 중 편한 것을 사용할 수 있습니다. 이 시리즈는 **npm** 기준으로 진행하되, pnpm 명령도 병기합니다.
+패키지 매니저는 npm·yarn·pnpm 중 편한 것을 사용할 수 있습니다. 이 글은 **npm** 기준으로 진행하되, pnpm 명령도 병기합니다.
 
 ## create-next-app으로 프로젝트 생성
 
@@ -44,7 +44,7 @@ Would you like to use Turbopack?           Yes
 Would you like to customize the import alias? No
 ```
 
-**App Router**를 `Yes`로 선택해야 이 시리즈에서 다루는 모든 예제가 동작합니다. `src/` 디렉토리 사용도 권장합니다 — 소스 코드와 설정 파일이 분리되어 프로젝트 루트가 깔끔해집니다.
+**App Router**를 `Yes`로 선택해야 이 글에서 다루는 모든 예제가 동작합니다. `src/` 디렉토리 사용도 권장합니다 — 소스 코드와 설정 파일이 분리되어 프로젝트 루트가 깔끔해집니다.
 
 ## 프로젝트 구조 미리 보기
 

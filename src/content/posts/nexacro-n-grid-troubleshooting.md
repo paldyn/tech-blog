@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-grid-render-tuning/)에서 Grid 렌더링 성능 최적화를 다뤘습니다. Grid 시리즈의 마지막으로, 실무에서 가장 자주 마주치는 Grid 문제들의 원인과 해결책을 정리합니다. 문제가 발생했을 때 이 글을 빠른 참조 가이드로 활용하기 바랍니다.
+[지난 글](/posts/nexacro-n-grid-render-tuning/)에서 Grid 렌더링 성능 최적화를 다뤘습니다. 이번 글에서는 실무에서 가장 자주 마주치는 Grid 문제들의 원인과 해결책을 정리합니다. 문제가 발생했을 때 이 글을 빠른 참조 가이드로 활용하기 바랍니다.
 
 ## 문제 1: Grid가 텅 비어 보인다
 

@@ -124,7 +124,7 @@ spec:
 
 ## 백엔드: Tempo
 
-트레이스 저장소로는 Jaeger와 Grafana Tempo가 대표적이다. 이 시리즈처럼 Grafana/Loki 스택을 쓰고 있다면 Tempo가 자연스럽다 — Loki와 같은 철학(최소 인덱스 + 오브젝트 스토리지)이라 운영 비용이 낮고, Grafana에서 메트릭·로그·트레이스가 한 화면에 모인다.
+트레이스 저장소로는 Jaeger와 Grafana Tempo가 대표적이다. 앞서 다룬 것처럼 Grafana/Loki 스택을 쓰고 있다면 Tempo가 자연스럽다 — Loki와 같은 철학(최소 인덱스 + 오브젝트 스토리지)이라 운영 비용이 낮고, Grafana에서 메트릭·로그·트레이스가 한 화면에 모인다.
 
 ```bash
 helm install tempo grafana/tempo -n tracing --create-namespace \

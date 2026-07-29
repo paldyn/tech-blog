@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-network-troubleshoot/)에서 네트워크 트러블슈팅 방법을 살펴봤다. 이번부터는 멀티 컨테이너 애플리케이션을 단일 파일로 정의하고 관리하는 **Docker Compose** 시리즈를 시작한다.
+[지난 글](/posts/docker-network-troubleshoot/)에서 네트워크 트러블슈팅 방법을 살펴봤다. 이번 글부터는 멀티 컨테이너 애플리케이션을 단일 파일로 정의하고 관리하는 **Docker Compose**를 살펴본다.
 
 ## Docker Compose란
 

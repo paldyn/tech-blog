@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-1995년, Netscape의 개발자 Brendan Eich는 단 **10일** 만에 새로운 언어를 만들어냈습니다. 그 이름은 처음에 Mocha, 이후 LiveScript였다가 마케팅 이유로 최종적으로 **JavaScript**가 되었습니다. Java가 한창 인기를 끌던 시절, 이름을 빌린 것인데—오늘날까지 수많은 오해의 씨앗이 되고 있습니다. 이번 시리즈에서는 JavaScript의 본질부터 최신 생태계까지 낱낱이 파헤쳐 봅니다.
+1995년, Netscape의 개발자 Brendan Eich는 단 **10일** 만에 새로운 언어를 만들어냈습니다. 그 이름은 처음에 Mocha, 이후 LiveScript였다가 마케팅 이유로 최종적으로 **JavaScript**가 되었습니다. Java가 한창 인기를 끌던 시절, 이름을 빌린 것인데—오늘날까지 수많은 오해의 씨앗이 되고 있습니다. 앞으로 JavaScript의 본질부터 최신 생태계까지 낱낱이 파헤쳐 봅니다.
 
 ## JavaScript가 탄생한 이유
 
@@ -94,7 +94,7 @@ GitHub의 언어 통계, Stack Overflow 개발자 설문, TIOBE 인덱스를 막
 - npm에 **200만 개 이상**의 패키지
 - React, Vue, Angular, Next.js 등 방대한 프레임워크 생태계
 
-JavaScript를 이해한다는 것은 웹의 작동 원리를 이해하는 것과 같습니다. 이 시리즈가 그 이해를 단단하게 만드는 데 도움이 되기를 바랍니다.
+JavaScript를 이해한다는 것은 웹의 작동 원리를 이해하는 것과 같습니다. 이 글이 그 이해를 단단하게 만드는 데 도움이 되기를 바랍니다.
 
 ---
 

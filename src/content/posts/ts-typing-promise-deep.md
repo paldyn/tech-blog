@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-react-generic-components/)로 React 묶음을 마무리했다. 이번에는 비동기로 돌아와, 시리즈 앞부분 [async/await 글](/posts/ts-typing-async/)에서 가볍게 다뤘던 `Promise`를 타입 관점에서 깊게 파고든다. `Promise<T>`는 단순해 보이지만 `then` 체이닝의 타입 흐름, 자동 평탄화, 조합 함수들의 반환 타입, 그리고 "reject는 타입에 잡히지 않는다"는 근본적 한계까지 알아둘 게 꽤 있다.
+[지난 글](/posts/ts-react-generic-components/)로 React 묶음을 마무리했다. 이번에는 비동기로 돌아와, 앞서 [async/await 글](/posts/ts-typing-async/)에서 가볍게 다뤘던 `Promise`를 타입 관점에서 깊게 파고든다. `Promise<T>`는 단순해 보이지만 `then` 체이닝의 타입 흐름, 자동 평탄화, 조합 함수들의 반환 타입, 그리고 "reject는 타입에 잡히지 않는다"는 근본적 한계까지 알아둘 게 꽤 있다.
 
 ## Promise<T>의 T는 "성공 값"이다
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-statistics-selectivity/)에서 CBO 통계와 선택도를 다뤘다. 이제 Oracle 특화 시리즈로 넘어간다. Oracle의 첫 번째 핵심 개념은 **인스턴스(Instance)와 데이터베이스(Database)의 분리**다.
+[지난 글](/posts/sql-statistics-selectivity/)에서 CBO 통계와 선택도를 다뤘다. 이제 Oracle 특화 주제로 넘어간다. Oracle의 첫 번째 핵심 개념은 **인스턴스(Instance)와 데이터베이스(Database)의 분리**다.
 
 ---
 

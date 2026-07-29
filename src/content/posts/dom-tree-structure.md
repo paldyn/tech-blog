@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-blob-file-filereader/)에서 파일과 이진 데이터를 다루는 API를 살펴봤습니다. 이제부터는 브라우저 환경의 핵심인 DOM 시리즈를 시작합니다. 첫 번째 주제는 DOM 트리의 구조입니다.
+[지난 글](/posts/js-blob-file-filereader/)에서 파일과 이진 데이터를 다루는 API를 살펴봤습니다. 이번 글부터는 브라우저 환경의 핵심인 DOM을 다룹니다. 첫 번째 주제는 DOM 트리의 구조입니다.
 
 ---
 

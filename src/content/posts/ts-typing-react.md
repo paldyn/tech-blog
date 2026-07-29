@@ -124,7 +124,7 @@ function Button({ variant = "primary", ...rest }: ButtonProps) {
 
 `React.ButtonHTMLAttributes<HTMLButtonElement>`를 확장하면 `<button>`의 모든 표준 속성을 자동으로 받고, 거기에 우리만의 prop(`variant`)을 더할 수 있다. 나머지 속성은 `...rest`로 받아 실제 `<button>`에 펼쳐 넘긴다. 이것이 재사용 가능한 UI 컴포넌트의 표준 패턴이다.
 
-여기까지가 React 타이핑의 첫걸음이다. props에 타입을 주는 것만으로 컴포넌트 사용처 전체가 타입의 보호를 받는다. 이 시리즈의 다음 단계에서는 `useState`·`useReducer` 같은 훅의 타이핑, ref와 이벤트 핸들러, 그리고 제네릭 컴포넌트까지 React와 TypeScript의 결합을 더 깊이 파고든다.
+여기까지가 React 타이핑의 첫걸음이다. props에 타입을 주는 것만으로 컴포넌트 사용처 전체가 타입의 보호를 받는다. 다음 단계에서는 `useState`·`useReducer` 같은 훅의 타이핑, ref와 이벤트 핸들러, 그리고 제네릭 컴포넌트까지 React와 TypeScript의 결합을 더 깊이 파고든다.
 
 ---
 

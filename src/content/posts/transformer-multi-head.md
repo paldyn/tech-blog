@@ -124,7 +124,7 @@ MQA: Q(h×d_k), K(1×d_k), V(1×d_k)
 
 GQA는 품질은 MHA에 가깝게 유지하면서 추론 속도를 2~4배 향상시킨다.
 
-## 이 시리즈의 다음 단계
+## 다음 단계
 
 Multi-Head Attention을 이해했으니, 앞으로 다룰 주제들이 훨씬 명확해진다. Positional Encoding이 왜 필요한지(위치 정보가 없는 Self-Attention), 인코더·디코더 Masking이 어떻게 작동하는지, BERT와 GPT가 같은 Transformer를 어떻게 다르게 활용하는지—모두 이 글에서 쌓은 이해 위에서 전개된다.
 

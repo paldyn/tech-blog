@@ -129,7 +129,7 @@ function onChange(
 }
 ```
 
-`HTMLInputElement | HTMLTextAreaElement`의 `target`은 두 타입의 공통 속성만 접근 가능하다. `value`는 둘 다 있으니 안전하고, 한쪽에만 있는 속성은 [좁히기](/posts/ts-narrowing-basics/)가 필요하다. 이건 이벤트 타이핑이라기보다 우리가 시리즈 내내 다룬 유니온 다루기의 응용이다.
+`HTMLInputElement | HTMLTextAreaElement`의 `target`은 두 타입의 공통 속성만 접근 가능하다. `value`는 둘 다 있으니 안전하고, 한쪽에만 있는 속성은 [좁히기](/posts/ts-narrowing-basics/)가 필요하다. 이건 이벤트 타이핑이라기보다 우리가 그동안 다룬 유니온 다루기의 응용이다.
 
 정리하면, React 이벤트 핸들러 타이핑의 원칙은 세 가지다. **인라인이면 추론에 맡기고, 분리하면 `이벤트Event<엘리먼트>`로 명시하며, 요소 프로퍼티는 `currentTarget`으로 안전하게 접근한다.** 핸들러를 변수나 props로 다룰 땐 `EventHandler` 별칭이 간결하다. 다음 글에서는 컴포넌트 자체를 제네릭으로 만들어 재사용성을 끌어올리는 법을 본다.
 

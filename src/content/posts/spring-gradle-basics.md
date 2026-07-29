@@ -289,7 +289,7 @@ Gradle은 두 가지 DSL을 지원합니다.
 
 ## 정리
 
-Gradle의 핵심은 세 가지입니다. 코드(Kotlin/Groovy)로 빌드를 기술하고, 태스크 그래프로 의존성을 관리하며, 증분 빌드와 캐시로 속도를 확보합니다. Maven의 XML보다 간결하고 강력하지만, 처음엔 낯선 DSL 문법이 진입 장벽이 됩니다. 이 시리즈의 예제는 모두 Gradle Kotlin DSL 기준으로 작성됩니다. 다음 글에서는 의존성 관리의 세부 사항(scope, transitive, BOM)을 더 깊이 파봅니다.
+Gradle의 핵심은 세 가지입니다. 코드(Kotlin/Groovy)로 빌드를 기술하고, 태스크 그래프로 의존성을 관리하며, 증분 빌드와 캐시로 속도를 확보합니다. Maven의 XML보다 간결하고 강력하지만, 처음엔 낯선 DSL 문법이 진입 장벽이 됩니다. 이 글의 예제는 모두 Gradle Kotlin DSL 기준으로 작성됩니다. 다음 글에서는 의존성 관리의 세부 사항(scope, transitive, BOM)을 더 깊이 파봅니다.
 
 ---
 

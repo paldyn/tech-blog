@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-tcpdump-in-container/)에서 tcpdump로 컨테이너 네트워크 패킷을 분석하는 방법을 살펴봤다. 디버깅 시리즈의 이번 편은 컨테이너에서 가장 자주 마주치는 오류 중 하나인 `Permission denied`를 다룬다. 원인을 모르면 `--user root`로 임시 해결하고 넘어가기 쉬운데, 이렇게 하면 보안 구멍을 만드는 것이다.
+[지난 글](/posts/docker-tcpdump-in-container/)에서 tcpdump로 컨테이너 네트워크 패킷을 분석하는 방법을 살펴봤다. 이번 글은 컨테이너에서 가장 자주 마주치는 오류 중 하나인 `Permission denied`를 다룬다. 원인을 모르면 `--user root`로 임시 해결하고 넘어가기 쉬운데, 이렇게 하면 보안 구멍을 만드는 것이다.
 
 ## Linux 권한 모델이 그대로 적용된다
 

@@ -203,7 +203,7 @@ npx eslint --rulesdir ./rules src/
 
 ## 정리
 
-프로토타입 오염은 JavaScript의 프로토타입 체인 구조를 악용하는 취약점입니다. 방어의 핵심은 외부 데이터를 처리하는 병합·복사 함수에서 `__proto__`·`constructor`·`prototype` 키를 차단하고, 사전 객체는 `Object.create(null)`을 사용하며, 입력 단계에서 JSON 스키마로 검증하는 것입니다. 이번 보안 시리즈를 통해 XSS, CSRF, CSP, CORS, SRI, 쿠키, JWT, OAuth, eval, 프로토타입 오염까지 10가지 핵심 주제를 살펴봤습니다.
+프로토타입 오염은 JavaScript의 프로토타입 체인 구조를 악용하는 취약점입니다. 방어의 핵심은 외부 데이터를 처리하는 병합·복사 함수에서 `__proto__`·`constructor`·`prototype` 키를 차단하고, 사전 객체는 `Object.create(null)`을 사용하며, 입력 단계에서 JSON 스키마로 검증하는 것입니다. 지금까지 XSS, CSRF, CSP, CORS, SRI, 쿠키, JWT, OAuth, eval, 프로토타입 오염까지 10가지 핵심 보안 주제를 살펴봤습니다.
 
 ---
 

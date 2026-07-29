@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-multitenant-pdb-cdb/)에서 Oracle 멀티테넌트 아키텍처를 살펴봤다. 이제부터는 PostgreSQL 시리즈를 시작한다. PostgreSQL은 오픈소스 RDBMS 중 가장 강력한 기능 집합을 보유하며, Oracle과는 설계 철학이 크게 다르다. 첫 번째 주제는 전체 아키텍처 구조다.
+[지난 글](/posts/oracle-multitenant-pdb-cdb/)에서 Oracle 멀티테넌트 아키텍처를 살펴봤다. 이제부터는 PostgreSQL을 살펴본다. PostgreSQL은 오픈소스 RDBMS 중 가장 강력한 기능 집합을 보유하며, Oracle과는 설계 철학이 크게 다르다. 첫 번째 주제는 전체 아키텍처 구조다.
 
 ## PostgreSQL의 프로세스 기반 설계
 

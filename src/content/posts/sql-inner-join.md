@@ -119,7 +119,7 @@ JOIN orders o ON o.user_id = u.id
 WHERE o.status = 'paid';
 ```
 
-단, **OUTER JOIN에서는 ON과 WHERE의 위치에 따라 결과가 달라진다.** 다음 편에서 자세히 다룬다.
+단, **OUTER JOIN에서는 ON과 WHERE의 위치에 따라 결과가 달라진다.** 다음 글에서 자세히 다룬다.
 
 ---
 

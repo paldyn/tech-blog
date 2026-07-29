@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-multi-dataset/)에서 복수 Dataset 동시 처리를 배웠습니다. 트랜잭션 시리즈의 마지막인 이번 글에서는 `transaction()` 호출 시 **커스텀 HTTP 헤더를 추가하는 방법**을 다룹니다. JWT 토큰 인증, CSRF 방어, 언어 설정 전달이 대표적인 활용 사례입니다.
+[지난 글](/posts/nexacro-n-multi-dataset/)에서 복수 Dataset 동시 처리를 배웠습니다. 이번 글에서는 `transaction()` 호출 시 **커스텀 HTTP 헤더를 추가하는 방법**을 다룹니다. JWT 토큰 인증, CSRF 방어, 언어 설정 전달이 대표적인 활용 사례입니다.
 
 ## 커스텀 HTTP 헤더가 필요한 이유
 

@@ -179,7 +179,7 @@ async def complete_order(session, order_id, user_email):
     # 트랜잭션 커밋 시 두 작업 모두 반영 또는 둘 다 롤백
 ```
 
-이 패턴은 DB 큐의 가장 큰 장점입니다. 외부 메시지 브로커로는 이 원자성을 보장하기 위해 2PC(Two-Phase Commit) 같은 복잡한 프로토콜이 필요합니다. 이것으로 SQL 완전 정복 시리즈의 ORM·패턴 파트가 마무리됩니다.
+이 패턴은 DB 큐의 가장 큰 장점입니다. 외부 메시지 브로커로는 이 원자성을 보장하기 위해 2PC(Two-Phase Commit) 같은 복잡한 프로토콜이 필요합니다.
 
 ---
 

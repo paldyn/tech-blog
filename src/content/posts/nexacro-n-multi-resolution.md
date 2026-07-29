@@ -180,7 +180,7 @@ function MainFrame_onload(obj, e) {
 | 4K 3840×2160 (DPI 200%) | `pixelper="2.0"` + @2x 이미지 + `autosize="true"` |
 | 태블릿 1366×768 | autosize + 브레이크포인트 조합 |
 
-이번 글로 Nexacro N의 Form 타입, 화면 계층, 생명주기, 상속·Include, 레이아웃, Container, Anchor/Margin/Padding, 반응형, 다중 해상도 대응까지 화면 구성의 핵심 축을 모두 다뤘습니다. 다음 시리즈에서는 Div를 이용한 그루핑 기법과 컴포넌트 카탈로그로 이어집니다.
+이번 글로 Nexacro N의 Form 타입, 화면 계층, 생명주기, 상속·Include, 레이아웃, Container, Anchor/Margin/Padding, 반응형, 다중 해상도 대응까지 화면 구성의 핵심 축을 모두 다뤘습니다. 다음 글에서는 Div를 이용한 그루핑 기법과 컴포넌트 카탈로그로 이어집니다.
 
 ---
 

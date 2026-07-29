@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/app-meeting-summary/)에서 AI 회의 요약 시스템까지 실전 애플리케이션 패턴을 살펴봤다. 이제 시리즈의 마지막 파트인 **도구와 라이브러리** 편으로 넘어간다. AI 개발자가 매일 쓰는 Python 생태계를 계층별로 살펴본다.
+[지난 글](/posts/app-meeting-summary/)에서 AI 회의 요약 시스템까지 실전 애플리케이션 패턴을 살펴봤다. 이번 글에서는 **도구와 라이브러리**를 다룬다. AI 개발자가 매일 쓰는 Python 생태계를 계층별로 살펴본다.
 
 Python이 AI/ML 표준 언어가 된 이유는 단순하다. 수치 계산(NumPy), 데이터 조작(Pandas), 시각화(Matplotlib), 전통 ML(Scikit-learn), 딥러닝(PyTorch/TensorFlow), 대형 언어 모델 연동(Transformers, Anthropic SDK, OpenAI SDK) 모두 Python 생태계 안에서 일관된 방식으로 연결된다.
 

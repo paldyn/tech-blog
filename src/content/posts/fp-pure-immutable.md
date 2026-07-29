@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sec-dependency-audit/)에서 의존성 공급망 보안을 다뤘습니다. 이번 글부터는 **함수형 프로그래밍(Functional Programming)** 시리즈를 시작합니다. 그 첫 번째 주제는 모든 FP 개념의 토대인 **순수 함수(Pure Function)** 와 **불변성(Immutability)** 입니다.
+[지난 글](/posts/sec-dependency-audit/)에서 의존성 공급망 보안을 다뤘습니다. 이번 글부터는 **함수형 프로그래밍(Functional Programming)** 을 다룹니다. 그 첫 번째 주제는 모든 FP 개념의 토대인 **순수 함수(Pure Function)** 와 **불변성(Immutability)** 입니다.
 
 ## 순수 함수란
 

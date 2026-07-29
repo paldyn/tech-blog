@@ -172,7 +172,7 @@ Context 설정은 `~/.docker/contexts/` 디렉터리에 저장됩니다.
 
 ## 정리
 
-`docker context`는 여러 Docker 환경을 이름 기반으로 관리하고 단일 CLI로 전환하며 사용하는 강력한 기능입니다. SSH context를 사용하면 추가 포트 개방 없이 원격 Docker에 안전하게 접근할 수 있고, `DOCKER_CONTEXT` 환경 변수로 스크립트에서 유연하게 활용할 수 있습니다. 이것으로 Docker 기초 설치·환경 파트를 마무리하고, 다음 편부터는 컨테이너 실행의 핵심인 `docker run` 명령어부터 본격적으로 다룹니다.
+`docker context`는 여러 Docker 환경을 이름 기반으로 관리하고 단일 CLI로 전환하며 사용하는 강력한 기능입니다. SSH context를 사용하면 추가 포트 개방 없이 원격 Docker에 안전하게 접근할 수 있고, `DOCKER_CONTEXT` 환경 변수로 스크립트에서 유연하게 활용할 수 있습니다. 이것으로 Docker 기초 설치·환경 파트를 마무리하고, 다음 글부터는 컨테이너 실행의 핵심인 `docker run` 명령어부터 본격적으로 다룹니다.
 
 ---
 

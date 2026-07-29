@@ -203,7 +203,7 @@ set.remove(1);   // UnsupportedOperationException
 
 `Collections.unmodifiableList()`는 원본 리스트의 변경이 뷰에도 반영되는 반면, `List.copyOf()`는 스냅샷 복사본이라 완전히 독립적이다.
 
-불변 객체는 현대 Java 설계의 핵심이다. 가능한 한 불변으로 만들되, 불변으로 만들 수 없을 때만 가변성을 허용하는 것이 올바른 접근이다. 이번 시리즈 배치에서 살펴본 sealed 클래스, records, Object 메서드들은 모두 불변 도메인 모델 설계를 향한 Java의 진화를 보여준다. 다음 배치에서는 **제네릭(Generics)** 시리즈로 이어진다.
+불변 객체는 현대 Java 설계의 핵심이다. 가능한 한 불변으로 만들되, 불변으로 만들 수 없을 때만 가변성을 허용하는 것이 올바른 접근이다. 지금까지 살펴본 sealed 클래스, records, Object 메서드들은 모두 불변 도메인 모델 설계를 향한 Java의 진화를 보여준다. 다음 글부터는 **제네릭(Generics)**을 다룬다.
 
 ---
 

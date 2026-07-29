@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/build-code-splitting/)에서 코드 스플리팅의 청킹 전략을 살펴봤습니다. 이번부터는 **테스트** 시리즈를 시작합니다. 첫 주제는 JavaScript 생태계에서 가장 널리 쓰이는 테스트 프레임워크 **Jest**입니다. Jest는 메타(구 Facebook)가 만들고 오픈소스로 관리합니다. 설정 없이 바로 쓸 수 있는 올인원 설계(Test Runner + Assertion + Mock + Coverage)가 장점입니다.
+[지난 글](/posts/build-code-splitting/)에서 코드 스플리팅의 청킹 전략을 살펴봤습니다. 이번 글부터는 **테스트**를 다룹니다. 첫 주제는 JavaScript 생태계에서 가장 널리 쓰이는 테스트 프레임워크 **Jest**입니다. Jest는 메타(구 Facebook)가 만들고 오픈소스로 관리합니다. 설정 없이 바로 쓸 수 있는 올인원 설계(Test Runner + Assertion + Mock + Coverage)가 장점입니다.
 
 ## Jest 아키텍처
 

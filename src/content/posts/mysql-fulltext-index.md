@@ -132,7 +132,7 @@ SET GLOBAL ngram_token_size = 2;  -- 2-gram: 모든 2글자 조합을 인덱싱
 
 대규모 전문 검색이 필요하��면 MySQL FULLTEXT 대신 **Elasticsearch**, **OpenSearch**, **Typesense** 같은 전문 검색 엔진과 동��화하는 방법을 고려하세요. MySQL FULLTEXT는 중소 규모의 단일 서버 환경에서 간단하게 검색 기능을 추가할 때 유용합니다.
 
-MySQL ���덱스 시리즈를 여기서 마무리합니다. B+ Tree 기본 구조부터 클러스터드/세컨더리 인덱스, Leftmost Prefix, ICP, Invisible Index, Functional Index, FULLTEXT까지 InnoDB 인덱스의 핵심을 체계적으로 살펴봤습니다.
+MySQL ���덱스 이야기는 여기까지입니다. B+ Tree 기본 구조부터 클러스터드/세컨더리 인덱스, Leftmost Prefix, ICP, Invisible Index, Functional Index, FULLTEXT까지 InnoDB 인덱스의 핵심을 체계적으로 살펴봤습니다.
 
 ---
 

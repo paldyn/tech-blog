@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-immutable-files/)에서 `chattr +i`로 파일에 불변 속성을 부여하는 방법을 살펴봤습니다. 이번 글부터는 리눅스 프로세스 관리 시리즈로 넘어가, 프로세스가 무엇인지 내부 구조부터 파고듭니다.
+[지난 글](/posts/linux-immutable-files/)에서 `chattr +i`로 파일에 불변 속성을 부여하는 방법을 살펴봤습니다. 이번 글부터는 리눅스 프로세스 관리로 넘어가, 프로세스가 무엇인지 내부 구조부터 파고듭니다.
 
 ## 프로세스란 무엇인가
 

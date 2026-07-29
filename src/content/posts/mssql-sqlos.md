@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mariadb-system-versioning/)에서 MariaDB의 시간 여행 쿼리를 살펴봤다. 이번 글부터는 SQL Server(MSSQL) 시리즈를 시작한다. 첫 번째 주제는 SQL Server 내부에서 운영체제 역할을 수행하는 **SQLOS**다.
+[지난 글](/posts/mariadb-system-versioning/)에서 MariaDB의 시간 여행 쿼리를 살펴봤다. 이번 글부터는 SQL Server(MSSQL)를 살펴본다. 첫 주제는 SQL Server 내부에서 운영체제 역할을 수행하는 **SQLOS**다.
 
 ## SQLOS란
 

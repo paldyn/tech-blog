@@ -150,7 +150,7 @@ supabase
 
 ## 마무리
 
-Supabase의 본질은 화려한 신기술이 아니라 **검증된 PostgreSQL을 최대한 활용하는 조립술**이다. 테이블을 만들면 API가 생기고(PostgREST), 행 단위 보안은 데이터베이스가 직접 지키며(RLS), 변경 사항은 WAL을 타고 실시간으로 흐른다(Realtime). 그래서 Supabase를 잘 쓰는 지름길은 결국 PostgreSQL과 SQL을 잘 이해하는 것이다 — 이 블로그의 SQL 시리즈가 그대로 무기가 되는 이유다.
+Supabase의 본질은 화려한 신기술이 아니라 **검증된 PostgreSQL을 최대한 활용하는 조립술**이다. 테이블을 만들면 API가 생기고(PostgREST), 행 단위 보안은 데이터베이스가 직접 지키며(RLS), 변경 사항은 WAL을 타고 실시간으로 흐른다(Realtime). 그래서 Supabase를 잘 쓰는 지름길은 결국 PostgreSQL과 SQL을 잘 이해하는 것이다 — 이 블로그의 SQL 글들이 그대로 무기가 되는 이유다.
 
 ---
 

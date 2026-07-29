@@ -83,7 +83,7 @@ yay -S aur-package-name   # AUR 패키지 설치
 
 처음 Linux를 배우는 목적이라면 **Ubuntu**나 **Linux Mint**를 권한다. 커뮤니티가 크고 검색 시 한국어 자료도 많다. 회사 서버 운영이 목적이라면 무료 RHEL 호환인 **AlmaLinux**나 **Rocky Linux**, 혹은 **Ubuntu Server LTS**가 검증된 선택이다. 커스터마이징과 최신 패키지가 중요하다면 **Arch Linux**나 **Manjaro**를 탐색해볼 만하다.
 
-이 시리즈는 Ubuntu/Debian과 RHEL/CentOS 계열을 기준으로 설명하되, 배포판에 무관한 내용을 우선한다. 명령어와 개념 대부분은 어느 배포판에서나 동일하게 동작한다.
+여기서는 Ubuntu/Debian과 RHEL/CentOS 계열을 기준으로 설명하되, 배포판에 무관한 내용을 우선한다. 명령어와 개념 대부분은 어느 배포판에서나 동일하게 동작한다.
 
 ---
 

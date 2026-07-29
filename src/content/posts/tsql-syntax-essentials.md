@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mssql-data-log-filegroup/)에서 SQL Server 파일 구조를 살펴봤다. 이번 글부터는 T-SQL(Transact-SQL) 문법 시리즈를 시작한다. T-SQL은 ANSI SQL 표준을 기반으로 Microsoft가 SQL Server를 위해 확장한 방언이다. 표준 SQL과 다른 T-SQL만의 특징을 이해해야 올바르고 효율적인 쿼리를 작성할 수 있다.
+[지난 글](/posts/mssql-data-log-filegroup/)에서 SQL Server 파일 구조를 살펴봤다. 이번 글부터는 T-SQL(Transact-SQL) 문법을 다룬다. T-SQL은 ANSI SQL 표준을 기반으로 Microsoft가 SQL Server를 위해 확장한 방언이다. 표준 SQL과 다른 T-SQL만의 특징을 이해해야 올바르고 효율적인 쿼리를 작성할 수 있다.
 
 ## 배치(Batch)와 GO
 

@@ -181,7 +181,7 @@ spec:
     targetPort: 3000
 ```
 
-앱 내부 서비스는 ClusterIP로 두고, 외부 접근이 필요한 서비스에만 LoadBalancer 또는 (다음 편에서 다룰) Ingress를 사용하는 것이 표준 패턴이다.
+앱 내부 서비스는 ClusterIP로 두고, 외부 접근이 필요한 서비스에만 LoadBalancer 또는 (다음 글에서 다룰) Ingress를 사용하는 것이 표준 패턴이다.
 
 ---
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-컨테이너를 로컬에서 다뤄봤다면, 실제 서비스를 운영할 때 자연스럽게 떠오르는 질문이 있다. "이제 Kubernetes를 써야 하나, 아니면 Docker Compose로 충분한가?" 이번 편에서는 그 선택 기준을 명확히 잡는다.
+컨테이너를 로컬에서 다뤄봤다면, 실제 서비스를 운영할 때 자연스럽게 떠오르는 질문이 있다. "이제 Kubernetes를 써야 하나, 아니면 Docker Compose로 충분한가?" 이번 글에서는 그 선택 기준을 명확히 잡는다.
 
 ## 목적부터 다르다
 
@@ -134,7 +134,7 @@ kubectl set image deployment/myapp \
   app=myregistry/myapp:${GIT_SHA}
 ```
 
-K8s가 낯설다면 먼저 개발 환경에 [minikube](https://minikube.sigs.k8s.io/) 또는 [kind](https://kind.sigs.k8s.io/)로 로컬 클러스터를 구축해 학습하는 것이 좋다. 다음 편부터는 K8s의 핵심 개념인 Pod, Deployment, Service를 하나씩 살펴본다.
+K8s가 낯설다면 먼저 개발 환경에 [minikube](https://minikube.sigs.k8s.io/) 또는 [kind](https://kind.sigs.k8s.io/)로 로컬 클러스터를 구축해 학습하는 것이 좋다. 다음 글부터는 K8s의 핵심 개념인 Pod, Deployment, Service를 하나씩 살펴본다.
 
 ---
 

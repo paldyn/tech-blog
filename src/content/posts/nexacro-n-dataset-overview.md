@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-Grid 시리즈를 마치고, 이번 글부터는 **Dataset** 챕터를 시작합니다. Nexacro N 개발에서 Dataset은 서버에서 받은 데이터를 저장하고, UI 컴포넌트에 바인딩하고, 변경 사항을 추적해서 다시 서버로 보내는 **데이터의 심장** 역할을 합니다. Dataset을 제대로 이해하면 Nexacro N 개발의 절반을 이해한 것과 같습니다.
+이번 글부터는 **Dataset**을 다룹니다. Nexacro N 개발에서 Dataset은 서버에서 받은 데이터를 저장하고, UI 컴포넌트에 바인딩하고, 변경 사항을 추적해서 다시 서버로 보내는 **데이터의 심장** 역할을 합니다. Dataset을 제대로 이해하면 Nexacro N 개발의 절반을 이해한 것과 같습니다.
 
 ## Dataset이란?
 

@@ -103,7 +103,7 @@ sim_dog_car = F.cosine_similarity(vec_dog, vec_car, dim=-1)
 | 문장 임베딩 | 문장 전체를 하나의 벡터로 | Sentence-BERT |
 | 다중모달 임베딩 | 텍스트+이미지 공유 공간 | CLIP |
 
-이 시리즈의 다음 글들에서 각각을 상세히 다룬다.
+다음 글들에서 각각을 상세히 다룬다.
 
 ## 임베딩 행렬의 크기
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-tsconfig-options/)에서 `tsconfig.json`의 주요 옵션을 정리했다. TypeScript 시리즈의 마지막 주제로, **기존 JavaScript 프로젝트에 TypeScript를 점진적으로 도입하는 전략**을 살펴본다. 처음부터 완전한 타입 안전성을 목표로 하면 방대한 코드베이스에서 팀 전체의 생산성이 일시에 떨어질 수 있다. 단계적 접근이 훨씬 현실적이다.
+[지난 글](/posts/ts-tsconfig-options/)에서 `tsconfig.json`의 주요 옵션을 정리했다. 이번 글에서는 **기존 JavaScript 프로젝트에 TypeScript를 점진적으로 도입하는 전략**을 살펴본다. 처음부터 완전한 타입 안전성을 목표로 하면 방대한 코드베이스에서 팀 전체의 생산성이 일시에 떨어질 수 있다. 단계적 접근이 훨씬 현실적이다.
 
 ## 점진적 도입의 원칙
 
@@ -155,7 +155,7 @@ someLib.undeclaredMethod();
 - **타입 커버리지 추적**: `npx type-coverage` 도구로 타입이 지정된 비율을 측정
 - **새 팀원 온보딩**: TypeScript 완전 전환 후 JS 경험만 있는 개발자도 빠르게 적응
 
-TypeScript 도입은 한번에 완성하는 것이 아니라 지속적으로 품질을 높이는 과정이다. 이것으로 JavaScript 완전 정복 시리즈의 TypeScript 섹션을 마무리한다. 다음 시리즈에서는 빌드 도구(Babel, SWC, webpack, Vite)를 깊이 살펴본다.
+TypeScript 도입은 한번에 완성하는 것이 아니라 지속적으로 품질을 높이는 과정이다. 다음 글에서는 빌드 도구(Babel, SWC, webpack, Vite)를 깊이 살펴본다.
 
 ---
 

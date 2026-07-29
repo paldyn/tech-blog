@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sqlite-mobile-embedded/)에서 SQLite의 다양한 활용 환경을 살펴봤다. SQLite 시리즈의 마지막으로, SQLite를 선택하면 안 되는 상황과 설계적 한계를 명확히 정리한다. SQLite를 정확히 이해한다는 것은 SQLite의 강점만큼 **한계도 명확히 아는 것**이다.
+[지난 글](/posts/sqlite-mobile-embedded/)에서 SQLite의 다양한 활용 환경을 살펴봤다. 이번 글에서는 SQLite를 선택하면 안 되는 상황과 설계적 한계를 명확히 정리한다. SQLite를 정확히 이해한다는 것은 SQLite의 강점만큼 **한계도 명확히 아는 것**이다.
 
 ## SQLite의 설계 철학과 한계의 관계
 
@@ -232,7 +232,7 @@ def test_order_requires_user(db):
         db.execute("INSERT INTO orders(user_id, amount) VALUES(999, 100)")
 ```
 
-SQLite는 "DB 서버가 없어야 하는 곳"에서 세계 최고의 선택이다. 하지만 여러 서버가 필요하거나 동시 쓰기 요구가 높은 순간, 망설임 없이 클라이언트-서버 DB로 전환해야 한다. 올바른 도구를 올바른 곳에 사용하는 것, 그것이 SQLite 시리즈를 통해 전달하고자 한 핵심 메시지다.
+SQLite는 "DB 서버가 없어야 하는 곳"에서 세계 최고의 선택이다. 하지만 여러 서버가 필요하거나 동시 쓰기 요구가 높은 순간, 망설임 없이 클라이언트-서버 DB로 전환해야 한다. 올바른 도구를 올바른 곳에 사용하는 것, 그것이 SQLite를 다루며 전달하고자 한 핵심 메시지다.
 
 ---
 

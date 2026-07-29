@@ -1,6 +1,6 @@
 ---
 title: "OWASP Top 10: 가장 위험한 웹 취약점 개관"
-description: "OWASP Top 10 2021 목록을 소개하고, 2017년 대비 달라진 점과 각 항목의 핵심 개념, 그리고 이 시리즈에서 어떤 순서로 심화 다룰지를 안내합니다."
+description: "OWASP Top 10 2021 목록을 소개하고, 2017년 대비 달라진 점과 각 항목의 핵심 개념, 그리고 앞으로 어떤 순서로 심화 다룰지를 안내합니다."
 author: "PALDYN Team"
 pubDate: "2026-06-03"
 archiveOrder: 3
@@ -96,9 +96,9 @@ CI/CD 파이프라인 보안, 안전하지 않은 역직렬화, 무결성 검증
 | Insecure Design 신규 추가 | 보안을 구현이 아닌 설계 단계부터 고려해야 함 |
 | SSRF 신규 추가 | 클라우드·마이크로서비스 환경에서 급증 |
 
-## 이 시리즈에서의 학습 순서
+## 학습 순서
 
-이 시리즈는 OWASP Top 10 항목을 포함해 웹 보안의 전 영역을 체계적으로 다룬다.
+앞으로 OWASP Top 10 항목을 포함해 웹 보안의 전 영역을 체계적으로 다룬다.
 
 ```
 인젝션 계열:     A03 → SQL·Blind SQL → NoSQL → Command → Template → XSS

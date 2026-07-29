@@ -206,7 +206,7 @@ Spring Boot 3.x는 Spring Framework 6.x를 사용하며, Jakarta EE 9+ 네임스
                → 마이크로서비스 아키텍처
 ```
 
-이 시리즈도 같은 순서를 따릅니다. Chapter 3~8은 Spring Framework 코어와 데이터 접근을, Chapter 9~11은 Spring Boot를, Chapter 14는 Spring Security를, Chapter 20은 Spring Cloud를 다룹니다.
+앞으로의 글들도 같은 순서를 따릅니다. Spring Framework 코어와 데이터 접근을 먼저 다루고, 이어서 Spring Boot, Spring Security, Spring Cloud를 살펴봅니다.
 
 ## 정리
 

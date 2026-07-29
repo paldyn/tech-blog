@@ -172,7 +172,7 @@ function fn_saveCb(svcID, errCode, errMsg) {
 }
 ```
 
-## CRUD 시리즈 정리
+## CRUD 패턴 정리
 
 이 글로 Nexacro N CRUD 패턴의 네 가지 표준 함수—`fn_search`, `fn_new`, `fn_delete`, `fn_save`—를 모두 살펴봤다. 각 함수는 서로 독립적이지만 Dataset의 rowStatus를 통해 상태를 공유하며 협력한다.
 

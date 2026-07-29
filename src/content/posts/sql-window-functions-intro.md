@@ -140,7 +140,7 @@ FROM → WHERE → GROUP BY → HAVING → SELECT(윈도우 함수 포함) → O
 | 순위 함수 프레임 | 순위 함수에는 프레임 무관 |
 | LAST_VALUE 주의 | 기본 프레임이 CURRENT ROW까지 → 전체 범위로 재정의 필요 |
 
-다음 편에서는 순위 함수 `ROW_NUMBER`, `RANK`, `DENSE_RANK`의 차이와 실무 패턴을 더 깊이 살펴본다.
+다음 글에서는 순위 함수 `ROW_NUMBER`, `RANK`, `DENSE_RANK`의 차이와 실무 패턴을 더 깊이 살펴본다.
 
 ---
 

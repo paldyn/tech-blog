@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-typing-fetch/)에서 네트워크 응답을 `unknown`으로 받아 타입 가드로 길들이는 법을 봤다. 이번 묶음부터는 무대를 React로 옮긴다. React 컴포넌트는 결국 props라는 입력을 받아 UI를 반환하는 함수이고, 그 입력의 모양을 타입으로 못 박는 일이 React + TypeScript의 출발점이다. 첫 글은 가장 기본이자 가장 자주 헷갈리는 두 가지, **props 선언**과 **children 타이핑**을 다룬다.
+[지난 글](/posts/ts-typing-fetch/)에서 네트워크 응답을 `unknown`으로 받아 타입 가드로 길들이는 법을 봤다. 이제부터는 무대를 React로 옮긴다. React 컴포넌트는 결국 props라는 입력을 받아 UI를 반환하는 함수이고, 그 입력의 모양을 타입으로 못 박는 일이 React + TypeScript의 출발점이다. 이번 글은 가장 기본이자 가장 자주 헷갈리는 두 가지, **props 선언**과 **children 타이핑**을 다룬다.
 
 ## props는 함수의 첫 번째 인자다
 
-React 함수 컴포넌트는 이름이 거창하지만 props 객체 하나를 받는 함수일 뿐이다. 그래서 props 타이핑은 새로운 문법이 아니라, 우리가 시리즈 내내 다룬 "객체 타입 선언"을 컴포넌트 인자에 붙이는 것과 같다.
+React 함수 컴포넌트는 이름이 거창하지만 props 객체 하나를 받는 함수일 뿐이다. 그래서 props 타이핑은 새로운 문법이 아니라, 우리가 그동안 다룬 "객체 타입 선언"을 컴포넌트 인자에 붙이는 것과 같다.
 
 ```typescript
 interface ButtonProps {

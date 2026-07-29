@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-collection-best-practices/)에서 컬렉션 모범 사례를 정리했다. 이번부터는 **Stream API** 시리즈를 시작한다. Stream은 Java 8의 가장 큰 변화 중 하나로, 컬렉션 데이터를 선언적으로 처리하는 파이프라인 모델을 제공한다.
+[지난 글](/posts/java-collection-best-practices/)에서 컬렉션 모범 사례를 정리했다. 이번 글부터는 **Stream API**를 다룬다. Stream은 Java 8의 가장 큰 변화 중 하나로, 컬렉션 데이터를 선언적으로 처리하는 파이프라인 모델을 제공한다.
 
 ## Stream이란
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cubrid-java-integration/)에서 CUBRID Java 연동을 살펴봤다. 이번 글부터는 분산 환경에서의 SQL 시리즈를 시작한다. 첫 주제는 분산 데이터베이스 설계의 근본적인 트레이드오프를 설명하는 **CAP 정리**와, 분산 SQL(NewSQL)이 이 정리에서 어디에 위치하는지다.
+[지난 글](/posts/cubrid-java-integration/)에서 CUBRID Java 연동을 살펴봤다. 이번 글부터는 분산 환경에서의 SQL을 다룬다. 첫 주제는 분산 데이터베이스 설계의 근본적인 트레이드오프를 설명하는 **CAP 정리**와, 분산 SQL(NewSQL)이 이 정리에서 어디에 위치하는지다.
 
 ## CAP 정리란
 

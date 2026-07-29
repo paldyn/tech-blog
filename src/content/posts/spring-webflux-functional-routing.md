@@ -202,7 +202,7 @@ class UserRouterTest {
 
 어노테이션 방식과 함수형 방식을 같은 프로젝트에 혼용할 수 있다. 기존 코드를 점진적으로 함수형으로 마이그레이션하거나, 간단한 CRUD는 어노테이션으로, 복잡한 라우팅 조합이 필요한 부분만 함수형으로 작성하는 전략도 유효하다.
 
-Spring WebFlux 시리즈는 이번 글로 마무리된다. 리액티브 개념에서 시작해 Mono/Flux, MVC vs WebFlux 선택, WebClient, R2DBC, 함수형 라우팅까지 WebFlux의 핵심을 모두 다뤘다. 다음 편에서는 Spring의 현대화 주제인 Jakarta EE 마이그레이션을 살펴본다.
+여기까지 리액티브 개념에서 시작해 Mono/Flux, MVC vs WebFlux 선택, WebClient, R2DBC, 함수형 라우팅까지 WebFlux의 핵심을 모두 다뤘다. 다음 글에서는 Spring의 현대화 주제인 Jakarta EE 마이그레이션을 살펴본다.
 
 ---
 

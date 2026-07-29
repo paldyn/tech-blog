@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/test-coverage-reliability/)에서 커버리지와 테스트 신뢰성을 살펴봤습니다. 이번부터는 **린팅과 포맷팅** 시리즈를 시작합니다. 첫 주제는 **ESLint**입니다. ESLint는 JavaScript/TypeScript 코드에서 잠재적 버그와 코드 품질 문제를 정적 분석으로 찾아내는 도구입니다. 2013년 Nicholas C. Zakas가 만들었고, 현재 대부분의 JavaScript 프로젝트에서 표준으로 사용됩니다.
+[지난 글](/posts/test-coverage-reliability/)에서 커버리지와 테스트 신뢰성을 살펴봤습니다. 이번 글부터는 **린팅과 포맷팅**을 다룹니다. 첫 주제는 **ESLint**입니다. ESLint는 JavaScript/TypeScript 코드에서 잠재적 버그와 코드 품질 문제를 정적 분석으로 찾아내는 도구입니다. 2013년 Nicholas C. Zakas가 만들었고, 현재 대부분의 JavaScript 프로젝트에서 표준으로 사용됩니다.
 
 ---
 

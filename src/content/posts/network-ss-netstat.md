@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-cdn-deep/)에서 CDN의 심화 구조를 다뤘다. 이제 시리즈는 네트워크 진단 도구 영역으로 넘어간다. 서버에 접속해서 "지금 어떤 포트가 열려있지?", "이 연결은 왜 TIME_WAIT인거지?" 같은 질문에 답하려면 **ss**와 **netstat**을 알아야 한다.
+[지난 글](/posts/network-cdn-deep/)에서 CDN의 심화 구조를 다뤘다. 이제 네트워크 진단 도구 영역으로 넘어간다. 서버에 접속해서 "지금 어떤 포트가 열려있지?", "이 연결은 왜 TIME_WAIT인거지?" 같은 질문에 답하려면 **ss**와 **netstat**을 알아야 한다.
 
 ## ss vs netstat
 

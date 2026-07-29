@@ -222,7 +222,7 @@ state.users[0].score; // 0
 next.users[0].score;  // 10
 ```
 
-이 시리즈의 객체 관련 주제가 여기서 마무리됩니다. 다음 글부터는 클래스 문법의 세부 기능(constructor, static, private, getter/setter, extends, instanceof)을 하나씩 깊이 살펴봅니다.
+객체 관련 주제는 여기서 마무리됩니다. 다음 글부터는 클래스 문법의 세부 기능(constructor, static, private, getter/setter, extends, instanceof)을 하나씩 깊이 살펴봅니다.
 
 ---
 

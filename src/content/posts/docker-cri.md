@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-oci-spec/)에서 OCI 스펙이 컨테이너 생태계를 표준화하는 방식을 살펴봤다. 이번에는 **CRI**(Container Runtime Interface)를 다룬다. CRI는 쿠버네티스 kubelet이 컨테이너 런타임과 통신하기 위한 gRPC 인터페이스다. 이 시리즈의 마지막 주제로, Docker 생태계와 쿠버네티스가 어떻게 연결되는지를 정리한다.
+[지난 글](/posts/docker-oci-spec/)에서 OCI 스펙이 컨테이너 생태계를 표준화하는 방식을 살펴봤다. 이번에는 **CRI**(Container Runtime Interface)를 다룬다. CRI는 쿠버네티스 kubelet이 컨테이너 런타임과 통신하기 위한 gRPC 인터페이스다. Docker 생태계와 쿠버네티스가 어떻게 연결되는지를 정리한다.
 
 ## CRI가 등장한 배경
 
@@ -163,9 +163,9 @@ kubectl get node -o wide
 # containerRuntimeEndpoint: unix:///var/run/crio/crio.sock
 ```
 
-## Docker 완전 정복 시리즈를 마치며
+## Docker의 핵심을 정리하며
 
-CRI를 끝으로 Docker 완전 정복 시리즈가 마무리된다. 이 시리즈에서 다룬 핵심 주제를 정리하면 다음과 같다.
+CRI를 끝으로 Docker의 핵심 구성 요소를 여기까지 살펴봤다. 지금까지 다룬 주제를 정리하면 다음과 같다.
 
 - **컨테이너 기초**: 컨테이너 개념, Docker 아키텍처, 설치와 기본 명령
 - **이미지 관리**: Dockerfile 작성, 멀티 스테이지 빌드, 레지스트리 활용

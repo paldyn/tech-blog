@@ -170,7 +170,7 @@ WHERE period @> now()::timestamptz;  -- 현재 시점 포함 예약
 
 ## 사용자 정의 타입
 
-PostgreSQL은 `CREATE TYPE`으로 복합 타입(composite), 열거형(enum), 범위 타입을 직접 정의할 수 있다. 이는 시리즈 뒤쪽의 `pg-user-defined-types-domain`에서 다룬다.
+PostgreSQL은 `CREATE TYPE`으로 복합 타입(composite), 열거형(enum), 범위 타입을 직접 정의할 수 있다. 이는 `pg-user-defined-types-domain`에서 따로 다룬다.
 
 ```sql
 -- 열거형 타입

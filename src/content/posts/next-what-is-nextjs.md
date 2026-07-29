@@ -58,7 +58,7 @@ React (컴포넌트·훅)
 
 ### 5. App Router vs Pages Router
 
-Next.js 13부터 도입된 **App Router**(`app/`)는 React Server Components를 기반으로 하는 새 아키텍처입니다. 기존 **Pages Router**(`pages/`)도 여전히 지원되지만, 신규 프로젝트는 App Router를 권장합니다. 이 시리즈는 App Router를 중심으로 진행합니다.
+Next.js 13부터 도입된 **App Router**(`app/`)는 React Server Components를 기반으로 하는 새 아키텍처입니다. 기존 **Pages Router**(`pages/`)도 여전히 지원되지만, 신규 프로젝트는 App Router를 권장합니다. 앞으로의 글은 App Router를 중심으로 진행합니다.
 
 ## 언제 Next.js를 선택해야 할까
 
@@ -71,7 +71,7 @@ Next.js 13부터 도입된 **App Router**(`app/`)는 React Server Components를 
 
 ## 버전 이야기
 
-이 시리즈는 **Next.js 15** 기준으로 작성됩니다. Next.js 15는 React 19를 기본 지원하며 `fetch` 캐싱 동작이 14에서 바뀌었습니다(기본값이 `no-store`). 주요 변경 사항은 각 글에서 언급하겠습니다.
+Next.js를 다루는 글은 **Next.js 15** 기준으로 작성됩니다. Next.js 15는 React 19를 기본 지원하며 `fetch` 캐싱 동작이 14에서 바뀌었습니다(기본값이 `no-store`). 주요 변경 사항은 각 글에서 언급하겠습니다.
 
 ```bash
 # 버전 확인

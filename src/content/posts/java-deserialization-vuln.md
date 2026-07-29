@@ -102,7 +102,7 @@ public Object receiveSafely(InputStream in) throws Exception {
 - 근본 해법은 native 직렬화를 버리고 **데이터 전용 포맷** 을 쓰는 것이다.
 - 불가피하다면 **ObjectInputFilter 허용 목록** 과 자원 한도로 방어선을 세운다.
 
-여기까지가 이 시리즈의 보안 파트다. 다음 글부터는 주제를 옮겨, 오래된 Java 버전을 현대 LTS로 옮기는 **마이그레이션** 을 다룬다. 첫 편은 Java 8에서 11로의 이동이다.
+여기까지가 보안 파트다. 다음 글부터는 주제를 옮겨, 오래된 Java 버전을 현대 LTS로 옮기는 **마이그레이션** 을 다룬다. 첫 글은 Java 8에서 11로의 이동이다.
 
 ---
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-hotfix-deploy/)에서 긴급 장애 상황의 핫픽스 배포 전략을 살펴보았다. 배포와 운영 전략이 갖춰졌다면 이제 시리즈의 후반부 주제인 마이그레이션으로 넘어간다. 국내에는 아직도 많은 기업이 Nexacro 14(ActiveX 기반)로 구축된 레거시 시스템을 운영하고 있다. Internet Explorer 지원 종료와 ActiveX 제거 정책으로 인해 마이그레이션이 선택이 아닌 필수가 되었다. Nexacro 14에서 Nexacro Platform으로의 전환은 기반 기술이 크게 달라지므로 체계적인 접근이 필요하다.
+[지난 글](/posts/nexacro-n-hotfix-deploy/)에서 긴급 장애 상황의 핫픽스 배포 전략을 살펴보았다. 배포와 운영 전략이 갖춰졌다면 이제 마이그레이션으로 넘어간다. 국내에는 아직도 많은 기업이 Nexacro 14(ActiveX 기반)로 구축된 레거시 시스템을 운영하고 있다. Internet Explorer 지원 종료와 ActiveX 제거 정책으로 인해 마이그레이션이 선택이 아닌 필수가 되었다. Nexacro 14에서 Nexacro Platform으로의 전환은 기반 기술이 크게 달라지므로 체계적인 접근이 필요하다.
 
 ## Nexacro 14와 Platform의 차이
 

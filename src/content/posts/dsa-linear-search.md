@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-sorting-stability/)에서 정렬 안정성을 다뤘습니다. 이번부터는 **탐색(Search)** 알고리즘 시리즈입니다. 첫 번째는 가장 단순한 탐색인 **선형 탐색**(Linear Search)으로, 구현이 쉽고 정렬되지 않은 배열에서도 사용할 수 있어 여전히 중요합니다.
+[지난 글](/posts/dsa-sorting-stability/)에서 정렬 안정성을 다뤘습니다. 이번부터는 **탐색(Search)** 알고리즘을 다룹니다. 첫 번째는 가장 단순한 탐색인 **선형 탐색**(Linear Search)으로, 구현이 쉽고 정렬되지 않은 배열에서도 사용할 수 있어 여전히 중요합니다.
 
 ## 기본 구현
 

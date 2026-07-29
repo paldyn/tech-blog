@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-common-confirm/)에서 공통 confirm 팝업 설계를 다루었다. 공통 라이브러리 시리즈의 마지막 주요 요소인 **BaseForm** 을 살펴본다. BaseForm은 모든 업무 폼이 상속하는 공통 기본 폼이다. 세션 체크, 공통 툴바, 표준 메서드 구조를 한 곳에 모아 두면 업무 폼은 순수 업무 로직에만 집중할 수 있다.
+[지난 글](/posts/nexacro-n-common-confirm/)에서 공통 confirm 팝업 설계를 다루었다. 공통 라이브러리의 주요 요소인 **BaseForm** 을 살펴본다. BaseForm은 모든 업무 폼이 상속하는 공통 기본 폼이다. 세션 체크, 공통 툴바, 표준 메서드 구조를 한 곳에 모아 두면 업무 폼은 순수 업무 로직에만 집중할 수 있다.
 
 ## BaseForm이 필요한 이유
 

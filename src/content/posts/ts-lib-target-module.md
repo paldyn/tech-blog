@@ -58,7 +58,7 @@ draft: false
 { "compilerOptions": { "module": "ESNext", "moduleResolution": "Bundler" } }
 ```
 
-`module`은 `target`보다 까다롭다. 모듈 해석 방식(`moduleResolution`), 패키지의 `type: "module"` 여부, 실행 환경(Node ESM/CJS, 번들러)과 맞물리기 때문이다. 이 모듈 해석 주제는 그 자체로 깊어서, 이 시리즈에서도 별도 글로 다룬다. 여기서는 "`module`은 출력의 모듈 형식을 정하고, 실제 해석 규칙은 `moduleResolution`과 함께 정해진다"는 큰 틀만 잡아두자.
+`module`은 `target`보다 까다롭다. 모듈 해석 방식(`moduleResolution`), 패키지의 `type: "module"` 여부, 실행 환경(Node ESM/CJS, 번들러)과 맞물리기 때문이다. 이 모듈 해석 주제는 그 자체로 깊어서 별도 글로 다룬다. 여기서는 "`module`은 출력의 모듈 형식을 정하고, 실제 해석 규칙은 `moduleResolution`과 함께 정해진다"는 큰 틀만 잡아두자.
 
 ## 환경별 권장 조합
 

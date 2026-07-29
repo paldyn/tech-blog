@@ -26,7 +26,7 @@ draft: false
 | JDK 17 | ✓ | **3.x 최소 요구** | 2029년 |
 | JDK 21 | ✓ | **3.x 권장** | 2031년 |
 
-이 시리즈는 **JDK 21**을 기준으로 합니다. JDK 17이 Spring Boot 3.x의 최소 요구 버전이지만, JDK 21에서는 **가상 스레드(Project Loom)** 와 **레코드 패턴**, **시퀀스드 컬렉션** 같은 유용한 기능이 추가됩니다.
+여기서는 **JDK 21**을 기준으로 합니다. JDK 17이 Spring Boot 3.x의 최소 요구 버전이지만, JDK 21에서는 **가상 스레드(Project Loom)** 와 **레코드 패턴**, **시퀀스드 컬렉션** 같은 유용한 기능이 추가됩니다.
 
 ![JDK 버전 선택 가이드](/assets/posts/spring-environment-jdk-versions.svg)
 
@@ -81,7 +81,7 @@ Windows에서는 **Winget**이나 **Temurin 공식 인스톨러**를 사용합�
 | Community | 무료 | 기본 자바 + 스프링 코어 |
 | Ultimate | 유료(학생 무료) | Spring Boot DevTools, 내장 DB 뷰어 등 |
 
-학생이라면 Ultimate를 무료로 사용할 수 있습니다(`jetbrains.com/student`). 업무 환경이 아니라면 Community 에디션으로 이 시리즈의 모든 예제를 실행할 수 있습니다.
+학생이라면 Ultimate를 무료로 사용할 수 있습니다(`jetbrains.com/student`). 업무 환경이 아니라면 Community 에디션으로 여기서 다루는 모든 예제를 실행할 수 있습니다.
 
 IntelliJ 설치 후 Spring Boot 프로젝트를 여는 방법:
 

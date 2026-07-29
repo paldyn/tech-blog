@@ -57,7 +57,7 @@ import "./util" 의 탐색 순서 (node10 기준)
 3. /node_modules/lodash        ← 보통 여기서 발견
 ```
 
-패키지 디렉터리를 찾은 다음에는 그 안에서 타입의 진입점을 결정한다. `package.json`의 `types`(또는 `typings`) 필드를 먼저 확인하고, 없으면 `index.d.ts`를 찾는다. 패키지 자체에 타입이 없으면 마지막으로 `node_modules/@types/lodash` 같은 **DefinitelyTyped 폴백**을 시도한다 — 이 생태계는 시리즈 뒤에서 따로 다룬다.
+패키지 디렉터리를 찾은 다음에는 그 안에서 타입의 진입점을 결정한다. `package.json`의 `types`(또는 `typings`) 필드를 먼저 확인하고, 없으면 `index.d.ts`를 찾는다. 패키지 자체에 타입이 없으면 마지막으로 `node_modules/@types/lodash` 같은 **DefinitelyTyped 폴백**을 시도한다 — 이 생태계는 별도의 글에서 따로 다룬다.
 
 ## moduleResolution — 네 가지 전략
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/bash-shellcheck/)에서 ShellCheck으로 스크립트 품질을 높이는 방법을 살펴봤습니다. 이번부터는 텍스트 처리 도구 시리즈로, `grep`을 시작으로 `sed`, `awk` 순서로 다룹니다. grep은 리눅스에서 가장 빈번하게 쓰이는 도구 중 하나로, 로그 분석, 코드 검색, 파이프라인 필터링 등 어디서나 등장합니다.
+[지난 글](/posts/bash-shellcheck/)에서 ShellCheck으로 스크립트 품질을 높이는 방법을 살펴봤습니다. 이번부터는 텍스트 처리 도구를 `grep`, `sed`, `awk` 순서로 다룹니다. grep은 리눅스에서 가장 빈번하게 쓰이는 도구 중 하나로, 로그 분석, 코드 검색, 파이프라인 필터링 등 어디서나 등장합니다.
 
 ## grep / egrep / fgrep의 관계
 

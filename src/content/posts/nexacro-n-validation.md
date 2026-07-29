@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-transaction-unit/)에서 트랜잭션 단위 설계를 다뤘다. 이번 글부터는 **유효성 검사(Validation)** 시리즈를 시작한다. 데이터를 저장하기 전에 잘못된 값을 걸러내는 일은 UX와 데이터 무결성 양쪽에 영향을 미친다. Nexacro N에서는 "언제" 검증하느냐에 따라 사용하는 이벤트와 방법이 달라진다.
+[지난 글](/posts/nexacro-n-transaction-unit/)에서 트랜잭션 단위 설계를 다뤘다. 이번 글에서는 **유효성 검사(Validation)**를 다룬다. 데이터를 저장하기 전에 잘못된 값을 걸러내는 일은 UX와 데이터 무결성 양쪽에 영향을 미친다. Nexacro N에서는 "언제" 검증하느냐에 따라 사용하는 이벤트와 방법이 달라진다.
 
 ## 유효성 검사가 필요한 이유
 

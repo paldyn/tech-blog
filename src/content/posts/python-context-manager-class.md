@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-deprecated-warnings-decorator/)에서 deprecated 경고 데코레이터를 살펴봤다. 이번 글부터는 **컨텍스트 매니저** 시리즈를 시작한다. `with open("file.txt") as f:` 처럼 자원 획득과 해제를 자동화하는 `with` 문의 내부 동작 원리, 즉 **컨텍스트 매니저 프로토콜**부터 살펴본다.
+[지난 글](/posts/python-deprecated-warnings-decorator/)에서 deprecated 경고 데코레이터를 살펴봤다. 이번 글부터는 **컨텍스트 매니저**를 다룬다. `with open("file.txt") as f:` 처럼 자원 획득과 해제를 자동화하는 `with` 문의 내부 동작 원리, 즉 **컨텍스트 매니저 프로토콜**부터 살펴본다.
 
 ## 컨텍스트 매니저 프로토콜
 

@@ -313,7 +313,7 @@ Transformer<String, Integer> lengthOf = String::length;
 System.out.println(lengthOf.transform("Java"));  // → 4
 ```
 
-`java.util.function` 패키지의 `Function<T,R>`, `Predicate<T>`, `Consumer<T>`, `Supplier<T>` 등이 모두 함수형 인터페이스다. 람다와 메서드 참조는 함수형 인터페이스를 구현한 것으로 취급되며, 자세한 내용은 이후 람다·스트림 시리즈에서 다룬다.
+`java.util.function` 패키지의 `Function<T,R>`, `Predicate<T>`, `Consumer<T>`, `Supplier<T>` 등이 모두 함수형 인터페이스다. 람다와 메서드 참조는 함수형 인터페이스를 구현한 것으로 취급되며, 자세한 내용은 이후 람다·스트림을 다루는 글에서 살펴본다.
 
 ## 인터페이스 설계 원칙
 

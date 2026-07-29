@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/workerd-cloudflare/)에서 Cloudflare Workers의 V8 Isolate 기반 엣지 런타임을 살펴봤다. 이번 글부터는 **TypeScript** 시리즈를 시작한다. TypeScript는 오늘날 프론트엔드·백엔드·풀스택 개발에서 사실상 표준이 되었지만, 그 근본 원리를 모른 채 사용하면 `any` 남발이나 불필요한 타입 캐스팅 같은 패턴으로 타입 시스템의 이점을 버리게 된다.
+[지난 글](/posts/workerd-cloudflare/)에서 Cloudflare Workers의 V8 Isolate 기반 엣지 런타임을 살펴봤다. 이번 글부터는 **TypeScript**를 다룬다. TypeScript는 오늘날 프론트엔드·백엔드·풀스택 개발에서 사실상 표준이 되었지만, 그 근본 원리를 모른 채 사용하면 `any` 남발이나 불필요한 타입 캐스팅 같은 패턴으로 타입 시스템의 이점을 버리게 된다.
 
 ## TypeScript는 무엇인가
 

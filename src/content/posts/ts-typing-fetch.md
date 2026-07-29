@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-typing-express/)에서 서버 쪽 Express 핸들러의 요청·응답 타이핑을 봤다. 이번 글은 그 반대편, 클라이언트가 서버에 요청을 보내는 `fetch`를 다룬다. `fetch`는 브라우저와 최신 Node 모두에서 표준이지만, 응답을 파싱하는 `res.json()`이 `any`를 반환한다는 결정적 약점이 있다. 시리즈에서 반복해 온 "외부 입력은 검증 전까지 신뢰하지 않는다"는 원칙을, 이번에는 네트워크 응답에 적용해 묶음을 마무리한다.
+[지난 글](/posts/ts-typing-express/)에서 서버 쪽 Express 핸들러의 요청·응답 타이핑을 봤다. 이번 글은 그 반대편, 클라이언트가 서버에 요청을 보내는 `fetch`를 다룬다. `fetch`는 브라우저와 최신 Node 모두에서 표준이지만, 응답을 파싱하는 `res.json()`이 `any`를 반환한다는 결정적 약점이 있다. 그동안 반복해 온 "외부 입력은 검증 전까지 신뢰하지 않는다"는 원칙을, 이번에는 네트워크 응답에 적용해 본다.
 
 ## res.json()은 any를 반환한다
 
@@ -80,7 +80,7 @@ const user = await getJson("/api/user/1", isUser); // User, 검증됨
 
 ## Result와 결합해 실패를 값으로
 
-이 시리즈 앞부분에서 본 `Result`와 묶으면, 네트워크·HTTP·형태 불일치라는 세 가지 실패를 하나의 값으로 통합할 수 있다. 호출부는 `try/catch` 없이 `ok`만 확인한다.
+앞서 본 `Result`와 묶으면, 네트워크·HTTP·형태 불일치라는 세 가지 실패를 하나의 값으로 통합할 수 있다. 호출부는 `try/catch` 없이 `ok`만 확인한다.
 
 ```typescript
 type Result<T> =

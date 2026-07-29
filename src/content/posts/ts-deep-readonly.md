@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-thistype-omitthisparameter/)에서 `this` 컨텍스트를 타입 레벨에서 다루는 방법을 살펴봤습니다. 이번 글은 유틸리티 타입 시리즈의 마지막 편으로, TypeScript 표준 라이브러리에 없지만 실무에서 자주 필요한 **DeepReadonly** 패턴을 완전히 정리합니다.
+[지난 글](/posts/ts-thistype-omitthisparameter/)에서 `this` 컨텍스트를 타입 레벨에서 다루는 방법을 살펴봤습니다. 이번 글에서는 TypeScript 표준 라이브러리에 없지만 실무에서 자주 필요한 **DeepReadonly** 패턴을 완전히 정리합니다.
 
 ![Readonly vs Deep Readonly 깊이 비교](/assets/posts/ts-deep-readonly-overview.svg)
 

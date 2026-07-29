@@ -128,7 +128,7 @@ class PointDC:
         return (self.x**2 + self.y**2) ** 0.5
 ```
 
-불변 데이터를 가볍게 표현할 때는 `namedtuple`, 메서드나 가변 상태가 필요하다면 `dataclass`를 선택하세요. 시리즈 뒷부분에서 `dataclass`를 자세히 다룰 예정입니다.
+불변 데이터를 가볍게 표현할 때는 `namedtuple`, 메서드나 가변 상태가 필요하다면 `dataclass`를 선택하세요. `dataclass`는 다른 글에서 자세히 다룰 예정입니다.
 
 ---
 

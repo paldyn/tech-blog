@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/distsql-vitess/)에서 Vitess의 MySQL 샤딩 미들웨어를 살펴봤다. 이번 글부터는 OLAP(Online Analytical Processing) 시리즈를 시작한다. OLAP를 이해하려면 먼저 OLTP와의 근본적인 차이부터 짚어야 한다. 두 워크로드는 같은 SQL을 사용하지만, 데이터 규모·쿼리 패턴·성능 병목이 완전히 다르다.
+[지난 글](/posts/distsql-vitess/)에서 Vitess의 MySQL 샤딩 미들웨어를 살펴봤다. 이번 글부터는 OLAP(Online Analytical Processing)를 다룬다. OLAP를 이해하려면 먼저 OLTP와의 근본적인 차이부터 짚어야 한다. 두 워크로드는 같은 SQL을 사용하지만, 데이터 규모·쿼리 패턴·성능 병목이 완전히 다르다.
 
 ## OLTP란
 
@@ -106,7 +106,7 @@ FROM (
 ) daily;
 ```
 
-이어지는 OLAP 시리즈에서는 스타 스키마, SCD, BigQuery, Snowflake, Redshift, ClickHouse, DuckDB를 차례로 다룬다.
+이어지는 글에서는 스타 스키마, SCD, BigQuery, Snowflake, Redshift, ClickHouse, DuckDB를 차례로 다룬다.
 
 ---
 

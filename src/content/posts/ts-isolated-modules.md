@@ -79,7 +79,7 @@ export type { User, Role } from './user';  // 타입
 }
 ```
 
-`verbatimModuleSyntax`(이 시리즈의 별도 글에서 다룬다)와 함께 쓰면, 타입 전용 import/export를 더 일관되게 강제할 수 있어 궁합이 좋다.
+`verbatimModuleSyntax`(별도 글에서 다룬다)와 함께 쓰면, 타입 전용 import/export를 더 일관되게 강제할 수 있어 궁합이 좋다.
 
 여기까지가 "한 파일을 빠르게 변환"하기 위한 제약이었다. 이번엔 반대 방향, 즉 **여러 번의 빌드 사이에서 작업을 재사용해 전체 빌드를 빠르게** 만드는 쪽을 본다. 다음 글에서 `incremental`과 `composite` 옵션으로 증분 빌드를 구성하는 법을 다룬다.
 

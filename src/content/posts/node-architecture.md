@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/worker-wasm-integration/)에서 Web Worker와 WebAssembly 통합 패턴을 살펴봤습니다. 이번부터는 Node.js 심화 시리즈입니다. Node.js가 **어떻게 단일 스레드로 수천 개의 동시 연결을 처리하는지**, 그 구조를 레이어별로 분해합니다.
+[지난 글](/posts/worker-wasm-integration/)에서 Web Worker와 WebAssembly 통합 패턴을 살펴봤습니다. 이번 글부터는 Node.js를 깊이 다룹니다. Node.js가 **어떻게 단일 스레드로 수천 개의 동시 연결을 처리하는지**, 그 구조를 레이어별로 분해합니다.
 
 ---
 

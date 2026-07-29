@@ -151,7 +151,7 @@ ON CONFLICT (product_id) DO UPDATE ...
 | MySQL / MariaDB | `ON DUPLICATE KEY UPDATE` |
 | SQLite | `INSERT OR REPLACE`, `ON CONFLICT` |
 
-이번 시리즈 배치에서는 DDL의 제약 조건부터 DML의 핵심 명령까지 10편을 살펴봤다. 다음 배치에서는 SELECT의 논리적 실행 순서부터 시작해 쿼리 작성의 기초를 다룬다.
+여기까지 DDL의 제약 조건부터 DML의 핵심 명령까지 살펴봤다. 다음으로는 SELECT의 논리적 실행 순서부터 시작해 쿼리 작성의 기초를 다룬다.
 
 ---
 

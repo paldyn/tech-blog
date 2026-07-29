@@ -166,7 +166,7 @@ tsc --build  # 참조 그래프를 추적해 필요한 패키지만 빌드
 }
 ```
 
-`@tsconfig/node22`, `@tsconfig/strictest` 같은 커뮤니티 베이스 설정을 `extends`로 상속하면 좋은 기본값에서 시작할 수 있다. 다음 글은 TypeScript 시리즈의 마지막 주제인 **점진적 도입 전략**이다.
+`@tsconfig/node22`, `@tsconfig/strictest` 같은 커뮤니티 베이스 설정을 `extends`로 상속하면 좋은 기본값에서 시작할 수 있다. 다음 글의 주제는 TypeScript **점진적 도입 전략**이다.
 
 ---
 

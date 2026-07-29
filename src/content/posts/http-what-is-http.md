@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-traceroute-mtr/)까지 네트워크 인프라와 진단 도구를 다뤘다. 이제 그 위에서 동작하는 **HTTP** 시리즈를 시작한다. 브라우저 주소창에 URL을 입력했을 때, 그 순간부터 페이지가 뜰 때까지 HTTP가 모든 것을 주관한다.
+[지난 글](/posts/network-traceroute-mtr/)까지 네트워크 인프라와 진단 도구를 다뤘다. 이제 그 위에서 동작하는 **HTTP**를 살펴본다. 브라우저 주소창에 URL을 입력했을 때, 그 순간부터 페이지가 뜰 때까지 HTTP가 모든 것을 주관한다.
 
 ## HTTP란
 

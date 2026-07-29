@@ -111,7 +111,7 @@ git help               # 기본 명령어 목록 확인
 
 ![설치 후 확인 단계](/assets/posts/git-install-verify.svg)
 
-버전 2.x.x 이상이면 이 시리즈의 모든 예제를 실행할 수 있다. 일부 고급 기능(Partial Clone, Sparse Checkout, Worktree 등)은 2.36 이상을 권장한다.
+버전 2.x.x 이상이면 이 글에서 다루는 모든 예제를 실행할 수 있다. 일부 고급 기능(Partial Clone, Sparse Checkout, Worktree 등)은 2.36 이상을 권장한다.
 
 ## GUI 도구
 

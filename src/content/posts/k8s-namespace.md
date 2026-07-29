@@ -186,7 +186,7 @@ helm install myapp ./chart \
   --values values-staging.yaml
 ```
 
-이로써 Docker 시리즈의 쿠버네티스 기초 파트가 마무리된다. Pod → Deployment → Service → Ingress → ConfigMap/Secret → Namespace 순서로 이해했다면 K8s의 핵심 개념을 다 파악한 것이다. 다음 단계로는 Helm, ArgoCD를 활용한 GitOps, 모니터링(Prometheus/Grafana) 연동을 살펴보면 된다.
+여기까지 쿠버네티스의 기초 개념을 살펴봤다. Pod → Deployment → Service → Ingress → ConfigMap/Secret → Namespace 순서로 이해했다면 K8s의 핵심 개념을 다 파악한 것이다. 다음 단계로는 Helm, ArgoCD를 활용한 GitOps, 모니터링(Prometheus/Grafana) 연동을 살펴보면 된다.
 
 ---
 

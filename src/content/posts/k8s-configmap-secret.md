@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-ingress-basics/)에서 Ingress로 외부 트래픽을 여러 서비스로 분기하는 방법을 다뤘다. 이번 편은 컨테이너에 설정값을 주입하는 K8s의 표준 방법인 ConfigMap과 Secret이다. 이미지에 설정을 하드코딩하면 환경마다 이미지를 다시 빌드해야 한다. 설정을 분리하면 같은 이미지를 dev/staging/prod에 동일하게 사용할 수 있다.
+[지난 글](/posts/k8s-ingress-basics/)에서 Ingress로 외부 트래픽을 여러 서비스로 분기하는 방법을 다뤘다. 이번 글은 컨테이너에 설정값을 주입하는 K8s의 표준 방법인 ConfigMap과 Secret이다. 이미지에 설정을 하드코딩하면 환경마다 이미지를 다시 빌드해야 한다. 설정을 분리하면 같은 이미지를 dev/staging/prod에 동일하게 사용할 수 있다.
 
 ## ConfigMap vs Secret
 

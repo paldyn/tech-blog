@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/springboot-transaction-best-practice/)에서 `@Transactional` 실전 가이드를 마무리했습니다. 이제 시리즈의 다음 장인 **REST API 설계**로 넘어갑니다. Spring으로 REST API를 만드는 방법은 이미 알고 있더라도, '왜 이렇게 설계해야 하는가'라는 질문에 답하려면 REST의 원칙부터 이해해야 합니다. 인터넷에 수많은 API가 "RESTful"을 자처하지만, 그 중 Roy Fielding이 정의한 REST를 실제로 충족하는 API는 드뭅니다. 이 글에서는 REST가 무엇인지, 어떤 제약조건을 충족해야 하는지, 그리고 Spring에서 원칙을 지키는 API를 어떻게 만드는지 살펴봅니다.
+[지난 글](/posts/springboot-transaction-best-practice/)에서 `@Transactional` 실전 가이드를 마무리했습니다. 이제 **REST API 설계**로 넘어갑니다. Spring으로 REST API를 만드는 방법은 이미 알고 있더라도, '왜 이렇게 설계해야 하는가'라는 질문에 답하려면 REST의 원칙부터 이해해야 합니다. 인터넷에 수많은 API가 "RESTful"을 자처하지만, 그 중 Roy Fielding이 정의한 REST를 실제로 충족하는 API는 드뭅니다. 이 글에서는 REST가 무엇인지, 어떤 제약조건을 충족해야 하는지, 그리고 Spring에서 원칙을 지키는 API를 어떻게 만드는지 살펴봅니다.
 
 ## REST란 무엇인가
 

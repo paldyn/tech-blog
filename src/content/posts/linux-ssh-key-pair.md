@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-jq-yq/)에서 jq와 yq로 JSON과 YAML을 처리하는 방법을 살펴봤습니다. 이번 글부터는 SSH 시리즈를 시작합니다. SSH(Secure Shell)는 원격 서버를 안전하게 관리하는 핵심 프로토콜입니다. 이번 글에서는 공개키 인증의 원리와 ssh-keygen으로 키를 생성·관리하는 방법을 다룹니다.
+[지난 글](/posts/linux-jq-yq/)에서 jq와 yq로 JSON과 YAML을 처리하는 방법을 살펴봤습니다. 이번 글부터는 SSH를 다룹니다. SSH(Secure Shell)는 원격 서버를 안전하게 관리하는 핵심 프로토콜입니다. 이번 글에서는 공개키 인증의 원리와 ssh-keygen으로 키를 생성·관리하는 방법을 다룹니다.
 
 ![SSH 키 쌍 구조와 인증 흐름](/assets/posts/linux-ssh-key-pair-overview.svg)
 

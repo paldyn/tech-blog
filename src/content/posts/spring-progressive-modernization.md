@@ -1,6 +1,6 @@
 ---
 title: "Spring 점진적 현대화: 레거시에서 최신 Spring까지"
-description: "Spring 완전 정복 시리즈의 마지막 글. 레거시 Spring 프로젝트를 최신 Spring Boot 3와 클라우드 네이티브 아키텍처로 단계적으로 전환하는 전체 전략과 실무 경험을 정리합니다."
+description: "레거시 Spring 프로젝트를 최신 Spring Boot 3와 클라우드 네이티브 아키텍처로 단계적으로 전환하는 전체 전략과 실무 경험을 정리합니다."
 author: "PALDYN Team"
 pubDate: "2026-06-06"
 archiveOrder: 4
@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/springboot-2-to-3-migration/)에서 Spring Boot 2에서 3으로 업그레이드하는 구체적인 절차를 살펴봤다. 시리즈의 마지막 글인 이번에는 더 넓은 시각에서 레거시 Spring 프로젝트를 현대화하는 전략, 실무 경험, 그리고 우리가 Spring을 배워온 여정을 돌아본다.
+[지난 글](/posts/springboot-2-to-3-migration/)에서 Spring Boot 2에서 3으로 업그레이드하는 구체적인 절차를 살펴봤다. 이번 글에서는 더 넓은 시각에서 레거시 Spring 프로젝트를 현대화하는 전략, 실무 경험, 그리고 우리가 Spring을 배워온 여정을 돌아본다.
 
 ## 현대화가 필요한 순간
 
@@ -194,9 +194,9 @@ public class UserService {
 }
 ```
 
-## Spring 완전 정복 시리즈를 마무리하며
+## Spring 학습을 정리하며
 
-이 시리즈는 Spring의 철학과 기본 원리(IoC/DI, AOP)에서 시작해 Spring MVC, Spring Data JPA, Spring Boot, Spring Security, 캐시·비동기·이벤트, 테스트 전략, 운영 관측, Cloud Native, Spring WebFlux, 그리고 현대화 전략까지 152개의 글로 Spring 생태계 전체를 다뤘다.
+그동안 Spring의 철학과 기본 원리(IoC/DI, AOP)에서 시작해 Spring MVC, Spring Data JPA, Spring Boot, Spring Security, 캐시·비동기·이벤트, 테스트 전략, 운영 관측, Cloud Native, Spring WebFlux, 그리고 현대화 전략까지 152개의 글로 Spring 생태계 전체를 다뤘다.
 
 ```bash
 # Spring 완전 정복 시리즈 통계
@@ -205,9 +205,9 @@ public class UserService {
 # - 목표: 현업에서 Spring을 자신 있게 사용할 수 있는 실력
 ```
 
-Spring은 계속 진화한다. Spring 6.x 업데이트, Spring Boot 4.x 예고, Spring AI의 급격한 발전 등 변화의 속도가 빠르다. 하지만 시리즈 첫 글에서 다룬 IoC/DI의 철학, 테스트 가능한 코드, 횡단 관심사의 분리라는 원칙은 버전이 바뀌어도 흔들리지 않는다.
+Spring은 계속 진화한다. Spring 6.x 업데이트, Spring Boot 4.x 예고, Spring AI의 급격한 발전 등 변화의 속도가 빠르다. 하지만 첫 글에서 다룬 IoC/DI의 철학, 테스트 가능한 코드, 횡단 관심사의 분리라는 원칙은 버전이 바뀌어도 흔들리지 않는다.
 
-공식 문서([docs.spring.io](https://docs.spring.io)), Spring 공식 블로그, 그리고 실제 프로젝트에서의 실습이 학습의 완성이다. 이 시리즈가 Spring 마스터로 가는 여정에 탄탄한 디딤돌이 되기를 바란다.
+공식 문서([docs.spring.io](https://docs.spring.io)), Spring 공식 블로그, 그리고 실제 프로젝트에서의 실습이 학습의 완성이다. 이 글들이 Spring 마스터로 가는 여정에 탄탄한 디딤돌이 되기를 바란다.
 
 ---
 

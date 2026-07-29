@@ -196,7 +196,7 @@ spec:
         - templateName: success-rate  # Prometheus 메트릭 기반 검증
 ```
 
-자동으로 에러율이 임계값을 초과하면 롤백합니다. 다음 시리즈에서 Argo Rollouts와 Progressive Delivery를 더 자세히 다룰 예정입니다.
+자동으로 에러율이 임계값을 초과하면 롤백합니다. 다음 글에서 Argo Rollouts와 Progressive Delivery를 더 자세히 다룰 예정입니다.
 
 ---
 

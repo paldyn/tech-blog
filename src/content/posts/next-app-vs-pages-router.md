@@ -94,7 +94,7 @@ App Router는 `loading.tsx`와 `<Suspense>`를 활용한 스트리밍 렌더링�
 
 하나의 프로젝트에서 `pages/`와 `app/`을 동시에 사용할 수 있습니다. 마이그레이션 과도기에 유용합니다. 단, 같은 URL을 두 라우터가 모두 처리하면 App Router가 우선합니다.
 
-이 시리즈는 전적으로 **App Router** 기준으로 진행합니다. Pages Router 관련 내용은 필요한 경우 비교 형태로만 언급합니다.
+이 글은 전적으로 **App Router** 기준으로 진행합니다. Pages Router 관련 내용은 필요한 경우 비교 형태로만 언급합니다.
 
 ---
 

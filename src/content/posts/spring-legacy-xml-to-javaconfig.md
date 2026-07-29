@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-ai-intro/)에서 Spring AI를 통해 생성형 AI를 Spring 생태계에 통합하는 방법을 살펴봤다. 이번 글에서는 시리즈의 마무리로 여전히 많은 현장에서 만나는 레거시 XML 설정 코드를 현대적인 Java Config로 안전하게 전환하는 방법을 다룬다.
+[지난 글](/posts/spring-ai-intro/)에서 Spring AI를 통해 생성형 AI를 Spring 생태계에 통합하는 방법을 살펴봤다. 이번 글에서는 여전히 많은 현장에서 만나는 레거시 XML 설정 코드를 현대적인 Java Config로 안전하게 전환하는 방법을 다룬다.
 
 ## 왜 아직도 XML 설정 코드가 남아 있는가
 

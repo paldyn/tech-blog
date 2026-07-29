@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pattern-module/)에서 모듈 패턴으로 캡슐화와 네임스페이스를 관리하는 방법을 살펴봤습니다. 이번에는 JavaScript 패턴 시리즈의 마지막 두 패턴—**미디에이터**(Mediator)와 **믹스인(Mixin)**—을 정리합니다. 미디에이터는 컴포넌트 간 결합도를 낮추고, 믹스인은 단일 상속의 한계를 넘어 기능을 재사용합니다.
+[지난 글](/posts/pattern-module/)에서 모듈 패턴으로 캡슐화와 네임스페이스를 관리하는 방법을 살펴봤습니다. 이번에는 JavaScript 패턴 가운데 **미디에이터**(Mediator)와 **믹스인(Mixin)** 두 가지를 정리합니다. 미디에이터는 컴포넌트 간 결합도를 낮추고, 믹스인은 단일 상속의 한계를 넘어 기능을 재사용합니다.
 
 ![미디에이터 vs 직접 통신](/assets/posts/pattern-mediator-mixin-mediator.svg)
 

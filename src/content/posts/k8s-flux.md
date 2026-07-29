@@ -144,7 +144,7 @@ spec:
     cleanupOnFail: true       # 실패하면 자동 롤백
 ```
 
-`version: "6.x"` 같은 semver 범위를 주면 새 패치 버전이 올라올 때 자동으로 따라간다. 시리즈에서 다뤘던 [Helm 차트](/posts/k8s-helm-overview/) 운영을 통째로 선언형으로 바꿔주는 CRD다.
+`version: "6.x"` 같은 semver 범위를 주면 새 패치 버전이 올라올 때 자동으로 따라간다. 앞서 다뤘던 [Helm 차트](/posts/k8s-helm-overview/) 운영을 통째로 선언형으로 바꿔주는 CRD다.
 
 ## 이미지 자동 업데이트 — 내장 기능
 

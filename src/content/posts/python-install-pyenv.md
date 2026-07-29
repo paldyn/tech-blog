@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-implementations-cpython-pypy/)에서 CPython이 표준 구현체임을 살펴봤다. 이번 편에서는 Python 개발 환경의 현실적인 문제를 다룬다. 실무에서는 하나의 Python 버전만 사용하지 않는다. 프로젝트 A는 Python 3.10을 요구하고, 프로젝트 B는 3.12를 쓰며, 레거시 프로젝트는 3.8에 묶여 있을 수 있다. 이런 버전 충돌 문제를 우아하게 해결하는 도구가 **pyenv**다.
+[지난 글](/posts/python-implementations-cpython-pypy/)에서 CPython이 표준 구현체임을 살펴봤다. 이번 글에서는 Python 개발 환경의 현실적인 문제를 다룬다. 실무에서는 하나의 Python 버전만 사용하지 않는다. 프로젝트 A는 Python 3.10을 요구하고, 프로젝트 B는 3.12를 쓰며, 레거시 프로젝트는 3.8에 묶여 있을 수 있다. 이런 버전 충돌 문제를 우아하게 해결하는 도구가 **pyenv**다.
 
 ## 왜 pyenv가 필요한가?
 
@@ -231,9 +231,9 @@ CI/CD 파이프라인(GitHub Actions, GitLab CI 등)에서도 pyenv를 사용하
 
 ## uv: 차세대 Python 관리 도구
 
-최근 Rust로 작성된 `uv`가 pyenv + pip + venv의 기능을 통합하며 빠르게 주목받고 있다. pyenv보다 설치와 사용이 훨씬 빠르다. 단, 아직 생태계가 형성 중이라 pyenv가 더 안정적인 선택이다. 이 시리즈의 후반부에서 uv를 별도로 다룰 예정이다.
+최근 Rust로 작성된 `uv`가 pyenv + pip + venv의 기능을 통합하며 빠르게 주목받고 있다. pyenv보다 설치와 사용이 훨씬 빠르다. 단, 아직 생태계가 형성 중이라 pyenv가 더 안정적인 선택이다. uv는 나중에 별도의 글에서 다룰 예정이다.
 
-다음 편에서는 Python 언어의 설계 철학을 담은 PEP 20, "The Zen of Python"을 살펴본다. `import this`라는 easter egg에 담긴 19가지 격언을 코드와 함께 이해할 것이다.
+다음 글에서는 Python 언어의 설계 철학을 담은 PEP 20, "The Zen of Python"을 살펴본다. `import this`라는 easter egg에 담긴 19가지 격언을 코드와 함께 이해할 것이다.
 
 ---
 

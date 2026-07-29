@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-typing-json/)에서 JSON 값을 정밀하게 표현하는 `JsonValue` 타입을 만들었다. 그런데 정작 외부 데이터를 읽어 오는 표준 함수 `JSON.parse`는 그 안전성을 모두 무너뜨린다. 반환 타입이 `any`이기 때문이다. 이번 글은 시리즈의 한 매듭으로, 신뢰할 수 없는 입력의 관문인 `JSON.parse`를 타입 안전하게 다루는 법을 정리한다.
+[지난 글](/posts/ts-typing-json/)에서 JSON 값을 정밀하게 표현하는 `JsonValue` 타입을 만들었다. 그런데 정작 외부 데이터를 읽어 오는 표준 함수 `JSON.parse`는 그 안전성을 모두 무너뜨린다. 반환 타입이 `any`이기 때문이다. 이번 글은 신뢰할 수 없는 입력의 관문인 `JSON.parse`를 타입 안전하게 다루는 법을 정리한다.
 
 ## 문제: JSON.parse는 any를 반환한다
 
@@ -100,7 +100,7 @@ const user = UserSchema.parse(JSON.parse(input));
 
 ## 4단계: 예외 대신 Result로 감싸기
 
-`JSON.parse`는 잘못된 문자열에 대해 예외를 던지고, 스키마 검증도 실패 시 throw한다. 이 두 실패를 묶어 **결과 값**으로 돌려주면 호출자가 분기를 강제로 처리하게 된다. 시리즈 앞에서 본 에러 핸들링 패턴과 자연스럽게 이어진다.
+`JSON.parse`는 잘못된 문자열에 대해 예외를 던지고, 스키마 검증도 실패 시 throw한다. 이 두 실패를 묶어 **결과 값**으로 돌려주면 호출자가 분기를 강제로 처리하게 된다. 앞서 본 에러 핸들링 패턴과 자연스럽게 이어진다.
 
 ```typescript
 type Result<T> =
