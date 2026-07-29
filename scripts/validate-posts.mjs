@@ -32,11 +32,8 @@ function checkFrontmatter(file, content) {
   return fm;
 }
 
-function checkCodeBlock(file, content) {
-  if (!/```\w/.test(content)) {
-    error(file, 'no fenced code block with language identifier found');
-  }
-}
+// 코드 블록 필수 검사는 제거했다 — 개념·비교·거버넌스처럼 코드가 억지스러운 주제도 있고,
+// 펜스 언어명 누락은 품질 검토 루틴이 따로 잡는다.
 
 function checkSvgImages(file, content) {
   const svgRefs = [...content.matchAll(/!\[.*?\]\((\/assets\/posts\/[^)]+\.svg)\)/g)];
@@ -61,7 +58,6 @@ for (const filename of files) {
   const content = readFileSync(filepath, 'utf-8');
   console.log(`  Checking: ${filename}`);
   checkFrontmatter(filename, content);
-  checkCodeBlock(filename, content);
   checkSvgImages(filename, content);
 }
 
