@@ -137,20 +137,24 @@ export function logoFor(post: Post): string | undefined {
   return CATEGORY_LOGOS[post.data.category];
 }
 
-// 배경이 투명한 로고들의 브랜드 포인트 컬러.
-// 라이트 모드에서 타일 배경으로 깔고 로고는 흰색으로 녹아웃한다.
-const LOGO_BRAND: Record<string, string> = {
-  'java.png': '#5382a1',
-  'kubernetes.png': '#326ce5',
-  'docker.png': '#2496ed',
-  'react.png': '#087ea4',
-  'git.png': '#f05033',
-  'linux.png': '#c98a00',
+// 배경이 투명한 로고들의 브랜드 포인트 컬러. 라이트 모드에서 타일 배경으로 깔린다.
+// knockout=true면 로고를 흰색 실루엣으로 찍어낸다. Tux처럼 여러 색이 섞인
+// 일러스트는 흰색으로 찍으면 형체만 남으므로 원본 색을 그대로 둔다.
+const LOGO_BRAND: Record<string, { bg: string; knockout: boolean }> = {
+  'java.png': { bg: '#5382a1', knockout: true },
+  'kubernetes.png': { bg: '#326ce5', knockout: true },
+  'docker.png': { bg: '#2496ed', knockout: true },
+  'react.png': { bg: '#087ea4', knockout: true },
+  'git.png': { bg: '#f05033', knockout: true },
+  'linux.png': { bg: '#c98a00', knockout: false },
 };
 
-export function logoBrand(logo: string | undefined): string | undefined {
+export function logoBrandStyle(logo: string | undefined): string | undefined {
   if (!logo) return undefined;
-  return LOGO_BRAND[logo.slice(logo.lastIndexOf('/') + 1)];
+  const brand = LOGO_BRAND[logo.slice(logo.lastIndexOf('/') + 1)];
+  if (!brand) return undefined;
+  const filter = brand.knockout ? 'brightness(0) invert(1)' : 'none';
+  return `--brand:${brand.bg};--logo-filter:${filter}`;
 }
 
 export function readingTimeFor(post: Post): string {

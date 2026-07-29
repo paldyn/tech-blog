@@ -1,6 +1,6 @@
 ---
 import FormattedDate from './FormattedDate.astro';
-import { logoBrand } from '../utils/posts';
+import { logoBrandStyle } from '../utils/posts';
 
 interface Props {
   title: string;
@@ -48,7 +48,7 @@ const fillClass = logo?.endsWith('/nexacro.png')
   ? 'logo-light-fill'
   : undefined;
 const useThemeLogo = category === 'Team';
-const brand = logoBrand(logo);
+const brandStyle = logoBrandStyle(logo);
 ---
 
 <a href={url} class="side-item">
@@ -58,7 +58,7 @@ const brand = logoBrand(logo);
       <img class="team-logo team-logo-dark-mode" src="/assets/logo-symbol-dark.png" alt="" loading="lazy" aria-hidden="true" />
     </div>
   ) : logo ? (
-    <div class:list={['side-thumb', 'logo-thumb', fillClass, { 'logo-fill': shouldFillLogo }]} style={brand && `--brand:${brand}`}>
+    <div class:list={['side-thumb', 'logo-thumb', fillClass, { 'logo-fill': shouldFillLogo }]} style={brandStyle}>
       <img src={logo} alt={`${category} 로고`} loading="lazy" />
     </div>
   ) : (
@@ -155,7 +155,7 @@ const brand = logoBrand(logo);
     background: var(--brand, #ffffff);
   }
   :global(html[data-theme="light"]) .side-thumb.logo-thumb.logo-fill.logo-light-fill img {
-    filter: brightness(0) invert(1);
+    filter: var(--logo-filter, none);
   }
   .side-thumb.logo-thumb.logo-fill img {
     width: 100%;
