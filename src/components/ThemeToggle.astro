@@ -14,11 +14,18 @@
   (function () {
     var btn = document.getElementById('themeToggle');
     if (!btn) return;
+    var timer;
     btn.addEventListener('click', function () {
-      var cur = document.documentElement.getAttribute('data-theme');
+      var root = document.documentElement;
+      var cur = root.getAttribute('data-theme');
       var next = cur === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
+      // 목록 페이지엔 썸네일이 수천 개라, 전환 순간 트랜지션이 한꺼번에 걸리면
+      // 메인 스레드가 수백 ms 막힌다. 전환하는 동안만 트랜지션을 끈다.
+      root.classList.add('theme-switching');
+      root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
+      clearTimeout(timer);
+      timer = setTimeout(function () { root.classList.remove('theme-switching'); }, 80);
     });
   })();
 </script>
