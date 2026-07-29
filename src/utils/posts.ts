@@ -170,7 +170,9 @@ export async function getPublishedPosts(): Promise<Post[]> {
 
 export async function getPostsByType(type: PostType): Promise<Post[]> {
   const posts = await getPublishedPosts();
-  return posts.filter((post) => post.data.type === type);
+  return posts.filter(
+    (post) => post.data.type === type || post.data.alsoIn.includes(type),
+  );
 }
 
 export function postTypeLabel(type: PostType): string {

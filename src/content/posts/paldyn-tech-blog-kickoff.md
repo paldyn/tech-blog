@@ -5,6 +5,7 @@ author: "PALDYN Team"
 pubDate: "2026-04-19"
 archiveOrder: 1
 type: "record"
+alsoIn: ["knowledge"]
 category: "Team"
 tags: ["intro", "culture", "knowledge-sharing"]
 featured: false
