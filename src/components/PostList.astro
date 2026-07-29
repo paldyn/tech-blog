@@ -1,6 +1,7 @@
 ---
 import {
   logoFor,
+  logoTint,
   postUrl,
   readingTimeFor,
   thumbFor,
@@ -84,7 +85,7 @@ function logoFillClass(logo: string | undefined): string | undefined {
                 <img class="team-logo team-logo-dark-mode" src="/assets/logo-symbol-dark.png" alt="" loading="lazy" aria-hidden="true" />
               </div>
             ) : logo ? (
-              <div class:list={['thumb', 'logo-thumb', fillClass, { 'logo-fill': fillLogo }]}>
+              <div class:list={['thumb', 'logo-thumb', fillClass, { 'logo-fill': fillLogo }]} style={logoTint(logo) && `background:${logoTint(logo)}`}>
                 <img src={logo} alt={`${post.data.category} 로고`} loading="lazy" />
               </div>
             ) : (
@@ -216,10 +217,16 @@ function logoFillClass(logo: string | undefined): string | undefined {
     object-fit: cover;
     border-radius: inherit;
   }
+  .thumb.logo-thumb.logo-fill.logo-light-fill {
+    /* 색조가 타일 밖으로 번지지 않도록 합성 범위를 가둔다 */
+    isolation: isolate;
+  }
   .thumb.logo-thumb.logo-fill.logo-light-fill img {
     object-fit: contain;
     padding: 8% 10%;
     box-sizing: border-box;
+    /* 이미지에 구워진 흰 배경을 타일 색조에 녹인다 */
+    mix-blend-mode: multiply;
   }
   /* 가로로 넓은 워드마크(java·kubernetes)는 여백을 줄여 더 크게 */
   .thumb.logo-thumb.logo-fill.logo-light-fill.logo-light-fill-wide img {

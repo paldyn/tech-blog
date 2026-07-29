@@ -137,6 +137,22 @@ export function logoFor(post: Post): string | undefined {
   return CATEGORY_LOGOS[post.data.category];
 }
 
+// 흰 배경이 이미지에 구워진 로고들. 타일에 브랜드 색을 깔고 img를 multiply로 합성하면
+// 흰 배경만 색에 녹고 로고 아트워크는 그대로 남는다.
+const LOGO_TINTS: Record<string, string> = {
+  'java.png': '#eaf0f7',
+  'kubernetes.png': '#e8eefc',
+  'docker.png': '#e6f2fd',
+  'react.png': '#e4f6fb',
+  'git.png': '#fceae4',
+  'linux.png': '#fdf1dd',
+};
+
+export function logoTint(logo: string | undefined): string | undefined {
+  if (!logo) return undefined;
+  return LOGO_TINTS[logo.slice(logo.lastIndexOf('/') + 1)];
+}
+
 export function readingTimeFor(post: Post): string {
   const minutes = Math.max(1, Math.round(readingTime(post.body ?? '').minutes));
   return `${minutes} min read`;
