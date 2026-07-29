@@ -60,7 +60,7 @@ Parcel이 `app.tsx`를 만나면 자동으로 TypeScript와 JSX 변환기를 설
 
 ![Parcel vs Turbopack 포지셔닝 비교](/assets/posts/build-parcel-turbopack-compare.svg)
 
-Parcel 2는 내부적으로 **SWC(Rust)**를 사용해 변환하며, 워커 스레드에서 파일 병렬 처리합니다.
+Parcel 2는 내부적으로 **SWC**(Rust)를 사용해 변환하며, 워커 스레드에서 파일 병렬 처리합니다.
 
 ```bash
 # 변환 결과 캐시 (.parcel-cache/)

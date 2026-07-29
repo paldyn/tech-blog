@@ -96,7 +96,7 @@ spec:
               +(env): "production"    # 레이블이 없을 때만 추가
 ```
 
-`+(env): "production"` 표기법은 Kyverno의 **조건부 앵커(Conditional Anchor)**다. `+(...)`는 해당 키가 존재하지 않을 경우에만 값을 추가한다. 반면 기존 값이 있으면 덮어쓰지 않는다.
+`+(env): "production"` 표기법은 Kyverno의 **조건부 앵커**(Conditional Anchor)다. `+(...)`는 해당 키가 존재하지 않을 경우에만 값을 추가한다. 반면 기존 값이 있으면 덮어쓰지 않는다.
 
 JSON Patch 방식도 지원한다.
 

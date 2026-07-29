@@ -48,7 +48,7 @@ SELECT
 FROM customers;
 ```
 
-COALESCE는 **단락 평가(short-circuit)**를 한다. 첫 인자가 non-NULL이면 나머지를 평가하지 않는다. 따라서 뒤 인자에 비용이 큰 서브쿼리가 있어도 앞이 non-NULL이면 실행되지 않는다.
+COALESCE는 **단락 평가**(short-circuit)를 한다. 첫 인자가 non-NULL이면 나머지를 평가하지 않는다. 따라서 뒤 인자에 비용이 큰 서브쿼리가 있어도 앞이 non-NULL이면 실행되지 않는다.
 
 COALESCE는 SQL:1999 표준이며 모든 주요 RDBMS에서 지원한다. Oracle의 `NVL(a, b)`, MySQL의 `IFNULL(a, b)`는 인자가 두 개로 제한되며 동일 기능이다.
 

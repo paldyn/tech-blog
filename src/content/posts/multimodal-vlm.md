@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/multimodal-llm/)에서 GPT-4o·Gemini·Claude 같은 멀티모달 LLM의 전체 구조를 살펴봤다. 이번 글에서는 그 근간을 이루는 **비전-언어 모델(VLM, Vision-Language Model)**의 핵심 기술들을 파고든다. CLIP이 이미지와 텍스트를 같은 공간에 정렬하는 방법, BLIP2가 Q-Former로 모달리티 간극을 메우는 방식, LLaVA가 GPT-4 생성 데이터로 비주얼 인스트럭션 튜닝을 수행하는 과정까지 — 현대 멀티모달 AI의 기술적 뼈대를 완전 해설한다.
+[지난 글](/posts/multimodal-llm/)에서 GPT-4o·Gemini·Claude 같은 멀티모달 LLM의 전체 구조를 살펴봤다. 이번 글에서는 그 근간을 이루는 **비전-언어 모델**(VLM, Vision-Language Model)의 핵심 기술들을 파고든다. CLIP이 이미지와 텍스트를 같은 공간에 정렬하는 방법, BLIP2가 Q-Former로 모달리티 간극을 메우는 방식, LLaVA가 GPT-4 생성 데이터로 비주얼 인스트럭션 튜닝을 수행하는 과정까지 — 현대 멀티모달 AI의 기술적 뼈대를 완전 해설한다.
 
 ## CLIP: 대조 학습으로 이미지-텍스트 정렬
 
 ![VLM 아키텍처 진화](/assets/posts/multimodal-vlm-architecture.svg)
 
-2021년 OpenAI가 발표한 **CLIP(Contrastive Language-Image Pre-training)**은 VLM 연구의 게임 체인저였다. 핵심 아이디어는 간단하다: 이미지와 그에 대응하는 텍스트를 동일한 임베딩 공간에서 **가깝게** 만들고, 관련 없는 이미지-텍스트 쌍은 **멀게** 만드는 것이다.
+2021년 OpenAI가 발표한 **CLIP**(Contrastive Language-Image Pre-training)은 VLM 연구의 게임 체인저였다. 핵심 아이디어는 간단하다: 이미지와 그에 대응하는 텍스트를 동일한 임베딩 공간에서 **가깝게** 만들고, 관련 없는 이미지-텍스트 쌍은 **멀게** 만드는 것이다.
 
 ### 4억 쌍 이미지-텍스트 데이터
 
@@ -59,7 +59,7 @@ def clip_loss(image_features, text_features, temperature=0.07):
 
 ## BLIP2: Q-Former로 모달리티 간극 메우기
 
-2023년 Salesforce가 발표한 **BLIP2(Bootstrapping Language-Image Pre-training 2)**는 사전학습된 이미지 인코더와 LLM을 효율적으로 연결하는 방법을 제시했다. 핵심 혁신은 **Q-Former(Querying Transformer)**라는 새로운 모듈이다.
+2023년 Salesforce가 발표한 **BLIP2**(Bootstrapping Language-Image Pre-training 2)는 사전학습된 이미지 인코더와 LLM을 효율적으로 연결하는 방법을 제시했다. 핵심 혁신은 **Q-Former**(Querying Transformer)라는 새로운 모듈이다.
 
 ### Querying Transformer (Q-Former)
 
@@ -91,11 +91,11 @@ class QFormer:
 
 BLIP2는 **두 단계**로 학습된다. 1단계는 **비전-언어 표현 학습**으로, Q-Former를 Frozen ViT에 연결해 이미지-텍스트 매칭, 이미지-텍스트 대조 학습, 이미지 기반 텍스트 생성의 세 가지 목표를 동시에 학습한다.
 
-2단계는 **생성 언어 학습**으로, Q-Former 출력을 Frozen LLM(OPT 또는 FlanT5)에 연결해 이미지 조건부 텍스트 생성 능력을 획득한다. 두 단계 모두 ViT와 LLM을 **동결(freeze)**한 채 Q-Former만 학습하므로, 파라미터 효율이 높다. 전체 파라미터의 1~2%만 학습해도 강력한 멀티모달 능력을 달성한다.
+2단계는 **생성 언어 학습**으로, Q-Former 출력을 Frozen LLM(OPT 또는 FlanT5)에 연결해 이미지 조건부 텍스트 생성 능력을 획득한다. 두 단계 모두 ViT와 LLM을 **동결**(freeze)한 채 Q-Former만 학습하므로, 파라미터 효율이 높다. 전체 파라미터의 1~2%만 학습해도 강력한 멀티모달 능력을 달성한다.
 
 ## LLaVA: 비주얼 인스트럭션 튜닝
 
-2023년 위스콘신-매디슨 대학교·마이크로소프트 연구팀이 발표한 **LLaVA(Large Language and Vision Assistant)**는 놀라울 정도로 단순한 구조로 강력한 멀티모달 대화 능력을 달성했다.
+2023년 위스콘신-매디슨 대학교·마이크로소프트 연구팀이 발표한 **LLaVA**(Large Language and Vision Assistant)는 놀라울 정도로 단순한 구조로 강력한 멀티모달 대화 능력을 달성했다.
 
 ### CLIP ViT → 선형 프로젝션 → LLM
 
@@ -152,7 +152,7 @@ LLaVA-NeXT(LLaVA-1.6)는 **동적 고해상도 처리**를 도입했다. 이미�
 
 ### Sigmoid Loss (CLIP vs SigLIP)
 
-Google이 2023년 제안한 **SigLIP(Sigmoid Loss for Language-Image Pre-Training)**은 CLIP의 소프트맥스 기반 대조 손실 대신 **시그모이드 손실**을 사용한다.
+Google이 2023년 제안한 **SigLIP**(Sigmoid Loss for Language-Image Pre-Training)은 CLIP의 소프트맥스 기반 대조 손실 대신 **시그모이드 손실**을 사용한다.
 
 CLIP의 InfoNCE 손실은 배치 내의 모든 쌍을 비교하는 방식이라, 배치 크기가 커질수록 부정 샘플(negative sample)도 증가한다. 반면 SigLIP은 각 이미지-텍스트 쌍을 독립적으로 이진 분류(매칭/비매칭)하는 시그모이드 손실을 사용해 **배치 크기에 덜 민감**하고 **학습이 더 안정적**이다.
 
@@ -230,13 +230,13 @@ def search_images(query: str, image_paths: list, top_k=5):
 
 VLM의 가장 기본적인 응용은 **이미지 캡셔닝**으로, 이미지를 입력받아 자연어 설명을 생성한다. COCO Captions·Flickr30k 같은 데이터셋으로 평가하며, CIDEr·BLEU·METEOR 같은 n-gram 기반 지표와 CLIPScore 같은 임베딩 기반 지표를 사용한다.
 
-**VQA(Visual Question Answering)**는 이미지와 질문을 함께 입력받아 답변을 생성하는 작업으로, VQAv2·GQA·TextVQA 같은 벤치마크가 있다. TextVQA는 이미지 속 텍스트를 읽어야 하는 OCR 중심 VQA로, 영수증·간판·표지 이해에 중요하다.
+**VQA**(Visual Question Answering)는 이미지와 질문을 함께 입력받아 답변을 생성하는 작업으로, VQAv2·GQA·TextVQA 같은 벤치마크가 있다. TextVQA는 이미지 속 텍스트를 읽어야 하는 OCR 중심 VQA로, 영수증·간판·표지 이해에 중요하다.
 
 ### 이미지 검색, 이상 탐지
 
 CLIP 임베딩 공간의 의미적 유사성을 이용한 **이미지 검색**은 전통적인 키워드 검색을 대체한다. "해질녘 해변가의 실루엣" 같은 추상적인 쿼리로도 관련 이미지를 찾을 수 있다. 이커머스에서는 텍스트 쿼리로 상품을 검색하는 **텍스트-이미지 교차 검색**에 활용된다.
 
-**이상 탐지(Anomaly Detection)**에서는 "정상 제품"과 "결함이 있는 제품" 텍스트 프롬프트의 임베딩과 이미지 임베딩의 거리를 비교해 제조업 품질 검사를 자동화할 수 있다. WinCLIP 같은 방법은 별도 파인튜닝 없이 제로샷으로 산업 이상 탐지를 수행한다.
+**이상 탐지**(Anomaly Detection)에서는 "정상 제품"과 "결함이 있는 제품" 텍스트 프롬프트의 임베딩과 이미지 임베딩의 거리를 비교해 제조업 품질 검사를 자동화할 수 있다. WinCLIP 같은 방법은 별도 파인튜닝 없이 제로샷으로 산업 이상 탐지를 수행한다.
 
 ## 학습 데이터와 벤치마크
 
@@ -249,7 +249,7 @@ VLM 학습에 사용되는 주요 데이터셋을 정리하면 다음과 같다:
 | LLaVA-Instruct-150K | 15만 개 | 시각 인스트럭션 |
 | ShareGPT4V | 120만 개 | GPT-4V 캡션 |
 
-VLM 평가에는 다양한 벤치마크가 사용된다. **MMBench**는 총 6K개 객관식 문제로 멀티모달 능력을 평가한다. **MMMU(Massive Multidisciplinary Multimodal Understanding)**는 대학 수준 전문 지식이 필요한 문제들로 구성된다. **ScienceQA**는 초중고 과학 교과서 문제로 과학 지식 추론을 평가하고, **OCRBench**는 장면 텍스트 인식과 문서 이해를 집중 평가한다.
+VLM 평가에는 다양한 벤치마크가 사용된다. **MMBench**는 총 6K개 객관식 문제로 멀티모달 능력을 평가한다. **MMMU**(Massive Multidisciplinary Multimodal Understanding)는 대학 수준 전문 지식이 필요한 문제들로 구성된다. **ScienceQA**는 초중고 과학 교과서 문제로 과학 지식 추론을 평가하고, **OCRBench**는 장면 텍스트 인식과 문서 이해를 집중 평가한다.
 
 현재 VLM 연구의 최전선은 더 고해상도 이미지 처리, 더 긴 비디오 이해, 3D 공간 추론으로 이동하고 있다. 다음 글에서는 이러한 멀티모달 AI 모델들을 어떻게 체계적으로 평가하는지, MMBench·MMMU·VQA 벤치마크 구조와 평가 방법론을 살펴본다.
 

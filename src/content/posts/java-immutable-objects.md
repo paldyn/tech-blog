@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-comparable-comparator/)에서 `Comparable`과 `Comparator`로 정렬 기준을 정의하는 방법을 살펴봤다. 이번에는 **불변 객체(Immutable Object)**를 다룬다. 불변 객체는 한 번 생성된 후 상태가 변경되지 않는 객체다. Java에서 가장 중요한 설계 원칙 중 하나이며, `String`, `Integer`, `BigDecimal` 같은 핵심 클래스가 모두 불변이다.
+[지난 글](/posts/java-comparable-comparator/)에서 `Comparable`과 `Comparator`로 정렬 기준을 정의하는 방법을 살펴봤다. 이번에는 **불변 객체**(Immutable Object)를 다룬다. 불변 객체는 한 번 생성된 후 상태가 변경되지 않는 객체다. Java에서 가장 중요한 설계 원칙 중 하나이며, `String`, `Integer`, `BigDecimal` 같은 핵심 클래스가 모두 불변이다.
 
 ## 불변 객체의 장점
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-broken-access-control/)에서 Broken Access Control의 6가지 유형을 개괄적으로 살펴봤습니다. 그 중에서도 버그바운티에서 가장 자주 보고되고 API 보안에서 가장 흔히 발견되는 **IDOR(Insecure Direct Object Reference, 불안전한 직접 객체 참조)**를 이번 글에서 집중적으로 분석합니다.
+[지난 글](/posts/websec-broken-access-control/)에서 Broken Access Control의 6가지 유형을 개괄적으로 살펴봤습니다. 그 중에서도 버그바운티에서 가장 자주 보고되고 API 보안에서 가장 흔히 발견되는 **IDOR**(Insecure Direct Object Reference, 불안전한 직접 객체 참조)를 이번 글에서 집중적으로 분석합니다.
 
 ## IDOR란?
 

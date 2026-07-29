@@ -15,7 +15,7 @@ draft: false
 
 ## pwd: 지금 어디 있는가
 
-**pwd(Print Working Directory)**는 현재 위치하는 절대 경로를 출력한다. 길고 복잡한 디렉터리 구조를 오가다 보면 현재 위치를 잃기 쉽다. `pwd`로 먼저 위치를 확인하는 습관을 들이면 좋다.
+**pwd**(Print Working Directory)는 현재 위치하는 절대 경로를 출력한다. 길고 복잡한 디렉터리 구조를 오가다 보면 현재 위치를 잃기 쉽다. `pwd`로 먼저 위치를 확인하는 습관을 들이면 좋다.
 
 ```bash
 pwd
@@ -30,7 +30,7 @@ pwd -P
 
 ## cd: 디렉터리 이동
 
-**cd(Change Directory)**는 현재 작업 디렉터리를 변경한다.
+**cd**(Change Directory)는 현재 작업 디렉터리를 변경한다.
 
 ```bash
 # 절대 경로로 이동
@@ -68,7 +68,7 @@ dirs                # 스택 내용 확인
 
 ## ls: 디렉터리 내용 보기
 
-**ls(LiSt)**는 디렉터리 내용을 나열한다. 옵션 조합에 따라 출력 형식이 크게 달라진다.
+**ls**(LiSt)는 디렉터리 내용을 나열한다. 옵션 조합에 따라 출력 형식이 크게 달라진다.
 
 ![pwd·cd·ls 핵심 사용법](/assets/posts/linux-pwd-cd-ls-commands.svg)
 

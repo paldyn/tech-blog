@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-object-types/)에서 객체 타입을 살펴봤다. 이번 글에서는 TypeScript의 **열거형(enum)**을 완전히 정리한다. 숫자 열거형, 문자열 열거형, 이종 열거형, 역방향 매핑, `const enum`까지 다루고, 마지막으로 언제 `enum`을 사용할지, 언제 유니언 타입이 더 나은지 기준을 제시한다.
+[지난 글](/posts/ts-object-types/)에서 객체 타입을 살펴봤다. 이번 글에서는 TypeScript의 **열거형**(enum)을 완전히 정리한다. 숫자 열거형, 문자열 열거형, 이종 열거형, 역방향 매핑, `const enum`까지 다루고, 마지막으로 언제 `enum`을 사용할지, 언제 유니언 타입이 더 나은지 기준을 제시한다.
 
 ## 열거형이란
 
@@ -107,7 +107,7 @@ fetchData(ApiEndpoint.Users);
 
 ## 이종 열거형 (주의 필요)
 
-숫자와 문자열을 섞은 **이종 열거형(Heterogeneous Enum)**은 TypeScript에서 허용하지만 실제로는 사용을 강력히 피해야 한다.
+숫자와 문자열을 섞은 **이종 열거형**(Heterogeneous Enum)은 TypeScript에서 허용하지만 실제로는 사용을 강력히 피해야 한다.
 
 ```typescript
 // 이종 열거형 — 실무에서 사용 금지

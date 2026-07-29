@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-watch-service/)에서 파일 시스템 변경을 감시하는 `WatchService`를 다뤘다. 이번에는 파일 I/O 자체를 비동기로 수행하는 **`AsynchronousFileChannel`**을 정리한다. 읽기·쓰기 완료를 기다리지 않고 다른 작업을 계속하다가 완료 시 콜백 또는 Future로 결과를 받는 패턴이다.
+[지난 글](/posts/java-watch-service/)에서 파일 시스템 변경을 감시하는 `WatchService`를 다뤘다. 이번에는 파일 I/O 자체를 비동기로 수행하는 <strong>`AsynchronousFileChannel`</strong>을 정리한다. 읽기·쓰기 완료를 기다리지 않고 다른 작업을 계속하다가 완료 시 콜백 또는 Future로 결과를 받는 패턴이다.
 
 ## 왜 비동기 파일 I/O인가
 

@@ -92,7 +92,7 @@ final class Rectangle extends Shape { }
 
 ## 패턴 매칭 switch와의 결합
 
-sealed의 진정한 힘은 패턴 매칭 `switch` (Java 21)와 만날 때 발휘된다. 컴파일러는 sealed 계층의 모든 타입이 처리됐는지 **완전성(exhaustiveness)**을 정적으로 검사한다.
+sealed의 진정한 힘은 패턴 매칭 `switch` (Java 21)와 만날 때 발휘된다. 컴파일러는 sealed 계층의 모든 타입이 처리됐는지 **완전성**(exhaustiveness)을 정적으로 검사한다.
 
 ```java
 double area(Shape s) {

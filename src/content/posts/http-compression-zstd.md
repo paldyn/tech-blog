@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/http-compression-gzip-brotli/)에서 gzip과 Brotli를 정리하며 `Accept-Encoding: zstd`라는 값이 슬쩍 지나갔다. **Zstandard(zstd)**는 페이스북(현 메타)이 2016년 공개하고 RFC 8878로 표준화된 압축 알고리즘으로, 데이터 인프라 세계(Kafka, RocksDB, 리눅스 커널 이미지, ZFS)를 이미 평정한 뒤 2024년부터 브라우저에 들어오면서 HTTP 압축의 세 번째 선택지가 됐다. 이번 글은 zstd가 어떤 물건이고, 언제 gzip·Brotli 대신 골라야 하는지를 다룬다.
+[지난 글](/posts/http-compression-gzip-brotli/)에서 gzip과 Brotli를 정리하며 `Accept-Encoding: zstd`라는 값이 슬쩍 지나갔다. **Zstandard**(zstd)는 페이스북(현 메타)이 2016년 공개하고 RFC 8878로 표준화된 압축 알고리즘으로, 데이터 인프라 세계(Kafka, RocksDB, 리눅스 커널 이미지, ZFS)를 이미 평정한 뒤 2024년부터 브라우저에 들어오면서 HTTP 압축의 세 번째 선택지가 됐다. 이번 글은 zstd가 어떤 물건이고, 언제 gzip·Brotli 대신 골라야 하는지를 다룬다.
 
 ## zstd의 설계 목표 — 속도를 포기하지 않는 압축
 
@@ -132,7 +132,7 @@ Safari 등 미지원 클라이언트  | gzip 폴백 항상 유지
 ```
 
 - zstd는 **속도-압축률 트레이드오프 곡선 자체를 끌어올린** 알고리즘이다. 동적 압축에서 gzip을 대체할 1순위 후보다.
-- 브라우저 지원은 Chrome·Firefox까지 왔지만 Safari가 남았다. **Accept-Encoding 협상과 gzip 폴백, 그리고 `Vary: Accept-Encoding`**은 변함없는 기본기다.
+- 브라우저 지원은 Chrome·Firefox까지 왔지만 Safari가 남았다. <strong>Accept-Encoding 협상과 gzip 폴백, 그리고 `Vary: Accept-Encoding`</strong>은 변함없는 기본기다.
 - 사전 압축은 작은 응답의 압축률 문제를 푸는 zstd 고유의 강점이고, Compression Dictionary Transport로 웹 표준에 편입되는 중이다.
 
 이로써 HTTP 압축 3부작(전송/콘텐츠 인코딩 → gzip·Brotli → zstd)이 마무리됐다. 다음 글에서는 압축과 함께 대용량 전송의 다른 축인 **Range 요청**으로 이어진다.

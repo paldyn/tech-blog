@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-extended-statistics/)에서 확장 통계로 옵티마이저의 추정 정확도를 높이는 방법을 살펴봤다. 이제 PostgreSQL의 서버 사이드 프로그래밍 첫 주제인 **사용자 정의 함수(User-Defined Function)**를 다룬다.
+[지난 글](/posts/pg-extended-statistics/)에서 확장 통계로 옵티마이저의 추정 정확도를 높이는 방법을 살펴봤다. 이제 PostgreSQL의 서버 사이드 프로그래밍 첫 주제인 **사용자 정의 함수**(User-Defined Function)를 다룬다.
 
 ## 왜 함수를 쓰는가
 
@@ -42,7 +42,7 @@ SELECT add_tax(10000, 0.05);   -- 10500
 SELECT name, add_tax(price) AS price_with_tax FROM products;
 ```
 
-SQL 함수의 특징은 **인라인 가능(inlineable)**하다는 점이다. 옵티마이저가 함수 호출을 풀어서 함수 본문을 쿼리에 직접 삽입할 수 있다. 이 덕분에 추가 함수 호출 오버헤드 없이 옵티마이저가 최적화할 수 있다.
+SQL 함수의 특징은 **인라인 가능**(inlineable)하다는 점이다. 옵티마이저가 함수 호출을 풀어서 함수 본문을 쿼리에 직접 삽입할 수 있다. 이 덕분에 추가 함수 호출 오버헤드 없이 옵티마이저가 최적화할 수 있다.
 
 ## PL/pgSQL 함수
 

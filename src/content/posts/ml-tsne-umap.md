@@ -41,7 +41,7 @@ print(f"PCA 2D 실루엣 계수: {sil_pca:.4f}")
 
 ## t-SNE: 확률 분포로 이웃 구조 보존
 
-**t-SNE (t-Distributed Stochastic Neighbor Embedding)**는 2008년 Laurens van der Maaten과 Geoffrey Hinton이 발표했다. 핵심 아이디어는 다음과 같다.
+**t-SNE**(t-Distributed Stochastic Neighbor Embedding)는 2008년 Laurens van der Maaten과 Geoffrey Hinton이 발표했다. 핵심 아이디어는 다음과 같다.
 
 **고차원 공간**: 각 점의 이웃 확률을 **가우시안 분포**로 모델링
 ```
@@ -102,7 +102,7 @@ for perp in [5, 15, 30, 50, 100]:
 
 ## UMAP: 빠르고 전역 구조도 보존
 
-**UMAP (Uniform Manifold Approximation and Projection)**은 2018년 발표된 알고리즘으로, 위상 수학(Algebraic Topology)에 기반한다. t-SNE의 단점인 느린 속도와 전역 구조 소실을 개선했다.
+**UMAP**(Uniform Manifold Approximation and Projection)은 2018년 발표된 알고리즘으로, 위상 수학(Algebraic Topology)에 기반한다. t-SNE의 단점인 느린 속도와 전역 구조 소실을 개선했다.
 
 ```python
 # umap-learn 설치 필요: pip install umap-learn

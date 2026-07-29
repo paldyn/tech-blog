@@ -65,7 +65,7 @@ cat data.csv \
 sudo echo "nameserver 8.8.8.8" > /etc/resolv.conf
 ```
 
-`sudo`는 `echo`에만 적용되고, `>` 리다이렉션은 **현재 셸(일반 사용자 권한)**이 처리하기 때문에 `/etc/resolv.conf`를 열 수 없다.
+`sudo`는 `echo`에만 적용되고, `>` 리다이렉션은 **현재 셸**(일반 사용자 권한)이 처리하기 때문에 `/etc/resolv.conf`를 열 수 없다.
 
 ```bash
 # ✅ sudo tee로 해결

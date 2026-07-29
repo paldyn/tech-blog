@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/gitlab-flow-overview/)에서 GitLab Flow를 다뤘다. Gitflow, GitHub Flow, GitLab Flow는 모두 feature 브랜치를 수일~수주 동안 유지한다. **Trunk-Based Development(TBD)**는 그 반대 극단에 있다. 브랜치를 아예 없애거나, 있어도 2일 이내에 trunk(main)에 통합한다.
+[지난 글](/posts/gitlab-flow-overview/)에서 GitLab Flow를 다뤘다. Gitflow, GitHub Flow, GitLab Flow는 모두 feature 브랜치를 수일~수주 동안 유지한다. **Trunk-Based Development**(TBD)는 그 반대 극단에 있다. 브랜치를 아예 없애거나, 있어도 2일 이내에 trunk(main)에 통합한다.
 
 ## TBD란 무엇인가
 

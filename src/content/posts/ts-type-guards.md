@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-unknown-never-any/)에서 `unknown`, `never`, `any`의 차이를 살펴봤다. 이번에는 **타입 가드(Type Guard)**를 다룬다. TypeScript 컴파일러는 특정 패턴의 조건문을 인식하고, 해당 분기 내에서 변수 타입을 자동으로 좁혀준다. 이 기능을 **제어 흐름 분석(Control Flow Analysis)**이라고 한다.
+[지난 글](/posts/ts-unknown-never-any/)에서 `unknown`, `never`, `any`의 차이를 살펴봤다. 이번에는 **타입 가드**(Type Guard)를 다룬다. TypeScript 컴파일러는 특정 패턴의 조건문을 인식하고, 해당 분기 내에서 변수 타입을 자동으로 좁혀준다. 이 기능을 **제어 흐름 분석**(Control Flow Analysis)이라고 한다.
 
 ## typeof 가드
 

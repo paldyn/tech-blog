@@ -74,7 +74,7 @@ Worker 전역 객체는 `self`(WorkerGlobalScope)입니다. `window`는 존재�
 
 ## 구조화 복제 vs Transferable
 
-`postMessage()`는 기본적으로 데이터를 **구조화 복제(Structured Clone)**합니다. 원본과 독립적인 복사본이 전달됩니다.
+`postMessage()`는 기본적으로 데이터를 **구조화 복제**(Structured Clone)합니다. 원본과 독립적인 복사본이 전달됩니다.
 
 ```js
 // 구조화 복제 (기본) — 복사 비용 발생

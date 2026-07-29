@@ -76,7 +76,7 @@ CREATE TABLE employees (
 
 ### N:M 관계
 
-N:M은 FK만으로 직접 표현할 수 없다. **교차 테이블(Junction Table)**을 새로 만들어 두 개의 1:N 관계로 분해한다.
+N:M은 FK만으로 직접 표현할 수 없다. **교차 테이블**(Junction Table)을 새로 만들어 두 개의 1:N 관계로 분해한다.
 
 ![교차 테이블 설계](/assets/posts/sql-relationship-mapping-junction.svg)
 

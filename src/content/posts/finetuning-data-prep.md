@@ -30,7 +30,7 @@ LLM은 특정 **텍스트 패턴**을 학습한다. 파인튜닝 데이터가 �
 {"text": "파이썬에서 리스트를 역순으로 정렬하려면 list.sort(reverse=True)를 사용한다."}
 ```
 
-이 형식은 **도메인 적응(domain adaptation)**에 가장 적합하다. 의료 문서, 법률 문서, 코드 코퍼스 등 특정 도메인의 텍스트를 대량으로 학습시킬 때 사용한다. 구현이 단순하지만, "지시를 따르는 능력(instruction following)"을 가르치기 어렵다는 단점이 있다.
+이 형식은 **도메인 적응**(domain adaptation)에 가장 적합하다. 의료 문서, 법률 문서, 코드 코퍼스 등 특정 도메인의 텍스트를 대량으로 학습시킬 때 사용한다. 구현이 단순하지만, "지시를 따르는 능력(instruction following)"을 가르치기 어렵다는 단점이 있다.
 
 ### 2. Instruction Format (Alpaca 형식)
 
@@ -54,7 +54,7 @@ Stanford Alpaca 논문(2023)이 대중화한 형식이다. `instruction`, `input
 The weather is very nice today.
 ```
 
-중요한 점은 **손실 마스킹(loss masking)**이다. `### Response:` 이전의 instruction과 input 부분에 대해서는 손실을 계산하지 않고, 오직 응답 부분에만 손실을 적용한다. 이렇게 해야 모델이 프롬프트를 외우는 것이 아니라 올바른 응답 생성을 학습한다.
+중요한 점은 **손실 마스킹**(loss masking)이다. `### Response:` 이전의 instruction과 input 부분에 대해서는 손실을 계산하지 않고, 오직 응답 부분에만 손실을 적용한다. 이렇게 해야 모델이 프롬프트를 외우는 것이 아니라 올바른 응답 생성을 학습한다.
 
 ### 3. Chat Format / ChatML
 
@@ -94,7 +94,7 @@ formatted = tokenizer.apply_chat_template(
 print(formatted)
 ```
 
-`add_generation_prompt=True`는 추론 시 마지막에 어시스턴트 응답 시작 토큰을 추가한다. **학습 시에는 `False`**, **추론 시에는 `True`**로 설정해야 한다.
+`add_generation_prompt=True`는 추론 시 마지막에 어시스턴트 응답 시작 토큰을 추가한다. **학습 시에는 `False`**, <strong>추론 시에는 `True`</strong>로 설정해야 한다.
 
 ## 품질이 양보다 중요하다
 
@@ -117,7 +117,7 @@ Stanford Alpaca는 단 **52,000개**의 instruction 데이터로 GPT-3.5에 버�
 
 ### 1단계: 중복 제거 (Deduplication)
 
-중복 샘플은 모델이 해당 패턴을 과도하게 외우게 만들어 일반화 성능을 저하시킨다. 완전 일치(exact match)뿐 아니라 MinHash나 SimHash를 사용한 **퍼지 중복 제거(fuzzy deduplication)**도 적용한다.
+중복 샘플은 모델이 해당 패턴을 과도하게 외우게 만들어 일반화 성능을 저하시킨다. 완전 일치(exact match)뿐 아니라 MinHash나 SimHash를 사용한 **퍼지 중복 제거**(fuzzy deduplication)도 적용한다.
 
 ```python
 from datasketch import MinHash, MinHashLSH
@@ -200,7 +200,7 @@ for seed in seed_instructions:
         synthetic_data.append(sample)
 ```
 
-합성 데이터는 반드시 **인간 검토(human review)**를 거쳐야 한다. LLM이 생성한 데이터에도 할루시네이션이 포함될 수 있기 때문이다.
+합성 데이터는 반드시 **인간 검토**(human review)를 거쳐야 한다. LLM이 생성한 데이터에도 할루시네이션이 포함될 수 있기 때문이다.
 
 ## 데이터 분리: Train/Validation 분할
 

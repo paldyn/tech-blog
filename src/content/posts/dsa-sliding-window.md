@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-two-pointers/)에서 투 포인터로 O(N²)을 O(N)으로 줄이는 방법을 다뤘습니다. 이번에는 **연속 부분 배열·문자열** 최적화에 특화된 **슬라이딩 윈도우(Sliding Window)**입니다.
+[지난 글](/posts/dsa-two-pointers/)에서 투 포인터로 O(N²)을 O(N)으로 줄이는 방법을 다뤘습니다. 이번에는 **연속 부분 배열·문자열** 최적화에 특화된 **슬라이딩 윈도우**(Sliding Window)입니다.
 
 ## 핵심 아이디어
 

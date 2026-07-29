@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-bipartite-matching/)에서 이분 매칭을 다뤘습니다. 이번에는 트리 알고리즘의 핵심 테크닉인 **LCA(Lowest Common Ancestor, 최소 공통 조상)**를 다룹니다. 두 노드 u, v의 LCA는 u와 v를 모두 자손으로 갖는 노드 중 가장 깊은 노드입니다. 이진 리프팅은 전처리 O(N log N), 쿼리 O(log N)으로 대용량 쿼리를 효율적으로 처리합니다.
+[지난 글](/posts/dsa-bipartite-matching/)에서 이분 매칭을 다뤘습니다. 이번에는 트리 알고리즘의 핵심 테크닉인 **LCA**(Lowest Common Ancestor, 최소 공통 조상)를 다룹니다. 두 노드 u, v의 LCA는 u와 v를 모두 자손으로 갖는 노드 중 가장 깊은 노드입니다. 이진 리프팅은 전처리 O(N log N), 쿼리 O(log N)으로 대용량 쿼리를 효율적으로 처리합니다.
 
 ## 핵심 아이디어: 이진 점프 테이블
 

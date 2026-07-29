@@ -43,7 +43,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
 ## RCSI — 행 버전 기반 READ COMMITTED
 
-**RCSI(Read Committed Snapshot Isolation)**는 데이터베이스 수준 옵션이다. 활성화하면 `READ COMMITTED` 트랜잭션이 **공유 락 없이** 행의 이전 버전을 읽는다.
+**RCSI**(Read Committed Snapshot Isolation)는 데이터베이스 수준 옵션이다. 활성화하면 `READ COMMITTED` 트랜잭션이 **공유 락 없이** 행의 이전 버전을 읽는다.
 
 ```sql
 -- RCSI 활성화 (DB 단독 사용 중일 때 실행)
@@ -60,7 +60,7 @@ WHERE  name = 'AdventureWorks';
 
 ![RCSI 행 버전 저장 메커니즘](/assets/posts/mssql-isolation-rcsi-flow.svg)
 
-내부적으로 SQL Server는 `tempdb`에 **버전 저장소(Version Store)**를 유지한다. 행이 수정될 때 이전 버전이 버전 저장소에 복사되고, 수정 중에 읽기 요청이 오면 버전 저장소에서 이전 값을 돌려준다. 읽기가 쓰기를 기다리지 않으므로 대기 없이 즉시 응답한다.
+내부적으로 SQL Server는 `tempdb`에 **버전 저장소**(Version Store)를 유지한다. 행이 수정될 때 이전 버전이 버전 저장소에 복사되고, 수정 중에 읽기 요청이 오면 버전 저장소에서 이전 값을 돌려준다. 읽기가 쓰기를 기다리지 않으므로 대기 없이 즉시 응답한다.
 
 ## SNAPSHOT — 트랜잭션 시작 시점 스냅샷
 

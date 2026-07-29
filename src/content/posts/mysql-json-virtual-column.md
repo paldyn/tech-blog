@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mysql-event-scheduler/)에서 이벤트 스케줄러로 자동 배치 작업을 처리하는 방법을 살펴봤습니다. 이번 글에서는 MySQL 5.7에서 도입된 **JSON 네이티브 타입**과 **가상 컬럼(Generated Column)**을 사용해 반정형 데이터를 효율적으로 관리하는 방법을 다룹니다.
+[지난 글](/posts/mysql-event-scheduler/)에서 이벤트 스케줄러로 자동 배치 작업을 처리하는 방법을 살펴봤습니다. 이번 글에서는 MySQL 5.7에서 도입된 **JSON 네이티브 타입**과 **가상 컬럼**(Generated Column)을 사용해 반정형 데이터를 효율적으로 관리하는 방법을 다룹니다.
 
 ## JSON 네이티브 타입
 
@@ -63,7 +63,7 @@ WHERE 조건이나 ORDER BY에서도 동일하게 사용할 수 있습니다. �
 
 ## 가상 컬럼 — JSON에 인덱스 걸기
 
-JSON 컬럼 자체에는 직접 인덱스를 생성할 수 없습니다. 대신 **Generated Column(가상 컬럼)**을 만들고 그 컬럼에 인덱스를 생성합니다.
+JSON 컬럼 자체에는 직접 인덱스를 생성할 수 없습니다. 대신 **Generated Column**(가상 컬럼)을 만들고 그 컬럼에 인덱스를 생성합니다.
 
 ![JSON 가상 컬럼 코드](/assets/posts/mysql-json-virtual-column-code.svg)
 

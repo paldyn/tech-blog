@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-cidr/)에서 CIDR로 IP 주소를 효율적으로 관리하는 방법을 살펴봤다. 이번에는 실제 패킷이 네트워크를 통과할 때 발생하는 물리적 제약인 **MTU(Maximum Transmission Unit)**와, 패킷이 MTU를 초과할 때 발생하는 **단편화(Fragmentation)**를 다룬다.
+[지난 글](/posts/network-cidr/)에서 CIDR로 IP 주소를 효율적으로 관리하는 방법을 살펴봤다. 이번에는 실제 패킷이 네트워크를 통과할 때 발생하는 물리적 제약인 **MTU**(Maximum Transmission Unit)와, 패킷이 MTU를 초과할 때 발생하는 **단편화**(Fragmentation)를 다룬다.
 
 ## MTU란 무엇인가
 
-MTU는 특정 링크 계층 프로토콜이 한 번에 전달할 수 있는 **최대 페이로드 크기(바이트)**다.
+MTU는 특정 링크 계층 프로토콜이 한 번에 전달할 수 있는 **최대 페이로드 크기**(바이트)다.
 
 ```
 링크 유형별 MTU:

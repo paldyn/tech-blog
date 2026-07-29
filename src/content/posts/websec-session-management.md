@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-brute-force-defense/)에서 로그인 자체를 보호하는 방법을 알아봤다. 로그인에 성공한 이후에는 **세션(Session)**이 사용자를 식별하는 수단이 된다. 세션이 탈취되면 로그인 과정 전체가 무의미해진다.
+[지난 글](/posts/websec-brute-force-defense/)에서 로그인 자체를 보호하는 방법을 알아봤다. 로그인에 성공한 이후에는 **세션**(Session)이 사용자를 식별하는 수단이 된다. 세션이 탈취되면 로그인 과정 전체가 무의미해진다.
 
 ## 세션 ID 생성 원칙
 
-세션 ID는 반드시 **암호학적으로 안전한 의사 난수 생성기(CSPRNG)**로 생성해야 한다.
+세션 ID는 반드시 **암호학적으로 안전한 의사 난수 생성기**(CSPRNG)로 생성해야 한다.
 
 ```python
 import secrets

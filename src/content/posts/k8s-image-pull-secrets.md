@@ -130,7 +130,7 @@ spec:
 
 ## IRSA로 시크릿 없이 인증 (EKS 권장)
 
-AWS EKS에서는 **IRSA(IAM Roles for Service Accounts)**를 사용하면 Secret 없이도 ECR에 접근할 수 있다. kubelet이 Node의 IAM 역할을 통해 자동으로 인증한다.
+AWS EKS에서는 **IRSA**(IAM Roles for Service Accounts)를 사용하면 Secret 없이도 ECR에 접근할 수 있다. kubelet이 Node의 IAM 역할을 통해 자동으로 인증한다.
 
 ```bash
 # 1. OIDC 프로바이더 생성 (클러스터당 1회)

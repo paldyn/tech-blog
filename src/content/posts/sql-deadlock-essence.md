@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-2pl-mvcc-theory/)에서 2PL에서 교착상태가 발생할 수 있다고 언급했다. 이번에는 **데드락(Deadlock)**의 발생 조건, DB의 감지 메커니즘, 예방 전략, 그리고 발생했을 때의 대처 방법을 구체적으로 살펴본다.
+[지난 글](/posts/sql-2pl-mvcc-theory/)에서 2PL에서 교착상태가 발생할 수 있다고 언급했다. 이번에는 **데드락**(Deadlock)의 발생 조건, DB의 감지 메커니즘, 예방 전략, 그리고 발생했을 때의 대처 방법을 구체적으로 살펴본다.
 
 ---
 
@@ -44,7 +44,7 @@ DB에서는 주로 **순환 대기를 제거**하는 방식으로 예방한다.
 
 ## DB의 데드락 감지 방법
 
-대부분의 RDBMS는 **Wait-For Graph(WFG)**를 주기적으로 분석해 사이클을 감지한다.
+대부분의 RDBMS는 **Wait-For Graph**(WFG)를 주기적으로 분석해 사이클을 감지한다.
 
 ```sql
 -- PostgreSQL: deadlock_timeout 후 감지 시작 (기본 1초)

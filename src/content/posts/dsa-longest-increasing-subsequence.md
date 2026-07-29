@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-tree-dp/)에서 트리 DP로 서브트리를 합산하는 패턴을 살펴봤습니다. 이번에는 DP의 고전 문제인 **최장 증가 부분 수열(LIS, Longest Increasing Subsequence)**을 다룹니다. 배열에서 순서를 유지하면서 값이 증가하는 가장 긴 부분 수열을 구하는 문제로, O(n²) DP와 O(n log n) 이분 탐색 두 가지 접근을 모두 이해하는 것이 중요합니다.
+[지난 글](/posts/dsa-tree-dp/)에서 트리 DP로 서브트리를 합산하는 패턴을 살펴봤습니다. 이번에는 DP의 고전 문제인 **최장 증가 부분 수열**(LIS, Longest Increasing Subsequence)을 다룹니다. 배열에서 순서를 유지하면서 값이 증가하는 가장 긴 부분 수열을 구하는 문제로, O(n²) DP와 O(n log n) 이분 탐색 두 가지 접근을 모두 이해하는 것이 중요합니다.
 
 ## 문제 정의
 

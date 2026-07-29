@@ -42,7 +42,7 @@ efibootmgr -v
 
 ## ② 부트로더 — GRUB2
 
-**GRUB2(GRand Unified Bootloader 2)**는 현재 대부분의 Linux 배포판이 사용하는 부트로더입니다.
+**GRUB2**(GRand Unified Bootloader 2)는 현재 대부분의 Linux 배포판이 사용하는 부트로더입니다.
 
 ```bash
 # GRUB 설정 파일 위치

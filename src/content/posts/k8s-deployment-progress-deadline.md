@@ -17,7 +17,7 @@ draft: false
 
 `progressDeadlineSeconds`는 Deployment가 새 ReplicaSet을 활성화하는 데 허용되는 **최대 시간**입니다. 이 시간 안에 배포가 완료되지 않으면 Deployment의 `.status.conditions`에 `Progressing: False` 조건이 기록되고, `reason: ProgressDeadlineExceeded`가 설정됩니다.
 
-기본값은 **600초(10분)**입니다.
+기본값은 **600초**(10분)입니다.
 
 ```yaml
 spec:

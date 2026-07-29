@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-selection-sort/)에서 선택 정렬을 다뤘습니다. 이번에는 **삽입 정렬(Insertion Sort)**입니다. 카드 게임에서 손에 쥔 카드를 순서에 맞게 끼워 넣는 방식과 동일합니다. 거의 정렬된 데이터에서 O(N)에 가까운 성능을 내고, Tim Sort의 기반이 되는 중요한 알고리즘입니다.
+[지난 글](/posts/dsa-selection-sort/)에서 선택 정렬을 다뤘습니다. 이번에는 **삽입 정렬**(Insertion Sort)입니다. 카드 게임에서 손에 쥔 카드를 순서에 맞게 끼워 넣는 방식과 동일합니다. 거의 정렬된 데이터에서 O(N)에 가까운 성능을 내고, Tim Sort의 기반이 되는 중요한 알고리즘입니다.
 
 ## 동작 원리
 

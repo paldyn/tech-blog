@@ -43,7 +43,7 @@ const move = 0; /* Direction.Up */
 
 ## 컴파일 결과 차이
 
-일반 enum은 JavaScript로 컴파일될 때 **즉시 실행 함수(IIFE)**를 이용해 객체를 생성한다.
+일반 enum은 JavaScript로 컴파일될 때 **즉시 실행 함수**(IIFE)를 이용해 객체를 생성한다.
 
 ```typescript
 // TypeScript — 일반 enum

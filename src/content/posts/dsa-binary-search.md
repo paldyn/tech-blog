@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-linear-search/)에서 O(N) 선형 탐색을 다뤘습니다. 이번에는 **이진 탐색(Binary Search)**입니다. 정렬된 배열에서 매 단계마다 탐색 범위를 절반으로 줄여 **O(log N)**에 원소를 찾습니다. N=10억이라도 30번이면 충분합니다.
+[지난 글](/posts/dsa-linear-search/)에서 O(N) 선형 탐색을 다뤘습니다. 이번에는 **이진 탐색**(Binary Search)입니다. 정렬된 배열에서 매 단계마다 탐색 범위를 절반으로 줄여 **O**(log N)에 원소를 찾습니다. N=10억이라도 30번이면 충분합니다.
 
 ## 핵심 원리
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-args-kwargs/)에서 `*args`와 `**kwargs`로 가변 인수를 받는 방법을 알아봤다. 이번에는 특정 인수를 반드시 이름으로만 전달하도록 강제하는 **키워드 전용 인수(keyword-only arguments)**를 살펴본다.
+[지난 글](/posts/python-args-kwargs/)에서 `*args`와 `**kwargs`로 가변 인수를 받는 방법을 알아봤다. 이번에는 특정 인수를 반드시 이름으로만 전달하도록 강제하는 **키워드 전용 인수**(keyword-only arguments)를 살펴본다.
 
 ## 왜 필요한가
 

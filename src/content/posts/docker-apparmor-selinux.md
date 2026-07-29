@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-seccomp-profile/)에서 seccomp로 허용 syscall을 제한하는 방법을 다뤘다. 이번에는 **강제 접근 제어(MAC, Mandatory Access Control)**를 제공하는 AppArmor와 SELinux를 컨테이너에 적용하는 방법을 살펴본다. 이 두 메커니즘은 root 권한이 있어도 정책 범위 밖의 파일에 접근하지 못하도록 커널이 강제한다.
+[지난 글](/posts/docker-seccomp-profile/)에서 seccomp로 허용 syscall을 제한하는 방법을 다뤘다. 이번에는 **강제 접근 제어**(MAC, Mandatory Access Control)를 제공하는 AppArmor와 SELinux를 컨테이너에 적용하는 방법을 살펴본다. 이 두 메커니즘은 root 권한이 있어도 정책 범위 밖의 파일에 접근하지 못하도록 커널이 강제한다.
 
 ## 강제 접근 제어(MAC)란
 

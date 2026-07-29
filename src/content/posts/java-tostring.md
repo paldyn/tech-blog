@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-equals-hashcode/)에서 `equals()`와 `hashCode()`의 계약과 올바른 구현 방법을 살펴봤다. 이번에는 `Object`의 또 다른 핵심 메서드인 **`toString()`**을 다룬다. `equals`/`hashCode`보다 단순해 보이지만, 제대로 구현하지 않으면 디버깅이 어려워지고 로그가 무의미해진다.
+[지난 글](/posts/java-equals-hashcode/)에서 `equals()`와 `hashCode()`의 계약과 올바른 구현 방법을 살펴봤다. 이번에는 `Object`의 또 다른 핵심 메서드인 <strong>`toString()`</strong>을 다룬다. `equals`/`hashCode`보다 단순해 보이지만, 제대로 구현하지 않으면 디버깅이 어려워지고 로그가 무의미해진다.
 
 ## 기본 동작
 

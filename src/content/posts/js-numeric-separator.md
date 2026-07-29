@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-logical-assignment/)에서 논리 할당 연산자를 살펴봤습니다. 이번에는 같은 ES2021 스펙에 포함된 **숫자 구분자(Numeric Separator)**를 다룹니다. 기능 자체는 단순하지만, 대규모 수치를 다루는 코드에서 실수를 줄이는 데 의외로 큰 역할을 합니다.
+[지난 글](/posts/js-logical-assignment/)에서 논리 할당 연산자를 살펴봤습니다. 이번에는 같은 ES2021 스펙에 포함된 **숫자 구분자**(Numeric Separator)를 다룹니다. 기능 자체는 단순하지만, 대규모 수치를 다루는 코드에서 실수를 줄이는 데 의외로 큰 역할을 합니다.
 
 ## 숫자 구분자란?
 

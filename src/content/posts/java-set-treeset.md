@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-set-linkedhashset/)에서 삽입 순서를 유지하는 LinkedHashSet을 살펴봤다. 이번에는 **`TreeSet`**을 다룬다. TreeSet은 원소를 항상 **정렬된 순서**로 유지하고, 범위 탐색과 인접 원소 검색 같은 풍부한 쿼리 메서드를 제공한다.
+[지난 글](/posts/java-set-linkedhashset/)에서 삽입 순서를 유지하는 LinkedHashSet을 살펴봤다. 이번에는 <strong>`TreeSet`</strong>을 다룬다. TreeSet은 원소를 항상 **정렬된 순서**로 유지하고, 범위 탐색과 인접 원소 검색 같은 풍부한 쿼리 메서드를 제공한다.
 
 ## 내부 구조: Red-Black Tree
 
@@ -26,7 +26,7 @@ public TreeSet() {
 }
 ```
 
-Red-Black Tree는 삽입·삭제 후 트리를 자동으로 균형 잡아 높이를 O(log n)으로 유지한다. 따라서 모든 기본 연산(add, remove, contains)이 **O(log n)**을 보장한다.
+Red-Black Tree는 삽입·삭제 후 트리를 자동으로 균형 잡아 높이를 O(log n)으로 유지한다. 따라서 모든 기본 연산(add, remove, contains)이 **O**(log n)을 보장한다.
 
 ![TreeSet 내부 — Red-Black Tree 기반 정렬](/assets/posts/java-set-treeset-structure.svg)
 

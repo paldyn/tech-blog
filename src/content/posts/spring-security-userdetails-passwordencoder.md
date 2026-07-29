@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-security-authentication-vs-authorization/)에서 인증과 인가의 개념적 차이를 살펴봤습니다. 이번 글에서는 인증 흐름에서 핵심 역할을 하는 두 인터페이스, **`UserDetailsService`**와 **`PasswordEncoder`**를 직접 구현합니다. 이 두 컴포넌트를 올바르게 구현해야 Spring Security가 사용자를 식별하고 비밀번호를 안전하게 검증할 수 있습니다.
+[지난 글](/posts/spring-security-authentication-vs-authorization/)에서 인증과 인가의 개념적 차이를 살펴봤습니다. 이번 글에서는 인증 흐름에서 핵심 역할을 하는 두 인터페이스, <strong>`UserDetailsService`</strong>와 <strong>`PasswordEncoder`</strong>를 직접 구현합니다. 이 두 컴포넌트를 올바르게 구현해야 Spring Security가 사용자를 식별하고 비밀번호를 안전하게 검증할 수 있습니다.
 
 ## UserDetails 인터페이스
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/real-i18n/)에서 react-i18next로 다국어 지원을 구현했습니다. 이번에는 **웹 접근성(Accessibility, a11y)**을 다룹니다. 접근성은 시각 장애인이나 운동 장애인만을 위한 것이 아닙니다. 화면 리더, 키보드만 사용하는 고급 사용자, 느린 네트워크 환경의 사용자 모두에게 더 나은 경험을 제공합니다. WCAG(Web Content Accessibility Guidelines) 2.1 AA 수준을 목표로 하는 것이 현재 산업 표준입니다.
+[지난 글](/posts/real-i18n/)에서 react-i18next로 다국어 지원을 구현했습니다. 이번에는 **웹 접근성**(Accessibility, a11y)을 다룹니다. 접근성은 시각 장애인이나 운동 장애인만을 위한 것이 아닙니다. 화면 리더, 키보드만 사용하는 고급 사용자, 느린 네트워크 환경의 사용자 모두에게 더 나은 경험을 제공합니다. WCAG(Web Content Accessibility Guidelines) 2.1 AA 수준을 목표로 하는 것이 현재 산업 표준입니다.
 
 ![웹 접근성 — ARIA 속성과 역할](/assets/posts/real-accessibility-aria.svg)
 

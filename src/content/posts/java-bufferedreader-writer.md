@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-streams-byte-char/)에서 바이트 스트림과 문자 스트림의 핵심 API를 살펴봤다. 이번에는 실무에서 가장 자주 쓰이는 **`BufferedReader`와 `BufferedWriter`**를 깊이 파고든다. 버퍼링이 성능에 어떤 차이를 만드는지, `readLine()`의 올바른 사용법, `PrintWriter`의 `autoFlush`까지 다룬다.
+[지난 글](/posts/java-streams-byte-char/)에서 바이트 스트림과 문자 스트림의 핵심 API를 살펴봤다. 이번에는 실무에서 가장 자주 쓰이는 <strong>`BufferedReader`와 `BufferedWriter`</strong>를 깊이 파고든다. 버퍼링이 성능에 어떤 차이를 만드는지, `readLine()`의 올바른 사용법, `PrintWriter`의 `autoFlush`까지 다룬다.
 
 ## 왜 BufferedReader가 필요한가
 
-`FileReader`의 `read()`는 한 번 호출할 때마다 **시스템 콜(커널 모드 전환)**을 발생시킨다. 10만 문자를 읽으면 10만 번의 시스템 콜이 일어난다. 이는 성능에 치명적이다.
+`FileReader`의 `read()`는 한 번 호출할 때마다 **시스템 콜**(커널 모드 전환)을 발생시킨다. 10만 문자를 읽으면 10만 번의 시스템 콜이 일어난다. 이는 성능에 치명적이다.
 
 `BufferedReader`는 내부에 **기본 8192 chars(약 16KB)** 의 버퍼를 두고, 한 번의 시스템 콜로 대량의 데이터를 읽어온 후 버퍼에서 순차적으로 제공한다.
 

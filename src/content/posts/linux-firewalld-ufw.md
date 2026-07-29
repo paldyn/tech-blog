@@ -15,7 +15,7 @@ draft: false
 
 ## firewalld: 존(Zone) 기반 방화벽
 
-firewalld의 핵심 개념은 **존(Zone)**입니다. 네트워크 인터페이스나 IP 주소를 특정 존에 할당하면, 그 존의 정책이 적용됩니다. 네트워크 환경이 바뀔 때(예: 사무실 Wi-Fi → 공용 Wi-Fi) 인터페이스를 다른 존으로 옮기는 것만으로 보안 정책을 전환할 수 있습니다.
+firewalld의 핵심 개념은 **존**(Zone)입니다. 네트워크 인터페이스나 IP 주소를 특정 존에 할당하면, 그 존의 정책이 적용됩니다. 네트워크 환경이 바뀔 때(예: 사무실 Wi-Fi → 공용 Wi-Fi) 인터페이스를 다른 존으로 옮기는 것만으로 보안 정책을 전환할 수 있습니다.
 
 ![firewalld 존 신뢰 수준](/assets/posts/linux-firewalld-ufw-zones.svg)
 
@@ -37,7 +37,7 @@ firewall-cmd --list-all
 firewall-cmd --zone=public --list-all
 ```
 
-변경 사항은 기본적으로 **런타임(runtime)**에만 적용됩니다. 재부팅 후에도 유지하려면 `--permanent` 플래그를 추가한 뒤 `--reload`를 실행해야 합니다.
+변경 사항은 기본적으로 **런타임**(runtime)에만 적용됩니다. 재부팅 후에도 유지하려면 `--permanent` 플래그를 추가한 뒤 `--reload`를 실행해야 합니다.
 
 ```bash
 # 포트 영구 허용

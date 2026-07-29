@@ -36,7 +36,7 @@ const fn = outer();
 // → count, data는 힙에서 살아있음
 ```
 
-`outer()`가 반환되면 outer의 스택 프레임은 사라지지만, `inner` 함수 객체의 `[[Environment]]`가 outer의 **환경 레코드(힙)**를 참조하고 있습니다. `fn`이 살아있는 한 `count`와 `data`는 GC 대상이 되지 않습니다.
+`outer()`가 반환되면 outer의 스택 프레임은 사라지지만, `inner` 함수 객체의 `[[Environment]]`가 outer의 **환경 레코드**(힙)를 참조하고 있습니다. `fn`이 살아있는 한 `count`와 `data`는 GC 대상이 되지 않습니다.
 
 ![클로저가 외부 변수를 붙잡는 구조](/assets/posts/js-closure-and-memory-scope.svg)
 

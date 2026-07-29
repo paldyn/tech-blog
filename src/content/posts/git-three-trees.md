@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-clone/)에서 원격 저장소를 로컬로 복제하는 방법을 살펴봤다. 이제 Git의 내부 구조 중 가장 핵심적인 개념을 다룰 차례다. Git의 **세 가지 트리(three trees)**를 이해하면 `git add`, `git commit`, `git reset`, `git restore` 같은 명령어들이 왜 그런 방식으로 동작하는지 명확하게 납득할 수 있다.
+[지난 글](/posts/git-clone/)에서 원격 저장소를 로컬로 복제하는 방법을 살펴봤다. 이제 Git의 내부 구조 중 가장 핵심적인 개념을 다룰 차례다. Git의 **세 가지 트리**(three trees)를 이해하면 `git add`, `git commit`, `git reset`, `git restore` 같은 명령어들이 왜 그런 방식으로 동작하는지 명확하게 납득할 수 있다.
 
 ## 세 트리의 개념
 

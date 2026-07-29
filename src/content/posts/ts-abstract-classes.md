@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-ecmascript-private-fields/)에서 ECMAScript 비공개 필드를 살펴봤다. 이번에는 **추상 클래스(Abstract Class)**를 다룬다. 추상 클래스는 직접 인스턴스화할 수 없는 클래스로, 공통 구조와 동작을 정의하는 **설계도** 역할을 한다. 서브클래스는 이 설계도를 바탕으로 구체적인 구현을 제공해야 한다.
+[지난 글](/posts/ts-ecmascript-private-fields/)에서 ECMAScript 비공개 필드를 살펴봤다. 이번에는 **추상 클래스**(Abstract Class)를 다룬다. 추상 클래스는 직접 인스턴스화할 수 없는 클래스로, 공통 구조와 동작을 정의하는 **설계도** 역할을 한다. 서브클래스는 이 설계도를 바탕으로 구체적인 구현을 제공해야 한다.
 
 ## abstract 키워드
 

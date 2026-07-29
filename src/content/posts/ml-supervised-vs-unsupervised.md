@@ -15,7 +15,7 @@ draft: false
 
 ## 지도 학습: 정답 있는 공부
 
-**지도 학습(Supervised Learning)**은 입력(X)과 정답 레이블(y)이 쌍으로 주어진다. 모델은 `f(X) ≈ y`인 함수를 학습한다.
+**지도 학습**(Supervised Learning)은 입력(X)과 정답 레이블(y)이 쌍으로 주어진다. 모델은 `f(X) ≈ y`인 함수를 학습한다.
 
 지도 학습의 두 주요 유형:
 - **분류(Classification)**: 이산적인 클래스를 예측. 이메일이 스팸인가 아닌가? 이미지가 고양이인가 강아지인가?
@@ -44,7 +44,7 @@ print(f"정확도: {accuracy_score(y_test, predictions):.3f}")  # ≈ 0.967
 
 ## 비지도 학습: 정답 없는 탐험
 
-**비지도 학습(Unsupervised Learning)**은 레이블 없이 데이터의 숨겨진 구조를 찾는다.
+**비지도 학습**(Unsupervised Learning)은 레이블 없이 데이터의 숨겨진 구조를 찾는다.
 
 ```python
 from sklearn.cluster import KMeans
@@ -76,7 +76,7 @@ print(f"분산 설명력: {pca.explained_variance_ratio_.sum():.1%}")
 
 ## 반지도 학습: 소수 레이블의 활용
 
-**반지도 학습(Semi-supervised Learning)**은 소수의 레이블 데이터와 다수의 무레이블 데이터를 함께 활용한다.
+**반지도 학습**(Semi-supervised Learning)은 소수의 레이블 데이터와 다수의 무레이블 데이터를 함께 활용한다.
 
 ```python
 from sklearn.semi_supervised import LabelPropagation
@@ -95,13 +95,13 @@ transduced_labels = label_prop.transduction_
 print(f"레이블 전파 정확도: {accuracy_score(y, transduced_labels):.3f}")
 ```
 
-현대 LLM 파인튜닝에서 사용하는 **RLHF(인간 피드백 강화 학습)**도 반지도 학습의 일종이다. 소수의 인간 선호 데이터로 보상 모델을 학습하고, 이를 무제한의 모델 출력에 적용한다.
+현대 LLM 파인튜닝에서 사용하는 **RLHF**(인간 피드백 강화 학습)도 반지도 학습의 일종이다. 소수의 인간 선호 데이터로 보상 모델을 학습하고, 이를 무제한의 모델 출력에 적용한다.
 
 ![머신러닝 학습 패러다임 완전 지도](/assets/posts/ml-supervised-vs-unsupervised-overview.svg)
 
 ## 자기지도 학습: AI의 혁명
 
-**자기지도 학습(Self-supervised Learning)**은 데이터 자체에서 지도 신호를 자동 생성한다. 레이블링 비용 없이 대규모 데이터를 활용할 수 있어 현대 AI의 핵심 패러다임이 되었다.
+**자기지도 학습**(Self-supervised Learning)은 데이터 자체에서 지도 신호를 자동 생성한다. 레이블링 비용 없이 대규모 데이터를 활용할 수 있어 현대 AI의 핵심 패러다임이 되었다.
 
 ```python
 # GPT 스타일: 다음 토큰 예측

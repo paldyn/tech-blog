@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-tail-recursion-limit/)에서 재귀 깊이 제한과 해결책을 살펴봤다. 재귀와 밀접하게 연결된 또 다른 최적화 기법이 **메모이제이션(Memoization)**이다. 동일한 인자로 함수가 반복 호출될 때 이전 결과를 캐시해서 재계산을 피하는 방식이다.
+[지난 글](/posts/python-tail-recursion-limit/)에서 재귀 깊이 제한과 해결책을 살펴봤다. 재귀와 밀접하게 연결된 또 다른 최적화 기법이 **메모이제이션**(Memoization)이다. 동일한 인자로 함수가 반복 호출될 때 이전 결과를 캐시해서 재계산을 피하는 방식이다.
 
 ## 메모이제이션이란?
 

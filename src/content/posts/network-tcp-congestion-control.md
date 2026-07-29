@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-mss-mtu-pmtud/)에서 MSS와 MTU, PMTUD의 원리를 살펴봤다. TCP 성능의 마지막 퍼즐 조각은 **혼잡 제어(Congestion Control)**다. 흐름 제어가 수신자를 보호한다면, 혼잡 제어는 **네트워크를 보호**한다. 이 둘의 최솟값이 실제 전송 속도를 결정한다.
+[지난 글](/posts/network-mss-mtu-pmtud/)에서 MSS와 MTU, PMTUD의 원리를 살펴봤다. TCP 성능의 마지막 퍼즐 조각은 **혼잡 제어**(Congestion Control)다. 흐름 제어가 수신자를 보호한다면, 혼잡 제어는 **네트워크를 보호**한다. 이 둘의 최솟값이 실제 전송 속도를 결정한다.
 
 ## 혼잡이란 무엇인가
 
-라우터의 큐가 꽉 차면 새로 들어오는 패킷을 버린다. 이를 **혼잡(Congestion)**이라 한다. 모든 TCP 연결이 욕심껏 보내면 네트워크 전체가 붕괴하는 **혼잡 붕괴(Congestion Collapse)**가 발생한다(1980년대에 실제 발생). TCP 혼잡 제어는 각 연결이 스스로 자제하는 분산 알고리즘이다.
+라우터의 큐가 꽉 차면 새로 들어오는 패킷을 버린다. 이를 **혼잡**(Congestion)이라 한다. 모든 TCP 연결이 욕심껏 보내면 네트워크 전체가 붕괴하는 **혼잡 붕괴**(Congestion Collapse)가 발생한다(1980년대에 실제 발생). TCP 혼잡 제어는 각 연결이 스스로 자제하는 분산 알고리즘이다.
 
 ```text
 cwnd (Congestion Window): 송신자 자체 제한 윈도우
@@ -28,7 +28,7 @@ ssthresh (Slow Start Threshold): SS와 CA의 경계
 
 ![TCP 혼잡 제어 cwnd 변화 (Reno)](/assets/posts/network-tcp-congestion-control-aimd.svg)
 
-그래프의 특징적인 **톱니 모양(Sawtooth)**은 TCP가 점진적으로 속도를 높이다가 손실을 감지하면 즉시 줄이는 AIMD 동작을 나타낸다.
+그래프의 특징적인 **톱니 모양**(Sawtooth)은 TCP가 점진적으로 속도를 높이다가 손실을 감지하면 즉시 줄이는 AIMD 동작을 나타낸다.
 
 ## 4단계 혼잡 제어
 
@@ -85,7 +85,7 @@ def on_timeout(cwnd, ssthresh):
 
 ## AIMD: 공정성을 보장하는 원리
 
-**AIMD(Additive Increase, Multiplicative Decrease)**는 TCP 혼잡 제어의 핵심 철학이다. 여러 TCP 연결이 공유 링크를 경쟁할 때 AIMD는 자연스럽게 공평한 분배로 수렴한다.
+**AIMD**(Additive Increase, Multiplicative Decrease)는 TCP 혼잡 제어의 핵심 철학이다. 여러 TCP 연결이 공유 링크를 경쟁할 때 AIMD는 자연스럽게 공평한 분배로 수렴한다.
 
 ```text
 AI (Additive Increase): 문제없으면 조금씩 늘린다
@@ -118,7 +118,7 @@ sysctl -w net.ipv4.tcp_congestion_control=bbr
 
 ## BBR: 모델 기반 혼잡 제어
 
-Google이 개발한 **BBR(Bottleneck Bandwidth and RTT)**은 패킷 손실이 아닌 **대역폭과 RTT를 직접 측정**해 혼잡을 감지한다. 특히 무선 네트워크처럼 손실이 혼잡이 아닌 노이즈 때문에 발생하는 환경에서 Reno/CUBIC보다 훨씬 좋은 성능을 보인다. 유튜브, Google 검색 서비스에 BBR이 배포됐다.
+Google이 개발한 **BBR**(Bottleneck Bandwidth and RTT)은 패킷 손실이 아닌 **대역폭과 RTT를 직접 측정**해 혼잡을 감지한다. 특히 무선 네트워크처럼 손실이 혼잡이 아닌 노이즈 때문에 발생하는 환경에서 Reno/CUBIC보다 훨씬 좋은 성능을 보인다. 유튜브, Google 검색 서비스에 BBR이 배포됐다.
 
 ---
 

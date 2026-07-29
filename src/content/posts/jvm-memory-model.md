@@ -58,9 +58,9 @@ Survivor가 두 개인 이유도 여기 있습니다. 매 Minor GC마다 살아�
 
 ### 3. 나이가 차면 Old로 승격
 
-객체는 Minor GC에서 살아남을 때마다 **나이(age)**가 1씩 증가하고, 임계값(`-XX:MaxTenuringThreshold`, 기본 15)에 도달하면 **Old 세대로 승격(promotion)**됩니다. Survivor에 다 안 들어갈 만큼 생존 객체가 많거나, Survivor보다 큰 대형 객체는 임계값과 무관하게 조기 승격되거나 Old에 직접 할당되기도 합니다.
+객체는 Minor GC에서 살아남을 때마다 **나이**(age)가 1씩 증가하고, 임계값(`-XX:MaxTenuringThreshold`, 기본 15)에 도달하면 **Old 세대로 승격**(promotion)됩니다. Survivor에 다 안 들어갈 만큼 생존 객체가 많거나, Survivor보다 큰 대형 객체는 임계값과 무관하게 조기 승격되거나 Old에 직접 할당되기도 합니다.
 
-Old 세대가 차오르면 Major GC(또는 Full GC)가 필요한데, Young보다 영역이 크고 생존율도 높아 일반적으로 훨씬 비쌉니다. **GC 튜닝의 상당 부분은 "일찍 죽을 객체가 Old로 승격되지 않게 하는 것"**이라고 요약할 수 있습니다.
+Old 세대가 차오르면 Major GC(또는 Full GC)가 필요한데, Young보다 영역이 크고 생존율도 높아 일반적으로 훨씬 비쌉니다. <strong>GC 튜닝의 상당 부분은 "일찍 죽을 객체가 Old로 승격되지 않게 하는 것"</strong>이라고 요약할 수 있습니다.
 
 ## 세대 간 참조 문제 — card table
 

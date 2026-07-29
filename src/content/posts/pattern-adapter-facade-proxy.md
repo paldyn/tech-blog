@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pattern-strategy-decorator/)에서 전략·데코레이터 패턴으로 행위를 교체하고 확장하는 방법을 살펴봤습니다. 이번에는 **구조 패턴(Structural Pattern)** 세 가지—**어댑터(Adapter)**, **퍼사드(Facade)**, **프록시(Proxy)**—를 JavaScript 코드와 함께 정리합니다. 세 패턴 모두 "래퍼(wrapper)"를 두는 방식이지만, 해결하는 문제가 다릅니다.
+[지난 글](/posts/pattern-strategy-decorator/)에서 전략·데코레이터 패턴으로 행위를 교체하고 확장하는 방법을 살펴봤습니다. 이번에는 **구조 패턴(Structural Pattern)<strong> 세 가지—</strong>어댑터(Adapter)**, **퍼사드(Facade)**, **프록시(Proxy)**—를 JavaScript 코드와 함께 정리합니다. 세 패턴 모두 "래퍼(wrapper)"를 두는 방식이지만, 해결하는 문제가 다릅니다.
 
 ![어댑터·퍼사드·프록시 개념 구조](/assets/posts/pattern-adapter-facade-proxy-concept.svg)
 

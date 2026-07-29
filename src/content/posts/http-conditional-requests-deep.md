@@ -175,7 +175,7 @@ function evaluatePreconditions(req, res, resource) {
 
 조건부 요청은 단순한 캐시 최적화가 아니라 **HTTP에 내장된 버전 검증 프로토콜**이다. 읽기 경로에서는 If-None-Match/If-Modified-Since가 대역폭을 아끼고, 쓰기 경로에서는 If-Match/If-Unmodified-Since가 데이터를 지키며, If-Range는 그 사이에서 이어받기를 안전하게 만든다. 그리고 이 모든 것은 서버가 **RFC 9110의 평가 순서**를 지킬 때만 예측 가능하게 동작한다.
 
-다음 글에서는 주제를 바꿔, 브라우저 보안 모델의 핵심인 **CORS(교차 출처 리소스 공유)**를 다룬다.
+다음 글에서는 주제를 바꿔, 브라우저 보안 모델의 핵심인 **CORS**(교차 출처 리소스 공유)를 다룬다.
 
 ---
 

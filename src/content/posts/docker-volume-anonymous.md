@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-volume-named/)에서 Named Volume을 깊이 살펴봤다. 이번에는 이름이 없는 **Anonymous Volume(익명 볼륨)**을 다룬다. 익명 볼륨은 공식적으로 덜 주목받지만, Dockerfile에서 `VOLUME` 지시어를 쓰면 자동으로 생성되므로 알지 못하면 디스크를 조용히 채울 수 있다.
+[지난 글](/posts/docker-volume-named/)에서 Named Volume을 깊이 살펴봤다. 이번에는 이름이 없는 **Anonymous Volume**(익명 볼륨)을 다룬다. 익명 볼륨은 공식적으로 덜 주목받지만, Dockerfile에서 `VOLUME` 지시어를 쓰면 자동으로 생성되므로 알지 못하면 디스크를 조용히 채울 수 있다.
 
 ## Anonymous Volume이란
 
@@ -72,7 +72,7 @@ Named Volume이 훨씬 유연하고 관리하기 쉽다. Anonymous Volume을 의
 
 ## 고아 볼륨 문제
 
-컨테이너를 `docker rm`하면 익명 볼륨이 남는다. 이를 **고아 볼륨(orphan volume)**이라 한다.
+컨테이너를 `docker rm`하면 익명 볼륨이 남는다. 이를 **고아 볼륨**(orphan volume)이라 한다.
 
 ```bash
 # 고아 볼륨 확인

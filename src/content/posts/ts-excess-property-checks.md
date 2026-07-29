@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-nominal-branded-types/)에서 브랜드 타입을 살펴봤다. 이번에는 TypeScript의 **초과 프로퍼티 검사(Excess Property Checks)**를 다룬다. 구조적 타이핑에 추가된 특별한 검사로, 객체 리터럴을 직접 할당할 때만 작동하는 엄격한 타입 검사다.
+[지난 글](/posts/ts-nominal-branded-types/)에서 브랜드 타입을 살펴봤다. 이번에는 TypeScript의 **초과 프로퍼티 검사**(Excess Property Checks)를 다룬다. 구조적 타이핑에 추가된 특별한 검사로, 객체 리터럴을 직접 할당할 때만 작동하는 엄격한 타입 검사다.
 
 ## 구조적 타이핑과의 차이
 

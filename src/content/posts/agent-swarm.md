@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/agent-autogen/)에서 AutoGen의 대화 기반 멀티 에이전트 협업을 살펴봤다. 이번 글에서는 OpenAI가 발표한 **Swarm**을 다룬다. Swarm은 LangChain, AutoGen, CrewAI에 비해 극도로 단순한 경량 프레임워크로, **핸드오프(Handoff)**라는 단 하나의 핵심 메커니즘으로 멀티 에이전트를 구현한다.
+[지난 글](/posts/agent-autogen/)에서 AutoGen의 대화 기반 멀티 에이전트 협업을 살펴봤다. 이번 글에서는 OpenAI가 발표한 **Swarm**을 다룬다. Swarm은 LangChain, AutoGen, CrewAI에 비해 극도로 단순한 경량 프레임워크로, **핸드오프**(Handoff)라는 단 하나의 핵심 메커니즘으로 멀티 에이전트를 구현한다.
 
 ## Swarm이란
 

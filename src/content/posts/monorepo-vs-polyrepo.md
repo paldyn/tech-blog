@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/trunk-based-development/)에서 Trunk-Based Development를 다뤘다. 브랜치 전략 못지않게 팀 생산성에 영향을 미치는 결정이 하나 더 있다. 코드를 **하나의 저장소(Monorepo)**에 넣을지, **서비스마다 분리된 저장소(Polyrepo)**로 관리할지다.
+[지난 글](/posts/trunk-based-development/)에서 Trunk-Based Development를 다뤘다. 브랜치 전략 못지않게 팀 생산성에 영향을 미치는 결정이 하나 더 있다. 코드를 **하나의 저장소**(Monorepo)에 넣을지, **서비스마다 분리된 저장소**(Polyrepo)로 관리할지다.
 
 ## 두 가지 접근
 

@@ -15,7 +15,7 @@ draft: false
 
 ## 트리의 정의
 
-**트리(Tree)**는 사이클이 없는 연결 비방향 그래프(Connected Acyclic Undirected Graph)입니다. n개의 노드가 있으면 정확히 n-1개의 간선(edge)을 가집니다.
+**트리**(Tree)는 사이클이 없는 연결 비방향 그래프(Connected Acyclic Undirected Graph)입니다. n개의 노드가 있으면 정확히 n-1개의 간선(edge)을 가집니다.
 
 계층적으로 표현하면 하나의 **루트(root)** 노드를 최상위에 두고, 부모-자식 관계로 노드를 연결한 구조입니다.
 

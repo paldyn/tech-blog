@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-tls-1-2-vs-1-3/)에서 TLS 1.2와 1.3의 차이를 비교했습니다. 이번 글에서는 TLS 통신에서 어떤 알고리즘이 어떤 역할을 하는지, **암호 스위트(Cipher Suite)**를 분해해서 살펴봅니다.
+[지난 글](/posts/network-tls-1-2-vs-1-3/)에서 TLS 1.2와 1.3의 차이를 비교했습니다. 이번 글에서는 TLS 통신에서 어떤 알고리즘이 어떤 역할을 하는지, **암호 스위트**(Cipher Suite)를 분해해서 살펴봅니다.
 
 ## 암호 스위트란?
 
@@ -34,7 +34,7 @@ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 
 ### 1. 키 교환 (Key Exchange)
 
-클라이언트와 서버가 **공통 비밀(shared secret)**을 안전하게 만드는 과정입니다.
+클라이언트와 서버가 **공통 비밀**(shared secret)을 안전하게 만드는 과정입니다.
 
 **ECDHE (Elliptic Curve Diffie-Hellman Ephemeral)** — 권장
 

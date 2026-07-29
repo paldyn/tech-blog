@@ -15,7 +15,7 @@ draft: false
 
 ## MTU: 한 번에 보낼 수 있는 최대 크기
 
-**MTU(Maximum Transmission Unit)**는 네트워크 인터페이스가 하나의 프레임에 담을 수 있는 최대 IP 패킷 크기다. 이더넷의 기본값은 1500 bytes다. 이는 이더넷 표준에서 정의된 값이며, 라우터나 스위치를 거칠 때 각 인터페이스 MTU가 다를 수 있다.
+**MTU**(Maximum Transmission Unit)는 네트워크 인터페이스가 하나의 프레임에 담을 수 있는 최대 IP 패킷 크기다. 이더넷의 기본값은 1500 bytes다. 이는 이더넷 표준에서 정의된 값이며, 라우터나 스위치를 거칠 때 각 인터페이스 MTU가 다를 수 있다.
 
 ```bash
 # 인터페이스 MTU 확인
@@ -33,7 +33,7 @@ ping -M do -s 1472 8.8.8.8
 
 ## MSS: TCP 페이로드 최대 크기
 
-**MSS(Maximum Segment Size)**는 TCP가 한 세그먼트에 담을 수 있는 **데이터(페이로드) 최대 크기**다. 헤더는 포함하지 않는다.
+**MSS**(Maximum Segment Size)는 TCP가 한 세그먼트에 담을 수 있는 **데이터(페이로드) 최대 크기**다. 헤더는 포함하지 않는다.
 
 ![MTU/MSS 계층 관계](/assets/posts/network-mss-mtu-pmtud-layers.svg)
 
@@ -55,7 +55,7 @@ IP 패킷이 MTU보다 크면 라우터는 이를 쪼개서 전달할 수 있다
 
 ## PMTUD: 경로 MTU 자동 탐색
 
-경로 상의 링크 MTU가 각기 다를 때, 송신자는 어떻게 최적 크기를 알 수 있을까? **PMTUD(Path MTU Discovery)**가 이를 해결한다.
+경로 상의 링크 MTU가 각기 다를 때, 송신자는 어떻게 최적 크기를 알 수 있을까? **PMTUD**(Path MTU Discovery)가 이를 해결한다.
 
 ![PMTUD 동작 흐름](/assets/posts/network-mss-mtu-pmtud-flow.svg)
 

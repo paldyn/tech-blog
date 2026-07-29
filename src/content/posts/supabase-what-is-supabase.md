@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-사이드 프로젝트를 시작할 때 가장 김이 빠지는 순간은 정작 아이디어를 구현하기 전이다. 회원가입·로그인을 붙이고, 데이터베이스를 띄우고, API 서버를 세우고, 파일 업로드를 처리하고… 어떤 앱을 만들든 반복되는 이 "백엔드 밑작업"만으로 며칠이 사라진다. **Supabase(수파베이스)**는 이 밑작업 전체를 하나로 묶어 제공하는 오픈소스 백엔드 플랫폼(BaaS, Backend as a Service)이다. 흔히 "오픈소스 Firebase 대안"으로 소개되지만, 내부를 들여다보면 Firebase와는 근본부터 다른 선택을 했다 — **중심에 PostgreSQL이 있다.**
+사이드 프로젝트를 시작할 때 가장 김이 빠지는 순간은 정작 아이디어를 구현하기 전이다. 회원가입·로그인을 붙이고, 데이터베이스를 띄우고, API 서버를 세우고, 파일 업로드를 처리하고… 어떤 앱을 만들든 반복되는 이 "백엔드 밑작업"만으로 며칠이 사라진다. **Supabase**(수파베이스)는 이 밑작업 전체를 하나로 묶어 제공하는 오픈소스 백엔드 플랫폼(BaaS, Backend as a Service)이다. 흔히 "오픈소스 Firebase 대안"으로 소개되지만, 내부를 들여다보면 Firebase와는 근본부터 다른 선택을 했다 — **중심에 PostgreSQL이 있다.**
 
 ## Firebase 대안, 그런데 데이터베이스가 다르다
 
-Supabase는 2020년에 등장했다. 당시 Firebase는 백엔드 없이 앱을 만들 수 있는 가장 유명한 방법이었지만, 두 가지 불만이 꾸준히 쌓이고 있었다. 하나는 데이터베이스가 **Firestore라는 전용 NoSQL**이라 조인·집계 같은 관계형 질의가 어렵고, 데이터가 커질수록 모델링이 꼬인다는 것. 다른 하나는 구글 클라우드에 묶이는 **벤더 종속(vendor lock-in)**이다.
+Supabase는 2020년에 등장했다. 당시 Firebase는 백엔드 없이 앱을 만들 수 있는 가장 유명한 방법이었지만, 두 가지 불만이 꾸준히 쌓이고 있었다. 하나는 데이터베이스가 **Firestore라는 전용 NoSQL**이라 조인·집계 같은 관계형 질의가 어렵고, 데이터가 커질수록 모델링이 꼬인다는 것. 다른 하나는 구글 클라우드에 묶이는 **벤더 종속**(vendor lock-in)이다.
 
 Supabase의 접근은 정반대였다. 새 데이터베이스를 발명하는 대신, 30년 넘게 검증된 **PostgreSQL을 그대로 중심에 두고** 그 주변에 인증·API·실시간·스토리지를 조립했다. 그래서 Supabase 프로젝트를 만들면 실제로 받는 것은 "Supabase 전용 DB"가 아니라 **온전한 PostgreSQL 데이터베이스 한 대**다. `psql`로 직접 접속할 수 있고, 익숙한 SQL이 전부 통하며, 언제든 덤프를 떠서 다른 곳으로 이사할 수 있다. 전체 코드가 오픈소스라 Docker로 셀프 호스팅하는 것도 가능하다.
 
@@ -81,7 +81,7 @@ await supabase.from('todos').update({ is_done: true }).eq('id', 1)
 
 ## 보안의 핵심 — Row Level Security
 
-전통적인 구조에서는 API 서버가 경비원 역할을 한다. "이 요청을 보낸 사용자가 이 데이터를 봐도 되는가"를 서버 코드의 `if`문이 판단한다. Supabase에는 그 서버가 없으므로, 경비원이 **데이터베이스 안으로** 들어간다. 그 장치가 PostgreSQL의 내장 기능인 **RLS(Row Level Security, 행 수준 보안)**다.
+전통적인 구조에서는 API 서버가 경비원 역할을 한다. "이 요청을 보낸 사용자가 이 데이터를 봐도 되는가"를 서버 코드의 `if`문이 판단한다. Supabase에는 그 서버가 없으므로, 경비원이 **데이터베이스 안으로** 들어간다. 그 장치가 PostgreSQL의 내장 기능인 **RLS**(Row Level Security, 행 수준 보안)다.
 
 ![Row Level Security — 같은 쿼리라도 사용자에 따라 다른 행이 반환되는 과정 애니메이션](/assets/posts/supabase-what-is-supabase-rls.svg)
 
@@ -106,7 +106,7 @@ create policy "내 이름으로만 추가" on todos
 
 ## Realtime은 어떻게 동작하나
 
-Supabase의 실시간 기능은 폴링이 아니다. PostgreSQL은 모든 변경 사항을 **WAL(Write-Ahead Log)**이라는 로그에 먼저 기록하는데, Realtime 서버(Elixir로 작성)가 이 로그 스트림을 구독하고 있다가 변경이 감지되면 웹소켓으로 연결된 구독자들에게 밀어 보낸다.
+Supabase의 실시간 기능은 폴링이 아니다. PostgreSQL은 모든 변경 사항을 **WAL**(Write-Ahead Log)이라는 로그에 먼저 기록하는데, Realtime 서버(Elixir로 작성)가 이 로그 스트림을 구독하고 있다가 변경이 감지되면 웹소켓으로 연결된 구독자들에게 밀어 보낸다.
 
 ![Realtime — INSERT가 WAL을 거쳐 구독 클라이언트들에게 전파되는 과정 애니메이션](/assets/posts/supabase-what-is-supabase-realtime.svg)
 

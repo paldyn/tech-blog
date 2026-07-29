@@ -15,7 +15,7 @@ draft: false
 
 ## 버전 스큐 — 컴포넌트마다 허용되는 차이
 
-업그레이드 순서를 이해하려면 먼저 **버전 스큐 정책(version skew policy)**을 알아야 한다. 쿠버네티스의 여러 컴포넌트는 동시에 같은 버전일 필요는 없지만, 서로 얼마나 차이 나도 되는지에는 규칙이 있다. 기준점은 항상 **kube-apiserver**다.
+업그레이드 순서를 이해하려면 먼저 **버전 스큐 정책**(version skew policy)을 알아야 한다. 쿠버네티스의 여러 컴포넌트는 동시에 같은 버전일 필요는 없지만, 서로 얼마나 차이 나도 되는지에는 규칙이 있다. 기준점은 항상 **kube-apiserver**다.
 
 ![버전 스큐 정책 — 무엇이 얼마나 차이 나도 되는가](/assets/posts/k8s-cluster-upgrades-version-skew.svg)
 

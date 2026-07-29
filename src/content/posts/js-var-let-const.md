@@ -19,7 +19,7 @@ draft: false
 
 ## var — 함수 스코프의 유산
 
-`var`는 JavaScript 초기부터 있던 변수 선언 방법입니다. 가장 큰 특징은 **함수 스코프(function-scoped)**입니다. 블록(`{}`)을 스코프 경계로 인식하지 않습니다.
+`var`는 JavaScript 초기부터 있던 변수 선언 방법입니다. 가장 큰 특징은 **함수 스코프**(function-scoped)입니다. 블록(`{}`)을 스코프 경계로 인식하지 않습니다.
 
 ```javascript
 function example() {
@@ -53,7 +53,7 @@ console.log(window.globalVar); // "hello" (브라우저)
 
 ## let — 블록 스코프의 시대
 
-ES2015에서 도입된 `let`은 **블록 스코프(block-scoped)**입니다. `if`, `for`, `while`, 일반 `{}` 블록 모두를 스코프 경계로 인식합니다.
+ES2015에서 도입된 `let`은 **블록 스코프**(block-scoped)입니다. `if`, `for`, `while`, 일반 `{}` 블록 모두를 스코프 경계로 인식합니다.
 
 ```javascript
 if (true) {
@@ -74,7 +74,7 @@ let x = 2; // SyntaxError — 재선언 불가
 
 ![for 루프 클로저 함정](/assets/posts/js-var-let-const-loop.svg)
 
-`var`로 선언된 `i`는 함수 스코프이기 때문에 루프의 모든 반복이 **같은 `i`**를 공유합니다. 클로저를 사용해 각 반복의 `i` 값을 캡처하려 해도, 클로저가 실행될 시점에는 루프가 끝나 `i`가 최종값(`3`)이 되어 있습니다.
+`var`로 선언된 `i`는 함수 스코프이기 때문에 루프의 모든 반복이 <strong>같은 `i`</strong>를 공유합니다. 클로저를 사용해 각 반복의 `i` 값을 캡처하려 해도, 클로저가 실행될 시점에는 루프가 끝나 `i`가 최종값(`3`)이 되어 있습니다.
 
 `let`은 반복마다 **새로운 바인딩**을 만들어 각 클로저가 독립적인 `i`를 캡처합니다.
 
@@ -91,7 +91,7 @@ arr.push(4);   // OK! — 배열 자체가 아니라 내용을 변경
 arr = [5, 6];  // TypeError — arr 변수 자체는 재할당 불가
 ```
 
-중요한 점: `const`는 값의 **불변(immutable)**을 보장하는 것이 아니라, **바인딩의 불변**을 보장합니다. `const`로 선언된 객체나 배열의 내용은 변경할 수 있습니다.
+중요한 점: `const`는 값의 **불변**(immutable)을 보장하는 것이 아니라, **바인딩의 불변**을 보장합니다. `const`로 선언된 객체나 배열의 내용은 변경할 수 있습니다.
 
 ```javascript
 const user = { name: "Alice" };

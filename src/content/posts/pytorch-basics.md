@@ -15,7 +15,7 @@ draft: false
 
 ## 왜 PyTorch인가
 
-PyTorch는 2017년 Facebook AI Research(FAIR)에서 공개됐다. TensorFlow의 정적 계산 그래프(define-and-run) 방식과 달리 **동적 계산 그래프(define-by-run)**를 채택해 파이썬 제어 흐름(`if`, `for`)을 그대로 쓸 수 있다. 이 덕분에 디버깅이 쉽고, 가변 길이 시퀀스 처리가 자연스럽다. 현재 머신러닝 논문의 70% 이상이 PyTorch를 사용한다.
+PyTorch는 2017년 Facebook AI Research(FAIR)에서 공개됐다. TensorFlow의 정적 계산 그래프(define-and-run) 방식과 달리 **동적 계산 그래프**(define-by-run)를 채택해 파이썬 제어 흐름(`if`, `for`)을 그대로 쓸 수 있다. 이 덕분에 디버깅이 쉽고, 가변 길이 시퀀스 처리가 자연스럽다. 현재 머신러닝 논문의 70% 이상이 PyTorch를 사용한다.
 
 ## 텐서: 모든 것의 기본 단위
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-interface-extends/)에서 interface extends를 살펴봤다. 이번에는 **인덱스 시그니처(Index Signature)**를 다룬다. 키를 미리 알 수 없는 딕셔너리 형태의 객체를 타입 안전하게 다루는 방법이다.
+[지난 글](/posts/ts-interface-extends/)에서 interface extends를 살펴봤다. 이번에는 **인덱스 시그니처**(Index Signature)를 다룬다. 키를 미리 알 수 없는 딕셔너리 형태의 객체를 타입 안전하게 다루는 방법이다.
 
 ## 기본 문법
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mysql-trigger/)에서 DML 이벤트에 반응하는 트리거를 살펴봤습니다. 이번 글에서는 시간 기반으로 자동 실행되는 **이벤트 스케줄러(Event Scheduler)**를 다룹니다. 외부 cron 없이 MySQL 내부에서 정기 배치 작업을 처리할 수 있습니다.
+[지난 글](/posts/mysql-trigger/)에서 DML 이벤트에 반응하는 트리거를 살펴봤습니다. 이번 글에서는 시간 기반으로 자동 실행되는 **이벤트 스케줄러**(Event Scheduler)를 다룹니다. 외부 cron 없이 MySQL 내부에서 정기 배치 작업을 처리할 수 있습니다.
 
 ## 이벤트 스케줄러란
 

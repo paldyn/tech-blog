@@ -227,7 +227,7 @@ trainer.train()
 
 ## Model Parallelism vs Data Parallelism
 
-모델 자체가 단일 GPU에 올라가지 않을 때는 **모델 병렬화(Model Parallelism)**를 사용한다.
+모델 자체가 단일 GPU에 올라가지 않을 때는 **모델 병렬화**(Model Parallelism)를 사용한다.
 
 | 방식 | 분산 단위 | 사용 상황 |
 |---|---|---|

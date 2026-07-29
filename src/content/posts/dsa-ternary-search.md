@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-binary-search-on-answer/)에서 이진 탐색을 정답 공간에 적용하는 파라메트릭 서치를 다뤘습니다. 이번에는 같은 탐색 아이디어를 **단봉 함수(Unimodal Function)**에 적용하는 **삼분 탐색(Ternary Search)**입니다.
+[지난 글](/posts/dsa-binary-search-on-answer/)에서 이진 탐색을 정답 공간에 적용하는 파라메트릭 서치를 다뤘습니다. 이번에는 같은 탐색 아이디어를 **단봉 함수**(Unimodal Function)에 적용하는 **삼분 탐색**(Ternary Search)입니다.
 
 ## 단봉 함수란
 

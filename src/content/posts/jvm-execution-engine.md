@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/jvm-heap-structure/)에서 JVM Heap의 세대 구조와 객체 생명주기를 살펴봤습니다. 클래스 로더가 바이트코드를 메모리에 올리고 나면, 이번에는 **실행 엔진(Execution Engine)**이 그 바이트코드를 실제 CPU 명령어로 바꾸어 실행합니다. Java가 인터프리터 언어처럼 시작해 C++에 근접한 성능에 도달하는 이유가 바로 여기에 있습니다.
+[지난 글](/posts/jvm-heap-structure/)에서 JVM Heap의 세대 구조와 객체 생명주기를 살펴봤습니다. 클래스 로더가 바이트코드를 메모리에 올리고 나면, 이번에는 **실행 엔진**(Execution Engine)이 그 바이트코드를 실제 CPU 명령어로 바꾸어 실행합니다. Java가 인터프리터 언어처럼 시작해 C++에 근접한 성능에 도달하는 이유가 바로 여기에 있습니다.
 
 ## 실행 엔진의 세 축
 
@@ -91,7 +91,7 @@ JIT 컴파일 결과는 Heap이 아닌 별도의 **Code Cache**에 저장됩니�
 -XX:+PrintCodeCache               # 사용 현황 출력 (진단용)
 ```
 
-JVM 시작 후 실행 빈도가 낮은 코드가 먼저 컴파일되지 않도록 워밍업 기간을 갖는 것이 좋습니다. 컨테이너 환경에서는 `-XX:TieredStopAtLevel=1`로 C1만 사용해 빠른 시작을 선택하거나, **Class Data Sharing(CDS)**으로 JIT 워밍업 자체를 단축하는 방법도 활용됩니다.
+JVM 시작 후 실행 빈도가 낮은 코드가 먼저 컴파일되지 않도록 워밍업 기간을 갖는 것이 좋습니다. 컨테이너 환경에서는 `-XX:TieredStopAtLevel=1`로 C1만 사용해 빠른 시작을 선택하거나, **Class Data Sharing**(CDS)으로 JIT 워밍업 자체를 단축하는 방법도 활용됩니다.
 
 ## Interpreter와 JIT의 협력 요약
 
@@ -123,7 +123,7 @@ JVM 시작 후 실행 빈도가 낮은 코드가 먼저 컴파일되지 않도�
 -XX:-TieredCompilation
 ```
 
-실행 엔진의 동작을 이해하면 **JMH(Java Microbenchmark Harness)**로 마이크로벤치마크를 설계할 때 워밍업 단계가 왜 필수인지, 벤치마크 결과가 왜 JIT 컴파일 전과 후에 달라지는지를 납득할 수 있습니다.
+실행 엔진의 동작을 이해하면 **JMH**(Java Microbenchmark Harness)로 마이크로벤치마크를 설계할 때 워밍업 단계가 왜 필수인지, 벤치마크 결과가 왜 JIT 컴파일 전과 후에 달라지는지를 납득할 수 있습니다.
 
 ---
 

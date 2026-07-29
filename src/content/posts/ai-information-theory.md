@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-bayes-theorem/)에서 베이즈 정리가 새로운 증거로 믿음을 갱신하는 원리를 살펴봤다. 이번에는 AI 수학 기초의 마지막 퍼즐인 **정보 이론(Information Theory)**을 다룬다. 정보 이론은 1948년 클로드 섀넌(Claude Shannon)이 통신 이론 논문 한 편으로 세운 분야다. "메시지를 얼마나 압축할 수 있는가?"라는 실용적 질문에서 출발했지만, 오늘날 딥러닝의 손실 함수, LLM의 평가 지표(Perplexity), 강화 학습의 정책 최적화까지 AI 전반의 수학적 언어가 되었다.
+[지난 글](/posts/ai-bayes-theorem/)에서 베이즈 정리가 새로운 증거로 믿음을 갱신하는 원리를 살펴봤다. 이번에는 AI 수학 기초의 마지막 퍼즐인 **정보 이론**(Information Theory)을 다룬다. 정보 이론은 1948년 클로드 섀넌(Claude Shannon)이 통신 이론 논문 한 편으로 세운 분야다. "메시지를 얼마나 압축할 수 있는가?"라는 실용적 질문에서 출발했지만, 오늘날 딥러닝의 손실 함수, LLM의 평가 지표(Perplexity), 강화 학습의 정책 최적화까지 AI 전반의 수학적 언어가 되었다.
 
 ## 정보량: 놀라움을 수치화하다
 
 정보 이론의 핵심 직관은 단순하다. **예측하기 어려운 사건일수록 더 많은 정보를 담고 있다.** 매일 해가 뜨는 사건은 뉴스가 되지 않지만, 로또 당첨은 뉴스가 된다.
 
-이 직관을 수식으로 표현한 것이 **정보량(Information Content 또는 Self-Information)**이다.
+이 직관을 수식으로 표현한 것이 **정보량**(Information Content 또는 Self-Information)이다.
 
 ```text
 I(x) = −log₂ P(x)  [단위: bits]
@@ -52,7 +52,7 @@ for name, p in events.items():
 
 ## 엔트로피: 분포 전체의 불확실성
 
-개별 사건의 정보량을 확률 가중 평균한 것이 **엔트로피(Entropy)**다. 확률 분포 전체가 얼마나 불확실한지를 하나의 숫자로 나타낸다.
+개별 사건의 정보량을 확률 가중 평균한 것이 **엔트로피**(Entropy)다. 확률 분포 전체가 얼마나 불확실한지를 하나의 숫자로 나타낸다.
 
 ```text
 H(X) = −Σ P(x) · log P(x)  = E[−log P(X)]
@@ -86,11 +86,11 @@ print(f"균등 분포:     H = {entropy_bits(uniform):.3f} bits")
 # 결정론적: 0.087 / 중간: 1.421 / 균등: 2.000
 ```
 
-LLM에서 **Perplexity(복잡도)**는 `exp(평균 교차 엔트로피)`다. 언어 모델이 테스트 문장을 얼마나 "놀랍게" 여기는지를 측정한다. Perplexity가 낮을수록 모델이 텍스트를 잘 예측한다.
+LLM에서 **Perplexity**(복잡도)는 `exp(평균 교차 엔트로피)`다. 언어 모델이 테스트 문장을 얼마나 "놀랍게" 여기는지를 측정한다. Perplexity가 낮을수록 모델이 텍스트를 잘 예측한다.
 
 ## KL 발산: 두 분포 사이의 거리
 
-실제 데이터 분포 P와 모델이 학습한 분포 Q 사이의 차이를 측정하는 것이 **KL 발산(Kullback-Leibler Divergence)**이다.
+실제 데이터 분포 P와 모델이 학습한 분포 Q 사이의 차이를 측정하는 것이 **KL 발산**(Kullback-Leibler Divergence)이다.
 
 ```text
 D_KL(P ‖ Q) = Σ P(x) · log(P(x) / Q(x))
@@ -123,7 +123,7 @@ VAE(변분 오토인코더)의 손실 함수는 `재구성 손실 + D_KL(q(z|x) 
 
 ## 교차 엔트로피: 딥러닝 학습의 핵심 손실
 
-**교차 엔트로피(Cross-Entropy)**는 KL 발산과 엔트로피의 합이다.
+**교차 엔트로피**(Cross-Entropy)는 KL 발산과 엔트로피의 합이다.
 
 ```text
 H(P, Q) = H(P) + D_KL(P ‖ Q) = −Σ P(x) · log Q(x)
@@ -157,7 +157,7 @@ print(f"Perplexity: {perplexity:.2f}")
 
 ## 상호 정보량: 두 변수의 의존성
 
-**상호 정보량(Mutual Information)**은 두 확률 변수 X, Y가 서로 얼마나 정보를 공유하는지를 측정한다.
+**상호 정보량**(Mutual Information)은 두 확률 변수 X, Y가 서로 얼마나 정보를 공유하는지를 측정한다.
 
 ```text
 I(X; Y) = H(X) + H(Y) − H(X, Y) = D_KL(P(X,Y) ‖ P(X)·P(Y))

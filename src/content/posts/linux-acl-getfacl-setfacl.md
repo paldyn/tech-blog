@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-special-bits-suid-sgid-sticky/)에서 SUID·SGID·Sticky 비트를 다뤘습니다. 전통적인 리눅스 권한은 소유자·그룹·기타 3계층만 표현할 수 있어, 여러 사용자에게 각기 다른 권한을 줘야 할 때 한계가 있습니다. **ACL(Access Control List)**은 이 한계를 돌파합니다.
+[지난 글](/posts/linux-special-bits-suid-sgid-sticky/)에서 SUID·SGID·Sticky 비트를 다뤘습니다. 전통적인 리눅스 권한은 소유자·그룹·기타 3계층만 표현할 수 있어, 여러 사용자에게 각기 다른 권한을 줘야 할 때 한계가 있습니다. **ACL**(Access Control List)은 이 한계를 돌파합니다.
 
 ## ACL이란
 
@@ -119,7 +119,7 @@ mask를 변경하면 `chmod` 그룹 권한 비트가 mask를 반영합니다. �
 
 ## 기본 ACL (Default ACL)
 
-디렉터리에 **기본 ACL(default ACL)**을 설정하면, 해당 디렉터리 안에 새로 만들어지는 파일과 하위 디렉터리가 자동으로 ACL을 상속합니다.
+디렉터리에 **기본 ACL**(default ACL)을 설정하면, 해당 디렉터리 안에 새로 만들어지는 파일과 하위 디렉터리가 자동으로 ACL을 상속합니다.
 
 ```bash
 # /srv/team에 기본 ACL 설정

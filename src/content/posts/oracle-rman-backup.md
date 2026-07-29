@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-data-guard/)에서 Data Guard로 재해 복구(DR)를 구성하는 방법을 살펴봤다. Data Guard가 실시간 복제라면, **RMAN(Recovery Manager)**은 Oracle DB 전용 백업·복구 도구다. 두 가지는 상호 보완적으로 함께 사용한다.
+[지난 글](/posts/oracle-data-guard/)에서 Data Guard로 재해 복구(DR)를 구성하는 방법을 살펴봤다. Data Guard가 실시간 복제라면, **RMAN**(Recovery Manager)은 Oracle DB 전용 백업·복구 도구다. 두 가지는 상호 보완적으로 함께 사용한다.
 
 ## RMAN이란
 

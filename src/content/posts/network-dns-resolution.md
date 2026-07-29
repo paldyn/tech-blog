@@ -15,7 +15,7 @@ draft: false
 
 ## DNS의 역할
 
-**DNS(Domain Name System)**는 사람이 기억하기 쉬운 도메인 이름을 기계가 사용하는 IP 주소로 변환하는 전화번호부 시스템이다. 이 변환 과정을 **이름 해석(Name Resolution)**이라고 한다.
+**DNS**(Domain Name System)는 사람이 기억하기 쉬운 도메인 이름을 기계가 사용하는 IP 주소로 변환하는 전화번호부 시스템이다. 이 변환 과정을 **이름 해석**(Name Resolution)이라고 한다.
 
 ```text
 www.example.com → 93.184.216.34
@@ -71,7 +71,7 @@ dig +trace www.example.com
 # www.example.com. 3600 IN A  93.184.216.34         (최종 답)
 ```
 
-**재귀 해석기(Recursive Resolver)**는 클라이언트를 대신해 이 순환 과정을 처리한다. ISP가 제공하거나, 8.8.8.8(Google), 1.1.1.1(Cloudflare) 같은 공개 DNS 서비스를 사용한다.
+**재귀 해석기**(Recursive Resolver)는 클라이언트를 대신해 이 순환 과정을 처리한다. ISP가 제공하거나, 8.8.8.8(Google), 1.1.1.1(Cloudflare) 같은 공개 DNS 서비스를 사용한다.
 
 재귀 해석기는 결과를 **캐시**에 저장한다. TTL(Time To Live) 동안 동일 도메인 요청에 대해 루트/TLD 조회 없이 바로 응답한다.
 

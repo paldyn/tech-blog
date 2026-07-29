@@ -27,7 +27,7 @@ draft: false
 
 ## Masked Self-Attention: 미래를 보지 않는다
 
-디코더의 Self-Attention에 **Causal Mask(인과 마스크)**를 적용하는 이유는 두 가지다.
+디코더의 Self-Attention에 **Causal Mask**(인과 마스크)를 적용하는 이유는 두 가지다.
 
 - **추론 일관성**: 토큰 `i`를 생성할 때 `i+1` 이후는 아직 생성되지 않았다.  
 - **학습 병렬화**: Teacher Forcing으로 정답 시퀀스를 한 번에 입력하면, 마스크가 없으면 미래 정답이 현재 예측에 "새어" 들어간다.

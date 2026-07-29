@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-map-hashmap/)에서 HashMap의 내부 구조와 Java 8+ API를 살펴봤다. 이번에는 **`LinkedHashMap`**을 다룬다. HashMap의 O(1) 성능을 유지하면서 **삽입 순서 또는 접근 순서**를 보존하는 맵 구현체다.
+[지난 글](/posts/java-map-hashmap/)에서 HashMap의 내부 구조와 Java 8+ API를 살펴봤다. 이번에는 <strong>`LinkedHashMap`</strong>을 다룬다. HashMap의 O(1) 성능을 유지하면서 **삽입 순서 또는 접근 순서**를 보존하는 맵 구현체다.
 
 ## 두 가지 순서 모드
 

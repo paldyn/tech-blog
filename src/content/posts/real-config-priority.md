@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/real-env-vars/)에서 환경 변수를 파일에서 읽어 `process.env`에 주입하는 방법을 살펴봤습니다. 이번에는 **설정 우선순위(Configuration Priority)**를 다룹니다. 실제 프로젝트에서는 기본값, `.env` 파일, OS 환경 변수, CI/CD Secrets, 명령줄 인자 등 여러 소스가 동시에 존재합니다. 이것들이 어떤 순서로 적용되는지, 충돌 시 어떤 값이 이기는지 명확하게 정의해야 합니다.
+[지난 글](/posts/real-env-vars/)에서 환경 변수를 파일에서 읽어 `process.env`에 주입하는 방법을 살펴봤습니다. 이번에는 **설정 우선순위**(Configuration Priority)를 다룹니다. 실제 프로젝트에서는 기본값, `.env` 파일, OS 환경 변수, CI/CD Secrets, 명령줄 인자 등 여러 소스가 동시에 존재합니다. 이것들이 어떤 순서로 적용되는지, 충돌 시 어떤 값이 이기는지 명확하게 정의해야 합니다.
 
 ![설정 우선순위 레이어](/assets/posts/real-config-priority-layers.svg)
 

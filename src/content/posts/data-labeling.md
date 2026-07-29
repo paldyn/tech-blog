@@ -25,7 +25,7 @@ draft: false
 
 ## 약지도 학습: 레이블 없이 레이블 만들기
 
-**Snorkel**은 도메인 전문가가 직접 레이블링하는 대신 **레이블링 함수(Labeling Function)**를 작성하게 한다.
+**Snorkel**은 도메인 전문가가 직접 레이블링하는 대신 **레이블링 함수**(Labeling Function)를 작성하게 한다.
 
 ```python
 from snorkel.labeling import labeling_function, PandasLFApplier
@@ -107,7 +107,7 @@ def collect_preference_pair(prompt: str):
 
 ## 레이블링 품질 관리: IAA
 
-레이블러가 여러 명일 때, 같은 데이터에 다른 레이블을 붙이면 어느 것이 맞는지 알 수 없다. **IAA(Inter-Annotator Agreement)**로 레이블러 간 일치도를 측정한다.
+레이블러가 여러 명일 때, 같은 데이터에 다른 레이블을 붙이면 어느 것이 맞는지 알 수 없다. **IAA**(Inter-Annotator Agreement)로 레이블러 간 일치도를 측정한다.
 
 ![레이블링 품질 관리 워크플로우](/assets/posts/data-labeling-workflow.svg)
 

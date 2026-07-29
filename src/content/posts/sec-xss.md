@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/perf-cpu-profiling-flame/)에서 플레임 차트로 CPU 병목을 찾는 방법을 살펴봤습니다. 이번 글부터는 보안 시리즈를 시작합니다. 첫 주제는 웹 취약점 중 가장 흔하면서도 파급력이 큰 **XSS(Cross-Site Scripting)**입니다. 이름에 "CSS"처럼 스타일시트와 혼동하지 않도록 XSS로 줄여 씁니다.
+[지난 글](/posts/perf-cpu-profiling-flame/)에서 플레임 차트로 CPU 병목을 찾는 방법을 살펴봤습니다. 이번 글부터는 보안 시리즈를 시작합니다. 첫 주제는 웹 취약점 중 가장 흔하면서도 파급력이 큰 **XSS**(Cross-Site Scripting)입니다. 이름에 "CSS"처럼 스타일시트와 혼동하지 않도록 XSS로 줄여 씁니다.
 
 ## XSS란 무엇인가
 

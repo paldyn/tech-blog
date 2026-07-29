@@ -35,7 +35,7 @@ Dockerfile의 **셸 형식** CMD는 `/bin/sh -c "..."` 로 감싸서 실행한�
 
 ## exec 형식으로 해결
 
-**JSON 배열(exec 형식)**을 사용하면 셸을 거치지 않고 앱이 직접 PID 1이 된다.
+**JSON 배열**(exec 형식)을 사용하면 셸을 거치지 않고 앱이 직접 PID 1이 된다.
 
 ```dockerfile
 # 권장

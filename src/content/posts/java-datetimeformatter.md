@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-instant-duration/)까지 java.time의 주요 타입을 모두 살펴봤습니다. 이번 글은 그 타입들을 문자열로 내보내고, 문자열에서 다시 읽어 들이는 **`DateTimeFormatter`**입니다. 화면 표시, 로그 출력, API 응답, 파일명 생성 — 날짜가 문자열과 만나는 모든 지점에서 쓰이는 도구이고, 동시에 `YYYY` 같은 한 글자 실수가 연말마다 장애를 일으키는 지점이기도 합니다.
+[지난 글](/posts/java-instant-duration/)까지 java.time의 주요 타입을 모두 살펴봤습니다. 이번 글은 그 타입들을 문자열로 내보내고, 문자열에서 다시 읽어 들이는 <strong>`DateTimeFormatter`</strong>입니다. 화면 표시, 로그 출력, API 응답, 파일명 생성 — 날짜가 문자열과 만나는 모든 지점에서 쓰이는 도구이고, 동시에 `YYYY` 같은 한 글자 실수가 연말마다 장애를 일으키는 지점이기도 합니다.
 
 ## 양방향 변환의 중심
 

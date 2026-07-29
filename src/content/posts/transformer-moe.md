@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/transformer-mqa-gqa/)에서 GQA가 KV 헤드를 줄여 메모리를 절감하는 방법을 살펴봤다. 이번에는 파라미터 규모와 연산 비용을 분리하는 전혀 다른 전략인 **Mixture of Experts(MoE)**를 다룬다. MoE는 1991년 Jacobs et al.의 아이디어를 현대 트랜스포머에 접목한 것으로, 2024년 GPT-4, Mixtral 8×7B, DeepSeek-V3 등에서 적용되며 LLM 아키텍처의 새로운 주류가 됐다.
+[지난 글](/posts/transformer-mqa-gqa/)에서 GQA가 KV 헤드를 줄여 메모리를 절감하는 방법을 살펴봤다. 이번에는 파라미터 규모와 연산 비용을 분리하는 전혀 다른 전략인 **Mixture of Experts**(MoE)를 다룬다. MoE는 1991년 Jacobs et al.의 아이디어를 현대 트랜스포머에 접목한 것으로, 2024년 GPT-4, Mixtral 8×7B, DeepSeek-V3 등에서 적용되며 LLM 아키텍처의 새로운 주류가 됐다.
 
 ## 핵심 아이디어: 희소 활성화
 
@@ -48,9 +48,9 @@ output = sum(gates[i] * Expert_i(x) for i in indices)
 
 ## 로드 밸런싱 문제와 보조 손실
 
-MoE의 고질적 문제는 **라우터 붕괴(Router Collapse)**다. 학습 초기에 특정 전문가가 우연히 좋은 성능을 보이면, 라우터가 그 전문가만 계속 선택하게 되어 나머지 전문가는 학습이 안 된다.
+MoE의 고질적 문제는 **라우터 붕괴**(Router Collapse)다. 학습 초기에 특정 전문가가 우연히 좋은 성능을 보이면, 라우터가 그 전문가만 계속 선택하게 되어 나머지 전문가는 학습이 안 된다.
 
-이를 막기 위해 **보조 로드 밸런싱 손실(Auxiliary Load Balancing Loss)**을 추가한다:
+이를 막기 위해 **보조 로드 밸런싱 손실**(Auxiliary Load Balancing Loss)을 추가한다:
 
 ```python
 def load_balancing_loss(router_probs, expert_indices, num_experts):
@@ -75,7 +75,7 @@ total_loss = lm_loss + 0.01 * load_balancing_loss(...)
 
 **Expert Choice**(Zhou et al., 2022) 방식은 반대다. 각 전문가가 처리할 Top-K 토큰을 선택한다. 전문가 용량이 보장되고 로드 밸런싱이 자연스럽지만, 일부 토큰이 어떤 전문가에도 선택받지 못할 수 있다.
 
-DeepSeek은 **공유 전문가(Shared Expert)**를 추가로 두어, 모든 토큰이 반드시 거치는 공통 표현 학습을 담당하게 했다. 나머지 전문가들은 특화된 능력을 학습한다.
+DeepSeek은 **공유 전문가**(Shared Expert)를 추가로 두어, 모든 토큰이 반드시 거치는 공통 표현 학습을 담당하게 했다. 나머지 전문가들은 특화된 능력을 학습한다.
 
 ## 주요 MoE 모델 비교
 

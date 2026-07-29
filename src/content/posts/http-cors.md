@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/http-conditional-requests-deep/)까지 캐시와 조건부 요청을 마쳤다. 이번에는 프런트엔드 개발자가 가장 자주 마주치는 에러의 주인공, **CORS(Cross-Origin Resource Sharing)**다. "CORS 에러는 서버에서 헤더 하나 추가하면 된다"는 처방만 알고 넘어가기 쉽지만, 왜 브라우저가 멀쩡한 응답을 막아서는지, 무엇을 보호하려는 장치인지 원리를 이해하면 디버깅이 완전히 달라진다.
+[지난 글](/posts/http-conditional-requests-deep/)까지 캐시와 조건부 요청을 마쳤다. 이번에는 프런트엔드 개발자가 가장 자주 마주치는 에러의 주인공, **CORS**(Cross-Origin Resource Sharing)다. "CORS 에러는 서버에서 헤더 하나 추가하면 된다"는 처방만 알고 넘어가기 쉽지만, 왜 브라우저가 멀쩡한 응답을 막아서는지, 무엇을 보호하려는 장치인지 원리를 이해하면 디버깅이 완전히 달라진다.
 
 ## 출처(Origin)란 정확히 무엇인가
 
@@ -34,7 +34,7 @@ CORS를 이해하려면 먼저 **출처**의 정의부터 정확해야 한다. �
 
 ## 동일 출처 정책 — 무엇을 막으려는 건가
 
-**동일 출처 정책(Same-Origin Policy, SOP)**은 "한 출처의 스크립트가 다른 출처의 응답을 읽지 못하게 한다"는 브라우저 규칙이다. 왜 필요할까?
+**동일 출처 정책**(Same-Origin Policy, SOP)은 "한 출처의 스크립트가 다른 출처의 응답을 읽지 못하게 한다"는 브라우저 규칙이다. 왜 필요할까?
 
 브라우저는 요청을 보낼 때 **그 도메인의 쿠키를 자동으로 첨부**한다. 당신이 `bank.com`에 로그인된 상태로 악성 사이트 `evil.com`을 방문했다고 하자. SOP가 없다면:
 
@@ -96,7 +96,7 @@ Content-Type: application/x-www-form-urlencoded,
               multipart/form-data, text/plain 중 하나
 ```
 
-`Content-Type: application/json`을 붙이는 순간 단순 요청이 아니다. `Authorization` 헤더를 붙여도 마찬가지다. 단순 요청 조건을 벗어나면 브라우저는 본 요청 전에 **프리플라이트(preflight)**라는 사전 확인 요청을 보내는데, 이는 다음 글에서 깊이 다룬다.
+`Content-Type: application/json`을 붙이는 순간 단순 요청이 아니다. `Authorization` 헤더를 붙여도 마찬가지다. 단순 요청 조건을 벗어나면 브라우저는 본 요청 전에 **프리플라이트**(preflight)라는 사전 확인 요청을 보내는데, 이는 다음 글에서 깊이 다룬다.
 
 ## 서버 측 CORS 설정
 

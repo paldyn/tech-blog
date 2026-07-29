@@ -15,9 +15,9 @@ draft: false
 
 ## 두 가지 삭제 방식
 
-**Hard Delete(물리 삭제)**는 `DELETE FROM users WHERE id = ?`로 실제 DB에서 행을 제거합니다. 단순하고 DB를 깔끔하게 유지하지만, 삭제된 데이터를 되살릴 수 없습니다.
+**Hard Delete**(물리 삭제)는 `DELETE FROM users WHERE id = ?`로 실제 DB에서 행을 제거합니다. 단순하고 DB를 깔끔하게 유지하지만, 삭제된 데이터를 되살릴 수 없습니다.
 
-**Soft Delete(논리 삭제)**는 `deleted_at`(또는 `is_deleted`) 컬럼에 삭제 시각을 표시하고 행은 유지합니다. 데이터는 여전히 DB에 있지만 `WHERE deleted_at IS NULL` 조건으로 "없는 것처럼" 처리합니다.
+**Soft Delete**(논리 삭제)는 `deleted_at`(또는 `is_deleted`) 컬럼에 삭제 시각을 표시하고 행은 유지합니다. 데이터는 여전히 DB에 있지만 `WHERE deleted_at IS NULL` 조건으로 "없는 것처럼" 처리합니다.
 
 ```sql
 -- Soft Delete 컬럼 추가

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-array-types/)에서 TypeScript의 기본 배열 타입 선언 문법을 정리했다. 이번에는 배열의 **불변성(immutability)**을 타입 시스템으로 보장하는 `readonly` 수식어와 `ReadonlyArray<T>`를 다룬다. 함수 파라미터를 읽기 전용으로 선언하거나 원본 데이터를 보호해야 하는 상황에서 이 타입들을 어떻게 활용하는지 완전히 정리한다.
+[지난 글](/posts/ts-array-types/)에서 TypeScript의 기본 배열 타입 선언 문법을 정리했다. 이번에는 배열의 **불변성**(immutability)을 타입 시스템으로 보장하는 `readonly` 수식어와 `ReadonlyArray<T>`를 다룬다. 함수 파라미터를 읽기 전용으로 선언하거나 원본 데이터를 보호해야 하는 상황에서 이 타입들을 어떻게 활용하는지 완전히 정리한다.
 
 ![가변 배열 vs 읽기 전용 배열](/assets/posts/ts-readonly-arrays-compare.svg)
 

@@ -50,7 +50,7 @@ sudo tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn|tcp-ack) != 0' -n
 
 ![핸드셰이크 상태 전이](/assets/posts/network-tcp-3way-handshake-states.svg)
 
-`ack` 값이 상대방 `seq + 1`인 이유는 ACK 번호가 **"다음에 받기를 기대하는 바이트 번호"**이기 때문이다. SYN 세그먼트 자체는 데이터가 없지만 1바이트를 소비한 것으로 처리한다(FIN도 동일).
+`ack` 값이 상대방 `seq + 1`인 이유는 ACK 번호가 <strong>"다음에 받기를 기대하는 바이트 번호"</strong>이기 때문이다. SYN 세그먼트 자체는 데이터가 없지만 1바이트를 소비한 것으로 처리한다(FIN도 동일).
 
 ## SYN 큐와 Accept 큐
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-collision-resolution/)에서 분리 체이닝으로 충돌을 해결하는 방법을 살펴봤습니다. 이번에는 링크드 리스트를 전혀 사용하지 않고 **배열 내에서 빈 슬롯을 찾아 저장**하는 **개방 주소법(Open Addressing)**을 다룹니다. Python의 내장 `dict`와 `set`이 이 방식으로 구현되어 있습니다.
+[지난 글](/posts/dsa-collision-resolution/)에서 분리 체이닝으로 충돌을 해결하는 방법을 살펴봤습니다. 이번에는 링크드 리스트를 전혀 사용하지 않고 **배열 내에서 빈 슬롯을 찾아 저장**하는 **개방 주소법**(Open Addressing)을 다룹니다. Python의 내장 `dict`와 `set`이 이 방식으로 구현되어 있습니다.
 
 ## 개방 주소법의 기본 아이디어
 
@@ -35,7 +35,7 @@ h(k, i) = (h(k) + i) % m   (i = 0, 1, 2, ...)
 h(k, i) = (h(k) + i²) % m
 ```
 
-i²만큼 건너뛰며 탐사합니다. 1차 클러스터링은 해소되지만 같은 h(k)를 가진 키들이 동일한 탐사 경로를 따르는 **2차 클러스터링(Secondary Clustering)**이 남습니다.
+i²만큼 건너뛰며 탐사합니다. 1차 클러스터링은 해소되지만 같은 h(k)를 가진 키들이 동일한 탐사 경로를 따르는 **2차 클러스터링**(Secondary Clustering)이 남습니다.
 
 ## 이중 해싱 (Double Hashing)
 

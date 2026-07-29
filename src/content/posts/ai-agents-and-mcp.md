@@ -26,7 +26,7 @@ draft: false
 
 ## ReAct: 추론과 행동의 통합
 
-가장 영향력 있는 에이전트 패턴은 2022년 제안된 **ReAct(Reasoning + Acting)**다. LLM이 생각을 텍스트로 명시하고(Thought), 도구를 호출하며(Action), 결과를 관찰(Observation)하는 사이클을 반복한다.
+가장 영향력 있는 에이전트 패턴은 2022년 제안된 **ReAct**(Reasoning + Acting)다. LLM이 생각을 텍스트로 명시하고(Thought), 도구를 호출하며(Action), 결과를 관찰(Observation)하는 사이클을 반복한다.
 
 ![ReAct 루프](/assets/posts/ai-agents-and-mcp-react.svg)
 

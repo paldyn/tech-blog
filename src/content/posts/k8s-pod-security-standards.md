@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-seccomp-apparmor/)에서 Seccomp와 AppArmor로 커널 레벨 보안을 구성하는 방법을 살펴봤다. 이번에는 클러스터 전체에 일관된 보안 기준선을 적용하는 **Pod Security Standards(PSS)**를 다룬다. 쿠버네티스 1.25부터 PodSecurityPolicy(PSP)가 제거됐고, 그 자리를 PSS가 채웠다. PSS는 "어떤 Pod가 허용되는가"를 세 가지 레벨로 표준화한 명세이며, 실제 강제는 Pod Security Admission(PSA) 컨트롤러가 담당한다.
+[지난 글](/posts/k8s-seccomp-apparmor/)에서 Seccomp와 AppArmor로 커널 레벨 보안을 구성하는 방법을 살펴봤다. 이번에는 클러스터 전체에 일관된 보안 기준선을 적용하는 **Pod Security Standards**(PSS)를 다룬다. 쿠버네티스 1.25부터 PodSecurityPolicy(PSP)가 제거됐고, 그 자리를 PSS가 채웠다. PSS는 "어떤 Pod가 허용되는가"를 세 가지 레벨로 표준화한 명세이며, 실제 강제는 Pod Security Admission(PSA) 컨트롤러가 담당한다.
 
 ## 세 가지 보안 레벨
 

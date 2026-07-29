@@ -74,7 +74,7 @@ export async function createPost(formData: FormData) {
 
 ## 인가 — 소유권 확인 (IDOR 방어)
 
-**IDOR(Insecure Direct Object Reference)**는 공격자가 다른 사용자의 리소스 ID를 직접 요청해 접근하는 취약점입니다. 반드시 리소스의 소유자를 서버에서 검증해야 합니다.
+**IDOR**(Insecure Direct Object Reference)는 공격자가 다른 사용자의 리소스 ID를 직접 요청해 접근하는 취약점입니다. 반드시 리소스의 소유자를 서버에서 검증해야 합니다.
 
 ```ts
 export async function updatePost(postId: string, formData: FormData) {

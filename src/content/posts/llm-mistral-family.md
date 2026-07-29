@@ -68,7 +68,7 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 
 2023년 12월, Mistral은 다시 한 번 아무 예고 없이 모델을 공개했다. 이번엔 **Mixtral 8x7B**, 업계 최초의 상업용 Sparse Mixture of Experts(MoE) 오픈소스 모델이었다.
 
-MoE 아키텍처의 핵심 아이디어: 하나의 거대한 Feed-Forward Network 대신, **여러 전문화된 소규모 네트워크(Expert)**를 두고, 각 토큰마다 적합한 전문가만 활성화한다. Mixtral 8x7B는 8개의 전문가 네트워크를 가지며, 각 토큰 처리 시 그 중 2개만 활성화한다.
+MoE 아키텍처의 핵심 아이디어: 하나의 거대한 Feed-Forward Network 대신, **여러 전문화된 소규모 네트워크**(Expert)를 두고, 각 토큰마다 적합한 전문가만 활성화한다. Mixtral 8x7B는 8개의 전문가 네트워크를 가지며, 각 토큰 처리 시 그 중 2개만 활성화한다.
 
 **숫자로 보는 MoE 효율성:**
 - 전체 파라미터: 46.7B

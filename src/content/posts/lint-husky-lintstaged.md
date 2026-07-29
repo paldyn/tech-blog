@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/lint-typescript-eslint/)에서 TypeScript ESLint로 타입 인식 린팅을 설정하는 방법을 살펴봤습니다. 린팅 규칙이 아무리 훌륭해도 개발자가 `git commit` 전에 `npm run lint`를 실행하지 않으면 의미가 없습니다. **Husky**와 **lint-staged**는 이 문제를 Git 훅으로 자동화합니다. 커밋 순간에 품질 검사를 실행해, 오류가 있는 코드가 저장소에 들어오지 못하도록 막는 **품질 게이트(Quality Gate)**를 구성합니다.
+[지난 글](/posts/lint-typescript-eslint/)에서 TypeScript ESLint로 타입 인식 린팅을 설정하는 방법을 살펴봤습니다. 린팅 규칙이 아무리 훌륭해도 개발자가 `git commit` 전에 `npm run lint`를 실행하지 않으면 의미가 없습니다. **Husky**와 **lint-staged**는 이 문제를 Git 훅으로 자동화합니다. 커밋 순간에 품질 검사를 실행해, 오류가 있는 코드가 저장소에 들어오지 못하도록 막는 **품질 게이트**(Quality Gate)를 구성합니다.
 
 ---
 

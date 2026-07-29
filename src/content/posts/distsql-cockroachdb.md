@@ -15,7 +15,7 @@ draft: false
 
 ## CockroachDB 아키텍처 개요
 
-CockroachDB는 5개 계층으로 구성되며, 모든 노드가 동일한 코드를 실행하는 **대칭 아키텍처(symmetric architecture)**가 특징이다. 특정 노드가 장애를 일으켜도 다른 노드가 즉시 대신할 수 있다.
+CockroachDB는 5개 계층으로 구성되며, 모든 노드가 동일한 코드를 실행하는 **대칭 아키텍처**(symmetric architecture)가 특징이다. 특정 노드가 장애를 일으켜도 다른 노드가 즉시 대신할 수 있다.
 
 ![CockroachDB 계층 아키텍처](/assets/posts/distsql-cockroachdb-architecture.svg)
 
@@ -31,7 +31,7 @@ CockroachDB는 5개 계층으로 구성되며, 모든 노드가 동일한 코드
 
 ## HLC — Spanner TrueTime의 오픈소스 대안
 
-Google Spanner는 GPS와 원자시계로 구현한 TrueTime API로 글로벌 트랜잭션 순서를 보장한다. CockroachDB는 이를 **HLC(Hybrid Logical Clock)**로 대체한다. HLC는 NTP 시간(물리 시계)과 논리 카운터를 결합해, 원자시계 없이도 분산 노드 간 이벤트 순서를 결정한다.
+Google Spanner는 GPS와 원자시계로 구현한 TrueTime API로 글로벌 트랜잭션 순서를 보장한다. CockroachDB는 이를 **HLC**(Hybrid Logical Clock)로 대체한다. HLC는 NTP 시간(물리 시계)과 논리 카운터를 결합해, 원자시계 없이도 분산 노드 간 이벤트 순서를 결정한다.
 
 ```sql
 -- HLC 타임스탬프 확인 (CRDB 전용)
@@ -47,7 +47,7 @@ HLC의 한계는 시계 오차(clock skew)가 크면 커밋 지연이 길어진�
 
 ## Serializable 격리와 SSI
 
-CockroachDB의 기본 격리 수준은 **Serializable**이다. MySQL의 기본 Repeatable Read, PostgreSQL의 기본 Read Committed보다 강력하다. 내부적으로 **SSI(Serializable Snapshot Isolation)**를 사용해 팬텀 읽기와 쓰기 스큐(write skew)까지 방지한다.
+CockroachDB의 기본 격리 수준은 **Serializable**이다. MySQL의 기본 Repeatable Read, PostgreSQL의 기본 Read Committed보다 강력하다. 내부적으로 **SSI**(Serializable Snapshot Isolation)를 사용해 팬텀 읽기와 쓰기 스큐(write skew)까지 방지한다.
 
 ```sql
 -- Serializable 트랜잭션 (기본값)
@@ -65,7 +65,7 @@ SSI에서는 커밋 시 다른 트랜잭션의 쓰기와 충돌 여부를 검사
 
 ## 멀티 리전 테이블
 
-CockroachDB의 가장 독특한 기능 중 하나는 **행 단위 리전 핀닝(Regional by Row)**이다. 같은 테이블의 행이라도 region 컬럼 값에 따라 데이터를 해당 리전의 노드에 물리적으로 배치한다. 한국 사용자의 데이터는 서울 리전에, 미국 사용자 데이터는 버지니아 리전에 저장하면서 동일한 테이블로 통합 조회할 수 있다.
+CockroachDB의 가장 독특한 기능 중 하나는 **행 단위 리전 핀닝**(Regional by Row)이다. 같은 테이블의 행이라도 region 컬럼 값에 따라 데이터를 해당 리전의 노드에 물리적으로 배치한다. 한국 사용자의 데이터는 서울 리전에, 미국 사용자 데이터는 버지니아 리전에 저장하면서 동일한 테이블로 통합 조회할 수 있다.
 
 ![CockroachDB SQL 특징과 멀티 리전](/assets/posts/distsql-cockroachdb-sql.svg)
 

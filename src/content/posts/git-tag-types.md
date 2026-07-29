@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-credential-helper/)에서 HTTPS 인증을 자동화하는 credential helper를 다뤘다. 이번에는 코드베이스의 특정 시점을 표시하는 **Git 태그(tag)**의 두 가지 유형을 비교한다. 태그는 배포 버전, 릴리스 포인트, 중요한 마일스톤을 기록하는 데 사용된다.
+[지난 글](/posts/git-credential-helper/)에서 HTTPS 인증을 자동화하는 credential helper를 다뤘다. 이번에는 코드베이스의 특정 시점을 표시하는 **Git 태그**(tag)의 두 가지 유형을 비교한다. 태그는 배포 버전, 릴리스 포인트, 중요한 마일스톤을 기록하는 데 사용된다.
 
 ## 태그란 무엇인가
 
 태그는 특정 커밋에 붙이는 **고정 포인터**다. 브랜치와 달리 새 커밋을 추가해도 태그는 이동하지 않는다. `v1.0`, `v2.3.1` 같은 버전 레이블이 대표적인 사용 사례다.
 
-Git에는 두 종류의 태그가 있다: **Lightweight(경량 태그)**와 **Annotated(주석 태그)**.
+Git에는 두 종류의 태그가 있다: **Lightweight**(경량 태그)와 **Annotated(주석 태그)**.
 
 ## Lightweight 태그
 

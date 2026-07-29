@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-list-vector-stack/)에서 레거시 Vector와 Stack을 살펴봤다. 이번에는 **`HashSet`**을 다룬다. `HashSet`은 Java에서 가장 많이 쓰이는 `Set` 구현체로, 중복 없는 원소 저장과 O(1) 평균 검색 성능을 제공한다.
+[지난 글](/posts/java-list-vector-stack/)에서 레거시 Vector와 Stack을 살펴봤다. 이번에는 <strong>`HashSet`</strong>을 다룬다. `HashSet`은 Java에서 가장 많이 쓰이는 `Set` 구현체로, 중복 없는 원소 저장과 O(1) 평균 검색 성능을 제공한다.
 
 ## HashSet은 HashMap 위에 올라탄 Set
 

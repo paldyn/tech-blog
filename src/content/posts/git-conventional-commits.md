@@ -104,7 +104,7 @@ Fixes #456
 Reviewed-by: Alice <alice@example.com>
 ```
 
-`body`는 무엇을(what)이 아닌 **왜(why)**를 설명한다. `footer`는 GitHub 이슈 연결(`Fixes #`, `Closes #`, `Refs #`)이나 리뷰어 정보를 기록한다.
+`body`는 무엇을(what)이 아닌 **왜**(why)를 설명한다. `footer`는 GitHub 이슈 연결(`Fixes #`, `Closes #`, `Refs #`)이나 리뷰어 정보를 기록한다.
 
 ## 실제 사용 예시
 

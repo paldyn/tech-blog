@@ -40,7 +40,7 @@ score(D, Q) = Σ IDF(qᵢ) · [TF(qᵢ,D) · (k₁+1)] / [TF(qᵢ,D) + k₁·(1-
 - **|D|/avgdl**: 문서 길이 정규화 (긴 문서 불이익)
 - **k₁, b**: 튜닝 파라미터 (보통 k₁=1.5, b=0.75)
 
-BM25의 핵심 특징은 **희소 벡터(Sparse Vector)**를 사용한다는 점이다. 어휘 크기(V)의 벡터에서 문서에 실제로 등장한 단어 위치만 0이 아닌 값을 가진다. 10만 개의 어휘 중 실제 등장 단어가 50개라면 벡터의 99.95%가 0이다. 이 희소성 덕분에 역색인(Inverted Index)을 통해 매우 빠른 검색이 가능하다.
+BM25의 핵심 특징은 **희소 벡터**(Sparse Vector)를 사용한다는 점이다. 어휘 크기(V)의 벡터에서 문서에 실제로 등장한 단어 위치만 0이 아닌 값을 가진다. 10만 개의 어휘 중 실제 등장 단어가 50개라면 벡터의 99.95%가 0이다. 이 희소성 덕분에 역색인(Inverted Index)을 통해 매우 빠른 검색이 가능하다.
 
 ```python
 from rank_bm25 import BM25Okapi
@@ -158,7 +158,7 @@ for dist, idx in zip(distances, indices):
 
 ## Hybrid 검색과 RRF 융합 알고리즘
 
-하이브리드 검색은 BM25와 Dense 검색의 결과를 합쳐 각 방식의 강점을 취한다. 두 결과를 어떻게 합치느냐가 핵심인데, 가장 효과적인 방법이 **RRF(Reciprocal Rank Fusion)**다.
+하이브리드 검색은 BM25와 Dense 검색의 결과를 합쳐 각 방식의 강점을 취한다. 두 결과를 어떻게 합치느냐가 핵심인데, 가장 효과적인 방법이 **RRF**(Reciprocal Rank Fusion)다.
 
 ![하이브리드 검색 아키텍처](/assets/posts/rag-retrieval-strategies-hybrid.svg)
 

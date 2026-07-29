@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-you-might-not-need-effect/)에서 Effect가 필요 없는 상황들을 살펴봤다. 이번에는 Effect가 실제로 필요한 가장 흔한 경우인 데이터 페칭에서 발생하는 **경쟁 조건(race condition)**을 다룬다. 빠르게 클릭하거나 값이 빠르게 바뀌는 환경에서 반드시 마주치는 문제다.
+[지난 글](/posts/react-you-might-not-need-effect/)에서 Effect가 필요 없는 상황들을 살펴봤다. 이번에는 Effect가 실제로 필요한 가장 흔한 경우인 데이터 페칭에서 발생하는 **경쟁 조건**(race condition)을 다룬다. 빠르게 클릭하거나 값이 빠르게 바뀌는 환경에서 반드시 마주치는 문제다.
 
 ## 경쟁 조건이란
 

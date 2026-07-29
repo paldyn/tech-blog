@@ -52,7 +52,7 @@ dig google.com A
 
 ## CNAME 레코드 (Canonical Name)
 
-도메인의 **별명(Alias)**을 지정한다. CNAME은 또 다른 도메인을 가리키며, 최종적으로 A 레코드까지 연쇄 조회한다.
+도메인의 **별명**(Alias)을 지정한다. CNAME은 또 다른 도메인을 가리키며, 최종적으로 A 레코드까지 연쇄 조회한다.
 
 ```text
 www.example.com  →  CNAME  →  cdn.example.net  →  A  →  104.21.23.145

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-function-based-index/)에서 표현식을 키로 저장하는 Function-Based Index를 다뤘다. 이번에는 테이블 자체가 B-Tree 구조로 저장되는 **Index-Organized Table(IOT)**을 살펴본다.
+[지난 글](/posts/oracle-function-based-index/)에서 표현식을 키로 저장하는 Function-Based Index를 다뤘다. 이번에는 테이블 자체가 B-Tree 구조로 저장되는 **Index-Organized Table**(IOT)을 살펴본다.
 
 ## Heap 테이블 vs. IOT
 
@@ -80,7 +80,7 @@ IOT에는 PK 이외의 컬럼에 대해 **보조 인덱스**를 추가로 생성
 CREATE INDEX idx_postal_city ON postal_codes (city);
 ```
 
-힙 테이블의 인덱스는 물리적 `ROWID`를 저장하지만, IOT 보조 인덱스는 **UROWID(논리 ROWID)**를 저장한다. UROWID는 해당 행의 PK 값으로 구성된다. 보조 인덱스로 city를 찾으면 UROWID에서 PK를 추출하고, 다시 IOT B-Tree를 탐색해 전체 행을 반환한다. 이 때문에 보조 인덱스를 통한 조회는 PK 직접 조회보다 한 단계 더 필요하다.
+힙 테이블의 인덱스는 물리적 `ROWID`를 저장하지만, IOT 보조 인덱스는 **UROWID**(논리 ROWID)를 저장한다. UROWID는 해당 행의 PK 값으로 구성된다. 보조 인덱스로 city를 찾으면 UROWID에서 PK를 추출하고, 다시 IOT B-Tree를 탐색해 전체 행을 반환한다. 이 때문에 보조 인덱스를 통한 조회는 PK 직접 조회보다 한 단계 더 필요하다.
 
 ![IOT 생성·조회·보조 인덱스](/assets/posts/oracle-iot-sql.svg)
 

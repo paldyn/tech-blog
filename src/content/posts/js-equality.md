@@ -15,7 +15,7 @@ draft: false
 
 ## == 느슨한 동등 (Abstract Equality)
 
-`==`는 두 값의 타입이 다를 때 **형변환(coercion)**을 시도한 후 비교합니다. ECMAScript 스펙의 추상 동등 비교(Abstract Equality Comparison) 알고리즘이 동작합니다.
+`==`는 두 값의 타입이 다를 때 **형변환**(coercion)을 시도한 후 비교합니다. ECMAScript 스펙의 추상 동등 비교(Abstract Equality Comparison) 알고리즘이 동작합니다.
 
 핵심 규칙을 요약하면:
 1. 타입이 같으면 `===`와 동일하게 비교

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mysql-stored-procedure-function/)에서 스토어드 프로시저와 함수로 서버 사이드 로직을 구현하는 방법을 살펴봤습니다. 이번 글에서는 DML 이벤트에 자동으로 반응하는 **트리거(Trigger)**를 다룹니다.
+[지난 글](/posts/mysql-stored-procedure-function/)에서 스토어드 프로시저와 함수로 서버 사이드 로직을 구현하는 방법을 살펴봤습니다. 이번 글에서는 DML 이벤트에 자동으로 반응하는 **트리거**(Trigger)를 다룹니다.
 
 ## 트리거란
 

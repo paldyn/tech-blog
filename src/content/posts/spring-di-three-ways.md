@@ -13,7 +13,7 @@ draft: false
 
 [지난 글](/posts/spring-component-scan/)에서는 컴포넌트 스캔이 클래스패스를 순회하며 빈을 자동 등록하는 과정을 살펴봤습니다. 이번에는 IoC 컨테이너가 빈을 생성한 뒤 의존 관계를 어떤 방식으로 연결하는지, 즉 **의존성 주입(Dependency Injection)의 세 가지 전략**을 집중적으로 파고듭니다.
 
-Spring은 세 가지 방법으로 의존성을 주입할 수 있습니다. **생성자 주입(Constructor Injection)**, **세터 주입(Setter Injection)**, 그리고 **필드 주입(Field Injection)**입니다. 셋 모두 `@Autowired`(또는 생략 가능한 경우)를 활용하지만 동작 시점·불변성 보장·테스트 용이성에서 뚜렷한 차이를 보입니다.
+Spring은 세 가지 방법으로 의존성을 주입할 수 있습니다. **생성자 주입(Constructor Injection)**, **세터 주입(Setter Injection)**, 그리고 **필드 주입**(Field Injection)입니다. 셋 모두 `@Autowired`(또는 생략 가능한 경우)를 활용하지만 동작 시점·불변성 보장·테스트 용이성에서 뚜렷한 차이를 보입니다.
 
 ## 생성자 주입 — 가장 권장되는 방식
 

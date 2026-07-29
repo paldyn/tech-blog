@@ -15,7 +15,7 @@ draft: false
 
 ## CAS(Compare-And-Swap) 원리
 
-Atomic 클래스의 핵심은 CPU가 제공하는 **CAS 명령(x86의 `CMPXCHG`)**이다. 단일 CPU 명령이므로 중간에 인터럽트될 수 없다.
+Atomic 클래스의 핵심은 CPU가 제공하는 **CAS 명령**(x86의 `CMPXCHG`)이다. 단일 CPU 명령이므로 중간에 인터럽트될 수 없다.
 
 ```text
 if (메모리[addr] == expected) {
@@ -101,7 +101,7 @@ ref.compareAndSet(current, newNode, stamp, stamp + 1);
 
 ## LongAdder와 LongAccumulator
 
-`AtomicLong`은 고경합 환경에서 많은 스레드가 동일 메모리 위치를 CAS하려 경합해 성능이 저하된다. `LongAdder`는 내부적으로 **여러 셀(Cell)**에 분산해 경합을 줄인다.
+`AtomicLong`은 고경합 환경에서 많은 스레드가 동일 메모리 위치를 CAS하려 경합해 성능이 저하된다. `LongAdder`는 내부적으로 **여러 셀**(Cell)에 분산해 경합을 줄인다.
 
 ```java
 LongAdder adder = new LongAdder();

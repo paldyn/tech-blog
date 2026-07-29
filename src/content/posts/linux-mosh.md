@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-screen-tmux/)에서 tmux와 screen으로 SSH 세션이 끊겨도 프로세스를 유지하는 방법을 살펴봤습니다. tmux가 세션 유지를 담당한다면, **mosh(Mobile Shell)**는 한 걸음 더 나아가 연결 자체가 끊기지 않도록 합니다. 이동 중 Wi-Fi 전환, LTE↔Wi-Fi 전환, 노트북을 닫았다 열기 — 이런 상황에서도 셸 세션이 살아 있습니다.
+[지난 글](/posts/linux-screen-tmux/)에서 tmux와 screen으로 SSH 세션이 끊겨도 프로세스를 유지하는 방법을 살펴봤습니다. tmux가 세션 유지를 담당한다면, **mosh**(Mobile Shell)는 한 걸음 더 나아가 연결 자체가 끊기지 않도록 합니다. 이동 중 Wi-Fi 전환, LTE↔Wi-Fi 전환, 노트북을 닫았다 열기 — 이런 상황에서도 셸 세션이 살아 있습니다.
 
 ## mosh의 핵심 아이디어
 
-SSH는 TCP 연결 위에서 동작합니다. TCP는 연결 지향 프로토콜이라 IP가 바뀌거나 연결이 일정 시간 끊기면 세션이 소멸합니다. mosh는 이 문제를 **UDP + SSP(State Synchronization Protocol)**로 해결합니다.
+SSH는 TCP 연결 위에서 동작합니다. TCP는 연결 지향 프로토콜이라 IP가 바뀌거나 연결이 일정 시간 끊기면 세션이 소멸합니다. mosh는 이 문제를 **UDP + SSP**(State Synchronization Protocol)로 해결합니다.
 
 mosh의 동작 순서:
 1. SSH로 서버에 접속해 `mosh-server`를 시작하고 인증을 처리

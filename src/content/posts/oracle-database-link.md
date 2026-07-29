@@ -73,7 +73,7 @@ DML(INSERT/UPDATE/DELETE)도 DB Link를 통해 실행할 수 있다. 단, DDL은
 
 ## 시노님으로 @link 숨기기
 
-코드에 `@branch_db`를 직접 쓰면 나중에 링크 이름이 바뀔 때 모든 SQL을 수정해야 한다. **시노님(SYNONYM)**으로 추상화하면 이 의존성을 제거할 수 있다.
+코드에 `@branch_db`를 직접 쓰면 나중에 링크 이름이 바뀔 때 모든 SQL을 수정해야 한다. **시노님**(SYNONYM)으로 추상화하면 이 의존성을 제거할 수 있다.
 
 ```sql
 -- 시노님 생성
@@ -90,7 +90,7 @@ CREATE SYNONYM branch_sales FOR branch_sales@new_branch_db;
 
 ## 분산 트랜잭션과 2PC
 
-로컬과 원격 DB 양쪽에 DML이 있는 경우, Oracle은 **Two-Phase Commit(2PC)**으로 원자성을 보장한다.
+로컬과 원격 DB 양쪽에 DML이 있는 경우, Oracle은 **Two-Phase Commit**(2PC)으로 원자성을 보장한다.
 
 ```sql
 BEGIN

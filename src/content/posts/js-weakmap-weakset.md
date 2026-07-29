@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-map-set/)에서 Map과 Set을 살펴봤습니다. 이번 글에서는 이 두 컬렉션의 "약한" 버전인 **WeakMap**과 **WeakSet**을 다룹니다. 이름에서 알 수 있듯 키(WeakMap) 또는 원소(WeakSet)에 대한 **약한 참조(weak reference)**를 유지해 가비지 컬렉터가 자유롭게 수거할 수 있도록 허용합니다.
+[지난 글](/posts/js-map-set/)에서 Map과 Set을 살펴봤습니다. 이번 글에서는 이 두 컬렉션의 "약한" 버전인 **WeakMap**과 **WeakSet**을 다룹니다. 이름에서 알 수 있듯 키(WeakMap) 또는 원소(WeakSet)에 대한 **약한 참조**(weak reference)를 유지해 가비지 컬렉터가 자유롭게 수거할 수 있도록 허용합니다.
 
 ## 강한 참조 vs 약한 참조
 

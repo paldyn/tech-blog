@@ -27,7 +27,7 @@ more +20 file.txt      # 20번째 줄부터 시작
 
 ## less — 더 강력한 페이저
 
-`less`는 `more`의 기능을 모두 포함하면서 훨씬 많은 기능을 제공한다. **"less is more"**라는 이름답게, 이름이 less지만 more보다 기능이 훨씬 많다. `man` 명령도 내부적으로 `less`를 사용한다.
+`less`는 `more`의 기능을 모두 포함하면서 훨씬 많은 기능을 제공한다. <strong>"less is more"</strong>라는 이름답게, 이름이 less지만 more보다 기능이 훨씬 많다. `man` 명령도 내부적으로 `less`를 사용한다.
 
 ```bash
 less file.txt

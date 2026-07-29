@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-class-inheritance/)에서 `extends`와 `super`를 이용한 상속을 살펴봤다. 이번에는 TypeScript만의 편리한 문법인 **파라미터 프로퍼티(Parameter Properties)**를 다룬다. 생성자 파라미터에 접근 제한자를 붙이는 것만으로 프로퍼티 선언과 초기화를 한 번에 처리하는 기법이다.
+[지난 글](/posts/ts-class-inheritance/)에서 `extends`와 `super`를 이용한 상속을 살펴봤다. 이번에는 TypeScript만의 편리한 문법인 **파라미터 프로퍼티**(Parameter Properties)를 다룬다. 생성자 파라미터에 접근 제한자를 붙이는 것만으로 프로퍼티 선언과 초기화를 한 번에 처리하는 기법이다.
 
 ## 문제: 반복되는 보일러플레이트
 

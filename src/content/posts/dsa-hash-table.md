@@ -11,17 +11,17 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-skip-list/)에서 정렬 데이터를 평균 O(log n)에 처리하는 스킵 리스트를 살펴봤습니다. 이번에는 더 빠른 **O(1) 평균** 탐색·삽입·삭제를 제공하는 **해시 테이블(Hash Table)**을 다룹니다. Python의 `dict`와 `set`, Java의 `HashMap`, JavaScript의 객체 리터럴 등이 모두 해시 테이블 기반입니다.
+[지난 글](/posts/dsa-skip-list/)에서 정렬 데이터를 평균 O(log n)에 처리하는 스킵 리스트를 살펴봤습니다. 이번에는 더 빠른 **O(1) 평균** 탐색·삽입·삭제를 제공하는 **해시 테이블**(Hash Table)을 다룹니다. Python의 `dict`와 `set`, Java의 `HashMap`, JavaScript의 객체 리터럴 등이 모두 해시 테이블 기반입니다.
 
 ## 해시 테이블의 구조
 
-해시 테이블은 **해시 함수(hash function)**로 키를 정수 인덱스로 변환해 배열의 해당 위치(버킷)에 값을 저장합니다.
+해시 테이블은 **해시 함수**(hash function)로 키를 정수 인덱스로 변환해 배열의 해당 위치(버킷)에 값을 저장합니다.
 
 ```text
 인덱스 = hash(key) % capacity
 ```
 
-이상적인 경우 모든 연산이 O(1)이지만, **충돌(collision)**이 발생하면 성능이 저하됩니다.
+이상적인 경우 모든 연산이 O(1)이지만, **충돌**(collision)이 발생하면 성능이 저하됩니다.
 
 ![해시 테이블 — 체이닝 방식](/assets/posts/dsa-hash-table-structure.svg)
 

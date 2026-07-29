@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cv-diffusion-basics/)에서 확산 모델의 수학적 원리인 순방향·역방향 과정과 노이즈 스케줄러를 다뤘다. 이번 글에서는 이 원리를 **잠재 공간(Latent Space)**으로 이동시켜 실용적으로 만든 **Stable Diffusion**의 전체 파이프라인과 실전 사용법을 다룬다.
+[지난 글](/posts/cv-diffusion-basics/)에서 확산 모델의 수학적 원리인 순방향·역방향 과정과 노이즈 스케줄러를 다뤘다. 이번 글에서는 이 원리를 **잠재 공간**(Latent Space)으로 이동시켜 실용적으로 만든 **Stable Diffusion**의 전체 파이프라인과 실전 사용법을 다룬다.
 
 ## Latent Diffusion Model(LDM)의 핵심 혁신
 

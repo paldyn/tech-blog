@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nn-forward-backward/)에서 역전파가 연쇄 법칙을 통해 모든 층의 기울기를 계산한다는 것을 배웠다. 이 역전파로 학습할 수 있는 가장 기본적인 신경망 구조가 **다층 퍼셉트론(Multi-Layer Perceptron, MLP)**이다. MLP는 딥러닝의 출발점이자 가장 이해하기 쉬운 형태다. 이번 글에서는 MLP의 구조, **보편 근사 정리(Universal Approximation Theorem)**, 깊이와 너비의 트레이드오프, 그리고 MNIST 손글씨 분류기 완전 구현을 다룬다.
+[지난 글](/posts/nn-forward-backward/)에서 역전파가 연쇄 법칙을 통해 모든 층의 기울기를 계산한다는 것을 배웠다. 이 역전파로 학습할 수 있는 가장 기본적인 신경망 구조가 **다층 퍼셉트론**(Multi-Layer Perceptron, MLP)이다. MLP는 딥러닝의 출발점이자 가장 이해하기 쉬운 형태다. 이번 글에서는 MLP의 구조, **보편 근사 정리(Universal Approximation Theorem)**, 깊이와 너비의 트레이드오프, 그리고 MNIST 손글씨 분류기 완전 구현을 다룬다.
 
 ## MLP란
 

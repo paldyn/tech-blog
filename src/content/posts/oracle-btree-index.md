@@ -95,7 +95,7 @@ B-Tree Leaf 블록이 꽉 차면 **Index Split**이 발생한다. 블록의 절�
 
 ## Index Range Scan vs Full Table Scan
 
-옵티마이저가 인덱스를 사용할지 결정하는 핵심 요소는 **선택도(Selectivity)**다.
+옵티마이저가 인덱스를 사용할지 결정하는 핵심 요소는 **선택도**(Selectivity)다.
 
 ```sql
 -- 실행 계획 확인

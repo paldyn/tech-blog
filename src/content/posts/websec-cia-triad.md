@@ -130,9 +130,9 @@ def is_rate_limited(user_id: str, limit: int = 100, window: int = 60) -> bool:
 
 ## 확장 모델: CIAA와 Parkerian Hexad
 
-CIA에 **책임 추적성(Accountability)**을 추가한 CIAA 모델도 자주 쓰인다. 누가, 언제, 무엇을 했는지 감사 로그로 추적하는 능력이다. "기밀성이 깨졌을 때 누가 접근했는가"를 사후에 밝히는 데 필수적이다.
+CIA에 **책임 추적성**(Accountability)을 추가한 CIAA 모델도 자주 쓰인다. 누가, 언제, 무엇을 했는지 감사 로그로 추적하는 능력이다. "기밀성이 깨졌을 때 누가 접근했는가"를 사후에 밝히는 데 필수적이다.
 
-Parker의 Hexad 모델은 CIA에 **소유권(Possession)**, **진정성(Authenticity)**, **유용성(Utility)**을 더한다. 랜섬웨어는 무결성·가용성을 침해하면서도 소유권을 빼앗는 공격이다.
+Parker의 Hexad 모델은 CIA에 **소유권(Possession)**, **진정성(Authenticity)**, **유용성**(Utility)을 더한다. 랜섬웨어는 무결성·가용성을 침해하면서도 소유권을 빼앗는 공격이다.
 
 실무에서는 CIA가 가장 범용적이고 의사소통에 유용하다. 보안 결정을 내릴 때 "이 변경이 C·I·A 중 무엇에 영향을 주는가?"를 묻는 습관을 들이는 것만으로도 많은 실수를 예방할 수 있다.
 

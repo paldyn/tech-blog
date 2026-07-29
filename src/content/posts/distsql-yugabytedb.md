@@ -60,7 +60,7 @@ CREATE TABLE us_orders (
 
 ## 팔로워 읽기
 
-Raft 리더에서만 읽으면 WAN 환경에서 지연이 크다. YugabyteDB는 **팔로워 읽기(follower reads)**를 지원한다. 허용 가능한 오래된 데이터(staleness) 범위 내에서 가장 가까운 팔로워에서 읽는다. 읽기 지연을 크게 줄이면서도 일관성의 정도를 staleness로 제어할 수 있다.
+Raft 리더에서만 읽으면 WAN 환경에서 지연이 크다. YugabyteDB는 **팔로워 읽기**(follower reads)를 지원한다. 허용 가능한 오래된 데이터(staleness) 범위 내에서 가장 가까운 팔로워에서 읽는다. 읽기 지연을 크게 줄이면서도 일관성의 정도를 staleness로 제어할 수 있다.
 
 ```sql
 -- 글로벌 팔로워 읽기 설정

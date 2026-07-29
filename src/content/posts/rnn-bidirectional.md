@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/rnn-gru/)에서 GRU가 LSTM을 경량화한 방법을 살펴봤다. 단방향 RNN은 항상 왼쪽에서 오른쪽으로 읽는다—토큰을 처리할 때 아직 보지 못한 미래 토큰의 맥락은 알 수 없다. **양방향 RNN(Bidirectional RNN)**은 두 개의 RNN을 동시에 실행해 이 한계를 극복한다. 하나는 왼→오른쪽(Forward), 다른 하나는 오른→왼쪽(Backward) 방향으로 시퀀스를 처리하고, 두 은닉 상태를 이어 붙여(concatenate) 각 토큰의 완전한 문맥 표현을 만든다.
+[지난 글](/posts/rnn-gru/)에서 GRU가 LSTM을 경량화한 방법을 살펴봤다. 단방향 RNN은 항상 왼쪽에서 오른쪽으로 읽는다—토큰을 처리할 때 아직 보지 못한 미래 토큰의 맥락은 알 수 없다. **양방향 RNN**(Bidirectional RNN)은 두 개의 RNN을 동시에 실행해 이 한계를 극복한다. 하나는 왼→오른쪽(Forward), 다른 하나는 오른→왼쪽(Backward) 방향으로 시퀀스를 처리하고, 두 은닉 상태를 이어 붙여(concatenate) 각 토큰의 완전한 문맥 표현을 만든다.
 
 ## 구조
 
@@ -27,7 +27,7 @@ y_t = [h̄_t ; h̃_t]                  # 2 × hidden 벡터
 
 ## 왜 양방향이 필요한가: NER 예시
 
-"Apple은 팀 쿡이 이끄는 회사다"에서 "Apple"이 과일인지 기업인지 판단하려면 **뒤의 "회사"**를 먼저 봐야 한다. Forward-only RNN은 "Apple"을 처리할 시점에 아직 "회사"를 보지 못했다. Backward RNN이 오른쪽에서 왼쪽으로 읽으면서 "Apple" 위치에 이미 "회사" 정보를 담고 있다.
+"Apple은 팀 쿡이 이끄는 회사다"에서 "Apple"이 과일인지 기업인지 판단하려면 <strong>뒤의 "회사"</strong>를 먼저 봐야 한다. Forward-only RNN은 "Apple"을 처리할 시점에 아직 "회사"를 보지 못했다. Backward RNN이 오른쪽에서 왼쪽으로 읽으면서 "Apple" 위치에 이미 "회사" 정보를 담고 있다.
 
 ![양방향 RNN 활용 예시](/assets/posts/rnn-bidirectional-usecase.svg)
 

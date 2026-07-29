@@ -39,7 +39,7 @@ Passive Close 측은 오류로 연결이 끝난다.
 
 ## MSL과 2MSL
 
-**MSL(Maximum Segment Lifetime)**은 세그먼트가 네트워크에서 살아있을 수 있는 최대 시간이다. Linux 기본값은 60초(RFC 793은 2분 권장). 따라서 TIME_WAIT 지속 시간은 **2×60 = 120초**다.
+**MSL**(Maximum Segment Lifetime)은 세그먼트가 네트워크에서 살아있을 수 있는 최대 시간이다. Linux 기본값은 60초(RFC 793은 2분 권장). 따라서 TIME_WAIT 지속 시간은 **2×60 = 120초**다.
 
 ```bash
 # Linux에서 MSL 확인 (직접 조회 불가, tcp_fin_timeout으로 간접 파악)

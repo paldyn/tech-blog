@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nlp-summarization/)에서 긴 문서를 압축하는 요약 기술을 살펴봤다. 이번에는 문서에서 특정 질문의 답을 정확히 찾아내는 **질의응답(Question Answering, QA)**을 다룬다. 단순히 검색 결과를 반환하는 것이 아니라 "BTS는 언제 데뷔했나요?"라는 질문에 대해 "2013년 6월 13일"이라는 정확한 답을 추출하거나 생성하는 기술이다. 챗봇, 문서 검색, 고객 지원 자동화, 시험 자동 채점 등 다양한 분야에서 핵심 역할을 한다.
+[지난 글](/posts/nlp-summarization/)에서 긴 문서를 압축하는 요약 기술을 살펴봤다. 이번에는 문서에서 특정 질문의 답을 정확히 찾아내는 **질의응답**(Question Answering, QA)을 다룬다. 단순히 검색 결과를 반환하는 것이 아니라 "BTS는 언제 데뷔했나요?"라는 질문에 대해 "2013년 6월 13일"이라는 정확한 답을 추출하거나 생성하는 기술이다. 챗봇, 문서 검색, 고객 지원 자동화, 시험 자동 채점 등 다양한 분야에서 핵심 역할을 한다.
 
 ## QA의 세 가지 유형
 
@@ -61,7 +61,7 @@ def predict_span(model, input_ids, attention_mask):
 
 ## KorQuAD: 한국어 QA 벤치마크
 
-**KorQuAD(Korean Question Answering Dataset)**는 위키피디아 기반의 한국어 추출형 QA 데이터셋이다. 영어의 SQuAD에 해당한다. KorQuAD 1.0은 70K+ 질문-답 쌍, KorQuAD 2.0은 HTML 구조 포함 복잡한 문서까지 다룬다.
+**KorQuAD**(Korean Question Answering Dataset)는 위키피디아 기반의 한국어 추출형 QA 데이터셋이다. 영어의 SQuAD에 해당한다. KorQuAD 1.0은 70K+ 질문-답 쌍, KorQuAD 2.0은 HTML 구조 포함 복잡한 문서까지 다룬다.
 
 ```python
 from datasets import load_dataset

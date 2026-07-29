@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-cross-join-cartesian/)에서 CROSS JOIN과 카테시안 곱을 살펴봤다. 이번에는 같은 테이블을 두 번 조인하는 **셀프 조인(Self Join)**을 다룬다. 조직도, 카테고리 트리, 댓글 스레드처럼 하나의 테이블 안에서 부모-자식 관계가 있는 데이터를 다룰 때 핵심 패턴이다.
+[지난 글](/posts/sql-cross-join-cartesian/)에서 CROSS JOIN과 카테시안 곱을 살펴봤다. 이번에는 같은 테이블을 두 번 조인하는 **셀프 조인**(Self Join)을 다룬다. 조직도, 카테고리 트리, 댓글 스레드처럼 하나의 테이블 안에서 부모-자식 관계가 있는 데이터를 다룰 때 핵심 패턴이다.
 
 ---
 
 ## 셀프 조인이란
 
-셀프 조인은 특별한 조인 키워드가 따로 있는 게 아니다. 같은 테이블에 서로 다른 **별칭(Alias)**을 붙여 두 번 참조하는 일반 JOIN이다.
+셀프 조인은 특별한 조인 키워드가 따로 있는 게 아니다. 같은 테이블에 서로 다른 **별칭**(Alias)을 붙여 두 번 참조하는 일반 JOIN이다.
 
 ```sql
 -- employees 테이블: id, name, manager_id (자기 참조 FK)
@@ -99,7 +99,7 @@ WHERE ABS(a.salary - b.salary) >= 1000000;
 
 ## 재귀 CTE로 임의 깊이 탐색
 
-셀프 조인은 한 번 조인할 때마다 한 단계 내려간다. 계층이 3단계면 JOIN을 3번 써야 한다. 깊이를 알 수 없는 계층을 탐색할 때는 **재귀 CTE(WITH RECURSIVE)**를 사용한다.
+셀프 조인은 한 번 조인할 때마다 한 단계 내려간다. 계층이 3단계면 JOIN을 3번 써야 한다. 깊이를 알 수 없는 계층을 탐색할 때는 **재귀 CTE**(WITH RECURSIVE)를 사용한다.
 
 ![재귀 CTE vs 셀프 조인](/assets/posts/sql-self-join-hierarchical-recursive.svg)
 

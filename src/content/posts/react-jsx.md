@@ -17,7 +17,7 @@ draft: false
 
 ## JSX란
 
-**JSX(JavaScript XML)**는 JavaScript 파일 안에서 HTML과 유사한 마크업을 작성할 수 있게 해주는 문법 확장입니다. 브라우저는 JSX를 직접 이해하지 못하므로, Babel이나 SWC 같은 **트랜스파일러**가 JSX를 순수 JavaScript로 변환합니다.
+**JSX**(JavaScript XML)는 JavaScript 파일 안에서 HTML과 유사한 마크업을 작성할 수 있게 해주는 문법 확장입니다. 브라우저는 JSX를 직접 이해하지 못하므로, Babel이나 SWC 같은 **트랜스파일러**가 JSX를 순수 JavaScript로 변환합니다.
 
 ```jsx
 // 개발자가 작성하는 JSX
@@ -51,7 +51,7 @@ const element = _jsx('h1', { className: 'title', children: 'Hello, React!' });
 }
 ```
 
-React Element는 값싼 **설계도(Blueprint)**입니다. 실제 DOM 노드보다 훨씬 가볍고 빠르게 생성할 수 있어서, React가 상태 변경 시마다 새 Element 트리를 만들어 이전과 비교(diff)할 수 있습니다.
+React Element는 값싼 **설계도**(Blueprint)입니다. 실제 DOM 노드보다 훨씬 가볍고 빠르게 생성할 수 있어서, React가 상태 변경 시마다 새 Element 트리를 만들어 이전과 비교(diff)할 수 있습니다.
 
 ---
 
@@ -107,7 +107,7 @@ HTML 속성 이름과 달리 JSX는 JavaScript 객체 키를 따르므로 camelC
 
 ### 4. 중괄호 `{}`로 JavaScript 표현식 삽입
 
-JSX 안의 `{}`에는 유효한 JavaScript **표현식(expression)**을 넣을 수 있습니다. 변수, 함수 호출, 삼항 연산자, 템플릿 리터럴 모두 가능합니다. 단, `if`문이나 `for`문 같은 **문(statement)**은 표현식이 아니므로 직접 넣을 수 없습니다.
+JSX 안의 `{}`에는 유효한 JavaScript **표현식**(expression)을 넣을 수 있습니다. 변수, 함수 호출, 삼항 연산자, 템플릿 리터럴 모두 가능합니다. 단, `if`문이나 `for`문 같은 **문**(statement)은 표현식이 아니므로 직접 넣을 수 없습니다.
 
 ```jsx
 const user = { name: 'Alice', score: 42 };

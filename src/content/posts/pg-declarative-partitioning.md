@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-foreign-data-wrapper/)에서 FDW로 외부 데이터 소스를 연결하는 방법을 살펴봤다. 이번에는 대용량 테이블의 성능과 관리성을 높이는 **선언적 파티셔닝(Declarative Partitioning)**을 다룬다. PostgreSQL 10에서 도입된 이 기능은 10~100억 건 이상의 시계열 데이터나 멀티테넌트 데이터를 효율적으로 관리할 수 있게 한다.
+[지난 글](/posts/pg-foreign-data-wrapper/)에서 FDW로 외부 데이터 소스를 연결하는 방법을 살펴봤다. 이번에는 대용량 테이블의 성능과 관리성을 높이는 **선언적 파티셔닝**(Declarative Partitioning)을 다룬다. PostgreSQL 10에서 도입된 이 기능은 10~100억 건 이상의 시계열 데이터나 멀티테넌트 데이터를 효율적으로 관리할 수 있게 한다.
 
 ## 파티셔닝이 필요한 상황
 

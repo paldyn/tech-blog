@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-hoisting/)에서 JavaScript의 호이스팅을 살펴보면서 `let`과 `const`는 선언만 호이스팅되고 초기화는 되지 않는다고 했습니다. 이 "선언은 됐지만 아직 초기화되지 않은" 구간이 바로 **TDZ(Temporal Dead Zone, 시간적 사각지대)**입니다. 이번 글에서는 TDZ가 왜 존재하는지, 그리고 어떤 상황에서 예기치 못한 TDZ 오류를 만나게 되는지 살펴봅니다.
+[지난 글](/posts/js-hoisting/)에서 JavaScript의 호이스팅을 살펴보면서 `let`과 `const`는 선언만 호이스팅되고 초기화는 되지 않는다고 했습니다. 이 "선언은 됐지만 아직 초기화되지 않은" 구간이 바로 **TDZ**(Temporal Dead Zone, 시간적 사각지대)입니다. 이번 글에서는 TDZ가 왜 존재하는지, 그리고 어떤 상황에서 예기치 못한 TDZ 오류를 만나게 되는지 살펴봅니다.
 
 ## TDZ란 무엇인가
 

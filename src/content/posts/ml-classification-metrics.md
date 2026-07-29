@@ -114,7 +114,7 @@ weighted avg       0.87    0.87      0.87       450
 
 ## MCC: 불균형 데이터의 최선 단일 지표
 
-F1도 음성 클래스를 고려하지 않아 극단적 불균형에서 한계가 있다. **MCC(Matthews Correlation Coefficient)**는 네 칸을 모두 활용해 가장 균형 잡힌 단일 지표를 제공한다.
+F1도 음성 클래스를 고려하지 않아 극단적 불균형에서 한계가 있다. **MCC**(Matthews Correlation Coefficient)는 네 칸을 모두 활용해 가장 균형 잡힌 단일 지표를 제공한다.
 
 ```python
 from sklearn.metrics import matthews_corrcoef

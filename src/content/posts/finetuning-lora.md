@@ -21,7 +21,7 @@ LoRA(Low-Rank Adaptation)는 2021년 Microsoft Research의 Hu et al.이 제안�
 
 ## LoRA의 수학: W' = W + B·A
 
-사전학습된 모델의 특정 레이어에 가중치 행렬 **W ∈ ℝ^{d×d}**가 있다고 하자. Full Fine-tuning이라면 이 행렬 전체(d² 파라미터)를 업데이트한다. LoRA는 이 대신 **W의 변화량 ΔW를 두 개의 저랭크 행렬의 곱으로 근사**한다.
+사전학습된 모델의 특정 레이어에 가중치 행렬 <strong>W ∈ ℝ^{d×d}</strong>가 있다고 하자. Full Fine-tuning이라면 이 행렬 전체(d² 파라미터)를 업데이트한다. LoRA는 이 대신 **W의 변화량 ΔW를 두 개의 저랭크 행렬의 곱으로 근사**한다.
 
 ```text
 W' = W + ΔW = W + B·A
@@ -32,7 +32,7 @@ W' = W + ΔW = W + B·A
   r << d          (rank, 보통 4~64)
 ```
 
-학습 시 **W는 완전히 동결(frozen)**되고, A와 B만 업데이트된다. d=4096, r=16이라면 기존 16,777,216개의 파라미터를 학습하는 대신 2×(4096×16) = 131,072개만 학습한다. 약 99.2% 절감이다.
+학습 시 **W는 완전히 동결**(frozen)되고, A와 B만 업데이트된다. d=4096, r=16이라면 기존 16,777,216개의 파라미터를 학습하는 대신 2×(4096×16) = 131,072개만 학습한다. 약 99.2% 절감이다.
 
 **왜 B를 0으로 초기화하나?** 학습 시작 시 B·A = 0이 되어 ΔW=0에서 출발한다. 즉 파인튜닝 초기에는 원본 사전학습 모델과 동일한 출력을 내고, 학습이 진행될수록 B·A가 태스크에 맞게 조정된다. 이렇게 하면 학습 초기의 불안정성이 크게 줄어든다.
 
@@ -188,7 +188,7 @@ merged_model = AutoModelForCausalLM.from_pretrained("./merged-model")
 막상 LoRA를 처음 적용할 때 어떤 설정을 선택해야 할지 막막할 수 있다. 다음 순서로 결정하면 대부분의 경우 좋은 출발점을 찾을 수 있다.
 
 1. **rank=16, alpha=32**로 시작한다. 이 조합이 가장 많은 케이스에서 안정적인 학습을 보여준다.
-2. **target_modules=["q_proj","k_proj","v_proj","o_proj"]**로 전체 Attention을 커버한다.
+2. <strong>target_modules=["q_proj","k_proj","v_proj","o_proj"]</strong>로 전체 Attention을 커버한다.
 3. **lora_dropout=0.05**, **bias="none"** 으로 고정한다.
 4. 성능이 부족하면 먼저 **데이터 품질**을 점검한 후, target_modules에 FFN(gate/up/down)을 추가한다.
 5. FFN 추가 후에도 부족하다면 rank를 32~64로 올리되, 학습 시간 증가를 감수해야 한다.

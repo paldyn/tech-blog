@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-conditional-import/)에서 조건부 임포트를 살펴봤습니다. 이번에는 모듈 시스템의 마지막 주제로, Python의 **이름 규약**을 정리합니다. `_name`, `__name`, `__name__` — 언더스코어 개수에 따라 의미가 달라지는 이 규약들과, 그중 하나인 **이름 맹글링(name mangling)**이 실제로 어떻게 동작하는지 알아봅니다.
+[지난 글](/posts/python-conditional-import/)에서 조건부 임포트를 살펴봤습니다. 이번에는 모듈 시스템의 마지막 주제로, Python의 **이름 규약**을 정리합니다. `_name`, `__name`, `__name__` — 언더스코어 개수에 따라 의미가 달라지는 이 규약들과, 그중 하나인 **이름 맹글링**(name mangling)이 실제로 어떻게 동작하는지 알아봅니다.
 
 ## 네 가지 이름 패턴
 

@@ -15,7 +15,7 @@ draft: false
 
 ## 클래스 다중 상속이 없는 이유
 
-C++는 클래스 다중 상속을 허용하지만 Java는 처음부터 허용하지 않았다. 가장 큰 이유는 **다이아몬드 문제(Diamond Problem)**다.
+C++는 클래스 다중 상속을 허용하지만 Java는 처음부터 허용하지 않았다. 가장 큰 이유는 **다이아몬드 문제**(Diamond Problem)다.
 
 ```text
       A
@@ -222,7 +222,7 @@ class Duck implements Flyable, Swimmable {
 
 ### 믹스인 패턴
 
-인터페이스 다중 구현의 대표 용도는 **믹스인(Mixin)**이다. 여러 기능을 독립적인 인터페이스로 분리해 조합한다.
+인터페이스 다중 구현의 대표 용도는 **믹스인**(Mixin)이다. 여러 기능을 독립적인 인터페이스로 분리해 조합한다.
 
 ```java
 interface Loggable {

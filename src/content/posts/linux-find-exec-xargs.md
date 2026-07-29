@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-find-basics/)에서 `find`로 파일을 찾는 다양한 조건을 배웠다. 이번 글에서는 찾은 파일에 명령을 실행하는 **`-exec` 옵션과 `xargs`**를 다룬다. 이 두 가지를 자유롭게 다루면 반복적인 파일 일괄 처리 작업을 한 줄로 자동화할 수 있다.
+[지난 글](/posts/linux-find-basics/)에서 `find`로 파일을 찾는 다양한 조건을 배웠다. 이번 글에서는 찾은 파일에 명령을 실행하는 <strong>`-exec` 옵션과 `xargs`</strong>를 다룬다. 이 두 가지를 자유롭게 다루면 반복적인 파일 일괄 처리 작업을 한 줄로 자동화할 수 있다.
 
 ## -exec: 찾은 파일에 명령 실행
 

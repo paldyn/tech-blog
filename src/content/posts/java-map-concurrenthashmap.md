@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-map-treemap/)에서 TreeMap의 NavigableMap API와 범위 쿼리를 살펴봤다. 이번에는 **`ConcurrentHashMap`**을 다룬다. 멀티스레드 환경에서 `HashMap`의 빠른 성능을 유지하면서 스레드 안전을 보장하는 Java 최선의 Map 구현체다.
+[지난 글](/posts/java-map-treemap/)에서 TreeMap의 NavigableMap API와 범위 쿼리를 살펴봤다. 이번에는 <strong>`ConcurrentHashMap`</strong>을 다룬다. 멀티스레드 환경에서 `HashMap`의 빠른 성능을 유지하면서 스레드 안전을 보장하는 Java 최선의 Map 구현체다.
 
 ## HashMap이 멀티스레드에서 위험한 이유
 
@@ -86,7 +86,7 @@ map.put(null, "value"); // NullPointerException
 map.put("key", null);   // NullPointerException
 ```
 
-이유: 동시성 환경에서 `get("key") == null`이 **"키가 없음"**인지 **"값이 null"**인지 구분할 수 없어 모호성이 생기기 때문이다. HashMap에서는 단일 스레드이므로 `containsKey`로 확인할 수 있지만, 멀티스레드 환경에서는 두 연산 사이에 상태가 바뀔 수 있다.
+이유: 동시성 환경에서 `get("key") == null`이 <strong>"키가 없음"</strong>인지 <strong>"값이 null"</strong>인지 구분할 수 없어 모호성이 생기기 때문이다. HashMap에서는 단일 스레드이므로 `containsKey`로 확인할 수 있지만, 멀티스레드 환경에서는 두 연산 사이에 상태가 바뀔 수 있다.
 
 ## size() vs mappingCount()
 

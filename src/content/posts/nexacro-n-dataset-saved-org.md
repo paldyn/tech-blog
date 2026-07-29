@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-dataset-row-status/)에서 rowType으로 행의 변경 상태를 추적하는 법을 다뤘습니다. Dataset은 rowType과 함께 **원본 값(savedOrg)**도 내부에 보관합니다. 사용자가 값을 수정해도 원본이 사라지지 않기 때문에, 언제든 수정 전 값을 되찾거나 비교할 수 있습니다.
+[지난 글](/posts/nexacro-n-dataset-row-status/)에서 rowType으로 행의 변경 상태를 추적하는 법을 다뤘습니다. Dataset은 rowType과 함께 **원본 값**(savedOrg)도 내부에 보관합니다. 사용자가 값을 수정해도 원본이 사라지지 않기 때문에, 언제든 수정 전 값을 되찾거나 비교할 수 있습니다.
 
 ## savedOrg란?
 

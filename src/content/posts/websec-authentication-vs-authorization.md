@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-http-security-basics/)에서 HTTP 프로토콜의 보안 기초를 다뤘다. 이번 글부터는 2부 인증과 인가를 본격적으로 시작한다. **인증(Authentication)**과 **인가(Authorization)**는 영어권에서도 종종 혼용되지만, 보안에서 이 두 개념의 혼동은 심각한 취약점을 만든다.
+[지난 글](/posts/websec-http-security-basics/)에서 HTTP 프로토콜의 보안 기초를 다뤘다. 이번 글부터는 2부 인증과 인가를 본격적으로 시작한다. **인증**(Authentication)과 **인가**(Authorization)는 영어권에서도 종종 혼용되지만, 보안에서 이 두 개념의 혼동은 심각한 취약점을 만든다.
 
 ## 두 개념의 정의
 

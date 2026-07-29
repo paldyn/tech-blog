@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-exhaustiveness-checking/)에서 완전성 검사를 살펴봤다. 이번에는 TypeScript 3.7에서 도입된 **단언 함수(Assertion Functions)**를 살펴본다. 타입 가드(`is` 반환)와 달리 단언 함수는 조건이 거짓이면 예외를 던지고, 참이면 이후 코드에서 타입이 좁혀진다.
+[지난 글](/posts/ts-exhaustiveness-checking/)에서 완전성 검사를 살펴봤다. 이번에는 TypeScript 3.7에서 도입된 **단언 함수**(Assertion Functions)를 살펴본다. 타입 가드(`is` 반환)와 달리 단언 함수는 조건이 거짓이면 예외를 던지고, 참이면 이후 코드에서 타입이 좁혀진다.
 
 ## 타입 가드 vs 단언 함수
 

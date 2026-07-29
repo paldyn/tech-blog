@@ -55,7 +55,7 @@ Content-Type: image/png
 ------X7MA4YWxkTrZu0gW--
 ```
 
-여기서 눈여겨볼 지점이 몇 가지 있다. 첫째, **텍스트 필드 part에는 `Content-Type`이 없다**(기본 `text/plain`으로 간주). 파일 part에만 `image/png` 같은 타입이 붙는다. 둘째, part 헤더와 본문 사이의 **빈 줄 하나**가 헤더의 끝을 의미한다 — HTTP 메시지 구조 그대로다. 셋째, 줄 끝은 모두 **CRLF(`\r\n`)**이며, 이건 단순한 관습이 아니라 RFC가 규정한 형식이다.
+여기서 눈여겨볼 지점이 몇 가지 있다. 첫째, **텍스트 필드 part에는 `Content-Type`이 없다**(기본 `text/plain`으로 간주). 파일 part에만 `image/png` 같은 타입이 붙는다. 둘째, part 헤더와 본문 사이의 **빈 줄 하나**가 헤더의 끝을 의미한다 — HTTP 메시지 구조 그대로다. 셋째, 줄 끝은 모두 **CRLF**(`\r\n`)이며, 이건 단순한 관습이 아니라 RFC가 규정한 형식이다.
 
 ## RFC 7578 — 규격이 정한 것들
 
@@ -151,7 +151,7 @@ Content-Range: bytes 0-499/1234
 --3d6b6a4--
 ```
 
-요컨대 **form-data는 업로드(요청), byteranges는 부분 다운로드(응답)**다. boundary 메커니즘이라는 같은 골격을 쓰지만 part 헤더가 `Content-Disposition`이냐 `Content-Range`냐로 구분된다. byteranges 쪽은 [Range 요청 글](/posts/http-range-requests/)에서 더 깊이 다뤘다.
+요컨대 **form-data는 업로드(요청), byteranges는 부분 다운로드**(응답)다. boundary 메커니즘이라는 같은 골격을 쓰지만 part 헤더가 `Content-Disposition`이냐 `Content-Range`냐로 구분된다. byteranges 쪽은 [Range 요청 글](/posts/http-range-requests/)에서 더 깊이 다뤘다.
 
 ## 정리
 

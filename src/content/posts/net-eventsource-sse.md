@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/net-streams-readable/)에서 ReadableStream의 내부 구조와 파이프 패턴을 살펴봤습니다. 이번에는 **Server-Sent Events(SSE)**를 정리합니다. SSE는 서버가 클라이언트에게 데이터를 단방향으로 실시간 푸시하는 가장 단순한 방법으로, 실시간 알림·대시보드·LLM 스트리밍 응답에 폭넓게 사용됩니다.
+[지난 글](/posts/net-streams-readable/)에서 ReadableStream의 내부 구조와 파이프 패턴을 살펴봤습니다. 이번에는 **Server-Sent Events**(SSE)를 정리합니다. SSE는 서버가 클라이언트에게 데이터를 단방향으로 실시간 푸시하는 가장 단순한 방법으로, 실시간 알림·대시보드·LLM 스트리밍 응답에 폭넓게 사용됩니다.
 
 ---
 

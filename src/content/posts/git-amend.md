@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-semver-tagging/)에서 SemVer와 Git 태그를 연동하는 방법을 살펴봤다. 이번에는 방금 만든 커밋을 수정하는 가장 간단한 도구, **`git commit --amend`**를 다룬다. 메시지 오타, 빠뜨린 파일, 잘못된 작성자 정보를 로컬에서 빠르게 수정할 수 있다.
+[지난 글](/posts/git-semver-tagging/)에서 SemVer와 Git 태그를 연동하는 방법을 살펴봤다. 이번에는 방금 만든 커밋을 수정하는 가장 간단한 도구, <strong>`git commit --amend`</strong>를 다룬다. 메시지 오타, 빠뜨린 파일, 잘못된 작성자 정보를 로컬에서 빠르게 수정할 수 있다.
 
 ## amend의 내부 동작
 

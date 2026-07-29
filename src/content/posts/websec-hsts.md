@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-security-headers/)에서 HTTP 보안 헤더 전체를 조망했다. 이번 글에서는 그 중 가장 기초이자 가장 중요한 **HSTS(HTTP Strict Transport Security)**를 깊이 파고든다. HSTS는 HTTP 연결을 HTTPS로 강제해 중간자 공격과 SSL Stripping을 차단한다.
+[지난 글](/posts/websec-security-headers/)에서 HTTP 보안 헤더 전체를 조망했다. 이번 글에서는 그 중 가장 기초이자 가장 중요한 **HSTS**(HTTP Strict Transport Security)를 깊이 파고든다. HSTS는 HTTP 연결을 HTTPS로 강제해 중간자 공격과 SSL Stripping을 차단한다.
 
 ## HTTP의 약점: SSL Stripping
 

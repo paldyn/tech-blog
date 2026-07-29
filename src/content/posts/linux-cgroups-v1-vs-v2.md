@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-container-namespaces-detail/)에서 Linux Namespace가 프로세스를 격리하는 방법을 배웠습니다. 이번에는 컨테이너의 두 번째 핵심 기술인 **cgroups(Control Groups)**를 살펴봅니다. Namespace가 "무엇이 보이는가"를 제한한다면, cgroups는 "얼마나 쓸 수 있는가"를 제한합니다.
+[지난 글](/posts/linux-container-namespaces-detail/)에서 Linux Namespace가 프로세스를 격리하는 방법을 배웠습니다. 이번에는 컨테이너의 두 번째 핵심 기술인 **cgroups**(Control Groups)를 살펴봅니다. Namespace가 "무엇이 보이는가"를 제한한다면, cgroups는 "얼마나 쓸 수 있는가"를 제한합니다.
 
 ## cgroups란
 
@@ -127,7 +127,7 @@ echo "8:0 rbps=10485760 wbps=10485760" | sudo tee \
 
 ## PSI — 압박 지표 (v2 전용)
 
-**PSI(Pressure Stall Information)**는 CPU·메모리·I/O 부족으로 프로세스가 실제 정체된 시간을 측정합니다.
+**PSI**(Pressure Stall Information)는 CPU·메모리·I/O 부족으로 프로세스가 실제 정체된 시간을 측정합니다.
 
 ```bash
 # 시스템 전체 메모리 압박

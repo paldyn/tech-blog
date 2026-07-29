@@ -38,13 +38,13 @@ setTimeout(userInput, 0);
 
 ## Trusted Types의 해결책
 
-**"DOM 싱크는 Trusted 타입만 받는다"**가 핵심 원칙이다. CSP로 활성화하면 브라우저가 `innerHTML`에 일반 문자열 할당을 거부하고 `TrustedHTML` 타입 객체만 허용한다.
+<strong>"DOM 싱크는 Trusted 타입만 받는다"</strong>가 핵심 원칙이다. CSP로 활성화하면 브라우저가 `innerHTML`에 일반 문자열 할당을 거부하고 `TrustedHTML` 타입 객체만 허용한다.
 
 ```http
 Content-Security-Policy: require-trusted-types-for 'script'; trusted-types myPolicy
 ```
 
-이제 `TrustedHTML`을 생성하는 유일한 방법은 **Trusted Types 정책(Policy)**을 통하는 것이다. 정책에 sanitize 로직을 집중시키면, 전체 코드베이스에서 XSS 검증이 필요한 지점이 정책 하나로 줄어든다.
+이제 `TrustedHTML`을 생성하는 유일한 방법은 **Trusted Types 정책**(Policy)을 통하는 것이다. 정책에 sanitize 로직을 집중시키면, 전체 코드베이스에서 XSS 검증이 필요한 지점이 정책 하나로 줄어든다.
 
 ![Trusted Types: DOM XSS 싱크 제어](/assets/posts/websec-trusted-types-overview.svg)
 

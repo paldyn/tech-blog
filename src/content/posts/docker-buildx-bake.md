@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-github-actions-build/)에서 GitHub Actions와 `docker/build-push-action`으로 이미지를 자동 빌드하는 방법을 살펴봤다. 마이크로서비스처럼 빌드 대상이 여러 개이거나 플랫폼·버전 조합이 복잡해지면 `docker build` 명령을 반복 조합하는 것이 한계에 달한다. **`docker buildx bake`**는 빌드 설정을 파일로 선언해 여러 대상을 병렬로 빌드하는 고수준 빌드 도구다.
+[지난 글](/posts/docker-github-actions-build/)에서 GitHub Actions와 `docker/build-push-action`으로 이미지를 자동 빌드하는 방법을 살펴봤다. 마이크로서비스처럼 빌드 대상이 여러 개이거나 플랫폼·버전 조합이 복잡해지면 `docker build` 명령을 반복 조합하는 것이 한계에 달한다. <strong>`docker buildx bake`</strong>는 빌드 설정을 파일로 선언해 여러 대상을 병렬로 빌드하는 고수준 빌드 도구다.
 
 ## bake란 무엇인가
 

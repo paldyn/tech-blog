@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/agent-crewai/)에서 CrewAI의 역할 기반 멀티 에이전트 협업을 살펴봤다. 이번 글에서는 Microsoft Research가 개발한 **AutoGen**을 다룬다. AutoGen은 에이전트 간 **대화(Conversation)**를 통해 문제를 해결하는 접근법으로, 특히 코드 생성·실행·디버깅 루프에 강점을 보인다.
+[지난 글](/posts/agent-crewai/)에서 CrewAI의 역할 기반 멀티 에이전트 협업을 살펴봤다. 이번 글에서는 Microsoft Research가 개발한 **AutoGen**을 다룬다. AutoGen은 에이전트 간 **대화**(Conversation)를 통해 문제를 해결하는 접근법으로, 특히 코드 생성·실행·디버깅 루프에 강점을 보인다.
 
 ## AutoGen이란
 

@@ -15,7 +15,7 @@ draft: false
 
 ## 두 가지 인증 전략
 
-인증 방식은 크게 **JWT(Stateless)**와 **세션(Stateful)** 두 가지로 나뉜다.
+인증 방식은 크게 **JWT**(Stateless)와 **세션(Stateful)** 두 가지로 나뉜다.
 
 ![Next.js 인증 전략 비교](/assets/posts/next-authentication-strategies.svg)
 

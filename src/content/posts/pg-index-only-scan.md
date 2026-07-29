@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-expression-index/)에서 표현식 인덱스로 함수 결과를 키에 저장하는 방법을 다뤘다. 이번에는 커버링 인덱스의 핵심 효과인 **Index-Only Scan(IOS)**의 동작 원리를 더 깊게 파헤친다. "인덱스만 읽고 힙을 건너뛴다"는 설명이 어떤 조건에서 성립하는지, 그리고 그렇지 않을 때 무슨 일이 일어나는지 살펴본다.
+[지난 글](/posts/pg-expression-index/)에서 표현식 인덱스로 함수 결과를 키에 저장하는 방법을 다뤘다. 이번에는 커버링 인덱스의 핵심 효과인 **Index-Only Scan**(IOS)의 동작 원리를 더 깊게 파헤친다. "인덱스만 읽고 힙을 건너뛴다"는 설명이 어떤 조건에서 성립하는지, 그리고 그렇지 않을 때 무슨 일이 일어나는지 살펴본다.
 
 ## Index Scan vs Index-Only Scan
 

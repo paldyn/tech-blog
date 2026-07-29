@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-page-cache/)에서 페이지 캐시가 메모리를 관리하는 방식을 살펴봤습니다. 이번에는 메모리가 완전히 바닥날 때 리눅스가 취하는 극단적인 조치인 **OOM Killer(Out-Of-Memory Killer)**를 알아봅니다.
+[지난 글](/posts/linux-page-cache/)에서 페이지 캐시가 메모리를 관리하는 방식을 살펴봤습니다. 이번에는 메모리가 완전히 바닥날 때 리눅스가 취하는 극단적인 조치인 **OOM Killer**(Out-Of-Memory Killer)를 알아봅니다.
 
 ## OOM이란
 

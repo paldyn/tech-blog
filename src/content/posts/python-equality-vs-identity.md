@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-truthy-falsy/)에서 참·거짓값을 살펴봤다. 이번에는 Python 초보자가 가장 많이 헷갈리는 주제 중 하나인 **`==`(동등성)와 `is`(동일성)**의 차이를 명확히 이해한다.
+[지난 글](/posts/python-truthy-falsy/)에서 참·거짓값을 살펴봤다. 이번에는 Python 초보자가 가장 많이 헷갈리는 주제 중 하나인 **`==`(동등성)와 `is`**(동일성)의 차이를 명확히 이해한다.
 
 ## == vs is
 

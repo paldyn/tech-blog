@@ -15,7 +15,7 @@ draft: false
 
 ## 연관 관계 매핑의 핵심 개념
 
-객체는 **참조**로 관계를 표현하고, 테이블은 **외래 키(FK)**로 관계를 표현합니다. 이 차이 때문에 JPA는 어느 쪽이 FK를 관리하는지 명확히 지정하도록 요구합니다.
+객체는 **참조**로 관계를 표현하고, 테이블은 **외래 키**(FK)로 관계를 표현합니다. 이 차이 때문에 JPA는 어느 쪽이 FK를 관리하는지 명확히 지정하도록 요구합니다.
 
 ### 연관관계 주인
 
@@ -162,7 +162,7 @@ public class UserProfile {
 }
 ```
 
-`@OneToOne`에서 주인이 아닌 쪽(`mappedBy`가 있는 쪽)은 **기본이 즉시 로딩(EAGER)**입니다. 반드시 `fetch = FetchType.LAZY`로 명시하세요. Hibernate는 `@OneToOne(mappedBy)` + LAZY를 지원하지만, 프록시 생성 제약으로 null 가능 여부에 따라 동작이 달라질 수 있습니다. `@OneToOne`은 가능하면 조회 시 항상 두 테이블을 JOIN하는 것으로 설계하는 것이 안전합니다.
+`@OneToOne`에서 주인이 아닌 쪽(`mappedBy`가 있는 쪽)은 **기본이 즉시 로딩**(EAGER)입니다. 반드시 `fetch = FetchType.LAZY`로 명시하세요. Hibernate는 `@OneToOne(mappedBy)` + LAZY를 지원하지만, 프록시 생성 제약으로 null 가능 여부에 따라 동작이 달라질 수 있습니다. `@OneToOne`은 가능하면 조회 시 항상 두 테이블을 JOIN하는 것으로 설계하는 것이 안전합니다.
 
 ## @ManyToMany — 실무에서 직접 사용 금지
 

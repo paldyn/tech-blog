@@ -15,7 +15,7 @@ draft: false
 
 ## 리플리케이션 기본 원리
 
-MySQL 리플리케이션은 Source(Primary) 서버의 변경 사항을 **Binary Log(binlog)**에 기록하고, Replica(Secondary) 서버가 이를 읽어와 재실행하는 방식으로 동작합니다.
+MySQL 리플리케이션은 Source(Primary) 서버의 변경 사항을 **Binary Log**(binlog)에 기록하고, Replica(Secondary) 서버가 이를 읽어와 재실행하는 방식으로 동작합니다.
 
 ```sql
 -- Source: binlog 설정 확인
@@ -161,7 +161,7 @@ SET GLOBAL replica_parallel_type = 'LOGICAL_CLOCK';
 | 구성 복잡도 | 낮음 | 보통 | 높음 |
 | 적합 환경 | 읽기 분산 | 단순 HA | 무중단 HA |
 
-운영 환경에서는 최소 **GTID + 반동기** 조합으로 데이터 손실 위험을 줄이고, 엄격한 가용성이 필요하다면 **그룹 리플리케이션(InnoDB Cluster)**을 선택합니다.
+운영 환경에서는 최소 **GTID + 반동기** 조합으로 데이터 손실 위험을 줄이고, 엄격한 가용성이 필요하다면 **그룹 리플리케이션**(InnoDB Cluster)을 선택합니다.
 
 ---
 

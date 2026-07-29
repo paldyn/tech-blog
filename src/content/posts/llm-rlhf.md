@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/llm-instruction-tuning/)에서 인스트럭션 튜닝의 전체 흐름—SFT, 보상 모델링, RLHF와 DPO—을 큰 그림으로 살펴봤다. 이번 글에서는 그 중심에 있는 **RLHF(Reinforcement Learning from Human Feedback)**를 깊이 파고든다. RLHF는 ChatGPT와 InstructGPT가 단순한 언어 모델을 넘어 "사람이 원하는 대로 동작하는 AI"로 거듭나게 한 핵심 기술이다. 2022년 OpenAI의 InstructGPT 논문은 175B 파라미터의 GPT-3보다, 훨씬 작은 1.3B 파라미터라도 RLHF로 정렬된 모델이 인간 평가자들에게 더 선호된다는 것을 보여줬다. 크기보다 정렬(alignment)이 중요하다는 것을 증명한 셈이다.
+[지난 글](/posts/llm-instruction-tuning/)에서 인스트럭션 튜닝의 전체 흐름—SFT, 보상 모델링, RLHF와 DPO—을 큰 그림으로 살펴봤다. 이번 글에서는 그 중심에 있는 **RLHF**(Reinforcement Learning from Human Feedback)를 깊이 파고든다. RLHF는 ChatGPT와 InstructGPT가 단순한 언어 모델을 넘어 "사람이 원하는 대로 동작하는 AI"로 거듭나게 한 핵심 기술이다. 2022년 OpenAI의 InstructGPT 논문은 175B 파라미터의 GPT-3보다, 훨씬 작은 1.3B 파라미터라도 RLHF로 정렬된 모델이 인간 평가자들에게 더 선호된다는 것을 보여줬다. 크기보다 정렬(alignment)이 중요하다는 것을 증명한 셈이다.
 
 ## RLHF란 무엇인가
 

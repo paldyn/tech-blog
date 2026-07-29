@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/data-labeling/)에서 AI 학습을 위한 레이블링 과정을 살펴봤다. 충분한 데이터를 확보했더라도, 더 많은 데이터는 항상 도움이 된다. **데이터 증강(Data Augmentation)**은 기존 데이터를 변형·확장해 모델이 더 다양한 패턴을 학습하도록 한다.
+[지난 글](/posts/data-labeling/)에서 AI 학습을 위한 레이블링 과정을 살펴봤다. 충분한 데이터를 확보했더라도, 더 많은 데이터는 항상 도움이 된다. **데이터 증강**(Data Augmentation)은 기존 데이터를 변형·확장해 모델이 더 다양한 패턴을 학습하도록 한다.
 
 ## 왜 증강이 필요한가
 
@@ -70,7 +70,7 @@ print(random_deletion(text, p=0.1))     # "이 제품은 정말합니다"
 print(random_swap(text, n=1))           # "이 제품은 훌륭합니다 정말"
 ```
 
-**역번역(Back-Translation)**은 높은 품질의 변형을 만든다.
+**역번역**(Back-Translation)은 높은 품질의 변형을 만든다.
 
 ```python
 from deep_translator import GoogleTranslator

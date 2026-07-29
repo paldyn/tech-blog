@@ -15,7 +15,7 @@ draft: false
 
 ## API Aggregation이란
 
-쿠버네티스 API는 단일 서버가 아니다. `kube-apiserver`는 일종의 **API 게이트웨이** 역할을 하며, 일부 API 경로는 외부 API 서버로 **프록시(proxy)**된다. 이 메커니즘을 **API Aggregation Layer**라고 한다.
+쿠버네티스 API는 단일 서버가 아니다. `kube-apiserver`는 일종의 **API 게이트웨이** 역할을 하며, 일부 API 경로는 외부 API 서버로 **프록시**(proxy)된다. 이 메커니즘을 **API Aggregation Layer**라고 한다.
 
 CRD와 API Aggregation의 차이는 명확하다.
 

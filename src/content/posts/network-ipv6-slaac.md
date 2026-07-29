@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-broadcast-multicast-anycast/)에서 브로드캐스트·멀티캐스트·애니캐스트 전송 방식을 살펴봤다. 이번 글에서는 IPv6의 핵심 기능 중 하나인 **SLAAC(Stateless Address Autoconfiguration)**을 다룬다. DHCP 서버 없이 호스트 스스로 전역 IPv6 주소를 생성하는 메커니즘이다.
+[지난 글](/posts/network-broadcast-multicast-anycast/)에서 브로드캐스트·멀티캐스트·애니캐스트 전송 방식을 살펴봤다. 이번 글에서는 IPv6의 핵심 기능 중 하나인 **SLAAC**(Stateless Address Autoconfiguration)을 다룬다. DHCP 서버 없이 호스트 스스로 전역 IPv6 주소를 생성하는 메커니즘이다.
 
 ## SLAAC이란?
 
-SLAAC(RFC 4862)는 IPv6 호스트가 **라우터의 광고(RA)**와 자신의 **인터페이스 식별자**를 결합해 전역 유니캐스트 주소를 자동으로 구성하는 방식이다. 상태 비저장(stateless)이므로 서버가 주소 할당 기록을 유지할 필요가 없다.
+SLAAC(RFC 4862)는 IPv6 호스트가 **라우터의 광고**(RA)와 자신의 **인터페이스 식별자**를 결합해 전역 유니캐스트 주소를 자동으로 구성하는 방식이다. 상태 비저장(stateless)이므로 서버가 주소 할당 기록을 유지할 필요가 없다.
 
 ## SLAAC 동작 과정
 

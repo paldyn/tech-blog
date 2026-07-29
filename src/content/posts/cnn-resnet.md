@@ -186,7 +186,7 @@ Pre-activation은 특히 매우 깊은 네트워크(1000층 이상)에서 더 �
 
 ## WideResNet: 깊이보다 너비
 
-Zagoruyko와 Komodakis는 깊이 대신 **너비(채널 수)**를 늘리는 것이 더 효율적일 수 있음을 보였다.
+Zagoruyko와 Komodakis는 깊이 대신 **너비**(채널 수)를 늘리는 것이 더 효율적일 수 있음을 보였다.
 
 ```python
 # WideResNet: 채널을 k배 넓힘

@@ -19,7 +19,7 @@ NetworkManager는 systemd 서비스로 실행되며, D-Bus를 통해 클라이�
 
 ![NetworkManager 구성 요소](/assets/posts/linux-network-manager-arch.svg)
 
-NetworkManager는 네트워크 설정을 **연결 프로파일(Connection Profile)**로 관리합니다. 연결 프로파일은 `/etc/NetworkManager/system-connections/` 디렉터리에 keyfile 형식으로 저장됩니다.
+NetworkManager는 네트워크 설정을 **연결 프로파일**(Connection Profile)로 관리합니다. 연결 프로파일은 `/etc/NetworkManager/system-connections/` 디렉터리에 keyfile 형식으로 저장됩니다.
 
 ```bash
 # NetworkManager 서비스 상태 확인

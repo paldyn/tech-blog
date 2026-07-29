@@ -84,7 +84,7 @@ move("diagonal");  // TS2345 ❌
 
 ## 판별 유니언 (Discriminated Union)
 
-판별 유니언은 각 멤버 타입이 **공통된 리터럴 속성(판별자, discriminant)**을 가지는 유니언이다. TypeScript의 타입 좁히기와 완벽히 결합하여 타입 안전한 분기 처리를 가능하게 한다.
+판별 유니언은 각 멤버 타입이 **공통된 리터럴 속성**(판별자, discriminant)을 가지는 유니언이다. TypeScript의 타입 좁히기와 완벽히 결합하여 타입 안전한 분기 처리를 가능하게 한다.
 
 ![리터럴 타입과 판별 유니언](/assets/posts/ts-union-intersection-literal-code.svg)
 
@@ -133,7 +133,7 @@ type UpperUser = UpperKeys<User>;
 
 ## 유니언 타입의 분배 법칙
 
-유니언 타입이 제네릭 타입 매개변수로 전달되면 각 멤버에 **분배(distribute)**된다.
+유니언 타입이 제네릭 타입 매개변수로 전달되면 각 멤버에 **분배**(distribute)된다.
 
 ```typescript
 type ToArray<T> = T extends any ? T[] : never;

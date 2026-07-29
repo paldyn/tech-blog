@@ -166,7 +166,7 @@ self.addEventListener('periodicsync', (event) => {
 });
 ```
 
-Periodic Background Sync는 **Chrome 80+**에서만 지원되며, 사이트가 홈 화면에 추가되어 있거나 충분한 사용 기록이 있어야 합니다. 배터리·네트워크 상태를 고려해 브라우저가 실행 시점을 결정합니다.
+Periodic Background Sync는 <strong>Chrome 80+</strong>에서만 지원되며, 사이트가 홈 화면에 추가되어 있거나 충분한 사용 기록이 있어야 합니다. 배터리·네트워크 상태를 고려해 브라우저가 실행 시점을 결정합니다.
 
 ---
 

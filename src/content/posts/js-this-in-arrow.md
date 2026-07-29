@@ -174,7 +174,7 @@ document.addEventListener('click', btn.handleClick); // this 유지 ✓
 
 ## 중첩 화살표 함수에서의 this
 
-화살표 함수가 중첩되어도 `this`는 항상 **가장 가까운 일반 함수(또는 클래스 constructor)**의 `this`를 캡처합니다.
+화살표 함수가 중첩되어도 `this`는 항상 **가장 가까운 일반 함수**(또는 클래스 constructor)의 `this`를 캡처합니다.
 
 ```javascript
 class Outer {

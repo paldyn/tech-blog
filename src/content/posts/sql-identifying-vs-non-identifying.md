@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-relationship-mapping/)에서 ERD를 SQL 테이블로 변환하는 규칙을 살펴봤다. 이번에는 ERD 도구에서 반드시 마주치는 개념인 **식별 관계(Identifying Relationship)**와 **비식별 관계(Non-Identifying Relationship)**의 차이를 정리한다.
+[지난 글](/posts/sql-relationship-mapping/)에서 ERD를 SQL 테이블로 변환하는 규칙을 살펴봤다. 이번에는 ERD 도구에서 반드시 마주치는 개념인 **식별 관계**(Identifying Relationship)와 **비식별 관계**(Non-Identifying Relationship)의 차이를 정리한다.
 
 ---
 

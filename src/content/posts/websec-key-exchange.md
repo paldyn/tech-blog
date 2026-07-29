@@ -21,7 +21,7 @@ draft: false
 
 ## Diffie-Hellman (DH): 수학적 원리
 
-DH의 핵심은 **이산 로그 문제(Discrete Logarithm Problem)**다. `g^a mod p`를 계산하기는 쉽지만, 결과값에서 `a`를 역산하기는 매우 어렵다.
+DH의 핵심은 **이산 로그 문제**(Discrete Logarithm Problem)다. `g^a mod p`를 계산하기는 쉽지만, 결과값에서 `a`를 역산하기는 매우 어렵다.
 
 ```python
 # DH 키 교환 Python 구현 (개념 이해용)
@@ -55,7 +55,7 @@ print(S_alice == S_bob)  # True
 
 ### DH 취약점: MITM 공격
 
-DH는 **인증(Authentication)**을 제공하지 않는다. 중간자(Mallory)가 Alice와 Bob 사이에서 각각 별도의 DH 교환을 수행하면 양쪽을 속일 수 있다.
+DH는 **인증**(Authentication)을 제공하지 않는다. 중간자(Mallory)가 Alice와 Bob 사이에서 각각 별도의 DH 교환을 수행하면 양쪽을 속일 수 있다.
 
 ```
 Alice ←→ Mallory ←→ Bob
@@ -124,7 +124,7 @@ session_key = derive_session_key(shared_alice)
 
 ![TLS 1.3 ECDHE 핸드셰이크](/assets/posts/websec-key-exchange-ecdh.svg)
 
-TLS 1.3은 **ECDHE(Ephemeral ECDH)**를 기본 키 교환 방식으로 채택했다. "Ephemeral"이 핵심이다.
+TLS 1.3은 **ECDHE**(Ephemeral ECDH)를 기본 키 교환 방식으로 채택했다. "Ephemeral"이 핵심이다.
 
 ```bash
 # 서버 TLS 설정 확인 (nginx)

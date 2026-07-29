@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-identity-vs-sequence/)에서 자동 증가 키 생성 전략을 살펴봤다. 이번에는 PostgreSQL 고유 기능인 **테이블 상속(Table Inheritance)**을 다룬다. 객체지향의 상속 개념을 관계형 테이블에 적용한 이 기능은 선언적 파티셔닝의 뿌리이기도 하다.
+[지난 글](/posts/pg-identity-vs-sequence/)에서 자동 증가 키 생성 전략을 살펴봤다. 이번에는 PostgreSQL 고유 기능인 **테이블 상속**(Table Inheritance)을 다룬다. 객체지향의 상속 개념을 관계형 테이블에 적용한 이 기능은 선언적 파티셔닝의 뿌리이기도 하다.
 
 ## 테이블 상속이란
 
@@ -125,7 +125,7 @@ CREATE INDEX idx_truck_year ON truck (year);
 
 ## 상속 vs 선언적 파티셔닝
 
-PostgreSQL 10에서 **선언적 파티셔닝(Declarative Partitioning)**이 도입됐다. 내부적으로 상속 메커니즘을 사용하지만, 명시적 `PARTITION BY` 구문으로 파티션을 관리한다.
+PostgreSQL 10에서 **선언적 파티셔닝**(Declarative Partitioning)이 도입됐다. 내부적으로 상속 메커니즘을 사용하지만, 명시적 `PARTITION BY` 구문으로 파티션을 관리한다.
 
 | 기능 | 테이블 상속 | 선언적 파티셔닝 |
 |------|------------|----------------|

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cv-3d-generation/)에서 NeRF·3DGS 등 3D 생성 AI를 다뤘다. 이번 글부터는 오디오 AI 영역으로 넘어가, **자동 음성 인식(ASR)**의 원리와 실전 구현을 완전 해설한다. Whisper는 2022년 OpenAI가 공개한 이후 오픈소스 ASR의 사실상 표준이 되었으며, 100여 개 언어에서 인간 수준에 가까운 성능을 보인다.
+[지난 글](/posts/cv-3d-generation/)에서 NeRF·3DGS 등 3D 생성 AI를 다뤘다. 이번 글부터는 오디오 AI 영역으로 넘어가, **자동 음성 인식**(ASR)의 원리와 실전 구현을 완전 해설한다. Whisper는 2022년 OpenAI가 공개한 이후 오픈소스 ASR의 사실상 표준이 되었으며, 100여 개 언어에서 인간 수준에 가까운 성능을 보인다.
 
 ## ASR 파이프라인 전체 구조
 

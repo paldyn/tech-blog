@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-xss-stored/)에서 DB에 저장된 스크립트가 모든 방문자에게 실행되는 저장형 XSS를 살펴봤습니다. 이번에 다룰 **DOM 기반 XSS(DOM-based XSS)**는 기존 두 유형과 근본적으로 다릅니다. 악성 코드가 서버를 전혀 거치지 않고, 브라우저 안의 JavaScript가 URL이나 기타 소스에서 직접 읽은 값을 위험한 DOM API에 넘기면서 발생합니다.
+[지난 글](/posts/websec-xss-stored/)에서 DB에 저장된 스크립트가 모든 방문자에게 실행되는 저장형 XSS를 살펴봤습니다. 이번에 다룰 **DOM 기반 XSS**(DOM-based XSS)는 기존 두 유형과 근본적으로 다릅니다. 악성 코드가 서버를 전혀 거치지 않고, 브라우저 안의 JavaScript가 URL이나 기타 소스에서 직접 읽은 값을 위험한 DOM API에 넘기면서 발생합니다.
 
 ## DOM 기반 XSS의 특수성
 
@@ -23,7 +23,7 @@ draft: false
 
 ## Source-Sink 모델
 
-DOM XSS를 이해하는 핵심 개념은 **Source(오염 소스)**와 **Sink(실행 지점)**입니다.
+DOM XSS를 이해하는 핵심 개념은 **Source**(오염 소스)와 **Sink**(실행 지점)입니다.
 
 **Source**: 공격자가 제어 가능한 데이터 입력 지점입니다.
 

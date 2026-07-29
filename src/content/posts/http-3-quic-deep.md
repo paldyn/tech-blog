@@ -75,7 +75,7 @@ QUIC은 연결을 **Connection ID**로 식별한다. IP나 포트가 아니라 �
 
 이 메커니즘은 **NAT rebinding** 문제도 자연스럽게 흡수한다. NAT 장비가 매핑을 갱신하면서 클라이언트의 외부 포트가 바뀌어도, TCP라면 미들박스가 연결을 잃지만 QUIC은 Connection ID 덕에 무사하다.
 
-물론 공짜는 아니다. IP가 바뀌면 서버는 **경로 검증(path validation)**을 수행한다. 새 경로로 `PATH_CHALLENGE` 프레임을 보내고 `PATH_RESPONSE`를 받아, 그 주소가 실제로 응답하는지 확인한 뒤에야 본격적인 데이터를 흘려보낸다. 이는 공격자가 위조된 주소로 트래픽을 유도하는 amplification 공격을 막기 위한 안전장치다.
+물론 공짜는 아니다. IP가 바뀌면 서버는 **경로 검증**(path validation)을 수행한다. 새 경로로 `PATH_CHALLENGE` 프레임을 보내고 `PATH_RESPONSE`를 받아, 그 주소가 실제로 응답하는지 확인한 뒤에야 본격적인 데이터를 흘려보낸다. 이는 공격자가 위조된 주소로 트래픽을 유도하는 amplification 공격을 막기 위한 안전장치다.
 
 ## 손실 복구 — packet number 단조 증가의 위력
 

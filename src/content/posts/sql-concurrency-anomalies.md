@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-isolation-levels-standard/)에서 격리 수준 4단계를 살펴봤다. 각 수준이 "무엇을 방지하는가"를 이해하려면 **이상 현상(Anomaly)**을 구체적으로 알아야 한다. 이번 글에서는 Dirty Read·Non-Repeatable Read·Phantom Read·Lost Update·Write Skew 각각의 원인과 해결책을 정리한다.
+[지난 글](/posts/sql-isolation-levels-standard/)에서 격리 수준 4단계를 살펴봤다. 각 수준이 "무엇을 방지하는가"를 이해하려면 **이상 현상**(Anomaly)을 구체적으로 알아야 한다. 이번 글에서는 Dirty Read·Non-Repeatable Read·Phantom Read·Lost Update·Write Skew 각각의 원인과 해결책을 정리한다.
 
 ---
 

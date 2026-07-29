@@ -55,7 +55,7 @@ kubectl uncordon <node>
 
 ## 노드 컨디션 — 건강을 읽는 법
 
-노드가 건강한지는 어떻게 알까. 각 노드의 kubelet은 주기적으로 자신의 상태를 **컨디션(condition)**으로 API 서버에 보고한다. `kubectl describe node`의 Conditions 섹션에서 이를 볼 수 있다.
+노드가 건강한지는 어떻게 알까. 각 노드의 kubelet은 주기적으로 자신의 상태를 **컨디션**(condition)으로 API 서버에 보고한다. `kubectl describe node`의 Conditions 섹션에서 이를 볼 수 있다.
 
 ![노드 컨디션 — kubelet이 보고하는 건강 신호](/assets/posts/k8s-node-management-conditions.svg)
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-bandwidth-throughput-latency/)에서 대역폭·처리량·지연이라는 세 가지 성능 지표를 살펴봤다. 그 중 **지연(Latency)**을 조금 더 파고들면, 실무에서 자주 혼용되는 두 개념이 나타난다. **RTT(Round-Trip Time)**와 **지터(Jitter)**다. 각각 무엇을 측정하는지, 어떤 서비스에 치명적인지 정확히 이해해야 네트워크 장애를 제대로 진단할 수 있다.
+[지난 글](/posts/network-bandwidth-throughput-latency/)에서 대역폭·처리량·지연이라는 세 가지 성능 지표를 살펴봤다. 그 중 **지연**(Latency)을 조금 더 파고들면, 실무에서 자주 혼용되는 두 개념이 나타난다. **RTT**(Round-Trip Time)와 **지터**(Jitter)다. 각각 무엇을 측정하는지, 어떤 서비스에 치명적인지 정확히 이해해야 네트워크 장애를 제대로 진단할 수 있다.
 
 ## RTT란 무엇인가
 

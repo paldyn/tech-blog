@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-load-balancing-l4-l7/)에서 서버 간 트래픽 분산을 다뤘다. 그런데 로드 밸런서로 아무리 서버를 늘려도 해결할 수 없는 문제가 있다. 서울 IDC에 있는 서버로 뉴욕 사용자가 요청을 보내면, 네트워크 거리 때문에 300ms 이상의 레이턴시가 발생한다. 이 문제를 해결하는 것이 **CDN(Content Delivery Network)**이다.
+[지난 글](/posts/network-load-balancing-l4-l7/)에서 서버 간 트래픽 분산을 다뤘다. 그런데 로드 밸런서로 아무리 서버를 늘려도 해결할 수 없는 문제가 있다. 서울 IDC에 있는 서버로 뉴욕 사용자가 요청을 보내면, 네트워크 거리 때문에 300ms 이상의 레이턴시가 발생한다. 이 문제를 해결하는 것이 **CDN**(Content Delivery Network)이다.
 
 ## CDN이란
 

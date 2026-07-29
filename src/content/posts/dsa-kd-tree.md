@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-fenwick-tree/)에서 1차원 배열의 prefix sum을 O(log n)에 관리하는 펜윅 트리를 살펴봤습니다. 이번에는 **다차원 공간**에서의 범위 탐색과 최근접 이웃(Nearest Neighbor) 탐색을 효율적으로 처리하는 **k-d 트리(k-dimensional Tree)**를 다룹니다.
+[지난 글](/posts/dsa-fenwick-tree/)에서 1차원 배열의 prefix sum을 O(log n)에 관리하는 펜윅 트리를 살펴봤습니다. 이번에는 **다차원 공간**에서의 범위 탐색과 최근접 이웃(Nearest Neighbor) 탐색을 효율적으로 처리하는 **k-d 트리**(k-dimensional Tree)를 다룹니다.
 
 ## 문제 상황
 
@@ -45,7 +45,7 @@ function buildKdTree(points, depth = 0) {
 }
 ```
 
-중앙값(median)을 루트로 삼기 때문에 트리가 균형을 이룹니다. 빌드 시간은 정렬 비용으로 **O(n log²n)**이며, 중앙값 선택을 quickselect로 최적화하면 **O(n log n)**입니다.
+중앙값(median)을 루트로 삼기 때문에 트리가 균형을 이룹니다. 빌드 시간은 정렬 비용으로 **O**(n log²n)이며, 중앙값 선택을 quickselect로 최적화하면 **O**(n log n)입니다.
 
 ## 최근접 이웃 탐색
 

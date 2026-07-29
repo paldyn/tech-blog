@@ -56,7 +56,7 @@ const user = {
 user.greet(); // 'Alice' — user가 this
 ```
 
-중요한 함정은 **암묵적 바인딩 소실(Implicit Binding Loss)**입니다. 메서드를 변수에 할당해 호출하면 컨텍스트 객체 정보가 사라집니다.
+중요한 함정은 **암묵적 바인딩 소실**(Implicit Binding Loss)입니다. 메서드를 변수에 할당해 호출하면 컨텍스트 객체 정보가 사라집니다.
 
 ```javascript
 const fn = user.greet; // 참조만 복사, 컨텍스트는 사라짐

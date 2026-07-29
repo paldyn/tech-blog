@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-deque/)에서 덱의 슬라이딩 윈도우 응용을 다뤘습니다. 이번에는 스택에 특수한 불변식(invariant)을 부여해 강력한 문제들을 선형 시간에 해결하는 **단조 스택(Monotonic Stack)**을 소개합니다. 이름이 생소하게 들릴 수 있지만, Next Greater Element 같은 고전 문제부터 히스토그램 최대 넓이까지 다양한 면접 단골 문제의 핵심 기법입니다.
+[지난 글](/posts/dsa-deque/)에서 덱의 슬라이딩 윈도우 응용을 다뤘습니다. 이번에는 스택에 특수한 불변식(invariant)을 부여해 강력한 문제들을 선형 시간에 해결하는 **단조 스택**(Monotonic Stack)을 소개합니다. 이름이 생소하게 들릴 수 있지만, Next Greater Element 같은 고전 문제부터 히스토그램 최대 넓이까지 다양한 면접 단골 문제의 핵심 기법입니다.
 
 ## 단조 스택이란
 
@@ -33,7 +33,7 @@ for val in arr:
 
 ## 응용 1 — Next Greater Element (NGE)
 
-배열의 각 원소에 대해 **오른쪽에서 처음 만나는 더 큰 값**을 구합니다. 브루트 포스는 O(n²)이지만 단조 스택으로 **O(n)**에 해결됩니다.
+배열의 각 원소에 대해 **오른쪽에서 처음 만나는 더 큰 값**을 구합니다. 브루트 포스는 O(n²)이지만 단조 스택으로 **O**(n)에 해결됩니다.
 
 ![단조 스택 — NGE](/assets/posts/dsa-monotonic-stack-nge.svg)
 

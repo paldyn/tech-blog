@@ -67,7 +67,7 @@ http.rememberMe(rm -> rm
 
 ![Persistent Token Remember-Me 플로우](/assets/posts/spring-security-remember-me-session-flow.svg)
 
-핵심은 **token 교체(rotation)**입니다. 매 성공 요청마다 DB의 token 값이 바뀌고, 새 쿠키가 발급됩니다. 공격자가 이전 쿠키를 탈취해도 최신 token과 일치하지 않아 즉시 도난 감지가 이뤄집니다.
+핵심은 **token 교체**(rotation)입니다. 매 성공 요청마다 DB의 token 값이 바뀌고, 새 쿠키가 발급됩니다. 공격자가 이전 쿠키를 탈취해도 최신 token과 일치하지 않아 즉시 도난 감지가 이뤄집니다.
 
 ## 세션 고정 공격(Session Fixation) 방어
 

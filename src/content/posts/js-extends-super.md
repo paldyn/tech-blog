@@ -115,7 +115,7 @@ new Circle(5).toString(); // 'Circle: area=78.53...'
 new Square(4).toString(); // 'Square: area=16'
 ```
 
-`toString()`은 부모 `Shape`에 있지만, `this.area()`를 호출하면 프로토타입 체인을 통해 각 서브클래스의 `area()`가 호출됩니다. 이것이 **다형성(polymorphism)**입니다.
+`toString()`은 부모 `Shape`에 있지만, `this.area()`를 호출하면 프로토타입 체인을 통해 각 서브클래스의 `area()`가 호출됩니다. 이것이 **다형성**(polymorphism)입니다.
 
 ## super.method() — 부모 메서드 호출
 

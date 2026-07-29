@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/inference-ollama/)에서 개발 환경에 특화된 Ollama를 살펴봤다. 이번에는 Hugging Face가 만든 프로덕션 서빙 솔루션 **TGI(Text Generation Inference)**를 다룬다. HF Hub의 수천 개 모델을 Docker 한 줄로 서빙할 수 있고, Flash Attention·Continuous Batching·Tensor Parallelism이 기본 내장되어 있다. HF Inference Endpoints 서비스의 엔진이기도 하다.
+[지난 글](/posts/inference-ollama/)에서 개발 환경에 특화된 Ollama를 살펴봤다. 이번에는 Hugging Face가 만든 프로덕션 서빙 솔루션 **TGI**(Text Generation Inference)를 다룬다. HF Hub의 수천 개 모델을 Docker 한 줄로 서빙할 수 있고, Flash Attention·Continuous Batching·Tensor Parallelism이 기본 내장되어 있다. HF Inference Endpoints 서비스의 엔진이기도 하다.
 
 ## TGI 아키텍처
 

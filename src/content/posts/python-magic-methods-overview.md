@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-init-vs-new/)에서 `__new__`와 `__init__`이 객체 생성의 두 단계를 담당한다는 것을 보았습니다. 이처럼 이름 앞뒤로 밑줄 두 개(`__`)가 붙은 메서드를 **매직 메서드(magic method)** 또는 **특수 메서드(special method)**, **던더 메서드(dunder method)**라고 부릅니다. Python이 특정 연산을 수행할 때 자동으로 호출하는 메서드들입니다.
+[지난 글](/posts/python-init-vs-new/)에서 `__new__`와 `__init__`이 객체 생성의 두 단계를 담당한다는 것을 보았습니다. 이처럼 이름 앞뒤로 밑줄 두 개(`__`)가 붙은 메서드를 **매직 메서드(magic method)** 또는 **특수 메서드(special method)**, **던더 메서드**(dunder method)라고 부릅니다. Python이 특정 연산을 수행할 때 자동으로 호출하는 메서드들입니다.
 
 ## 매직 메서드란
 

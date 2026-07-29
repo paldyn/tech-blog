@@ -15,7 +15,7 @@ draft: false
 
 ## Trio가 제안하는 것 — 구조적 동시성
 
-asyncio에서 `create_task`로 만든 Task는 부모와 분리되어 떠돈다. 부모 코루틴이 끝나도 자식 Task가 살아남아 누수가 되거나, 예외가 조용히 사라지기 쉽다. Trio는 **구조적 동시성(structured concurrency)**으로 이 문제를 정면으로 다룬다. 모든 동시 작업은 반드시 **nursery**(작업 보육실) 블록 안에서 생성되고, 그 블록을 벗어나기 전에 모든 자식이 끝나야 한다.
+asyncio에서 `create_task`로 만든 Task는 부모와 분리되어 떠돈다. 부모 코루틴이 끝나도 자식 Task가 살아남아 누수가 되거나, 예외가 조용히 사라지기 쉽다. Trio는 **구조적 동시성**(structured concurrency)으로 이 문제를 정면으로 다룬다. 모든 동시 작업은 반드시 **nursery**(작업 보육실) 블록 안에서 생성되고, 그 블록을 벗어나기 전에 모든 자식이 끝나야 한다.
 
 ![구조적 동시성 nursery 개념](/assets/posts/python-trio-anyio-nursery.svg)
 

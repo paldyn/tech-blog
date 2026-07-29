@@ -17,7 +17,7 @@ draft: false
 
 ClickHouse의 스토리지 엔진 계열 이름이 **MergeTree**다. 이름 그대로 LSM(Log-Structured Merge) 트리 아이디어에서 영감을 받았다.
 
-INSERT가 발생하면 **파트(Part)**라는 독립된 파일 집합이 생성된다. 파트는 `ORDER BY` 기준으로 정렬된 열 파일(`.bin`), 스파스 인덱스(`.idx`), 마크 파일(`.mrk`)로 구성된다. 백그라운드 Merge 프로세스가 여러 파트를 하나로 합치며 정렬 상태를 유지한다.
+INSERT가 발생하면 **파트**(Part)라는 독립된 파일 집합이 생성된다. 파트는 `ORDER BY` 기준으로 정렬된 열 파일(`.bin`), 스파스 인덱스(`.idx`), 마크 파일(`.mrk`)로 구성된다. 백그라운드 Merge 프로세스가 여러 파트를 하나로 합치며 정렬 상태를 유지한다.
 
 ![MergeTree 엔진 구조](/assets/posts/olap-clickhouse-mergetree.svg)
 

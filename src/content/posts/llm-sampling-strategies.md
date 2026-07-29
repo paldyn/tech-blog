@@ -51,7 +51,7 @@ Top-p와 성능이 비슷하지만, 특히 자연스러운 일상 대화 텍스�
 
 ## Contrastive Search: 반복 없는 일관성
 
-**Contrastive Search**는 Su et al. (2022)이 제안한 방법으로, 기존 샘플링 전략의 가장 큰 약점인 **반복(degeneration)**을 직접 해결한다.
+**Contrastive Search**는 Su et al. (2022)이 제안한 방법으로, 기존 샘플링 전략의 가장 큰 약점인 **반복**(degeneration)을 직접 해결한다.
 
 핵심 아이디어는 토큰을 선택할 때 **모델의 확률**과 **이미 생성된 텍스트와의 유사도** 두 가지를 동시에 고려하는 것이다.
 

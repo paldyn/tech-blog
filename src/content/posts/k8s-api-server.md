@@ -61,7 +61,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ### 인가 (Authorization)
 
-"이 주체가 요청한 작업을 수행할 권한이 있는가?"를 확인한다. K8s의 기본 인가 방식은 **RBAC(Role-Based Access Control)**다.
+"이 주체가 요청한 작업을 수행할 권한이 있는가?"를 확인한다. K8s의 기본 인가 방식은 **RBAC**(Role-Based Access Control)다.
 
 ```yaml
 # Role: default 네임스페이스에서 파드 조회 허용

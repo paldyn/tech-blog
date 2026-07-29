@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-context-reducer-architecture/)에서 Context와 useReducer를 결합한 아키텍처를 살펴봤다. 이제 컴포넌트 수준에서 불필요한 리렌더를 막는 핵심 도구, **`React.memo`**를 파고든다.
+[지난 글](/posts/react-context-reducer-architecture/)에서 Context와 useReducer를 결합한 아키텍처를 살펴봤다. 이제 컴포넌트 수준에서 불필요한 리렌더를 막는 핵심 도구, <strong>`React.memo`</strong>를 파고든다.
 
 ## React.memo란?
 

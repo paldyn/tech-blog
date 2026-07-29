@@ -70,7 +70,7 @@ func (r *MyAppReconciler) SetupWithManager(mgr ctrl.Manager) error {
 
 ## Reconcile 함수 구현 패턴
 
-Reconcile 함수는 단 하나의 원칙을 따른다: **"현재 상태를 읽고, 원하는 상태와 비교하고, 차이를 해소하라."** 이 함수는 언제든 여러 번 호출될 수 있으므로 반드시 **멱등성(idempotency)**을 보장해야 한다.
+Reconcile 함수는 단 하나의 원칙을 따른다: **"현재 상태를 읽고, 원하는 상태와 비교하고, 차이를 해소하라."** 이 함수는 언제든 여러 번 호출될 수 있으므로 반드시 **멱등성**(idempotency)을 보장해야 한다.
 
 ![Reconcile 함수 흐름](/assets/posts/k8s-controller-runtime-operator-sdk-reconcile.svg)
 

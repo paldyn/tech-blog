@@ -152,7 +152,7 @@ output = model.generate(
 
 ## 평가: Perplexity
 
-언어 모델의 기본 품질 지표는 **퍼플렉시티(Perplexity, PPL)**다. 모델이 테스트 텍스트를 얼마나 잘 "예측"하는지 측정한다. 낮을수록 좋다.
+언어 모델의 기본 품질 지표는 **퍼플렉시티**(Perplexity, PPL)다. 모델이 테스트 텍스트를 얼마나 잘 "예측"하는지 측정한다. 낮을수록 좋다.
 
 ```python
 import torch

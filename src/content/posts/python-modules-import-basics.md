@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-script-vs-repl/)에서 스크립트 파일로 코드를 실행하는 방법을 살펴봤다. 코드가 길어지면 한 파일에 모든 것을 넣는 것은 한계가 있다. **모듈(module)**은 Python 코드를 파일 단위로 나누어 재사용하는 방법이다.
+[지난 글](/posts/python-script-vs-repl/)에서 스크립트 파일로 코드를 실행하는 방법을 살펴봤다. 코드가 길어지면 한 파일에 모든 것을 넣는 것은 한계가 있다. **모듈**(module)은 Python 코드를 파일 단위로 나누어 재사용하는 방법이다.
 
 ## 모듈이란
 

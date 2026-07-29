@@ -17,7 +17,7 @@ draft: false
 
 `git stash branch <브랜치명>` 은 세 가지 동작을 한 번에 처리한다.
 
-1. stash를 **저장한 시점의 커밋(HEAD)**에서 새 브랜치를 만들어 체크아웃
+1. stash를 **저장한 시점의 커밋**(HEAD)에서 새 브랜치를 만들어 체크아웃
 2. stash를 `apply --index`로 적용 (스테이징 상태 포함)
 3. 적용 성공 시 stash를 스택에서 `drop`
 

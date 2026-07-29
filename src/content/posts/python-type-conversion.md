@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-set-frozenset/)에서 집합 자료구조를 살펴봤다. 이번에는 Python의 **타입 변환(type conversion)**을 체계적으로 정리한다. Python은 동적 타입 언어이지만 암묵적 변환은 거의 허용하지 않는다. 대부분 명시적으로 변환 함수를 호출해야 한다.
+[지난 글](/posts/python-set-frozenset/)에서 집합 자료구조를 살펴봤다. 이번에는 Python의 **타입 변환**(type conversion)을 체계적으로 정리한다. Python은 동적 타입 언어이지만 암묵적 변환은 거의 허용하지 않는다. 대부분 명시적으로 변환 함수를 호출해야 한다.
 
 ## 숫자 타입 변환
 

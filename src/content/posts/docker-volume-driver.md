@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-tmpfs/)에서 메모리 기반 tmpfs 마운트를 살펴봤다. 이번에는 **볼륨 드라이버(Volume Driver)**를 다룬다. 기본 `local` 드라이버 외에도 NFS, AWS EBS, Ceph 등 다양한 스토리지 백엔드를 볼륨으로 연결할 수 있다.
+[지난 글](/posts/docker-tmpfs/)에서 메모리 기반 tmpfs 마운트를 살펴봤다. 이번에는 **볼륨 드라이버**(Volume Driver)를 다룬다. 기본 `local` 드라이버 외에도 NFS, AWS EBS, Ceph 등 다양한 스토리지 백엔드를 볼륨으로 연결할 수 있다.
 
 ## 볼륨 드라이버란
 

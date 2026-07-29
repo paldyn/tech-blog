@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-routing-table-lpm/)에서 최장 프리픽스 매칭으로 라우터가 경로를 선택하는 방식을 살펴봤다. 이번 글에서는 인터넷 자체를 연결하는 프로토콜, **BGP(Border Gateway Protocol)**를 다룬다. 전 세계 수만 개의 네트워크가 BGP로 경로 정보를 교환하며 인터넷이 동작한다.
+[지난 글](/posts/network-routing-table-lpm/)에서 최장 프리픽스 매칭으로 라우터가 경로를 선택하는 방식을 살펴봤다. 이번 글에서는 인터넷 자체를 연결하는 프로토콜, **BGP**(Border Gateway Protocol)를 다룬다. 전 세계 수만 개의 네트워크가 BGP로 경로 정보를 교환하며 인터넷이 동작한다.
 
 ## 자율 시스템 (Autonomous System, AS)
 
-인터넷은 수많은 **자율 시스템(AS)**으로 구성된다. AS는 단일 조직이 관리하는 네트워크 집합으로, 고유한 **AS 번호(ASN)**를 가진다.
+인터넷은 수많은 **자율 시스템**(AS)으로 구성된다. AS는 단일 조직이 관리하는 네트워크 집합으로, 고유한 **AS 번호**(ASN)를 가진다.
 
 ```text
 AS 64500: ISP A (KT)

@@ -141,7 +141,7 @@ Port Knocking에는 한계가 있습니다.
 - **재전송 공격(Replay attack)** — 패킷을 도청하면 시퀀스를 복사해 재사용 가능
 - **시퀀스 노출** — 네트워크 감시자가 포트 순서를 추론할 수 있음
 
-이를 극복하려면 **fwknop(Single Packet Authorization)**를 사용합니다. fwknop는 단일 암호화 패킷 안에 타임스탬프와 HMAC를 포함해 재전송 공격을 막습니다.
+이를 극복하려면 **fwknop**(Single Packet Authorization)를 사용합니다. fwknop는 단일 암호화 패킷 안에 타임스탬프와 HMAC를 포함해 재전송 공격을 막습니다.
 
 ```bash
 # fwknop 서버

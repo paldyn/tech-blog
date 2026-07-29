@@ -44,7 +44,7 @@ WHERE status = 'pending';
 
 ### Planner가 부분 인덱스를 사용하는 조건
 
-옵티마이저는 쿼리의 WHERE 조건이 인덱스 정의 조건을 **논리적으로 함의(imply)**할 때 부분 인덱스를 선택한다.
+옵티마이저는 쿼리의 WHERE 조건이 인덱스 정의 조건을 **논리적으로 함의**(imply)할 때 부분 인덱스를 선택한다.
 
 ```sql
 -- 인덱스 정의: WHERE status = 'pending'

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-network-manager/)에서 NetworkManager로 네트워크 연결을 설정하는 방법을 살펴봤습니다. 이번에는 그 연결 위에서 이름 해석(DNS resolution)이 어떻게 이루어지는지, **`/etc/resolv.conf`**와 **`systemd-resolved`**를 중심으로 살펴봅니다. DNS 설정 오류는 가장 흔한 네트워크 장애 원인 중 하나이므로, 동작 원리를 정확히 이해하는 것이 중요합니다.
+[지난 글](/posts/linux-network-manager/)에서 NetworkManager로 네트워크 연결을 설정하는 방법을 살펴봤습니다. 이번에는 그 연결 위에서 이름 해석(DNS resolution)이 어떻게 이루어지는지, <strong>`/etc/resolv.conf`</strong>와 <strong>`systemd-resolved`</strong>를 중심으로 살펴봅니다. DNS 설정 오류는 가장 흔한 네트워크 장애 원인 중 하나이므로, 동작 원리를 정확히 이해하는 것이 중요합니다.
 
 ## 이름 해석 흐름
 
@@ -129,7 +129,7 @@ systemctl restart systemd-resolved
 
 **DNSSEC**는 DNS 응답의 위변조를 방지하는 서명 검증 메커니즘입니다. `DNSSEC=yes`로 설정하면 검증 실패 시 해석이 거부됩니다. 서버나 ISP가 DNSSEC를 지원하지 않는 환경에서는 `allow-downgrade`가 안전합니다.
 
-**DNS-over-TLS(DoT)**는 DNS 쿼리를 TLS로 암호화합니다. `DNSOverTLS=opportunistic`으로 설정하면 서버가 지원하는 경우 TLS를 사용하고, 그렇지 않으면 평문으로 폴백합니다.
+**DNS-over-TLS**(DoT)는 DNS 쿼리를 TLS로 암호화합니다. `DNSOverTLS=opportunistic`으로 설정하면 서버가 지원하는 경우 TLS를 사용하고, 그렇지 않으면 평문으로 폴백합니다.
 
 ## 직접 resolv.conf 관리 (systemd-resolved 없이)
 

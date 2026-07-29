@@ -18,8 +18,8 @@ draft: false
 ![URI · URL · URN 관계](/assets/posts/http-url-uri-vs-urn.svg)
 
 - **URI(Uniform Resource Identifier)**: 리소스를 **고유하게 식별**하는 문자열. 가장 상위 개념.
-- **URL(Uniform Resource Locator)**: URI의 부분집합. 리소스의 **위치(어디에 있는지)**로 식별. 웹에서 주로 사용.
-- **URN(Uniform Resource Name)**: URI의 부분집합. 리소스의 **이름(무엇인지)**으로 식별. 위치와 무관한 영구 식별자.
+- **URL(Uniform Resource Locator)**: URI의 부분집합. 리소스의 **위치**(어디에 있는지)로 식별. 웹에서 주로 사용.
+- **URN(Uniform Resource Name)**: URI의 부분집합. 리소스의 **이름**(무엇인지)으로 식별. 위치와 무관한 영구 식별자.
 
 ```
 URI (상위 개념)

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/next-authentication/)에서 jose와 httpOnly 쿠키로 JWT 인증을 직접 구현하는 방법을 살펴봤다. 이번에는 OAuth 소셜 로그인과 세션 관리를 포함해 인증 전반을 처리하는 **Auth.js(구 NextAuth)**를 소개한다. v5에서 App Router를 완전히 지원하게 되면서 설정 방식이 크게 개선됐다.
+[지난 글](/posts/next-authentication/)에서 jose와 httpOnly 쿠키로 JWT 인증을 직접 구현하는 방법을 살펴봤다. 이번에는 OAuth 소셜 로그인과 세션 관리를 포함해 인증 전반을 처리하는 **Auth.js**(구 NextAuth)를 소개한다. v5에서 App Router를 완전히 지원하게 되면서 설정 방식이 크게 개선됐다.
 
 ## Auth.js v5 개요
 

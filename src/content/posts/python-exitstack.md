@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-suppress-redirect/)에서 `suppress`, `redirect_stdout` 같은 contextlib 유틸리티를 살펴봤다. 이번에는 contextlib의 가장 강력한 도구인 **`ExitStack`**을 다룬다. 컨텍스트 매니저의 개수가 컴파일 시점에 정해지지 않는 경우를 우아하게 처리한다.
+[지난 글](/posts/python-suppress-redirect/)에서 `suppress`, `redirect_stdout` 같은 contextlib 유틸리티를 살펴봤다. 이번에는 contextlib의 가장 강력한 도구인 <strong>`ExitStack`</strong>을 다룬다. 컨텍스트 매니저의 개수가 컴파일 시점에 정해지지 않는 경우를 우아하게 처리한다.
 
 ## ExitStack이 필요한 이유
 

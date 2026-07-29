@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-fulltext-tsvector-tsquery/)에서 전문 검색을 위한 tsvector와 GIN 인덱스를 살펴봤다. 이번에는 PostgreSQL에서 외부 데이터 소스를 로컬 테이블처럼 쿼리할 수 있게 해주는 **FDW(Foreign Data Wrapper)**를 다룬다.
+[지난 글](/posts/pg-fulltext-tsvector-tsquery/)에서 전문 검색을 위한 tsvector와 GIN 인덱스를 살펴봤다. 이번에는 PostgreSQL에서 외부 데이터 소스를 로컬 테이블처럼 쿼리할 수 있게 해주는 **FDW**(Foreign Data Wrapper)를 다룬다.
 
 ## FDW란
 

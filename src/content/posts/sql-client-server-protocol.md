@@ -19,7 +19,7 @@ DBMS는 전형적인 **클라이언트-서버 아키텍처**로 동작합니다.
 
 ![SQL 쿼리의 여행 — 클라이언트에서 결과까지](/assets/posts/sql-client-server-protocol-flow.svg)
 
-클라이언트(애플리케이션)는 SQL을 문자열로 생성하고, **드라이버(JDBC, ODBC, libpq 등)**가 이를 DBMS별 바이너리 프로토콜로 직렬화해 TCP 소켓으로 전송합니다. 서버는 수신된 패킷을 파싱하고, 실행 계획을 수립한 후, 스토리지에서 데이터를 읽어 결과를 돌려줍니다.
+클라이언트(애플리케이션)는 SQL을 문자열로 생성하고, **드라이버**(JDBC, ODBC, libpq 등)가 이를 DBMS별 바이너리 프로토콜로 직렬화해 TCP 소켓으로 전송합니다. 서버는 수신된 패킷을 파싱하고, 실행 계획을 수립한 후, 스토리지에서 데이터를 읽어 결과를 돌려줍니다.
 
 ### DBMS별 기본 포트
 
@@ -96,7 +96,7 @@ DBMS는 SQL 구조 파싱이 완료된 후 바인딩 값을 데이터로만 취�
 
 ## 드라이버 레이어
 
-애플리케이션이 직접 TCP 소켓을 다루지 않는 이유는 **드라이버(Driver)**가 복잡성을 숨겨주기 때문입니다.
+애플리케이션이 직접 TCP 소켓을 다루지 않는 이유는 **드라이버**(Driver)가 복잡성을 숨겨주기 때문입니다.
 
 ```java
 // JDBC (Java Database Connectivity) 예시
@@ -116,13 +116,13 @@ while (rs.next()) {
 }
 ```
 
-**ODBC(Open Database Connectivity)**는 드라이버 추상화 레이어입니다. 언어에 무관하게 동일한 API로 다양한 DBMS에 접속할 수 있습니다. Python의 `pyodbc`, C의 `sqlsrv` 드라이버가 대표적입니다.
+**ODBC**(Open Database Connectivity)는 드라이버 추상화 레이어입니다. 언어에 무관하게 동일한 API로 다양한 DBMS에 접속할 수 있습니다. Python의 `pyodbc`, C의 `sqlsrv` 드라이버가 대표적입니다.
 
 ## 커넥션과 커넥션 풀
 
 TCP 연결 수립(`3-way handshake`) + DBMS 인증 과정은 수십~수백 ms가 걸립니다. 웹 서버가 요청마다 새 커넥션을 맺으면 성능이 크게 저하됩니다.
 
-**커넥션 풀(Connection Pool)**은 미리 여러 커넥션을 만들어 두고 재사용합니다.
+**커넥션 풀**(Connection Pool)은 미리 여러 커넥션을 만들어 두고 재사용합니다.
 
 ```yaml
 # HikariCP (Spring Boot 기본 커넥션 풀) 설정 예시
@@ -160,7 +160,7 @@ with connection.cursor() as cur:
         raise
 ```
 
-트랜잭션을 길게 유지하면 커넥션이 풀에서 점유되고, 다른 요청이 커넥션을 기다리는 **커넥션 고갈(connection starvation)**이 발생합니다. 트랜잭션은 가능한 짧게 유지하는 것이 원칙입니다.
+트랜잭션을 길게 유지하면 커넥션이 풀에서 점유되고, 다른 요청이 커넥션을 기다리는 **커넥션 고갈**(connection starvation)이 발생합니다. 트랜잭션은 가능한 짧게 유지하는 것이 원칙입니다.
 
 ## 정리
 

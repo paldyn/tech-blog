@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-arguments-object/)에서 `arguments` 객체와 그 현대적 대체 방법을 살펴봤습니다. 이번에는 ES 모듈이 없던 시절 JavaScript 코드 구조화의 핵심이었던 **IIFE(Immediately Invoked Function Expression, 즉시 실행 함수 표현식)**를 다룹니다. 레거시 코드에서 빈번하게 등장하고, 오늘날에도 특정 상황에서 유용한 패턴입니다.
+[지난 글](/posts/js-arguments-object/)에서 `arguments` 객체와 그 현대적 대체 방법을 살펴봤습니다. 이번에는 ES 모듈이 없던 시절 JavaScript 코드 구조화의 핵심이었던 **IIFE**(Immediately Invoked Function Expression, 즉시 실행 함수 표현식)를 다룹니다. 레거시 코드에서 빈번하게 등장하고, 오늘날에도 특정 상황에서 유용한 패턴입니다.
 
 ## IIFE란
 

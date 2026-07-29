@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/audio-tts/)에서 VITS·XTTS·CosyVoice 등 신경망 음성 합성 기술을 살펴봤다. 이번 글에서는 한 단계 더 나아가 **AI 음악 생성(Music Generation)**을 다룬다. 2023년 Meta의 MusicGen 공개는 텍스트 한 줄로 고품질 음악을 만들어내는 시대를 열었다. 같은 해 Suno AI는 가사·멜로디·편곡·보컬을 통합 생성하는 상용 서비스를 출시해 큰 반향을 일으켰다. 오디오 AI의 최전선인 음악 생성 기술의 원리와 실전 구현을 완전 해설한다.
+[지난 글](/posts/audio-tts/)에서 VITS·XTTS·CosyVoice 등 신경망 음성 합성 기술을 살펴봤다. 이번 글에서는 한 단계 더 나아가 **AI 음악 생성**(Music Generation)을 다룬다. 2023년 Meta의 MusicGen 공개는 텍스트 한 줄로 고품질 음악을 만들어내는 시대를 열었다. 같은 해 Suno AI는 가사·멜로디·편곡·보컬을 통합 생성하는 상용 서비스를 출시해 큰 반향을 일으켰다. 오디오 AI의 최전선인 음악 생성 기술의 원리와 실전 구현을 완전 해설한다.
 
 ## 오디오 표현: 파형에서 토큰까지
 
@@ -21,7 +21,7 @@ draft: false
 
 Meta가 2022년 발표한 **EnCodec**은 오디오를 이산 토큰 시퀀스로 압축하는 신경망 오디오 코덱이다. 기존 MP3/AAC 같은 전통 코덱과 달리, 신경망 인코더-디코더 구조로 학습되어 훨씬 낮은 비트레이트에서도 자연스러운 품질을 유지한다.
 
-EnCodec 인코더는 오디오 파형을 받아 연속 잠재 벡터로 압축하고, 이를 **RVQ(Residual Vector Quantization)**로 이산 토큰으로 변환한다.
+EnCodec 인코더는 오디오 파형을 받아 연속 잠재 벡터로 압축하고, 이를 **RVQ**(Residual Vector Quantization)로 이산 토큰으로 변환한다.
 
 ### RVQ: 계층적 이산 표현
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-matrix-chain-multiplication/)에서 행렬 연쇄 곱셈을 구간 DP로 해결했습니다. 이번 글에서는 **구간 DP(Interval DP)**의 일반적인 패턴과 대표 문제들을 체계적으로 다룹니다. 구간 DP는 "연속된 구간 [i..j]에 대한 최적해를, 그 구간을 두 부분으로 나누는 분할 위치 k를 탐색해 구한다"는 구조를 가집니다.
+[지난 글](/posts/dsa-matrix-chain-multiplication/)에서 행렬 연쇄 곱셈을 구간 DP로 해결했습니다. 이번 글에서는 **구간 DP**(Interval DP)의 일반적인 패턴과 대표 문제들을 체계적으로 다룹니다. 구간 DP는 "연속된 구간 [i..j]에 대한 최적해를, 그 구간을 두 부분으로 나누는 분할 위치 k를 탐색해 구한다"는 구조를 가집니다.
 
 ## 구간 DP의 일반 패턴
 

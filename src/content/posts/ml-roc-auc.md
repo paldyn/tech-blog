@@ -15,7 +15,7 @@ draft: false
 
 ## ROC 곡선의 두 축
 
-ROC(Receiver Operating Characteristic) 곡선은 X축에 **FPR(False Positive Rate)**, Y축에 **TPR(True Positive Rate, 재현율)**을 놓고 임계값을 0에서 1까지 변화시킬 때의 궤적을 그린다.
+ROC(Receiver Operating Characteristic) 곡선은 X축에 **FPR(False Positive Rate)**, Y축에 **TPR**(True Positive Rate, 재현율)을 놓고 임계값을 0에서 1까지 변화시킬 때의 궤적을 그린다.
 
 - **TPR(민감도, Recall)** = TP / (TP + FN) — 실제 양성 중 탐지한 비율
 - **FPR(1-특이도)** = FP / (FP + TN) — 실제 음성 중 잘못 양성으로 판단한 비율
@@ -26,7 +26,7 @@ ROC(Receiver Operating Characteristic) 곡선은 X축에 **FPR(False Positive Ra
 
 ## AUC의 확률론적 의미
 
-**AUC(Area Under the ROC Curve)**는 ROC 곡선 아래 면적으로, 0부터 1 사이의 값을 갖는다. 단순히 면적이 아니라 직관적인 확률로 해석할 수 있다.
+**AUC**(Area Under the ROC Curve)는 ROC 곡선 아래 면적으로, 0부터 1 사이의 값을 갖는다. 단순히 면적이 아니라 직관적인 확률로 해석할 수 있다.
 
 > **AUC = 임의로 선택한 양성 샘플이 임의로 선택한 음성 샘플보다 더 높은 점수를 받을 확률**
 

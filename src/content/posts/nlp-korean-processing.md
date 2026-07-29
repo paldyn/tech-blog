@@ -33,7 +33,7 @@ draft: false
 
 ## 형태소 분석: 한국어 NLP의 핵심
 
-영어에서는 공백 기반 토큰화만으로도 기본 처리가 가능하지만, 한국어에서는 **형태소 분석(Morphological Analysis)**이 필수다.
+영어에서는 공백 기반 토큰화만으로도 기본 처리가 가능하지만, 한국어에서는 **형태소 분석**(Morphological Analysis)이 필수다.
 
 ![한국어 NLP 처리 파이프라인](/assets/posts/nlp-korean-processing-pipeline.svg)
 
@@ -92,7 +92,7 @@ for sent in sentences:
 
 ## KLUE: 한국어 NLP 벤치마크
 
-**KLUE(Korean Language Understanding Evaluation)**는 한국어 NLP 모델 성능을 종합 평가하는 벤치마크로, 총 8개 태스크로 구성된다.
+**KLUE**(Korean Language Understanding Evaluation)는 한국어 NLP 모델 성능을 종합 평가하는 벤치마크로, 총 8개 태스크로 구성된다.
 
 | 태스크 | 설명 | 현 SOTA |
 |---|---|---|
@@ -244,7 +244,7 @@ print(result)
 | AI Hub 한국어 NLP | 다수 | 정부 지원 공개 데이터 |
 | KCC150 | 150M 토큰 | 사전학습용 코퍼스 |
 
-이로써 NLP 섹션의 주요 태스크 커버리지가 완성됐다. 다음 글부터는 이 모든 NLP 기술의 집합체라 할 수 있는 **대규모 언어 모델(LLM)**의 본질을 탐구한다.
+이로써 NLP 섹션의 주요 태스크 커버리지가 완성됐다. 다음 글부터는 이 모든 NLP 기술의 집합체라 할 수 있는 **대규모 언어 모델**(LLM)의 본질을 탐구한다.
 
 ---
 

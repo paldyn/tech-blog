@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nn-vanishing-gradient/)에서 기울기 소실·폭발 문제와 현대적 해결책을 살펴봤다. 이번 글부터는 이미지를 위한 합성곱 신경망(Convolutional Neural Network, CNN) 시리즈를 시작한다. CNN은 2012년 AlexNet이 ImageNet 대회에서 압도적인 성능을 보이며 딥러닝 붐을 이끈 핵심 아키텍처다. 오늘은 CNN의 가장 기본 단위인 **합성곱 연산(Convolution Operation)**을 깊이 이해해 보자.
+[지난 글](/posts/nn-vanishing-gradient/)에서 기울기 소실·폭발 문제와 현대적 해결책을 살펴봤다. 이번 글부터는 이미지를 위한 합성곱 신경망(Convolutional Neural Network, CNN) 시리즈를 시작한다. CNN은 2012년 AlexNet이 ImageNet 대회에서 압도적인 성능을 보이며 딥러닝 붐을 이끈 핵심 아키텍처다. 오늘은 CNN의 가장 기본 단위인 **합성곱 연산**(Convolution Operation)을 깊이 이해해 보자.
 
 ## 왜 완전연결층으로는 이미지를 처리하기 어려운가
 
@@ -21,7 +21,7 @@ draft: false
 
 ## 합성곱 연산의 작동 방식
 
-합성곱의 핵심 아이디어는 **작은 필터(커널)**를 이미지 위에서 슬라이딩하며 각 위치에서 내적(dot product)을 계산하는 것이다.
+합성곱의 핵심 아이디어는 **작은 필터**(커널)를 이미지 위에서 슬라이딩하며 각 위치에서 내적(dot product)을 계산하는 것이다.
 
 ![합성곱 연산 원리](/assets/posts/cnn-convolution-basics-operation.svg)
 
@@ -123,7 +123,7 @@ print(result)
 
 ## 여러 필터 → 여러 채널
 
-실제 Conv 레이어는 단 하나의 커널이 아니라 `C_out`개의 커널을 동시에 사용한다. 각 커널은 서로 다른 패턴(엣지, 질감, 색상 등)을 탐지하도록 학습된다. 그 결과 출력은 `(C_out, H_out, W_out)` 형태의 3D 텐서, 즉 **특징 맵(Feature Map)**이 된다.
+실제 Conv 레이어는 단 하나의 커널이 아니라 `C_out`개의 커널을 동시에 사용한다. 각 커널은 서로 다른 패턴(엣지, 질감, 색상 등)을 탐지하도록 학습된다. 그 결과 출력은 `(C_out, H_out, W_out)` 형태의 3D 텐서, 즉 **특징 맵**(Feature Map)이 된다.
 
 ```python
 # 입력: (batch=1, C_in=3, H=32, W=32)

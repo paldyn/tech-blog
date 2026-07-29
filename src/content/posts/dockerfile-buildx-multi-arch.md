@@ -15,7 +15,7 @@ draft: false
 
 ## 왜 멀티 아키텍처인가
 
-Apple M1/M2/M3 맥북의 보급, AWS Graviton(arm64) 인스턴스의 비용 효율성, Raspberry Pi 등 IoT 기기의 증가로 amd64 단독 이미지로는 부족해졌다. `docker pull myapp:latest`가 자동으로 해당 플랫폼에 맞는 레이어를 선택하려면 **manifest list(이미지 인덱스)**가 필요하다.
+Apple M1/M2/M3 맥북의 보급, AWS Graviton(arm64) 인스턴스의 비용 효율성, Raspberry Pi 등 IoT 기기의 증가로 amd64 단독 이미지로는 부족해졌다. `docker pull myapp:latest`가 자동으로 해당 플랫폼에 맞는 레이어를 선택하려면 **manifest list**(이미지 인덱스)가 필요하다.
 
 ![멀티 아키텍처 이미지 빌드 흐름](/assets/posts/dockerfile-buildx-multiarch-flow.svg)
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-interface-vs-type/)에서 `interface`와 `type`의 차이를 살펴봤다. 이번에는 TypeScript에서 가장 강력한 기능 중 하나인 **제네릭(Generics)**을 다룬다. 제네릭을 이해하면 `any`를 사용하지 않고도 다양한 타입을 처리하는 재사용 가능한 함수와 자료구조를 만들 수 있다.
+[지난 글](/posts/ts-interface-vs-type/)에서 `interface`와 `type`의 차이를 살펴봤다. 이번에는 TypeScript에서 가장 강력한 기능 중 하나인 **제네릭**(Generics)을 다룬다. 제네릭을 이해하면 `any`를 사용하지 않고도 다양한 타입을 처리하는 재사용 가능한 함수와 자료구조를 만들 수 있다.
 
 ## 제네릭이 필요한 이유
 

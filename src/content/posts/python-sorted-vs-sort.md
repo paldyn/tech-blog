@@ -98,7 +98,7 @@ by_age_name = sorted(people, key=itemgetter("age", "name"))
 
 ## 안정 정렬(Stable Sort) 활용
 
-Python의 정렬은 **안정 정렬(stable sort)**이므로, 키 값이 같은 요소들은 원래 순서가 유지됩니다. 이를 이용해 다단계 정렬을 순서대로 적용할 수 있습니다.
+Python의 정렬은 **안정 정렬**(stable sort)이므로, 키 값이 같은 요소들은 원래 순서가 유지됩니다. 이를 이용해 다단계 정렬을 순서대로 적용할 수 있습니다.
 
 ```python
 # 먼저 name으로 정렬한 뒤 age로 정렬

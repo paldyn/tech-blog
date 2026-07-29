@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-service-account/)에서 ServiceAccount로 워크로드 ID를 관리하는 방법을 알아봤다. 이번에는 그 SA에 실제 권한을 부여하는 **RBAC(Role-Based Access Control)**을 다룬다. K8s 1.8부터 기본 인가 방식이 됐으며, 누가(Subject) 어디에서(Scope) 무엇을(Verb + Resource) 할 수 있는지를 세밀하게 제어한다.
+[지난 글](/posts/k8s-service-account/)에서 ServiceAccount로 워크로드 ID를 관리하는 방법을 알아봤다. 이번에는 그 SA에 실제 권한을 부여하는 **RBAC**(Role-Based Access Control)을 다룬다. K8s 1.8부터 기본 인가 방식이 됐으며, 누가(Subject) 어디에서(Scope) 무엇을(Verb + Resource) 할 수 있는지를 세밀하게 제어한다.
 
 ## RBAC 네 가지 오브젝트
 

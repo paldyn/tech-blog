@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-modern-graalvm-aot/)에서 GraalVM 네이티브 이미지로 기동 시간을 수십 ms로 줄이는 방법을 살펴봤습니다. 이번 글에서는 Java 21의 또 다른 혁신인 **Virtual Threads(가상 스레드)**를 Spring Boot에 적용하는 방법을 다룹니다.
+[지난 글](/posts/spring-modern-graalvm-aot/)에서 GraalVM 네이티브 이미지로 기동 시간을 수십 ms로 줄이는 방법을 살펴봤습니다. 이번 글에서는 Java 21의 또 다른 혁신인 **Virtual Threads**(가상 스레드)를 Spring Boot에 적용하는 방법을 다룹니다.
 
 ## 왜 Virtual Threads가 필요한가
 
@@ -19,7 +19,7 @@ draft: false
 
 대기 시간이 긴 I/O(DB 쿼리, 외부 HTTP 호출)가 많은 서비스에서는 스레드가 블로킹 상태로 묶여 있어, 실제 CPU 사용률은 낮아도 스레드 부족으로 응답 지연이 발생하는 역설적 상황이 생깁니다.
 
-**Virtual Threads(Project Loom)**는 JVM이 경량 스레드를 직접 관리하는 방식으로 이 문제를 해결합니다. 수십만 개의 VT를 생성해도 메모리 부담이 적고, I/O 대기 중 캐리어 스레드를 반납해 다른 작업을 처리합니다.
+**Virtual Threads**(Project Loom)는 JVM이 경량 스레드를 직접 관리하는 방식으로 이 문제를 해결합니다. 수십만 개의 VT를 생성해도 메모리 부담이 적고, I/O 대기 중 캐리어 스레드를 반납해 다른 작업을 처리합니다.
 
 ![Virtual Threads vs Platform Threads 구조 비교](/assets/posts/spring-modern-virtual-threads-model.svg)
 

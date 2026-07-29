@@ -15,7 +15,7 @@ draft: false
 
 ## 동작 원리
 
-ltrace는 ELF 바이너리의 **PLT(Procedure Linkage Table)**를 이용합니다. 동적으로 링크된 프로그램은 라이브러리 함수를 직접 호출하지 않고 PLT를 거칩니다. ltrace는 이 PLT 엔트리에 중단점(breakpoint)을 설치해 함수 진입·종료 시점을 포착합니다.
+ltrace는 ELF 바이너리의 **PLT**(Procedure Linkage Table)를 이용합니다. 동적으로 링크된 프로그램은 라이브러리 함수를 직접 호출하지 않고 PLT를 거칩니다. ltrace는 이 PLT 엔트리에 중단점(breakpoint)을 설치해 함수 진입·종료 시점을 포착합니다.
 
 ![ltrace 동작 원리](/assets/posts/linux-ltrace-basics-concept.svg)
 

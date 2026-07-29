@@ -97,7 +97,7 @@ useEffect(() => {
 
 ## 데이터 페칭과 경쟁 조건
 
-useEffect에서 데이터를 가져올 때 **경쟁 조건(race condition)**이 발생할 수 있다.
+useEffect에서 데이터를 가져올 때 **경쟁 조건**(race condition)이 발생할 수 있다.
 
 ```jsx
 // 문제가 있는 코드

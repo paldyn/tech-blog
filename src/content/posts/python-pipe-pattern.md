@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-toolz-cytoolz/)에서 toolz 라이브러리의 `pipe` 함수를 맛봤다. 이번 글에서는 **파이프 패턴(Pipe Pattern)**을 더 깊이 다룬다. 파이프 패턴은 데이터를 일련의 변환 함수들을 통과시켜 최종 결과를 얻는 방식으로, Unix 셸의 `|` 파이프와 동일한 발상이다.
+[지난 글](/posts/python-toolz-cytoolz/)에서 toolz 라이브러리의 `pipe` 함수를 맛봤다. 이번 글에서는 **파이프 패턴**(Pipe Pattern)을 더 깊이 다룬다. 파이프 패턴은 데이터를 일련의 변환 함수들을 통과시켜 최종 결과를 얻는 방식으로, Unix 셸의 `|` 파이프와 동일한 발상이다.
 
 ## 파이프 패턴이란?
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-tcp-sequence-ack/)에서 TCP 순서 번호와 ACK으로 신뢰성을 확보하는 원리를 살펴봤다. 신뢰성 다음 과제는 **속도 조절**이다. 빠른 송신자가 느린 수신자를 압도하지 않도록 TCP는 **흐름 제어(Flow Control)**를 제공한다.
+[지난 글](/posts/network-tcp-sequence-ack/)에서 TCP 순서 번호와 ACK으로 신뢰성을 확보하는 원리를 살펴봤다. 신뢰성 다음 과제는 **속도 조절**이다. 빠른 송신자가 느린 수신자를 압도하지 않도록 TCP는 **흐름 제어**(Flow Control)를 제공한다.
 
 ## 흐름 제어란 무엇인가
 
@@ -66,7 +66,7 @@ ss -tn -o
 
 ## Window Scale 옵션
 
-TCP 헤더의 Window Size 필드는 16비트라 최대 65,535 bytes다. 고속 네트워크에서 이 크기가 병목이 된다. **Window Scale** 옵션(RFC 1323)은 3-way 핸드셰이크에서 협상해 실제 윈도우를 최대 **2³⁰ bytes(1GB)**까지 확장한다.
+TCP 헤더의 Window Size 필드는 16비트라 최대 65,535 bytes다. 고속 네트워크에서 이 크기가 병목이 된다. **Window Scale** 옵션(RFC 1323)은 3-way 핸드셰이크에서 협상해 실제 윈도우를 최대 **2³⁰ bytes**(1GB)까지 확장한다.
 
 ```text
 Window Scale 협상

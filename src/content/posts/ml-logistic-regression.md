@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ml-linear-regression/)에서 선형 회귀가 연속값 예측 문제를 풀었다. 이번에는 **분류 문제**를 다루는 **로지스틱 회귀(Logistic Regression)**를 살펴본다. 이름에 "회귀"가 붙었지만 분류 알고리즘이다. 선형 회귀의 출력을 시그모이드 함수로 변환해 확률로 만드는 것이 핵심 아이디어다.
+[지난 글](/posts/ml-linear-regression/)에서 선형 회귀가 연속값 예측 문제를 풀었다. 이번에는 **분류 문제**를 다루는 **로지스틱 회귀**(Logistic Regression)를 살펴본다. 이름에 "회귀"가 붙었지만 분류 알고리즘이다. 선형 회귀의 출력을 시그모이드 함수로 변환해 확률로 만드는 것이 핵심 아이디어다.
 
 ## 왜 선형 회귀로 분류하면 안 될까
 
@@ -99,7 +99,7 @@ print(classification_report(y_test, y_pred_adj))
 
 ## 손실 함수: Binary Cross-Entropy
 
-로지스틱 회귀의 손실 함수는 MSE가 아닌 **BCE(Binary Cross-Entropy)**다.
+로지스틱 회귀의 손실 함수는 MSE가 아닌 **BCE**(Binary Cross-Entropy)다.
 
 ```
 L = -[y·log(ŷ) + (1-y)·log(1-ŷ)]
@@ -152,7 +152,7 @@ with torch.no_grad():
 
 ## 다중 분류: Softmax
 
-클래스가 3개 이상이면 **소프트맥스(Softmax)**를 사용한다.
+클래스가 3개 이상이면 **소프트맥스**(Softmax)를 사용한다.
 
 ```python
 # Softmax: P(class=k) = e^zₖ / Σⱼ e^zⱼ

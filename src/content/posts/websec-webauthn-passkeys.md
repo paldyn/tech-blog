@@ -17,7 +17,7 @@ draft: false
 
 전통적인 OTP는 사용자가 코드를 어떤 사이트에든 입력할 수 있다. 공격자가 `bank-1ogin.com` 같은 가짜 사이트를 만들어 OTP를 실시간으로 릴레이하면 MFA를 우회할 수 있다.
 
-WebAuthn은 다르다. 개인키는 특정 **rpId(Relying Party ID)**에 바인딩된다. 브라우저가 서명을 생성할 때 **현재 접속 중인 도메인**이 등록된 rpId와 일치하는지 검증한다. 가짜 사이트에서는 진짜 도메인의 개인키로 서명할 수 없다.
+WebAuthn은 다르다. 개인키는 특정 **rpId**(Relying Party ID)에 바인딩된다. 브라우저가 서명을 생성할 때 **현재 접속 중인 도메인**이 등록된 rpId와 일치하는지 검증한다. 가짜 사이트에서는 진짜 도메인의 개인키로 서명할 수 없다.
 
 ![WebAuthn 등록 및 인증 흐름](/assets/posts/websec-webauthn-passkeys-flow.svg)
 

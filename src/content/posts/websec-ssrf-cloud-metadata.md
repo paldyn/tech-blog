@@ -15,7 +15,7 @@ draft: false
 
 ## 클라우드 메타데이터 서비스란?
 
-AWS, GCP, Azure 등 클라우드 제공자는 인스턴스 내부에서만 접근 가능한 HTTP API를 제공합니다. 이 API는 인스턴스에 대한 정보(AMI ID, 인스턴스 타입, 퍼블릭 IP, 태그 등)와 함께 **IAM 역할에 연결된 임시 자격증명(Access Key, Secret Key, Session Token)**을 제공합니다.
+AWS, GCP, Azure 등 클라우드 제공자는 인스턴스 내부에서만 접근 가능한 HTTP API를 제공합니다. 이 API는 인스턴스에 대한 정보(AMI ID, 인스턴스 타입, 퍼블릭 IP, 태그 등)와 함께 **IAM 역할에 연결된 임시 자격증명**(Access Key, Secret Key, Session Token)을 제공합니다.
 
 이 API는 링크-로컬 IP(`169.254.169.254`)에 위치하며, 인스턴스 내부에서는 인증 없이 접근할 수 있도록 설계되었습니다(v1 기준). SSRF 취약점이 있는 서버가 이 주소에 요청을 보내게 만들면 자격증명을 탈취할 수 있습니다.
 

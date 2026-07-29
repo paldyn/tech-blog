@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-ie-to-modern/)에서 IE 전용 코드를 모던 브라우저 표준으로 전환하는 방법을 다루었다. 이번에는 Nexacro N 프론트엔드와 백엔드를 연결하는 핵심 인프라인 **어댑터(Adapter)**를 살펴본다.
+[지난 글](/posts/nexacro-n-ie-to-modern/)에서 IE 전용 코드를 모던 브라우저 표준으로 전환하는 방법을 다루었다. 이번에는 Nexacro N 프론트엔드와 백엔드를 연결하는 핵심 인프라인 **어댑터**(Adapter)를 살펴본다.
 
 Nexacro N의 `transaction()` 호출이 서버에 도달했을 때, 그 요청을 받아 비즈니스 로직과 연결해 주는 컴포넌트가 어댑터다. 일반적인 REST API 컨트롤러와 달리 어댑터는 Nexacro 고유의 PL(Protocol Layer) 형식으로 인코딩된 데이터를 파싱하고, Dataset 객체를 생성하며, 서비스 메서드에 전달하는 역할을 담당한다.
 

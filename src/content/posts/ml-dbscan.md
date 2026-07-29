@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ml-clustering-hierarchical/)에서 계층적 군집화가 덴드로그램을 통해 군집의 계층 구조를 보여주는 방식을 공부했다. 이번엔 군집화를 완전히 다른 시각으로 바라보는 알고리즘을 소개한다. **DBSCAN(Density-Based Spatial Clustering of Applications with Noise)**은 "밀도가 높은 영역은 하나의 군집"이라는 직관에서 출발한다. K-평균처럼 군집 수를 사전에 지정하지 않아도 되고, 비구형 군집도 자연스럽게 탐지하며, 이상치(noise)를 자동으로 걸러낸다는 세 가지 특징을 동시에 갖는다.
+[지난 글](/posts/ml-clustering-hierarchical/)에서 계층적 군집화가 덴드로그램을 통해 군집의 계층 구조를 보여주는 방식을 공부했다. 이번엔 군집화를 완전히 다른 시각으로 바라보는 알고리즘을 소개한다. **DBSCAN**(Density-Based Spatial Clustering of Applications with Noise)은 "밀도가 높은 영역은 하나의 군집"이라는 직관에서 출발한다. K-평균처럼 군집 수를 사전에 지정하지 않아도 되고, 비구형 군집도 자연스럽게 탐지하며, 이상치(noise)를 자동으로 걸러낸다는 세 가지 특징을 동시에 갖는다.
 
 ## 밀도 기반 군집화의 직관
 
@@ -84,13 +84,13 @@ DBSCAN이 군집을 만드는 과정을 단계별로 살펴보자.
 5. **비핵심 처리**: 이웃 수 < MinPts이면 잡음으로 임시 분류
 6. **반복**: 모든 포인트를 방문할 때까지 1-5 반복
 
-중요한 개념이 **밀도 연결(Density-Connected)**이다. 두 점 p, q가 어떤 핵심 포인트 o를 통해 연결될 수 있으면 "밀도 연결"되었다고 한다. DBSCAN은 밀도 연결된 모든 점을 하나의 군집으로 묶는다.
+중요한 개념이 **밀도 연결**(Density-Connected)이다. 두 점 p, q가 어떤 핵심 포인트 o를 통해 연결될 수 있으면 "밀도 연결"되었다고 한다. DBSCAN은 밀도 연결된 모든 점을 하나의 군집으로 묶는다.
 
 ## ε 튜닝: k-거리 그래프
 
 DBSCAN의 성능은 ε 선택에 크게 의존한다. ε이 너무 작으면 대부분의 포인트가 잡음이 되고, 너무 크면 모든 포인트가 하나의 군집이 된다.
 
-가장 널리 사용되는 ε 추정법은 **k-거리 그래프(k-distance graph)**다.
+가장 널리 사용되는 ε 추정법은 **k-거리 그래프**(k-distance graph)다.
 
 ```python
 from sklearn.neighbors import NearestNeighbors
@@ -212,7 +212,7 @@ print(f"실제 이상 거래 위치: {anomaly_indices[anomaly_indices >= 400]}")
 
 DBSCAN의 가장 큰 단점 중 하나는 **균일한 밀도를 가정**한다는 점이다. 밀도가 서로 다른 두 군집이 있을 때, 하나의 ε 값으로는 두 군집을 동시에 잘 탐지하기 어렵다.
 
-**HDBSCAN(Hierarchical DBSCAN)**은 이 문제를 해결한다. DBSCAN을 다양한 ε 값에서 실행한 결과를 계층적으로 정리해서, 각 군집에 가장 적합한 ε을 자동으로 선택한다.
+**HDBSCAN**(Hierarchical DBSCAN)은 이 문제를 해결한다. DBSCAN을 다양한 ε 값에서 실행한 결과를 계층적으로 정리해서, 각 군집에 가장 적합한 ε을 자동으로 선택한다.
 
 ```python
 # pip install hdbscan

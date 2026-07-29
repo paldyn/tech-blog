@@ -15,7 +15,7 @@ draft: false
 
 ## Bash: 사실상 표준
 
-**Bash(Bourne Again Shell)**는 1989년 GNU 프로젝트의 일환으로 만들어진 셸이다. 대부분의 Linux 배포판에서 `/bin/bash`로 기본 설치되어 있고, 서버 환경에서도 항상 사용 가능하다.
+**Bash**(Bourne Again Shell)는 1989년 GNU 프로젝트의 일환으로 만들어진 셸이다. 대부분의 Linux 배포판에서 `/bin/bash`로 기본 설치되어 있고, 서버 환경에서도 항상 사용 가능하다.
 
 POSIX sh와 호환되어 어디서나 돌아가는 스크립트를 작성할 수 있다. `#!/bin/bash`로 시작하는 쉘 스크립트가 전 세계 수백만 개의 서버에서 실행된다.
 
@@ -36,7 +36,7 @@ Bash의 약점은 인터랙티브 경험이다. 기본 자동완성, 히스토�
 
 ## Zsh: 파워 유저의 선택
 
-**Zsh(Z Shell)**는 1990년 Paul Falstad가 만들었다. bash와 대부분 호환되면서 훨씬 강력한 인터랙티브 기능을 제공한다. macOS는 Catalina(2019)부터 기본 셸을 zsh로 변경했다.
+**Zsh**(Z Shell)는 1990년 Paul Falstad가 만들었다. bash와 대부분 호환되면서 훨씬 강력한 인터랙티브 기능을 제공한다. macOS는 Catalina(2019)부터 기본 셸을 zsh로 변경했다.
 
 ```bash
 # zsh 설치 (Debian/Ubuntu)
@@ -68,7 +68,7 @@ ls *(/)       # 디렉터리만
 
 ## Fish: 현대적인 셸
 
-**Fish(Friendly Interactive Shell)**는 2005년 등장한 셸로, 설정 없이 바로 쓸 수 있는 경험을 목표로 한다. 역사 기반 자동완성, 문법 강조, 색상 출력이 **기본 내장**이다.
+**Fish**(Friendly Interactive Shell)는 2005년 등장한 셸로, 설정 없이 바로 쓸 수 있는 경험을 목표로 한다. 역사 기반 자동완성, 문법 강조, 색상 출력이 **기본 내장**이다.
 
 단점은 bash/POSIX와 호환되지 않는 독자적 문법이다. `$(...)` 대신 `(...)`, `$1` 대신 `$argv[1]`, `if`/`fi` 대신 `if`/`end`를 사용한다. 기존 bash 스크립트를 바로 실행할 수 없다.
 

@@ -73,7 +73,7 @@ HyperCLOVA X는 **CLOVA X** 서비스(clova.ai)로 일반 사용자에게도 제
 
 ## EXAONE: LG AI Research의 오픈소스 전략
 
-**EXAONE(Expert AI for EverytONE)**은 2023년 LG AI Research가 공개한 LLM 시리즈다. 2024년 EXAONE 3.0(7.8B)을 연구용 오픈소스로 공개해 주목을 받았다.
+**EXAONE**(Expert AI for EverytONE)은 2023년 LG AI Research가 공개한 LLM 시리즈다. 2024년 EXAONE 3.0(7.8B)을 연구용 오픈소스로 공개해 주목을 받았다.
 
 EXAONE 3.5(2024.12)는 2.4B, 7.8B, 32B 세 가지 크기를 오픈소스로 공개했다. 특이한 점은 **연구용 라이선스**로 공개됐다는 것이다. 학술 연구와 비상업적 목적으로는 자유롭게 사용할 수 있지만, 상업적 사용은 LG AI Research에 별도 문의가 필요하다.
 
@@ -104,7 +104,7 @@ input_ids = tokenizer.apply_chat_template(
 
 **Upstage**는 국내 AI 스타트업으로, 2023년 SOLAR 10.7B를 공개해 HuggingFace Open LLM Leaderboard에서 1위를 달성하며 세계적 주목을 받았다.
 
-SOLAR의 핵심 기술은 **Depth-Up Scaling(DUS)**이다. 두 개의 작은 모델을 단순 연결해 더 큰 모델을 만드는 방식이다. LLaMA 2 7B 두 개를 연결해 10.7B를 만들되, 연결 부분의 레이어를 삭제하고 새로 파인튜닝하는 방식이다. 훈련 비용을 줄이면서도 높은 성능을 달성했다.
+SOLAR의 핵심 기술은 **Depth-Up Scaling**(DUS)이다. 두 개의 작은 모델을 단순 연결해 더 큰 모델을 만드는 방식이다. LLaMA 2 7B 두 개를 연결해 10.7B를 만들되, 연결 부분의 레이어를 삭제하고 새로 파인튜닝하는 방식이다. 훈련 비용을 줄이면서도 높은 성능을 달성했다.
 
 ```python
 # SOLAR 모델 HuggingFace에서 실행

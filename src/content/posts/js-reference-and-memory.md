@@ -17,9 +17,9 @@ draft: false
 
 JavaScript 엔진은 두 종류의 메모리 영역을 사용합니다.
 
-**스택(Stack)**은 정해진 크기의 빠른 메모리입니다. 원시값(number, string, boolean, null, undefined, symbol, bigint)은 크기가 고정되어 있어 스택에 직접 저장됩니다.
+**스택**(Stack)은 정해진 크기의 빠른 메모리입니다. 원시값(number, string, boolean, null, undefined, symbol, bigint)은 크기가 고정되어 있어 스택에 직접 저장됩니다.
 
-**힙(Heap)**은 크기가 가변적인 값을 저장하는 동적 메모리 영역입니다. 객체, 배열, 함수는 힙에 저장되고, 스택의 변수에는 힙의 메모리 주소(참조)만 담깁니다.
+**힙**(Heap)은 크기가 가변적인 값을 저장하는 동적 메모리 영역입니다. 객체, 배열, 함수는 힙에 저장되고, 스택의 변수에는 힙의 메모리 주소(참조)만 담깁니다.
 
 ```javascript
 let a = 42;         // 스택에 42 직접 저장
@@ -84,7 +84,7 @@ const deep2 = JSON.parse(JSON.stringify(original));
 
 ## 함수 인수 전달 방식
 
-JavaScript는 항상 **값에 의한 전달(pass by value)**을 합니다. 단, 객체의 경우 "참조 값"이 복사됩니다.
+JavaScript는 항상 **값에 의한 전달**(pass by value)을 합니다. 단, 객체의 경우 "참조 값"이 복사됩니다.
 
 - **원시값**: 값 자체가 복사되므로 함수 내 변경이 외부에 영향 없음
 - **객체**: 참조(주소)가 복사되므로 프로퍼티 변경은 외부에 영향 있음. 단, 변수 자체를 재할당하면 외부에 영향 없음

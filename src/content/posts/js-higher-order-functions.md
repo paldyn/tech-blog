@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-iife/)에서 IIFE와 모듈 패턴을 살펴봤습니다. 이번에는 함수형 프로그래밍의 핵심인 **고차 함수(Higher-Order Function)**를 집중적으로 다룹니다. 고차 함수는 함수를 인수로 받거나 함수를 반환하는 함수입니다. `map`, `filter`, `reduce`는 가장 흔히 쓰이는 내장 고차 함수이고, `debounce`, `once`, `memoize` 같은 패턴은 고차 함수로 구현하는 대표적 유틸리티입니다.
+[지난 글](/posts/js-iife/)에서 IIFE와 모듈 패턴을 살펴봤습니다. 이번에는 함수형 프로그래밍의 핵심인 **고차 함수**(Higher-Order Function)를 집중적으로 다룹니다. 고차 함수는 함수를 인수로 받거나 함수를 반환하는 함수입니다. `map`, `filter`, `reduce`는 가장 흔히 쓰이는 내장 고차 함수이고, `debounce`, `once`, `memoize` 같은 패턴은 고차 함수로 구현하는 대표적 유틸리티입니다.
 
 ## 고차 함수란
 

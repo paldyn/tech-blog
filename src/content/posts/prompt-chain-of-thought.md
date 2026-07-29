@@ -86,7 +86,7 @@ print(result)
 
 ![Zero-shot CoT vs Few-shot CoT](/assets/posts/prompt-chain-of-thought-types.svg)
 
-Few-shot CoT는 Wei et al.의 원래 기법으로, **추론 과정이 포함된 예시(exemplar)**를 프롬프트에 넣는다.
+Few-shot CoT는 Wei et al.의 원래 기법으로, **추론 과정이 포함된 예시**(exemplar)를 프롬프트에 넣는다.
 
 ```python
 few_shot_cot_prompt = """다음은 수학 문제 풀이 예시입니다.
@@ -206,7 +206,7 @@ def cot_solve(
 
 **환각 위험**: CoT가 그럴듯한 추론 체인을 만들지만 사실과 다를 수 있다. 추론 단계가 길어질수록 초기 오류가 전파되는 **오류 누적(error propagation)** 문제가 있다.
 
-**검증 필요**: 수학 계산은 Python 실행기로 검증, 코드는 실제 실행으로 검증하는 **도구 검증(tool-augmented CoT)**을 결합하면 신뢰성이 크게 오른다.
+**검증 필요**: 수학 계산은 Python 실행기로 검증, 코드는 실제 실행으로 검증하는 **도구 검증**(tool-augmented CoT)을 결합하면 신뢰성이 크게 오른다.
 
 **비용**: CoT는 표준 프롬프팅보다 훨씬 많은 토큰을 소비한다. 캐싱(prompt caching)을 활용하거나, 단순한 쿼리에는 CoT를 적용하지 않는 라우팅 전략이 필요하다.
 

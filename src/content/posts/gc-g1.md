@@ -43,7 +43,7 @@ G1의 가장 큰 차별점은 **정지 시간을 목표로 직접 받는다**는
 -XX:InitiatingHeapOccupancyPercent=45   # old 점유율 45%면 동시 마킹 시작(IHOP)
 ```
 
-`MaxGCPauseMillis`는 명령이 아니라 **목표(soft goal)**입니다. G1은 과거 수집들의 통계로 "region 하나를 비우는 데 평균 얼마가 걸리는지"를 학습해 두고, 다음 수집에서 이 목표 안에 들어오도록 **이번에 비울 region 수를 스스로 정합니다.** 목표를 너무 작게 잡으면 한 번에 적은 region만 비우게 되어 수집이 잦아지고 처리량이 떨어집니다. 보장이 아니라 예산이라는 점을 이해하는 것이 G1 튜닝의 출발입니다.
+`MaxGCPauseMillis`는 명령이 아니라 **목표**(soft goal)입니다. G1은 과거 수집들의 통계로 "region 하나를 비우는 데 평균 얼마가 걸리는지"를 학습해 두고, 다음 수집에서 이 목표 안에 들어오도록 **이번에 비울 region 수를 스스로 정합니다.** 목표를 너무 작게 잡으면 한 번에 적은 region만 비우게 되어 수집이 잦아지고 처리량이 떨어집니다. 보장이 아니라 예산이라는 점을 이해하는 것이 G1 튜닝의 출발입니다.
 
 ## 한 주기의 흐름 — Young, 동시 마킹, Mixed
 
@@ -51,7 +51,7 @@ G1의 수집은 크게 세 가지로 나뉩니다.
 
 ![G1의 수집 주기 — Young, Concurrent Mark, Mixed의 흐름](/assets/posts/gc-g1-collection-cycle.svg)
 
-**1. Young Collection (evacuation).** 가장 자주 일어나는 기본 수집입니다. Eden·Survivor region의 살아 있는 객체를 빈 region으로 **복사(copying)**하고, 원래 region은 통째로 비웁니다. 이 복사가 곧 compaction 효과를 내므로 **CMS를 괴롭히던 단편화가 G1에는 없습니다.** 살아남은 객체는 Survivor를 거쳐 충분히 나이를 먹으면 Old region으로 승격됩니다.
+**1. Young Collection (evacuation).** 가장 자주 일어나는 기본 수집입니다. Eden·Survivor region의 살아 있는 객체를 빈 region으로 **복사**(copying)하고, 원래 region은 통째로 비웁니다. 이 복사가 곧 compaction 효과를 내므로 **CMS를 괴롭히던 단편화가 G1에는 없습니다.** 살아남은 객체는 Survivor를 거쳐 충분히 나이를 먹으면 Old region으로 승격됩니다.
 
 **2. Concurrent Marking Cycle.** old 점유율이 IHOP 임계(`InitiatingHeapOccupancyPercent`, 기본 45%)에 닿으면, G1은 old region에 쓰레기가 얼마나 있는지 알아내기 위해 동시 마킹을 시작합니다.
 
@@ -70,9 +70,9 @@ Initial Mark는 별도 STW를 만들지 않고 **Young Collection에 얹혀(pigg
 
 ## Remembered Set과 write barrier — region 모델의 대가
 
-일부 region만 수집하려면 풀어야 할 문제가 있습니다. **"수집 대상 region 밖에서 안쪽 객체를 가리키는 참조"**를 어떻게 빠짐없이 찾을까요? 이걸 모르면 살아 있는 객체를 죽은 것으로 오해해 회수해버립니다.
+일부 region만 수집하려면 풀어야 할 문제가 있습니다. <strong>"수집 대상 region 밖에서 안쪽 객체를 가리키는 참조"</strong>를 어떻게 빠짐없이 찾을까요? 이걸 모르면 살아 있는 객체를 죽은 것으로 오해해 회수해버립니다.
 
-G1은 각 region마다 **Remembered Set(RSet)**을 둡니다. RSet은 "다른 region에서 이 region을 가리키는 참조가 어디 있는지"를 기록한 자료구조입니다. 덕분에 G1은 전체 힙을 스캔하지 않고 RSet만 보면 region 밖에서 들어오는 참조를 알 수 있습니다.
+G1은 각 region마다 **Remembered Set**(RSet)을 둡니다. RSet은 "다른 region에서 이 region을 가리키는 참조가 어디 있는지"를 기록한 자료구조입니다. 덕분에 G1은 전체 힙을 스캔하지 않고 RSet만 보면 region 밖에서 들어오는 참조를 알 수 있습니다.
 
 RSet을 최신으로 유지하려면, 앱이 참조를 쓸 때마다 "이 쓰기가 region 경계를 넘었는가"를 검사하는 **write barrier**가 필요합니다. 이것이 G1이 상시 지불하는 비용입니다.
 
@@ -116,9 +116,9 @@ G1은 "목표만 주고 나머지는 맡긴다"가 기본 철학이라, 손댈 �
 
 ## 정리
 
-- G1은 힙을 **동일 크기 region(보통 1~32MB)**으로 나누고 역할을 동적으로 부여한다 — young/old는 흩어진 region 집합이다
+- G1은 힙을 **동일 크기 region**(보통 1~32MB)으로 나누고 역할을 동적으로 부여한다 — young/old는 흩어진 region 집합이다
 - **정지 시간 목표(`MaxGCPauseMillis`, 기본 200ms)** 안에서 회수 이득이 큰 region부터 비운다 ("garbage-first")
-- 모든 수집이 **evacuation(=copying)**이라 compaction 효과를 내고 **단편화가 없다** — CMS의 약점을 구조적으로 해결
+- 모든 수집이 **evacuation**(=copying)이라 compaction 효과를 내고 **단편화가 없다** — CMS의 약점을 구조적으로 해결
 - 한 주기는 **Young → Concurrent Marking Cycle(Initial Mark·Concurrent Mark·Remark·Cleanup) → Mixed**로 흐른다
 - 일부 region만 수집하려고 **Remembered Set + write barrier(SATB)** 비용을 상시 지불한다
 - region 절반 초과 객체는 **Humongous**로 연속 region에 직접 할당된다

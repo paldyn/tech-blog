@@ -35,7 +35,7 @@ e_contextual(w, C) = f(w, C)
 
 ## ELMo: 양방향 LSTM으로 만드는 깊은 문맥 표현
 
-**ELMo(Embeddings from Language Models)**는 2018년 AllenNLP가 발표한 모델로, 문맥적 임베딩의 첫 번째 대성공 사례다.
+**ELMo**(Embeddings from Language Models)는 2018년 AllenNLP가 발표한 모델로, 문맥적 임베딩의 첫 번째 대성공 사례다.
 
 ### ELMo 아키텍처
 
@@ -90,7 +90,7 @@ J = Σ_{k=1}^{N} (log p(t_k | t_1, ..., t_{k-1}) + log p(t_k | t_{k+1}, ..., t_N
 
 ## BERT: 트랜스포머로 만드는 양방향 문맥
 
-ELMo가 LSTM 기반이었다면, 같은 해 구글이 발표한 **BERT(Bidirectional Encoder Representations from Transformers)**는 트랜스포머 아키텍처를 사용해 한 단계 도약했다.
+ELMo가 LSTM 기반이었다면, 같은 해 구글이 발표한 **BERT**(Bidirectional Encoder Representations from Transformers)는 트랜스포머 아키텍처를 사용해 한 단계 도약했다.
 
 ### BERT의 설계 철학
 
@@ -196,7 +196,7 @@ cls_embedding = out.last_hidden_state[:, 0, :]  # [1, 768]
 | 최대 시퀀스 길이 | 제한 없음 | 512 토큰 |
 | 사용 방식 | 특징 추출 (고정) | 미세조정 또는 추출 |
 
-BERT가 ELMo를 대부분의 태스크에서 압도했지만, ELMo의 가장 큰 기여는 **"모든 레이어가 다른 언어 지식을 담는다"**는 통찰이다. 이 개념은 BERT와 이후 대형 언어 모델 해석성 연구에 큰 영향을 미쳤다.
+BERT가 ELMo를 대부분의 태스크에서 압도했지만, ELMo의 가장 큰 기여는 <strong>"모든 레이어가 다른 언어 지식을 담는다"</strong>는 통찰이다. 이 개념은 BERT와 이후 대형 언어 모델 해석성 연구에 큰 영향을 미쳤다.
 
 ## 한국어 BERT 모델들
 

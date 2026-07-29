@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-postgis-intro/)에서 PostGIS로 공간 쿼리를 다뤘다. 이번에는 PostgreSQL 내장 **전문 검색(Full-Text Search)**을 살펴본다. 외부 검색 엔진 없이 `LIKE '%키워드%'`보다 훨씬 정확하고 빠른 텍스트 검색을 구현할 수 있다.
+[지난 글](/posts/pg-postgis-intro/)에서 PostGIS로 공간 쿼리를 다뤘다. 이번에는 PostgreSQL 내장 **전문 검색**(Full-Text Search)을 살펴본다. 외부 검색 엔진 없이 `LIKE '%키워드%'`보다 훨씬 정확하고 빠른 텍스트 검색을 구현할 수 있다.
 
 ## LIKE 검색의 한계
 

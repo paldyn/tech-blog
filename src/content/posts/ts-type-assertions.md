@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-type-annotations/)에서 타입 어노테이션과 타입 추론을 살펴봤다. 때로는 TypeScript 컴파일러가 추론한 타입보다 개발자가 더 정확한 정보를 갖고 있는 경우가 있다. 이럴 때 사용하는 것이 **타입 단언(Type Assertion)**이다. 타입 단언은 강력하지만 잘못 사용하면 TypeScript의 안전망을 뚫는 구멍이 된다.
+[지난 글](/posts/ts-type-annotations/)에서 타입 어노테이션과 타입 추론을 살펴봤다. 때로는 TypeScript 컴파일러가 추론한 타입보다 개발자가 더 정확한 정보를 갖고 있는 경우가 있다. 이럴 때 사용하는 것이 **타입 단언**(Type Assertion)이다. 타입 단언은 강력하지만 잘못 사용하면 TypeScript의 안전망을 뚫는 구멍이 된다.
 
 ## 타입 단언이란
 

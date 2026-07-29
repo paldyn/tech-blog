@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-conflict-with-stash/)에서 stash 중 충돌 처리를 마무리했다. 이번 글부터는 새로운 주제인 **원격 저장소(Remote)**로 넘어간다. Git에서 협업의 핵심은 원격 저장소와의 연결이다.
+[지난 글](/posts/git-conflict-with-stash/)에서 stash 중 충돌 처리를 마무리했다. 이번 글부터는 새로운 주제인 **원격 저장소**(Remote)로 넘어간다. Git에서 협업의 핵심은 원격 저장소와의 연결이다.
 
 ## 원격 저장소란
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-index-not-used-patterns/)에서 인덱스가 사용되지 않는 패턴을 살펴봤다. 이번에는 그 결정을 내리는 주체인 **비용 기반 옵티마이저(CBO, Cost-Based Optimizer)**의 작동 원리를 파악한다.
+[지난 글](/posts/sql-index-not-used-patterns/)에서 인덱스가 사용되지 않는 패턴을 살펴봤다. 이번에는 그 결정을 내리는 주체인 **비용 기반 옵티마이저**(CBO, Cost-Based Optimizer)의 작동 원리를 파악한다.
 
 ---
 

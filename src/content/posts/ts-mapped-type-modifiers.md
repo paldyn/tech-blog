@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-variance/)에서 TypeScript 타입 시스템의 분산성을 살펴봤다. 이번에는 매핑된 타입을 더 깊이 다룬다. 기본 매핑된 타입은 `[K in keyof T]: T[K]` 형태로 속성을 그대로 복사하지만, **수정자(modifier)**와 **`as` 절**을 추가하면 `readonly`·`optional`을 자유롭게 조작하고 키 이름까지 변환할 수 있다.
+[지난 글](/posts/ts-variance/)에서 TypeScript 타입 시스템의 분산성을 살펴봤다. 이번에는 매핑된 타입을 더 깊이 다룬다. 기본 매핑된 타입은 `[K in keyof T]: T[K]` 형태로 속성을 그대로 복사하지만, **수정자**(modifier)와 **`as` 절**을 추가하면 `readonly`·`optional`을 자유롭게 조작하고 키 이름까지 변환할 수 있다.
 
 ## 수정자 문법: +와 -
 

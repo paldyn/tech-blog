@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-destructuring/)에서 구조 분해 할당으로 값을 추출하는 법을 살펴봤습니다. 이번에는 ES2015가 가져온 또 다른 문자열 혁신인 **템플릿 리터럴(template literal)**을 다룹니다. 백틱(`` ` ``)으로 감싸는 이 문법은 단순 보간 그 이상으로, 태그드 템플릿을 통해 styled-components, GraphQL 쿼리, XSS 방어 같은 강력한 추상화를 가능하게 합니다.
+[지난 글](/posts/js-destructuring/)에서 구조 분해 할당으로 값을 추출하는 법을 살펴봤습니다. 이번에는 ES2015가 가져온 또 다른 문자열 혁신인 **템플릿 리터럴**(template literal)을 다룹니다. 백틱(`` ` ``)으로 감싸는 이 문법은 단순 보간 그 이상으로, 태그드 템플릿을 통해 styled-components, GraphQL 쿼리, XSS 방어 같은 강력한 추상화를 가능하게 합니다.
 
 ## 기본 문법 — 보간과 여러 줄
 
@@ -55,7 +55,7 @@ const template = `
 
 ## 태그드 템플릿 — 함수가 문자열을 제어
 
-백틱 앞에 함수 이름을 붙이면 그 함수가 템플릿 처리를 가로챕니다. 이것이 **태그드 템플릿(tagged template)**입니다.
+백틱 앞에 함수 이름을 붙이면 그 함수가 템플릿 처리를 가로챕니다. 이것이 **태그드 템플릿**(tagged template)입니다.
 
 ```javascript
 function highlight(strings, ...values) {

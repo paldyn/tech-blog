@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-map-linkedhashmap/)에서 LinkedHashMap의 삽입/접근 순서 모드와 LRU 캐시 패턴을 살펴봤다. 이번에는 **`TreeMap`**을 다룬다. TreeMap은 키를 항상 정렬된 순서로 유지하고, 범위 탐색 메서드를 제공하는 Map 구현체다.
+[지난 글](/posts/java-map-linkedhashmap/)에서 LinkedHashMap의 삽입/접근 순서 모드와 LRU 캐시 패턴을 살펴봤다. 이번에는 <strong>`TreeMap`</strong>을 다룬다. TreeMap은 키를 항상 정렬된 순서로 유지하고, 범위 탐색 메서드를 제공하는 Map 구현체다.
 
 ## 내부 구조: Red-Black Tree
 
@@ -38,7 +38,7 @@ System.out.println(grades);
 
 ### 뷰 메서드
 
-`headMap`, `tailMap`, `subMap`은 원본 TreeMap의 **라이브 뷰(live view)**를 반환한다. 뷰에 대한 쓰기 연산은 원본에 반영된다.
+`headMap`, `tailMap`, `subMap`은 원본 TreeMap의 **라이브 뷰**(live view)를 반환한다. 뷰에 대한 쓰기 연산은 원본에 반영된다.
 
 ```java
 TreeMap<Integer, String> scores = new TreeMap<>();

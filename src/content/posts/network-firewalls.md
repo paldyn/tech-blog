@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-https/)에서 HTTPS의 동작과 보안 강화 메커니즘을 살펴봤습니다. 이번 글에서는 네트워크 보안의 기본 구성 요소인 **방화벽(Firewall)**을 세대별로 살펴보고, 실제 운영 환경의 DMZ 설계까지 알아봅니다.
+[지난 글](/posts/network-https/)에서 HTTPS의 동작과 보안 강화 메커니즘을 살펴봤습니다. 이번 글에서는 네트워크 보안의 기본 구성 요소인 **방화벽**(Firewall)을 세대별로 살펴보고, 실제 운영 환경의 DMZ 설계까지 알아봅니다.
 
 ## 방화벽이란?
 
@@ -70,7 +70,7 @@ HTTP URL, 메서드, 헤더 등 L7 내용을 검사합니다.
 # HTTP method 기반 차단은 WAF 역할
 ```
 
-**WAF (Web Application Firewall)**가 이 계층의 대표입니다.
+**WAF**(Web Application Firewall)가 이 계층의 대표입니다.
 
 ### 4세대: NGFW (Next Generation Firewall)
 

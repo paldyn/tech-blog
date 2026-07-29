@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-gradient-descent/)에서 경사 하강법의 기본 원리를 익혔다. 이번에는 그 기본형에서 발전한 **다양한 옵티마이저(Optimizer)**를 비교한다. 옵티마이저는 "어떻게 파라미터를 업데이트할 것인가"에 대한 알고리즘이다. 기본 SGD의 두 가지 약점 — 모든 파라미터에 동일한 학습률을 적용한다, 최솟값까지의 경로가 비효율적이다 — 을 해결하기 위해 다양한 방법이 개발되었다.
+[지난 글](/posts/ai-gradient-descent/)에서 경사 하강법의 기본 원리를 익혔다. 이번에는 그 기본형에서 발전한 **다양한 옵티마이저**(Optimizer)를 비교한다. 옵티마이저는 "어떻게 파라미터를 업데이트할 것인가"에 대한 알고리즘이다. 기본 SGD의 두 가지 약점 — 모든 파라미터에 동일한 학습률을 적용한다, 최솟값까지의 경로가 비효율적이다 — 을 해결하기 위해 다양한 방법이 개발되었다.
 
 ## SGD + Momentum: 관성으로 가속
 
-기본 SGD는 각 스텝에서 현재 그래디언트만 고려한다. **모멘텀(Momentum)**은 이전 업데이트 방향을 관성으로 유지해 수렴을 가속한다.
+기본 SGD는 각 스텝에서 현재 그래디언트만 고려한다. **모멘텀**(Momentum)은 이전 업데이트 방향을 관성으로 유지해 수렴을 가속한다.
 
 ```python
 import torch.optim as optim
@@ -86,7 +86,7 @@ v ← α·v + (1−α)·∇L²   # 지수 가중 이동 평균 (누적 없음)
 
 ## Adam: 현대 딥러닝의 표준
 
-**Adam(Adaptive Moment Estimation)**은 모멘텀과 RMSProp을 결합한 알고리즘이다. 2015년 Kingma와 Ba가 제안했다.
+**Adam**(Adaptive Moment Estimation)은 모멘텀과 RMSProp을 결합한 알고리즘이다. 2015년 Kingma와 Ba가 제안했다.
 
 ```python
 # Adam: β₁=0.9(1차 모멘텀), β₂=0.999(2차 모멘텀)
@@ -138,7 +138,7 @@ optimizer = optim.AdamW(optimizer_grouped, lr=3e-4)
 
 ## 학습률 스케줄러
 
-옵티마이저와 함께 학습률을 조절하는 **스케줄러(Scheduler)**를 사용하면 학습이 안정적으로 수렴한다.
+옵티마이저와 함께 학습률을 조절하는 **스케줄러**(Scheduler)를 사용하면 학습이 안정적으로 수렴한다.
 
 ```python
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/distillation/)에서 큰 모델의 지식을 작은 모델로 이전하는 증류를 다뤘다. 이번에는 완전히 다른 접근이다. 이미 훈련된 모델에서 "덜 중요한" 가중치를 0으로 만들거나 아예 제거하는 **프루닝(Pruning)**이다. 인간의 뇌가 발달 과정에서 시냅스를 가지치기(pruning)하는 것에서 이름을 따왔다. 제대로 적용하면 모델 크기와 연산량을 50% 이상 줄이면서도 성능 손실을 최소화할 수 있다.
+[지난 글](/posts/distillation/)에서 큰 모델의 지식을 작은 모델로 이전하는 증류를 다뤘다. 이번에는 완전히 다른 접근이다. 이미 훈련된 모델에서 "덜 중요한" 가중치를 0으로 만들거나 아예 제거하는 **프루닝**(Pruning)이다. 인간의 뇌가 발달 과정에서 시냅스를 가지치기(pruning)하는 것에서 이름을 따왔다. 제대로 적용하면 모델 크기와 연산량을 50% 이상 줄이면서도 성능 손실을 최소화할 수 있다.
 
 ## 프루닝의 두 가지 축
 
@@ -19,9 +19,9 @@ draft: false
 
 ### 비구조적 프루닝 vs 구조적 프루닝
 
-**비구조적 프루닝(Unstructured Pruning)**은 개별 가중치를 선택적으로 0으로 만든다. 가중치 행렬에 구멍이 뚫리는 형태라 **희소 행렬(Sparse Matrix)**이 생긴다. 이론적으로 50~90%까지 제거해도 성능 손실이 적지만, 실제로 추론을 빠르게 하려면 희소 행렬 연산을 지원하는 전용 하드웨어(NVIDIA A100의 Sparse Tensor Core)나 특수 라이브러리가 필요하다. 일반 GPU에서는 제거된 0도 연산에 포함되므로 실제 속도 향상이 없다.
+**비구조적 프루닝**(Unstructured Pruning)은 개별 가중치를 선택적으로 0으로 만든다. 가중치 행렬에 구멍이 뚫리는 형태라 **희소 행렬**(Sparse Matrix)이 생긴다. 이론적으로 50~90%까지 제거해도 성능 손실이 적지만, 실제로 추론을 빠르게 하려면 희소 행렬 연산을 지원하는 전용 하드웨어(NVIDIA A100의 Sparse Tensor Core)나 특수 라이브러리가 필요하다. 일반 GPU에서는 제거된 0도 연산에 포함되므로 실제 속도 향상이 없다.
 
-**구조적 프루닝(Structured Pruning)**은 뉴런(행), 필터(채널), 어텐션 헤드처럼 의미 있는 단위를 통째로 제거한다. 행 전체가 사라지므로 행렬 크기 자체가 줄어든다. 일반 하드웨어에서도 즉각 속도 향상이 있고 모델 파일 크기도 줄어든다. 단, 같은 희소성 비율에서 비구조적 방식보다 성능 손실이 크다.
+**구조적 프루닝**(Structured Pruning)은 뉴런(행), 필터(채널), 어텐션 헤드처럼 의미 있는 단위를 통째로 제거한다. 행 전체가 사라지므로 행렬 크기 자체가 줄어든다. 일반 하드웨어에서도 즉각 속도 향상이 있고 모델 파일 크기도 줄어든다. 단, 같은 희소성 비율에서 비구조적 방식보다 성능 손실이 크다.
 
 ![구조적 vs 비구조적 프루닝](/assets/posts/pruning-concept.svg)
 
@@ -33,7 +33,7 @@ draft: false
 
 ## Magnitude Pruning: 가장 단순한 기준
 
-가장 직관적인 방법은 가중치의 **절댓값(magnitude)**이 작은 것이 덜 중요하다는 가정이다. 임계값 이하의 가중치를 모두 0으로 만든다.
+가장 직관적인 방법은 가중치의 **절댓값**(magnitude)이 작은 것이 덜 중요하다는 가정이다. 임계값 이하의 가중치를 모두 0으로 만든다.
 
 ```python
 import torch
@@ -91,7 +91,7 @@ from accelerate.utils import load_and_quantize_model
 
 ## SparseGPT: LLM을 위한 OBC 기반 프루닝
 
-단순 Magnitude Pruning은 LLM에 효과적이지 않다. 가중치 절댓값이 작더라도 활성화 크기가 크면 중요할 수 있다. **SparseGPT(Frantar & Alistarh, 2023)**는 GPTQ와 같은 OBC(Optimal Brain Compression) 프레임워크를 프루닝에 적용한다. 가중치를 0으로 만들 때 같은 레이어 나머지 가중치를 조정해 출력 변화를 보상한다.
+단순 Magnitude Pruning은 LLM에 효과적이지 않다. 가중치 절댓값이 작더라도 활성화 크기가 크면 중요할 수 있다. **SparseGPT**(Frantar & Alistarh, 2023)는 GPTQ와 같은 OBC(Optimal Brain Compression) 프레임워크를 프루닝에 적용한다. 가중치를 0으로 만들 때 같은 레이어 나머지 가중치를 조정해 출력 변화를 보상한다.
 
 ```bash
 # SparseGPT 실행 (공식 구현)
@@ -119,7 +119,7 @@ python llama.py \
 
 ## Wanda: 빠른 LLM 프루닝
 
-**Wanda(Sun et al., 2023)**는 "Weight AND Activation"의 줄임말이다. 가중치 중요도를 `|W_ij| × ‖Xⱼ‖₂`로 정의한다. 가중치 절댓값과 해당 입력 채널의 활성화 L2 norm의 곱이다. Hessian을 계산하지 않아 SparseGPT보다 훨씬 빠르다.
+**Wanda**(Sun et al., 2023)는 "Weight AND Activation"의 줄임말이다. 가중치 중요도를 `|W_ij| × ‖Xⱼ‖₂`로 정의한다. 가중치 절댓값과 해당 입력 채널의 활성화 L2 norm의 곱이다. Hessian을 계산하지 않아 SparseGPT보다 훨씬 빠르다.
 
 ```python
 import torch
@@ -200,7 +200,7 @@ model.print_trainable_parameters()
 | LLM-Pruner | 구조적 | 실제 크기 감소 | 즉각 속도 향상 |
 | ShortGPT | 레이어 제거 | 구현 단순 | 즉각 속도 향상 |
 
-프루닝은 양자화·증류와 상호 보완적이다. SparseGPT + GPTQ를 결합하면 50% 희소화 + INT4 양자화를 동시에 달성할 수 있다. 다음 글에서는 추론 속도를 높이는 완전히 다른 접근인 **투기적 디코딩(Speculative Decoding)**을 다룬다.
+프루닝은 양자화·증류와 상호 보완적이다. SparseGPT + GPTQ를 결합하면 50% 희소화 + INT4 양자화를 동시에 달성할 수 있다. 다음 글에서는 추론 속도를 높이는 완전히 다른 접근인 **투기적 디코딩**(Speculative Decoding)을 다룬다.
 
 ---
 

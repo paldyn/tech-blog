@@ -24,7 +24,7 @@ draft: false
 
 ## 실루엣 계수: 가장 직관적인 내부 지표
 
-**실루엣 계수(Silhouette Coefficient)**는 각 샘플에 대해 두 거리를 계산한다.
+**실루엣 계수**(Silhouette Coefficient)는 각 샘플에 대해 두 거리를 계산한다.
 
 - **a(x)**: 같은 클러스터 내 다른 모든 포인트까지의 평균 거리 (응집도)
 - **b(x)**: 가장 가까운 다른 클러스터 내 모든 포인트까지의 평균 거리 (분리도)
@@ -116,9 +116,9 @@ CH는 계산이 빠르고(O(n)) 대용량 데이터에 적합하지만, 볼록(c
 
 ![클러스터링 평가 지표 코드](/assets/posts/ml-clustering-metrics-comparison.svg)
 
-**ARI(Adjusted Rand Index)**는 두 레이블 할당의 유사도를 랜덤 기준선으로 보정해 측정한다. -1~+1 범위로, 1은 완벽한 일치, 0은 랜덤 수준이다.
+**ARI**(Adjusted Rand Index)는 두 레이블 할당의 유사도를 랜덤 기준선으로 보정해 측정한다. -1~+1 범위로, 1은 완벽한 일치, 0은 랜덤 수준이다.
 
-**NMI(Normalized Mutual Information)**는 정보 이론적 관점에서 두 군집 간 상호 정보를 측정한다. 0~1 범위로, 1은 완벽한 일치다.
+**NMI**(Normalized Mutual Information)는 정보 이론적 관점에서 두 군집 간 상호 정보를 측정한다. 0~1 범위로, 1은 완벽한 일치다.
 
 ```python
 from sklearn.metrics import (adjusted_rand_score,

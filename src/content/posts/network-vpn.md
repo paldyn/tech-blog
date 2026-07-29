@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-firewalls/)에서 방화벽의 동작과 DMZ 설계를 살펴봤습니다. 이번 글에서는 **VPN(Virtual Private Network)**의 터널링 원리부터 WireGuard 설정까지, 현대 VPN 기술을 실무 중심으로 정리합니다.
+[지난 글](/posts/network-firewalls/)에서 방화벽의 동작과 DMZ 설계를 살펴봤습니다. 이번 글에서는 **VPN**(Virtual Private Network)의 터널링 원리부터 WireGuard 설정까지, 현대 VPN 기술을 실무 중심으로 정리합니다.
 
 ## VPN이 해결하는 문제
 

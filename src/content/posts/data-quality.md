@@ -43,7 +43,7 @@ draft: false
 
 ## Great Expectations로 검증 파이프라인 구축
 
-**Great Expectations(GX)**는 파이썬 기반의 데이터 검증 프레임워크다. "Expectation"이라는 단위로 품질 규칙을 정의하고, 배치(batch) 단위로 검증을 실행한다.
+**Great Expectations**(GX)는 파이썬 기반의 데이터 검증 프레임워크다. "Expectation"이라는 단위로 품질 규칙을 정의하고, 배치(batch) 단위로 검증을 실행한다.
 
 ```python
 import great_expectations as gx

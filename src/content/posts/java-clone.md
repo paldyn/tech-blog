@@ -15,7 +15,7 @@ draft: false
 
 ## clone()의 기본 동작
 
-`Object.clone()`은 현재 객체의 **얕은 복사(shallow copy)**를 반환한다. 새 객체를 만들고, 원래 객체의 모든 필드를 비트 단위로 복사한다.
+`Object.clone()`은 현재 객체의 **얕은 복사**(shallow copy)를 반환한다. 새 객체를 만들고, 원래 객체의 모든 필드를 비트 단위로 복사한다.
 
 ```java
 Object.clone()  // protected, CloneNotSupportedException 던짐
@@ -150,7 +150,7 @@ System.out.println(matrix[0][0]); // 99 — 2차원 배열은 내부 배열 공�
 
 ## 대안: 복사 생성자
 
-`clone()` 대신 **복사 생성자(copy constructor)**가 훨씬 명확하다.
+`clone()` 대신 **복사 생성자**(copy constructor)가 훨씬 명확하다.
 
 ```java
 class Profile {

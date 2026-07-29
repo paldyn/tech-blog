@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-meet-in-the-middle/)에서 지수 탐색을 절반으로 줄이는 Meet in the Middle을 다뤘습니다. 이번에는 정렬 없이 **k번째 작은 원소**를 평균 O(N)에 구하는 **퀵셀렉트(Quickselect)**입니다.
+[지난 글](/posts/dsa-meet-in-the-middle/)에서 지수 탐색을 절반으로 줄이는 Meet in the Middle을 다뤘습니다. 이번에는 정렬 없이 **k번째 작은 원소**를 평균 O(N)에 구하는 **퀵셀렉트**(Quickselect)입니다.
 
 ## 핵심 아이디어
 

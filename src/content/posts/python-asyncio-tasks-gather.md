@@ -92,7 +92,7 @@ asyncio.run(main())
 
 ## TaskGroup — 더 안전한 묶음 (3.11+)
 
-Python 3.11부터는 `asyncio.TaskGroup`이 권장된다. `async with` 블록 안에서 만든 Task들을 묶어 관리하고, 하나가 실패하면 나머지를 자동으로 취소한 뒤 예외를 모아 던진다. 이른바 **구조적 동시성(structured concurrency)**이다.
+Python 3.11부터는 `asyncio.TaskGroup`이 권장된다. `async with` 블록 안에서 만든 Task들을 묶어 관리하고, 하나가 실패하면 나머지를 자동으로 취소한 뒤 예외를 모아 던진다. 이른바 **구조적 동시성**(structured concurrency)이다.
 
 ```python
 import asyncio

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/jvm-class-loader/)에서 Bootstrap·Platform·Application 세 계층의 클래스 로더와 로딩·링킹·초기화 3단계 프로세스를 살펴봤습니다. 이번 글은 그 핵심 보안 원칙인 **부모 위임 모델(Parent Delegation Model)**을 코드 레벨까지 분해하고, 위임이 역설적으로 문제를 일으키는 SPI 시나리오와 Java 9 모듈 시스템이 이를 어떻게 재정의했는지까지 다룹니다.
+[지난 글](/posts/jvm-class-loader/)에서 Bootstrap·Platform·Application 세 계층의 클래스 로더와 로딩·링킹·초기화 3단계 프로세스를 살펴봤습니다. 이번 글은 그 핵심 보안 원칙인 **부모 위임 모델**(Parent Delegation Model)을 코드 레벨까지 분해하고, 위임이 역설적으로 문제를 일으키는 SPI 시나리오와 Java 9 모듈 시스템이 이를 어떻게 재정의했는지까지 다룹니다.
 
 ## loadClass()의 실제 구현
 
@@ -76,7 +76,7 @@ System.out.println(a.isAssignableFrom(b)); // false!
 
 부모 위임 모델은 한 가지 역설을 품고 있습니다. **`java.sql.Driver` 인터페이스는 Bootstrap이 로드**하지만, 그 구현체인 `com.mysql.cj.jdbc.Driver`는 **classpath에 있으므로 Application ClassLoader**가 로드해야 합니다. Bootstrap은 자식 로더를 모르므로 직접 구현체를 찾을 수 없습니다.
 
-이 문제를 해결하기 위해 도입된 것이 **스레드 컨텍스트 클래스 로더(Thread Context ClassLoader, TCCL)**입니다.
+이 문제를 해결하기 위해 도입된 것이 **스레드 컨텍스트 클래스 로더**(Thread Context ClassLoader, TCCL)입니다.
 
 ```java
 // JDBC DriverManager 내부 (단순화)
@@ -92,7 +92,7 @@ for (Driver d : loader) {
 }
 ```
 
-`ServiceLoader.load()`가 TCCL을 사용하면 Bootstrap 코드가 실질적으로 Application ClassLoader의 권한을 빌려 구현체를 찾습니다. 이것이 **위임 역전(Delegation Inversion)**이라 불리는 패턴입니다.
+`ServiceLoader.load()`가 TCCL을 사용하면 Bootstrap 코드가 실질적으로 Application ClassLoader의 권한을 빌려 구현체를 찾습니다. 이것이 **위임 역전**(Delegation Inversion)이라 불리는 패턴입니다.
 
 ![컨텍스트 클래스 로더와 SPI 패턴](/assets/posts/jvm-class-loader-delegation-context.svg)
 

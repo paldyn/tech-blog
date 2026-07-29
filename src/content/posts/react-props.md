@@ -17,7 +17,7 @@ draft: false
 
 ## props란
 
-**props(properties)**는 부모 컴포넌트가 자식 컴포넌트에게 전달하는 데이터입니다. 함수의 인자와 같은 개념으로, 컴포넌트 함수의 첫 번째 매개변수로 받습니다.
+**props**(properties)는 부모 컴포넌트가 자식 컴포넌트에게 전달하는 데이터입니다. 함수의 인자와 같은 개념으로, 컴포넌트 함수의 첫 번째 매개변수로 받습니다.
 
 ```jsx
 // 부모가 props 전달
@@ -43,7 +43,7 @@ function UserCard({ name, score }) {
 
 ![Props 단방향 흐름](/assets/posts/react-props-flow.svg)
 
-props는 항상 **부모 → 자식** 방향으로만 흐릅니다. 자식은 받은 props를 읽을 수만 있고 직접 수정할 수 없습니다. 이것이 React의 **단방향 데이터 흐름(one-way data flow)**입니다.
+props는 항상 **부모 → 자식** 방향으로만 흐릅니다. 자식은 받은 props를 읽을 수만 있고 직접 수정할 수 없습니다. 이것이 React의 **단방향 데이터 흐름**(one-way data flow)입니다.
 
 ```jsx
 function Child({ count }) {

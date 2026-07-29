@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-fork-join/)에서 Fork/Join 프레임워크의 전체 구조와 Work-Stealing 알고리즘을 살펴봤습니다. 이번에는 실제로 작업을 구현할 때 사용하는 두 클래스, **`RecursiveTask`와 `RecursiveAction`**의 세부 사용법과 주의점을 깊이 있게 다룹니다.
+[지난 글](/posts/java-fork-join/)에서 Fork/Join 프레임워크의 전체 구조와 Work-Stealing 알고리즘을 살펴봤습니다. 이번에는 실제로 작업을 구현할 때 사용하는 두 클래스, <strong>`RecursiveTask`와 `RecursiveAction`</strong>의 세부 사용법과 주의점을 깊이 있게 다룹니다.
 
 ## 두 클래스의 차이
 

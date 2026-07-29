@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-classes-basics/)에서 TypeScript 클래스의 기본 구조를 살펴봤다. 이번에는 클래스 멤버의 공개 범위를 제어하는 **접근 제한자(Access Modifiers)**를 다룬다. 어떤 코드가 어떤 프로퍼티나 메서드에 접근할 수 있는지를 컴파일 타임에 강제하는 핵심 기능이다.
+[지난 글](/posts/ts-classes-basics/)에서 TypeScript 클래스의 기본 구조를 살펴봤다. 이번에는 클래스 멤버의 공개 범위를 제어하는 **접근 제한자**(Access Modifiers)를 다룬다. 어떤 코드가 어떤 프로퍼티나 메서드에 접근할 수 있는지를 컴파일 타임에 강제하는 핵심 기능이다.
 
 ## 세 가지 접근 제한자
 

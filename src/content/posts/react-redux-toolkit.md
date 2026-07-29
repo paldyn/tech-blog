@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-context-vs-external/)에서 Context와 외부 상태 관리 라이브러리의 차이를 살펴봤다. Redux는 대규모 애플리케이션에서 예측 가능한 상태 관리를 위한 검증된 솔루션이다. 과거의 Redux는 보일러플레이트가 많았지만, **Redux Toolkit(RTK)**이 이를 크게 개선했다.
+[지난 글](/posts/react-context-vs-external/)에서 Context와 외부 상태 관리 라이브러리의 차이를 살펴봤다. Redux는 대규모 애플리케이션에서 예측 가능한 상태 관리를 위한 검증된 솔루션이다. 과거의 Redux는 보일러플레이트가 많았지만, **Redux Toolkit**(RTK)이 이를 크게 개선했다.
 
 ## Redux Toolkit이 해결하는 문제
 

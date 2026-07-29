@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-key-management-rotation/)에서 암호화 키 생명주기 관리를 살펴봤다. 이번 글에서는 웹 보안의 핵심 프로토콜 **TLS(Transport Layer Security)**의 동작 원리, 실무 보안 설정, 역사적 취약점과 대응책을 다룬다.
+[지난 글](/posts/websec-key-management-rotation/)에서 암호화 키 생명주기 관리를 살펴봤다. 이번 글에서는 웹 보안의 핵심 프로토콜 **TLS**(Transport Layer Security)의 동작 원리, 실무 보안 설정, 역사적 취약점과 대응책을 다룬다.
 
 ## TLS가 제공하는 세 가지 보장
 

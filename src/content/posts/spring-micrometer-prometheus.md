@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-custom-healthindicator/)에서 커스텀 HealthIndicator로 애플리케이션의 생존 여부를 확인하는 방법을 살펴봤다. 헬스 체크가 "살아 있는가/죽어 있는가"를 알려준다면, **메트릭(Metrics)**은 "얼마나 잘 동작하고 있는가"를 알려준다. 초당 몇 건의 주문이 처리되는가, 95번째 백분위 API 응답 시간이 얼마인가, JVM 힙 사용률이 몇 퍼센트인가 — 이런 정보가 있어야 성능 병목을 찾고 용량 계획을 세울 수 있다.
+[지난 글](/posts/spring-custom-healthindicator/)에서 커스텀 HealthIndicator로 애플리케이션의 생존 여부를 확인하는 방법을 살펴봤다. 헬스 체크가 "살아 있는가/죽어 있는가"를 알려준다면, **메트릭**(Metrics)은 "얼마나 잘 동작하고 있는가"를 알려준다. 초당 몇 건의 주문이 처리되는가, 95번째 백분위 API 응답 시간이 얼마인가, JVM 힙 사용률이 몇 퍼센트인가 — 이런 정보가 있어야 성능 병목을 찾고 용량 계획을 세울 수 있다.
 
 ## Micrometer란 — "메트릭의 SLF4J"
 
-**Micrometer**는 메트릭 수집을 위한 **벤더 중립 파사드(Vendor-Neutral Facade)**다. SLF4J가 Logback, Log4j, JUL을 하나의 API로 추상화하듯, Micrometer는 Prometheus, Datadog, CloudWatch, InfluxDB를 단일 API로 추상화한다.
+**Micrometer**는 메트릭 수집을 위한 **벤더 중립 파사드**(Vendor-Neutral Facade)다. SLF4J가 Logback, Log4j, JUL을 하나의 API로 추상화하듯, Micrometer는 Prometheus, Datadog, CloudWatch, InfluxDB를 단일 API로 추상화한다.
 
 Spring Boot 2부터 Micrometer가 기본 내장됐다. `spring-boot-starter-actuator`를 추가하면 JVM, HTTP, DB 연결 풀 메트릭이 자동 수집된다.
 

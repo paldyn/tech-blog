@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-csprng/)에서 암호학적으로 안전한 난수 생성기를 살펴봤다. 이번 글에서는 데이터 보호의 두 핵심 축인 **전송 중 암호화(Encryption in Transit)**와 **저장 데이터 암호화(Encryption at Rest)**를 다룬다.
+[지난 글](/posts/websec-csprng/)에서 암호학적으로 안전한 난수 생성기를 살펴봤다. 이번 글에서는 데이터 보호의 두 핵심 축인 **전송 중 암호화**(Encryption in Transit)와 **저장 데이터 암호화**(Encryption at Rest)를 다룬다.
 
 ## 두 가지 암호화가 모두 필요한 이유
 

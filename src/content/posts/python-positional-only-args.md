@@ -15,7 +15,7 @@ draft: false
 
 ## / 구분자란
 
-Python 3.8에서 도입된 **위치 전용 인수(positional-only arguments)**는 `/` 기호를 매개변수 목록에 넣어 선언한다. `/` 앞에 있는 매개변수는 **반드시 위치 인수로만 전달**해야 한다.
+Python 3.8에서 도입된 **위치 전용 인수**(positional-only arguments)는 `/` 기호를 매개변수 목록에 넣어 선언한다. `/` 앞에 있는 매개변수는 **반드시 위치 인수로만 전달**해야 한다.
 
 ```python
 def greet(name, /, greeting="Hello"):

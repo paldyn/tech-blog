@@ -83,7 +83,7 @@ JVM이 사용하는 메모리 영역입니다. 주요 영역은 다음과 같습
 
 ## JRE — 실행에 필요한 모든 것
 
-**JRE(Java Runtime Environment)** 는 JVM과 **표준 라이브러리(Java SE API)**를 합친 패키지입니다. `String`, `List`, `InputStream` 같은 클래스들이 모두 JRE의 표준 라이브러리에 포함됩니다.
+**JRE(Java Runtime Environment)** 는 JVM과 **표준 라이브러리**(Java SE API)를 합친 패키지입니다. `String`, `List`, `InputStream` 같은 클래스들이 모두 JRE의 표준 라이브러리에 포함됩니다.
 
 JDK 8까지는 JRE를 JDK와 별도로 배포했습니다. 개발자는 JDK를 쓰고, 최종 사용자는 JRE만 설치하는 구조였습니다. **JDK 11부터 JRE 단독 패키지 제공이 중단**되었고, JDK 하나로 개발과 실행을 모두 처리합니다.
 

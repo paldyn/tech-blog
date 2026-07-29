@@ -83,7 +83,7 @@ with torch.backends.cuda.sdp_kernel(
 
 ## 접근 방법 4: State Space Model (Mamba, S4)
 
-어텐션을 완전히 포기하고 **선형 재귀(linear recurrence)**로 O(N) 복잡도를 달성한다. Mamba(2023)는 입력에 따라 SSM 파라미터를 동적으로 변화시키는 **선택적 SSM**을 도입해 어텐션과 비슷한 선택적 기억을 구현했다.
+어텐션을 완전히 포기하고 **선형 재귀**(linear recurrence)로 O(N) 복잡도를 달성한다. Mamba(2023)는 입력에 따라 SSM 파라미터를 동적으로 변화시키는 **선택적 SSM**을 도입해 어텐션과 비슷한 선택적 기억을 구현했다.
 
 | 특성 | Self-Attention | Mamba |
 |------|---------------|-------|

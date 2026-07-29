@@ -28,7 +28,7 @@ el.textContent = Number(el.textContent) + 1;
 el.style.color = count > 10 ? 'red' : 'black';
 ```
 
-**선언형 방식(React)**은 "지금 상태에서 UI가 어떻게 보여야 하는가"만 기술합니다. 실제 DOM 변경은 React가 알아서 처리합니다.
+**선언형 방식**(React)은 "지금 상태에서 UI가 어떻게 보여야 하는가"만 기술합니다. 실제 DOM 변경은 React가 알아서 처리합니다.
 
 ```jsx
 // 선언형: "어떤 모습이어야 할지"만 선언

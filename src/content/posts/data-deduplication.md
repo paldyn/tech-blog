@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/data-quality/)에서 데이터 품질의 6대 차원을 살펴봤다. 그 중 **유일성(Uniqueness)**은 중복 제거라는 구체적인 작업으로 구현된다. 중복 데이터는 모델 학습에서 특정 패턴을 과대표집해 편향을 일으키고, 암기(memorization)를 조장한다. LLM 사전 학습 데이터셋에서도 중복 문서를 제거하는 것이 모델 성능과 일반화에 유의미한 영향을 미친다는 연구 결과가 있다.
+[지난 글](/posts/data-quality/)에서 데이터 품질의 6대 차원을 살펴봤다. 그 중 **유일성**(Uniqueness)은 중복 제거라는 구체적인 작업으로 구현된다. 중복 데이터는 모델 학습에서 특정 패턴을 과대표집해 편향을 일으키고, 암기(memorization)를 조장한다. LLM 사전 학습 데이터셋에서도 중복 문서를 제거하는 것이 모델 성능과 일반화에 유의미한 영향을 미친다는 연구 결과가 있다.
 
 ## 중복의 종류
 
@@ -156,7 +156,7 @@ print(f"제거된 의미 중복: {len(to_remove)} / {len(df)}")
 
 ### MinHash LSH: 초대규모 텍스트 디덥
 
-수십억 개 문서를 처리할 때는 O(n²) 쌍별 비교가 불가능하다. **MinHash + LSH(Locality Sensitive Hashing)**는 실제로 유사한 쌍만 빠르게 찾아낸다.
+수십억 개 문서를 처리할 때는 O(n²) 쌍별 비교가 불가능하다. **MinHash + LSH**(Locality Sensitive Hashing)는 실제로 유사한 쌍만 빠르게 찾아낸다.
 
 ```python
 from datasketch import MinHash, MinHashLSH

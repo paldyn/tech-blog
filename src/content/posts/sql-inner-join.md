@@ -60,7 +60,7 @@ JOIN price_ranges pr ON p.price BETWEEN pr.min_price AND pr.max_price
 JOIN discounts d ON d.user_id = u.id AND d.valid_until >= CURRENT_DATE
 ```
 
-등호 이외의 조건을 사용하는 **비등가 조인(Non-Equi Join)**은 카디널리티가 높으면 성능 문제가 생길 수 있다.
+등호 이외의 조건을 사용하는 **비등가 조인**(Non-Equi Join)은 카디널리티가 높으면 성능 문제가 생길 수 있다.
 
 ---
 

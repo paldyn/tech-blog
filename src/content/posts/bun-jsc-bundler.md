@@ -15,7 +15,7 @@ draft: false
 
 ## JavaScriptCore를 택한 이유
 
-Bun이 V8 대신 **JavaScriptCore(JSC)**를 선택한 이유는 성능 특성에 있다. JSC는 Apple이 Safari를 위해 개발한 엔진으로, V8과 비교해 다음 특징이 있다.
+Bun이 V8 대신 **JavaScriptCore**(JSC)를 선택한 이유는 성능 특성에 있다. JSC는 Apple이 Safari를 위해 개발한 엔진으로, V8과 비교해 다음 특징이 있다.
 
 - **낮은 메모리 사용량**: V8의 히든 클래스 최적화보다 메모리 효율적
 - **빠른 스타트업**: JIT 컴파일 전략이 달라 콜드 스타트가 빠름

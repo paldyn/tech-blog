@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-list-linkedlist/)에서 LinkedList의 이중 연결 리스트 구조를 살펴봤다. 이번에는 Java 1.0 시절부터 존재하는 **`Vector`와 `Stack`**을 다룬다. 두 클래스는 지금도 표준 라이브러리에 남아 있어 레거시 코드에서 종종 만날 수 있지만, 현대 Java 개발에서는 더 나은 대안으로 교체하는 것이 권장된다.
+[지난 글](/posts/java-list-linkedlist/)에서 LinkedList의 이중 연결 리스트 구조를 살펴봤다. 이번에는 Java 1.0 시절부터 존재하는 <strong>`Vector`와 `Stack`</strong>을 다룬다. 두 클래스는 지금도 표준 라이브러리에 남아 있어 레거시 코드에서 종종 만날 수 있지만, 현대 Java 개발에서는 더 나은 대안으로 교체하는 것이 권장된다.
 
 ## Vector — 최초의 동기화된 List
 

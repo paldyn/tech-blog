@@ -29,7 +29,7 @@ null || 'default';    // 'default'
 0 || 'default';       // 'default' (0은 falsy)
 ```
 
-오른쪽이 **부작용(side effect)**이 있을 때 단락이 중요합니다.
+오른쪽이 **부작용**(side effect)이 있을 때 단락이 중요합니다.
 
 ```javascript
 let count = 0;

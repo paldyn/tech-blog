@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mysql-replication-async-semi-group/)에서 비동기·반동기·그룹 리플리케이션의 작동 원리를 살펴봤다. 전통적인 바이너리 로그 파일명 + 포지션 기반 리플리케이션은 Failover 시 정확한 포지션을 직접 지정해야 했고, 이 과정에서 실수가 발생하면 데이터가 유실되거나 중복 적용되는 문제가 생겼다. MySQL 5.6에 도입된 **GTID(Global Transaction Identifier)**는 모든 트랜잭션에 전역 고유 식별자를 부여해 이 복잡성을 근본적으로 해결한다.
+[지난 글](/posts/mysql-replication-async-semi-group/)에서 비동기·반동기·그룹 리플리케이션의 작동 원리를 살펴봤다. 전통적인 바이너리 로그 파일명 + 포지션 기반 리플리케이션은 Failover 시 정확한 포지션을 직접 지정해야 했고, 이 과정에서 실수가 발생하면 데이터가 유실되거나 중복 적용되는 문제가 생겼다. MySQL 5.6에 도입된 **GTID**(Global Transaction Identifier)는 모든 트랜잭션에 전역 고유 식별자를 부여해 이 복잡성을 근본적으로 해결한다.
 
 ## GTID란 무엇인가
 

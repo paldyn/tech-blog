@@ -82,7 +82,7 @@ Create React App 5 이상, Vite, Next.js는 모두 신 변환을 기본으로 �
 
 ## JSX 중괄호 안의 표현식 규칙
 
-JSX `{}` 안에는 **값을 만드는 표현식(expression)**만 들어갈 수 있습니다. `if`·`for` 같은 **문(statement)**은 값을 반환하지 않으므로 불가합니다.
+JSX `{}` 안에는 **값을 만드는 표현식**(expression)만 들어갈 수 있습니다. `if`·`for` 같은 **문**(statement)은 값을 반환하지 않으므로 불가합니다.
 
 ![JSX 중괄호 안에서 쓸 수 있는 표현식](/assets/posts/react-jsx-deep-expressions.svg)
 

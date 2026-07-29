@@ -15,7 +15,7 @@ draft: false
 
 ## TypeScript는 무엇인가
 
-TypeScript는 Microsoft가 2012년에 발표한 **JavaScript의 정적 타입 슈퍼셋(typed superset)**이다. 모든 유효한 JavaScript 코드는 유효한 TypeScript 코드다. TypeScript 컴파일러(`tsc`)는 타입 검사를 수행한 뒤 타입 정보를 모두 제거하고 순수한 JavaScript를 출력한다.
+TypeScript는 Microsoft가 2012년에 발표한 **JavaScript의 정적 타입 슈퍼셋**(typed superset)이다. 모든 유효한 JavaScript 코드는 유효한 TypeScript 코드다. TypeScript 컴파일러(`tsc`)는 타입 검사를 수행한 뒤 타입 정보를 모두 제거하고 순수한 JavaScript를 출력한다.
 
 이 한 문장이 핵심이다: **타입은 런타임에 존재하지 않는다.** TypeScript의 타입 시스템은 순전히 컴파일 시점에만 동작하는 도구다.
 
@@ -67,7 +67,7 @@ TypeScript 컴파일러는 크게 네 단계로 동작한다.
 
 ## 구조적 타이핑
 
-TypeScript는 **구조적 타이핑(structural typing)**을 사용한다. 타입의 이름이나 선언이 아니라 구조(형태)를 기준으로 호환성을 판단한다. Java나 C#의 명목적 타이핑(nominal typing)과 다르다.
+TypeScript는 **구조적 타이핑**(structural typing)을 사용한다. 타입의 이름이나 선언이 아니라 구조(형태)를 기준으로 호환성을 판단한다. Java나 C#의 명목적 타이핑(nominal typing)과 다르다.
 
 ![TypeScript 타입 시스템 특성](/assets/posts/ts-essence-type-system.svg)
 

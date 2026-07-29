@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-generic-classes/)에서 제네릭 클래스를 살펴봤다. 인스턴스 생성 시 `T`를 명시하거나 생성자 인수에서 추론하는 방식이었다. 이번에는 한 발 더 나아가 **제네릭 기본 타입 파라미터(Generic Default Type Parameters)**를 다룬다. `T = string`처럼 `=` 뒤에 기본 타입을 붙이면, 호출자가 `T`를 생략했을 때 지정한 타입이 자동으로 사용된다. TypeScript 2.3에서 도입된 이 기능은 라이브러리 API를 더 편리하게 만드는 핵심 도구다.
+[지난 글](/posts/ts-generic-classes/)에서 제네릭 클래스를 살펴봤다. 인스턴스 생성 시 `T`를 명시하거나 생성자 인수에서 추론하는 방식이었다. 이번에는 한 발 더 나아가 **제네릭 기본 타입 파라미터**(Generic Default Type Parameters)를 다룬다. `T = string`처럼 `=` 뒤에 기본 타입을 붙이면, 호출자가 `T`를 생략했을 때 지정한 타입이 자동으로 사용된다. TypeScript 2.3에서 도입된 이 기능은 라이브러리 API를 더 편리하게 만드는 핵심 도구다.
 
 ## 왜 기본값이 필요한가
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-none/)에서 None을 살펴봤다. 이번에는 Python에서 가장 자주 쓰이는 컨테이너 타입인 **리스트(list)**를 기초부터 살펴본다.
+[지난 글](/posts/python-none/)에서 None을 살펴봤다. 이번에는 Python에서 가장 자주 쓰이는 컨테이너 타입인 **리스트**(list)를 기초부터 살펴본다.
 
 ## 리스트란
 

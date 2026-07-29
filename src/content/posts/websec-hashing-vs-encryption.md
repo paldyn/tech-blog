@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-symmetric-vs-asymmetric/)에서 대칭·비대칭 암호화의 차이와 TLS의 하이브리드 구조를 살펴봤다. 이번 글에서는 암호학에서 자주 혼동되는 **해싱(Hashing)과 암호화(Encryption)**의 근본적 차이를 명확히 하고, 각 상황에서 올바른 선택을 한다.
+[지난 글](/posts/websec-symmetric-vs-asymmetric/)에서 대칭·비대칭 암호화의 차이와 TLS의 하이브리드 구조를 살펴봤다. 이번 글에서는 암호학에서 자주 혼동되는 **해싱(Hashing)과 암호화**(Encryption)의 근본적 차이를 명확히 하고, 각 상황에서 올바른 선택을 한다.
 
 ## 핵심 차이: 단방향 vs 양방향
 

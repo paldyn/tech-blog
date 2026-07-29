@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-mst-prim/)에서 무방향 그래프의 MST를 구하는 프림을 배웠습니다. 이번에는 **방향 그래프(Directed Graph)** 에서 핵심 구조인 **강한 연결 요소(SCC, Strongly Connected Component)**를 찾는 알고리즘을 다룹니다. SCC는 **서로 양방향으로 도달 가능한 노드들의 최대 집합**입니다. 웹 페이지 링크 분석, 컴파일러의 순환 의존성 탐지, 게임 맵의 폐쇄 구역 분석 등에 활용됩니다.
+[지난 글](/posts/dsa-mst-prim/)에서 무방향 그래프의 MST를 구하는 프림을 배웠습니다. 이번에는 **방향 그래프(Directed Graph)** 에서 핵심 구조인 **강한 연결 요소**(SCC, Strongly Connected Component)를 찾는 알고리즘을 다룹니다. SCC는 **서로 양방향으로 도달 가능한 노드들의 최대 집합**입니다. 웹 페이지 링크 분석, 컴파일러의 순환 의존성 탐지, 게임 맵의 폐쇄 구역 분석 등에 활용됩니다.
 
 ## SCC란?
 
 방향 그래프에서 두 노드 u, v가 **u → v 경로와 v → u 경로가 모두 존재**할 때 같은 SCC에 속합니다.
 
-모든 SCC를 하나의 노드로 축소하면 **압축 그래프(Condensation Graph)**가 만들어지는데, 이는 항상 **DAG(사이클 없는 방향 그래프)**입니다.
+모든 SCC를 하나의 노드로 축소하면 **압축 그래프**(Condensation Graph)가 만들어지는데, 이는 항상 **DAG**(사이클 없는 방향 그래프)입니다.
 
 ![SCC 구조와 압축 그래프](/assets/posts/dsa-scc-graph.svg)
 
@@ -177,7 +177,7 @@ def tarjan_iterative(n, graph):
 
 ## 활용 — 2-SAT
 
-SCC의 대표적인 응용은 **2-SAT(2-Satisfiability Problem)**입니다. 각 리터럴 xi와 ¬xi를 노드로 만들고 논리 함의 관계를 간선으로 표현한 뒤, **xi와 ¬xi가 같은 SCC에 있으면 UNSAT**입니다.
+SCC의 대표적인 응용은 **2-SAT**(2-Satisfiability Problem)입니다. 각 리터럴 xi와 ¬xi를 노드로 만들고 논리 함의 관계를 간선으로 표현한 뒤, **xi와 ¬xi가 같은 SCC에 있으면 UNSAT**입니다.
 
 ```python
 def two_sat(n, clauses):

@@ -20,7 +20,7 @@ next:
   title: "TanStack Query — 서버 상태 관리의 표준"
 ---
 
-[지난 글](/posts/state-mobx/)에서 MobX의 투명한 반응형 상태 관리를 살펴봤습니다. 이번에는 한 단계 더 깊이 들어가 **RxJS(Reactive Extensions for JavaScript)**를 다룹니다. RxJS는 상태 관리 라이브러리가 아니라 **비동기 이벤트 스트림을 다루는 라이브러리**입니다. 클릭, HTTP 요청, WebSocket 메시지, 타이머 등 시간축 위에 펼쳐지는 모든 것을 하나의 모델로 다룰 수 있습니다.
+[지난 글](/posts/state-mobx/)에서 MobX의 투명한 반응형 상태 관리를 살펴봤습니다. 이번에는 한 단계 더 깊이 들어가 **RxJS**(Reactive Extensions for JavaScript)를 다룹니다. RxJS는 상태 관리 라이브러리가 아니라 **비동기 이벤트 스트림을 다루는 라이브러리**입니다. 클릭, HTTP 요청, WebSocket 메시지, 타이머 등 시간축 위에 펼쳐지는 모든 것을 하나의 모델로 다룰 수 있습니다.
 
 ---
 
@@ -406,7 +406,7 @@ function ThemeToggle() {
 
 ## 마블 다이어그램 읽는 법
 
-RxJS 공식 문서는 **마블 다이어그램(marble diagram)**으로 연산자 동작을 시각화합니다.
+RxJS 공식 문서는 **마블 다이어그램**(marble diagram)으로 연산자 동작을 시각화합니다.
 
 ```
 시간 →

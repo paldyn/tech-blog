@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-execution-context/)에서 실행 컨텍스트가 어떻게 생성되고 어떤 정보를 담고 있는지 살펴봤습니다. 그렇다면 이 컨텍스트들은 어디에 쌓이고, 어떤 순서로 처리될까요? 그 답이 바로 **콜 스택(Call Stack)**입니다. JavaScript가 단일 스레드임에도 함수 호출을 정확하게 추적할 수 있는 이유, 재귀가 깊어지면 에러가 나는 이유, `async/await`가 블로킹 없이 작동하는 이유 — 모두 콜 스택을 이해하면 자연스럽게 설명됩니다.
+[지난 글](/posts/js-execution-context/)에서 실행 컨텍스트가 어떻게 생성되고 어떤 정보를 담고 있는지 살펴봤습니다. 그렇다면 이 컨텍스트들은 어디에 쌓이고, 어떤 순서로 처리될까요? 그 답이 바로 **콜 스택**(Call Stack)입니다. JavaScript가 단일 스레드임에도 함수 호출을 정확하게 추적할 수 있는 이유, 재귀가 깊어지면 에러가 나는 이유, `async/await`가 블로킹 없이 작동하는 이유 — 모두 콜 스택을 이해하면 자연스럽게 설명됩니다.
 
 ---
 
@@ -55,7 +55,7 @@ main(); // main 호출 → 스택에 push
 
 ## 현재 실행 프레임 확인하기
 
-브라우저 개발자 도구나 Node.js에서 에러가 발생하면 **스택 트레이스(stack trace)**를 볼 수 있습니다. 이것이 바로 콜 스택의 스냅샷입니다.
+브라우저 개발자 도구나 Node.js에서 에러가 발생하면 **스택 트레이스**(stack trace)를 볼 수 있습니다. 이것이 바로 콜 스택의 스냅샷입니다.
 
 ```javascript
 function c() {
@@ -93,7 +93,7 @@ countDown(5);
 // → RangeError: Maximum call stack size exceeded
 ```
 
-올바른 재귀는 반드시 **기저 사례(base case)**가 있어야 합니다.
+올바른 재귀는 반드시 **기저 사례**(base case)가 있어야 합니다.
 
 ```javascript
 // ✓ 기저 사례를 가진 재귀
@@ -131,7 +131,7 @@ safeLoop(100000); // 스택 오버플로우 없이 처리
 
 ## 꼬리 재귀 최적화(TCO)
 
-일부 언어는 **꼬리 위치(tail position)**의 재귀 호출을 새 스택 프레임 없이 현재 프레임을 재사용하도록 최적화합니다. ECMAScript 2015 명세도 이를 정의했지만, 현재 V8을 포함한 대부분의 엔진은 이를 구현하지 않았습니다. Safari(JavaScriptCore)만이 엄격 모드에서 TCO를 지원합니다.
+일부 언어는 **꼬리 위치**(tail position)의 재귀 호출을 새 스택 프레임 없이 현재 프레임을 재사용하도록 최적화합니다. ECMAScript 2015 명세도 이를 정의했지만, 현재 V8을 포함한 대부분의 엔진은 이를 구현하지 않았습니다. Safari(JavaScriptCore)만이 엄격 모드에서 TCO를 지원합니다.
 
 ```javascript
 "use strict";

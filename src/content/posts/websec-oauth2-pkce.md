@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-oauth2/)에서 OAuth 2.0 Authorization Code Flow의 기본과 보안 포인트를 다뤘다. 그런데 SPA(Single Page Application)나 모바일 앱은 `client_secret`을 안전하게 보관할 수 없다. 이 경우 **PKCE(Proof Key for Code Exchange)**가 필수다.
+[지난 글](/posts/websec-oauth2/)에서 OAuth 2.0 Authorization Code Flow의 기본과 보안 포인트를 다뤘다. 그런데 SPA(Single Page Application)나 모바일 앱은 `client_secret`을 안전하게 보관할 수 없다. 이 경우 **PKCE**(Proof Key for Code Exchange)가 필수다.
 
 ## PKCE가 필요한 이유
 

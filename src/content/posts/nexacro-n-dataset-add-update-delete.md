@@ -28,7 +28,7 @@ function btn_add_onclick(obj, e) {
 }
 ```
 
-새 행의 rowType은 자동으로 **INSERT(2)**가 됩니다.
+새 행의 rowType은 자동으로 **INSERT**(2)가 됩니다.
 
 ![Dataset 행 추가·수정·삭제 흐름](/assets/posts/nexacro-n-dataset-add-update-delete-flow.svg)
 

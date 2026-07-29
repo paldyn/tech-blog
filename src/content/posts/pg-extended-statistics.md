@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-planner-options/)에서 플래너 GUC 파라미터로 옵티마이저 동작을 조정하는 방법을 살펴봤다. 이번에는 통계 수준에서 옵티마이저에게 더 정확한 정보를 제공하는 **확장 통계(Extended Statistics)**를 다룬다.
+[지난 글](/posts/pg-planner-options/)에서 플래너 GUC 파라미터로 옵티마이저 동작을 조정하는 방법을 살펴봤다. 이번에는 통계 수준에서 옵티마이저에게 더 정확한 정보를 제공하는 **확장 통계**(Extended Statistics)를 다룬다.
 
 ## 단일 컬럼 통계의 독립 가정
 

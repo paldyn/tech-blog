@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/tsql-variables-control-trycatch/)에서 T-SQL 변수와 제어흐름을 살펴봤다. 이번 글에서는 복잡한 쿼리를 구조화하는 **CTE(Common Table Expression)**와 행별로 함수를 적용하는 **APPLY 연산자**를 다룬다. 두 기능 모두 서브쿼리를 대체하는 강력한 도구다.
+[지난 글](/posts/tsql-variables-control-trycatch/)에서 T-SQL 변수와 제어흐름을 살펴봤다. 이번 글에서는 복잡한 쿼리를 구조화하는 **CTE**(Common Table Expression)와 행별로 함수를 적용하는 **APPLY 연산자**를 다룬다. 두 기능 모두 서브쿼리를 대체하는 강력한 도구다.
 
 ## CTE — 쿼리 이름 붙이기
 

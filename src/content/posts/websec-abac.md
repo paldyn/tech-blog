@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-rbac/)에서 역할(Role) 기반으로 권한을 부여하는 RBAC을 살펴봤다. RBAC은 단순하고 관리하기 쉽지만, "재무팀 직원이 업무 시간에 사내 네트워크에서만 기밀 보고서를 열람할 수 있다"처럼 복잡한 조건을 표현하기 어렵다. 이 한계를 극복하기 위해 등장한 것이 **ABAC(Attribute-Based Access Control)**이다.
+[지난 글](/posts/websec-rbac/)에서 역할(Role) 기반으로 권한을 부여하는 RBAC을 살펴봤다. RBAC은 단순하고 관리하기 쉽지만, "재무팀 직원이 업무 시간에 사내 네트워크에서만 기밀 보고서를 열람할 수 있다"처럼 복잡한 조건을 표현하기 어렵다. 이 한계를 극복하기 위해 등장한 것이 **ABAC**(Attribute-Based Access Control)이다.
 
 ## ABAC이란
 
-ABAC는 **주체(Subject), 객체(Object), 행동(Action), 환경(Environment)**의 네 가지 속성을 조합해 접근 허가 여부를 동적으로 결정하는 접근 제어 모델이다.
+ABAC는 **주체(Subject), 객체(Object), 행동(Action), 환경**(Environment)의 네 가지 속성을 조합해 접근 허가 여부를 동적으로 결정하는 접근 제어 모델이다.
 
 | 속성 | 설명 | 예시 |
 |---|---|---|

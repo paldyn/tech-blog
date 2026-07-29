@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-isolation-rc-serializable/)에서 격리 수준이 동시성과 일관성 사이의 트레이드오프를 어떻게 제어하는지 살펴봤다. 격리 수준과 함께 실제 데이터 보호를 담당하는 것이 잠금 메커니즘이다. Oracle의 잠금은 크게 **DML 잠금**, **DDL 잠금**, **내부 잠금(래치·뮤텍스)**으로 나뉜다.
+[지난 글](/posts/oracle-isolation-rc-serializable/)에서 격리 수준이 동시성과 일관성 사이의 트레이드오프를 어떻게 제어하는지 살펴봤다. 격리 수준과 함께 실제 데이터 보호를 담당하는 것이 잠금 메커니즘이다. Oracle의 잠금은 크게 **DML 잠금**, **DDL 잠금**, **내부 잠금**(래치·뮤텍스)으로 나뉜다.
 
 ## Oracle 잠금의 핵심 원칙
 

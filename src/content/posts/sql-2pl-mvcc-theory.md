@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-concurrency-anomalies/)에서 동시성 이상 현상을 살펴봤다. 이제 DB가 이상 현상을 어떻게 방지하는지—**2PL(2-Phase Locking)**과 **MVCC(Multi-Version Concurrency Control)**—의 내부 원리를 이해할 차례다.
+[지난 글](/posts/sql-concurrency-anomalies/)에서 동시성 이상 현상을 살펴봤다. 이제 DB가 이상 현상을 어떻게 방지하는지—**2PL**(2-Phase Locking)과 **MVCC(Multi-Version Concurrency Control)**—의 내부 원리를 이해할 차례다.
 
 ---
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-sql-injection/)에서 에러 메시지나 쿼리 결과가 그대로 반환되는 Classic SQL 인젝션을 다뤘다. 하지만 실제 서비스 대부분은 에러 메시지를 숨기고 구체적인 쿼리 결과를 노출하지 않는다. 그렇다고 안전한 것은 아니다. **블라인드 SQL 인젝션(Blind SQL Injection)**은 응답의 참/거짓 차이나 응답 시간 지연만으로 데이터를 추론해낸다.
+[지난 글](/posts/websec-sql-injection/)에서 에러 메시지나 쿼리 결과가 그대로 반환되는 Classic SQL 인젝션을 다뤘다. 하지만 실제 서비스 대부분은 에러 메시지를 숨기고 구체적인 쿼리 결과를 노출하지 않는다. 그렇다고 안전한 것은 아니다. **블라인드 SQL 인젝션**(Blind SQL Injection)은 응답의 참/거짓 차이나 응답 시간 지연만으로 데이터를 추론해낸다.
 
 ## 블라인드 SQL 인젝션이란
 

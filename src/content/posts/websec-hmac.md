@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-key-exchange/)에서 Diffie-Hellman과 ECDH로 두 당사자가 공유 비밀을 만드는 방법을 살펴봤다. 그렇다면 공유한 키로 메시지가 **변조되지 않았음**을 어떻게 증명할까? 이번 글에서는 무결성과 인증을 동시에 제공하는 **HMAC(Hash-based Message Authentication Code)**을 다룬다.
+[지난 글](/posts/websec-key-exchange/)에서 Diffie-Hellman과 ECDH로 두 당사자가 공유 비밀을 만드는 방법을 살펴봤다. 그렇다면 공유한 키로 메시지가 **변조되지 않았음**을 어떻게 증명할까? 이번 글에서는 무결성과 인증을 동시에 제공하는 **HMAC**(Hash-based Message Authentication Code)을 다룬다.
 
 ## MAC이란 무엇인가?
 
 단순 해시(SHA-256 등)는 무결성을 검증한다 — 데이터가 변조되지 않았는지 확인할 수 있다. 하지만 **인증**은 제공하지 않는다. 공격자가 메시지와 해시를 모두 교체하면 수신자는 알아챌 수 없다.
 
-**MAC(Message Authentication Code)**은 비밀 키를 사용해 무결성과 인증을 동시에 제공한다. 키 없이는 유효한 MAC을 만들 수 없다.
+**MAC**(Message Authentication Code)은 비밀 키를 사용해 무결성과 인증을 동시에 제공한다. 키 없이는 유효한 MAC을 만들 수 없다.
 
 ```python
 import hashlib
@@ -34,7 +34,7 @@ mac = hmac.new(secret_key, message, hashlib.sha256).hexdigest()
 
 ## HMAC의 내부 구조
 
-HMAC은 단순히 `HASH(key + message)`가 아니다. 이 naive한 방식은 **길이 확장 공격(Length Extension Attack)**에 취약하기 때문이다.
+HMAC은 단순히 `HASH(key + message)`가 아니다. 이 naive한 방식은 **길이 확장 공격**(Length Extension Attack)에 취약하기 때문이다.
 
 ![HMAC 내부 구조](/assets/posts/websec-hmac-structure.svg)
 
@@ -183,7 +183,7 @@ def generate_totp(secret: bytes, digits: int = 6, interval: int = 30) -> str:
 
 ## 타이밍 공격과 `compare_digest`
 
-HMAC 검증에서 `==` 비교를 사용하면 **타이밍 공격(Timing Attack)**에 취약하다.
+HMAC 검증에서 `==` 비교를 사용하면 **타이밍 공격**(Timing Attack)에 취약하다.
 
 ```python
 # ❌ 위험: 문자열 비교는 첫 불일치 위치에서 즉시 반환

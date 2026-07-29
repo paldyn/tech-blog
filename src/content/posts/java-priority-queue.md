@@ -53,7 +53,7 @@ System.out.println(pq.poll());  // 5
 
 ## Comparator로 정렬 기준 변경
 
-`PriorityQueue`의 기본 정렬은 **자연 순서(Comparable)**다. 역순이나 커스텀 기준을 쓰려면 생성자에 `Comparator`를 전달한다.
+`PriorityQueue`의 기본 정렬은 **자연 순서**(Comparable)다. 역순이나 커스텀 기준을 쓰려면 생성자에 `Comparator`를 전달한다.
 
 ```java
 // Max-Heap: 가장 큰 값이 먼저 나옴

@@ -17,7 +17,7 @@ draft: false
 
 ## 파생 상태란
 
-**파생 상태(derived state)**는 기존 state나 prop으로부터 계산할 수 있는 값입니다. 이 값을 별도 `useState`로 관리하면 두 값이 불일치하는 버그가 발생할 위험이 생깁니다.
+**파생 상태**(derived state)는 기존 state나 prop으로부터 계산할 수 있는 값입니다. 이 값을 별도 `useState`로 관리하면 두 값이 불일치하는 버그가 발생할 위험이 생깁니다.
 
 ```jsx
 // ❌ 동기화 위험 — items에서 이미 계산 가능

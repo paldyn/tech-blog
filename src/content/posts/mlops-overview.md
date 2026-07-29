@@ -161,7 +161,7 @@ Kubernetes가 ML 워크로드의 표준 오케스트레이터가 되었다. GPU 
 
 ### 데이터 레이어
 
-**DVC(Data Version Control)**는 Git과 유사한 인터페이스로 대용량 데이터와 모델 아티팩트를 버전 관리한다. `.dvc` 파일만 Git에 커밋하고 실제 데이터는 S3·GCS·Azure Blob에 저장한다.
+**DVC**(Data Version Control)는 Git과 유사한 인터페이스로 대용량 데이터와 모델 아티팩트를 버전 관리한다. `.dvc` 파일만 Git에 커밋하고 실제 데이터는 S3·GCS·Azure Blob에 저장한다.
 
 **피처 스토어**는 피처 계산 로직을 중앙화하여 학습-서빙 스큐를 방지한다. Feast(오픈소스), Tecton, Hopsworks가 주요 선택지다.
 

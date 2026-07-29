@@ -144,7 +144,7 @@ const copy = Object.create(
 
 ## `defineProperty` 기본값 주의
 
-기존 프로퍼티를 `defineProperty`로 수정할 때는 명시하지 않은 속성이 유지됩니다. 하지만 **새 프로퍼티를 추가할 때는 명시하지 않은 속성이 모두 `false` 또는 `undefined`**입니다.
+기존 프로퍼티를 `defineProperty`로 수정할 때는 명시하지 않은 속성이 유지됩니다. 하지만 <strong>새 프로퍼티를 추가할 때는 명시하지 않은 속성이 모두 `false` 또는 `undefined`</strong>입니다.
 
 ```javascript
 const obj = {};

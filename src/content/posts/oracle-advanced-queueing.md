@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-database-link/)에서 DB Link로 원격 데이터베이스에 투명하게 접근하는 방법을 다뤘다. 이번에는 Oracle DB 안에 내장된 메시지 큐 시스템인 **Advanced Queuing(AQ)**을 살펴본다.
+[지난 글](/posts/oracle-database-link/)에서 DB Link로 원격 데이터베이스에 투명하게 접근하는 방법을 다뤘다. 이번에는 Oracle DB 안에 내장된 메시지 큐 시스템인 **Advanced Queuing**(AQ)을 살펴본다.
 
 ## AQ가 필요한 이유
 

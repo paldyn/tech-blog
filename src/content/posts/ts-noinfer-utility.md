@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-generic-defaults/)에서 타입 파라미터에 기본값을 주는 방법을 배웠다. 이번에는 반대 방향의 문제를 다룬다. **"이 위치에서는 T를 추론하지 말아라"**라고 TypeScript에게 지시하는 `NoInfer<T>` 유틸리티다. TypeScript 5.4에서 내장 유틸리티로 추가됐으며, 제네릭 추론이 여러 위치에서 일어날 때 생기는 의도치 않은 타입 확장을 막아준다.
+[지난 글](/posts/ts-generic-defaults/)에서 타입 파라미터에 기본값을 주는 방법을 배웠다. 이번에는 반대 방향의 문제를 다룬다. <strong>"이 위치에서는 T를 추론하지 말아라"</strong>라고 TypeScript에게 지시하는 `NoInfer<T>` 유틸리티다. TypeScript 5.4에서 내장 유틸리티로 추가됐으며, 제네릭 추론이 여러 위치에서 일어날 때 생기는 의도치 않은 타입 확장을 막아준다.
 
 ## 문제: 여러 위치에서의 T 추론
 

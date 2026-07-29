@@ -17,7 +17,7 @@ draft: false
 
 ## 정규화란
 
-**중복 데이터**와 **갱신 이상(Update Anomaly)**을 제거하기 위해 테이블을 작은 단위로 분해하는 과정이다. 목표는 각 데이터가 **한 곳에만 존재**하도록 설계하는 것이다.
+**중복 데이터**와 **갱신 이상**(Update Anomaly)을 제거하기 위해 테이블을 작은 단위로 분해하는 과정이다. 목표는 각 데이터가 **한 곳에만 존재**하도록 설계하는 것이다.
 
 ```
 이상 현상 3종:
@@ -103,7 +103,7 @@ CREATE TABLE products (
 
 ## 3NF: 제3정규형
 
-**2NF를 만족하면서, 비키 속성은 기본키에만 직접 종속되어야 한다.** 비키 속성 간의 **이행적 함수 종속(Transitive Dependency)**을 제거한다.
+**2NF를 만족하면서, 비키 속성은 기본키에만 직접 종속되어야 한다.** 비키 속성 간의 **이행적 함수 종속**(Transitive Dependency)을 제거한다.
 
 ```sql
 -- 3NF 위반 예시
@@ -167,7 +167,7 @@ CREATE TABLE enrollment (
 );
 ```
 
-BCNF 분해는 항상 **무손실(Lossless)**이어야 하며, 때로는 함수 종속 보존(Dependency Preservation)을 포기해야 할 수 있다.
+BCNF 분해는 항상 **무손실**(Lossless)이어야 하며, 때로는 함수 종속 보존(Dependency Preservation)을 포기해야 할 수 있다.
 
 ---
 

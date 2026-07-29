@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-asymptotic-notation/)에서 빅오·빅오메가·빅세타 표기법을 살펴봤습니다. 이번에는 특별한 상황에서 쓰이는 분석 기법인 **분할 상환 분석(Amortized Analysis)**을 알아봅니다. 이것은 Python의 `list.append()`나 Java의 `ArrayList.add()`가 왜 O(1)이라고 불리는지 이해하는 핵심입니다.
+[지난 글](/posts/dsa-asymptotic-notation/)에서 빅오·빅오메가·빅세타 표기법을 살펴봤습니다. 이번에는 특별한 상황에서 쓰이는 분석 기법인 **분할 상환 분석**(Amortized Analysis)을 알아봅니다. 이것은 Python의 `list.append()`나 Java의 `ArrayList.add()`가 왜 O(1)이라고 불리는지 이해하는 핵심입니다.
 
 ## 분할 상환 분석이란
 
@@ -104,7 +104,7 @@ def increment(bits):
 
 ## 실무에서의 함의
 
-분할 상환 O(1)이 보장되더라도 **최악 단일 연산이 O(n)**일 수 있습니다. 이는 실시간 시스템에서 문제가 될 수 있습니다.
+분할 상환 O(1)이 보장되더라도 **최악 단일 연산이 O**(n)일 수 있습니다. 이는 실시간 시스템에서 문제가 될 수 있습니다.
 
 ```python
 import time

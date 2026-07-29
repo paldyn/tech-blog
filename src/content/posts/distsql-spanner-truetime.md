@@ -50,7 +50,7 @@ Spanner는 Raft 대신 **Paxos**를 사용한다. 각 디렉토리(데이터 조
 
 ## INTERLEAVE IN PARENT
 
-Spanner의 독특한 DDL 기능이 **인터리브(INTERLEAVE IN PARENT)**다. 부모 테이블과 자식 테이블의 관련 행을 같은 물리적 스플릿(split)에 저장한다. PostgreSQL의 클러스터드 인덱스나 CockroachDB의 인터리브와 유사한 개념이다.
+Spanner의 독특한 DDL 기능이 **인터리브**(INTERLEAVE IN PARENT)다. 부모 테이블과 자식 테이블의 관련 행을 같은 물리적 스플릿(split)에 저장한다. PostgreSQL의 클러스터드 인덱스나 CockroachDB의 인터리브와 유사한 개념이다.
 
 ![Cloud Spanner SQL 특징](/assets/posts/distsql-spanner-truetime-sql.svg)
 
@@ -74,7 +74,7 @@ Singer와 Albums 행이 같은 스플릿에 물리적으로 인접하므로, `WH
 
 ## Stale 읽기
 
-Spanner는 **Stale 읽기(staleness)**를 지원한다. 특정 과거 타임스탬프 기준의 스냅샷을 읽으면, 현재 Paxos 리더가 아닌 가까운 복제본에서 바로 읽을 수 있다. 글로벌 환경에서 WAN 왕복 없이 읽기 지연을 크게 줄인다.
+Spanner는 **Stale 읽기**(staleness)를 지원한다. 특정 과거 타임스탬프 기준의 스냅샷을 읽으면, 현재 Paxos 리더가 아닌 가까운 복제본에서 바로 읽을 수 있다. 글로벌 환경에서 WAN 왕복 없이 읽기 지연을 크게 줄인다.
 
 ```python
 # Python Spanner 클라이언트 (stale 읽기)

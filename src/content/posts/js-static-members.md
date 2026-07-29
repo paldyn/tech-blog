@@ -169,7 +169,7 @@ console.log(db1 === db2); // true (같은 인스턴스)
 
 ## 정적 초기화 블록 (ES2022)
 
-복잡한 정적 초기화 로직이 필요한 경우 **정적 초기화 블록(static initialization block)**을 사용합니다.
+복잡한 정적 초기화 로직이 필요한 경우 **정적 초기화 블록**(static initialization block)을 사용합니다.
 
 ```javascript
 class AppConfig {

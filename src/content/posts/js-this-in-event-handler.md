@@ -66,7 +66,7 @@ parent.addEventListener('click', function(e) {
 
 ## 화살표 함수 핸들러의 this
 
-화살표 함수를 핸들러로 사용하면 `this`는 DOM 요소가 아닌 **외부 렉시컬 환경의 `this`**입니다.
+화살표 함수를 핸들러로 사용하면 `this`는 DOM 요소가 아닌 <strong>외부 렉시컬 환경의 `this`</strong>입니다.
 
 ```javascript
 button.addEventListener('click', (e) => {

@@ -43,7 +43,7 @@ Fielding은 다음 여섯 가지 제약조건을 모두 충족해야 RESTful이�
 
 ![Richardson 성숙도 모델](/assets/posts/spring-rest-principles-maturity.svg)
 
-대부분의 실무 API는 **Level 2** 수준입니다. 적절한 URI와 HTTP 메서드를 사용하고 상태 코드를 올바르게 반환하면 Level 2로 평가됩니다. **Level 3(HATEOAS)**는 응답 본문에 관련 리소스 링크를 포함하는 방식으로, Spring HATEOAS 라이브러리가 지원하지만 구현 복잡도가 높아 선택적으로 도입합니다.
+대부분의 실무 API는 **Level 2** 수준입니다. 적절한 URI와 HTTP 메서드를 사용하고 상태 코드를 올바르게 반환하면 Level 2로 평가됩니다. **Level 3**(HATEOAS)는 응답 본문에 관련 리소스 링크를 포함하는 방식으로, Spring HATEOAS 라이브러리가 지원하지만 구현 복잡도가 높아 선택적으로 도입합니다.
 
 ## URI 설계 원칙
 

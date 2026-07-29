@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/next-performance/)에서 Core Web Vitals 중심의 성능 최적화 전략을 살펴봤다. 이번 글은 **국제화(i18n)**다. 글로벌 서비스를 목표로 한다면 다국어 지원은 필수다. Next.js App Router는 기본적으로 i18n 라우팅을 지원하지 않으므로, 별도 라이브러리가 필요하다. 현재 가장 널리 쓰이는 `next-intl`을 기준으로 설명한다.
+[지난 글](/posts/next-performance/)에서 Core Web Vitals 중심의 성능 최적화 전략을 살펴봤다. 이번 글은 **국제화**(i18n)다. 글로벌 서비스를 목표로 한다면 다국어 지원은 필수다. Next.js App Router는 기본적으로 i18n 라우팅을 지원하지 않으므로, 별도 라이브러리가 필요하다. 현재 가장 널리 쓰이는 `next-intl`을 기준으로 설명한다.
 
 ## 아키텍처 선택: URL 기반 로케일
 

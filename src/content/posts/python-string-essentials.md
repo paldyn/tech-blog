@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-bool-truthiness/)에서 bool 타입과 Truthiness를 살펴봤다. 이번에는 Python에서 가장 자주 다루는 타입 중 하나인 **문자열(str)**의 기초를 정리한다. 생성 방법부터 인덱싱, 슬라이싱, 연산자까지 차례대로 살펴본다.
+[지난 글](/posts/python-bool-truthiness/)에서 bool 타입과 Truthiness를 살펴봤다. 이번에는 Python에서 가장 자주 다루는 타입 중 하나인 **문자열**(str)의 기초를 정리한다. 생성 방법부터 인덱싱, 슬라이싱, 연산자까지 차례대로 살펴본다.
 
 ## 문자열 생성
 
@@ -100,7 +100,7 @@ s[0:100]  # 'Python' — 범위 초과 시 가능한 범위까지
 
 ## 문자열 불변성
 
-Python 문자열은 **불변(immutable)**이다. 한 번 생성된 문자열은 수정할 수 없다.
+Python 문자열은 **불변**(immutable)이다. 한 번 생성된 문자열은 수정할 수 없다.
 
 ```python
 s = "hello"

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/http-rest-principles/)에서 자원·표현·무상태라는 REST의 핵심 원칙을 정리했다. 그런데 "이 API는 RESTful한가?"라는 질문은 예/아니오로 딱 떨어지지 않는다. 현실의 API는 REST 원칙을 부분적으로만 따르는 경우가 대부분이다. 이 **정도(degree)**를 단계로 나눠 측정하자는 것이 Leonard Richardson이 2008년 QCon에서 제안한 **Richardson 성숙도 모델(Richardson Maturity Model, RMM)**이다. Martin Fowler가 이를 글로 정리하면서 널리 알려졌다.
+[지난 글](/posts/http-rest-principles/)에서 자원·표현·무상태라는 REST의 핵심 원칙을 정리했다. 그런데 "이 API는 RESTful한가?"라는 질문은 예/아니오로 딱 떨어지지 않는다. 현실의 API는 REST 원칙을 부분적으로만 따르는 경우가 대부분이다. 이 **정도**(degree)를 단계로 나눠 측정하자는 것이 Leonard Richardson이 2008년 QCon에서 제안한 **Richardson 성숙도 모델**(Richardson Maturity Model, RMM)이다. Martin Fowler가 이를 글로 정리하면서 널리 알려졌다.
 
 ## 모델의 큰 그림
 

@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-consistent-hashing/)에서 분산 환경의 해싱을 살펴봤습니다. 이번 글은 "이 원소가 집합에 속하는가?"를 일반 해시셋보다 수백 배 적은 메모리로 답하는 **블룸 필터(Bloom Filter)**를 다룹니다. Chrome 브라우저부터 Cassandra까지 다양한 시스템에서 성능 최적화에 활용됩니다.
+[지난 글](/posts/dsa-consistent-hashing/)에서 분산 환경의 해싱을 살펴봤습니다. 이번 글은 "이 원소가 집합에 속하는가?"를 일반 해시셋보다 수백 배 적은 메모리로 답하는 **블룸 필터**(Bloom Filter)를 다룹니다. Chrome 브라우저부터 Cassandra까지 다양한 시스템에서 성능 최적화에 활용됩니다.
 
 ## 블룸 필터란
 
-1970년 버튼 블룸(Burton Bloom)이 고안한 **확률적 자료구조(Probabilistic Data Structure)**입니다. m개의 비트 배열과 k개의 독립적인 해시 함수로 구성됩니다.
+1970년 버튼 블룸(Burton Bloom)이 고안한 **확률적 자료구조**(Probabilistic Data Structure)입니다. m개의 비트 배열과 k개의 독립적인 해시 함수로 구성됩니다.
 
 - **"없음" → 항상 정확**: 원소가 없다고 하면 확실히 없음
 - **"있음" → 틀릴 수 있음**: 있다고 해도 실제로 없을 수 있음 (거짓 양성)

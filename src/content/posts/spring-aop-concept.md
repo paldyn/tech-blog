@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-property-externalization/)에서는 설정 값을 코드 밖으로 꺼내는 방법을 살펴봤습니다. 이번에는 Spring의 두 번째 핵심 기술인 **AOP(Aspect-Oriented Programming)**입니다. AOP는 처음 접하면 개념이 낯설지만, "반복되는 부가 코드를 한 곳에 모아 자동으로 끼워 넣는다"는 한 문장으로 요약할 수 있습니다.
+[지난 글](/posts/spring-property-externalization/)에서는 설정 값을 코드 밖으로 꺼내는 방법을 살펴봤습니다. 이번에는 Spring의 두 번째 핵심 기술인 **AOP**(Aspect-Oriented Programming)입니다. AOP는 처음 접하면 개념이 낯설지만, "반복되는 부가 코드를 한 곳에 모아 자동으로 끼워 넣는다"는 한 문장으로 요약할 수 있습니다.
 
 ## 문제: 횡단 관심사(Cross-Cutting Concern)
 

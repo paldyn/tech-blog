@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-switch-expression/)에서 Java 14에 도입된 switch 표현식의 화살표 레이블과 yield를 살펴봤다. 이번에는 그 위에 쌓인 강력한 기능인 **패턴 매칭 switch(Pattern Matching for switch)**를 정리한다. Java 17부터 Preview를 거쳐 **Java 21(JEP 441)**에 정식 도입됐다.
+[지난 글](/posts/java-switch-expression/)에서 Java 14에 도입된 switch 표현식의 화살표 레이블과 yield를 살펴봤다. 이번에는 그 위에 쌓인 강력한 기능인 **패턴 매칭 switch**(Pattern Matching for switch)를 정리한다. Java 17부터 Preview를 거쳐 **Java 21**(JEP 441)에 정식 도입됐다.
 
 ## 패턴 매칭 switch가 필요한 이유
 

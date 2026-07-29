@@ -19,7 +19,7 @@ Jupyter는 세 컴포넌트가 분리된 구조로 동작한다.
 
 ![Jupyter 아키텍처: Browser → Server → Kernel](/assets/posts/notebook-jupyter-architecture.svg)
 
-**Browser(Notebook UI)**는 CodeMirror 에디터와 출력 렌더러를 포함한 순수 HTML/JavaScript 앱이다. 사용자가 셀을 실행하면 HTTP 또는 WebSocket을 통해 **Jupyter Server**에 메시지를 보낸다. 서버는 Tornado 비동기 프레임워크 위에서 동작하는 Python 프로세스로, REST API 라우팅·커널 생명주기 관리·파일 시스템 접근을 담당한다. 실제 코드 실행은 서버가 아닌 **IPython Kernel**이 맡는다. 서버와 커널은 ZeroMQ 5-소켓 프로토콜로 통신한다(`shell`, `iopub`, `stdin`, `control`, `heartbeat`).
+**Browser**(Notebook UI)는 CodeMirror 에디터와 출력 렌더러를 포함한 순수 HTML/JavaScript 앱이다. 사용자가 셀을 실행하면 HTTP 또는 WebSocket을 통해 **Jupyter Server**에 메시지를 보낸다. 서버는 Tornado 비동기 프레임워크 위에서 동작하는 Python 프로세스로, REST API 라우팅·커널 생명주기 관리·파일 시스템 접근을 담당한다. 실제 코드 실행은 서버가 아닌 **IPython Kernel**이 맡는다. 서버와 커널은 ZeroMQ 5-소켓 프로토콜로 통신한다(`shell`, `iopub`, `stdin`, `control`, `heartbeat`).
 
 ### .ipynb 파일 구조
 

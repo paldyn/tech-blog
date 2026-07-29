@@ -15,7 +15,7 @@ draft: false
 
 ## ECMAScript란 무엇인가
 
-JavaScript는 구현체이고, **ECMAScript**는 그 구현이 따라야 할 **명세(specification)**입니다. 비유하자면 ECMAScript는 건축 도면이고, Chrome의 V8, Firefox의 SpiderMonkey, Safari의 JavaScriptCore가 각각 그 도면을 보고 지은 건물입니다.
+JavaScript는 구현체이고, **ECMAScript**는 그 구현이 따라야 할 **명세**(specification)입니다. 비유하자면 ECMAScript는 건축 도면이고, Chrome의 V8, Firefox의 SpiderMonkey, Safari의 JavaScriptCore가 각각 그 도면을 보고 지은 건물입니다.
 
 1996년 Netscape는 JavaScript를 표준화하기 위해 ECMA International(유럽 컴퓨터 제조업체 협회)에 명세 작성을 의뢰합니다. Sun Microsystems가 "JavaScript"라는 이름에 상표권을 가지고 있었기 때문에, 표준 이름은 **ECMAScript**가 됩니다.
 

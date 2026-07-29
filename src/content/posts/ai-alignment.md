@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-safety-overview/)에서 AI 안전성의 전체 지형을 살펴봤다면, 이번에는 그 핵심 축인 **AI 정렬(AI Alignment)**을 깊이 파고든다. 정렬이란 AI 시스템의 목표·가치·행동이 인간이 의도한 바와 얼마나 일치하는가의 문제다.
+[지난 글](/posts/ai-safety-overview/)에서 AI 안전성의 전체 지형을 살펴봤다면, 이번에는 그 핵심 축인 **AI 정렬**(AI Alignment)을 깊이 파고든다. 정렬이란 AI 시스템의 목표·가치·행동이 인간이 의도한 바와 얼마나 일치하는가의 문제다.
 
 ## 정렬 문제가 왜 어려운가
 
-인간의 가치는 복잡하고 맥락 의존적이다. "도움이 되는 AI"를 만들려면 도움의 의미를 AI에게 수치로 가르쳐야 하는데, 그 수치가 조금만 어긋나도 예상치 못한 방향으로 최적화된다. 이 현상이 **비정렬(Misalignment)**이다.
+인간의 가치는 복잡하고 맥락 의존적이다. "도움이 되는 AI"를 만들려면 도움의 의미를 AI에게 수치로 가르쳐야 하는데, 그 수치가 조금만 어긋나도 예상치 못한 방향으로 최적화된다. 이 현상이 **비정렬**(Misalignment)이다.
 
 비정렬에는 크게 세 가지 유형이 있다.
 
@@ -27,7 +27,7 @@ draft: false
 
 ## RLHF: 인간 피드백 강화학습
 
-**RLHF(Reinforcement Learning from Human Feedback)**는 현재 GPT-4, Claude 등 주요 LLM이 채택한 표준 정렬 기법이다.
+**RLHF**(Reinforcement Learning from Human Feedback)는 현재 GPT-4, Claude 등 주요 LLM이 채택한 표준 정렬 기법이다.
 
 ```python
 # RLHF 3단계 개요
@@ -56,7 +56,7 @@ PPO 과정에서 KL 페널티가 핵심이다. 보상 모델 점수만 높이다
 
 ## Constitutional AI: 원칙 기반 정렬
 
-Anthropic이 개발한 **Constitutional AI(CAI)**는 명시적인 원칙 목록('헌법')으로 RLHF의 인간 라벨링 부담을 줄인다.
+Anthropic이 개발한 **Constitutional AI**(CAI)는 명시적인 원칙 목록('헌법')으로 RLHF의 인간 라벨링 부담을 줄인다.
 
 ```python
 constitution = [
@@ -81,7 +81,7 @@ reward_model = train(ai_feedback)
 
 ## DPO: 단순하고 안정적인 직접 선호 최적화
 
-**DPO(Direct Preference Optimization)**는 보상 모델 없이 선호 데이터로 직접 정책을 학습한다.
+**DPO**(Direct Preference Optimization)는 보상 모델 없이 선호 데이터로 직접 정책을 학습한다.
 
 ```python
 import torch

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/http-methods/)에서 9가지 HTTP 메서드를 살펴봤다. 이번 글에서는 메서드를 이해하는 핵심 개념인 **안전성(Safe)**과 **멱등성(Idempotent)**을 깊이 다룬다. 이 두 속성은 네트워크 재시도와 오류 복구 설계의 기반이다.
+[지난 글](/posts/http-methods/)에서 9가지 HTTP 메서드를 살펴봤다. 이번 글에서는 메서드를 이해하는 핵심 개념인 **안전성**(Safe)과 **멱등성**(Idempotent)을 깊이 다룬다. 이 두 속성은 네트워크 재시도와 오류 복구 설계의 기반이다.
 
 ## 안전성 (Safe)
 
@@ -74,7 +74,7 @@ session.mount("https://", adapter)
 
 ### 멱등 키 패턴
 
-멱등하지 않은 POST 요청을 안전하게 재시도하려면 **멱등 키(Idempotency-Key)**를 사용한다.
+멱등하지 않은 POST 요청을 안전하게 재시도하려면 **멱등 키**(Idempotency-Key)를 사용한다.
 
 ```http
 POST /api/payments HTTP/1.1

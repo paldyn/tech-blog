@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/fw-vue-core/)에서 Vue 3의 Proxy 기반 반응성을 살펴봤습니다. 이번에는 **Svelte**를 다룹니다. Svelte는 React나 Vue와 근본적으로 다른 철학을 가집니다. **"프레임워크를 런타임에 포함시키지 말고, 컴파일 타임에 바닐라 JS로 변환하자"**는 발상입니다. Virtual DOM 없이, 런타임 Diff 없이, 직접 DOM을 조작하는 코드를 생성합니다.
+[지난 글](/posts/fw-vue-core/)에서 Vue 3의 Proxy 기반 반응성을 살펴봤습니다. 이번에는 **Svelte**를 다룹니다. Svelte는 React나 Vue와 근본적으로 다른 철학을 가집니다. <strong>"프레임워크를 런타임에 포함시키지 말고, 컴파일 타임에 바닐라 JS로 변환하자"</strong>는 발상입니다. Virtual DOM 없이, 런타임 Diff 없이, 직접 DOM을 조작하는 코드를 생성합니다.
 
 ---
 

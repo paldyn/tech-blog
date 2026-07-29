@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-runnable-thread/)에서 `Runnable`과 `Thread`로 스레드를 생성하고 `start()`, `sleep()`, `join()`을 호출하는 방법을 살펴봤다. 이번에는 스레드가 생성부터 종료까지 거치는 **6가지 상태(Thread.State)**와 각 상태 사이의 전이 조건을 체계적으로 정리한다. 상태 흐름을 이해하면 데드락·기아 현상 디버깅과 스레드 덤프 분석이 훨씬 쉬워진다.
+[지난 글](/posts/java-runnable-thread/)에서 `Runnable`과 `Thread`로 스레드를 생성하고 `start()`, `sleep()`, `join()`을 호출하는 방법을 살펴봤다. 이번에는 스레드가 생성부터 종료까지 거치는 **6가지 상태**(Thread.State)와 각 상태 사이의 전이 조건을 체계적으로 정리한다. 상태 흐름을 이해하면 데드락·기아 현상 디버깅과 스레드 덤프 분석이 훨씬 쉬워진다.
 
 ## Thread.State 열거형
 

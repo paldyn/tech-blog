@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-tls-session-resumption/)에서 TLS 세션 재개 메커니즘을 살펴봤습니다. 일반적인 TLS는 서버만 인증서를 제시합니다. 우리가 은행 웹사이트에 접속할 때 서버가 진짜인지 확인하지만, 서버는 우리가 누구인지 TLS 레벨에서 검증하지 않습니다. **mTLS(Mutual TLS)**는 이 균형을 맞춥니다. 양쪽이 모두 인증서로 신원을 증명합니다.
+[지난 글](/posts/network-tls-session-resumption/)에서 TLS 세션 재개 메커니즘을 살펴봤습니다. 일반적인 TLS는 서버만 인증서를 제시합니다. 우리가 은행 웹사이트에 접속할 때 서버가 진짜인지 확인하지만, 서버는 우리가 누구인지 TLS 레벨에서 검증하지 않습니다. **mTLS**(Mutual TLS)는 이 균형을 맞춥니다. 양쪽이 모두 인증서로 신원을 증명합니다.
 
 ## 단방향 TLS vs mTLS
 

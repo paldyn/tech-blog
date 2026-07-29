@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-external-sorting/)에서 외부 정렬을 다뤘습니다. 이번에는 정렬 알고리즘의 핵심 속성 중 하나인 **정렬 안정성(Sorting Stability)**입니다. 안정성이 왜 중요한지, 어떤 알고리즘이 안정하고 왜 그런지 살펴봅니다.
+[지난 글](/posts/dsa-external-sorting/)에서 외부 정렬을 다뤘습니다. 이번에는 정렬 알고리즘의 핵심 속성 중 하나인 **정렬 안정성**(Sorting Stability)입니다. 안정성이 왜 중요한지, 어떤 알고리즘이 안정하고 왜 그런지 살펴봅니다.
 
 ## 안정 정렬의 정의
 

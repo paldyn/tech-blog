@@ -19,7 +19,7 @@ draft: false
 
 ![any 대신 unknown](/assets/posts/ts-any-elimination-any-vs-unknown.svg)
 
-대부분의 경우 `any` 자리에 들어가야 할 더 나은 기본값은 **`unknown`**이다. `unknown`도 "타입을 모른다"를 뜻하지만, 결정적인 차이가 있다. `unknown` 값은 **무언가를 하기 전에 반드시 좁혀야** 한다. 속성 접근, 호출, 구체 타입 할당이 전부 막혀서, 사용 전에 `typeof`나 `instanceof`, 스키마 검증으로 타입을 좁히도록 강제한다.
+대부분의 경우 `any` 자리에 들어가야 할 더 나은 기본값은 <strong>`unknown`</strong>이다. `unknown`도 "타입을 모른다"를 뜻하지만, 결정적인 차이가 있다. `unknown` 값은 **무언가를 하기 전에 반드시 좁혀야** 한다. 속성 접근, 호출, 구체 타입 할당이 전부 막혀서, 사용 전에 `typeof`나 `instanceof`, 스키마 검증으로 타입을 좁히도록 강제한다.
 
 ```typescript
 function process(value: unknown) {
@@ -37,7 +37,7 @@ function process(value: unknown) {
 
 ![any가 들어오는 경로와 대체](/assets/posts/ts-any-elimination-sources.svg)
 
-**`JSON.parse()`**의 반환 타입은 `any`다. 외부에서 온 데이터이므로 본질적으로 신뢰할 수 없다. 여기엔 `unknown`으로 받은 뒤 스키마 검증 라이브러리(zod 등)로 형태를 확인하는 것이 정석이다.
+<strong>`JSON.parse()`</strong>의 반환 타입은 `any`다. 외부에서 온 데이터이므로 본질적으로 신뢰할 수 없다. 여기엔 `unknown`으로 받은 뒤 스키마 검증 라이브러리(zod 등)로 형태를 확인하는 것이 정석이다.
 
 ```typescript
 import { z } from "zod";
@@ -48,7 +48,7 @@ const raw: unknown = JSON.parse(text);
 const user = UserSchema.parse(raw); // 검증 통과 후 User로 좁혀짐
 ```
 
-**`catch (e)`**의 `e`는 기본적으로 `any`다(`useUnknownInCatchVariables`를 켜면 `unknown`이 된다). 던져진 것이 꼭 `Error`라는 보장이 없으므로, `instanceof`로 좁혀 다룬다.
+<strong>`catch (e)`</strong>의 `e`는 기본적으로 `any`다(`useUnknownInCatchVariables`를 켜면 `unknown`이 된다). 던져진 것이 꼭 `Error`라는 보장이 없으므로, `instanceof`로 좁혀 다룬다.
 
 ```typescript
 try {

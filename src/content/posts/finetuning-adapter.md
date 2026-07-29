@@ -106,7 +106,7 @@ AdapterFusion은 두 단계로 학습한다.
 
 ## HuggingFace PEFT로 Adapter 구현하기
 
-HuggingFace PEFT 라이브러리는 Adapter 계열 중 **IA³(Infused Adapter by Inhibiting and Amplifying Inner Activations)**를 직접 지원한다. IA³는 Adapter보다 더 경량화된 변형으로, 가중치 벡터를 통해 Attention과 FFN 내부 활성화를 조절한다.
+HuggingFace PEFT 라이브러리는 Adapter 계열 중 **IA³**(Infused Adapter by Inhibiting and Amplifying Inner Activations)를 직접 지원한다. IA³는 Adapter보다 더 경량화된 변형으로, 가중치 벡터를 통해 Attention과 FFN 내부 활성화를 조절한다.
 
 ```python
 from transformers import AutoModelForSequenceClassification, AutoTokenizer

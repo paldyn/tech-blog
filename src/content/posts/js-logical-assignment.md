@@ -68,7 +68,7 @@ console.log(score); // 100  ← 주의: 0은 falsy
 
 ## ??= — null 또는 undefined일 때만 할당
 
-`x ??= y`는 `x`가 **`null` 또는 `undefined`**인 경우에만 할당합니다. `0`, `''`, `false` 등은 그대로 유지됩니다.
+`x ??= y`는 `x`가 <strong>`null` 또는 `undefined`</strong>인 경우에만 할당합니다. `0`, `''`, `false` 등은 그대로 유지됩니다.
 
 ```javascript
 let count = 0;

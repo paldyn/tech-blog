@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-hmac/)에서 HMAC으로 메시지 무결성과 인증을 보장하는 방법을 살펴봤다. 이번 글에서는 비밀번호를 안전하게 저장하는 핵심 기술인 **키 유도 함수(KDF: Key Derivation Function)**를 다룬다.
+[지난 글](/posts/websec-hmac/)에서 HMAC으로 메시지 무결성과 인증을 보장하는 방법을 살펴봤다. 이번 글에서는 비밀번호를 안전하게 저장하는 핵심 기술인 **키 유도 함수**(KDF: Key Derivation Function)를 다룬다.
 
 ## 왜 SHA-256으로 비밀번호를 해싱하면 안 되나?
 

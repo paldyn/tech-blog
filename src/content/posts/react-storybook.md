@@ -58,7 +58,7 @@ export const Loading: Story = {
 };
 ```
 
-여기서 중요한 설계 철학이 보인다. 스토리는 렌더링 코드가 아니라 **직렬화 가능한 props 조합(`args`)**이다. 데이터이기 때문에 Storybook의 다른 도구들 — Controls, Autodocs, 테스트 러너 — 이 스토리를 그대로 재사용할 수 있다.
+여기서 중요한 설계 철학이 보인다. 스토리는 렌더링 코드가 아니라 **직렬화 가능한 props 조합**(`args`)이다. 데이터이기 때문에 Storybook의 다른 도구들 — Controls, Autodocs, 테스트 러너 — 이 스토리를 그대로 재사용할 수 있다.
 
 ## args와 Controls
 

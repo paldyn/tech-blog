@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-collections-deque/)에서 양방향 큐인 deque를 살펴봤습니다. 이번에는 `collections.Counter`를 다룹니다. 텍스트의 단어 빈도, 리스트의 요소 개수, 로그의 이벤트 횟수처럼 **"얼마나 자주 등장하는가"**를 셀 때 for 루프와 딕셔너리를 직접 짜는 것보다 훨씬 간결한 도구입니다.
+[지난 글](/posts/python-collections-deque/)에서 양방향 큐인 deque를 살펴봤습니다. 이번에는 `collections.Counter`를 다룹니다. 텍스트의 단어 빈도, 리스트의 요소 개수, 로그의 이벤트 횟수처럼 <strong>"얼마나 자주 등장하는가"</strong>를 셀 때 for 루프와 딕셔너리를 직접 짜는 것보다 훨씬 간결한 도구입니다.
 
 ## Counter 생성 방법
 

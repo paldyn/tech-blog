@@ -15,7 +15,7 @@ draft: false
 
 ## EXPLAIN이란
 
-`EXPLAIN`은 MySQL 옵티마이저가 선택한 **실행 계획(Execution Plan)**을 사람이 읽을 수 있는 형태로 출력하는 명령입니다. 실행 계획에는 어떤 인덱스를 사용하는지, 몇 건을 스캔하는지, 조인 순서는 어떻게 되는지가 담겨 있습니다.
+`EXPLAIN`은 MySQL 옵티마이저가 선택한 **실행 계획**(Execution Plan)을 사람이 읽을 수 있는 형태로 출력하는 명령입니다. 실행 계획에는 어떤 인덱스를 사용하는지, 몇 건을 스캔하는지, 조인 순서는 어떻게 되는지가 담겨 있습니다.
 
 ```sql
 -- 기본 사용법
@@ -77,7 +77,7 @@ SELECT * FROM orders WHERE memo LIKE '%결제%'; -- type: ALL
 
 ## rows · filtered — 예상 처리량 계산
 
-`rows`는 옵티마이저가 스캔할 것으로 예상하는 행 수입니다. `filtered`는 WHERE 조건을 적용한 후 남을 행의 **비율(%)**입니다.
+`rows`는 옵티마이저가 스캔할 것으로 예상하는 행 수입니다. `filtered`는 WHERE 조건을 적용한 후 남을 행의 **비율**(%)입니다.
 
 ```sql
 -- rows=10000, filtered=10.00 이면

@@ -30,7 +30,7 @@ WHERE status = 'ACTIVE';
 
 ![필터된 인덱스 구조 비교](/assets/posts/mssql-filtered-index-structure.svg)
 
-데이터가 불균일하게 분포할 때 효과가 극적이다. 100만 행 중 1%만 `ACTIVE` 상태라면 필터된 인덱스의 크기는 일반 인덱스의 **1%**에 불과하다. 유지비용(INSERT/UPDATE/DELETE 시 인덱스 업데이트)도 99% 감소한다.
+데이터가 불균일하게 분포할 때 효과가 극적이다. 100만 행 중 1%만 `ACTIVE` 상태라면 필터된 인덱스의 크기는 일반 인덱스의 <strong>1%</strong>에 불과하다. 유지비용(INSERT/UPDATE/DELETE 시 인덱스 업데이트)도 99% 감소한다.
 
 ## 주요 활용 패턴
 

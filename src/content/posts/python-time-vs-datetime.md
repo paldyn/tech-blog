@@ -173,7 +173,7 @@ print(f"generator: {t1:.4f}s, list: {t2:.4f}s")
 | CPU 시간 측정 | `time.process_time()` |
 | 코드 벤치마크 | `timeit` 모듈 |
 
-요약하면: **날짜와 시간을 "다루고 표현"해야 한다면 `datetime`**, **측정하거나 대기해야 한다면 `time`**입니다.
+요약하면: **날짜와 시간을 "다루고 표현"해야 한다면 `datetime`**, <strong>측정하거나 대기해야 한다면 `time`</strong>입니다.
 
 ---
 

@@ -30,7 +30,7 @@ docker run --rm --network none alpine ping -c1 8.8.8.8
 
 ![Docker none 네트워크 격리 구조](/assets/posts/docker-network-none-diagram.svg)
 
-none 컨테이너는 외부, 다른 컨테이너, 호스트 어느 쪽과도 TCP/IP 통신이 불가능하다. 데이터를 주고받는 방법은 **볼륨(파일 시스템)**뿐이다.
+none 컨테이너는 외부, 다른 컨테이너, 호스트 어느 쪽과도 TCP/IP 통신이 불가능하다. 데이터를 주고받는 방법은 **볼륨**(파일 시스템)뿐이다.
 
 ## 실전 활용 코드
 

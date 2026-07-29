@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-tcp-time-wait/)에서 TIME_WAIT의 원리와 튜닝 방법을 살펴봤다. TCP 신뢰성의 핵심 메커니즘은 **순서 번호(Sequence Number)**와 **ACK(Acknowledgment Number)**다. 이 두 필드가 바이트 단위로 데이터의 전달 여부를 추적하고 재전송의 기준이 된다.
+[지난 글](/posts/network-tcp-time-wait/)에서 TIME_WAIT의 원리와 튜닝 방법을 살펴봤다. TCP 신뢰성의 핵심 메커니즘은 **순서 번호**(Sequence Number)와 **ACK**(Acknowledgment Number)다. 이 두 필드가 바이트 단위로 데이터의 전달 여부를 추적하고 재전송의 기준이 된다.
 
 ## 순서 번호와 ACK의 의미
 

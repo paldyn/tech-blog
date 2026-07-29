@@ -184,7 +184,7 @@ Next.js 14 이하에서는 `params`가 일반 객체였다. 버전에 따라 타
 
 ## 메타데이터 병합 규칙
 
-상위(layout)와 하위(page) 메타데이터는 **얕은 병합(shallow merge)**된다. 최상위 필드(`title`, `description`)는 하위가 상위를 덮어쓴다. 그러나 중첩 객체(`openGraph`, `twitter`)는 하위가 해당 객체 전체를 교체한다.
+상위(layout)와 하위(page) 메타데이터는 **얕은 병합**(shallow merge)된다. 최상위 필드(`title`, `description`)는 하위가 상위를 덮어쓴다. 그러나 중첩 객체(`openGraph`, `twitter`)는 하위가 해당 객체 전체를 교체한다.
 
 ```typescript
 // 루트 레이아웃

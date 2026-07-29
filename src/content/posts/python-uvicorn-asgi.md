@@ -21,7 +21,7 @@ draft: false
 
 ![WSGI vs ASGI](/assets/posts/python-uvicorn-asgi-wsgi-vs-asgi.svg)
 
-WSGI에서는 한 요청을 끝낼 때까지 워커 하나가 거기에 묶인다. DB나 외부 API를 기다리는 긴 I/O 동안 워커는 아무 일도 못 하고 놀게 된다. 또한 WebSocket처럼 연결을 길게 유지하는 통신은 애초에 다루기 어렵다. 이 한계를 풀기 위해 등장한 비동기 확장 규약이 **ASGI(Asynchronous Server Gateway Interface)**다.
+WSGI에서는 한 요청을 끝낼 때까지 워커 하나가 거기에 묶인다. DB나 외부 API를 기다리는 긴 I/O 동안 워커는 아무 일도 못 하고 놀게 된다. 또한 WebSocket처럼 연결을 길게 유지하는 통신은 애초에 다루기 어렵다. 이 한계를 풀기 위해 등장한 비동기 확장 규약이 **ASGI**(Asynchronous Server Gateway Interface)다.
 
 ## ASGI: 비동기로 확장된 규약
 

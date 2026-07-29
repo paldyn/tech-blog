@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-keyof-typeof/)에서 keyof와 typeof를 살펴봤다. 이번에는 **인덱스 접근 타입(Indexed Access Types)**을 다룬다. 기존 타입에서 특정 프로퍼티의 타입을 추출하는 `T[K]` 문법이다.
+[지난 글](/posts/ts-keyof-typeof/)에서 keyof와 typeof를 살펴봤다. 이번에는 **인덱스 접근 타입**(Indexed Access Types)을 다룬다. 기존 타입에서 특정 프로퍼티의 타입을 추출하는 `T[K]` 문법이다.
 
 ## 기본 문법
 

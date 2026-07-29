@@ -18,7 +18,7 @@ draft: false
 OAuth2와 OIDC는 자주 혼용되지만 목적이 다릅니다.
 
 - **OAuth2** (RFC 6749): **인가(Authorization)** 프레임워크입니다. "이 앱이 내 Google 캘린더에 접근해도 되나요?"처럼 자원(리소스)에 대한 접근 권한을 위임하는 것이 목적입니다. Access Token을 발급하지만, 이 토큰에 사용자 신원 정보가 담겨 있다는 보장이 없습니다.
-- **OIDC** (OpenID Connect): OAuth2 Authorization Code Flow 위에 **인증(Authentication)** 레이어를 추가한 표준입니다. Access Token과 함께 **ID Token(JWT)**을 발급하며, 이 JWT에는 사용자 이름, 이메일, 발급자 등 신원 정보(클레임)가 포함됩니다. Google·Kakao·GitHub 등 대부분의 소셜 로그인이 OIDC를 구현합니다.
+- **OIDC** (OpenID Connect): OAuth2 Authorization Code Flow 위에 **인증(Authentication)** 레이어를 추가한 표준입니다. Access Token과 함께 **ID Token**(JWT)을 발급하며, 이 JWT에는 사용자 이름, 이메일, 발급자 등 신원 정보(클레임)가 포함됩니다. Google·Kakao·GitHub 등 대부분의 소셜 로그인이 OIDC를 구현합니다.
 
 ## Authorization Code Flow 전체 과정
 

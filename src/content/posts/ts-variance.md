@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-noinfer-utility/)에서 `NoInfer<T>`로 추론 사이트를 제어하는 방법을 배웠다. 이번에는 TypeScript 타입 시스템의 근간 중 하나인 **분산성(Variance)**을 다룬다. 제네릭 타입이 서브타입 관계를 어떻게 계승하는지, 그리고 TypeScript 4.7에서 추가된 `in`/`out` 어노테이션으로 이를 명시적으로 선언하는 방법을 살펴본다.
+[지난 글](/posts/ts-noinfer-utility/)에서 `NoInfer<T>`로 추론 사이트를 제어하는 방법을 배웠다. 이번에는 TypeScript 타입 시스템의 근간 중 하나인 **분산성**(Variance)을 다룬다. 제네릭 타입이 서브타입 관계를 어떻게 계승하는지, 그리고 TypeScript 4.7에서 추가된 `in`/`out` 어노테이션으로 이를 명시적으로 선언하는 방법을 살펴본다.
 
 ## 분산성이란?
 
@@ -61,7 +61,7 @@ const eatDog: EatDog = (d: Animal) => { d.breathe(); }; // ✓
 
 ## TypeScript의 기본 동작
 
-TypeScript는 기본적으로 함수 매개변수를 **이중변성(bivariant)**으로 처리한다. 이는 역사적 이유에서 비롯된 설계로, 메서드 선언(`method(): void`)은 여전히 이중변성이다.
+TypeScript는 기본적으로 함수 매개변수를 **이중변성**(bivariant)으로 처리한다. 이는 역사적 이유에서 비롯된 설계로, 메서드 선언(`method(): void`)은 여전히 이중변성이다.
 
 ```typescript
 interface Comparator<T> {

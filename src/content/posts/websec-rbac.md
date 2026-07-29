@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-single-sign-on/)에서 SSO로 중앙 인증을 구현하는 방법을 살펴봤다. 인증(Authentication)이 "누구인가"를 확인한다면, **인가(Authorization)**는 "무엇을 할 수 있는가"를 결정한다. RBAC은 현대 애플리케이션에서 가장 널리 쓰이는 인가 모델이다.
+[지난 글](/posts/websec-single-sign-on/)에서 SSO로 중앙 인증을 구현하는 방법을 살펴봤다. 인증(Authentication)이 "누구인가"를 확인한다면, **인가**(Authorization)는 "무엇을 할 수 있는가"를 결정한다. RBAC은 현대 애플리케이션에서 가장 널리 쓰이는 인가 모델이다.
 
 ## RBAC이란
 
-RBAC(Role-Based Access Control)는 권한을 **역할(Role)**에 묶고, 사용자에게 역할을 부여하는 접근 제어 모델이다. 사용자에게 직접 권한을 부여하는 대신 역할을 통해 간접 부여한다.
+RBAC(Role-Based Access Control)는 권한을 **역할**(Role)에 묶고, 사용자에게 역할을 부여하는 접근 제어 모델이다. 사용자에게 직접 권한을 부여하는 대신 역할을 통해 간접 부여한다.
 
 ```
 사용자 → 역할 → 권한 → 리소스

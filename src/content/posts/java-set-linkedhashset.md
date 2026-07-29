@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-set-hashset/)에서 HashSet의 내부 구조와 equals/hashCode 계약을 살펴봤다. 이번에는 **`LinkedHashSet`**을 다룬다. HashSet의 O(1) 성능은 유지하면서 **삽입 순서를 보장**해야 할 때 사용한다.
+[지난 글](/posts/java-set-hashset/)에서 HashSet의 내부 구조와 equals/hashCode 계약을 살펴봤다. 이번에는 <strong>`LinkedHashSet`</strong>을 다룬다. HashSet의 O(1) 성능은 유지하면서 **삽입 순서를 보장**해야 할 때 사용한다.
 
 ## LinkedHashSet이 필요한 이유
 

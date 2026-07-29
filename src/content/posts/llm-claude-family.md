@@ -21,13 +21,13 @@ Anthropic의 출발점은 명확했다. "AI 능력의 발전과 AI 안전성의 
 
 ## Constitutional AI: 원칙으로 AI를 정렬하다
 
-Claude의 가장 핵심적인 기술적 특징은 **Constitutional AI(CAI)**다. 기존 RLHF는 인간 피드백자들이 AI 출력을 하나하나 평가하는 방식으로 작동한다. 이 방식은 효과적이지만 두 가지 문제가 있다. 확장성(인간 레이블러 수의 한계)과 일관성(평가자마다 기준이 다를 수 있음)이다.
+Claude의 가장 핵심적인 기술적 특징은 **Constitutional AI**(CAI)다. 기존 RLHF는 인간 피드백자들이 AI 출력을 하나하나 평가하는 방식으로 작동한다. 이 방식은 효과적이지만 두 가지 문제가 있다. 확장성(인간 레이블러 수의 한계)과 일관성(평가자마다 기준이 다를 수 있음)이다.
 
-Constitutional AI는 이를 다르게 접근한다. AI에게 **원칙 집합(Constitution)**을 주고, 그 원칙에 따라 자신의 출력을 스스로 비평하고 수정하게 한다.
+Constitutional AI는 이를 다르게 접근한다. AI에게 **원칙 집합**(Constitution)을 주고, 그 원칙에 따라 자신의 출력을 스스로 비평하고 수정하게 한다.
 
 **RLAIF(Reinforcement Learning from AI Feedback):** 인간 대신 AI가 피드백을 제공한다. Constitutional AI 원칙에 따라 훈련된 "헌법 AI"가 다른 AI 출력을 평가하고, 이 평가로 보상 신호를 만든다. 결과적으로 대규모 인간 레이블링 없이도 원칙 기반 정렬이 가능해진다.
 
-Claude의 핵심 원칙은 **Helpful(유용성), Harmless(무해성), Honest(정직성)**의 HHH 프레임워크다. 특히 "Honest"는 다른 AI 모델과 차별되는 지점이다. Claude는 모르는 것을 모른다고 말하고, 자신의 불확실성을 명시적으로 표현하도록 설계됐다.
+Claude의 핵심 원칙은 **Helpful(유용성), Harmless(무해성), Honest**(정직성)의 HHH 프레임워크다. 특히 "Honest"는 다른 AI 모델과 차별되는 지점이다. Claude는 모르는 것을 모른다고 말하고, 자신의 불확실성을 명시적으로 표현하도록 설계됐다.
 
 ![Claude 패밀리 진화 타임라인](/assets/posts/llm-claude-family-timeline.svg)
 

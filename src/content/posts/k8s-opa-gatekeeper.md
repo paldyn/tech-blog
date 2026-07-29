@@ -15,7 +15,7 @@ draft: false
 
 ## OPA와 Gatekeeper란?
 
-**OPA(Open Policy Agent)**는 CNCF 졸업 프로젝트로, 범용 정책 엔진이다. 쿠버네티스에만 국한되지 않고 Terraform, Envoy, API 게이트웨이 등 다양한 시스템에서 정책 평가에 사용된다. OPA는 **Rego**라는 선언형 언어로 정책을 작성하며, JSON/YAML 형태의 입력을 받아 허용(allow) 또는 거부(deny)를 결정한다.
+**OPA**(Open Policy Agent)는 CNCF 졸업 프로젝트로, 범용 정책 엔진이다. 쿠버네티스에만 국한되지 않고 Terraform, Envoy, API 게이트웨이 등 다양한 시스템에서 정책 평가에 사용된다. OPA는 **Rego**라는 선언형 언어로 정책을 작성하며, JSON/YAML 형태의 입력을 받아 허용(allow) 또는 거부(deny)를 결정한다.
 
 **Gatekeeper**는 OPA를 쿠버네티스 Admission Webhook과 통합하는 프로젝트다. CNCF 인큐베이팅 프로젝트이며, `gatekeeper-system` 네임스페이스에 컨트롤러 파드를 배포해 모든 API 요청을 가로채고 Rego 정책으로 평가한다. 핵심 장점은 다음과 같다.
 

@@ -26,7 +26,7 @@ draft: false
 
 ![SameSite vs SameOrigin: 정확한 개념 구분](/assets/posts/websec-csrf-samesite-model.svg)
 
-공개 접미사(Public Suffix) 판단은 Mozilla가 관리하는 **Public Suffix List(PSL)**를 브라우저가 참조합니다. `github.io`, `vercel.app`, `netlify.app`, `co.kr` 등이 공개 접미사로 등록되어 있어 그 아래 서브도메인들은 서로 다른 사이트로 취급됩니다.
+공개 접미사(Public Suffix) 판단은 Mozilla가 관리하는 **Public Suffix List**(PSL)를 브라우저가 참조합니다. `github.io`, `vercel.app`, `netlify.app`, `co.kr` 등이 공개 접미사로 등록되어 있어 그 아래 서브도메인들은 서로 다른 사이트로 취급됩니다.
 
 ## SameSite 세 가지 값 상세 동작
 
@@ -38,7 +38,7 @@ Google 검색 결과에서 github.com 링크 클릭
 → 쿠키 미전송 → 로그인 화면 리다이렉트
 ```
 
-**SameSite=Lax**: Chrome 80 이후 기본값입니다. **Top-level navigation**이고 **안전한 HTTP 메서드(GET, HEAD, OPTIONS)**인 경우에만 교차 사이트 쿠키를 전송합니다. 대부분의 CSRF 공격(POST form 제출, XHR, fetch)을 차단합니다.
+**SameSite=Lax**: Chrome 80 이후 기본값입니다. **Top-level navigation**이고 **안전한 HTTP 메서드**(GET, HEAD, OPTIONS)인 경우에만 교차 사이트 쿠키를 전송합니다. 대부분의 CSRF 공격(POST form 제출, XHR, fetch)을 차단합니다.
 
 ```http
 # Lax에서 쿠키 전송 조건

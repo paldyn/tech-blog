@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mssql-lock-hint-nolock-risk/)에서 NOLOCK 힌트의 위험성을 다뤘다. 이번에는 동시성 문제 중 가장 골치 아픈 현상인 **데드락(Deadlock)**을 분석하고 예방하는 방법을 알아본다.
+[지난 글](/posts/mssql-lock-hint-nolock-risk/)에서 NOLOCK 힌트의 위험성을 다뤘다. 이번에는 동시성 문제 중 가장 골치 아픈 현상인 **데드락**(Deadlock)을 분석하고 예방하는 방법을 알아본다.
 
 ## 데드락이란
 

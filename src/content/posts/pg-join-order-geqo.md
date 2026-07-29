@@ -39,7 +39,7 @@ WHERE  o.status = 'completed';
 
 ## 동적 프로그래밍 탐색
 
-테이블 수가 `join_collapse_limit`(기본 8) 이하이면 옵티마이저는 **동적 프로그래밍(DP)**으로 최적 조인 순서를 탐색한다. 2개짜리 조인의 최적 계획을 먼저 구하고, 그걸 조합해 3개짜리 최적 계획을 구하는 식으로 단계적으로 최적을 찾는다.
+테이블 수가 `join_collapse_limit`(기본 8) 이하이면 옵티마이저는 **동적 프로그래밍**(DP)으로 최적 조인 순서를 탐색한다. 2개짜리 조인의 최적 계획을 먼저 구하고, 그걸 조합해 3개짜리 최적 계획을 구하는 식으로 단계적으로 최적을 찾는다.
 
 각 단계에서 가능한 조인 방법(Hash Join, Merge Join, Nested Loop)과 조인 순서를 모두 고려하므로, 단순 순열 나열보다 훨씬 효율적이지만 테이블 수가 늘수록 기하급수적으로 느려진다.
 
@@ -47,7 +47,7 @@ WHERE  o.status = 'completed';
 
 ## GEQO — 유전자 알고리즘으로의 전환
 
-테이블 수가 `geqo_threshold`(기본 12) 이상이면 PostgreSQL은 **GEQO(Genetic Query Optimizer)**를 사용한다. 완전 탐색 대신 유전자 알고리즘으로 근사 최적을 찾는다.
+테이블 수가 `geqo_threshold`(기본 12) 이상이면 PostgreSQL은 **GEQO**(Genetic Query Optimizer)를 사용한다. 완전 탐색 대신 유전자 알고리즘으로 근사 최적을 찾는다.
 
 GEQO 동작 순서:
 1. 무작위 조인 순서(개체)를 `geqo_pool_size`개 생성

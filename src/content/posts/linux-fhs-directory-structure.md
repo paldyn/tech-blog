@@ -15,7 +15,7 @@ draft: false
 
 ## FHS란
 
-**FHS(Filesystem Hierarchy Standard)**는 Linux 파운데이션이 관리하는 표준으로, Linux 시스템에서 각 디렉터리가 담아야 할 내용을 정의한다. 배포판마다 세부 차이는 있지만 큰 틀은 동일하다. 덕분에 Ubuntu에서 배운 `/etc/nginx/` 경로가 RHEL에서도 동일하게 통한다.
+**FHS**(Filesystem Hierarchy Standard)는 Linux 파운데이션이 관리하는 표준으로, Linux 시스템에서 각 디렉터리가 담아야 할 내용을 정의한다. 배포판마다 세부 차이는 있지만 큰 틀은 동일하다. 덕분에 Ubuntu에서 배운 `/etc/nginx/` 경로가 RHEL에서도 동일하게 통한다.
 
 ```bash
 # 최상위 디렉터리 목록 확인

@@ -63,7 +63,7 @@ CMD ["python", "/app/app.py"]
 
 ## 2015 — OCI와 표준화
 
-Docker의 폭발적 성장과 함께 생태계 분열 위험이 생겼습니다. Linux Foundation 주도로 **OCI(Open Container Initiative)**가 설립됩니다. 두 가지 표준이 정의됩니다:
+Docker의 폭발적 성장과 함께 생태계 분열 위험이 생겼습니다. Linux Foundation 주도로 **OCI**(Open Container Initiative)가 설립됩니다. 두 가지 표준이 정의됩니다:
 
 - **image-spec**: 컨테이너 이미지 형식 표준
 - **runtime-spec**: 컨테이너 실행 환경 표준 (`runc`가 레퍼런스 구현)

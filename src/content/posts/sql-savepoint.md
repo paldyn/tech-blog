@@ -17,7 +17,7 @@ draft: false
 
 ## SAVEPOINT란
 
-`BEGIN`과 `COMMIT` 사이에서 **중간 복귀점(Checkpoint)**을 만드는 기능이다. 이후에 오류가 발생하면 전체 트랜잭션을 롤백하지 않고 해당 복귀점으로만 돌아올 수 있다.
+`BEGIN`과 `COMMIT` 사이에서 **중간 복귀점**(Checkpoint)을 만드는 기능이다. 이후에 오류가 발생하면 전체 트랜잭션을 롤백하지 않고 해당 복귀점으로만 돌아올 수 있다.
 
 ![SAVEPOINT 구조 다이어그램](/assets/posts/sql-savepoint-structure.svg)
 

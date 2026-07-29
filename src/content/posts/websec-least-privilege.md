@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-defense-in-depth/)에서 여러 계층에 걸쳐 방어를 배치하는 심층 방어 전략을 살펴봤다. 각 계층이 제대로 작동하려면 모든 컴포넌트가 "딱 필요한 만큼만" 권한을 가져야 한다. 이 원칙이 바로 **최소 권한 원칙(Principle of Least Privilege, PoLP)**이다.
+[지난 글](/posts/websec-defense-in-depth/)에서 여러 계층에 걸쳐 방어를 배치하는 심층 방어 전략을 살펴봤다. 각 계층이 제대로 작동하려면 모든 컴포넌트가 "딱 필요한 만큼만" 권한을 가져야 한다. 이 원칙이 바로 **최소 권한 원칙**(Principle of Least Privilege, PoLP)이다.
 
 ## 왜 권한이 넘치면 위험한가
 

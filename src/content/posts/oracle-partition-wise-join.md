@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-interval-partitioning/)에서 Interval 파티셔닝으로 파티션 생성을 자동화하는 방법을 살펴봤다. 파티셔닝을 제대로 설계하면 성능 이점이 단순한 프루닝에 그치지 않는다. **파티션-와이즈 조인(Partition-Wise Join, PWJ)**은 대용량 조인의 메모리 사용량과 병렬 확장성을 동시에 개선한다.
+[지난 글](/posts/oracle-interval-partitioning/)에서 Interval 파티셔닝으로 파티션 생성을 자동화하는 방법을 살펴봤다. 파티셔닝을 제대로 설계하면 성능 이점이 단순한 프루닝에 그치지 않는다. **파티션-와이즈 조인**(Partition-Wise Join, PWJ)은 대용량 조인의 메모리 사용량과 병렬 확장성을 동시에 개선한다.
 
 ## 왜 대용량 조인이 문제인가
 

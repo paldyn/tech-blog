@@ -75,7 +75,7 @@ Atomics.exchange(view, 0, 99); // 새 값으로 교체, 이전 값 반환
 
 ## compareExchange — CAS 연산
 
-**Compare-And-Swap(CAS)**은 락-프리(lock-free) 알고리즘의 핵심입니다. "현재 값이 기대값과 같으면 새 값으로 교체하고, 이전 값을 반환"합니다.
+**Compare-And-Swap**(CAS)은 락-프리(lock-free) 알고리즘의 핵심입니다. "현재 값이 기대값과 같으면 새 값으로 교체하고, 이전 값을 반환"합니다.
 
 ```js
 // Atomics.compareExchange(typedArray, index, expectedValue, replacementValue)
@@ -124,7 +124,7 @@ release();
 
 ## Atomics.waitAsync — Main Thread에서 대기
 
-Main Thread에서 `Atomics.wait`은 블로킹이라 허용되지 않습니다. **`Atomics.waitAsync`**는 Promise를 반환해 Main Thread나 이미 await 중인 컨텍스트에서도 사용할 수 있습니다.
+Main Thread에서 `Atomics.wait`은 블로킹이라 허용되지 않습니다. <strong>`Atomics.waitAsync`</strong>는 Promise를 반환해 Main Thread나 이미 await 중인 컨텍스트에서도 사용할 수 있습니다.
 
 ```js
 // main.js

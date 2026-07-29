@@ -95,7 +95,7 @@ SynthID 이미지 워터마크는 픽셀 도메인이 아닌 latent space에서 
 
 ## C2PA: 콘텐츠 출처 표준
 
-**C2PA(Coalition for Content Provenance and Authenticity)**는 Adobe, Microsoft, Google 등이 주도하는 미디어 출처 표준이다.
+**C2PA**(Coalition for Content Provenance and Authenticity)는 Adobe, Microsoft, Google 등이 주도하는 미디어 출처 표준이다.
 
 ```json
 {

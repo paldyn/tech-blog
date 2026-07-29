@@ -104,7 +104,7 @@ jobs:
 
 ### 기본 사용
 
-[webpagetest.org](https://www.webpagetest.org)에서 URL을 입력하면 전 세계 여러 위치의 실제 브라우저와 기기에서 테스트합니다. 특히 **폭포수 차트(Waterfall)**와 **필름스트립(Filmstrip)**이 강력합니다.
+[webpagetest.org](https://www.webpagetest.org)에서 URL을 입력하면 전 세계 여러 위치의 실제 브라우저와 기기에서 테스트합니다. 특히 **폭포수 차트**(Waterfall)와 **필름스트립**(Filmstrip)이 강력합니다.
 
 ```js
 // WebPageTest API로 자동화

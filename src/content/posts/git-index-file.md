@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-delta-compression/)에서 pack 파일의 delta 압축 메커니즘을 살펴봤다. 이번에는 Git의 3대 영역 중 하나인 **스테이징 영역(Index)**의 실체, 즉 `.git/index` 바이너리 파일을 들여다본다.
+[지난 글](/posts/git-delta-compression/)에서 pack 파일의 delta 압축 메커니즘을 살펴봤다. 이번에는 Git의 3대 영역 중 하나인 **스테이징 영역**(Index)의 실체, 즉 `.git/index` 바이너리 파일을 들여다본다.
 
 ## Index란
 

@@ -71,7 +71,7 @@ docker push myusername/myimage:1.0
 # Successfully signed docker.io/myusername/myimage:1.0
 ```
 
-**루트 키(root key)**는 모든 신뢰의 기반이다. 루트 키 패스프레이즈를 잃거나 키 파일이 손상되면 그 레포지터리의 서명을 복구할 수 없다.
+**루트 키**(root key)는 모든 신뢰의 기반이다. 루트 키 패스프레이즈를 잃거나 키 파일이 손상되면 그 레포지터리의 서명을 복구할 수 없다.
 
 ## 키 관리
 

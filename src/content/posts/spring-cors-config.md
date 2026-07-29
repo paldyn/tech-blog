@@ -15,13 +15,13 @@ draft: false
 
 ## CORS가 발생하는 이유
 
-브라우저는 **Same-Origin Policy(동일 출처 정책)**에 따라 스크립트가 다른 출처(프로토콜·도메인·포트 중 하나라도 다르면 다른 출처)의 응답을 읽는 것을 차단합니다. 프론트엔드(`https://app.example.com`)가 API(`https://api.example.com`)를 호출하면 출처가 다르기 때문에 브라우저가 CORS 오류를 냅니다.
+브라우저는 **Same-Origin Policy**(동일 출처 정책)에 따라 스크립트가 다른 출처(프로토콜·도메인·포트 중 하나라도 다르면 다른 출처)의 응답을 읽는 것을 차단합니다. 프론트엔드(`https://app.example.com`)가 API(`https://api.example.com`)를 호출하면 출처가 다르기 때문에 브라우저가 CORS 오류를 냅니다.
 
 CORS는 서버가 응답 헤더에 허용 정보를 담아 브라우저에게 "이 출처의 요청을 허용한다"고 알려주는 표준입니다.
 
 ## Preflight 요청
 
-브라우저는 단순 요청(Simple Request)이 아닌 경우, 실제 요청을 보내기 전에 **OPTIONS 메서드로 사전 요청(Preflight)**을 보냅니다.
+브라우저는 단순 요청(Simple Request)이 아닌 경우, 실제 요청을 보내기 전에 **OPTIONS 메서드로 사전 요청**(Preflight)을 보냅니다.
 
 ```http
 OPTIONS /api/users HTTP/1.1

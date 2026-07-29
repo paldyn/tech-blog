@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-optimizers/)에서 옵티마이저가 파라미터를 어떻게 업데이트하는지 살펴봤다. 옵티마이저가 최소화하려는 목표값이 바로 **손실 함수(Loss Function)**다. "무엇을 최소화하느냐"가 모델이 학습하는 것을 결정한다. 잘못된 손실 함수를 선택하면 아무리 좋은 옵티마이저를 쓰더라도 원하는 결과를 얻을 수 없다.
+[지난 글](/posts/ai-optimizers/)에서 옵티마이저가 파라미터를 어떻게 업데이트하는지 살펴봤다. 옵티마이저가 최소화하려는 목표값이 바로 **손실 함수**(Loss Function)다. "무엇을 최소화하느냐"가 모델이 학습하는 것을 결정한다. 잘못된 손실 함수를 선택하면 아무리 좋은 옵티마이저를 쓰더라도 원하는 결과를 얻을 수 없다.
 
 ## 회귀 손실: 연속값 예측
 
@@ -50,7 +50,7 @@ print(f"Huber: {huber:.4f}")  # MSE와 MAE의 장점 결합
 
 ## 이진 분류: BCE
 
-이진 분류(0/1 출력)에는 **Binary Cross-Entropy(BCE)**를 쓴다.
+이진 분류(0/1 출력)에는 **Binary Cross-Entropy**(BCE)를 쓴다.
 
 ```python
 # BCEWithLogitsLoss = sigmoid + BCE (수치적으로 더 안정)
@@ -140,7 +140,7 @@ def vae_loss(recon_x, x, mu, log_var):
 
 ## 대조 손실: 임베딩 학습의 핵심
 
-CLIP, SimCLR 같은 모델은 비슷한 데이터는 임베딩 공간에서 가깝게, 다른 데이터는 멀게 만드는 **대조 손실(Contrastive Loss)**을 사용한다.
+CLIP, SimCLR 같은 모델은 비슷한 데이터는 임베딩 공간에서 가깝게, 다른 데이터는 멀게 만드는 **대조 손실**(Contrastive Loss)을 사용한다.
 
 ```python
 def infonce_loss(image_emb, text_emb, temperature=0.07):

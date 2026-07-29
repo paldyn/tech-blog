@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-webauthn-passkeys/)에서 WebAuthn으로 피싱 불가능한 인증을 구현하는 방법을 다뤘다. 여러 앱을 운영하는 조직에서는 **SSO(Single Sign-On)**를 통해 한 번 로그인으로 모든 앱에 접근할 수 있게 한다. 편의성이 높지만 보안 설계를 잘못하면 위험이 배가될 수 있다.
+[지난 글](/posts/websec-webauthn-passkeys/)에서 WebAuthn으로 피싱 불가능한 인증을 구현하는 방법을 다뤘다. 여러 앱을 운영하는 조직에서는 **SSO**(Single Sign-On)를 통해 한 번 로그인으로 모든 앱에 접근할 수 있게 한다. 편의성이 높지만 보안 설계를 잘못하면 위험이 배가될 수 있다.
 
 ## SSO 작동 원리
 
-SSO의 핵심은 **IdP(Identity Provider)**가 중앙 인증을 담당하고, 각 앱(SP, Service Provider)이 IdP를 신뢰하는 구조다. 사용자는 IdP에 한 번만 로그인하면 모든 SP에 자동으로 인증된다.
+SSO의 핵심은 **IdP**(Identity Provider)가 중앙 인증을 담당하고, 각 앱(SP, Service Provider)이 IdP를 신뢰하는 구조다. 사용자는 IdP에 한 번만 로그인하면 모든 SP에 자동으로 인증된다.
 
 구현 방식:
 - **OIDC 기반**: OpenID Connect로 ID Token을 통해 SSO (현대 표준)

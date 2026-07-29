@@ -51,7 +51,7 @@ kubectl run dns-test --image=busybox --rm -it --restart=Never -- \
 
 ![Headless Service DNS 동작 비교](/assets/posts/k8s-headless-service-dns.svg)
 
-일반 Service는 DNS 쿼리에 대해 단일 ClusterIP(VIP)를 반환한다. kube-proxy가 이 VIP로 들어오는 트래픽을 각 Pod로 분산한다. 반면 Headless Service는 DNS 쿼리에 대해 **Pod IP 목록(A 레코드 다수)**을 직접 반환한다. 클라이언트가 여러 IP 중 하나를 선택해 직접 연결하므로 **클라이언트 사이드 로드밸런싱**이 된다.
+일반 Service는 DNS 쿼리에 대해 단일 ClusterIP(VIP)를 반환한다. kube-proxy가 이 VIP로 들어오는 트래픽을 각 Pod로 분산한다. 반면 Headless Service는 DNS 쿼리에 대해 **Pod IP 목록**(A 레코드 다수)을 직접 반환한다. 클라이언트가 여러 IP 중 하나를 선택해 직접 연결하므로 **클라이언트 사이드 로드밸런싱**이 된다.
 
 | 항목 | 일반 Service | Headless Service |
 |---|---|---|

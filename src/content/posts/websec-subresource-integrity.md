@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-clickjacking/)에서 클릭재킹을 막는 frame-ancestors와 X-Frame-Options를 살펴봤다. 이번 글에서는 CDN을 통해 로드하는 외부 리소스의 무결성을 보장하는 **서브리소스 무결성(Subresource Integrity, SRI)**을 다룬다. CDN이 해킹되어 파일이 변조되어도 브라우저가 스스로 차단할 수 있다.
+[지난 글](/posts/websec-clickjacking/)에서 클릭재킹을 막는 frame-ancestors와 X-Frame-Options를 살펴봤다. 이번 글에서는 CDN을 통해 로드하는 외부 리소스의 무결성을 보장하는 **서브리소스 무결성**(Subresource Integrity, SRI)을 다룬다. CDN이 해킹되어 파일이 변조되어도 브라우저가 스스로 차단할 수 있다.
 
 ## CDN을 통한 공급망 공격
 

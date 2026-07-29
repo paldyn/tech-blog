@@ -21,7 +21,7 @@ Oracle NLS는 다국어 데이터를 저장·정렬·표시하기 위한 언어�
 
 NLS 설정에는 DB, 세션, 클라이언트의 세 계층이 있다.
 
-**DB 문자 집합(NLS_CHARACTERSET)**: DB 생성 시 결정되며 이후 변경이 사실상 불가능하다. 한국어를 포함한 다국어를 사용한다면 **AL32UTF8(Unicode UTF-8)**을 강력히 권장한다. 레거시 시스템에서는 KO16MSWIN949(EUC-KR 계열)나 KO16KSC5601이 남아 있다.
+**DB 문자 집합(NLS_CHARACTERSET)**: DB 생성 시 결정되며 이후 변경이 사실상 불가능하다. 한국어를 포함한 다국어를 사용한다면 **AL32UTF8**(Unicode UTF-8)을 강력히 권장한다. 레거시 시스템에서는 KO16MSWIN949(EUC-KR 계열)나 KO16KSC5601이 남아 있다.
 
 **국가 문자 집합(NLS_NCHAR_CHARACTERSET)**: `NCHAR`, `NVARCHAR2`, `NCLOB` 타입 전용. AL16UTF16 또는 UTF8만 선택 가능하다.
 
@@ -120,7 +120,7 @@ SELECT TO_CHAR(SYSDATE, 'Month') FROM dual;  -- 5월
 
 ## 문자 집합 마이그레이션
 
-KO16MSWIN949에서 AL32UTF8로의 마이그레이션은 **DMU(Database Migration Assistant for Unicode)**를 사용하는 것이 공식 방법이다. 단순 Export/Import도 가능하지만 데이터 크기가 늘어나고(2→3바이트) VARCHAR2 컬럼 크기 초과 문제가 발생할 수 있어 사전 점검이 필수다.
+KO16MSWIN949에서 AL32UTF8로의 마이그레이션은 **DMU**(Database Migration Assistant for Unicode)를 사용하는 것이 공식 방법이다. 단순 Export/Import도 가능하지만 데이터 크기가 늘어나고(2→3바이트) VARCHAR2 컬럼 크기 초과 문제가 발생할 수 있어 사전 점검이 필수다.
 
 ## 정리
 

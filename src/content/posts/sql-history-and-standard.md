@@ -17,9 +17,9 @@ draft: false
 
 ![SQL 역사 타임라인](/assets/posts/sql-history-and-standard-timeline.svg)
 
-IBM의 Donald Chamberlin과 Raymond Boyce는 1974년 Codd의 관계형 모델을 구현하기 위해 **SEQUEL(Structured English QUEry Language)**을 설계했습니다. IBM의 System R 프로젝트에서 사용됐고, 상표권 문제로 이름이 **SQL(Structured Query Language)**로 바뀌었습니다.
+IBM의 Donald Chamberlin과 Raymond Boyce는 1974년 Codd의 관계형 모델을 구현하기 위해 **SEQUEL**(Structured English QUEry Language)을 설계했습니다. IBM의 System R 프로젝트에서 사용됐고, 상표권 문제로 이름이 **SQL**(Structured Query Language)로 바뀌었습니다.
 
-당시의 혁신은 "**무엇을**"만 말하고 "**어떻게**"는 DBMS에 맡기는 선언적 방식이었습니다.
+당시의 혁신은 "**무엇을<strong>"만 말하고 "</strong>어떻게**"는 DBMS에 맡기는 선언적 방식이었습니다.
 
 ```sql
 -- 1974년 SEQUEL의 원형 (현대 SQL과 거의 동일)
@@ -33,19 +33,19 @@ ORDER  BY salary DESC;
 
 ## 상용화의 시작 (1979)
 
-1979년 **Oracle(당시 Relational Software Inc.)**이 최초의 상용 SQL 기반 RDBMS인 **Oracle V2**를 출시했습니다. 아이러니하게도 IBM보다 먼저 상용화에 성공했습니다.
+1979년 **Oracle**(당시 Relational Software Inc.)이 최초의 상용 SQL 기반 RDBMS인 **Oracle V2**를 출시했습니다. 아이러니하게도 IBM보다 먼저 상용화에 성공했습니다.
 
 같은 시기 Sybase, Ingres, DB2 등이 등장하며 SQL 방언의 씨앗이 뿌려졌습니다. 각 회사가 독자적인 확장 문법을 추가하기 시작했습니다.
 
 ## 첫 ANSI 표준: SQL-86
 
-1986년 **ANSI(American National Standards Institute)**가 SQL을 최초로 표준화했습니다. ISO도 1987년 같은 내용을 채택해 국제 표준이 됐습니다. 한국의 KS와 JIS(일본공업규격)도 ANSI/ISO를 따릅니다.
+1986년 **ANSI**(American National Standards Institute)가 SQL을 최초로 표준화했습니다. ISO도 1987년 같은 내용을 채택해 국제 표준이 됐습니다. 한국의 KS와 JIS(일본공업규격)도 ANSI/ISO를 따릅니다.
 
 SQL-86은 매우 기초적이었습니다. `SELECT`, `INSERT`, `UPDATE`, `DELETE`와 기본 집계 함수 정도만 포함했고, `JOIN` 문법조차 표준화되지 않았습니다.
 
 ## SQL-92: 현재의 기반
 
-1992년 개정된 **SQL-92(SQL2)**는 현재까지도 사실상 "기본 SQL"로 통용되는 버전입니다.
+1992년 개정된 **SQL-92**(SQL2)는 현재까지도 사실상 "기본 SQL"로 통용되는 버전입니다.
 
 주요 추가 내용:
 
@@ -77,7 +77,7 @@ SQL-92가 등장하기 전까지는 `JOIN` 문법도 DBMS마다 달랐습니다.
 
 ## SQL:1999 — 현대적 기능의 시작
 
-**SQL:1999(SQL3)**은 관계형 모델에 없던 기능들을 대거 추가했습니다.
+**SQL:1999**(SQL3)은 관계형 모델에 없던 기능들을 대거 추가했습니다.
 
 | 기능 | 설명 |
 |------|------|

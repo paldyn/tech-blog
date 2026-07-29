@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-business-logic-flaws/)에서 비즈니스 로직 취약점을 살펴봤다. 이번에는 웹 보안의 가장 근본적인 보안 경계선인 **동일 출처 정책(Same-Origin Policy, SOP)**이다. 브라우저 보안 모델의 핵심이며, CORS·CSRF·XSS 등 수많은 웹 취약점의 배경을 이해하려면 SOP부터 알아야 한다.
+[지난 글](/posts/websec-business-logic-flaws/)에서 비즈니스 로직 취약점을 살펴봤다. 이번에는 웹 보안의 가장 근본적인 보안 경계선인 **동일 출처 정책**(Same-Origin Policy, SOP)이다. 브라우저 보안 모델의 핵심이며, CORS·CSRF·XSS 등 수많은 웹 취약점의 배경을 이해하려면 SOP부터 알아야 한다.
 
 ## 동일 출처 정책이란?
 
-브라우저가 스크립트가 서로 다른 **출처(Origin)**의 문서나 리소스에 접근하는 것을 제한하는 보안 메커니즘이다. 1995년 Netscape가 도입한 이후 모든 브라우저가 구현하고 있는 기본 보안 정책이다.
+브라우저가 스크립트가 서로 다른 **출처**(Origin)의 문서나 리소스에 접근하는 것을 제한하는 보안 메커니즘이다. 1995년 Netscape가 도입한 이후 모든 브라우저가 구현하고 있는 기본 보안 정책이다.
 
-**출처(Origin)**는 세 요소의 조합으로 정의된다:
+**출처**(Origin)는 세 요소의 조합으로 정의된다:
 - **프로토콜**: `http://` vs `https://`
 - **호스트**: `example.com` vs `sub.example.com`
 - **포트**: `:80` vs `:8080`
@@ -103,7 +103,7 @@ window.addEventListener('message', (event) => {
 
 ## SOP와 CSRF의 관계
 
-SOP가 응답 읽기를 막지만 요청 전송은 막지 않기 때문에 **CSRF(Cross-Site Request Forgery)**가 존재한다. 공격자는 응답을 읽지 않아도 상태 변경 요청(송금, 비밀번호 변경)을 서버에 보낼 수 있다. SOP만으로는 CSRF를 막을 수 없고 CSRF 토큰, `SameSite` 쿠키 등 추가 방어가 필요한 이유다.
+SOP가 응답 읽기를 막지만 요청 전송은 막지 않기 때문에 **CSRF**(Cross-Site Request Forgery)가 존재한다. 공격자는 응답을 읽지 않아도 상태 변경 요청(송금, 비밀번호 변경)을 서버에 보낼 수 있다. SOP만으로는 CSRF를 막을 수 없고 CSRF 토큰, `SameSite` 쿠키 등 추가 방어가 필요한 이유다.
 
 ## 핵심 정리
 

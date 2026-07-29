@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-conflict-markers/)에서 충돌 마커를 직접 편집하는 방법을 배웠다. 텍스트 편집만으로도 충분하지만, 충돌이 복잡할 때는 **시각적 병합 도구(mergetool)**를 사용하면 훨씬 편하다. `git mergetool`은 충돌 파일을 자동으로 열어 도구에 넘겨준다.
+[지난 글](/posts/git-conflict-markers/)에서 충돌 마커를 직접 편집하는 방법을 배웠다. 텍스트 편집만으로도 충분하지만, 충돌이 복잡할 때는 **시각적 병합 도구**(mergetool)를 사용하면 훨씬 편하다. `git mergetool`은 충돌 파일을 자동으로 열어 도구에 넘겨준다.
 
 ## mergetool의 동작 원리
 

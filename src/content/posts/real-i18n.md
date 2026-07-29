@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/real-form-validation/)에서 RHF와 Zod로 폼 유효성 검사를 구현했습니다. 이번에는 **국제화(i18n)**를 다룹니다. 전 세계 사용자를 대상으로 하는 서비스라면 언어, 날짜 형식, 숫자 형식이 달라져야 합니다. `react-i18next`는 React에서 가장 널리 사용되는 i18n 라이브러리로, 강력한 플러그인 생태계와 함께 실질적으로 표준 위치를 차지하고 있습니다.
+[지난 글](/posts/real-form-validation/)에서 RHF와 Zod로 폼 유효성 검사를 구현했습니다. 이번에는 **국제화**(i18n)를 다룹니다. 전 세계 사용자를 대상으로 하는 서비스라면 언어, 날짜 형식, 숫자 형식이 달라져야 합니다. `react-i18next`는 React에서 가장 널리 사용되는 i18n 라이브러리로, 강력한 플러그인 생태계와 함께 실질적으로 표준 위치를 차지하고 있습니다.
 
 ![react-i18next 아키텍처](/assets/posts/real-i18n-architecture.svg)
 

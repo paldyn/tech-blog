@@ -15,7 +15,7 @@ draft: false
 
 ## 딥러닝 추천의 핵심: 임베딩
 
-딥러닝 추천 시스템의 출발점은 **임베딩(Embedding)**이다. 사용자 ID와 아이템 ID처럼 카테고리형 데이터를 밀집 벡터(dense vector)로 변환하는 기법이다.
+딥러닝 추천 시스템의 출발점은 **임베딩**(Embedding)이다. 사용자 ID와 아이템 ID처럼 카테고리형 데이터를 밀집 벡터(dense vector)로 변환하는 기법이다.
 
 사용자가 100만 명이라면 단순 원-핫 인코딩은 100만 차원 벡터가 된다. 메모리도 낭비고 계산도 비효율적이다. 임베딩은 이를 64~256차원의 밀집 벡터로 압축한다. 이 과정에서 **유사한 사용자는 가까운 벡터, 다른 사용자는 먼 벡터**가 되도록 학습이 진행된다.
 
@@ -35,11 +35,11 @@ item_emb = nn.Embedding(num_embeddings=5_000_000, embedding_dim=64)
 
 ![딥러닝 추천 아키텍처 비교](/assets/posts/recsys-deep-learning-architecture.svg)
 
-NCF는 2017년 He et al.이 발표한 논문으로, 행렬 분해를 신경망으로 일반화한 프레임워크다. 핵심 아이디어는 사용자와 아이템 임베딩을 내적 대신 **MLP(다층 퍼셉트론)**로 결합하는 것이다.
+NCF는 2017년 He et al.이 발표한 논문으로, 행렬 분해를 신경망으로 일반화한 프레임워크다. 핵심 아이디어는 사용자와 아이템 임베딩을 내적 대신 **MLP**(다층 퍼셉트론)로 결합하는 것이다.
 
 ### GMF: 일반화된 행렬 분해
 
-GMF(Generalized Matrix Factorization)는 기존 행렬 분해를 신경망 관점에서 재해석한다. 사용자 임베딩과 아이템 임베딩을 **원소별 곱(element-wise product)**하고, 선형 레이어를 통과시켜 예측값을 만든다.
+GMF(Generalized Matrix Factorization)는 기존 행렬 분해를 신경망 관점에서 재해석한다. 사용자 임베딩과 아이템 임베딩을 **원소별 곱**(element-wise product)하고, 선형 레이어를 통과시켜 예측값을 만든다.
 
 ```python
 # GMF: 원소별 곱으로 상호작용 모델링
@@ -53,7 +53,7 @@ GMF는 행렬 분해와 수학적으로 동일하지만, 가중치를 학습할 
 
 ### MLP: 비선형 상호작용 학습
 
-MLP 부분은 사용자와 아이템 임베딩을 **연결(concatenate)**한 뒤 여러 완전 연결층을 통과시킨다. ReLU 활성화 함수가 비선형성을 부여해 훨씬 복잡한 상호작용 패턴을 학습할 수 있다.
+MLP 부분은 사용자와 아이템 임베딩을 **연결**(concatenate)한 뒤 여러 완전 연결층을 통과시킨다. ReLU 활성화 함수가 비선형성을 부여해 훨씬 복잡한 상호작용 패턴을 학습할 수 있다.
 
 ```python
 # MLP: 연결 후 비선형 변환
@@ -125,9 +125,9 @@ Alibaba의 Taobao(타오바오) 광고 시스템에 실제 배포되어 CTR(클�
 
 ## 시퀀스 기반 추천
 
-DIN 이후 사용자의 행동 **순서(sequence)**에서 의미를 추출하는 모델들이 등장했다.
+DIN 이후 사용자의 행동 **순서**(sequence)에서 의미를 추출하는 모델들이 등장했다.
 
-**SASRec(Self-Attentive Sequential Recommendation, 2018)**은 Transformer의 자기 주의(self-attention) 메커니즘을 추천에 적용했다. 과거 행동 시퀀스 전체를 병렬로 처리하며 장거리 의존성을 효과적으로 포착한다.
+**SASRec**(Self-Attentive Sequential Recommendation, 2018)은 Transformer의 자기 주의(self-attention) 메커니즘을 추천에 적용했다. 과거 행동 시퀀스 전체를 병렬로 처리하며 장거리 의존성을 효과적으로 포착한다.
 
 ```python
 # SASRec 핵심: Transformer 인코더로 시퀀스 모델링
@@ -140,7 +140,7 @@ output = transformer_encoder(item_seq_embs)  # (B, T, D)
 next_item_score = dot_product(output[:, -1, :], candidate_embs)
 ```
 
-**BERT4Rec(2019)**은 BERT의 마스크 언어 모델(MLM) 방식을 차용했다. 시퀀스 중간의 아이템을 무작위로 마스킹하고 예측하는 방식으로 학습한다. 양방향 문맥을 활용해 SASRec보다 더 풍부한 표현을 학습한다.
+**BERT4Rec**(2019)은 BERT의 마스크 언어 모델(MLM) 방식을 차용했다. 시퀀스 중간의 아이템을 무작위로 마스킹하고 예측하는 방식으로 학습한다. 양방향 문맥을 활용해 SASRec보다 더 풍부한 표현을 학습한다.
 
 이러한 시퀀스 추천 모델들은 사용자의 단기적인 관심 변화와 장기적인 취향을 동시에 포착할 수 있어 현대 추천 시스템의 핵심이 되었다.
 

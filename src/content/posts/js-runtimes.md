@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-engines/)에서 V8·SpiderMonkey·JavaScriptCore라는 JS 엔진이 소스 코드를 파싱하고 JIT 컴파일로 실행한다는 것을 살펴봤습니다. 그런데 엔진 단독으로는 파일을 읽거나 네트워크 요청을 보낼 수 없습니다. 엔진에 그 능력을 부여하는 것이 바로 **런타임(runtime)**입니다.
+[지난 글](/posts/js-engines/)에서 V8·SpiderMonkey·JavaScriptCore라는 JS 엔진이 소스 코드를 파싱하고 JIT 컴파일로 실행한다는 것을 살펴봤습니다. 그런데 엔진 단독으로는 파일을 읽거나 네트워크 요청을 보낼 수 없습니다. 엔진에 그 능력을 부여하는 것이 바로 **런타임**(runtime)입니다.
 
 ## 엔진과 런타임의 차이
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/llm-comparison-benchmarks/)에서 LLM 벤치마크와 평가 방법론을 살펴봤다. 이제부터는 LLM을 실제로 잘 활용하는 기술로 넘어간다. 그 첫 번째 주제가 **프롬프트 엔지니어링(Prompt Engineering)**이다. "AI에게 어떻게 말하느냐"가 결과의 70%를 결정한다는 말이 있을 정도로, 프롬프트는 LLM 활용의 핵심이다.
+[지난 글](/posts/llm-comparison-benchmarks/)에서 LLM 벤치마크와 평가 방법론을 살펴봤다. 이제부터는 LLM을 실제로 잘 활용하는 기술로 넘어간다. 그 첫 번째 주제가 **프롬프트 엔지니어링**(Prompt Engineering)이다. "AI에게 어떻게 말하느냐"가 결과의 70%를 결정한다는 말이 있을 정도로, 프롬프트는 LLM 활용의 핵심이다.
 
 ## 프롬프트 엔지니어링이란
 

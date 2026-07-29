@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-abstract-classes/)에서 추상 클래스로 설계도를 만드는 방법을 살펴봤다. 이번에는 클래스 **상속(Inheritance)**을 깊이 다룬다. `extends` 키워드로 부모 클래스의 프로퍼티와 메서드를 물려받고, `super`로 부모의 생성자와 메서드를 호출하는 전체 흐름을 정리한다.
+[지난 글](/posts/ts-abstract-classes/)에서 추상 클래스로 설계도를 만드는 방법을 살펴봤다. 이번에는 클래스 **상속**(Inheritance)을 깊이 다룬다. `extends` 키워드로 부모 클래스의 프로퍼티와 메서드를 물려받고, `super`로 부모의 생성자와 메서드를 호출하는 전체 흐름을 정리한다.
 
 ## extends 기본
 
@@ -88,7 +88,7 @@ class Dog extends Animal {
 
 ## 다형성과 타입 안전성
 
-상속의 강점은 **다형성(Polymorphism)**이다. 부모 타입으로 다양한 서브클래스 인스턴스를 다룰 수 있다.
+상속의 강점은 **다형성**(Polymorphism)이다. 부모 타입으로 다양한 서브클래스 인스턴스를 다룰 수 있다.
 
 ```typescript
 class Cat extends Animal {

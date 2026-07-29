@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pattern-pagination-cursor-vs-offset/)에서 페이지네이션 전략을 살펴봤습니다. 이번 글의 주제는 **멱등성(Idempotency)**입니다. 특히 결제, 포인트 적립, 재고 감소처럼 "한 번만 실행되어야 하는" 작업에서 네트워크 오류나 클라이언트 재시도로 인한 이중 처리를 방지하는 DB 패턴을 살펴봅니다.
+[지난 글](/posts/pattern-pagination-cursor-vs-offset/)에서 페이지네이션 전략을 살펴봤습니다. 이번 글의 주제는 **멱등성**(Idempotency)입니다. 특히 결제, 포인트 적립, 재고 감소처럼 "한 번만 실행되어야 하는" 작업에서 네트워크 오류나 클라이언트 재시도로 인한 이중 처리를 방지하는 DB 패턴을 살펴봅니다.
 
 ## 멱등성이란
 

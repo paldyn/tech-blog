@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/embedding-contextual/)에서 ELMo와 BERT가 문맥에 따라 다른 벡터를 생성하는 문맥적 임베딩을 살펴봤다. 이제 현실적인 질문이 남는다. "AI 기술이 발전했다"와 "인공지능이 급속히 성장하고 있다" — 이 두 문장이 의미상 비슷한가? BERT는 문장의 각 토큰에 문맥적 벡터를 만들어주지만, **문장 전체를 하나의 벡터로** 표현하는 것은 별도의 문제다. 문서 검색, 의미 유사도 측정, RAG(Retrieval-Augmented Generation)의 핵심인 **문장 임베딩**이 바로 이 공백을 메운다. 그 중심에는 2019년 Reimers & Gurevych가 발표한 **SBERT(Sentence-BERT)**가 있다.
+[지난 글](/posts/embedding-contextual/)에서 ELMo와 BERT가 문맥에 따라 다른 벡터를 생성하는 문맥적 임베딩을 살펴봤다. 이제 현실적인 질문이 남는다. "AI 기술이 발전했다"와 "인공지능이 급속히 성장하고 있다" — 이 두 문장이 의미상 비슷한가? BERT는 문장의 각 토큰에 문맥적 벡터를 만들어주지만, **문장 전체를 하나의 벡터로** 표현하는 것은 별도의 문제다. 문서 검색, 의미 유사도 측정, RAG(Retrieval-Augmented Generation)의 핵심인 **문장 임베딩**이 바로 이 공백을 메운다. 그 중심에는 2019년 Reimers & Gurevych가 발표한 **SBERT**(Sentence-BERT)가 있다.
 
 ## 왜 BERT를 그대로 쓰면 안 되는가
 
@@ -78,7 +78,7 @@ def pool(hidden_states, attention_mask, strategy="mean"):
         return hidden_states.max(1).values
 ```
 
-논문 결과, **평균 풀링(mean pooling)**이 [CLS] 풀링과 최대 풀링보다 일반적으로 우수했다.
+논문 결과, **평균 풀링**(mean pooling)이 [CLS] 풀링과 최대 풀링보다 일반적으로 우수했다.
 
 ### 학습 목표
 
@@ -205,7 +205,7 @@ FAISS의 `IndexFlatIP`는 정확한 최근접 이웃 탐색이다. 속도가 더
 
 ## RAG에서의 문장 임베딩
 
-현재 가장 실용적인 문장 임베딩 응용은 **RAG(Retrieval-Augmented Generation)**다.
+현재 가장 실용적인 문장 임베딩 응용은 **RAG**(Retrieval-Augmented Generation)다.
 
 ```text
 [사용자 질문] → [문장 임베딩] → [FAISS 검색] → [관련 문서 N개]

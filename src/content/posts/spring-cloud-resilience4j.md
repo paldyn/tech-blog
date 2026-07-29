@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-cloud-config-server/)에서 Spring Cloud Config Server로 설정을 중앙 관리하는 방법을 다뤘다. 이번 글에서는 MSA에서 가장 자주 발생하는 문제 중 하나인 **연쇄 장애(Cascade Failure)**를 방지하는 Resilience4j를 다룬다.
+[지난 글](/posts/spring-cloud-config-server/)에서 Spring Cloud Config Server로 설정을 중앙 관리하는 방법을 다뤘다. 이번 글에서는 MSA에서 가장 자주 발생하는 문제 중 하나인 **연쇄 장애**(Cascade Failure)를 방지하는 Resilience4j를 다룬다.
 
 ## 연쇄 장애: MSA의 숨겨진 위협
 

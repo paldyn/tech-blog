@@ -47,13 +47,13 @@ for _ in range(50):
 
 ## 정적 배치의 문제
 
-전통적 배치에서는 배치 내 모든 요청이 동시에 시작하고 동시에 끝나야 한다. 길이가 다른 요청들을 한 배치에 넣으려면 짧은 요청에 **패딩(padding)**을 추가해야 한다. 100 토큰 요청과 1000 토큰 요청이 한 배치에 있으면, 100 토큰 요청 완료 후 GPU 슬롯이 비지만 1000 토큰 요청이 끝날 때까지 다음 요청을 넣을 수 없다.
+전통적 배치에서는 배치 내 모든 요청이 동시에 시작하고 동시에 끝나야 한다. 길이가 다른 요청들을 한 배치에 넣으려면 짧은 요청에 **패딩**(padding)을 추가해야 한다. 100 토큰 요청과 1000 토큰 요청이 한 배치에 있으면, 100 토큰 요청 완료 후 GPU 슬롯이 비지만 1000 토큰 요청이 끝날 때까지 다음 요청을 넣을 수 없다.
 
 ![정적 배치 vs Continuous Batching](/assets/posts/inference-batching-static-vs-continuous.svg)
 
 ## Continuous Batching: Iteration-level Scheduling
 
-**Continuous Batching(Yu et al., 2022)**의 핵심 아이디어는 각 Forward Pass(iteration) 단위로 배치를 재구성하는 것이다. 한 iteration이 끝난 후:
+**Continuous Batching**(Yu et al., 2022)의 핵심 아이디어는 각 Forward Pass(iteration) 단위로 배치를 재구성하는 것이다. 한 iteration이 끝난 후:
 
 1. 완료된 요청(EOS 토큰 생성 또는 max_tokens 도달)을 배치에서 제거
 2. 대기 큐에서 새 요청을 빈 슬롯에 추가
@@ -161,7 +161,7 @@ print(f"캐시 히트: {cached_latency:.2f}s")
 
 ## GQA: KV 캐시 크기 자체를 줄이기
 
-**Grouped Query Attention(GQA)**은 여러 Query 헤드가 하나의 KV 헤드를 공유한다. Llama-3 계열이 GQA를 채택해 KV 캐시 크기를 MHA 대비 크게 줄였다.
+**Grouped Query Attention**(GQA)은 여러 Query 헤드가 하나의 KV 헤드를 공유한다. Llama-3 계열이 GQA를 채택해 KV 캐시 크기를 MHA 대비 크게 줄였다.
 
 ```
 MHA (Multi-Head Attention): n_heads = n_kv_heads

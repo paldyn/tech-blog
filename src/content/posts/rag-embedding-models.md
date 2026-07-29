@@ -43,7 +43,7 @@ RAG에서 임베딩 모델은 두 번 사용된다.
 - 비용: $0.02/1M 토큰 (large 대비 1/6)
 - **실무에서 가장 많이 선택되는 모델**: 비용 대비 성능이 탁월
 
-흥미로운 기능인 **차원 축소(Matryoshka)**가 있다. `dimensions` 파라미터로 출력 차원을 줄일 수 있다. 3072-dim을 256-dim으로 줄여도 성능이 크게 저하되지 않아 저장 비용을 대폭 절감할 수 있다.
+흥미로운 기능인 **차원 축소**(Matryoshka)가 있다. `dimensions` 파라미터로 출력 차원을 줄일 수 있다. 3072-dim을 256-dim으로 줄여도 성능이 크게 저하되지 않아 저장 비용을 대폭 절감할 수 있다.
 
 ```python
 from openai import OpenAI
@@ -348,7 +348,7 @@ def embed_with_cache(text: str) -> list[float]:
 
 ## 임베딩 모델 평가: MTEB 벤치마크
 
-임베딩 모델의 성능은 **MTEB(Massive Text Embedding Benchmark)**로 평가된다. MTEB는 다양한 언어와 태스크(검색, 분류, 클러스터링, 의미 유사도 등)에서 모델을 평가한다.
+임베딩 모델의 성능은 **MTEB**(Massive Text Embedding Benchmark)로 평가된다. MTEB는 다양한 언어와 태스크(검색, 분류, 클러스터링, 의미 유사도 등)에서 모델을 평가한다.
 
 한국어 RAG 전용으로는 **KoMTEB**를 참고하면 된다. KoMTEB는 한국어 특화 평가 데이터셋으로, 다국어 모델과 한국어 특화 모델을 공정하게 비교할 수 있다.
 

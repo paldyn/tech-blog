@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-graph-bfs/)에서 BFS로 최단 경로를 구하는 방법을 다뤘습니다. 이번에는 **깊이 우선 탐색(Depth-First Search, DFS)**를 살펴봅니다. DFS는 한 방향으로 끝까지 파고들었다 돌아오는 방식으로, 사이클 감지, 위상 정렬, SCC 등 다양한 알고리즘의 기반이 됩니다.
+[지난 글](/posts/dsa-graph-bfs/)에서 BFS로 최단 경로를 구하는 방법을 다뤘습니다. 이번에는 **깊이 우선 탐색**(Depth-First Search, DFS)를 살펴봅니다. DFS는 한 방향으로 끝까지 파고들었다 돌아오는 방식으로, 사이클 감지, 위상 정렬, SCC 등 다양한 알고리즘의 기반이 됩니다.
 
 ## 동작 원리
 

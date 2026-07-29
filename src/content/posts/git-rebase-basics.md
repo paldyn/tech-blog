@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-merge-strategies/)에서 다양한 merge 전략을 살펴봤다. 이번에는 히스토리를 직선으로 만드는 또 다른 방법, **`git rebase`**를 다룬다. 처음 접하면 개념이 낯설지만, 핵심은 단순하다. "커밋들을 새 베이스 위에 옮겨 붙인다."
+[지난 글](/posts/git-merge-strategies/)에서 다양한 merge 전략을 살펴봤다. 이번에는 히스토리를 직선으로 만드는 또 다른 방법, <strong>`git rebase`</strong>를 다룬다. 처음 접하면 개념이 낯설지만, 핵심은 단순하다. "커밋들을 새 베이스 위에 옮겨 붙인다."
 
 ## rebase의 핵심 개념
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-nat/)에서 NAT이 사설 IP를 공인 IP로 변환하는 방법을 살펴봤다. 이번 글에서는 네트워크 진단의 기본 도구인 **ICMP(Internet Control Message Protocol)**와 그것을 활용한 **ping**, **traceroute**를 다룬다.
+[지난 글](/posts/network-nat/)에서 NAT이 사설 IP를 공인 IP로 변환하는 방법을 살펴봤다. 이번 글에서는 네트워크 진단의 기본 도구인 **ICMP**(Internet Control Message Protocol)와 그것을 활용한 **ping**, **traceroute**를 다룬다.
 
 ## ICMP란?
 
@@ -63,7 +63,7 @@ ping -f -c 1000 192.168.1.1
 
 ![traceroute TTL 기반 경로 발견](/assets/posts/network-icmp-ping-traceroute.svg)
 
-traceroute는 **TTL을 1부터 하나씩 증가**시키며 패킷을 보낸다. 각 라우터는 TTL이 0이 되면 **ICMP Time Exceeded(Type 11)**를 출발지에게 보내고, 이 응답의 출발지 IP가 해당 홉의 라우터 주소가 된다.
+traceroute는 **TTL을 1부터 하나씩 증가**시키며 패킷을 보낸다. 각 라우터는 TTL이 0이 되면 **ICMP Time Exceeded**(Type 11)를 출발지에게 보내고, 이 응답의 출발지 IP가 해당 홉의 라우터 주소가 된다.
 
 ```bash
 # traceroute (Linux)

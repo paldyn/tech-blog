@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cv-image-classification-deep/)에서 딥러닝 이미지 분류의 전체 파이프라인과 CNN 기반 백본들을 살펴봤다. 이번 글에서는 2020년 등장해 CV 분야의 판도를 바꾼 **Vision Transformer(ViT)**를 완전 해설한다. ViT는 "이미지도 단어 시퀀스처럼 처리할 수 있다"는 단순한 아이디어로 시작해, 오늘날 CLIP·Stable Diffusion·GPT-4V 등 멀티모달 모델의 비전 인코더로 자리잡았다.
+[지난 글](/posts/cv-image-classification-deep/)에서 딥러닝 이미지 분류의 전체 파이프라인과 CNN 기반 백본들을 살펴봤다. 이번 글에서는 2020년 등장해 CV 분야의 판도를 바꾼 **Vision Transformer**(ViT)를 완전 해설한다. ViT는 "이미지도 단어 시퀀스처럼 처리할 수 있다"는 단순한 아이디어로 시작해, 오늘날 CLIP·Stable Diffusion·GPT-4V 등 멀티모달 모델의 비전 인코더로 자리잡았다.
 
 ## ViT 핵심 아이디어: 이미지 → 패치 시퀀스
 
@@ -166,7 +166,7 @@ with torch.no_grad():
 
 ### DeiT — 데이터 효율적 학습
 
-원본 ViT는 JFT-300M 같은 초대규모 데이터셋을 요구한다. DeiT는 ImageNet만으로 경쟁력 있는 ViT를 학습하기 위해 **증류 토큰(distillation token)**을 도입했다. CLS 토큰 외에 CNN 교사 모델의 예측을 모방하는 증류 토큰을 추가해 CNN의 귀납적 편향을 ViT에 이식한다.
+원본 ViT는 JFT-300M 같은 초대규모 데이터셋을 요구한다. DeiT는 ImageNet만으로 경쟁력 있는 ViT를 학습하기 위해 **증류 토큰**(distillation token)을 도입했다. CLS 토큰 외에 CNN 교사 모델의 예측을 모방하는 증류 토큰을 추가해 CNN의 귀납적 편향을 ViT에 이식한다.
 
 ### Swin Transformer — 계층형 윈도우 어텐션
 

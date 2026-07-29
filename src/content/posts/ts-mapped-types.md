@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-conditional-types/)에서 조건부 타입과 `infer` 키워드의 기초를 다뤘다. 이번에는 **매핑된 타입(Mapped Types)**을 살펴본다. 매핑된 타입은 기존 타입의 모든 속성을 순회하면서 각 속성을 변환해 새로운 타입을 만드는 TypeScript의 핵심 기능이다. `Partial`, `Readonly`, `Required`, `Pick`, `Record` 같은 표준 유틸리티 타입들이 모두 매핑된 타입으로 구현되어 있다.
+[지난 글](/posts/ts-conditional-types/)에서 조건부 타입과 `infer` 키워드의 기초를 다뤘다. 이번에는 **매핑된 타입**(Mapped Types)을 살펴본다. 매핑된 타입은 기존 타입의 모든 속성을 순회하면서 각 속성을 변환해 새로운 타입을 만드는 TypeScript의 핵심 기능이다. `Partial`, `Readonly`, `Required`, `Pick`, `Record` 같은 표준 유틸리티 타입들이 모두 매핑된 타입으로 구현되어 있다.
 
 ## 기본 문법
 

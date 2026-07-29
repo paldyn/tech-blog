@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-recursive-conditional-types/)에서 재귀 조건부 타입으로 다양한 타입 알고리즘을 구현했다. 이번에는 TypeScript 타입 체조의 가장 흥미로운 분야 중 하나인 **타입 레벨 산술(Type-Level Arithmetic)**을 다룬다. TypeScript 숫자 리터럴 타입은 연산을 직접 수행할 수 없지만, **튜플 길이**를 이용하면 덧셈, 뺄셈, 곱셈, 대소 비교를 타입 레벨에서 구현할 수 있다.
+[지난 글](/posts/ts-recursive-conditional-types/)에서 재귀 조건부 타입으로 다양한 타입 알고리즘을 구현했다. 이번에는 TypeScript 타입 체조의 가장 흥미로운 분야 중 하나인 **타입 레벨 산술**(Type-Level Arithmetic)을 다룬다. TypeScript 숫자 리터럴 타입은 연산을 직접 수행할 수 없지만, **튜플 길이**를 이용하면 덧셈, 뺄셈, 곱셈, 대소 비교를 타입 레벨에서 구현할 수 있다.
 
 ## 핵심 아이디어: 숫자 = 튜플 길이
 

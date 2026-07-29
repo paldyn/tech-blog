@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-monotonic-stack/)에서 단조 스택으로 O(n²) 문제를 O(n)으로 해결하는 법을 배웠습니다. 이번에는 정렬된 데이터를 평균 O(log n)에 탐색·삽입·삭제할 수 있는 **스킵 리스트(Skip List)**를 소개합니다. 균형 이진 탐색 트리와 비슷한 성능을 내면서도 구현이 훨씬 단순해, Redis의 Sorted Set에 실제로 사용되는 자료구조입니다.
+[지난 글](/posts/dsa-monotonic-stack/)에서 단조 스택으로 O(n²) 문제를 O(n)으로 해결하는 법을 배웠습니다. 이번에는 정렬된 데이터를 평균 O(log n)에 탐색·삽입·삭제할 수 있는 **스킵 리스트**(Skip List)를 소개합니다. 균형 이진 탐색 트리와 비슷한 성능을 내면서도 구현이 훨씬 단순해, Redis의 Sorted Set에 실제로 사용되는 자료구조입니다.
 
 ## 아이디어: 층층이 쌓은 고속 도로
 
@@ -22,7 +22,7 @@ draft: false
 - **Level 2**: 약 n/4 노드
 - **Level k**: 약 n/2^k 노드
 
-각 노드의 레벨은 **동전 뒤집기(Bernoulli trial)**로 무작위로 결정합니다(p=0.5).
+각 노드의 레벨은 **동전 뒤집기**(Bernoulli trial)로 무작위로 결정합니다(p=0.5).
 
 ![스킵 리스트 구조](/assets/posts/dsa-skip-list-structure.svg)
 

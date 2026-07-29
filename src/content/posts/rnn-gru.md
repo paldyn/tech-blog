@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/rnn-lstm/)에서 LSTM의 세 게이트 구조를 살펴봤다. 2014년 Cho et al.은 더 간단한 구조로도 LSTM과 비슷한 성능을 낼 수 있다는 것을 보였다—그것이 **GRU(Gated Recurrent Unit)**다. LSTM의 Forget·Input·Output 세 게이트를 **Reset·Update** 두 게이트로 압축하고, 셀 상태(C_t)를 없애 은닉 상태 하나만 유지한다.
+[지난 글](/posts/rnn-lstm/)에서 LSTM의 세 게이트 구조를 살펴봤다. 2014년 Cho et al.은 더 간단한 구조로도 LSTM과 비슷한 성능을 낼 수 있다는 것을 보였다—그것이 **GRU**(Gated Recurrent Unit)다. LSTM의 Forget·Input·Output 세 게이트를 **Reset·Update** 두 게이트로 압축하고, 셀 상태(C_t)를 없애 은닉 상태 하나만 유지한다.
 
 ## GRU 수식
 
@@ -96,7 +96,7 @@ LSTM의 Forget gate와 비슷하지만, GRU는 이것을 **후보 상태 계산 
 임베디드/엣지 AI, 스트리밍 추론   → GRU (파라미터↓, 상태 단순)
 ```
 
-최신 연구(2024)에서 Mamba 등 **State Space Model(SSM)**이 RNN과 Transformer의 장점을 결합하는 방향으로 발전하고 있다. 기본 GRU의 아이디어—게이트를 이용한 선택적 기억—는 이러한 최신 모델에도 그대로 이어진다.
+최신 연구(2024)에서 Mamba 등 **State Space Model**(SSM)이 RNN과 Transformer의 장점을 결합하는 방향으로 발전하고 있다. 기본 GRU의 아이디어—게이트를 이용한 선택적 기억—는 이러한 최신 모델에도 그대로 이어진다.
 
 ---
 

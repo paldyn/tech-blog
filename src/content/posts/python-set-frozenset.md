@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-dict-basics/)에서 딕셔너리를 살펴봤다. 이번에는 **집합(set)**을 다룬다. 딕셔너리와 같은 해시 테이블 구조지만 키만 있고 값은 없는 컬렉션이다.
+[지난 글](/posts/python-dict-basics/)에서 딕셔너리를 살펴봤다. 이번에는 **집합**(set)을 다룬다. 딕셔너리와 같은 해시 테이블 구조지만 키만 있고 값은 없는 컬렉션이다.
 
 ## set이란
 

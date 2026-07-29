@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-dockerignore/)에서 `.dockerignore`로 빌드 컨텍스트를 최소화하는 방법을 다뤘다. Docker를 처음 쓰거나 환경이 바뀐 후 가장 흔하게 만나는 오류가 **"Cannot connect to the Docker daemon at unix:///var/run/docker.sock"**이다. 원인은 크게 네 가지이고 각각 해결법이 다르다.
+[지난 글](/posts/docker-dockerignore/)에서 `.dockerignore`로 빌드 컨텍스트를 최소화하는 방법을 다뤘다. Docker를 처음 쓰거나 환경이 바뀐 후 가장 흔하게 만나는 오류가 <strong>"Cannot connect to the Docker daemon at unix:///var/run/docker.sock"</strong>이다. 원인은 크게 네 가지이고 각각 해결법이 다르다.
 
 ## 오류 메시지 전문
 

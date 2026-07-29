@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/http-status-4xx-5xx/)에서 오류 상태 코드를 정리했다. 이번 글에서는 HTTP 메시지에서 시작 줄만큼 중요한 **헤더(Header)**의 전체 구조와 분류를 다룬다.
+[지난 글](/posts/http-status-4xx-5xx/)에서 오류 상태 코드를 정리했다. 이번 글에서는 HTTP 메시지에서 시작 줄만큼 중요한 **헤더**(Header)의 전체 구조와 분류를 다룬다.
 
 ## HTTP 헤더란
 

@@ -165,7 +165,7 @@ String s = "Hello" + name + "!";
 
 하지만 **루프를 걸쳐 이어 붙이는 경우**는 최적화되지 않는다. `javac`가 루프마다 새 `StringBuilder`를 생성하기 때문이다. 루프 내 반복 연결은 반드시 수동으로 `StringBuilder`를 꺼내 써야 한다.
 
-Java 9+에서는 **`invokedynamic` 기반의 `StringConcatFactory`**가 추가되어 더 유연한 최적화가 가능해졌다. 내부 전략이 바뀌더라도 루프 안에서는 여전히 직접 `StringBuilder`를 쓰는 것이 가장 확실하다.
+Java 9+에서는 <strong>`invokedynamic` 기반의 `StringConcatFactory`</strong>가 추가되어 더 유연한 최적화가 가능해졌다. 내부 전략이 바뀌더라도 루프 안에서는 여전히 직접 `StringBuilder`를 쓰는 것이 가장 확실하다.
 
 ## 성능 비교 예시
 

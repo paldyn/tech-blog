@@ -15,7 +15,7 @@ draft: false
 
 ## 왜 서드파티 스크립트가 문제인가
 
-일반적인 `<script src="...">` 태그는 HTML 파싱을 차단한다. `async`/`defer` 속성을 붙이더라도 여러 스크립트가 경쟁적으로 로드되면 메인 스레드를 오래 점유해 **Total Blocking Time(TBT)**와 **Largest Contentful Paint(LCP)**가 나빠진다.
+일반적인 `<script src="...">` 태그는 HTML 파싱을 차단한다. `async`/`defer` 속성을 붙이더라도 여러 스크립트가 경쟁적으로 로드되면 메인 스레드를 오래 점유해 **Total Blocking Time**(TBT)와 **Largest Contentful Paint**(LCP)가 나빠진다.
 
 `next/script`는 네 가지 `strategy` 옵션으로 각 스크립트의 로드 시점을 명시적으로 선언하게 해준다.
 

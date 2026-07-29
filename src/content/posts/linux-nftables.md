@@ -33,13 +33,13 @@ nftables의 핵심 개념은 세 가지입니다.
 
 **테이블(Table)**: 주소 패밀리별 규칙 컨테이너입니다. `ip`, `ip6`, `inet`, `arp`, `bridge`, `netdev` 중 하나를 지정합니다. `inet`을 쓰면 IPv4와 IPv6를 함께 처리할 수 있어 가장 많이 씁니다.
 
-**체인(Chain)**: 테이블 안에 규칙을 담는 목록입니다. Netfilter 훅에 연결된 **기본 체인(base chain)**과, 다른 체인에서 `jump`/`goto`로 호출하는 **일반 체인(regular chain)**으로 나뉩니다.
+**체인(Chain)**: 테이블 안에 규칙을 담는 목록입니다. Netfilter 훅에 연결된 **기본 체인**(base chain)과, 다른 체인에서 `jump`/`goto`로 호출하는 **일반 체인**(regular chain)으로 나뉩니다.
 
 **훅(Hook)**: 커널이 패킷을 처리하는 시점을 나타냅니다. 다섯 가지 주요 훅이 있습니다.
 
 ![nftables 5개 훅 포인트](/assets/posts/linux-nftables-hooks.svg)
 
-체인을 훅에 연결할 때는 **우선순위(priority)**도 지정해야 합니다. 같은 훅을 여러 체인이 공유할 때 처리 순서를 결정합니다. 일반적으로 filter 체인은 우선순위 `0`, nat 체인은 `-100`(PREROUTING) 또는 `100`(POSTROUTING)을 씁니다.
+체인을 훅에 연결할 때는 **우선순위**(priority)도 지정해야 합니다. 같은 훅을 여러 체인이 공유할 때 처리 순서를 결정합니다. 일반적으로 filter 체인은 우선순위 `0`, nat 체인은 `-100`(PREROUTING) 또는 `100`(POSTROUTING)을 씁니다.
 
 ## 기본 명령어
 
@@ -132,7 +132,7 @@ nft add rule inet filter INPUT \
   ip saddr @ALLOWED_IPS tcp dport 22 accept
 ```
 
-**맵(Map)**은 키-값 쌍으로, DNAT 포트 매핑 등에 활용합니다.
+**맵**(Map)은 키-값 쌍으로, DNAT 포트 매핑 등에 활용합니다.
 
 ```bash
 # 포트별 DNAT 맵
@@ -175,7 +175,7 @@ Debian/Ubuntu에서는 `nftables.service`가 시작 시 `/etc/nftables.conf`를 
 
 ## conntrack과 상태 추적
 
-nftables에서 **연결 추적(conntrack)**은 `ct` 표현식으로 접근합니다.
+nftables에서 **연결 추적**(conntrack)은 `ct` 표현식으로 접근합니다.
 
 ```bash
 # 상태 기반 규칙

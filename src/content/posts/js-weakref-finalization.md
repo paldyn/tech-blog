@@ -15,7 +15,7 @@ draft: false
 
 ## WeakRef — 약한 참조
 
-`WeakRef`는 객체에 대한 **약한 참조(weak reference)**를 만듭니다. 강한 참조(`let obj = target`)와 달리, `WeakRef`가 가리키는 객체는 다른 강한 참조가 없으면 GC가 회수할 수 있습니다.
+`WeakRef`는 객체에 대한 **약한 참조**(weak reference)를 만듭니다. 강한 참조(`let obj = target`)와 달리, `WeakRef`가 가리키는 객체는 다른 강한 참조가 없으면 GC가 회수할 수 있습니다.
 
 ![WeakRef 강한 참조 vs 약한 참조](/assets/posts/js-weakref-finalization-memory.svg)
 

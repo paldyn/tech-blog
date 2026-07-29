@@ -29,7 +29,7 @@ draft: false
 
 ## ① 로컬 상태: useState와 useReducer
 
-대부분의 상태는 로컬이어야 한다. 무조건 전역 상태 관리 라이브러리를 쓰는 것은 **과도한 설계(over-engineering)**다.
+대부분의 상태는 로컬이어야 한다. 무조건 전역 상태 관리 라이브러리를 쓰는 것은 **과도한 설계**(over-engineering)다.
 
 ```tsx
 // 단순한 값: useState

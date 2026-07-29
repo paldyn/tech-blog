@@ -41,7 +41,7 @@ ETCDCTL_API=3 etcdctl get /registry/pods/default \
 
 K8s 오브젝트는 `/registry/{리소스타입}/{네임스페이스}/{이름}` 형식의 키로 저장된다. 값은 protobuf 형식으로 직렬화되어 있어 etcdctl로 조회하면 바이너리로 보이지만, API Server를 통해 조회하면 JSON으로 디코딩된다.
 
-중요한 점은 **spec(원하는 상태)**과 **status(실제 상태)**가 같은 오브젝트 안에 함께 저장된다는 것이다. Deployment Controller가 파드를 시작하면 파드의 status 필드를 업데이트하고, 이 변경이 etcd에 기록된다.
+중요한 점은 **spec**(원하는 상태)과 **status**(실제 상태)가 같은 오브젝트 안에 함께 저장된다는 것이다. Deployment Controller가 파드를 시작하면 파드의 status 필드를 업데이트하고, 이 변경이 etcd에 기록된다.
 
 ## Raft 합의 알고리즘
 

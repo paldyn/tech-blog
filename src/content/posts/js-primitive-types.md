@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-tdz/)에서 `let`과 `const`의 Temporal Dead Zone이 왜 존재하는지, 그리고 어떤 상황에서 ReferenceError가 발생하는지 살펴봤습니다. 이번 글에서는 JavaScript의 자료형 체계의 기초인 **원시 타입(primitive type)**을 정리합니다.
+[지난 글](/posts/js-tdz/)에서 `let`과 `const`의 Temporal Dead Zone이 왜 존재하는지, 그리고 어떤 상황에서 ReferenceError가 발생하는지 살펴봤습니다. 이번 글에서는 JavaScript의 자료형 체계의 기초인 **원시 타입**(primitive type)을 정리합니다.
 
 ## 원시 타입이란
 
-JavaScript에서 모든 값은 **원시 타입**이거나 **참조 타입(객체)**입니다. 원시 타입은 가장 기본적인 데이터 형태로, **불변(immutable)**합니다. 값 자체를 직접 변경할 수 없고, 변수에 새 값을 할당할 뿐입니다.
+JavaScript에서 모든 값은 **원시 타입**이거나 **참조 타입**(객체)입니다. 원시 타입은 가장 기본적인 데이터 형태로, **불변**(immutable)합니다. 값 자체를 직접 변경할 수 없고, 변수에 새 값을 할당할 뿐입니다.
 
 ```javascript
 let str = "hello";

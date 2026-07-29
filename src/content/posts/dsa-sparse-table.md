@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-kd-tree/)에서 다차원 공간 탐색을 위한 k-d 트리를 다뤘습니다. 이번에는 **정적 배열**에서 구간 최솟값(Range Minimum Query, RMQ) 쿼리를 놀라운 **O(1)**로 처리하는 희소 테이블(Sparse Table)을 알아봅니다.
+[지난 글](/posts/dsa-kd-tree/)에서 다차원 공간 탐색을 위한 k-d 트리를 다뤘습니다. 이번에는 **정적 배열**에서 구간 최솟값(Range Minimum Query, RMQ) 쿼리를 놀라운 **O**(1)로 처리하는 희소 테이블(Sparse Table)을 알아봅니다.
 
 ## 핵심 아이디어
 

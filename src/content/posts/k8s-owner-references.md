@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-annotations/)에서 Annotations의 용도와 실전 패턴을 살펴봤습니다. 이번에는 Kubernetes 리소스 간 **소유권(ownership)**을 기록하는 `ownerReferences` 필드와, 상위 리소스 삭제 시 하위 리소스를 어떻게 처리할지 결정하는 **가비지 컬렉션 정책**을 다룹니다.
+[지난 글](/posts/k8s-annotations/)에서 Annotations의 용도와 실전 패턴을 살펴봤습니다. 이번에는 Kubernetes 리소스 간 **소유권**(ownership)을 기록하는 `ownerReferences` 필드와, 상위 리소스 삭제 시 하위 리소스를 어떻게 처리할지 결정하는 **가비지 컬렉션 정책**을 다룹니다.
 
 ## ownerReferences란
 

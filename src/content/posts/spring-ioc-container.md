@@ -27,7 +27,7 @@ public class OrderService {
 
 이 방식의 문제는 `OrderService`가 `RateDiscountPolicy`와 `JdbcOrderRepository`에 **컴파일 타임**에 강하게 결합된다는 것입니다. 정책이나 저장소를 바꾸려면 `OrderService` 코드를 직접 수정해야 합니다.
 
-**제어의 역전(Inversion of Control, IoC)**은 이 역할을 외부로 넘깁니다. 객체는 자신의 의존성을 요청하거나 만들지 않고, 외부(컨테이너)가 필요한 객체를 주입해 줍니다.
+**제어의 역전**(Inversion of Control, IoC)은 이 역할을 외부로 넘깁니다. 객체는 자신의 의존성을 요청하거나 만들지 않고, 외부(컨테이너)가 필요한 객체를 주입해 줍니다.
 
 ```java
 // IoC 방식: 의존성을 생성자로 받는다 (DI)
@@ -61,7 +61,7 @@ public class OrderService {
 | `containsBean(String name)` | 빈 존재 여부 확인 |
 | `isSingleton(String name)` | 싱글톤 여부 확인 |
 
-`BeanFactory`는 **지연 초기화(Lazy Initialization)**를 기본으로 합니다. `getBean()`을 호출하는 시점에 비로소 빈이 생성됩니다. 메모리가 극도로 제한된 임베디드 환경 외에는 직접 사용할 일이 거의 없습니다.
+`BeanFactory`는 **지연 초기화**(Lazy Initialization)를 기본으로 합니다. `getBean()`을 호출하는 시점에 비로소 빈이 생성됩니다. 메모리가 극도로 제한된 임베디드 환경 외에는 직접 사용할 일이 거의 없습니다.
 
 ### ApplicationContext
 

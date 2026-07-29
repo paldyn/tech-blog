@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-first-class-functions/)에서 함수를 값으로 다루는 일급 함수 개념을 살펴봤습니다. 이번에는 ES2015가 도입한 함수 파라미터 두 가지 — **기본값 파라미터(default parameters)**와 **나머지 파라미터(rest parameters)** 를 다룹니다. 두 기능은 이전에 관용적으로 쓰이던 `arguments` 객체 조작과 `||` 기본값 패턴을 대체하여 코드를 명확하게 만들어 줍니다.
+[지난 글](/posts/js-first-class-functions/)에서 함수를 값으로 다루는 일급 함수 개념을 살펴봤습니다. 이번에는 ES2015가 도입한 함수 파라미터 두 가지 — **기본값 파라미터**(default parameters)와 **나머지 파라미터(rest parameters)** 를 다룹니다. 두 기능은 이전에 관용적으로 쓰이던 `arguments` 객체 조작과 `||` 기본값 패턴을 대체하여 코드를 명확하게 만들어 줍니다.
 
 ## 기본값 파라미터
 

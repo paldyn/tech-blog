@@ -17,7 +17,7 @@ draft: false
 
 **Raw SQL**은 SQL 문자열을 직접 데이터베이스 드라이버에 전달하는 방식이다. JDBC, psycopg2, database/sql(Go) 같은 저수준 API가 여기에 해당한다.
 
-**ORM(Object-Relational Mapping)**은 테이블과 객체(클래스) 사이의 변환을 자동화하는 레이어다. JPA/Hibernate, Django ORM, ActiveRecord, SQLAlchemy ORM이 대표적이다.
+**ORM**(Object-Relational Mapping)은 테이블과 객체(클래스) 사이의 변환을 자동화하는 레이어다. JPA/Hibernate, Django ORM, ActiveRecord, SQLAlchemy ORM이 대표적이다.
 
 그런데 현실에서는 이 두 극단 사이에 여러 계층이 있다.
 

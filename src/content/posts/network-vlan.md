@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-switching-mac-learning/)에서 스위치가 MAC 테이블로 프레임을 지능적으로 전달하는 방법을 살펴봤다. 그런데 하나의 스위치에 연결된 모든 장치는 같은 브로드캐스트 도메인에 속한다. 개발팀과 재무팀이 같은 스위치에 연결되면 서로의 브로드캐스트가 전달되고 보안 격리도 어렵다. **VLAN(Virtual LAN)**이 이 문제를 해결한다.
+[지난 글](/posts/network-switching-mac-learning/)에서 스위치가 MAC 테이블로 프레임을 지능적으로 전달하는 방법을 살펴봤다. 그런데 하나의 스위치에 연결된 모든 장치는 같은 브로드캐스트 도메인에 속한다. 개발팀과 재무팀이 같은 스위치에 연결되면 서로의 브로드캐스트가 전달되고 보안 격리도 어렵다. **VLAN**(Virtual LAN)이 이 문제를 해결한다.
 
 ## VLAN이 필요한 이유
 
@@ -130,7 +130,7 @@ SW# show interfaces trunk
 
 ## Inter-VLAN 라우팅
 
-VLAN 간 통신은 반드시 **라우터(또는 L3 스위치)**를 거쳐야 한다. 두 가지 방법이 있다.
+VLAN 간 통신은 반드시 **라우터**(또는 L3 스위치)를 거쳐야 한다. 두 가지 방법이 있다.
 
 ### Router-on-a-Stick
 

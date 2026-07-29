@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-kadane-algorithm/)에서 최대 부분 배열 합을 O(N)에 구하는 카데인 알고리즘을 다뤘습니다. 이번에는 업데이트와 구간 쿼리를 균형 있게 처리하는 **제곱근 분해(Sqrt Decomposition)**입니다.
+[지난 글](/posts/dsa-kadane-algorithm/)에서 최대 부분 배열 합을 O(N)에 구하는 카데인 알고리즘을 다뤘습니다. 이번에는 업데이트와 구간 쿼리를 균형 있게 처리하는 **제곱근 분해**(Sqrt Decomposition)입니다.
 
 ## 핵심 아이디어
 

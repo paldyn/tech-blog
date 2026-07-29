@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-infer-keyword/)에서 `infer`로 복잡한 타입을 분해하는 패턴을 살펴봤다. 이번에는 TypeScript 타입 계층의 양 끝과 탈출구 역할을 하는 세 가지 특수 타입인 **`unknown`, `never`, `any`**를 다룬다. 이 세 타입의 차이를 정확히 이해하면 타입 안전성과 유연성 사이의 균형을 의식적으로 선택할 수 있다.
+[지난 글](/posts/ts-infer-keyword/)에서 `infer`로 복잡한 타입을 분해하는 패턴을 살펴봤다. 이번에는 TypeScript 타입 계층의 양 끝과 탈출구 역할을 하는 세 가지 특수 타입인 <strong>`unknown`, `never`, `any`</strong>를 다룬다. 이 세 타입의 차이를 정확히 이해하면 타입 안전성과 유연성 사이의 균형을 의식적으로 선택할 수 있다.
 
 ## 타입 계층 구조
 

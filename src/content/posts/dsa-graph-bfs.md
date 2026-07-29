@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-graph-representation/)에서 그래프를 메모리에 저장하는 세 가지 방법을 살펴봤습니다. 이제 그래프를 실제로 탐색해 봅니다. **너비 우선 탐색(Breadth-First Search, BFS)**은 시작 정점에서 가까운 정점부터 차례로 방문하며, **비가중 그래프에서 최단 경로를 보장**하는 대표 알고리즘입니다.
+[지난 글](/posts/dsa-graph-representation/)에서 그래프를 메모리에 저장하는 세 가지 방법을 살펴봤습니다. 이제 그래프를 실제로 탐색해 봅니다. **너비 우선 탐색**(Breadth-First Search, BFS)은 시작 정점에서 가까운 정점부터 차례로 방문하며, **비가중 그래프에서 최단 경로를 보장**하는 대표 알고리즘입니다.
 
 ## 동작 원리
 

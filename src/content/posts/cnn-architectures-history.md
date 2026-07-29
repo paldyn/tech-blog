@@ -155,7 +155,7 @@ class InceptionModule(nn.Module):
 
 ## ResNet (2015): 잔차 연결의 혁명
 
-He et al.은 단순한 관찰에서 출발했다: "56층 네트워크가 20층보다 왜 성능이 낮은가?" 더 깊다고 항상 좋은 게 아니었다. 해결책은 **잔차 연결(Residual Connection)**이었다.
+He et al.은 단순한 관찰에서 출발했다: "56층 네트워크가 20층보다 왜 성능이 낮은가?" 더 깊다고 항상 좋은 게 아니었다. 해결책은 **잔차 연결**(Residual Connection)이었다.
 
 ```python
 class ResidualBlock(nn.Module):
@@ -174,9 +174,9 @@ class ResidualBlock(nn.Module):
         return F.relu(out)
 ```
 
-`H(x) = F(x) + x`. 레이어가 학습하는 것은 `F(x) = H(x) - x`, 즉 **잔차(Residual)**다. 불필요하면 `F(x) → 0`으로 수렴하면 된다 — 항등 함수를 배우기 위해 모든 가중치를 0으로 만들기만 하면 된다.
+`H(x) = F(x) + x`. 레이어가 학습하는 것은 `F(x) = H(x) - x`, 즉 **잔차**(Residual)다. 불필요하면 `F(x) → 0`으로 수렴하면 된다 — 항등 함수를 배우기 위해 모든 가중치를 0으로 만들기만 하면 된다.
 
-이로써 152층 네트워크 학습이 가능해졌고, ImageNet 오류율이 인간 수준(5.1%)이하인 **3.57%**로 내려갔다.
+이로써 152층 네트워크 학습이 가능해졌고, ImageNet 오류율이 인간 수준(5.1%)이하인 <strong>3.57%</strong>로 내려갔다.
 
 ## DenseNet (2017): 밀집 연결
 

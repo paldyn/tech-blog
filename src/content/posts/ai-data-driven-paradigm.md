@@ -42,7 +42,7 @@ good_data = pd.DataFrame({
 
 ## 데이터 플라이휠: 선두 기업이 더 강해지는 이유
 
-데이터 중심 패러다임에서 가장 중요한 경제적 개념이 **데이터 플라이휠(Data Flywheel)**이다. 선순환 구조가 한번 돌기 시작하면 가속이 붙어 멈추기 어렵다.
+데이터 중심 패러다임에서 가장 중요한 경제적 개념이 **데이터 플라이휠**(Data Flywheel)이다. 선순환 구조가 한번 돌기 시작하면 가속이 붙어 멈추기 어렵다.
 
 ![데이터 플라이휠 효과](/assets/posts/ai-data-driven-paradigm-flywheel.svg)
 

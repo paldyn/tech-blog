@@ -90,7 +90,7 @@ asyncio의 심장은 **이벤트 루프**다. 루프는 실행 준비가 된 코
 
 ![코루틴과 이벤트 루프의 협력 구조](/assets/posts/python-asyncio-basics-coroutine-flow.svg)
 
-이 전환은 **협력적(cooperative)**이다. 스레드처럼 OS가 강제로 끼어드는 것이 아니라, 코루틴이 `await` 지점에서 스스로 제어권을 양보한다. 그래서 `await` 없이 CPU만 오래 쓰는 코루틴은 다른 코루틴을 굶기게 된다.
+이 전환은 **협력적**(cooperative)이다. 스레드처럼 OS가 강제로 끼어드는 것이 아니라, 코루틴이 `await` 지점에서 스스로 제어권을 양보한다. 그래서 `await` 없이 CPU만 오래 쓰는 코루틴은 다른 코루틴을 굶기게 된다.
 
 ## 언제 asyncio를 쓸까
 

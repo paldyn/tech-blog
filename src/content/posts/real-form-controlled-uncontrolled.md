@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/real-pagination-client/)에서 커서 페이지네이션과 무한 스크롤 구현을 살펴봤습니다. 이번에는 **폼(Form)** 주제를 시작합니다. React에서 폼 입력을 다루는 두 가지 방식—**제어 컴포넌트(Controlled Component)**와 **비제어 컴포넌트(Uncontrolled Component)**—의 차이와 React Hook Form이 두 방식을 어떻게 결합하는지 정리합니다.
+[지난 글](/posts/real-pagination-client/)에서 커서 페이지네이션과 무한 스크롤 구현을 살펴봤습니다. 이번에는 **폼(Form)<strong> 주제를 시작합니다. React에서 폼 입력을 다루는 두 가지 방식—</strong>제어 컴포넌트**(Controlled Component)와 **비제어 컴포넌트(Uncontrolled Component)**—의 차이와 React Hook Form이 두 방식을 어떻게 결합하는지 정리합니다.
 
 ![제어 vs 비제어 컴포넌트](/assets/posts/real-form-controlled-uncontrolled-concept.svg)
 
 ## 제어 컴포넌트 (Controlled Component)
 
-React State가 **진실의 단일 소스(Single Source of Truth)**입니다. 사용자가 입력할 때마다 `onChange`로 State를 업데이트하고, `value`로 입력 요소에 반영합니다.
+React State가 **진실의 단일 소스**(Single Source of Truth)입니다. 사용자가 입력할 때마다 `onChange`로 State를 업데이트하고, `value`로 입력 요소에 반영합니다.
 
 ```javascript
 import { useState } from 'react';

@@ -171,7 +171,7 @@ VACUUM FREEZE VERBOSE person;
 
 ## Bloat와 repack
 
-VACUUM이 Free Space를 표시해도, 그 공간이 OS로 반환되지는 않는다. 테이블 파일 크기는 줄어들지 않는다. 이를 **bloat(부풀림)**이라 한다.
+VACUUM이 Free Space를 표시해도, 그 공간이 OS로 반환되지는 않는다. 테이블 파일 크기는 줄어들지 않는다. 이를 **bloat**(부풀림)이라 한다.
 
 ```sql
 -- pg_repack으로 잠금 없이 테이블 재작성 (확장 필요)

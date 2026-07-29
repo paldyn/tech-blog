@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-vlan/)에서 VLAN으로 네트워크를 논리적으로 분리하는 방법을 살펴봤다. 스위치를 여러 대 연결할 때 **이중화(Redundancy)**를 위해 링크를 두 개 이상 연결하면 반드시 **루프(Loop)**가 생긴다. 이더넷 루프는 브로드캐스트 스톰을 일으켜 네트워크 전체를 마비시킬 수 있다. **STP(Spanning Tree Protocol, IEEE 802.1D)**는 이 루프를 자동으로 감지하고 제거한다.
+[지난 글](/posts/network-vlan/)에서 VLAN으로 네트워크를 논리적으로 분리하는 방법을 살펴봤다. 스위치를 여러 대 연결할 때 **이중화**(Redundancy)를 위해 링크를 두 개 이상 연결하면 반드시 **루프**(Loop)가 생긴다. 이더넷 루프는 브로드캐스트 스톰을 일으켜 네트워크 전체를 마비시킬 수 있다. **STP**(Spanning Tree Protocol, IEEE 802.1D)는 이 루프를 자동으로 감지하고 제거한다.
 
 ## 이더넷 루프의 위험성
 
@@ -34,13 +34,13 @@ SW1 ─── SW2
 
 ## STP 동작 원리
 
-STP는 물리 루프 위에서 **논리적 트리(스패닝 트리)**를 만들어 루프를 제거한다. 루프를 제거하되 모든 세그먼트에 경로가 유지된다.
+STP는 물리 루프 위에서 **논리적 트리**(스패닝 트리)를 만들어 루프를 제거한다. 루프를 제거하되 모든 세그먼트에 경로가 유지된다.
 
 ![STP 토폴로지](/assets/posts/network-stp-topology.svg)
 
 ### 1단계: 루트 브리지 선출
 
-모든 스위치는 자신을 루트로 가정하고 **BPDU(Bridge Protocol Data Unit)**를 주고받는다. 우선순위가 가장 낮은 스위치가 루트 브리지로 선출된다.
+모든 스위치는 자신을 루트로 가정하고 **BPDU**(Bridge Protocol Data Unit)를 주고받는다. 우선순위가 가장 낮은 스위치가 루트 브리지로 선출된다.
 
 ```
 Bridge ID (BID) = Bridge Priority (2B) + MAC Address (6B)
@@ -158,7 +158,7 @@ SW(config-if)# spanning-tree bpduguard enable
 
 ## PVST+와 MST
 
-Cisco의 **PVST+(Per-VLAN STP)**는 VLAN마다 별도의 STP 인스턴스를 운영한다. VLAN별 루트 브리지를 다르게 설정해 로드 밸런싱이 가능하다.
+Cisco의 **PVST+**(Per-VLAN STP)는 VLAN마다 별도의 STP 인스턴스를 운영한다. VLAN별 루트 브리지를 다르게 설정해 로드 밸런싱이 가능하다.
 
 ```bash
 # PVST+ 로드 밸런싱 예시
@@ -171,7 +171,7 @@ SW2(config)# spanning-tree vlan 10,30 priority 8192
 # → 물리 링크를 VLAN에 따라 다른 경로 사용
 ```
 
-**MST(Multiple Spanning Tree, 802.1s)**는 여러 VLAN을 하나의 인스턴스로 그룹화해 PVST+의 오버헤드를 줄인다. 대규모 환경에서 선호된다.
+**MST**(Multiple Spanning Tree, 802.1s)는 여러 VLAN을 하나의 인스턴스로 그룹화해 PVST+의 오버헤드를 줄인다. 대규모 환경에서 선호된다.
 
 ## STP 트러블슈팅
 

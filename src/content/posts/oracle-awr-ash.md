@@ -15,13 +15,13 @@ draft: false
 
 ## AWR이란
 
-**AWR(Automatic Workload Repository)**은 Oracle DB가 주기적으로 성능 통계를 수집·저장하는 인프라다. 기본적으로 1시간마다 MMON 백그라운드 프로세스가 **스냅샷(Snapshot)**을 찍어 SYSAUX 테이블스페이스의 `DBA_HIST_*` 뷰 집합에 저장한다. 두 스냅샷 사이의 델타(Δ) 값을 비교하면 그 시간 구간의 부하 특성, 상위 SQL, Wait Event 등을 파악할 수 있다.
+**AWR**(Automatic Workload Repository)은 Oracle DB가 주기적으로 성능 통계를 수집·저장하는 인프라다. 기본적으로 1시간마다 MMON 백그라운드 프로세스가 **스냅샷**(Snapshot)을 찍어 SYSAUX 테이블스페이스의 `DBA_HIST_*` 뷰 집합에 저장한다. 두 스냅샷 사이의 델타(Δ) 값을 비교하면 그 시간 구간의 부하 특성, 상위 SQL, Wait Event 등을 파악할 수 있다.
 
 AWR 데이터는 기본 8일간 보존된다. 이 기간·간격은 `DBMS_WORKLOAD_REPOSITORY` 패키지로 조정한다.
 
 ## ASH란
 
-**ASH(Active Session History)**는 Active 세션(CPU를 쓰거나 특정 이벤트를 기다리는 세션)을 **1초마다 샘플링**하는 메모리 내 원형 버퍼다. 메모리 뷰는 `V$ACTIVE_SESSION_HISTORY`로 조회하며 최근 약 30분 분량이 유지된다. MMNL 프로세스가 이 샘플의 1/10을 디스크(`DBA_HIST_ACTIVE_SESS_HISTORY`)에 플러시해 장기 보관한다.
+**ASH**(Active Session History)는 Active 세션(CPU를 쓰거나 특정 이벤트를 기다리는 세션)을 **1초마다 샘플링**하는 메모리 내 원형 버퍼다. 메모리 뷰는 `V$ACTIVE_SESSION_HISTORY`로 조회하며 최근 약 30분 분량이 유지된다. MMNL 프로세스가 이 샘플의 1/10을 디스크(`DBA_HIST_ACTIVE_SESS_HISTORY`)에 플러시해 장기 보관한다.
 
 AWR이 "1시간 단위 평균 통계"를 제공한다면, ASH는 "그 안에서 특정 5분 동안 무슨 일이 있었는가"를 1초 해상도로 드릴다운할 수 있게 한다.
 
@@ -95,7 +95,7 @@ FETCH  FIRST 10 ROWS ONLY;
 
 ## ADDM — 자동 진단
 
-**ADDM(Automatic Database Diagnostic Monitor)**은 매 AWR 스냅샷 생성 직후 MMON이 자동으로 실행하는 AI 진단 엔진이다. AWR 데이터를 분석해 "이 시간대 병목은 SQL X입니다, 인덱스를 추가하세요" 수준의 권고를 생성한다.
+**ADDM**(Automatic Database Diagnostic Monitor)은 매 AWR 스냅샷 생성 직후 MMON이 자동으로 실행하는 AI 진단 엔진이다. AWR 데이터를 분석해 "이 시간대 병목은 SQL X입니다, 인덱스를 추가하세요" 수준의 권고를 생성한다.
 
 ```sql
 -- ADDM 태스크 결과 조회

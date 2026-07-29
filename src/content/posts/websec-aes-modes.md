@@ -70,7 +70,7 @@ padded = padder.update(plaintext) + padder.finalize()
 ct = encryptor.update(padded) + encryptor.finalize()
 ```
 
-CBC의 치명적 약점은 **무결성 검증이 없다**는 것이다. 공격자가 암호문을 조작하면 복호화 시 쓰레기 값이 나오지만 에러 메시지에서 패딩 정보가 유출될 수 있다. 이것이 **PKCS#7 패딩 오라클 공격(Padding Oracle Attack)**이다. POODLE(2014), BEAST(2011) 등의 실제 공격이 이 취약점을 이용했다.
+CBC의 치명적 약점은 **무결성 검증이 없다**는 것이다. 공격자가 암호문을 조작하면 복호화 시 쓰레기 값이 나오지만 에러 메시지에서 패딩 정보가 유출될 수 있다. 이것이 **PKCS#7 패딩 오라클 공격**(Padding Oracle Attack)이다. POODLE(2014), BEAST(2011) 등의 실제 공격이 이 취약점을 이용했다.
 
 ## GCM: 현재 표준 — AEAD 모드
 

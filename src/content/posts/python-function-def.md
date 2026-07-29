@@ -42,7 +42,7 @@ def 함수이름(매개변수1, 매개변수2):
 
 ## 매개변수와 인수
 
-**매개변수(parameter)**는 함수 정의에 나타나는 변수명, **인수(argument)**는 호출 시 전달하는 실제 값이다.
+**매개변수**(parameter)는 함수 정의에 나타나는 변수명, **인수**(argument)는 호출 시 전달하는 실제 값이다.
 
 ```python
 def add(a, b):        # a, b → 매개변수
@@ -127,7 +127,7 @@ print(result)    # None
 
 ## 함수는 객체다
 
-Python에서 함수는 **일급 객체(first-class object)**다. 변수에 할당하거나 다른 함수에 인수로 전달할 수 있다.
+Python에서 함수는 **일급 객체**(first-class object)다. 변수에 할당하거나 다른 함수에 인수로 전달할 수 있다.
 
 ```python
 def double(x):

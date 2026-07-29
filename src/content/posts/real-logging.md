@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/real-config-priority/)에서 설정 우선순위와 오버라이드 전략을 살펴봤습니다. 이번에는 **로깅(Logging)**입니다. 프로덕션에서 버그를 추적하거나 성능을 분석하려면 `console.log`보다 훨씬 정교한 도구가 필요합니다. 레벨 제어·구조화 출력·민감 정보 제거·컨텍스트 전파를 갖춘 로깅 전략을 정리합니다.
+[지난 글](/posts/real-config-priority/)에서 설정 우선순위와 오버라이드 전략을 살펴봤습니다. 이번에는 **로깅**(Logging)입니다. 프로덕션에서 버그를 추적하거나 성능을 분석하려면 `console.log`보다 훨씬 정교한 도구가 필요합니다. 레벨 제어·구조화 출력·민감 정보 제거·컨텍스트 전파를 갖춘 로깅 전략을 정리합니다.
 
 ![로그 레벨과 출력 전략](/assets/posts/real-logging-levels.svg)
 
@@ -93,7 +93,7 @@ try {
 
 ## 자식 로거 — 요청 컨텍스트 전파
 
-HTTP 요청 전체에서 같은 `requestId`를 로그에 포함하려면 **자식 로거(child logger)**를 사용합니다.
+HTTP 요청 전체에서 같은 `requestId`를 로그에 포함하려면 **자식 로거**(child logger)를 사용합니다.
 
 ```javascript
 // src/middleware/requestLogger.js
@@ -139,7 +139,7 @@ async function getUser(req, res) {
 
 ## Winston — 유연한 트랜스포트
 
-Winston은 다양한 **트랜스포트(출력 대상)**를 지원합니다. 파일·콘솔·외부 서비스에 동시에 로그를 보낼 수 있습니다.
+Winston은 다양한 **트랜스포트**(출력 대상)를 지원합니다. 파일·콘솔·외부 서비스에 동시에 로그를 보낼 수 있습니다.
 
 ```javascript
 import winston from 'winston';

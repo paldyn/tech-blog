@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-sliding-window/)에서 슬라이딩 윈도우로 연속 구간을 O(N)에 처리하는 방법을 다뤘습니다. 이번에는 구간 합 쿼리를 O(1)에 답하는 **누적 합(Prefix Sum)**입니다.
+[지난 글](/posts/dsa-sliding-window/)에서 슬라이딩 윈도우로 연속 구간을 O(N)에 처리하는 방법을 다뤘습니다. 이번에는 구간 합 쿼리를 O(1)에 답하는 **누적 합**(Prefix Sum)입니다.
 
 ## 핵심 아이디어
 

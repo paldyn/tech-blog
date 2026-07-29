@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-trigger-function/)에서 트리거 함수의 작성과 실행 시점을 살펴봤다. 이번에는 PostgreSQL 11에서 추가된 **프로시저(PROCEDURE)**를 다룬다. 함수와 비슷해 보이지만, 내부에서 `COMMIT`·`ROLLBACK`을 직접 실행할 수 있다는 점이 결정적으로 다르다.
+[지난 글](/posts/pg-trigger-function/)에서 트리거 함수의 작성과 실행 시점을 살펴봤다. 이번에는 PostgreSQL 11에서 추가된 **프로시저**(PROCEDURE)를 다룬다. 함수와 비슷해 보이지만, 내부에서 `COMMIT`·`ROLLBACK`을 직접 실행할 수 있다는 점이 결정적으로 다르다.
 
 ## 왜 PROCEDURE가 필요했나
 

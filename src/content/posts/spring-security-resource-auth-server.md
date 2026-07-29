@@ -218,7 +218,7 @@ public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
 
 ## Introspection 방식 (Opaque Token)
 
-JWT 대신 **불투명 토큰(Opaque Token)**을 사용하면 Resource Server가 매 요청마다 Auth Server의 `/oauth2/introspect` 엔드포인트를 호출해 토큰을 검증합니다. 토큰 즉시 취소가 필요한 서비스에 적합하지만, Auth Server 호출 비용이 추가됩니다.
+JWT 대신 **불투명 토큰**(Opaque Token)을 사용하면 Resource Server가 매 요청마다 Auth Server의 `/oauth2/introspect` 엔드포인트를 호출해 토큰을 검증합니다. 토큰 즉시 취소가 필요한 서비스에 적합하지만, Auth Server 호출 비용이 추가됩니다.
 
 ```yaml
 spring:

@@ -164,7 +164,7 @@ export async function generateMetadata(
 }
 ```
 
-`generateMetadata`의 fetch 요청은 동일 페이지의 Server Component에서 실행되는 동일한 요청과 **자동으로 중복 제거(dedup)**된다. 포스트 데이터를 두 번 가져올 걱정이 없다.
+`generateMetadata`의 fetch 요청은 동일 페이지의 Server Component에서 실행되는 동일한 요청과 **자동으로 중복 제거**(dedup)된다. 포스트 데이터를 두 번 가져올 걱정이 없다.
 
 ## robots 메타데이터
 

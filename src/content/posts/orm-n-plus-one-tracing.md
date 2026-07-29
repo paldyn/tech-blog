@@ -44,7 +44,7 @@ SELECT orders.id, orders.amount FROM orders WHERE orders.user_id = 2;
 
 ## 왜 ORM에서 자주 발생하는가
 
-ORM은 관계를 **지연 로딩(Lazy Loading)**으로 구현하는 경우가 많습니다. 처음 객체를 가져올 때는 연관된 레코드를 함께 로드하지 않고, 실제 접근 시점에 DB를 조회합니다. 이는 "불필요한 데이터는 로드하지 않는다"는 원칙에 따른 것이지만, 루프 안에서 관계를 접근하면 성능 재앙이 됩니다.
+ORM은 관계를 **지연 로딩**(Lazy Loading)으로 구현하는 경우가 많습니다. 처음 객체를 가져올 때는 연관된 레코드를 함께 로드하지 않고, 실제 접근 시점에 DB를 조회합니다. 이는 "불필요한 데이터는 로드하지 않는다"는 원칙에 따른 것이지만, 루프 안에서 관계를 접근하면 성능 재앙이 됩니다.
 
 JPA Hibernate도 동일한 문제가 발생합니다.
 
@@ -142,7 +142,7 @@ async function resolveUserOrders(user) {
 
 ## 해결 방법 3: 배치 크기 조정
 
-모든 연관 데이터를 한 번에 로드하기 어려울 때는 **배치 크기(batch size)**를 설정합니다. JPA에서는 `@BatchSize`, Hibernate에서는 `hibernate.default_batch_fetch_size`로 제어합니다.
+모든 연관 데이터를 한 번에 로드하기 어려울 때는 **배치 크기**(batch size)를 설정합니다. JPA에서는 `@BatchSize`, Hibernate에서는 `hibernate.default_batch_fetch_size`로 제어합니다.
 
 ```java
 // JPA — @BatchSize로 IN 절 배치 크기 지정

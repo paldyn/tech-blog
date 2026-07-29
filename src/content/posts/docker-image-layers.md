@@ -15,7 +15,7 @@ draft: false
 
 ## 레이어란 무엇인가
 
-Docker 이미지는 일련의 **변경 집합(Change Set)**으로 이루어진다. 각 변경 집합이 하나의 레이어다. Dockerfile의 `RUN`, `COPY`, `ADD` 같은 파일 시스템을 변경하는 명령은 새로운 레이어를 만든다.
+Docker 이미지는 일련의 **변경 집합**(Change Set)으로 이루어진다. 각 변경 집합이 하나의 레이어다. Dockerfile의 `RUN`, `COPY`, `ADD` 같은 파일 시스템을 변경하는 명령은 새로운 레이어를 만든다.
 
 ```dockerfile
 FROM  debian:bookworm-slim   # → Layer 1: 기반 파일 시스템

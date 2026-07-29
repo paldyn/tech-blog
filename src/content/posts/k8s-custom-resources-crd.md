@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-node-cordon-drain/)에서 노드 유지보수를 위한 Cordon과 Drain 절차를 살펴봤다. 이번에는 쿠버네티스 API를 확장하는 핵심 메커니즘인 **Custom Resource Definition(CRD)**을 다룬다. 쿠버네티스 생태계의 많은 도구(Prometheus Operator, ArgoCD, cert-manager, Istio 등)가 CRD를 기반으로 작동한다. CRD를 이해하면 이런 도구들의 작동 방식을 깊이 이해할 수 있고, 직접 확장도 구현할 수 있다.
+[지난 글](/posts/k8s-node-cordon-drain/)에서 노드 유지보수를 위한 Cordon과 Drain 절차를 살펴봤다. 이번에는 쿠버네티스 API를 확장하는 핵심 메커니즘인 **Custom Resource Definition**(CRD)을 다룬다. 쿠버네티스 생태계의 많은 도구(Prometheus Operator, ArgoCD, cert-manager, Istio 등)가 CRD를 기반으로 작동한다. CRD를 이해하면 이런 도구들의 작동 방식을 깊이 이해할 수 있고, 직접 확장도 구현할 수 있다.
 
 ## CRD가 필요한 이유
 
@@ -91,7 +91,7 @@ kubectl describe database my-postgres
 kubectl delete database my-postgres
 ```
 
-CR을 생성해도 기본적으로 아무 일도 일어나지 않는다. CRD는 데이터 구조를 정의할 뿐이다. CR에 반응해서 실제로 무언가를 만드는 것은 **Custom Controller(Operator)**의 역할이다.
+CR을 생성해도 기본적으로 아무 일도 일어나지 않는다. CRD는 데이터 구조를 정의할 뿐이다. CR에 반응해서 실제로 무언가를 만드는 것은 **Custom Controller**(Operator)의 역할이다.
 
 ## Custom Controller 패턴
 

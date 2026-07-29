@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-find-exec-xargs/)에서 `find -exec`와 `xargs`로 찾은 파일에 명령을 실행하는 방법을 익혔다. 이번 글에서는 `find`와는 다른 방식으로 동작하는 **`locate` 명령어와 그 데이터베이스를 구축하는 `updatedb`**를 다룬다. 파일 이름 하나로 시스템 전체에서 밀리초 안에 결과를 얻고 싶을 때 바로 `locate`다.
+[지난 글](/posts/linux-find-exec-xargs/)에서 `find -exec`와 `xargs`로 찾은 파일에 명령을 실행하는 방법을 익혔다. 이번 글에서는 `find`와는 다른 방식으로 동작하는 <strong>`locate` 명령어와 그 데이터베이스를 구축하는 `updatedb`</strong>를 다룬다. 파일 이름 하나로 시스템 전체에서 밀리초 안에 결과를 얻고 싶을 때 바로 `locate`다.
 
 ## locate의 동작 원리
 
-`find`는 명령 실행 시 파일시스템을 직접 탐색하기 때문에 수십만 개의 파일이 있는 시스템에서는 수초 이상 걸릴 수 있다. 반면 `locate`는 **사전에 구축된 파일 경로 데이터베이스(`mlocate.db`)**를 조회하므로 거의 즉시 결과를 반환한다.
+`find`는 명령 실행 시 파일시스템을 직접 탐색하기 때문에 수십만 개의 파일이 있는 시스템에서는 수초 이상 걸릴 수 있다. 반면 `locate`는 **사전에 구축된 파일 경로 데이터베이스**(`mlocate.db`)를 조회하므로 거의 즉시 결과를 반환한다.
 
 데이터베이스는 `/var/lib/mlocate/mlocate.db`(또는 `/var/cache/locate/locatedb`)에 저장되며, `updatedb`가 이를 갱신한다. 대부분의 배포판은 `cron`이나 `systemd timer`를 통해 매일 새벽 자동으로 `updatedb`를 실행한다.
 

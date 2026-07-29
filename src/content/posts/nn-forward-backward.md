@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nn-activation-functions/)에서 활성화 함수가 신경망에 비선형성을 부여한다는 것을 배웠다. 이제 신경망이 **어떻게 학습하는지**를 파헤칠 차례다. 신경망 학습의 핵심은 **역전파(Backpropagation)**다. 역전파가 없었다면 현대 딥러닝은 존재하지 않았을 것이다. 1986년 Rumelhart, Hinton, Williams가 발표한 이 알고리즘은 다층 신경망의 가중치를 효율적으로 학습할 수 있게 해주었다. 이번 글에서는 순전파로 예측을 만들고, 역전파로 기울기를 계산하고, 그 기울기로 파라미터를 업데이트하는 전체 과정을 수식과 코드로 명확히 이해한다.
+[지난 글](/posts/nn-activation-functions/)에서 활성화 함수가 신경망에 비선형성을 부여한다는 것을 배웠다. 이제 신경망이 **어떻게 학습하는지**를 파헤칠 차례다. 신경망 학습의 핵심은 **역전파**(Backpropagation)다. 역전파가 없었다면 현대 딥러닝은 존재하지 않았을 것이다. 1986년 Rumelhart, Hinton, Williams가 발표한 이 알고리즘은 다층 신경망의 가중치를 효율적으로 학습할 수 있게 해주었다. 이번 글에서는 순전파로 예측을 만들고, 역전파로 기울기를 계산하고, 그 기울기로 파라미터를 업데이트하는 전체 과정을 수식과 코드로 명확히 이해한다.
 
 ## 학습의 목표: 손실 최소화
 
@@ -52,7 +52,7 @@ print(f"Loss: {loss.item():.4f}")
 
 ## 역전파의 핵심: 연쇄 법칙
 
-역전파는 **연쇄 법칙(Chain Rule)**의 반복 적용이다.
+역전파는 **연쇄 법칙**(Chain Rule)의 반복 적용이다.
 
 합성 함수 `y = f(g(x))`의 미분:
 $$\frac{dy}{dx} = \frac{dy}{df} \cdot \frac{df}{dg} \cdot \frac{dg}{dx}$$
@@ -120,7 +120,7 @@ for epoch in range(200):
 
 ## 계산 그래프와 Autograd
 
-PyTorch는 `requires_grad=True`인 텐서를 포함한 연산을 수행할 때 자동으로 **계산 그래프(Computational Graph)**를 구성한다. `backward()`를 호출하면 이 그래프를 역방향으로 순회하며 기울기를 계산한다.
+PyTorch는 `requires_grad=True`인 텐서를 포함한 연산을 수행할 때 자동으로 **계산 그래프**(Computational Graph)를 구성한다. `backward()`를 호출하면 이 그래프를 역방향으로 순회하며 기울기를 계산한다.
 
 ```python
 # 계산 그래프 확인

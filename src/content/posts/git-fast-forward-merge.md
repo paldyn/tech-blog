@@ -35,7 +35,7 @@ main: C1 → C2 → C3 → C4
 
 ## 발생 조건
 
-Fast-forward는 병합 대상 브랜치가 현재 브랜치의 **직접적인 선조(ancestor)**일 때만 가능하다. `main`이 `feature`의 히스토리 안에 포함되어 있어야 한다는 뜻이다.
+Fast-forward는 병합 대상 브랜치가 현재 브랜치의 **직접적인 선조**(ancestor)일 때만 가능하다. `main`이 `feature`의 히스토리 안에 포함되어 있어야 한다는 뜻이다.
 
 `main`에 별도의 커밋이 생기면 두 브랜치가 "갈라진" 상태가 되어 fast-forward가 불가능해지고, Git은 3-way merge나 rebase를 요구한다.
 

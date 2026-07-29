@@ -37,7 +37,7 @@ R(mθ)q · R(nθ)k = q^T · R(mθ)^T · R(nθ) · k
                  = q^T · R((n−m)θ) · k
 ```
 
-내적 결과가 `q`, `k`, 그리고 **상대 거리 `n−m`**에만 의존한다. 위치 `m`과 `n` 절댓값은 사라지고 차이만 남는 것이다.
+내적 결과가 `q`, `k`, 그리고 <strong>상대 거리 `n−m`</strong>에만 의존한다. 위치 `m`과 `n` 절댓값은 사라지고 차이만 남는 것이다.
 
 ![RoPE 회전 개념과 상대 위치 의존성](/assets/posts/transformer-rotary-concept.svg)
 

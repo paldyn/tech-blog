@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-denormalization-decisions/)에서 비정규화 결정 기준을 살펴봤다. 이번에는 데이터베이스 설계의 출발점인 **ER 다이어그램(Entity-Relationship Diagram)**을 읽고 그리는 방법을 정리한다.
+[지난 글](/posts/sql-denormalization-decisions/)에서 비정규화 결정 기준을 살펴봤다. 이번에는 데이터베이스 설계의 출발점인 **ER 다이어그램**(Entity-Relationship Diagram)을 읽고 그리는 방법을 정리한다.
 
 ---
 
@@ -61,7 +61,7 @@ ORDER_ITEM --[INCLUDES]--> PRODUCT
 
 **Chen 표기법**은 엔티티를 직사각형, 속성을 타원, 관계를 마름모로 표현한다. 개념 설계 단계에서 관계의 의미를 명확히 드러낼 때 유용하다.
 
-**Crow's Foot(IE 표기법)**은 엔티티 박스 안에 속성을 직접 나열하고, 연결선 끝에 기수성을 표기한다. 실무 ERD 도구(ERDCloud, dbdiagram.io, Mermaid)의 기본값이다.
+**Crow's Foot**(IE 표기법)은 엔티티 박스 안에 속성을 직접 나열하고, 연결선 끝에 기수성을 표기한다. 실무 ERD 도구(ERDCloud, dbdiagram.io, Mermaid)의 기본값이다.
 
 ---
 
@@ -75,7 +75,7 @@ ORDER_ITEM --[INCLUDES]--> PRODUCT
 | **1:N** | 하나가 여럿에 대응 | 고객 → 주문 |
 | **N:M** | 양쪽 모두 여럿 | 학생 ↔ 강의 |
 
-N:M 관계는 **교차 테이블(Junction Table)**로 분해해야 물리 구현이 가능하다.
+N:M 관계는 **교차 테이블**(Junction Table)로 분해해야 물리 구현이 가능하다.
 
 ```sql
 -- N:M 예시: 학생-강의
@@ -135,7 +135,7 @@ CREATE TABLE order_items (
 
 ## 필수 vs 선택 참여
 
-기수성 외에 **참여 제약(Participation Constraint)**도 표기해야 한다.
+기수성 외에 **참여 제약**(Participation Constraint)도 표기해야 한다.
 
 ```
 전체 참여(Mandatory):  모든 고객은 반드시 주문을 가져야 한다

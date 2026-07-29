@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-modules-namespace/)에서 TypeScript 모듈 시스템과 네임스페이스를 살펴봤다. 이번에는 **데코레이터(Decorator)**를 다룬다. 데코레이터는 클래스, 메서드, 속성, 매개변수에 `@expression` 형태로 붙여 추가 동작이나 메타데이터를 주입하는 기능이다. NestJS, Angular, TypeORM 등 주요 프레임워크가 이 패턴을 핵심으로 사용한다.
+[지난 글](/posts/ts-modules-namespace/)에서 TypeScript 모듈 시스템과 네임스페이스를 살펴봤다. 이번에는 **데코레이터**(Decorator)를 다룬다. 데코레이터는 클래스, 메서드, 속성, 매개변수에 `@expression` 형태로 붙여 추가 동작이나 메타데이터를 주입하는 기능이다. NestJS, Angular, TypeORM 등 주요 프레임워크가 이 패턴을 핵심으로 사용한다.
 
 ## 데코레이터 활성화
 

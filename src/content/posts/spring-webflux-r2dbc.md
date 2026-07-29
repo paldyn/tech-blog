@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-webflux-webclient/)에서 외부 HTTP 호출을 위한 WebClient를 살펴봤다. 이번 글은 데이터베이스 접근 계층의 논블로킹화를 위한 **R2DBC(Reactive Relational Database Connectivity)**를 다룬다. WebFlux 스택에서 JDBC/JPA를 그대로 사용하면 이벤트 루프 스레드가 블로킹되어 성능이 무너진다. R2DBC는 이 문제를 해결하는 관계형 DB용 비동기 드라이버 스펙이다.
+[지난 글](/posts/spring-webflux-webclient/)에서 외부 HTTP 호출을 위한 WebClient를 살펴봤다. 이번 글은 데이터베이스 접근 계층의 논블로킹화를 위한 **R2DBC**(Reactive Relational Database Connectivity)를 다룬다. WebFlux 스택에서 JDBC/JPA를 그대로 사용하면 이벤트 루프 스레드가 블로킹되어 성능이 무너진다. R2DBC는 이 문제를 해결하는 관계형 DB용 비동기 드라이버 스펙이다.
 
 ## R2DBC가 필요한 이유
 

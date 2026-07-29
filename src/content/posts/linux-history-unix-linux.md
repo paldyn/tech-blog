@@ -17,7 +17,7 @@ draft: false
 
 1969년 Bell Labs의 켄 톰프슨(Ken Thompson)과 데니스 리치(Dennis Ritchie)는 PDP-7 컴퓨터에서 소규모 운영체제를 만들었다. 처음엔 어셈블리로 작성됐지만, 1973년 리치가 C언어를 개발하면서 Unix 전체를 C로 재작성했다. 이는 혁명적인 결정이었다. **특정 CPU 아키텍처에 종속되지 않는 이식성 높은 OS**가 처음 탄생한 것이다.
 
-Unix는 AT&T 내부와 대학에 소스코드와 함께 배포됐다. UC 버클리는 이를 개량해 **BSD(Berkeley Software Distribution)**를 만들었고, 수많은 변종 Unix가 생겨났다. 하지만 AT&T가 상업화에 나서자 Unix 소스코드는 비공개가 됐고, 누구나 자유롭게 쓸 수 있는 OS가 사라졌다.
+Unix는 AT&T 내부와 대학에 소스코드와 함께 배포됐다. UC 버클리는 이를 개량해 **BSD**(Berkeley Software Distribution)를 만들었고, 수많은 변종 Unix가 생겨났다. 하지만 AT&T가 상업화에 나서자 Unix 소스코드는 비공개가 됐고, 누구나 자유롭게 쓸 수 있는 OS가 사라졌다.
 
 ![Unix → Linux 역사 타임라인](/assets/posts/linux-history-unix-linux-timeline.svg)
 
@@ -56,7 +56,7 @@ uname -a
 
 ## 배포판의 등장과 대중화
 
-커널만으로는 일반 사용자가 쓸 수 없다. 1993년 Debian, 1994년 Red Hat과 Slackware 같은 **배포판(distribution)**이 등장하면서 Linux는 실용적인 OS로 자리잡기 시작했다. 배포판은 커널 + GNU 도구 + 패키지 관리자 + 설정 파일을 묶어 설치하기 쉽게 만든 것이다.
+커널만으로는 일반 사용자가 쓸 수 없다. 1993년 Debian, 1994년 Red Hat과 Slackware 같은 **배포판**(distribution)이 등장하면서 Linux는 실용적인 OS로 자리잡기 시작했다. 배포판은 커널 + GNU 도구 + 패키지 관리자 + 설정 파일을 묶어 설치하기 쉽게 만든 것이다.
 
 2004년 Ubuntu가 등장하면서 Linux는 데스크톱에서도 널리 쓰이기 시작했다. 2008년 Google이 Android에 Linux 커널을 채택하면서 스마트폰 세계도 정복했다. 현재 Linux 커널 개발에는 전 세계 21,000명 이상의 개발자와 1,700곳 이상의 기업이 기여하고 있다.
 

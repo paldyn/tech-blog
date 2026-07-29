@@ -17,7 +17,7 @@ draft: false
 
 ## Virtual DOM이란
 
-**Virtual DOM**은 실제 DOM을 추상화한 JavaScript 객체 트리입니다. `<div className="box">Hello</div>` 같은 JSX는 `React.createElement('div', { className: 'box' }, 'Hello')` 호출로 컴파일되어 객체를 생성합니다. React는 상태가 바뀌면 새 Virtual DOM 트리를 만들고, 이전 트리와 **비교(Diff)**해서 달라진 부분만 실제 DOM에 반영합니다.
+**Virtual DOM**은 실제 DOM을 추상화한 JavaScript 객체 트리입니다. `<div className="box">Hello</div>` 같은 JSX는 `React.createElement('div', { className: 'box' }, 'Hello')` 호출로 컴파일되어 객체를 생성합니다. React는 상태가 바뀌면 새 Virtual DOM 트리를 만들고, 이전 트리와 **비교**(Diff)해서 달라진 부분만 실제 DOM에 반영합니다.
 
 이를 통해 DOM 조작을 최소화합니다. DOM 조작은 레이아웃 재계산을 유발하기 때문에 빈번한 조작이 성능 문제를 일으킵니다.
 
@@ -69,7 +69,7 @@ React의 Diff는 O(n³) 일반 알고리즘 대신 두 가지 가정으로 O(n)�
 
 Fiber 노드마다 **Hook 연결 리스트**가 있습니다. 컴포넌트가 처음 실행될 때 각 `useState`, `useEffect`, `useMemo` 호출이 이 리스트에 순서대로 노드를 추가합니다. 다음 렌더링 때는 같은 순서로 노드를 꺼내서 이전 값과 비교합니다.
 
-이것이 바로 **"Hook은 항상 같은 순서로 호출해야 한다"**는 규칙의 이유입니다. 조건문 안에서 Hook을 호출하면 순서가 바뀌어 `Hook[n]`이 다른 상태 슬롯을 가리킵니다.
+이것이 바로 <strong>"Hook은 항상 같은 순서로 호출해야 한다"</strong>는 규칙의 이유입니다. 조건문 안에서 Hook을 호출하면 순서가 바뀌어 `Hook[n]`이 다른 상태 슬롯을 가리킵니다.
 
 ---
 

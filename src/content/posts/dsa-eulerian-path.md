@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-articulation-points-bridges/)에서 그래프에서 제거하면 연결이 끊기는 단절점·단절선을 탐지했습니다. 이번에는 **모든 간선을 정확히 한 번씩 통과**하는 **오일러 경로(Eulerian Path)**와 **오일러 회로(Eulerian Circuit)**를 다룹니다. 18세기 오일러가 쾨니히스베르크 다리 문제를 풀며 그래프 이론의 문을 열었던 그 개념입니다.
+[지난 글](/posts/dsa-articulation-points-bridges/)에서 그래프에서 제거하면 연결이 끊기는 단절점·단절선을 탐지했습니다. 이번에는 **모든 간선을 정확히 한 번씩 통과**하는 **오일러 경로**(Eulerian Path)와 **오일러 회로**(Eulerian Circuit)를 다룹니다. 18세기 오일러가 쾨니히스베르크 다리 문제를 풀며 그래프 이론의 문을 열었던 그 개념입니다.
 
 ## 오일러 경로 vs 오일러 회로
 

@@ -46,7 +46,7 @@ if (el instanceof HTMLButtonElement) {
 
 ## 안전한 기본값과 리터럴 보존
 
-셋째, **`any` 대신 `unknown`**을 안전한 기본값으로 쓴다. 둘 다 "아무 타입"을 받지만, `unknown`은 쓰기 전에 좁히기를 강제하므로 검사를 끄지 않는다. 외부 입력이나 `catch`의 에러처럼 타입을 확신할 수 없는 자리에 특히 잘 맞는다.
+셋째, <strong>`any` 대신 `unknown`</strong>을 안전한 기본값으로 쓴다. 둘 다 "아무 타입"을 받지만, `unknown`은 쓰기 전에 좁히기를 강제하므로 검사를 끄지 않는다. 외부 입력이나 `catch`의 에러처럼 타입을 확신할 수 없는 자리에 특히 잘 맞는다.
 
 ```typescript
 function parse(json: string): unknown {

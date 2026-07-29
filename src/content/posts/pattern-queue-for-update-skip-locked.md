@@ -123,7 +123,7 @@ async def worker_loop():
 
 ## 재시도와 Dead Letter Queue
 
-실패한 작업은 즉시 재시도하지 않고 **지수 백오프(Exponential Backoff)**로 대기 시간을 늘립니다.
+실패한 작업은 즉시 재시도하지 않고 **지수 백오프**(Exponential Backoff)로 대기 시간을 늘립니다.
 
 ![재시도 전략과 Dead Letter Queue](/assets/posts/pattern-queue-for-update-skip-locked-retry.svg)
 

@@ -15,7 +15,7 @@ draft: false
 
 ## 호이스팅이란 무엇인가
 
-호이스팅(hoisting)은 **"끌어올리기"**라는 뜻입니다. JavaScript 엔진이 코드를 실행하기 전에 변수와 함수 선언을 해당 스코프의 최상단으로 끌어올리는 동작처럼 보이는 현상을 말합니다.
+호이스팅(hoisting)은 <strong>"끌어올리기"</strong>라는 뜻입니다. JavaScript 엔진이 코드를 실행하기 전에 변수와 함수 선언을 해당 스코프의 최상단으로 끌어올리는 동작처럼 보이는 현상을 말합니다.
 
 중요한 점: 코드가 실제로 이동하지는 않습니다. 엔진이 **두 단계**로 코드를 처리하기 때문에 생기는 현상입니다:
 
@@ -107,7 +107,7 @@ const fn = () => "hello";
 
 ## let, const, class의 호이스팅
 
-`let`, `const`, `class`도 호이스팅됩니다. 하지만 `var`와 달리 **초기화 없이 선언만** 호이스팅됩니다. 이로 인해 **TDZ(Temporal Dead Zone)**가 생깁니다.
+`let`, `const`, `class`도 호이스팅됩니다. 하지만 `var`와 달리 **초기화 없이 선언만** 호이스팅됩니다. 이로 인해 **TDZ**(Temporal Dead Zone)가 생깁니다.
 
 ```javascript
 console.log(a); // ReferenceError — TDZ에 있음

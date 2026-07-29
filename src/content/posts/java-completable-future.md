@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-recursive-task/)에서 `RecursiveTask`와 `RecursiveAction`으로 Fork/Join 태스크를 구현하는 방법을 살펴봤습니다. Fork/Join은 CPU 바운드 분할 정복에 특화됐지만, 실제 서비스에서 더 자주 만나는 시나리오는 여러 비동기 I/O 작업을 조합해 하나의 결과를 만드는 것입니다. Java 8에서 도입된 **`CompletableFuture`**는 이런 복잡한 비동기 조합을 콜백 체이닝으로 우아하게 표현하게 해 줍니다.
+[지난 글](/posts/java-recursive-task/)에서 `RecursiveTask`와 `RecursiveAction`으로 Fork/Join 태스크를 구현하는 방법을 살펴봤습니다. Fork/Join은 CPU 바운드 분할 정복에 특화됐지만, 실제 서비스에서 더 자주 만나는 시나리오는 여러 비동기 I/O 작업을 조합해 하나의 결과를 만드는 것입니다. Java 8에서 도입된 <strong>`CompletableFuture`</strong>는 이런 복잡한 비동기 조합을 콜백 체이닝으로 우아하게 표현하게 해 줍니다.
 
 ## CompletableFuture란
 

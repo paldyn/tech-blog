@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-heapq/)에서 heapq로 최솟값을 효율적으로 다루는 법을 익혔습니다. 이번에는 `bisect` 모듈을 살펴봅니다. 정렬된 리스트에서 선형 탐색은 O(n)이지만, `bisect`의 이진 탐색은 **O(log n)**으로 삽입 위치를 찾습니다. 정렬된 상태를 유지하면서 데이터를 효율적으로 관리해야 할 때 필수 도구입니다.
+[지난 글](/posts/python-heapq/)에서 heapq로 최솟값을 효율적으로 다루는 법을 익혔습니다. 이번에는 `bisect` 모듈을 살펴봅니다. 정렬된 리스트에서 선형 탐색은 O(n)이지만, `bisect`의 이진 탐색은 **O**(log n)으로 삽입 위치를 찾습니다. 정렬된 상태를 유지하면서 데이터를 효율적으로 관리해야 할 때 필수 도구입니다.
 
 ## bisect_left와 bisect_right
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-micrometer-prometheus/)에서 Micrometer로 메트릭을 수집하고 Prometheus·Grafana와 연동하는 방법을 살펴봤다. 메트릭이 "시스템 전체가 얼마나 잘 동작하는가"를 알려준다면, **분산 추적(Distributed Tracing)**은 "특정 요청 하나가 여러 서비스를 거치는 과정에서 어디서 얼마나 걸렸는가"를 알려준다. 마이크로서비스 아키텍처에서는 하나의 HTTP 요청이 API Gateway → Order Service → Inventory Service → 결제 서비스로 이어질 수 있는데, 이 흐름 전체를 단일 TraceId로 묶어 추적하는 것이 분산 추적의 핵심이다.
+[지난 글](/posts/spring-micrometer-prometheus/)에서 Micrometer로 메트릭을 수집하고 Prometheus·Grafana와 연동하는 방법을 살펴봤다. 메트릭이 "시스템 전체가 얼마나 잘 동작하는가"를 알려준다면, **분산 추적**(Distributed Tracing)은 "특정 요청 하나가 여러 서비스를 거치는 과정에서 어디서 얼마나 걸렸는가"를 알려준다. 마이크로서비스 아키텍처에서는 하나의 HTTP 요청이 API Gateway → Order Service → Inventory Service → 결제 서비스로 이어질 수 있는데, 이 흐름 전체를 단일 TraceId로 묶어 추적하는 것이 분산 추적의 핵심이다.
 
 ## 핵심 개념: Trace와 Span
 

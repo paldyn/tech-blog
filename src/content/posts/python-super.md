@@ -34,7 +34,7 @@ class D(B, C):
 D().greet()  # "D+B+C+A"
 ```
 
-`B.greet()`에서 `super()`는 `A`가 아니라 **MRO의 다음 클래스인 `C`**를 가리킵니다. `D.__mro__ = (D, B, C, A, object)`이므로, `B` 입장에서 다음은 `C`입니다.
+`B.greet()`에서 `super()`는 `A`가 아니라 <strong>MRO의 다음 클래스인 `C`</strong>를 가리킵니다. `D.__mro__ = (D, B, C, A, object)`이므로, `B` 입장에서 다음은 `C`입니다.
 
 ## super() 동작 흐름
 

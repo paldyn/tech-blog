@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nexacro-n-dataset-overview/)에서 Dataset의 기본 구조와 역할을 살펴봤습니다. 이번에는 Dataset의 특수 컬럼 유형 중 하나인 **ConstColumn(상수 컬럼)**을 집중적으로 다룹니다. ConstColumn은 이름 그대로 모든 행이 동일한 상수 값을 공유하는 컬럼으로, 일반 컬럼과는 데이터 저장 방식이 근본적으로 다릅니다.
+[지난 글](/posts/nexacro-n-dataset-overview/)에서 Dataset의 기본 구조와 역할을 살펴봤습니다. 이번에는 Dataset의 특수 컬럼 유형 중 하나인 **ConstColumn**(상수 컬럼)을 집중적으로 다룹니다. ConstColumn은 이름 그대로 모든 행이 동일한 상수 값을 공유하는 컬럼으로, 일반 컬럼과는 데이터 저장 방식이 근본적으로 다릅니다.
 
 ## ConstColumn이란?
 

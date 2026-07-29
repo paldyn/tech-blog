@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-index-signatures/)에서 인덱스 시그니처를 살펴봤다. 이번에는 TypeScript의 불변(immutable) 타입 도구인 **`readonly`와 `as const`**를 다룬다. 데이터가 변경되지 않음을 타입 수준에서 명시하면 버그를 줄이고 코드 의도를 명확히 할 수 있다.
+[지난 글](/posts/ts-index-signatures/)에서 인덱스 시그니처를 살펴봤다. 이번에는 TypeScript의 불변(immutable) 타입 도구인 <strong>`readonly`와 `as const`</strong>를 다룬다. 데이터가 변경되지 않음을 타입 수준에서 명시하면 버그를 줄이고 코드 의도를 명확히 할 수 있다.
 
 ## readonly 프로퍼티
 

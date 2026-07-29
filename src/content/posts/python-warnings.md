@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-exception-groups/)에서 ExceptionGroup과 except*를 살펴봤다. 이번에는 예외는 아니지만 예외 계층에 포함되는 **경고(Warning)**를 다룬다. Python의 `warnings` 모듈은 라이브러리 개발자가 사용자에게 "이 기능은 곧 없어집니다" 같은 메시지를 전달하는 공식 채널이다. 경고를 올바르게 다루면 코드베이스의 품질을 높일 수 있다.
+[지난 글](/posts/python-exception-groups/)에서 ExceptionGroup과 except*를 살펴봤다. 이번에는 예외는 아니지만 예외 계층에 포함되는 **경고**(Warning)를 다룬다. Python의 `warnings` 모듈은 라이브러리 개발자가 사용자에게 "이 기능은 곧 없어집니다" 같은 메시지를 전달하는 공식 채널이다. 경고를 올바르게 다루면 코드베이스의 품질을 높일 수 있다.
 
 ## 경고와 예외의 차이
 

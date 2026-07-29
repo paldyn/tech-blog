@@ -231,7 +231,7 @@ ROUGE-L은 최장 공통 부분 수열(LCS)을 사용해 단어 순서를 고려
 
 ### Faithfulness 평가
 
-요약에서 가장 중요한 것은 **충실도(faithfulness)**다. 원문에 없는 내용을 생성하는 환각을 감지해야 한다:
+요약에서 가장 중요한 것은 **충실도**(faithfulness)다. 원문에 없는 내용을 생성하는 환각을 감지해야 한다:
 
 ```python
 def check_faithfulness_with_llm(summary: str, source: str, judge_model) -> dict:

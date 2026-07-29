@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-certificates-chain-of-trust/)에서 PKI와 인증서 체인을 살펴봤다. 이번 글에서는 암호화 시스템 전체의 보안이 의존하는 숨은 기반 — **암호학적으로 안전한 난수 생성기(CSPRNG)**를 다룬다.
+[지난 글](/posts/websec-certificates-chain-of-trust/)에서 PKI와 인증서 체인을 살펴봤다. 이번 글에서는 암호화 시스템 전체의 보안이 의존하는 숨은 기반 — **암호학적으로 안전한 난수 생성기**(CSPRNG)를 다룬다.
 
 ## 왜 난수 생성이 보안에 중요한가?
 

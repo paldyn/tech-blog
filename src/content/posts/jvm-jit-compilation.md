@@ -69,7 +69,7 @@ int result = x + y;
 
 ### 2. 탈출 분석 (Escape Analysis)
 
-객체가 현재 메서드 스코프를 벗어나지 않는다면, 그 객체를 Heap이 아닌 스택(또는 레지스터)에 할당할 수 있습니다. 이를 **스칼라 치환(Scalar Replacement)**이라고 합니다. Point 객체의 `x`, `y` 필드가 두 개의 지역 변수로 대체되므로 GC 대상이 사라집니다.
+객체가 현재 메서드 스코프를 벗어나지 않는다면, 그 객체를 Heap이 아닌 스택(또는 레지스터)에 할당할 수 있습니다. 이를 **스칼라 치환**(Scalar Replacement)이라고 합니다. Point 객체의 `x`, `y` 필드가 두 개의 지역 변수로 대체되므로 GC 대상이 사라집니다.
 
 ```java
 void process() {
@@ -81,7 +81,7 @@ void process() {
 // C2는 Point 객체를 아예 할당하지 않고 int 두 개로 치환
 ```
 
-탈출 분석은 **동기화 제거(Lock Elision)**도 수행합니다. 스레드 간 공유되지 않는 객체에 걸린 `synchronized` 블록을 완전히 제거합니다.
+탈출 분석은 **동기화 제거**(Lock Elision)도 수행합니다. 스레드 간 공유되지 않는 객체에 걸린 `synchronized` 블록을 완전히 제거합니다.
 
 ### 3. 루프 최적화 (Loop Optimization)
 
@@ -101,7 +101,7 @@ for (int i = 0; i < arr.length; i++) {
 
 ## Deoptimization: 최적화 철회
 
-JIT 컴파일러는 프로파일 정보를 기반으로 **추측적 최적화(Speculative Optimization)**를 수행합니다. 예를 들어 특정 호출 지점에서 항상 같은 구현체(`Shape` → `Circle`)가 들어온다면 인라이닝을 적용합니다. 그런데 런타임에 새로운 서브타입(`Square`)이 등장하면 이 가정이 깨집니다.
+JIT 컴파일러는 프로파일 정보를 기반으로 **추측적 최적화**(Speculative Optimization)를 수행합니다. 예를 들어 특정 호출 지점에서 항상 같은 구현체(`Shape` → `Circle`)가 들어온다면 인라이닝을 적용합니다. 그런데 런타임에 새로운 서브타입(`Square`)이 등장하면 이 가정이 깨집니다.
 
 이때 JVM은 **Deoptimization**을 수행합니다. 해당 컴파일된 코드를 무효화하고 다시 Interpreter 모드로 전환합니다. 충분한 새 프로파일 데이터가 쌓이면 재컴파일(Recompilation)이 이루어지며, 이번에는 새 타입도 고려한 더 범용적인 코드가 생성됩니다.
 

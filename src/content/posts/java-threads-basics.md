@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-record-serialization/)에서 레코드와 직렬화를 마무리했다. 이번부터는 Java 동시성 프로그래밍을 다룬다. **스레드(Thread)**는 Java 동시성의 가장 기본 단위다 — 멀티코어를 활용하고, I/O 대기 중 다른 작업을 계속하며, 응답성 높은 애플리케이션을 만들기 위한 핵심 기법이다.
+[지난 글](/posts/java-record-serialization/)에서 레코드와 직렬화를 마무리했다. 이번부터는 Java 동시성 프로그래밍을 다룬다. **스레드**(Thread)는 Java 동시성의 가장 기본 단위다 — 멀티코어를 활용하고, I/O 대기 중 다른 작업을 계속하며, 응답성 높은 애플리케이션을 만들기 위한 핵심 기법이다.
 
 ## 프로세스 vs 스레드
 

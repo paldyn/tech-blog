@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-spgist-brin-index/)에서 SP-GiST와 BRIN 같은 특수 목적 인덱스를 살펴봤다. 이번에는 B-Tree 인덱스를 한 단계 더 최적화하는 기법인 **커버링 인덱스(Covering Index)**와 PostgreSQL의 `INCLUDE` 절을 깊이 파고든다.
+[지난 글](/posts/pg-spgist-brin-index/)에서 SP-GiST와 BRIN 같은 특수 목적 인덱스를 살펴봤다. 이번에는 B-Tree 인덱스를 한 단계 더 최적화하는 기법인 **커버링 인덱스**(Covering Index)와 PostgreSQL의 `INCLUDE` 절을 깊이 파고든다.
 
 ## 커버링 인덱스란
 

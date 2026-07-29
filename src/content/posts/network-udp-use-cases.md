@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-congestion-algorithms/)에서 TCP 혼잡 제어 알고리즘의 발전을 살펴봤다. 이번에는 TCP와 다른 선택을 하는 **UDP(User Datagram Protocol)**가 왜 여전히 핵심 프로토콜인지, 어떤 상황에서 TCP보다 UDP가 올바른 선택인지를 깊이 살펴본다.
+[지난 글](/posts/network-congestion-algorithms/)에서 TCP 혼잡 제어 알고리즘의 발전을 살펴봤다. 이번에는 TCP와 다른 선택을 하는 **UDP**(User Datagram Protocol)가 왜 여전히 핵심 프로토콜인지, 어떤 상황에서 TCP보다 UDP가 올바른 선택인지를 깊이 살펴본다.
 
 ## UDP의 특성 요약
 
@@ -81,7 +81,7 @@ RTP 처리 방식:
 
 ## QUIC: UDP 위에 신뢰성 구현
 
-**QUIC(Quick UDP Internet Connections)**는 구글이 개발한 프로토콜로, HTTP/3의 전송 계층이다.
+**QUIC**(Quick UDP Internet Connections)는 구글이 개발한 프로토콜로, HTTP/3의 전송 계층이다.
 
 ![QUIC vs TCP+TLS](/assets/posts/network-udp-use-cases-quic.svg)
 

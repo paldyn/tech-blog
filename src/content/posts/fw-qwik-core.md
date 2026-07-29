@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/fw-solid-core/)에서 SolidJS의 세밀한 반응성을 살펴봤습니다. 이번에는 **Qwik**을 다룹니다. Qwik은 "애플리케이션 크기에 관계없이 **O(1)의 초기 로딩 시간**을 달성한다"는 목표로 설계된 프레임워크입니다. 핵심 아이디어는 **Resumability(재개 가능성)**입니다. 서버에서 렌더링한 상태를 직렬화해 HTML에 포함시키고, 클라이언트는 전통적인 Hydration 없이 바로 인터랙션할 수 있습니다.
+[지난 글](/posts/fw-solid-core/)에서 SolidJS의 세밀한 반응성을 살펴봤습니다. 이번에는 **Qwik**을 다룹니다. Qwik은 "애플리케이션 크기에 관계없이 **O(1)의 초기 로딩 시간**을 달성한다"는 목표로 설계된 프레임워크입니다. 핵심 아이디어는 **Resumability**(재개 가능성)입니다. 서버에서 렌더링한 상태를 직렬화해 HTML에 포함시키고, 클라이언트는 전통적인 Hydration 없이 바로 인터랙션할 수 있습니다.
 
 ---
 
@@ -43,7 +43,7 @@ Qwik은 서버 렌더링 시 컴포넌트 상태와 이벤트 핸들러 위치�
 
 ## $ 접미사 — 지연 로딩 경계
 
-Qwik에서 `$` 접미사는 **코드 분리 경계(Lazy Loading Boundary)**를 표시합니다. 컴파일러가 이 부분을 별도 청크로 분리합니다.
+Qwik에서 `$` 접미사는 **코드 분리 경계**(Lazy Loading Boundary)를 표시합니다. 컴파일러가 이 부분을 별도 청크로 분리합니다.
 
 ```jsx
 import { component$, useSignal, useTask$ } from '@builder.io/qwik'

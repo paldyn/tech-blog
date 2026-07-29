@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-mtls/)에서 mTLS와 상호 인증을 살펴봤습니다. TLS에서 서버(또는 클라이언트)의 신원을 증명하는 핵심은 **X.509 인증서**입니다. 인증서를 발급하고 관리하는 체계가 **PKI(Public Key Infrastructure)**입니다. 이번 글에서는 PKI의 신뢰 모델과 인증서 구조를 해부합니다.
+[지난 글](/posts/network-mtls/)에서 mTLS와 상호 인증을 살펴봤습니다. TLS에서 서버(또는 클라이언트)의 신원을 증명하는 핵심은 **X.509 인증서**입니다. 인증서를 발급하고 관리하는 체계가 **PKI**(Public Key Infrastructure)입니다. 이번 글에서는 PKI의 신뢰 모델과 인증서 구조를 해부합니다.
 
 ## PKI의 신뢰 문제
 
-인터넷에서 처음 만나는 서버가 "나는 example.com입니다"라고 말하면 어떻게 믿을 수 있을까요? PKI는 **신뢰할 수 있는 제3자(Certificate Authority)**를 통해 이 문제를 해결합니다.
+인터넷에서 처음 만나는 서버가 "나는 example.com입니다"라고 말하면 어떻게 믿을 수 있을까요? PKI는 **신뢰할 수 있는 제3자**(Certificate Authority)를 통해 이 문제를 해결합니다.
 
 ```
 신뢰 체인의 원리:

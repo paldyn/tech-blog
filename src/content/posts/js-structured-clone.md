@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-error-cause/)에서 Error cause를 살펴봤습니다. 이번에는 ES2022에 전역 함수로 추가된 **`structuredClone()`**을 다룹니다. 이 함수는 JavaScript의 구조적 복제 알고리즘(Structured Clone Algorithm)을 직접 노출해, 깊은 복사(deep clone)를 손쉽게 수행할 수 있게 합니다.
+[지난 글](/posts/js-error-cause/)에서 Error cause를 살펴봤습니다. 이번에는 ES2022에 전역 함수로 추가된 <strong>`structuredClone()`</strong>을 다룹니다. 이 함수는 JavaScript의 구조적 복제 알고리즘(Structured Clone Algorithm)을 직접 노출해, 깊은 복사(deep clone)를 손쉽게 수행할 수 있게 합니다.
 
 ## 얕은 복사와 깊은 복사
 
@@ -118,7 +118,7 @@ clone.toString(); // TypeError ✗
 
 ## Transferable 객체
 
-`structuredClone()`의 두 번째 인자로 `{ transfer: [...] }`를 전달하면, 지정된 `ArrayBuffer`를 복사 대신 **이전(transfer)**할 수 있습니다. 이전된 버퍼는 원본에서 사용할 수 없게 됩니다.
+`structuredClone()`의 두 번째 인자로 `{ transfer: [...] }`를 전달하면, 지정된 `ArrayBuffer`를 복사 대신 **이전**(transfer)할 수 있습니다. 이전된 버퍼는 원본에서 사용할 수 없게 됩니다.
 
 ```javascript
 const buffer = new ArrayBuffer(1024);

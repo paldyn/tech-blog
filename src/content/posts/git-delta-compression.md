@@ -17,7 +17,7 @@ draft: false
 
 일반적인 파일 버전 관리에서 파일을 수정할 때마다 전체 내용을 저장하면 공간 낭비가 크다. 10 KB 파일을 100번 수정하면 1 MB가 필요하지만 실제 변경량은 각 수정마다 몇 십 바이트에 불과할 수 있다.
 
-Git의 delta 압축은 **기준 오브젝트(base)**와 **차이(delta)**만 저장한다. delta는 base를 변환해 대상 오브젝트를 재구성하는 명령어 시퀀스다.
+Git의 delta 압축은 **기준 오브젝트**(base)와 **차이**(delta)만 저장한다. delta는 base를 변환해 대상 오브젝트를 재구성하는 명령어 시퀀스다.
 
 ![Delta 압축 체인 구조](/assets/posts/git-delta-compression-chain.svg)
 

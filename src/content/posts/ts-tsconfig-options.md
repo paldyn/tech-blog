@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-decorators/)에서 데코레이터 패턴과 실전 활용을 살펴봤다. 이번에는 TypeScript 프로젝트의 심장부인 **`tsconfig.json`**을 체계적으로 정리한다. 컴파일러 옵션을 제대로 이해하면 타입 안전성, 빌드 속도, 모듈 호환성 문제를 사전에 방지할 수 있다.
+[지난 글](/posts/ts-decorators/)에서 데코레이터 패턴과 실전 활용을 살펴봤다. 이번에는 TypeScript 프로젝트의 심장부인 <strong>`tsconfig.json`</strong>을 체계적으로 정리한다. 컴파일러 옵션을 제대로 이해하면 타입 안전성, 빌드 속도, 모듈 호환성 문제를 사전에 방지할 수 있다.
 
 ## tsconfig.json 기본 구조
 

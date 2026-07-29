@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-optimizer-hints/)에서 힌트로 CBO 결정을 재정의하는 방법을 다뤘다. 이번에는 더 체계적인 접근, **SQL Plan Management(SPM)**을 살펴본다. SPM은 특정 SQL의 실행 계획을 "기준선(Baseline)"으로 고정해 통계 변경·패치·업그레이드로 인한 계획 변동을 방지한다.
+[지난 글](/posts/oracle-optimizer-hints/)에서 힌트로 CBO 결정을 재정의하는 방법을 다뤘다. 이번에는 더 체계적인 접근, **SQL Plan Management**(SPM)을 살펴본다. SPM은 특정 SQL의 실행 계획을 "기준선(Baseline)"으로 고정해 통계 변경·패치·업그레이드로 인한 계획 변동을 방지한다.
 
 ## 왜 SPM이 필요한가
 
@@ -19,7 +19,7 @@ DBA가 성능 튜닝을 마친 뒤 이틀 후 통계가 자동 수집되면서 �
 
 ## SPM 아키텍처
 
-SPM의 핵심 저장소는 SYSAUX 테이블스페이스 내 **SQL Management Base(SMB)**다.
+SPM의 핵심 저장소는 SYSAUX 테이블스페이스 내 **SQL Management Base**(SMB)다.
 
 - **SQL Plan Baselines**: 수락(ACCEPTED=YES)된 플랜 목록. 쿼리 실행 시 이 플랜이 우선 사용된다.
 - **SQL Plan History**: 새 플랜이 발견됐지만 아직 검증되지 않은 후보 플랜.

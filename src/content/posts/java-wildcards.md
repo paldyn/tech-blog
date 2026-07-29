@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-bounded-type-parameter/)에서 `extends`로 타입 파라미터의 범위를 제한하는 방법을 배웠다. 이번에는 **와일드카드(Wildcard) `?`**를 다룬다. 와일드카드는 타입 파라미터 자리에 쓰이는 특수한 기호로, 클래스나 메서드를 **정의**할 때가 아니라 타입을 **사용**하는 위치(변수 선언, 메서드 파라미터)에서 유연성을 제공한다.
+[지난 글](/posts/java-bounded-type-parameter/)에서 `extends`로 타입 파라미터의 범위를 제한하는 방법을 배웠다. 이번에는 <strong>와일드카드(Wildcard) `?`</strong>를 다룬다. 와일드카드는 타입 파라미터 자리에 쓰이는 특수한 기호로, 클래스나 메서드를 **정의**할 때가 아니라 타입을 **사용**하는 위치(변수 선언, 메서드 파라미터)에서 유연성을 제공한다.
 
 ## 제네릭은 왜 불공변인가
 
-`Integer`는 `Number`의 하위 타입이다. 그런데 `List<Integer>`는 `List<Number>`의 하위 타입이 **아니다**. 이를 **불공변(Invariant)**이라 한다.
+`Integer`는 `Number`의 하위 타입이다. 그런데 `List<Integer>`는 `List<Number>`의 하위 타입이 **아니다**. 이를 **불공변**(Invariant)이라 한다.
 
 ```java
 List<Integer> ints = List.of(1, 2, 3);

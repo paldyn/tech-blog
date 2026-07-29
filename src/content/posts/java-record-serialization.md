@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-serialization-pitfalls/)에서 Java 직렬화의 함정을 짚었다. 이번에는 Java 16에서 정식 도입된 **레코드(Record)**가 직렬화와 어떻게 상호작용하는지 다룬다. 레코드는 기존 클래스와 다른 직렬화 규칙을 적용받아 보안상 더 안전하다.
+[지난 글](/posts/java-serialization-pitfalls/)에서 Java 직렬화의 함정을 짚었다. 이번에는 Java 16에서 정식 도입된 **레코드**(Record)가 직렬화와 어떻게 상호작용하는지 다룬다. 레코드는 기존 클래스와 다른 직렬화 규칙을 적용받아 보안상 더 안전하다.
 
 ## Record의 직렬화 특수 규칙
 
 `record` 선언이 `Serializable`을 구현하면 JVM은 **레코드 전용 직렬화 메커니즘**을 사용한다. 핵심 차이는 역직렬화 방식이다.
 
-일반 클래스는 역직렬화 시 **생성자를 우회**해 리플렉션으로 필드를 직접 주입한다. 레코드는 반드시 **정식 생성자(canonical constructor)**를 호출해 역직렬화한다. 이 말은 compact 생성자에 작성한 불변식 검증이 역직렬화 시에도 실행된다는 뜻이다.
+일반 클래스는 역직렬화 시 **생성자를 우회**해 리플렉션으로 필드를 직접 주입한다. 레코드는 반드시 **정식 생성자**(canonical constructor)를 호출해 역직렬화한다. 이 말은 compact 생성자에 작성한 불변식 검증이 역직렬화 시에도 실행된다는 뜻이다.
 
 ![Record 직렬화 아키텍처](/assets/posts/java-record-serialization-arch.svg)
 

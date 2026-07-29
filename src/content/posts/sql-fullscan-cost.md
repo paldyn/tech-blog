@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-polymorphic-relationships/)에서 다형성 관계 설계 패턴을 살펴봤다. 이번부터는 **인덱스와 쿼리 성능** 챕터를 시작한다. 첫 주제는 모든 성능 분석의 기준점이 되는 **풀스캔(Full Scan / Sequential Scan)**의 동작 원리와 비용이다.
+[지난 글](/posts/sql-polymorphic-relationships/)에서 다형성 관계 설계 패턴을 살펴봤다. 이번부터는 **인덱스와 쿼리 성능** 챕터를 시작한다. 첫 주제는 모든 성능 분석의 기준점이 되는 **풀스캔**(Full Scan / Sequential Scan)의 동작 원리와 비용이다.
 
 ---
 
@@ -31,7 +31,7 @@ SELECT * FROM orders WHERE status = 'shipped';
 
 ![풀스캔 I/O 모델](/assets/posts/sql-fullscan-cost-io-model.svg)
 
-풀스캔은 **순차 I/O(Sequential Read)**다. 디스크 헤드가 순서대로 이동하기 때문에 랜덤 I/O보다 처리량(throughput)이 훨씬 높다.
+풀스캔은 **순차 I/O**(Sequential Read)다. 디스크 헤드가 순서대로 이동하기 때문에 랜덤 I/O보다 처리량(throughput)이 훨씬 높다.
 
 PostgreSQL의 비용 단위로 표현하면:
 
@@ -53,7 +53,7 @@ Index Scan Cost = 인덱스 블록 수 × random_page_cost(기본값 4.0)
 
 ## 선택도와 임계값
 
-**선택도(Selectivity)**는 전체 행 중 쿼리 조건을 만족하는 행의 비율이다.
+**선택도**(Selectivity)는 전체 행 중 쿼리 조건을 만족하는 행의 비율이다.
 
 ```sql
 -- 선택도 = 조건 만족 행 수 / 전체 행 수

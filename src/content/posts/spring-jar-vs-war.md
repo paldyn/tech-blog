@@ -17,7 +17,7 @@ draft: false
 
 전통적인 JAR 파일은 해당 프로젝트의 컴파일된 클래스만 담는다. 의존성 라이브러리는 별도로 classpath에 포함시켜야 했기 때문에, 운영 서버에 직접 배포하려면 의존성 관리가 번거로웠다.
 
-**Spring Boot의 Fat JAR(Executable JAR)**은 다르다. `spring-boot-maven-plugin`이나 `spring-boot-gradle-plugin`이 빌드 시 모든 의존성 JAR을 하나의 JAR 안에 중첩 포함(nested JARs)하는 방식으로, 단일 파일 하나만으로 독립 실행이 가능하다.
+**Spring Boot의 Fat JAR**(Executable JAR)은 다르다. `spring-boot-maven-plugin`이나 `spring-boot-gradle-plugin`이 빌드 시 모든 의존성 JAR을 하나의 JAR 안에 중첩 포함(nested JARs)하는 방식으로, 단일 파일 하나만으로 독립 실행이 가능하다.
 
 ```
 java -jar myapp-1.0.jar

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-security-overview/)에서 Docker 보안의 5개 레이어를 살펴봤다. 그 중 첫 번째 실천 항목인 **비루트 사용자(non-root user)**를 이번 글에서 깊이 다룬다. 단순히 Dockerfile에 `USER` 한 줄을 추가하는 것이지만, 파일 소유권과 실행 권한 문제를 제대로 이해하지 않으면 컨테이너가 시작조차 하지 않는 상황이 생긴다.
+[지난 글](/posts/docker-security-overview/)에서 Docker 보안의 5개 레이어를 살펴봤다. 그 중 첫 번째 실천 항목인 **비루트 사용자**(non-root user)를 이번 글에서 깊이 다룬다. 단순히 Dockerfile에 `USER` 한 줄을 추가하는 것이지만, 파일 소유권과 실행 권한 문제를 제대로 이해하지 않으면 컨테이너가 시작조차 하지 않는 상황이 생긴다.
 
 ## 왜 비루트로 실행해야 하는가
 

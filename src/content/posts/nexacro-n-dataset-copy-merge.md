@@ -37,7 +37,7 @@ this.dsB.copyData(this.dsA);
 
 ## appendData — 뒤에 이어 붙이기
 
-기존 행은 그대로 두고 소스 Dataset의 행을 마지막에 추가합니다. 추가된 행의 rowType은 **INSERT(2)**가 됩니다.
+기존 행은 그대로 두고 소스 Dataset의 행을 마지막에 추가합니다. 추가된 행의 rowType은 **INSERT**(2)가 됩니다.
 
 ```javascript
 // dsA 행을 dsB 뒤에 이어 붙임

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-bellman-ford/)에서 단일 출발점의 최단 경로를 음수 간선에서도 구하는 벨만-포드를 다뤘습니다. **플로이드-워셜(Floyd-Warshall)**은 한 발 더 나아가 **모든 쌍(All-Pairs)의 최단 경로**를 단 3중 루프로 구합니다. 노드가 수백 개 이내인 dense 그래프, 전이 폐쇄(transitive closure) 계산, 음수 사이클 탐지 등에 쓰이는 강력한 DP 알고리즘입니다.
+[지난 글](/posts/dsa-bellman-ford/)에서 단일 출발점의 최단 경로를 음수 간선에서도 구하는 벨만-포드를 다뤘습니다. **플로이드-워셜**(Floyd-Warshall)은 한 발 더 나아가 **모든 쌍(All-Pairs)의 최단 경로**를 단 3중 루프로 구합니다. 노드가 수백 개 이내인 dense 그래프, 전이 폐쇄(transitive closure) 계산, 음수 사이클 탐지 등에 쓰이는 강력한 DP 알고리즘입니다.
 
 ## 핵심 아이디어 — DP 점화식
 

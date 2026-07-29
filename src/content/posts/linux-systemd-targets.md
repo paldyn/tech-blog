@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-systemd-unit-files/)에서 유닛 파일을 작성하는 방법을 배웠습니다. 이번에는 **타겟(target)**을 다룹니다. 타겟은 SysV init의 런레벨을 대체하는 개념으로, 여러 유닛을 그룹화해 시스템의 특정 상태를 정의합니다.
+[지난 글](/posts/linux-systemd-unit-files/)에서 유닛 파일을 작성하는 방법을 배웠습니다. 이번에는 **타겟**(target)을 다룹니다. 타겟은 SysV init의 런레벨을 대체하는 개념으로, 여러 유닛을 그룹화해 시스템의 특정 상태를 정의합니다.
 
 ## 타겟이란
 

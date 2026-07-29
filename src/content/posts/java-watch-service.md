@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-nio-selector/)에서 Selector로 네트워크 채널을 감시하는 법을 다뤘다. 이번에는 비슷한 개념을 파일 시스템에 적용한다. **`WatchService`**는 디렉터리 변경(파일 생성·수정·삭제)을 OS 네이티브 메커니즘으로 감시해 Java 애플리케이션에 이벤트를 전달한다.
+[지난 글](/posts/java-nio-selector/)에서 Selector로 네트워크 채널을 감시하는 법을 다뤘다. 이번에는 비슷한 개념을 파일 시스템에 적용한다. <strong>`WatchService`</strong>는 디렉터리 변경(파일 생성·수정·삭제)을 OS 네이티브 메커니즘으로 감시해 Java 애플리케이션에 이벤트를 전달한다.
 
 ## WatchService가 필요한 이유
 

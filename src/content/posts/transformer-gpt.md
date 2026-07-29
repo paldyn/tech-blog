@@ -63,7 +63,7 @@ print(tokenizer.decode(output[0], skip_special_tokens=True))
 
 ## GPT-3: 스케일과 In-Context Learning
 
-2020년 175B 파라미터의 GPT-3가 등장하며 **In-Context Learning(ICL)**이 주목받았다. 프롬프트에 예제를 몇 개 넣어주면(Few-shot), 그래디언트 업데이트 없이 모델이 새로운 태스크에 적응한다.
+2020년 175B 파라미터의 GPT-3가 등장하며 **In-Context Learning**(ICL)이 주목받았다. 프롬프트에 예제를 몇 개 넣어주면(Few-shot), 그래디언트 업데이트 없이 모델이 새로운 태스크에 적응한다.
 
 ![GPT 추론 — 자기 회귀 생성과 In-Context Learning](/assets/posts/transformer-gpt-inference.svg)
 

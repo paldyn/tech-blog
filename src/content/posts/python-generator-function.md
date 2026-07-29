@@ -87,7 +87,7 @@ except StopIteration as e:
 
 ## 지연 평가와 메모리 효율
 
-제너레이터의 가장 큰 장점은 **지연 평가(lazy evaluation)**다. 값을 미리 모두 계산하지 않고 요청할 때마다 하나씩 생성한다.
+제너레이터의 가장 큰 장점은 **지연 평가**(lazy evaluation)다. 값을 미리 모두 계산하지 않고 요청할 때마다 하나씩 생성한다.
 
 ![지연 평가의 이점](/assets/posts/python-generator-function-lazy.svg)
 

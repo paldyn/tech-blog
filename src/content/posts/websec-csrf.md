@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-xss-dom-based/)에서 DOM 기반 XSS를 살펴봤습니다. 이번 글의 주제인 **CSRF(Cross-Site Request Forgery, 사이트 간 요청 위조)**는 XSS와 종종 혼동되지만 완전히 다른 공격입니다. XSS는 공격자가 피해자의 브라우저에서 스크립트를 실행하는 것이고, CSRF는 피해자가 의도하지 않은 요청을 인증된 상태로 서버에 보내도록 만드는 공격입니다.
+[지난 글](/posts/websec-xss-dom-based/)에서 DOM 기반 XSS를 살펴봤습니다. 이번 글의 주제인 **CSRF**(Cross-Site Request Forgery, 사이트 간 요청 위조)는 XSS와 종종 혼동되지만 완전히 다른 공격입니다. XSS는 공격자가 피해자의 브라우저에서 스크립트를 실행하는 것이고, CSRF는 피해자가 의도하지 않은 요청을 인증된 상태로 서버에 보내도록 만드는 공격입니다.
 
 ## CSRF의 핵심 원리
 
@@ -47,11 +47,11 @@ fetch('https://bank.com/transfer', {
 </script>
 ```
 
-CSRF가 성공하는 이유는 서버가 요청의 **출처(Origin)**를 검증하지 않기 때문입니다. 세션 쿠키가 유효하면 정상 요청으로 처리합니다.
+CSRF가 성공하는 이유는 서버가 요청의 **출처**(Origin)를 검증하지 않기 때문입니다. 세션 쿠키가 유효하면 정상 요청으로 처리합니다.
 
 ## CSRF 토큰 방어
 
-가장 보편적인 방어책은 **동기화 토큰 패턴(Synchronizer Token Pattern)**입니다.
+가장 보편적인 방어책은 **동기화 토큰 패턴**(Synchronizer Token Pattern)입니다.
 
 서버가 폼을 응답할 때 예측 불가능한 난수 토큰을 hidden 필드에 삽입합니다. 폼 제출 시 서버는 이 토큰이 세션에 저장된 값과 일치하는지 검증합니다. 공격자가 `evil.com`에서 교차 출처 페이지를 읽어 토큰을 추출하는 것은 Same-Origin Policy로 차단됩니다.
 

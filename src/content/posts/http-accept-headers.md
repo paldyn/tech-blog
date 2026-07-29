@@ -71,7 +71,7 @@ def get_data():
 
 ## Accept-Language 헤더
 
-사용자가 선호하는 **자연 언어(human language)**를 전달한다.
+사용자가 선호하는 **자연 언어**(human language)를 전달한다.
 
 ```http
 Accept-Language: ko-KR, ko;q=0.9, en-US;q=0.8, en;q=0.7

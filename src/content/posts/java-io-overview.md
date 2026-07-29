@@ -158,7 +158,7 @@ try (FileChannel fc = FileChannel.open(path, StandardOpenOption.READ)) {
 }
 ```
 
-현대 Java 개발에서는 **`java.nio.file`의 `Files`와 `Path`**를 기본으로 사용하고, 대용량·비동기 처리가 필요할 때만 NIO Channel을 고려한다.
+현대 Java 개발에서는 <strong>`java.nio.file`의 `Files`와 `Path`</strong>를 기본으로 사용하고, 대용량·비동기 처리가 필요할 때만 NIO Channel을 고려한다.
 
 ## 핵심 요약
 

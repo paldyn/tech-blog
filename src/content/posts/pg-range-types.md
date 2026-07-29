@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-jsonb-indexing-gin/)에서 JSONB GIN 인덱스의 동작 원리를 살펴봤다. 이번에는 PostgreSQL의 또 다른 고유 타입인 **범위 타입(Range Type)**을 다룬다. 예약 시스템, 기간 할인, 유효 기간 조건 등 "시작~끝"을 표현하는 모든 시나리오에서 강력하다.
+[지난 글](/posts/pg-jsonb-indexing-gin/)에서 JSONB GIN 인덱스의 동작 원리를 살펴봤다. 이번에는 PostgreSQL의 또 다른 고유 타입인 **범위 타입**(Range Type)을 다룬다. 예약 시스템, 기간 할인, 유효 기간 조건 등 "시작~끝"을 표현하는 모든 시나리오에서 강력하다.
 
 ## 범위 타입 종류
 

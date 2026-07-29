@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-prefix-sum/)에서 구간 합을 O(1)에 조회하는 누적 합을 다뤘습니다. 이번에는 그 역방향 — **구간 일괄 업데이트**를 O(1)에 처리하는 **차이 배열(Difference Array)**입니다.
+[지난 글](/posts/dsa-prefix-sum/)에서 구간 합을 O(1)에 조회하는 누적 합을 다뤘습니다. 이번에는 그 역방향 — **구간 일괄 업데이트**를 O(1)에 처리하는 **차이 배열**(Difference Array)입니다.
 
 ## 핵심 아이디어
 
@@ -21,7 +21,7 @@ draft: false
 - D[l] += v (구간 시작: v만큼 증가)
 - D[r+1] -= v (구간 끝+1: v만큼 감소)
 
-두 점만 수정하므로 **O(1)**. 모든 업데이트 완료 후 D의 누적 합으로 **O(N)**에 최종 A를 복원합니다.
+두 점만 수정하므로 **O(1)**. 모든 업데이트 완료 후 D의 누적 합으로 **O**(N)에 최종 A를 복원합니다.
 
 ![차이 배열 개념](/assets/posts/dsa-difference-array-concept.svg)
 

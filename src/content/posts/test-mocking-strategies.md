@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/test-pyramid/)에서 테스트 피라미드와 계층별 전략을 살펴봤습니다. 이번에는 **테스트 더블(Test Double)**을 다룹니다. 테스트 더블은 Gerard Meszaros의 책 *xUnit Test Patterns*에서 정리된 개념으로, 영화에서 위험한 장면을 대신하는 스턴트 더블에서 이름을 빌렸습니다. 테스트에서 실제 의존성 대신 사용하는 모든 대체물을 통칭합니다.
+[지난 글](/posts/test-pyramid/)에서 테스트 피라미드와 계층별 전략을 살펴봤습니다. 이번에는 **테스트 더블**(Test Double)을 다룹니다. 테스트 더블은 Gerard Meszaros의 책 *xUnit Test Patterns*에서 정리된 개념으로, 영화에서 위험한 장면을 대신하는 스턴트 더블에서 이름을 빌렸습니다. 테스트에서 실제 의존성 대신 사용하는 모든 대체물을 통칭합니다.
 
 ---
 

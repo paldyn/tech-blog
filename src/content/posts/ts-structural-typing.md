@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-indexed-access-types/)에서 인덱스 접근 타입을 살펴봤다. 이번에는 TypeScript 타입 시스템의 근본 원칙인 **구조적 타이핑(Structural Typing)**을 다룬다. "이름이 아니라 형태(shape)로 타입을 비교한다"는 원칙이 TypeScript의 모든 타입 호환성 결정의 기초다.
+[지난 글](/posts/ts-indexed-access-types/)에서 인덱스 접근 타입을 살펴봤다. 이번에는 TypeScript 타입 시스템의 근본 원칙인 **구조적 타이핑**(Structural Typing)을 다룬다. "이름이 아니라 형태(shape)로 타입을 비교한다"는 원칙이 TypeScript의 모든 타입 호환성 결정의 기초다.
 
 ## 구조적 타이핑이란
 
@@ -45,7 +45,7 @@ const a: Animal = dog; // OK ✅
 
 ## 함수 매개변수 호환성
 
-함수 타입의 매개변수는 **반변(contravariant)**이다. 더 적은 매개변수를 받는 함수를 더 많은 매개변수를 기대하는 타입에 할당할 수 있다.
+함수 타입의 매개변수는 **반변**(contravariant)이다. 더 적은 매개변수를 받는 함수를 더 많은 매개변수를 기대하는 타입에 할당할 수 있다.
 
 ```typescript
 type OnClick = (event: MouseEvent) => void;
@@ -62,7 +62,7 @@ const handler: OnClick = () => {}; // 매개변수 무시 — OK ✅
 
 ## 반환 타입 공변성
 
-반환 타입은 **공변(covariant)**이다. 더 구체적인 타입을 반환하는 함수가 더 추상적인 반환 타입에 할당 가능하다.
+반환 타입은 **공변**(covariant)이다. 더 구체적인 타입을 반환하는 함수가 더 추상적인 반환 타입에 할당 가능하다.
 
 ```typescript
 interface Named { name: string }

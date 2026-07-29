@@ -77,7 +77,7 @@ VACUUM (ANALYZE, VERBOSE) orders;
 
 ## TOAST — 대용량 값 처리
 
-PostgreSQL 행은 하나의 페이지(8KB)를 넘을 수 없다. `text`, `bytea`, `jsonb` 같은 가변 길이 타입이 크면 **TOAST(The Oversized-Attribute Storage Technique)**가 자동으로 개입한다.
+PostgreSQL 행은 하나의 페이지(8KB)를 넘을 수 없다. `text`, `bytea`, `jsonb` 같은 가변 길이 타입이 크면 **TOAST**(The Oversized-Attribute Storage Technique)가 자동으로 개입한다.
 
 처리 순서:
 1. 값 크기가 **2KB 초과**이면 압축 시도 (기본 PGLZ, 14c부터 LZ4 선택 가능)

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-rabbitmq-amqp/)에서 RabbitMQ를 통해 서비스 간 메시지를 주고받는 방법을 살펴봤습니다. 이번에는 한 걸음 더 나아가 **이벤트 기반 아키텍처(Event-Driven Architecture, EDA)**의 핵심 패턴과 Spring 생태계에서 이를 구현하는 방법을 정리합니다.
+[지난 글](/posts/spring-rabbitmq-amqp/)에서 RabbitMQ를 통해 서비스 간 메시지를 주고받는 방법을 살펴봤습니다. 이번에는 한 걸음 더 나아가 **이벤트 기반 아키텍처**(Event-Driven Architecture, EDA)의 핵심 패턴과 Spring 생태계에서 이를 구현하는 방법을 정리합니다.
 
 ## EDA란 무엇인가?
 

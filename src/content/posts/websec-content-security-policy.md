@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-cors-security/)에서 CORS 잘못된 설정으로 SOP가 무력화되는 방식을 살펴봤다. 이번에는 **콘텐츠 보안 정책(Content Security Policy, CSP)**이다. XSS 취약점이 존재하더라도 공격 스크립트의 실행을 막는 심층 방어 레이어다.
+[지난 글](/posts/websec-cors-security/)에서 CORS 잘못된 설정으로 SOP가 무력화되는 방식을 살펴봤다. 이번에는 **콘텐츠 보안 정책**(Content Security Policy, CSP)이다. XSS 취약점이 존재하더라도 공격 스크립트의 실행을 막는 심층 방어 레이어다.
 
 ## CSP란?
 

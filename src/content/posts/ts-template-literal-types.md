@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-mapped-types/)에서 매핑된 타입으로 기존 타입의 속성을 일괄 변환하는 방법을 배웠다. 이번에는 **템플릿 리터럴 타입(Template Literal Types)**을 살펴본다. TypeScript 4.1에서 도입된 이 기능은 JavaScript의 백틱 문자열처럼 타입 수준에서 문자열을 조합하고, 패턴 매칭으로 부분 문자열을 추출할 수 있게 해준다.
+[지난 글](/posts/ts-mapped-types/)에서 매핑된 타입으로 기존 타입의 속성을 일괄 변환하는 방법을 배웠다. 이번에는 **템플릿 리터럴 타입**(Template Literal Types)을 살펴본다. TypeScript 4.1에서 도입된 이 기능은 JavaScript의 백틱 문자열처럼 타입 수준에서 문자열을 조합하고, 패턴 매칭으로 부분 문자열을 추출할 수 있게 해준다.
 
 ## 기본 문법
 

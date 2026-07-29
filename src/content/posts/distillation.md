@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/quantization-awq-gptq/)에서 기존 가중치를 INT4로 압축하는 AWQ·GPTQ를 살펴봤다. 양자화가 완성된 모델을 압축하는 방법이라면, **지식 증류(Knowledge Distillation)**는 완전히 다른 접근이다. 큰 모델(Teacher)이 작은 모델(Student)에게 자신의 "지식"을 가르쳐 Student가 Teacher에 준하는 성능을 내도록 훈련한다. Hinton et al. (2015)의 선구적 논문 이후 증류는 BERT 경량화(DistilBERT), LLM 파인튜닝(Alpaca, Vicuna), 소형 언어 모델 개발(TinyLLaMA) 등에 폭넓게 활용됐다.
+[지난 글](/posts/quantization-awq-gptq/)에서 기존 가중치를 INT4로 압축하는 AWQ·GPTQ를 살펴봤다. 양자화가 완성된 모델을 압축하는 방법이라면, **지식 증류**(Knowledge Distillation)는 완전히 다른 접근이다. 큰 모델(Teacher)이 작은 모델(Student)에게 자신의 "지식"을 가르쳐 Student가 Teacher에 준하는 성능을 내도록 훈련한다. Hinton et al. (2015)의 선구적 논문 이후 증류는 BERT 경량화(DistilBERT), LLM 파인튜닝(Alpaca, Vicuna), 소형 언어 모델 개발(TinyLLaMA) 등에 폭넓게 활용됐다.
 
 ## 왜 증류가 필요한가: Hard Label의 한계
 
@@ -180,7 +180,7 @@ print(tokenizer.decode(out[0], skip_special_tokens=True))
 - **Token-Level KD**: 최고 품질, 메모리 비용 큼
 - **온도 파라미터**: 분포를 부드럽게 해 클래스 간 유사도 정보 전달
 
-다음 글에서는 훈련된 모델에서 불필요한 가중치를 제거하는 **프루닝(Pruning)**을 다룬다.
+다음 글에서는 훈련된 모델에서 불필요한 가중치를 제거하는 **프루닝**(Pruning)을 다룬다.
 
 ---
 

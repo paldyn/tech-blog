@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-oauth2-pkce/)에서 PKCE로 공개 클라이언트를 보호하는 방법을 다뤘다. OAuth 2.0은 인가(Authorization) 프레임워크이고 **인증이 아니다**. 사용자가 누구인지 확인하려면 OAuth 2.0 위에 **OpenID Connect(OIDC)**를 얹어야 한다.
+[지난 글](/posts/websec-oauth2-pkce/)에서 PKCE로 공개 클라이언트를 보호하는 방법을 다뤘다. OAuth 2.0은 인가(Authorization) 프레임워크이고 **인증이 아니다**. 사용자가 누구인지 확인하려면 OAuth 2.0 위에 **OpenID Connect**(OIDC)를 얹어야 한다.
 
 ## OAuth 2.0과 OIDC의 차이
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-vertical-pod-autoscaler/)에서 컨테이너 리소스를 수직으로 자동 조정하는 VPA를 다뤘습니다. HPA와 VPA는 Pod 단위의 스케일링이었다면, 이번에 다루는 **Cluster Autoscaler(CA)**는 노드 수 자체를 늘리고 줄입니다.
+[지난 글](/posts/k8s-vertical-pod-autoscaler/)에서 컨테이너 리소스를 수직으로 자동 조정하는 VPA를 다뤘습니다. HPA와 VPA는 Pod 단위의 스케일링이었다면, 이번에 다루는 **Cluster Autoscaler**(CA)는 노드 수 자체를 늘리고 줄입니다.
 
 ## Cluster Autoscaler란?
 

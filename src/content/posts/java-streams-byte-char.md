@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-io-overview/)에서 Java IO 전체 구조를 살펴봤다. 이번에는 **바이트 스트림(`InputStream`/`OutputStream`)과 문자 스트림(`Reader`/`Writer`)**의 핵심 API와 함께 자주 틀리는 사용 패턴을 집중적으로 다룬다.
+[지난 글](/posts/java-io-overview/)에서 Java IO 전체 구조를 살펴봤다. 이번에는 **바이트 스트림(`InputStream`/`OutputStream`)과 문자 스트림**(`Reader`/`Writer`)의 핵심 API와 함께 자주 틀리는 사용 패턴을 집중적으로 다룬다.
 
 ## InputStream — 바이트 입력의 근본
 

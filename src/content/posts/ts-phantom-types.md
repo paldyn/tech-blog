@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-opaque-types/)에서 brand로 타입을 구분하는 Opaque 타입을 다뤘다. Phantom 타입은 그 아이디어를 한 걸음 더 밀어붙인다. 브랜드는 "이 값이 무엇인지"를 표시했다면, Phantom 타입은 **"이 값이 지금 어떤 상태인지"**를 타입 매개변수로 추적한다. 그 매개변수는 런타임 값에는 전혀 등장하지 않는, 말 그대로 "유령(phantom)" 정보다.
+[지난 글](/posts/ts-opaque-types/)에서 brand로 타입을 구분하는 Opaque 타입을 다뤘다. Phantom 타입은 그 아이디어를 한 걸음 더 밀어붙인다. 브랜드는 "이 값이 무엇인지"를 표시했다면, Phantom 타입은 <strong>"이 값이 지금 어떤 상태인지"</strong>를 타입 매개변수로 추적한다. 그 매개변수는 런타임 값에는 전혀 등장하지 않는, 말 그대로 "유령(phantom)" 정보다.
 
 ## Phantom 타입이란
 

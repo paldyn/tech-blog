@@ -71,7 +71,7 @@ Location: https://example.com/maintenance-target
 
 ![PRG 패턴 흐름](/assets/posts/http-redirect-types-deep-prg.svg)
 
-POST로 폼을 제출한 직후 결과 페이지를 그대로 200으로 렌더링하면, 사용자가 브라우저에서 새로고침(F5)할 때 브라우저가 "이 POST를 다시 보낼까요?"를 묻고, 무심코 확인하면 **같은 주문이 두 번 들어간다**. 이걸 막는 표준 해법이 **PRG(Post / Redirect / Get)**다.
+POST로 폼을 제출한 직후 결과 페이지를 그대로 200으로 렌더링하면, 사용자가 브라우저에서 새로고침(F5)할 때 브라우저가 "이 POST를 다시 보낼까요?"를 묻고, 무심코 확인하면 **같은 주문이 두 번 들어간다**. 이걸 막는 표준 해법이 **PRG**(Post / Redirect / Get)다.
 
 1. 클라이언트가 `POST /orders`로 주문을 제출한다.
 2. 서버는 주문을 저장한 뒤 **303 See Other**로 `Location: /orders/1234`를 응답한다.

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-lsof/)에서 lsof로 열린 파일과 소켓을 조회하는 방법을 배웠습니다. 이번에는 현대 리눅스 커널에서 가장 혁신적인 기술 중 하나인 **eBPF(extended Berkeley Packet Filter)**를 살펴봅니다. 커널을 재컴파일하거나 커널 모듈을 로드하지 않고, 안전하게 커널 내부를 관찰하고 프로그래밍할 수 있는 기술입니다.
+[지난 글](/posts/linux-lsof/)에서 lsof로 열린 파일과 소켓을 조회하는 방법을 배웠습니다. 이번에는 현대 리눅스 커널에서 가장 혁신적인 기술 중 하나인 **eBPF**(extended Berkeley Packet Filter)를 살펴봅니다. 커널을 재컴파일하거나 커널 모듈을 로드하지 않고, 안전하게 커널 내부를 관찰하고 프로그래밍할 수 있는 기술입니다.
 
 ## eBPF란 무엇인가
 

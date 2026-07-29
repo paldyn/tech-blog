@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-records/)에서 record 클래스의 선언과 자동 생성 멤버, 컴팩트 생성자를 살펴봤다. 이번에는 Java 21에서 정식 출시된 **record 패턴(record pattern)**을 다룬다. record 패턴은 `instanceof`와 `switch`에서 record의 컴포넌트를 즉시 분해(deconstruct)해 바인딩하는 기능이다.
+[지난 글](/posts/java-records/)에서 record 클래스의 선언과 자동 생성 멤버, 컴팩트 생성자를 살펴봤다. 이번에는 Java 21에서 정식 출시된 **record 패턴**(record pattern)을 다룬다. record 패턴은 `instanceof`와 `switch`에서 record의 컴포넌트를 즉시 분해(deconstruct)해 바인딩하는 기능이다.
 
 ## record 패턴이란
 

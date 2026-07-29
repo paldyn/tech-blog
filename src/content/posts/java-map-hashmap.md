@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-set-treeset/)에서 TreeSet의 Red-Black Tree 구조를 살펴봤다. 이번에는 Java에서 가장 많이 쓰이는 Map 구현체인 **`HashMap`**을 깊이 파헤친다. 내부 구조를 이해하면 성능 함정을 피하고 올바른 튜닝 결정을 내릴 수 있다.
+[지난 글](/posts/java-set-treeset/)에서 TreeSet의 Red-Black Tree 구조를 살펴봤다. 이번에는 Java에서 가장 많이 쓰이는 Map 구현체인 <strong>`HashMap`</strong>을 깊이 파헤친다. 내부 구조를 이해하면 성능 함정을 피하고 올바른 튜닝 결정을 내릴 수 있다.
 
 ## 내부 구조: 버킷 배열 + 연결 리스트/트리
 
-`HashMap`은 **버킷 배열(table)**과 각 버킷에 연결된 **Entry 체인**으로 구성된다. Entry는 `(hash, key, value, next)` 4개의 필드를 보유한다.
+`HashMap`은 **버킷 배열**(table)과 각 버킷에 연결된 **Entry 체인**으로 구성된다. Entry는 `(hash, key, value, next)` 4개의 필드를 보유한다.
 
 ```java
 // java.util.HashMap 내부 (간략화)

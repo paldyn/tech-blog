@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-dhcp/)에서 DHCP로 네트워크 설정을 자동으로 받는 방법을 살펴봤다. 이번 글에서는 애플리케이션과 네트워크를 연결하는 계층인 **전송 계층(Transport Layer)**의 역할과 구조를 다룬다.
+[지난 글](/posts/network-dhcp/)에서 DHCP로 네트워크 설정을 자동으로 받는 방법을 살펴봤다. 이번 글에서는 애플리케이션과 네트워크를 연결하는 계층인 **전송 계층**(Transport Layer)의 역할과 구조를 다룬다.
 
 ## 전송 계층의 위치와 역할
 
@@ -109,7 +109,7 @@ def compute_checksum(data: bytes) -> int:
 
 ## 포트 범위와 임시 포트
 
-클라이언트가 서버에 연결할 때 운영체제가 자동으로 **임시 포트(Ephemeral Port)**를 할당한다.
+클라이언트가 서버에 연결할 때 운영체제가 자동으로 **임시 포트**(Ephemeral Port)를 할당한다.
 
 ```bash
 # Linux 임시 포트 범위 확인 및 변경

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-race-conditions/)에서 동시성 취약점을 살펴봤다. 이번에는 **비즈니스 로직 취약점(Business Logic Flaws)**이다. SQL 인젝션이나 XSS처럼 기술적 오류가 아니라, 애플리케이션이 정상 작동하면서도 의도된 비즈니스 규칙을 벗어나는 방식으로 악용되는 취약점이다.
+[지난 글](/posts/websec-race-conditions/)에서 동시성 취약점을 살펴봤다. 이번에는 **비즈니스 로직 취약점**(Business Logic Flaws)이다. SQL 인젝션이나 XSS처럼 기술적 오류가 아니라, 애플리케이션이 정상 작동하면서도 의도된 비즈니스 규칙을 벗어나는 방식으로 악용되는 취약점이다.
 
 ## 비즈니스 로직 취약점이란?
 

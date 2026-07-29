@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-rtt-jitter/)에서 RTT와 지터로 네트워크 지연을 정량화하는 방법을 살펴봤다. 그렇다면 애초에 데이터는 네트워크를 통해 어떻게 전달되는 걸까? 전화망과 인터넷이 같은 물리 선로를 쓰면서도 동작 방식이 전혀 다른 이유가 여기에 있다. 핵심은 **회선 교환(Circuit Switching)**과 **패킷 교환(Packet Switching)**의 근본적인 차이에 있다.
+[지난 글](/posts/network-rtt-jitter/)에서 RTT와 지터로 네트워크 지연을 정량화하는 방법을 살펴봤다. 그렇다면 애초에 데이터는 네트워크를 통해 어떻게 전달되는 걸까? 전화망과 인터넷이 같은 물리 선로를 쓰면서도 동작 방식이 전혀 다른 이유가 여기에 있다. 핵심은 **회선 교환**(Circuit Switching)과 **패킷 교환**(Packet Switching)의 근본적인 차이에 있다.
 
 ## 회선 교환: 전용 경로 예약
 
@@ -37,7 +37,7 @@ draft: false
 
 ## 패킷 교환: 공유 자원과 Store-and-Forward
 
-인터넷의 근간인 패킷 교환은 데이터를 **패킷(Packet)**이라는 단위로 분할해 전송한다. 각 패킷은 독립적으로 라우팅되며, 목적지에서 재조립된다.
+인터넷의 근간인 패킷 교환은 데이터를 **패킷**(Packet)이라는 단위로 분할해 전송한다. 각 패킷은 독립적으로 라우팅되며, 목적지에서 재조립된다.
 
 ![Store-and-Forward 패킷 전달](/assets/posts/network-circuit-vs-packet-switching-packet.svg)
 

@@ -147,7 +147,7 @@ if (isSystemPropertySet())    return false; // -Dspring.devtools.restart.enabled
 
 ## 정리
 
-DevTools는 ClassLoader 분리라는 영리한 방법으로 전체 JVM 재구동 없이 빠른 재시작을 구현합니다. LiveReload와 캐시 자동 비활성화까지 더해지면 개발 피드백 루프가 크게 짧아집니다. 프로덕션에서는 자동으로 비활성화되므로 안심하고 `developmentOnly`로 추가할 수 있습니다. 다음 글에서는 Spring Boot의 강력한 설정 체계인 **`@ConfigurationProperties`**를 살펴봅니다.
+DevTools는 ClassLoader 분리라는 영리한 방법으로 전체 JVM 재구동 없이 빠른 재시작을 구현합니다. LiveReload와 캐시 자동 비활성화까지 더해지면 개발 피드백 루프가 크게 짧아집니다. 프로덕션에서는 자동으로 비활성화되므로 안심하고 `developmentOnly`로 추가할 수 있습니다. 다음 글에서는 Spring Boot의 강력한 설정 체계인 <strong>`@ConfigurationProperties`</strong>를 살펴봅니다.
 
 ---
 

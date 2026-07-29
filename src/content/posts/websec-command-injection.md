@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-nosql-injection/)에서 NoSQL 데이터베이스를 대상으로 한 인젝션 기법을 살펴봤다. 인젝션 계열 중 가장 치명적인 결과를 낳는 것은 **커맨드 인젝션(Command Injection)**이다. 성공 시 서버 OS에서 임의 명령어를 실행할 수 있어 서버 완전 장악, 파일 시스템 탈취, 리버스 쉘 설치까지 이어진다.
+[지난 글](/posts/websec-nosql-injection/)에서 NoSQL 데이터베이스를 대상으로 한 인젝션 기법을 살펴봤다. 인젝션 계열 중 가장 치명적인 결과를 낳는 것은 **커맨드 인젝션**(Command Injection)이다. 성공 시 서버 OS에서 임의 명령어를 실행할 수 있어 서버 완전 장악, 파일 시스템 탈취, 리버스 쉘 설치까지 이어진다.
 
 ## 커맨드 인젝션이란
 

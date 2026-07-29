@@ -15,7 +15,7 @@ draft: false
 
 ## SCN이란 무엇인가
 
-**SCN(System Change Number)**은 Oracle 데이터베이스에서 모든 커밋에 단조 증가 번호를 부여하는 글로벌 타임스탬프다. 정수 카운터로, 커밋이 발생할 때마다 단조적으로 증가한다.
+**SCN**(System Change Number)은 Oracle 데이터베이스에서 모든 커밋에 단조 증가 번호를 부여하는 글로벌 타임스탬프다. 정수 카운터로, 커밋이 발생할 때마다 단조적으로 증가한다.
 
 SCN이 저장되는 위치:
 - Control 파일 헤더

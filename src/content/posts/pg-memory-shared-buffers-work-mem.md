@@ -17,7 +17,7 @@ draft: false
 
 PostgreSQL은 테이블과 인덱스를 8KB 단위 **페이지**로 읽고 쓴다. Shared Buffers는 이 페이지를 메모리에 캐싱하는 공간이다. 캐시에 있으면 디스크 I/O 없이 처리되고(Buffer Hit), 없으면 디스크에서 읽어 캐시에 올린다(Buffer Miss).
 
-권장 크기는 **전체 RAM의 25%**다. 예를 들어 32GB 서버라면 `shared_buffers = 8GB`. 일반적으로 이 이상 늘리면 OS Kernel Page Cache 공간이 줄어들어 오히려 역효과가 나는 경우가 많다.
+권장 크기는 <strong>전체 RAM의 25%</strong>다. 예를 들어 32GB 서버라면 `shared_buffers = 8GB`. 일반적으로 이 이상 늘리면 OS Kernel Page Cache 공간이 줄어들어 오히려 역효과가 나는 경우가 많다.
 
 ```ini
 # postgresql.conf
@@ -39,7 +39,7 @@ Shared Buffers가 가득 찼을 때 교체 대상 페이지를 선택하는 알�
 
 ## OS Kernel Page Cache와의 이중 버퍼링
 
-PostgreSQL은 Shared Buffers 외에도 OS Kernel Page Cache에 또 한 번 캐싱될 수 있다. 이를 **이중 버퍼링(double buffering)**이라 한다. 메모리가 낭비되는 구조지만, `O_DIRECT`를 쓰지 않는 일반 설정에서는 피할 수 없다.
+PostgreSQL은 Shared Buffers 외에도 OS Kernel Page Cache에 또 한 번 캐싱될 수 있다. 이를 **이중 버퍼링**(double buffering)이라 한다. 메모리가 낭비되는 구조지만, `O_DIRECT`를 쓰지 않는 일반 설정에서는 피할 수 없다.
 
 이 때문에 `effective_cache_size`라는 힌트 파라미터가 존재한다. 플래너는 이 값을 "얼마나 많은 메모리가 OS 캐시로 사용 가능한가"의 추정치로 사용해 Index Scan vs Sequential Scan을 결정한다. 실제 메모리를 할당하지 않는다.
 

@@ -43,7 +43,7 @@ spring-boot-starter-web
 
 ## BOM — 버전 통합 관리의 비밀
 
-`spring-boot-starter-web`을 추가할 때 버전을 명시하지 않아도 됩니다. 이는 **BOM(Bill of Materials)**이 동작하기 때문입니다.
+`spring-boot-starter-web`을 추가할 때 버전을 명시하지 않아도 됩니다. 이는 **BOM**(Bill of Materials)이 동작하기 때문입니다.
 
 ```groovy
 // build.gradle — 버전을 명시하지 않아도 됨

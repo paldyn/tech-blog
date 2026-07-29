@@ -21,7 +21,7 @@ Snowflake는 세 개의 레이어로 구성된다.
 
 **Cloud Services Layer**: 항상 실행 중인 공유 레이어다. 인증·접근 제어, 메타데이터 관리, 쿼리 파싱·최적화, 트랜잭션 조율을 담당한다. 이 레이어는 컴퓨팅 크레딧 없이 동작하므로 별도 과금이 없다(컴퓨팅의 10% 미만 사용 시 무료).
 
-**Query Processing Layer (Virtual Warehouses)**: 실제 쿼리를 실행하는 컴퓨팅 레이어다. **Virtual Warehouse(VW)**는 독립된 MPP 클러스터이며, 각 VW는 동일한 스토리지 데이터를 공유하지만 로컬 디스크 캐시는 독립적이다. XS부터 6XL까지 크기를 선택할 수 있으며, 초 단위로 크레딧을 소비한다.
+**Query Processing Layer (Virtual Warehouses)**: 실제 쿼리를 실행하는 컴퓨팅 레이어다. **Virtual Warehouse**(VW)는 독립된 MPP 클러스터이며, 각 VW는 동일한 스토리지 데이터를 공유하지만 로컬 디스크 캐시는 독립적이다. XS부터 6XL까지 크기를 선택할 수 있으며, 초 단위로 크레딧을 소비한다.
 
 **Cloud Storage Layer**: AWS S3, Azure Blob, GCS에 데이터를 저장한다. Snowflake가 자체 관리하는 **Micro-partition** 형식으로 변환해 저장한다.
 

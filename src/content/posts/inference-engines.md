@@ -23,7 +23,7 @@ Hugging Face Transformers의 `model.generate()`로도 추론할 수 있다. 그�
 
 ## 핵심 기술 1: Continuous Batching
 
-전통적 정적 배치는 한 배치의 모든 요청이 끝날 때까지 다음 요청이 기다려야 한다. 500 토큰 요청 하나가 10 토큰 요청 7개를 막는 상황이 발생한다. **Continuous Batching(Iteration-level Scheduling)**은 각 Forward Pass(iteration) 단위로 배치를 재구성한다. 완료된 요청은 즉시 제거하고 대기 중인 요청을 빈 슬롯에 채운다. GPU 활용률이 크게 향상된다.
+전통적 정적 배치는 한 배치의 모든 요청이 끝날 때까지 다음 요청이 기다려야 한다. 500 토큰 요청 하나가 10 토큰 요청 7개를 막는 상황이 발생한다. **Continuous Batching**(Iteration-level Scheduling)은 각 Forward Pass(iteration) 단위로 배치를 재구성한다. 완료된 요청은 즉시 제거하고 대기 중인 요청을 빈 슬롯에 채운다. GPU 활용률이 크게 향상된다.
 
 ## 핵심 기술 2: PagedAttention
 
@@ -82,7 +82,7 @@ print(resp.choices[0].message.content)
 
 ## TGI: Hugging Face 생태계의 서빙 엔진
 
-**Text Generation Inference(TGI)**는 Hugging Face가 만든 프로덕션 서빙 솔루션이다. Hugging Face Hub의 모델을 Docker로 바로 배포할 수 있어 HF 생태계와의 통합이 뛰어나다.
+**Text Generation Inference**(TGI)는 Hugging Face가 만든 프로덕션 서빙 솔루션이다. Hugging Face Hub의 모델을 Docker로 바로 배포할 수 있어 HF 생태계와의 통합이 뛰어나다.
 
 ```bash
 # Docker로 TGI 실행

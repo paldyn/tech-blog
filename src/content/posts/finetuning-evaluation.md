@@ -23,7 +23,7 @@ draft: false
 
 ## Perplexity: 언어 모델의 기본 체력 측정
 
-**Perplexity(퍼플렉시티)**는 언어 모델이 텍스트를 얼마나 "놀랍지 않게" 예측하는지를 측정하는 지표다. 수식으로 표현하면 다음과 같다.
+**Perplexity**(퍼플렉시티)는 언어 모델이 텍스트를 얼마나 "놀랍지 않게" 예측하는지를 측정하는 지표다. 수식으로 표현하면 다음과 같다.
 
 ```text
 PPL = exp(-1/N * Σ log P(wᵢ | w₁,...,wᵢ₋₁))
@@ -41,7 +41,7 @@ Perplexity는 훈련 loss와 직접 연관된다. `loss = log(PPL)`이므로 훈
 
 ## ROUGE: 요약 모델의 표준 평가
 
-**ROUGE(Recall-Oriented Understudy for Gisting Evaluation)**는 생성된 텍스트와 참조 텍스트 사이의 n-gram 겹침을 측정한다. 요약 태스크에서 가장 많이 사용된다.
+**ROUGE**(Recall-Oriented Understudy for Gisting Evaluation)는 생성된 텍스트와 참조 텍스트 사이의 n-gram 겹침을 측정한다. 요약 태스크에서 가장 많이 사용된다.
 
 ### ROUGE의 세 가지 변종
 
@@ -80,7 +80,7 @@ ROUGE의 한계는 의미적 유사성을 무시한다는 점이다. "자동차"
 
 ## BLEU: 기계 번역의 전통적 기준
 
-**BLEU(Bilingual Evaluation Understudy)**는 생성된 텍스트의 n-gram이 참조 텍스트에 얼마나 포함되어 있는지를 측정한다. ROUGE가 재현율(recall) 중심이라면, BLEU는 정밀도(precision) 중심이다. 기계 번역 분야에서 오랫동안 표준으로 사용되어 왔다.
+**BLEU**(Bilingual Evaluation Understudy)는 생성된 텍스트의 n-gram이 참조 텍스트에 얼마나 포함되어 있는지를 측정한다. ROUGE가 재현율(recall) 중심이라면, BLEU는 정밀도(precision) 중심이다. 기계 번역 분야에서 오랫동안 표준으로 사용되어 왔다.
 
 BLEU의 몇 가지 특성을 알아두면 좋다.
 
@@ -141,7 +141,7 @@ weighted_f1 = f1_score(y_true, y_pred, average="weighted")
 
 ### QA 태스크: Exact Match와 F1
 
-질의응답(QA) 태스크에서는 **Exact Match(EM)**과 **Token-level F1**을 함께 사용한다.
+질의응답(QA) 태스크에서는 **Exact Match**(EM)과 **Token-level F1**을 함께 사용한다.
 
 - **EM**: 예측 답변이 정답과 완전히 일치하는 비율
 - **F1**: 공유 토큰 비율 (부분 점수 부여)
@@ -230,7 +230,7 @@ LLM-as-Judge의 장점과 주의점은 다음과 같다.
 
 ### 4단계: 파국적 망각 확인
 
-파인튜닝 후 모델이 이전에 잘 수행하던 능력을 잃지 않았는지 확인해야 한다. 이를 **파국적 망각(catastrophic forgetting)**이라 한다. 파인튜닝 도메인 이외의 일반 QA 태스크에서도 성능을 측정해서 비교하라.
+파인튜닝 후 모델이 이전에 잘 수행하던 능력을 잃지 않았는지 확인해야 한다. 이를 **파국적 망각**(catastrophic forgetting)이라 한다. 파인튜닝 도메인 이외의 일반 QA 태스크에서도 성능을 측정해서 비교하라.
 
 ## lm-evaluation-harness 활용
 

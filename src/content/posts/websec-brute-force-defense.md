@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-password-policies/)에서 강력한 비밀번호 정책을 설계하는 방법을 알아봤다. 하지만 강한 비밀번호를 요구해도 공격자가 자동화 도구로 수천만 번 시도한다면 언젠가는 맞출 수 있다. **무차별 대입 공격(Brute Force Attack)**에 대한 서버 측 방어가 반드시 필요하다.
+[지난 글](/posts/websec-password-policies/)에서 강력한 비밀번호 정책을 설계하는 방법을 알아봤다. 하지만 강한 비밀번호를 요구해도 공격자가 자동화 도구로 수천만 번 시도한다면 언젠가는 맞출 수 있다. **무차별 대입 공격**(Brute Force Attack)에 대한 서버 측 방어가 반드시 필요하다.
 
 ## 무차별 대입 공격의 종류
 

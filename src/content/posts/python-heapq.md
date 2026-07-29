@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-collections-namedtuple/)에서 이름 있는 불변 튜플인 namedtuple을 다뤘습니다. 이번에는 `heapq` 모듈을 살펴봅니다. 힙(Heap)은 **부모 노드가 항상 자식 노드보다 작거나 같은 완전 이진 트리** 구조로, 최솟값을 O(log n)에 삽입하고 O(log n)에 꺼낼 수 있습니다. Python의 `heapq`는 **최소 힙(min-heap)**을 일반 리스트 위에 구현합니다.
+[지난 글](/posts/python-collections-namedtuple/)에서 이름 있는 불변 튜플인 namedtuple을 다뤘습니다. 이번에는 `heapq` 모듈을 살펴봅니다. 힙(Heap)은 **부모 노드가 항상 자식 노드보다 작거나 같은 완전 이진 트리** 구조로, 최솟값을 O(log n)에 삽입하고 O(log n)에 꺼낼 수 있습니다. Python의 `heapq`는 **최소 힙**(min-heap)을 일반 리스트 위에 구현합니다.
 
 ## 기본 연산
 

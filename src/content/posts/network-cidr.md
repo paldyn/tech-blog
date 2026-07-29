@@ -28,7 +28,7 @@ draft: false
 
 ## CIDR 표기법
 
-CIDR(Classless Inter-Domain Routing, RFC 1519)은 클래스 경계를 없애고 **프리픽스 길이(/n)**로 네트워크를 표현한다.
+CIDR(Classless Inter-Domain Routing, RFC 1519)은 클래스 경계를 없애고 **프리픽스 길이**(/n)로 네트워크를 표현한다.
 
 ![CIDR 표기법](/assets/posts/network-cidr-notation.svg)
 

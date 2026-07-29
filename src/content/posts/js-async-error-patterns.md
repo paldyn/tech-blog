@@ -42,7 +42,7 @@ const data = await retry(
 );
 ```
 
-재시도 시 **지수 백오프(exponential backoff)**를 적용하면 서버 과부하를 줄일 수 있습니다. 429(Too Many Requests)나 503(Service Unavailable) 에러에만 재시도하고, 400/401/403은 재시도해도 의미 없으므로 즉시 throw합니다.
+재시도 시 **지수 백오프**(exponential backoff)를 적용하면 서버 과부하를 줄일 수 있습니다. 429(Too Many Requests)나 503(Service Unavailable) 에러에만 재시도하고, 400/401/403은 재시도해도 의미 없으므로 즉시 throw합니다.
 
 ![비동기 에러 처리 4가지 패턴](/assets/posts/js-async-error-patterns-overview.svg)
 

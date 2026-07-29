@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-initramfs/)에서 initramfs가 실제 루트 파일시스템을 마운트하기까지의 과정을 살펴봤습니다. 부팅 중에 initramfs가 디스크 드라이버나 파일시스템 드라이버를 동적으로 불러오는 장면이 있었는데, 그 핵심 메커니즘이 바로 **커널 모듈(Kernel Module)**입니다.
+[지난 글](/posts/linux-initramfs/)에서 initramfs가 실제 루트 파일시스템을 마운트하기까지의 과정을 살펴봤습니다. 부팅 중에 initramfs가 디스크 드라이버나 파일시스템 드라이버를 동적으로 불러오는 장면이 있었는데, 그 핵심 메커니즘이 바로 **커널 모듈**(Kernel Module)입니다.
 
 ![커널 모듈 아키텍처](/assets/posts/linux-kernel-modules-lsmod-arch.svg)
 

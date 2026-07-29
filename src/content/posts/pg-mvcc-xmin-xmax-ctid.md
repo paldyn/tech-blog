@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-table-inheritance/)에서 테이블 상속 구조를 살펴봤다. 이번에는 PostgreSQL의 동시성 제어의 심장부인 **MVCC(Multi-Version Concurrency Control)**를 xmin, xmax, ctid라는 시스템 컬럼으로 분해해 이해한다.
+[지난 글](/posts/pg-table-inheritance/)에서 테이블 상속 구조를 살펴봤다. 이번에는 PostgreSQL의 동시성 제어의 심장부인 **MVCC**(Multi-Version Concurrency Control)를 xmin, xmax, ctid라는 시스템 컬럼으로 분해해 이해한다.
 
 ## MVCC의 핵심 아이디어
 

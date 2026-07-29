@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-module-search-path/)에서 `sys.path`가 어떻게 구성되는지 살펴봤습니다. 이번에는 그 경로 위에서 실제로 모듈을 불러올 때 쓰는 두 가지 임포트 스타일, **절대 임포트(absolute import)**와 **상대 임포트(relative import)**의 차이를 파헤칩니다.
+[지난 글](/posts/python-module-search-path/)에서 `sys.path`가 어떻게 구성되는지 살펴봤습니다. 이번에는 그 경로 위에서 실제로 모듈을 불러올 때 쓰는 두 가지 임포트 스타일, **절대 임포트**(absolute import)와 **상대 임포트**(relative import)의 차이를 파헤칩니다.
 
 ## 절대 임포트
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cnn-instance-segmentation/)에서 인스턴스 세그멘테이션으로 CNN 계열의 정점을 살펴봤다. 이미지처럼 공간 구조가 고정된 데이터와 달리, **텍스트·음성·시계열**처럼 순서가 중요한 데이터를 다루려면 다른 접근이 필요하다. 그 해답이 **순환 신경망(Recurrent Neural Network, RNN)**이다.
+[지난 글](/posts/cnn-instance-segmentation/)에서 인스턴스 세그멘테이션으로 CNN 계열의 정점을 살펴봤다. 이미지처럼 공간 구조가 고정된 데이터와 달리, **텍스트·음성·시계열**처럼 순서가 중요한 데이터를 다루려면 다른 접근이 필요하다. 그 해답이 **순환 신경망**(Recurrent Neural Network, RNN)이다.
 
 ## RNN이 풀려는 문제
 
@@ -55,7 +55,7 @@ out, h_n = rnn(x)                   # out: (32, 20, 256)
 
 ## 시간 전개(Unrolling)와 BPTT
 
-RNN 그래프를 각 타임스텝으로 펼치면 매우 깊은 순전파 경로가 나타난다. 역전파도 이 경로를 따라 **시간을 거슬러 올라가야** 한다—이를 **BPTT(Backpropagation Through Time)**라 한다.
+RNN 그래프를 각 타임스텝으로 펼치면 매우 깊은 순전파 경로가 나타난다. 역전파도 이 경로를 따라 **시간을 거슬러 올라가야** 한다—이를 **BPTT**(Backpropagation Through Time)라 한다.
 
 ![BPTT: 시간을 통한 역전파](/assets/posts/rnn-basics-bptt.svg)
 
@@ -70,7 +70,7 @@ W_h의 최대 특잇값이 1보다 작으면 곱이 기하급수적으로 → 0(
 
 ## 기울기 문제와 Truncated BPTT
 
-기울기 폭발은 **그래디언트 클리핑(Gradient Clipping)**으로 완화할 수 있다.
+기울기 폭발은 **그래디언트 클리핑**(Gradient Clipping)으로 완화할 수 있다.
 
 ```python
 optimizer.zero_grad()

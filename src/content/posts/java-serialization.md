@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-async-file-channel/)에서 `AsynchronousFileChannel`로 비동기 파일 I/O를 수행하는 법을 익혔다. 이번에는 Java의 고유 직렬화 메커니즘을 다룬다. **직렬화(Serialization)**는 객체의 상태를 바이트 스트림으로 변환해 파일에 저장하거나 네트워크로 전송하고, **역직렬화(Deserialization)**로 다시 복원하는 과정이다.
+[지난 글](/posts/java-async-file-channel/)에서 `AsynchronousFileChannel`로 비동기 파일 I/O를 수행하는 법을 익혔다. 이번에는 Java의 고유 직렬화 메커니즘을 다룬다. **직렬화**(Serialization)는 객체의 상태를 바이트 스트림으로 변환해 파일에 저장하거나 네트워크로 전송하고, **역직렬화**(Deserialization)로 다시 복원하는 과정이다.
 
 ## Serializable — 마커 인터페이스
 

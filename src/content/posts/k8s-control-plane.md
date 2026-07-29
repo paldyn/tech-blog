@@ -17,7 +17,7 @@ draft: false
 
 컨트롤 플레인의 작동 방식은 하나의 패턴으로 설명된다: **Watch-Reconcile 루프**다.
 
-1. etcd에 저장된 **원하는 상태(Desired State)**를 감시(Watch)
+1. etcd에 저장된 **원하는 상태**(Desired State)를 감시(Watch)
 2. 실제 상태(Actual State)와 비교
 3. 차이가 있으면 조정(Reconcile)해서 원하는 상태로 만들기
 

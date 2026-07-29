@@ -76,7 +76,7 @@ Path는 **보안 경계가 아니다.** 동일 오리진 내에서는 `document.
 Set-Cookie: sessionId=abc; Secure
 ```
 
-Secure가 없는 쿠키는 HTTP와 HTTPS 양쪽에서 전송되어 **중간자 공격(MITM)**에 노출된다. 특히 HTTP 업그레이드 시나리오에서 쿠키가 평문으로 전송될 수 있다.
+Secure가 없는 쿠키는 HTTP와 HTTPS 양쪽에서 전송되어 **중간자 공격**(MITM)에 노출된다. 특히 HTTP 업그레이드 시나리오에서 쿠키가 평문으로 전송될 수 있다.
 
 ```python
 # HSTS(HTTP Strict Transport Security)와 함께 사용

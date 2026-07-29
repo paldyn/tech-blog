@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nlp-question-answering/)에서 문서에서 정답을 찾는 질의응답 기술을 다뤘다. 이번에는 언어 자체를 다른 언어로 변환하는 **기계 번역(Machine Translation, MT)**을 살펴본다. "Hello"를 "안녕하세요"로 번역하는 단순한 작업처럼 보이지만, 언어 간 어순 차이, 경어법, 문화적 뉘앙스, 중의성 해소 등 수많은 언어적 도전이 숨어 있다. 기계 번역은 NLP 역사상 가장 오랫동안 연구된 분야 중 하나이며, Transformer 아키텍처가 탄생하게 된 직접적인 계기이기도 하다.
+[지난 글](/posts/nlp-question-answering/)에서 문서에서 정답을 찾는 질의응답 기술을 다뤘다. 이번에는 언어 자체를 다른 언어로 변환하는 **기계 번역**(Machine Translation, MT)을 살펴본다. "Hello"를 "안녕하세요"로 번역하는 단순한 작업처럼 보이지만, 언어 간 어순 차이, 경어법, 문화적 뉘앙스, 중의성 해소 등 수많은 언어적 도전이 숨어 있다. 기계 번역은 NLP 역사상 가장 오랫동안 연구된 분야 중 하나이며, Transformer 아키텍처가 탄생하게 된 직접적인 계기이기도 하다.
 
 ## 기계 번역의 발전사
 
@@ -108,7 +108,7 @@ print(chrf.corpus_score(hypotheses, references))
 # chrF2 = 47.64 ...
 ```
 
-BLEU의 한계: 의미는 같지만 표현이 다른 번역을 낮게 평가한다. 예를 들어 "car"와 "automobile"은 같은 의미지만 겹치지 않는다. 이를 보완하기 위해 **ChrF(문자 n-gram), COMET(신경망 기반 품질 추정)**을 병용한다.
+BLEU의 한계: 의미는 같지만 표현이 다른 번역을 낮게 평가한다. 예를 들어 "car"와 "automobile"은 같은 의미지만 겹치지 않는다. 이를 보완하기 위해 **ChrF(문자 n-gram), COMET**(신경망 기반 품질 추정)을 병용한다.
 
 ### COMET
 

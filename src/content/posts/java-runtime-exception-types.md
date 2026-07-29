@@ -15,7 +15,7 @@ draft: false
 
 ## RuntimeException의 특성
 
-`RuntimeException`과 그 하위 클래스들은 **비검사 예외(Unchecked Exception)**다. 컴파일러가 `throws` 선언이나 `try-catch`를 강제하지 않는다. 대부분 **프로그래밍 오류**에서 발생하므로 예외를 잡아서 복구하기보다는 오류를 수정하는 것이 올바른 접근이다.
+`RuntimeException`과 그 하위 클래스들은 **비검사 예외**(Unchecked Exception)다. 컴파일러가 `throws` 선언이나 `try-catch`를 강제하지 않는다. 대부분 **프로그래밍 오류**에서 발생하므로 예외를 잡아서 복구하기보다는 오류를 수정하는 것이 올바른 접근이다.
 
 ![주요 RuntimeException 분류](/assets/posts/java-runtime-exception-types-map.svg)
 

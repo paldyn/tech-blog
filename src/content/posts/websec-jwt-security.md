@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-session-hijacking/)에서 세션 기반 인증의 취약점을 다뤘다. 최근에는 세션 쿠키 대신 **JWT(JSON Web Token)**을 인증 수단으로 사용하는 경우가 많다. JWT는 강력하지만, 잘못 구현하면 심각한 보안 취약점이 생긴다.
+[지난 글](/posts/websec-session-hijacking/)에서 세션 기반 인증의 취약점을 다뤘다. 최근에는 세션 쿠키 대신 **JWT**(JSON Web Token)을 인증 수단으로 사용하는 경우가 많다. JWT는 강력하지만, 잘못 구현하면 심각한 보안 취약점이 생긴다.
 
 ## JWT란 무엇인가
 

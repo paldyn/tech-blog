@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-command-injection/)에서 OS 명령어를 직접 탈취하는 커맨드 인젝션을 다뤘다. 이번 글에서는 인젝션 계열의 마지막으로 **SSTI(Server-Side Template Injection)**를 살펴본다. 템플릿 엔진을 통해 서버에서 임의 코드를 실행한다는 점에서 커맨드 인젝션과 동일한 파괴력을 지니지만, 공격 벡터와 메커니즘이 전혀 다르다.
+[지난 글](/posts/websec-command-injection/)에서 OS 명령어를 직접 탈취하는 커맨드 인젝션을 다뤘다. 이번 글에서는 인젝션 계열의 마지막으로 **SSTI**(Server-Side Template Injection)를 살펴본다. 템플릿 엔진을 통해 서버에서 임의 코드를 실행한다는 점에서 커맨드 인젝션과 동일한 파괴력을 지니지만, 공격 벡터와 메커니즘이 전혀 다르다.
 
 ## SSTI란
 

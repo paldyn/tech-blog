@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/lint-prettier-separation/)에서 Prettier와 ESLint의 역할을 분리하는 방법을 다뤘습니다. 이번에는 **TypeScript 코드를 위한 ESLint 설정**, 즉 `@typescript-eslint` 패키지 생태계를 깊이 살펴봅니다. 일반 ESLint 규칙은 TypeScript 타입 정보를 모릅니다. 예를 들어 `Promise`를 반환하는 함수를 `await` 없이 호출해도 기본 규칙은 침묵합니다. TypeScript ESLint는 TypeScript 컴파일러의 **타입 체커(Type Checker)**를 ESLint 규칙 안으로 끌어들여 이 공백을 메웁니다.
+[지난 글](/posts/lint-prettier-separation/)에서 Prettier와 ESLint의 역할을 분리하는 방법을 다뤘습니다. 이번에는 **TypeScript 코드를 위한 ESLint 설정**, 즉 `@typescript-eslint` 패키지 생태계를 깊이 살펴봅니다. 일반 ESLint 규칙은 TypeScript 타입 정보를 모릅니다. 예를 들어 `Promise`를 반환하는 함수를 `await` 없이 호출해도 기본 규칙은 침묵합니다. TypeScript ESLint는 TypeScript 컴파일러의 **타입 체커**(Type Checker)를 ESLint 규칙 안으로 끌어들여 이 공백을 메웁니다.
 
 ---
 

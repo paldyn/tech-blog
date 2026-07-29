@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-recover-orphan-commit/)에서 고아 커밋을 복구했다. 이번에는 더 심각한 상황인 **저장소 손상(corruption)**을 다룬다. 디스크 오류, 비정상 종료, 네트워크 전송 오류로 인해 Git 객체 파일 자체가 손상되는 경우다. `git fsck`가 `error: sha1 mismatch`나 `missing blob` 같은 메시지를 출력한다면 여기서 시작한다.
+[지난 글](/posts/git-recover-orphan-commit/)에서 고아 커밋을 복구했다. 이번에는 더 심각한 상황인 **저장소 손상**(corruption)을 다룬다. 디스크 오류, 비정상 종료, 네트워크 전송 오류로 인해 Git 객체 파일 자체가 손상되는 경우다. `git fsck`가 `error: sha1 mismatch`나 `missing blob` 같은 메시지를 출력한다면 여기서 시작한다.
 
 ## 손상 유형 파악
 

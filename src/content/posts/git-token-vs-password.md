@@ -15,7 +15,7 @@ draft: false
 
 ## GitHub 패스워드 인증 종료
 
-2021년 8월 13일, GitHub은 HTTPS 방식의 패스워드 인증을 종료했다. 그 이후로 `git push` 등에서 HTTPS를 사용할 경우 반드시 **Personal Access Token(PAT)**을 사용해야 한다. 이전처럼 계정 비밀번호를 입력하면 인증 실패 오류가 발생한다.
+2021년 8월 13일, GitHub은 HTTPS 방식의 패스워드 인증을 종료했다. 그 이후로 `git push` 등에서 HTTPS를 사용할 경우 반드시 **Personal Access Token**(PAT)을 사용해야 한다. 이전처럼 계정 비밀번호를 입력하면 인증 실패 오류가 발생한다.
 
 종료 이유는 보안이다. 계정 비밀번호는 모든 권한을 한꺼번에 노출하지만, PAT는 스코프를 제한하고 개별 취소가 가능하다.
 

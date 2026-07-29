@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-equality-vs-identity/)에서 `==`와 `is`의 차이를 살펴봤다. 이번에는 더 깊이 들어가 **해시(hash)**와 동등성이 어떻게 연결되는지, `dict`와 `set`이 내부적으로 어떻게 동작하는지 이해한다.
+[지난 글](/posts/python-equality-vs-identity/)에서 `==`와 `is`의 차이를 살펴봤다. 이번에는 더 깊이 들어가 **해시**(hash)와 동등성이 어떻게 연결되는지, `dict`와 `set`이 내부적으로 어떻게 동작하는지 이해한다.
 
 ## 해시란
 

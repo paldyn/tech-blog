@@ -49,7 +49,7 @@ Oracle 설치 시 기본 생성되는 테이블스페이스:
 
 ## Locally Managed Tablespace (LMT)와 ASSM
 
-과거 딕셔너리 기반 관리(DMT)는 딕셔너리 테이블에 Extent 정보를 저장해 경합이 심했다. 현재는 **LMT(Locally Managed Tablespace)**가 기본이다. Extent 할당 비트맵을 테이블스페이스 헤더 블록에 직접 저장해 딕셔너리 경합을 제거한다.
+과거 딕셔너리 기반 관리(DMT)는 딕셔너리 테이블에 Extent 정보를 저장해 경합이 심했다. 현재는 **LMT**(Locally Managed Tablespace)가 기본이다. Extent 할당 비트맵을 테이블스페이스 헤더 블록에 직접 저장해 딕셔너리 경합을 제거한다.
 
 ASSM(Automatic Segment Space Management)은 세그먼트 내 블록 가용 공간을 비트맵으로 추적한다. Freelist 경합을 제거해 동시 DML 성능을 높인다.
 

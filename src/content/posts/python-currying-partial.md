@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-functools-reduce/)에서 `reduce`로 시퀀스를 단일 값으로 접는 방법을 살펴봤다. 이번 글은 함수의 인자를 미리 고정하는 두 가지 기법, **커링(Currying)**과 **부분 적용(Partial Application)**을 다룬다. 이 둘을 구분하고, Python에서 `functools.partial`을 활용하는 실전 패턴을 익혀보자.
+[지난 글](/posts/python-functools-reduce/)에서 `reduce`로 시퀀스를 단일 값으로 접는 방법을 살펴봤다. 이번 글은 함수의 인자를 미리 고정하는 두 가지 기법, **커링**(Currying)과 **부분 적용**(Partial Application)을 다룬다. 이 둘을 구분하고, Python에서 `functools.partial`을 활용하는 실전 패턴을 익혀보자.
 
 ## 커링과 부분 적용의 차이
 

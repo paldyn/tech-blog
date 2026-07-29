@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-generics-basics/)에서 제네릭의 기본 개념과 타입 매개변수 추론을 살펴봤다. 이번에는 **제네릭 제약(Generic Constraints)**을 다룬다. 제약은 타입 매개변수 `T`가 가질 수 있는 타입의 범위를 한정하여, `T`에서 특정 속성이나 메서드를 안전하게 사용할 수 있게 한다.
+[지난 글](/posts/ts-generics-basics/)에서 제네릭의 기본 개념과 타입 매개변수 추론을 살펴봤다. 이번에는 **제네릭 제약**(Generic Constraints)을 다룬다. 제약은 타입 매개변수 `T`가 가질 수 있는 타입의 범위를 한정하여, `T`에서 특정 속성이나 메서드를 안전하게 사용할 수 있게 한다.
 
 ## extends 제약 — 기본
 

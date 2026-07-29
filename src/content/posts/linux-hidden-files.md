@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-file-vs-directory/)에서 파일과 디렉터리의 내부 구조를 살펴봤다. 이번 글에서는 Linux를 쓰다 보면 반드시 마주치는 **숨김 파일(hidden files)**을 다룬다. `ls` 명령으로 보이지 않던 `.bashrc`, `.ssh/`, `.gitconfig` 같은 파일들이 어떤 원리로 숨겨지는지, 어떻게 보고 다루는지 정리한다.
+[지난 글](/posts/linux-file-vs-directory/)에서 파일과 디렉터리의 내부 구조를 살펴봤다. 이번 글에서는 Linux를 쓰다 보면 반드시 마주치는 **숨김 파일**(hidden files)을 다룬다. `ls` 명령으로 보이지 않던 `.bashrc`, `.ssh/`, `.gitconfig` 같은 파일들이 어떤 원리로 숨겨지는지, 어떻게 보고 다루는지 정리한다.
 
 ## 숨김 파일이란
 

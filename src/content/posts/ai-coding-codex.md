@@ -163,7 +163,7 @@ if response.choices[0].message.tool_calls:
 
 ## o-series: 추론하는 코딩 AI
 
-2024년 말 OpenAI가 출시한 **o-series**(o1, o3, o4-mini)는 기존 모델과 다른 패러다임이다. 답변을 바로 생성하는 대신 내부적으로 **단계별 추론(Chain of Thought)**을 수행하고 최종 답을 반환한다.
+2024년 말 OpenAI가 출시한 **o-series**(o1, o3, o4-mini)는 기존 모델과 다른 패러다임이다. 답변을 바로 생성하는 대신 내부적으로 **단계별 추론**(Chain of Thought)을 수행하고 최종 답을 반환한다.
 
 복잡한 알고리즘 문제나 까다로운 버그에서 특히 강력하다.
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-owasp-top10-overview/)에서 OWASP Top 10 전체를 개관했다. 이제부터 각 취약점 계열을 심화 탐구한다. 가장 먼저 다룰 것은 **인젝션(Injection)**이다. OWASP Top 10 A03이자 웹 취약점의 가장 근본적인 카테고리로, 이후 이어질 XSS·CSRF·SSRF 편에서도 공통적으로 적용되는 원리를 담고 있다.
+[지난 글](/posts/websec-owasp-top10-overview/)에서 OWASP Top 10 전체를 개관했다. 이제부터 각 취약점 계열을 심화 탐구한다. 가장 먼저 다룰 것은 **인젝션**(Injection)이다. OWASP Top 10 A03이자 웹 취약점의 가장 근본적인 카테고리로, 이후 이어질 XSS·CSRF·SSRF 편에서도 공통적으로 적용되는 원리를 담고 있다.
 
 ## 인젝션이란
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-amortized-analysis/)에서 분할 상환 분석을 배웠습니다. 이제 본격적으로 자료구조를 공부할 차례입니다. 시리즈의 첫 번째 자료구조는 모든 것의 기반이 되는 **배열(Array)**입니다.
+[지난 글](/posts/dsa-amortized-analysis/)에서 분할 상환 분석을 배웠습니다. 이제 본격적으로 자료구조를 공부할 차례입니다. 시리즈의 첫 번째 자료구조는 모든 것의 기반이 되는 **배열**(Array)입니다.
 
 ## 배열이란
 

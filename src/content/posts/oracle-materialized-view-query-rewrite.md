@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-partition-wise-join/)에서 파티션-와이즈 조인으로 대용량 조인 성능을 개선하는 방법을 다뤘다. 이번에는 쿼리 결과를 미리 계산해두는 **Materialized View(MV)**와, 원본 쿼리를 자동으로 MV 조회로 바꿔주는 **Query Rewrite**를 살펴본다.
+[지난 글](/posts/oracle-partition-wise-join/)에서 파티션-와이즈 조인으로 대용량 조인 성능을 개선하는 방법을 다뤘다. 이번에는 쿼리 결과를 미리 계산해두는 **Materialized View**(MV)와, 원본 쿼리를 자동으로 MV 조회로 바꿔주는 **Query Rewrite**를 살펴본다.
 
 ## Materialized View란
 
@@ -43,7 +43,7 @@ EXEC DBMS_MVIEW.REFRESH('MV_DEPT_SALES', 'C');
 
 ## FAST Refresh — 증분 갱신
 
-변경된 부분만 MV에 반영하는 것이 FAST Refresh다. 이를 위해 베이스 테이블에 **MV Log(Materialized View Log)**를 먼저 만들어야 한다.
+변경된 부분만 MV에 반영하는 것이 FAST Refresh다. 이를 위해 베이스 테이블에 **MV Log**(Materialized View Log)를 먼저 만들어야 한다.
 
 ```sql
 -- MV Log 생성 (변경 추적)

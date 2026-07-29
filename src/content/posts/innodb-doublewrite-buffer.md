@@ -71,7 +71,7 @@ MySQL 8.0.20 이전에는 Doublewrite Area가 ibdata1(System Tablespace) 내부�
 SET GLOBAL innodb_doublewrite = OFF;
 ```
 
-Doublewrite로 인한 쓰기 증폭은 **약 5~10%**입니다. SSD 환경에서는 순차 쓰기인 Doublewrite Area 기록이 매우 빠르므로 실질 영향은 더 작습니다.
+Doublewrite로 인한 쓰기 증폭은 <strong>약 5~10%</strong>입니다. SSD 환경에서는 순차 쓰기인 Doublewrite Area 기록이 매우 빠르므로 실질 영향은 더 작습니다.
 
 비활성화가 안전한 경우:
 - **ZFS, Btrfs** 등 원자적 쓰기(Atomic Write)를 보장하는 파일시스템

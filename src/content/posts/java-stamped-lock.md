@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-locks/)에서 `ReentrantLock`과 `ReadWriteLock`을 다뤘다. 이번에는 Java 8에서 추가된 **`StampedLock`**을 살펴본다. `ReentrantReadWriteLock`보다 복잡하지만, 읽기가 압도적으로 많은 환경에서 **낙관적 읽기(Optimistic Read)** 모드를 통해 락 없이 읽기를 시도해 성능을 크게 향상시킬 수 있다.
+[지난 글](/posts/java-locks/)에서 `ReentrantLock`과 `ReadWriteLock`을 다뤘다. 이번에는 Java 8에서 추가된 <strong>`StampedLock`</strong>을 살펴본다. `ReentrantReadWriteLock`보다 복잡하지만, 읽기가 압도적으로 많은 환경에서 **낙관적 읽기(Optimistic Read)** 모드를 통해 락 없이 읽기를 시도해 성능을 크게 향상시킬 수 있다.
 
 ## 스탬프(Stamp) 개념
 

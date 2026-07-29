@@ -34,7 +34,7 @@ draft: false
 
 플래그를 켜는 순서는 "영향이 크고 가치가 높은 것부터"가 원칙이다.
 
-가장 먼저 **`noImplicitAny`**다. 타입을 추론할 수 없어 조용히 `any`가 되던 곳을 모두 에러로 드러낸다. 이걸 닫아야 비로소 "타입이 새는 구멍"이 막히므로 출발점으로 적합하다. 영향 범위가 가장 넓어 에러가 많이 나오지만, 매개변수에 타입을 다는 단순 작업이 대부분이라 정리가 직관적이다.
+가장 먼저 <strong>`noImplicitAny`</strong>다. 타입을 추론할 수 없어 조용히 `any`가 되던 곳을 모두 에러로 드러낸다. 이걸 닫아야 비로소 "타입이 새는 구멍"이 막히므로 출발점으로 적합하다. 영향 범위가 가장 넓어 에러가 많이 나오지만, 매개변수에 타입을 다는 단순 작업이 대부분이라 정리가 직관적이다.
 
 ```typescript
 // noImplicitAny 켜기 전: param은 암묵적 any
@@ -44,7 +44,7 @@ function handle(param) { return param.value; }
 function handle(param: { value: string }) { return param.value; }
 ```
 
-다음은 **`strictNullChecks`**다. 실무 버그를 가장 많이 잡아주는 플래그다. 이전까지 `null`과 `undefined`는 모든 타입에 슬쩍 들어갈 수 있었지만, 이 플래그를 켜면 타입에 명시적으로 포함해야 한다. "혹시 null일 수 있는 값을 그냥 썼다"는 가장 흔한 런타임 에러가 컴파일 타임으로 올라온다.
+다음은 <strong>`strictNullChecks`</strong>다. 실무 버그를 가장 많이 잡아주는 플래그다. 이전까지 `null`과 `undefined`는 모든 타입에 슬쩍 들어갈 수 있었지만, 이 플래그를 켜면 타입에 명시적으로 포함해야 한다. "혹시 null일 수 있는 값을 그냥 썼다"는 가장 흔한 런타임 에러가 컴파일 타임으로 올라온다.
 
 ```typescript
 // strictNullChecks 켠 후

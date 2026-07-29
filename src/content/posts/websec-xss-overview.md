@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-template-injection/)에서 서버 사이드 템플릿 엔진에서 코드를 실행하는 SSTI를 다뤘다. 이번 글에서는 인젝션 계열의 마지막이자 웹에서 가장 광범위하게 발생하는 **XSS(Cross-Site Scripting)**를 개관한다. XSS는 OWASP Top 10의 A03 인젝션 카테고리에 포함되며, 공격이 성공하면 피해자의 브라우저에서 임의의 JavaScript를 실행할 수 있다.
+[지난 글](/posts/websec-template-injection/)에서 서버 사이드 템플릿 엔진에서 코드를 실행하는 SSTI를 다뤘다. 이번 글에서는 인젝션 계열의 마지막이자 웹에서 가장 광범위하게 발생하는 **XSS**(Cross-Site Scripting)를 개관한다. XSS는 OWASP Top 10의 A03 인젝션 카테고리에 포함되며, 공격이 성공하면 피해자의 브라우저에서 임의의 JavaScript를 실행할 수 있다.
 
 ## XSS란
 

@@ -24,7 +24,7 @@ git merge --no-ff feature/add-search
 # 또는 GitHub UI에서 "Create a merge commit"
 ```
 
-feature 브랜치의 모든 커밋과, 두 브랜치를 합치는 **머지 커밋(M)**이 생긴다. `git log --graph`에서 분기가 보인다.
+feature 브랜치의 모든 커밋과, 두 브랜치를 합치는 **머지 커밋**(M)이 생긴다. `git log --graph`에서 분기가 보인다.
 
 **장점:** 완전한 히스토리 보존. 브랜치가 언제 분기했고 언제 합쳐졌는지 명확하다.
 
@@ -52,7 +52,7 @@ git rebase main feature/add-search
 # 또는 GitHub UI에서 "Rebase and merge"
 ```
 
-feature 브랜치의 각 커밋을 main 끝에 **재배치(rebase)**한다. 머지 커밋이 생기지 않고 선형 히스토리를 유지하면서 개별 커밋도 보존된다.
+feature 브랜치의 각 커밋을 main 끝에 **재배치**(rebase)한다. 머지 커밋이 생기지 않고 선형 히스토리를 유지하면서 개별 커밋도 보존된다.
 
 **장점:** 선형 히스토리 + 개별 커밋 보존.
 

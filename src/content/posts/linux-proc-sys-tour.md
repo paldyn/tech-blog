@@ -15,7 +15,7 @@ draft: false
 
 ## /proc란
 
-`/proc`는 **procfs(Process Filesystem)**로, 디스크에 실제 존재하지 않는 가상 파일시스템입니다. 커널이 내부 상태를 사용자 공간에 파일 인터페이스로 노출하기 위해 마운트합니다.
+`/proc`는 **procfs**(Process Filesystem)로, 디스크에 실제 존재하지 않는 가상 파일시스템입니다. 커널이 내부 상태를 사용자 공간에 파일 인터페이스로 노출하기 위해 마운트합니다.
 
 ```bash
 # /proc 마운트 확인

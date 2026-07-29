@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ml-gradient-boosting/)에서 그래디언트 부스팅이 잔차를 순차적으로 교정해 강력한 예측기를 만드는 원리를 배웠다. 지금까지 다룬 모든 알고리즘은 **지도 학습(Supervised Learning)**이었다. 훈련 데이터에 정답 레이블이 있었고, 모델은 그 레이블을 예측하도록 최적화됐다. 이번에는 패러다임을 바꾼다. 레이블이 없는 데이터에서 스스로 구조를 찾아내는 **비지도 학습(Unsupervised Learning)**의 가장 유명한 알고리즘, **K-평균 군집화(K-Means Clustering)**를 탐구한다.
+[지난 글](/posts/ml-gradient-boosting/)에서 그래디언트 부스팅이 잔차를 순차적으로 교정해 강력한 예측기를 만드는 원리를 배웠다. 지금까지 다룬 모든 알고리즘은 **지도 학습**(Supervised Learning)이었다. 훈련 데이터에 정답 레이블이 있었고, 모델은 그 레이블을 예측하도록 최적화됐다. 이번에는 패러다임을 바꾼다. 레이블이 없는 데이터에서 스스로 구조를 찾아내는 **비지도 학습**(Unsupervised Learning)의 가장 유명한 알고리즘, **K-평균 군집화**(K-Means Clustering)를 탐구한다.
 
 ## K-평균 알고리즘의 4단계
 
@@ -56,7 +56,7 @@ print("WCSS (관성):", kmeans.inertia_)
 
 ## K-means++ 초기화: 더 나은 시작점
 
-기본 K-평균은 초기 중심점을 무작위로 선택한다. 이 경우 지역 최솟값(Local Minimum)에 빠져 나쁜 결과가 나올 수 있다. **K-means++**는 이를 개선한 초기화 전략이다.
+기본 K-평균은 초기 중심점을 무작위로 선택한다. 이 경우 지역 최솟값(Local Minimum)에 빠져 나쁜 결과가 나올 수 있다. <strong>K-means++</strong>는 이를 개선한 초기화 전략이다.
 
 ```
 1. 첫 번째 중심점: 무작위 선택
@@ -87,7 +87,7 @@ for init_method in ['random', 'k-means++']:
 
 ## WCSS: 군집 품질을 측정하는 지표
 
-**WCSS (Within-Cluster Sum of Squares)**, 즉 **관성(Inertia)**은 각 데이터 포인트와 소속 군집 중심점 사이의 거리 제곱합이다.
+**WCSS (Within-Cluster Sum of Squares)**, 즉 **관성**(Inertia)은 각 데이터 포인트와 소속 군집 중심점 사이의 거리 제곱합이다.
 
 ```
 WCSS = Σᵢ Σₓ∈Cᵢ ||x - μᵢ||²

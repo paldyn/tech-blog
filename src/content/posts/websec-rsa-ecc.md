@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-aes-modes/)에서 대칭 암호화 AES의 운용 모드를 살펴봤다. 이번 글에서는 공개키(비대칭) 암호화의 양대 산맥인 **RSA**와 **ECC(Elliptic Curve Cryptography)**를 비교하며, 실무에서 어떤 알고리즘을 선택해야 하는지 살펴본다.
+[지난 글](/posts/websec-aes-modes/)에서 대칭 암호화 AES의 운용 모드를 살펴봤다. 이번 글에서는 공개키(비대칭) 암호화의 양대 산맥인 **RSA**와 **ECC**(Elliptic Curve Cryptography)를 비교하며, 실무에서 어떤 알고리즘을 선택해야 하는지 살펴본다.
 
 ## 공개키 암호화란?
 
@@ -84,7 +84,7 @@ ciphertext = private_key.public_key().encrypt(
 
 ## ECC: 타원곡선 위의 점 연산
 
-ECC는 타원곡선 위의 점들이 이루는 군(group) 구조를 활용한다. 타원곡선은 `y² = x³ + ax + b (mod p)` 형태이며, 이 위의 점 덧셈 연산은 쉽지만 **역산(이산 로그 문제)**은 현실적으로 불가능하다.
+ECC는 타원곡선 위의 점들이 이루는 군(group) 구조를 활용한다. 타원곡선은 `y² = x³ + ax + b (mod p)` 형태이며, 이 위의 점 덧셈 연산은 쉽지만 **역산**(이산 로그 문제)은 현실적으로 불가능하다.
 
 ```python
 # ECC 키 쌍 생성 (Python cryptography 라이브러리)

@@ -55,7 +55,7 @@ dis.dis(greet)
 
 ### GIL: CPython의 가장 유명한 제약
 
-CPython의 가장 논란이 많은 특징은 **GIL(Global Interpreter Lock, 전역 인터프리터 잠금)**이다.
+CPython의 가장 논란이 많은 특징은 **GIL**(Global Interpreter Lock, 전역 인터프리터 잠금)이다.
 
 GIL은 한 번에 하나의 스레드만 Python 바이트코드를 실행할 수 있도록 하는 잠금 장치다. 멀티코어 CPU가 있어도 Python 스레드는 동시에 실행되지 않는다.
 

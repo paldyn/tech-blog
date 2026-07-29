@@ -15,7 +15,7 @@ draft: false
 
 ## 왜 팝업이 차단되는가
 
-브라우저는 **사용자가 직접 수행한 액션(클릭·키 입력)**에서 유발된 `window.open` 호출만 허용한다. 비동기로 처리가 분리되면 그 컨텍스트는 소멸하고, 이후 호출되는 `window.open`은 차단 대상이 된다.
+브라우저는 **사용자가 직접 수행한 액션**(클릭·키 입력)에서 유발된 `window.open` 호출만 허용한다. 비동기로 처리가 분리되면 그 컨텍스트는 소멸하고, 이후 호출되는 `window.open`은 차단 대상이 된다.
 
 ![팝업 차단 발생 메커니즘](/assets/posts/nexacro-n-troubleshoot-popup-blocked-flow.svg)
 

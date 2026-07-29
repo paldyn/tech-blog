@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-injection-overview/)에서 인젝션 취약점의 공통 원리와 유형 분류를 살펴봤다. 이번 글에서는 인젝션 계열 중 가장 역사가 길고 피해가 큰 **SQL 인젝션(SQL Injection, SQLi)**을 깊이 파헤친다. 적절한 방어 없이 단 하나의 파라미터만으로 전체 데이터베이스를 덤프할 수 있다는 사실이 SQLi를 그토록 위협적으로 만든다.
+[지난 글](/posts/websec-injection-overview/)에서 인젝션 취약점의 공통 원리와 유형 분류를 살펴봤다. 이번 글에서는 인젝션 계열 중 가장 역사가 길고 피해가 큰 **SQL 인젝션**(SQL Injection, SQLi)을 깊이 파헤친다. 적절한 방어 없이 단 하나의 파라미터만으로 전체 데이터베이스를 덤프할 수 있다는 사실이 SQLi를 그토록 위협적으로 만든다.
 
 ## SQL 인젝션이란
 

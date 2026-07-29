@@ -17,7 +17,7 @@ draft: false
 
 ## React의 변경 감지 방식
 
-React는 `setState`가 호출될 때 이전 상태와 새 상태를 **얕은 참조 비교(Object.is)**로 비교합니다.
+React는 `setState`가 호출될 때 이전 상태와 새 상태를 **얕은 참조 비교**(Object.is)로 비교합니다.
 
 ```javascript
 Object.is(prevState, nextState)
@@ -25,7 +25,7 @@ Object.is(prevState, nextState)
 // false → "변경 있음" → 리렌더 실행
 ```
 
-객체와 배열은 **참조(메모리 주소)**로 비교됩니다. 내부 값이 달라도 같은 객체를 수정하면 참조가 같으므로 React는 변경을 감지하지 못합니다.
+객체와 배열은 **참조**(메모리 주소)로 비교됩니다. 내부 값이 달라도 같은 객체를 수정하면 참조가 같으므로 React는 변경을 감지하지 못합니다.
 
 ![불변성 개념: 직접 수정 vs 새 객체 생성](/assets/posts/react-immutable-updates-concept.svg)
 
@@ -33,7 +33,7 @@ Object.is(prevState, nextState)
 
 ## 객체 불변 업데이트
 
-**스프레드 연산자(`...`)**를 사용해 새 객체를 만드는 것이 기본 패턴입니다.
+**스프레드 연산자**(`...`)를 사용해 새 객체를 만드는 것이 기본 패턴입니다.
 
 ```jsx
 const [user, setUser] = useState({ name: 'Alice', age: 25, city: 'Seoul' });

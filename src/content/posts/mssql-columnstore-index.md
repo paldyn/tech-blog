@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mssql-filtered-index/)에서 필터된 인덱스로 크기와 성능을 최적화하는 방법을 살펴봤다. 이번에는 OLAP 분석 쿼리를 수십 배 빠르게 만드는 **컬럼스토어 인덱스(Columnstore Index)**를 깊이 파헤친다.
+[지난 글](/posts/mssql-filtered-index/)에서 필터된 인덱스로 크기와 성능을 최적화하는 방법을 살펴봤다. 이번에는 OLAP 분석 쿼리를 수십 배 빠르게 만드는 **컬럼스토어 인덱스**(Columnstore Index)를 깊이 파헤친다.
 
 ## 왜 컬럼 저장인가
 
@@ -72,9 +72,9 @@ WHERE  cs.object_id = OBJECT_ID('sales_fact');
 
 ## 델타 스토어와 쓰기 처리
 
-컬럼스토어는 대용량 배치 로드에 최적화되어 있지만, 개별 행 INSERT도 지원한다. 새로 삽입된 행은 먼저 **델타 스토어(Delta Store)**에 행 저장 형식으로 쌓인다. 약 100만 행이 쌓이면 **Tuple Mover** 백그라운드 프로세스가 압축하여 새 행 그룹으로 전환한다.
+컬럼스토어는 대용량 배치 로드에 최적화되어 있지만, 개별 행 INSERT도 지원한다. 새로 삽입된 행은 먼저 **델타 스토어**(Delta Store)에 행 저장 형식으로 쌓인다. 약 100만 행이 쌓이면 **Tuple Mover** 백그라운드 프로세스가 압축하여 새 행 그룹으로 전환한다.
 
-DELETE는 실제로 행을 지우지 않고 **삭제 비트맵(Delete Bitmap)**에만 표시한다. 물리적 제거는 다음 REORGANIZE 시에 이루어진다.
+DELETE는 실제로 행을 지우지 않고 **삭제 비트맵**(Delete Bitmap)에만 표시한다. 물리적 제거는 다음 REORGANIZE 시에 이루어진다.
 
 ```sql
 -- 대량 INSERT (델타 스토어 우회, 직접 압축 행 그룹 생성)

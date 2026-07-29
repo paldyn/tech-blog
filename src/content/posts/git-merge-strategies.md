@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-merge-squash/)에서 squash merge를 살펴봤다. 이번에는 `git merge -s`로 지정하는 **병합 전략(strategy)**을 다룬다. 일상적으로는 기본값을 사용하지만, 복잡한 병합 시나리오나 자동화 스크립트에서 전략 선택이 중요해진다.
+[지난 글](/posts/git-merge-squash/)에서 squash merge를 살펴봤다. 이번에는 `git merge -s`로 지정하는 **병합 전략**(strategy)을 다룬다. 일상적으로는 기본값을 사용하지만, 복잡한 병합 시나리오나 자동화 스크립트에서 전략 선택이 중요해진다.
 
 ## 전략이란
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-pure-functions/)에서 순수 함수의 장점을 살펴봤다. 이번 글에서는 함수형 프로그래밍의 핵심 연산 중 하나인 **`reduce`**를 다룬다. `reduce`는 시퀀스의 원소들을 이진 함수로 반복 적용해 단일 값으로 "접는(fold)" 연산이다.
+[지난 글](/posts/python-pure-functions/)에서 순수 함수의 장점을 살펴봤다. 이번 글에서는 함수형 프로그래밍의 핵심 연산 중 하나인 <strong>`reduce`</strong>를 다룬다. `reduce`는 시퀀스의 원소들을 이진 함수로 반복 적용해 단일 값으로 "접는(fold)" 연산이다.
 
 ## reduce의 동작 원리
 
@@ -157,7 +157,7 @@ from functools import reduce
 reduce(f, iterable)
 ```
 
-다음 글에서는 `reduce`와 함께 함수형 프로그래밍의 핵심 도구인 **커링(Currying)**과 **부분 적용(Partial Application)**을 살펴본다.
+다음 글에서는 `reduce`와 함께 함수형 프로그래밍의 핵심 도구인 **커링**(Currying)과 **부분 적용**(Partial Application)을 살펴본다.
 
 ---
 

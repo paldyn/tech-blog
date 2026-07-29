@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/springboot-devtools-livereload/)에서 DevTools로 개발 생산성을 높이는 방법을 살펴봤습니다. 이번에는 Spring Boot 설정 체계의 핵심인 **`@ConfigurationProperties`**를 다룹니다. `@Value`에 익숙하다면, `@ConfigurationProperties`가 왜 더 나은 선택인지 이해하게 될 것입니다.
+[지난 글](/posts/springboot-devtools-livereload/)에서 DevTools로 개발 생산성을 높이는 방법을 살펴봤습니다. 이번에는 Spring Boot 설정 체계의 핵심인 <strong>`@ConfigurationProperties`</strong>를 다룹니다. `@Value`에 익숙하다면, `@ConfigurationProperties`가 왜 더 나은 선택인지 이해하게 될 것입니다.
 
 ## @Value의 한계
 

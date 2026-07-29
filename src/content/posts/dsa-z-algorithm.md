@@ -33,7 +33,7 @@ draft: false
 
 ## Z-box로 O(n) 구현
 
-Z 배열을 naive하게 구하면 O(n²)이지만, **Z-box [l, r)**를 유지해 이미 계산된 정보를 재사용하면 O(n)입니다.
+Z 배열을 naive하게 구하면 O(n²)이지만, <strong>Z-box [l, r)</strong>를 유지해 이미 계산된 정보를 재사용하면 O(n)입니다.
 
 Z-box는 현재까지 알려진 "가장 오른쪽으로 확장된 일치 구간"입니다. `s[l..r) == s[0..r-l)` 을 만족합니다.
 
@@ -107,7 +107,7 @@ print(min_period("abcde"))     # 5
 
 ## 응용: 문자열 보더 (Border)
 
-문자열의 **보더(Border)**는 진정한 접두사이면서 동시에 진정한 접미사인 부분 문자열입니다.
+문자열의 **보더**(Border)는 진정한 접두사이면서 동시에 진정한 접미사인 부분 문자열입니다.
 
 ```python
 def all_borders(s: str) -> list:

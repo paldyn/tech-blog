@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-difference-array/)에서 구간 업데이트를 O(1)에 처리하는 차이 배열을 다뤘습니다. 이번에는 **최대 부분 배열 합(Maximum Subarray Sum)**을 O(N), O(1) 공간에 구하는 **카데인 알고리즘(Kadane's Algorithm)**입니다.
+[지난 글](/posts/dsa-difference-array/)에서 구간 업데이트를 O(1)에 처리하는 차이 배열을 다뤘습니다. 이번에는 **최대 부분 배열 합**(Maximum Subarray Sum)을 O(N), O(1) 공간에 구하는 **카데인 알고리즘**(Kadane's Algorithm)입니다.
 
 ## 핵심 아이디어
 

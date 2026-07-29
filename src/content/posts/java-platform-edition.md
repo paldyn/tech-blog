@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-history/)에서 Java가 어떤 역사적 흐름 속에서 성장해 왔는지 살펴봤습니다. Java는 단순히 하나의 언어가 아니라, 서로 다른 목적을 위해 설계된 여러 **에디션(Edition)**으로 구성된 플랫폼 생태계입니다. "Java를 배운다"고 할 때 우리가 실제로 다루는 것은 Java SE이지만, 구직 공고나 프레임워크 문서에서 Java EE, Jakarta EE, Spring Framework 같은 용어를 마주치면 혼란스러울 수 있습니다. 이 글에서는 각 에디션의 설계 목적, 범위, 현재 상태를 정리하고, 실무에서 이들이 어떻게 연결되는지 살펴봅니다.
+[지난 글](/posts/java-history/)에서 Java가 어떤 역사적 흐름 속에서 성장해 왔는지 살펴봤습니다. Java는 단순히 하나의 언어가 아니라, 서로 다른 목적을 위해 설계된 여러 **에디션**(Edition)으로 구성된 플랫폼 생태계입니다. "Java를 배운다"고 할 때 우리가 실제로 다루는 것은 Java SE이지만, 구직 공고나 프레임워크 문서에서 Java EE, Jakarta EE, Spring Framework 같은 용어를 마주치면 혼란스러울 수 있습니다. 이 글에서는 각 에디션의 설계 목적, 범위, 현재 상태를 정리하고, 실무에서 이들이 어떻게 연결되는지 살펴봅니다.
 
 ---
 
 ## Java SE — 모든 것의 토대
 
-**Java SE(Standard Edition)**는 Java 생태계의 핵심입니다. 언어 사양(JLS), JVM 명세, 표준 라이브러리(Java Class Library)를 포함하며, 다른 모든 에디션의 기반이 됩니다.
+**Java SE**(Standard Edition)는 Java 생태계의 핵심입니다. 언어 사양(JLS), JVM 명세, 표준 라이브러리(Java Class Library)를 포함하며, 다른 모든 에디션의 기반이 됩니다.
 
 SE가 제공하는 주요 영역은 다음과 같습니다.
 
@@ -37,7 +37,7 @@ SE의 관리 주체는 JCP(Java Community Process)이며, OpenJDK 커뮤니티�
 
 ## Java ME — 임베디드를 위한 경량 플랫폼
 
-**Java ME(Micro Edition)**는 피처폰, 셋톱박스, 임베디드 컨트롤러처럼 메모리와 CPU가 극도로 제한된 환경을 위해 설계되었습니다. Java SE의 서브셋을 기반으로 하며, 두 가지 주요 구성 요소로 이루어집니다.
+**Java ME**(Micro Edition)는 피처폰, 셋톱박스, 임베디드 컨트롤러처럼 메모리와 CPU가 극도로 제한된 환경을 위해 설계되었습니다. Java SE의 서브셋을 기반으로 하며, 두 가지 주요 구성 요소로 이루어집니다.
 
 - **CLDC(Connected Limited Device Configuration)**: 최소한의 JVM과 핵심 라이브러리 (J2ME 시대의 기반)
 - **MIDP(Mobile Information Device Profile)**: 피처폰 UI·네트워크·미디어 API
@@ -68,7 +68,7 @@ public class HelloMidlet extends MIDlet {
 
 ## Java EE에서 Jakarta EE로 — 엔터프라이즈 표준의 이관
 
-**Java EE(Enterprise Edition)**는 대규모 서버 사이드 애플리케이션을 위한 사양 집합입니다. 트랜잭션 관리, 의존성 주입, 영속성, 웹 계층 등 엔터프라이즈 개발에 필요한 표준 API를 정의합니다.
+**Java EE**(Enterprise Edition)는 대규모 서버 사이드 애플리케이션을 위한 사양 집합입니다. 트랜잭션 관리, 의존성 주입, 영속성, 웹 계층 등 엔터프라이즈 개발에 필요한 표준 API를 정의합니다.
 
 Java EE는 2017년 Oracle이 Eclipse 재단에 이관하기로 결정하면서 역사적인 전환점을 맞습니다. 그런데 이관 과정에서 "Java"라는 상표를 Oracle이 양도하지 않았기 때문에, Eclipse 재단은 새 이름을 고민해야 했습니다. 커뮤니티 투표를 통해 **Jakarta EE**라는 이름이 선택되었고, Java EE 8이 Jakarta EE 8로 이어졌습니다.
 

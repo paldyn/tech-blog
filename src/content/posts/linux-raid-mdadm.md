@@ -15,7 +15,7 @@ draft: false
 
 ## RAID란 무엇인가
 
-**RAID(Redundant Array of Independent Disks)**는 여러 디스크를 하나의 논리 장치로 묶어 성능이나 신뢰성(또는 둘 다)을 높이는 기술입니다. 리눅스에서는 `mdadm`(multiple device admin) 도구로 커널 레벨의 소프트웨어 RAID를 구성합니다.
+**RAID**(Redundant Array of Independent Disks)는 여러 디스크를 하나의 논리 장치로 묶어 성능이나 신뢰성(또는 둘 다)을 높이는 기술입니다. 리눅스에서는 `mdadm`(multiple device admin) 도구로 커널 레벨의 소프트웨어 RAID를 구성합니다.
 
 ![RAID 레벨 비교](/assets/posts/linux-raid-mdadm-levels.svg)
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-mapped-type-modifiers/)에서 매핑된 타입의 수정자와 `as` 절 키 재매핑을 살펴봤다. 키 재매핑에서 `Capitalize`를 잠깐 사용했는데, 이번에는 이런 **인트린직 문자열 조작 타입(Intrinsic String Manipulation Types)**을 깊이 다룬다. TypeScript 4.1에서 도입된 `Uppercase<S>`, `Lowercase<S>`, `Capitalize<S>`, `Uncapitalize<S>` 네 가지로, 타입 레벨에서 문자열 리터럴 타입을 변환한다.
+[지난 글](/posts/ts-mapped-type-modifiers/)에서 매핑된 타입의 수정자와 `as` 절 키 재매핑을 살펴봤다. 키 재매핑에서 `Capitalize`를 잠깐 사용했는데, 이번에는 이런 **인트린직 문자열 조작 타입**(Intrinsic String Manipulation Types)을 깊이 다룬다. TypeScript 4.1에서 도입된 `Uppercase<S>`, `Lowercase<S>`, `Capitalize<S>`, `Uncapitalize<S>` 네 가지로, 타입 레벨에서 문자열 리터럴 타입을 변환한다.
 
 ## 네 가지 유틸리티
 

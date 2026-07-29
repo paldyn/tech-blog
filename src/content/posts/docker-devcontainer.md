@@ -174,7 +174,7 @@ feature는 OCI 이미지 기반의 설치 스크립트다. `https://containers.d
 
 ## GitHub Codespaces 호환
 
-`.devcontainer/devcontainer.json`은 GitHub Codespaces에서도 그대로 동작한다. 저장소 페이지에서 **"Code → Open with Codespaces"**를 클릭하면 클라우드에 동일한 개발 환경이 생성된다. 로컬 Docker 설치 없이도 개발 환경에 접근할 수 있어 온보딩이 극적으로 빨라진다.
+`.devcontainer/devcontainer.json`은 GitHub Codespaces에서도 그대로 동작한다. 저장소 페이지에서 <strong>"Code → Open with Codespaces"</strong>를 클릭하면 클라우드에 동일한 개발 환경이 생성된다. 로컬 Docker 설치 없이도 개발 환경에 접근할 수 있어 온보딩이 극적으로 빨라진다.
 
 ```bash
 # 새 팀원 온보딩 절차

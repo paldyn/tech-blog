@@ -57,7 +57,7 @@ val_transforms = transforms.Compose([
 
 ### ResNet — 잔차 연결의 혁명
 
-2015년 등장한 ResNet은 **잔차 연결(skip connection)**으로 그래디언트 소실을 해결해 100층 이상의 깊은 네트워크를 가능하게 했다. 오늘날에도 전이학습 베이스라인으로 가장 많이 쓰인다.
+2015년 등장한 ResNet은 **잔차 연결**(skip connection)으로 그래디언트 소실을 해결해 100층 이상의 깊은 네트워크를 가능하게 했다. 오늘날에도 전이학습 베이스라인으로 가장 많이 쓰인다.
 
 ```python
 import torchvision.models as models
@@ -74,7 +74,7 @@ backbone.fc = torch.nn.Linear(
 
 ### EfficientNet — 복합 스케일링
 
-EfficientNet은 **너비(width)·깊이(depth)·해상도(resolution)**를 동시에 스케일링하는 복합 스케일링 기법을 도입했다. B0~B7까지 버전이 있으며, 파라미터 효율이 뛰어나 엣지 디바이스에 적합하다.
+EfficientNet은 **너비(width)·깊이(depth)·해상도**(resolution)를 동시에 스케일링하는 복합 스케일링 기법을 도입했다. B0~B7까지 버전이 있으며, 파라미터 효율이 뛰어나 엣지 디바이스에 적합하다.
 
 ### ViT — 패치 기반 어텐션
 
@@ -120,7 +120,7 @@ optimizer = torch.optim.Adam(
 
 ### Fine-Tuning
 
-백본의 후기 레이어(고수준 특징 담당)도 함께 재학습한다. 학습률을 레이어별로 다르게 설정하는 **차등 학습률(Discriminative Learning Rate)**이 핵심이다.
+백본의 후기 레이어(고수준 특징 담당)도 함께 재학습한다. 학습률을 레이어별로 다르게 설정하는 **차등 학습률**(Discriminative Learning Rate)이 핵심이다.
 
 ```python
 def build_finetune_model(num_classes: int):

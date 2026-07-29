@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-type-level-arithmetic/)에서 튜플 길이로 산술 연산을 구현했다. 이번에는 튜플 타입 자체를 조작하는 패턴을 종합적으로 살펴본다. TypeScript 4.0에서 도입된 **variadic 튜플 타입(`...T`)**과 `infer`를 결합하면, 런타임 배열을 다루듯 타입 레벨에서 Head, Tail, Reverse, Zip, Filter 같은 연산을 구현할 수 있다.
+[지난 글](/posts/ts-type-level-arithmetic/)에서 튜플 길이로 산술 연산을 구현했다. 이번에는 튜플 타입 자체를 조작하는 패턴을 종합적으로 살펴본다. TypeScript 4.0에서 도입된 **variadic 튜플 타입**(`...T`)과 `infer`를 결합하면, 런타임 배열을 다루듯 타입 레벨에서 Head, Tail, Reverse, Zip, Filter 같은 연산을 구현할 수 있다.
 
 ## variadic 튜플 기본 문법
 

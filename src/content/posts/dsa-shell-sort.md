@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-insertion-sort/)에서 삽입 정렬의 O(N) 최선 성능과 Tim Sort와의 관계를 살펴봤습니다. 이번에는 **셸 정렬(Shell Sort)**입니다. 셸 정렬은 삽입 정렬의 단점(원소가 멀리 있을 때 이동 거리가 큼)을 간격(gap)을 이용한 분할로 해결한 알고리즘입니다.
+[지난 글](/posts/dsa-insertion-sort/)에서 삽입 정렬의 O(N) 최선 성능과 Tim Sort와의 관계를 살펴봤습니다. 이번에는 **셸 정렬**(Shell Sort)입니다. 셸 정렬은 삽입 정렬의 단점(원소가 멀리 있을 때 이동 거리가 큼)을 간격(gap)을 이용한 분할로 해결한 알고리즘입니다.
 
 ## 핵심 아이디어
 

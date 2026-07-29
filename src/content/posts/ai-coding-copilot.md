@@ -17,7 +17,7 @@ draft: false
 
 ![GitHub Copilot 작동 구조](/assets/posts/ai-coding-copilot-architecture.svg)
 
-Copilot의 핵심 기술은 **FIM(Fill-In-Middle)**이다. 기존 언어 모델은 앞에서 뒤로만 생성하지만, FIM은 커서 앞(prefix)과 뒤(suffix)를 모두 프롬프트로 주고 그 사이의 코드를 생성한다. 함수 중간에 커서를 두고 완성을 요청할 때도 전후 맥락을 모두 활용할 수 있는 이유다.
+Copilot의 핵심 기술은 **FIM**(Fill-In-Middle)이다. 기존 언어 모델은 앞에서 뒤로만 생성하지만, FIM은 커서 앞(prefix)과 뒤(suffix)를 모두 프롬프트로 주고 그 사이의 코드를 생성한다. 함수 중간에 커서를 두고 완성을 요청할 때도 전후 맥락을 모두 활용할 수 있는 이유다.
 
 ```text
 <PRE> ... 앞의 코드 ... <SUF> ... 뒤의 코드 ... <MID>

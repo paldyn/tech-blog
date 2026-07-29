@@ -19,7 +19,7 @@ draft: false
 
 ![ESLint 처리 파이프라인](/assets/posts/lint-eslint-basics-pipeline.svg)
 
-ESLint는 소스 파일을 **파서(Parser)**로 AST(Abstract Syntax Tree)로 변환한 뒤, 각 규칙이 AST 노드를 방문하며 위반을 수집합니다. 기본 파서는 `espree`이며, TypeScript를 지원하려면 `@typescript-eslint/parser`로 교체합니다.
+ESLint는 소스 파일을 **파서**(Parser)로 AST(Abstract Syntax Tree)로 변환한 뒤, 각 규칙이 AST 노드를 방문하며 위반을 수집합니다. 기본 파서는 `espree`이며, TypeScript를 지원하려면 `@typescript-eslint/parser`로 교체합니다.
 
 ---
 

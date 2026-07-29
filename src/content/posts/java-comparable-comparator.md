@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-finalize-removed/)에서 `finalize()` 폐기 이유와 올바른 자원 관리 방법을 살펴봤다. 이번에는 Java에서 객체를 정렬하는 두 가지 방법인 **`Comparable`**과 **`Comparator`**를 다룬다. 둘 다 정렬 기준을 정의하지만 목적과 사용 방식이 다르다.
+[지난 글](/posts/java-finalize-removed/)에서 `finalize()` 폐기 이유와 올바른 자원 관리 방법을 살펴봤다. 이번에는 Java에서 객체를 정렬하는 두 가지 방법인 <strong>`Comparable`</strong>과 <strong>`Comparator`</strong>를 다룬다. 둘 다 정렬 기준을 정의하지만 목적과 사용 방식이 다르다.
 
 ## 왜 두 가지가 필요한가
 
@@ -190,7 +190,7 @@ hs.add(a); hs.add(b);
 System.out.println(hs.size()); // 2
 ```
 
-`Comparable`과 `Comparator`는 Java 컬렉션 프레임워크, 스트림 정렬, 우선순위 큐의 핵심이다. 다음 글에서는 **불변 객체(Immutable Object)**를 다룬다. 불변 객체 설계의 원칙과 장점, 그리고 자바에서 불변 클래스를 만드는 올바른 방법을 살펴볼 것이다.
+`Comparable`과 `Comparator`는 Java 컬렉션 프레임워크, 스트림 정렬, 우선순위 큐의 핵심이다. 다음 글에서는 **불변 객체**(Immutable Object)를 다룬다. 불변 객체 설계의 원칙과 장점, 그리고 자바에서 불변 클래스를 만드는 올바른 방법을 살펴볼 것이다.
 
 ---
 

@@ -46,7 +46,7 @@ systemd.unit=emergency.target
 init=/bin/bash
 ```
 
-3. **`Ctrl+X`** 또는 **`F10`**으로 부팅
+3. **`Ctrl+X`** 또는 <strong>`F10`</strong>으로 부팅
 
 ## rescue 모드에서 복구 작업
 

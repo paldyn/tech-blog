@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mysql-leftmost-prefix/)에서 복합 인덱스의 Leftmost Prefix 규칙을 살펴봤습니다. 이번 글에서는 인덱스 조건 평가 위치를 스토리지 엔진으로 내리는 최적화인 **Index Condition Pushdown(ICP)**을 다룹니다.
+[지난 글](/posts/mysql-leftmost-prefix/)에서 복합 인덱스의 Leftmost Prefix 규칙을 살펴봤습니다. 이번 글에서는 인덱스 조건 평가 위치를 스토리지 엔진으로 내리는 최적화인 **Index Condition Pushdown**(ICP)을 다룹니다.
 
 ## ICP 이전의 동작 방식
 
@@ -82,7 +82,7 @@ SET optimizer_switch = 'index_condition_pushdown=on';  -- 원복
 
 ## MRR(Multi-Range Read)과의 조합
 
-ICP는 종종 **MRR(Multi-Range Read)**과 함께 동작합니다. MRR은 세컨더리 인덱스 스캔으로 얻은 PK 목록을 정렬한 뒤 클러스터드 인덱스를 순차적으로 읽어 랜덤 I/O를 줄이는 최적화입니다.
+ICP는 종종 **MRR**(Multi-Range Read)과 함께 동작합니다. MRR은 세컨더리 인덱스 스캔으로 얻은 PK 목록을 정렬한 뒤 클러스터드 인덱스를 순차적으로 읽어 랜덤 I/O를 줄이는 최적화입니다.
 
 ```sql
 -- MRR 활성화 확인

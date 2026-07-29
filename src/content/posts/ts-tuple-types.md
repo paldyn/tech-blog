@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-readonly-arrays/)에서 읽기 전용 배열을 살펴봤다. 이번 글에서는 TypeScript의 **튜플 타입(Tuple Types)**을 완전히 정복한다. 튜플은 배열과 비슷해 보이지만, 각 위치마다 타입이 고정되고 길이도 미리 정해진다는 점에서 근본적으로 다르다.
+[지난 글](/posts/ts-readonly-arrays/)에서 읽기 전용 배열을 살펴봤다. 이번 글에서는 TypeScript의 **튜플 타입**(Tuple Types)을 완전히 정복한다. 튜플은 배열과 비슷해 보이지만, 각 위치마다 타입이 고정되고 길이도 미리 정해진다는 점에서 근본적으로 다르다.
 
 ![튜플 타입 구조](/assets/posts/ts-tuple-types-structure.svg)
 
@@ -42,7 +42,7 @@ const wrong3: RGB = [255, 0, 0, 1];  // Error: 요소가 너무 많음
 
 ## 명명된 튜플 (TS 4.0+)
 
-TypeScript 4.0부터 **명명된 튜플(Named Tuples)**을 사용할 수 있다. 각 요소에 라벨을 붙여 IDE 툴팁과 오류 메시지를 훨씬 읽기 쉽게 만든다.
+TypeScript 4.0부터 **명명된 튜플**(Named Tuples)을 사용할 수 있다. 각 요소에 라벨을 붙여 IDE 툴팁과 오류 메시지를 훨씬 읽기 쉽게 만든다.
 
 ```typescript
 // 일반 튜플: 위치만 표시
@@ -118,7 +118,7 @@ type Middle = [string, ...number[], boolean];
 
 ## 구조 분해와 튜플
 
-튜플의 가장 유용한 기능 중 하나는 **구조 분해 할당(Destructuring Assignment)**과의 궁합이다.
+튜플의 가장 유용한 기능 중 하나는 **구조 분해 할당**(Destructuring Assignment)과의 궁합이다.
 
 ```typescript
 type Point3D = [x: number, y: number, z: number];

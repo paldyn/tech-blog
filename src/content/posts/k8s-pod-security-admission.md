@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-pod-security-standards/)에서 Pod Security Standards(PSS)의 세 가지 레벨을 살펴봤다. PSS는 "무엇을 허용하는가"를 정의하는 명세이고, **Pod Security Admission(PSA)**은 그 명세를 실제로 집행하는 구현체다. PSA는 쿠버네티스 1.23부터 기본 활성화된 빌트인 Admission Controller로, 별도의 설치 없이 사용할 수 있다는 점에서 OPA Gatekeeper나 Kyverno와 차별화된다.
+[지난 글](/posts/k8s-pod-security-standards/)에서 Pod Security Standards(PSS)의 세 가지 레벨을 살펴봤다. PSS는 "무엇을 허용하는가"를 정의하는 명세이고, **Pod Security Admission**(PSA)은 그 명세를 실제로 집행하는 구현체다. PSA는 쿠버네티스 1.23부터 기본 활성화된 빌트인 Admission Controller로, 별도의 설치 없이 사용할 수 있다는 점에서 OPA Gatekeeper나 Kyverno와 차별화된다.
 
 ## PSA 요청 처리 흐름
 

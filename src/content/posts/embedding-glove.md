@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/embedding-word2vec/)에서 Word2Vec이 신경망으로 단어 의미를 학습하는 원리를 살펴봤다. Skip-gram은 지역 문맥 창 안에서 중심 단어와 주변 단어 쌍만을 학습한다. 그런데 여기에는 놓치는 것이 있다. 전체 코퍼스에서 "얼음(ice)"과 "냉기(cold)"가 얼마나 자주 함께 등장하는지, 그 **전역 통계(global statistics)**가 담고 있는 정보다. 2014년 스탠퍼드의 Jeffrey Pennington 팀이 발표한 **GloVe(Global Vectors for Word Representation)**는 이 전역 공기 패턴을 명시적으로 모델링해 더 풍부한 의미 표현을 달성했다.
+[지난 글](/posts/embedding-word2vec/)에서 Word2Vec이 신경망으로 단어 의미를 학습하는 원리를 살펴봤다. Skip-gram은 지역 문맥 창 안에서 중심 단어와 주변 단어 쌍만을 학습한다. 그런데 여기에는 놓치는 것이 있다. 전체 코퍼스에서 "얼음(ice)"과 "냉기(cold)"가 얼마나 자주 함께 등장하는지, 그 **전역 통계**(global statistics)가 담고 있는 정보다. 2014년 스탠퍼드의 Jeffrey Pennington 팀이 발표한 **GloVe**(Global Vectors for Word Representation)는 이 전역 공기 패턴을 명시적으로 모델링해 더 풍부한 의미 표현을 달성했다.
 
 ## 공기 행렬이란 무엇인가
 
-**공기(Co-occurrence)**란 두 단어가 같은 문맥 창 내에 함께 등장하는 것을 말한다. 전체 코퍼스를 훑으며 모든 단어 쌍에 대해 이 빈도를 세면 **공기 행렬(Co-occurrence Matrix) X**가 만들어진다.
+**공기**(Co-occurrence)란 두 단어가 같은 문맥 창 내에 함께 등장하는 것을 말한다. 전체 코퍼스를 훑으며 모든 단어 쌍에 대해 이 빈도를 세면 **공기 행렬(Co-occurrence Matrix) X**가 만들어진다.
 
 ```text
 X_{ij} = 단어 i의 문맥 창 내에 단어 j가 등장한 총 횟수
@@ -33,7 +33,7 @@ P(k | i) = X_{ik} / X_i
 
 여기서 X_i = Σ_j X_{ij}는 단어 i의 총 문맥 등장 횟수다.
 
-GloVe의 핵심 통찰은 **비율(ratio)**에 있다. 두 단어 i, j와 탐침 단어 k 사이의 관계는 단순한 확률이 아닌 **확률의 비율**로 가장 잘 포착된다:
+GloVe의 핵심 통찰은 **비율**(ratio)에 있다. 두 단어 i, j와 탐침 단어 k 사이의 관계는 단순한 확률이 아닌 **확률의 비율**로 가장 잘 포착된다:
 
 ```text
 P(k | ice) / P(k | steam)
@@ -55,7 +55,7 @@ J = Σ_{i,j=1}^{V} f(X_{ij}) (w_i^T w̃_j + b_i + b̃_j - log X_{ij})^2
 
 각 구성 요소를 살펴보자.
 
-**가중치 함수 f(X_{ij})**는 희소 공기 쌍의 과도한 영향을 억제한다:
+**가중치 함수 f**(X_{ij})는 희소 공기 쌍의 과도한 영향을 억제한다:
 
 ```text
 f(x) = (x/x_max)^α  if x < x_max

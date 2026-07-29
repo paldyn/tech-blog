@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-closure-patterns/)에서 클로저가 얼마나 강력한 패턴인지 살펴봤습니다. 그런데 클로저는 그 본질인 "외부 변수 참조 유지"가 곧 양날의 검입니다. 의도적으로 상태를 유지하는 것은 좋지만, 의도치 않게 불필요한 데이터를 메모리에 붙잡아 두면 **메모리 누수(Memory Leak)**가 발생합니다. JavaScript의 가비지 컬렉터는 완전히 자동이지만, 참조 사슬이 끊기지 않으면 아무리 정교한 GC도 메모리를 회수할 수 없습니다.
+[지난 글](/posts/js-closure-patterns/)에서 클로저가 얼마나 강력한 패턴인지 살펴봤습니다. 그런데 클로저는 그 본질인 "외부 변수 참조 유지"가 곧 양날의 검입니다. 의도적으로 상태를 유지하는 것은 좋지만, 의도치 않게 불필요한 데이터를 메모리에 붙잡아 두면 **메모리 누수**(Memory Leak)가 발생합니다. JavaScript의 가비지 컬렉터는 완전히 자동이지만, 참조 사슬이 끊기지 않으면 아무리 정교한 GC도 메모리를 회수할 수 없습니다.
 
 ---
 
@@ -167,7 +167,7 @@ data.set(domElement, { clicks: 0, history: [] });
 // domElement = null → GC 시 WeakMap 항목도 제거
 ```
 
-`WeakMap`의 키는 GC 루트에서 도달 불가능해지면 `WeakMap`이 보유한 참조에도 불구하고 GC됩니다. 이를 **약한 참조(weak reference)**라고 합니다.
+`WeakMap`의 키는 GC 루트에서 도달 불가능해지면 `WeakMap`이 보유한 참조에도 불구하고 GC됩니다. 이를 **약한 참조**(weak reference)라고 합니다.
 
 ---
 

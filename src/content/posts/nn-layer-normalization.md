@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/nn-batch-normalization/)에서 배치 정규화가 내부 공변량 이동을 해결하고 학습을 안정화한다는 것을 배웠다. 그런데 배치 정규화는 배치 크기가 작을 때 불안정하고, 시퀀스 길이가 다른 자연어 처리에서 적용하기 어렵다. 이 문제를 해결하기 위해 2016년 Ba et al.이 제안한 **레이어 정규화(Layer Normalization, LN)**가 등장했다. 현재 GPT, BERT, LLaMA 등 사실상 모든 대규모 언어 모델이 레이어 정규화를 사용한다.
+[지난 글](/posts/nn-batch-normalization/)에서 배치 정규화가 내부 공변량 이동을 해결하고 학습을 안정화한다는 것을 배웠다. 그런데 배치 정규화는 배치 크기가 작을 때 불안정하고, 시퀀스 길이가 다른 자연어 처리에서 적용하기 어렵다. 이 문제를 해결하기 위해 2016년 Ba et al.이 제안한 **레이어 정규화**(Layer Normalization, LN)가 등장했다. 현재 GPT, BERT, LLaMA 등 사실상 모든 대규모 언어 모델이 레이어 정규화를 사용한다.
 
 ## 배치 정규화의 한계와 레이어 정규화
 
@@ -96,7 +96,7 @@ Pre-LN의 장점:
 
 ## RMSNorm: LLaMA와 Gemma의 선택
 
-**Root Mean Square Layer Normalization (RMSNorm)**은 레이어 정규화에서 평균 빼기를 제거한 단순화 버전이다.
+**Root Mean Square Layer Normalization**(RMSNorm)은 레이어 정규화에서 평균 빼기를 제거한 단순화 버전이다.
 
 $$\text{RMSNorm}(x) = \frac{x}{\text{RMS}(x)} \cdot \gamma, \quad \text{RMS}(x) = \sqrt{\frac{1}{H}\sum_{i=1}^{H} x_i^2}$$
 

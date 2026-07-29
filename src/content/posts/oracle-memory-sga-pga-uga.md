@@ -47,7 +47,7 @@ WHERE name = 'buffer_cache';
 
 ### 2. Shared Pool
 
-SQL·PL/SQL의 **파싱 결과(Library Cache)**와 **딕셔너리 정보(Dictionary Cache)**를 저장한다. Shared Pool이 크면 더 많은 SQL 커서를 캐시해 반복 파싱(Hard Parse)을 피할 수 있다.
+SQL·PL/SQL의 **파싱 결과**(Library Cache)와 **딕셔너리 정보**(Dictionary Cache)를 저장한다. Shared Pool이 크면 더 많은 SQL 커서를 캐시해 반복 파싱(Hard Parse)을 피할 수 있다.
 
 ![Shared Pool과 Soft Parse](/assets/posts/oracle-memory-sga-pga-uga-shared-pool.svg)
 

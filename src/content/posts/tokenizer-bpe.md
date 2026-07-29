@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/tokenizer-and-tokens/)에서 토크나이저가 텍스트를 정수 ID로 변환하는 개념을 살펴봤다. 이번에는 GPT 시리즈, LLaMA, Mistral 등 현대 LLM 대부분이 채택한 서브워드 알고리즘인 **BPE(Byte Pair Encoding)**의 작동 원리를 상세히 해부한다. BPE는 원래 데이터 압축 알고리즘이었는데, 2016년 Sennrich et al.이 NLP에 적용하면서 서브워드 토크나이저의 기준이 됐다.
+[지난 글](/posts/tokenizer-and-tokens/)에서 토크나이저가 텍스트를 정수 ID로 변환하는 개념을 살펴봤다. 이번에는 GPT 시리즈, LLaMA, Mistral 등 현대 LLM 대부분이 채택한 서브워드 알고리즘인 **BPE**(Byte Pair Encoding)의 작동 원리를 상세히 해부한다. BPE는 원래 데이터 압축 알고리즘이었는데, 2016년 Sennrich et al.이 NLP에 적용하면서 서브워드 토크나이저의 기준이 됐다.
 
 ## BPE의 핵심 아이디어
 

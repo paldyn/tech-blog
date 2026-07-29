@@ -27,7 +27,7 @@ LLM 성능을 비교하는 방법은 크게 세 가지다.
 
 ## MMLU: 지식과 이해의 표준
 
-**MMLU(Massive Multitask Language Understanding)**는 2021년 UC Berkeley에서 만든 벤치마크로, LLM 평가의 사실상 표준이 됐다.
+**MMLU**(Massive Multitask Language Understanding)는 2021년 UC Berkeley에서 만든 벤치마크로, LLM 평가의 사실상 표준이 됐다.
 
 57개 학문 분야(역사, 수학, 법률, 의학, 물리학, 컴퓨터 과학 등)에서 총 15,908개의 4지 선다형 문제를 사용한다. 문제는 초등학교 수준부터 전문가 수준까지 다양하다.
 

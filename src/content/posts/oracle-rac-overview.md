@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/oracle-advanced-queueing/)에서 AQ로 트랜잭션 보장 메시징을 구현하는 방법을 다뤘다. 이번에는 Oracle의 대표적인 고가용성·확장성 솔루션인 **RAC(Real Application Clusters)**의 아키텍처를 살펴본다.
+[지난 글](/posts/oracle-advanced-queueing/)에서 AQ로 트랜잭션 보장 메시징을 구현하는 방법을 다뤘다. 이번에는 Oracle의 대표적인 고가용성·확장성 솔루션인 **RAC**(Real Application Clusters)의 아키텍처를 살펴본다.
 
 ## RAC란
 
@@ -23,7 +23,7 @@ draft: false
 
 ### 공유 스토리지
 
-모든 노드가 동일한 데이터파일, 컨트롤 파일, Redo Log에 접근한다. Oracle은 **ASM(Automatic Storage Management)**을 통해 이 스토리지를 관리한다. ASM은 미러링과 스트라이핑을 자동으로 처리하며, 노드가 추가되거나 제거될 때 데이터를 자동으로 재배치한다.
+모든 노드가 동일한 데이터파일, 컨트롤 파일, Redo Log에 접근한다. Oracle은 **ASM**(Automatic Storage Management)을 통해 이 스토리지를 관리한다. ASM은 미러링과 스트라이핑을 자동으로 처리하며, 노드가 추가되거나 제거될 때 데이터를 자동으로 재배치한다.
 
 ### 인터커넥트 (Private Interconnect)
 
@@ -66,7 +66,7 @@ ORDER BY name;
 
 ## 서비스와 부하 분산
 
-RAC에서 클라이언트는 특정 노드에 직접 연결하지 않는다. **SCAN(Single Client Access Name)**을 통해 접속하며, Oracle Clusterware가 현재 부하를 고려해 최적 노드로 연결을 라우팅한다.
+RAC에서 클라이언트는 특정 노드에 직접 연결하지 않는다. **SCAN**(Single Client Access Name)을 통해 접속하며, Oracle Clusterware가 현재 부하를 고려해 최적 노드로 연결을 라우팅한다.
 
 ```sql
 -- 현재 서비스 현황 확인

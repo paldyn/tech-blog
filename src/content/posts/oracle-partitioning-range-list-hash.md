@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/plsql-bulk-collect-forall/)에서 BULK COLLECT와 FORALL로 대량 데이터를 효율적으로 처리하는 법을 살펴봤다. 이번에는 테이블 자체를 물리적으로 나누는 **파티셔닝(Partitioning)**을 다룬다. Oracle에서 파티셔닝은 대용량 테이블의 성능·관리성·가용성을 동시에 해결하는 핵심 기법이다.
+[지난 글](/posts/plsql-bulk-collect-forall/)에서 BULK COLLECT와 FORALL로 대량 데이터를 효율적으로 처리하는 법을 살펴봤다. 이번에는 테이블 자체를 물리적으로 나누는 **파티셔닝**(Partitioning)을 다룬다. Oracle에서 파티셔닝은 대용량 테이블의 성능·관리성·가용성을 동시에 해결하는 핵심 기법이다.
 
 ## 파티셔닝이 필요한 이유
 
@@ -47,7 +47,7 @@ PARTITION BY RANGE (sale_dt) (
 
 ## 파티션 프루닝
 
-파티셔닝의 핵심 성능 이점은 **파티션 프루닝(Partition Pruning)**에 있다. WHERE 절의 파티션 키 조건을 CBO가 분석해, 해당 범위에 없는 파티션은 아예 접근하지 않는다.
+파티셔닝의 핵심 성능 이점은 **파티션 프루닝**(Partition Pruning)에 있다. WHERE 절의 파티션 키 조건을 CBO가 분석해, 해당 범위에 없는 파티션은 아예 접근하지 않는다.
 
 ![파티션 프루닝과 DDL 구문](/assets/posts/oracle-partitioning-range-list-hash-pruning.svg)
 
@@ -63,7 +63,7 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 -- PARTITION RANGE SINGLE | Pstart=1 Pstop=1
 ```
 
-`Pstart=Pstop=1`이면 파티션 하나만 스캔했다는 뜻이다. 프루닝이 되려면 조건이 **정적(리터럴이나 바인드 변수)**이거나 **실행 시점 결정 가능**해야 한다. 함수로 파티션 키를 감싸면 프루닝이 깨진다.
+`Pstart=Pstop=1`이면 파티션 하나만 스캔했다는 뜻이다. 프루닝이 되려면 조건이 **정적**(리터럴이나 바인드 변수)이거나 **실행 시점 결정 가능**해야 한다. 함수로 파티션 키를 감싸면 프루닝이 깨진다.
 
 ```sql
 -- 프루닝 안 됨: 함수로 감쌈
@@ -98,7 +98,7 @@ PARTITION BY LIST (region_cd) (
 
 ## Hash 파티셔닝
 
-파티션 키의 해시값으로 행을 균등하게 분산한다. 핫스팟 없이 I/O를 여러 디스크에 퍼뜨리는 것이 목적이다. 파티션 수는 반드시 **2의 거듭제곱(2, 4, 8, 16…)**을 권장한다. Oracle 내부 해시 함수 특성상 균등 분포가 보장된다.
+파티션 키의 해시값으로 행을 균등하게 분산한다. 핫스팟 없이 I/O를 여러 디스크에 퍼뜨리는 것이 목적이다. 파티션 수는 반드시 **2의 거듭제곱**(2, 4, 8, 16…)을 권장한다. Oracle 내부 해시 함수 특성상 균등 분포가 보장된다.
 
 ```sql
 CREATE TABLE customers (

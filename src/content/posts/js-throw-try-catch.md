@@ -15,7 +15,7 @@ draft: false
 
 ## throw — 어떤 값이든 던질 수 있다
 
-`throw`는 **표현식**이 아니라 **문(statement)**입니다. 어떤 값이든 던질 수 있지만, 항상 `Error` 객체(또는 그 서브클래스)를 던져야 합니다.
+`throw`는 **표현식**이 아니라 **문**(statement)입니다. 어떤 값이든 던질 수 있지만, 항상 `Error` 객체(또는 그 서브클래스)를 던져야 합니다.
 
 ```js
 throw new Error('메시지');         // 권장
@@ -54,7 +54,7 @@ function main() {
 
 ![throw — 콜 스택 위로 에러 전파](/assets/posts/js-throw-try-catch-flow.svg)
 
-중간에 `catch` 없이 에러를 그대로 통과시키는 것을 **에러 전파(propagation)**라 합니다. 각 함수가 에러를 처리할 필요 없이, 의미 있는 컨텍스트가 있는 곳에서 포착합니다.
+중간에 `catch` 없이 에러를 그대로 통과시키는 것을 **에러 전파**(propagation)라 합니다. 각 함수가 에러를 처리할 필요 없이, 의미 있는 컨텍스트가 있는 곳에서 포착합니다.
 
 ## try/catch/finally 실행 순서
 

@@ -29,7 +29,7 @@ AG는 공유 스토리지 없이 **로그 스트림 복제** 방식으로 데이
 
 **Secondary 레플리카**는 Primary로부터 로그를 받아 Redo 적용한다. 동기 레플리카는 자동 장애 조치 대상이 되고 읽기 전용 쿼리도 허용할 수 있다.
 
-**WSFC(Windows Server Failover Cluster)**는 모든 AG 노드의 상태를 감지하고 장애 조치를 조율하는 기반 인프라다. SQL Server 2019 이상에서는 Linux AG도 가능하다(Pacemaker 사용).
+**WSFC**(Windows Server Failover Cluster)는 모든 AG 노드의 상태를 감지하고 장애 조치를 조율하는 기반 인프라다. SQL Server 2019 이상에서는 Linux AG도 가능하다(Pacemaker 사용).
 
 ## 동기 vs 비동기 커밋 모드
 

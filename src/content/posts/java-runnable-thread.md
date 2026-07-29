@@ -170,7 +170,7 @@ void waitForEvent() throws InterruptedException {
 
 ## 데몬 스레드
 
-JVM은 모든 **사용자 스레드(non-daemon)**가 종료될 때 종료된다. 데몬 스레드는 사용자 스레드가 모두 끝나면 JVM이 강제 종료한다.
+JVM은 모든 **사용자 스레드**(non-daemon)가 종료될 때 종료된다. 데몬 스레드는 사용자 스레드가 모두 끝나면 JVM이 강제 종료한다.
 
 ```java
 Thread bg = new Thread(this::periodicCleanup, "cleanup-daemon");

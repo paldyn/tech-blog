@@ -234,7 +234,7 @@ String greet(String name) {
 
 ## 예외 처리 명령어
 
-`athrow`는 스택 top의 `Throwable` 참조를 팝하여 예외를 발생시킵니다. 예외 처리기(핸들러) 범위는 바이트코드 명령어가 아닌 **예외 테이블(exception table)**로 표현됩니다.
+`athrow`는 스택 top의 `Throwable` 참조를 팝하여 예외를 발생시킵니다. 예외 처리기(핸들러) 범위는 바이트코드 명령어가 아닌 **예외 테이블**(exception table)로 표현됩니다.
 
 ```text
 Exception table:

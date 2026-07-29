@@ -214,7 +214,7 @@ public class UserPreference { /* ... */ }
 - 웹 스코프(`request`·`session`): 싱글톤에 주입 시 `proxyMode` 필수
 - `@RequestScope`·`@SessionScope`: 단축 어노테이션, proxyMode 자동 포함
 
-다음 글에서는 빈의 **생명주기(Lifecycle)**를 살펴봅니다. 빈이 생성되고 초기화 콜백이 호출되며 소멸하는 전 과정을 추적하고, `@PostConstruct`·`@PreDestroy`·`InitializingBean` 등의 차이를 설명합니다.
+다음 글에서는 빈의 **생명주기**(Lifecycle)를 살펴봅니다. 빈이 생성되고 초기화 콜백이 호출되며 소멸하는 전 과정을 추적하고, `@PostConstruct`·`@PreDestroy`·`InitializingBean` 등의 차이를 설명합니다.
 
 ---
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-collection-framework/)에서 컬렉션 프레임워크의 전체 구조를 살펴봤다. 이번에는 가장 많이 쓰이는 컬렉션인 **`List`와 `ArrayList`**를 깊이 파헤친다. 단순히 쓰는 방법을 넘어, 내부 구조를 이해하면 성능 문제를 예측하고 올바른 최적화 전략을 선택할 수 있다.
+[지난 글](/posts/java-collection-framework/)에서 컬렉션 프레임워크의 전체 구조를 살펴봤다. 이번에는 가장 많이 쓰이는 컬렉션인 <strong>`List`와 `ArrayList`</strong>를 깊이 파헤친다. 단순히 쓰는 방법을 넘어, 내부 구조를 이해하면 성능 문제를 예측하고 올바른 최적화 전략을 선택할 수 있다.
 
 ## List 인터페이스
 
@@ -43,7 +43,7 @@ public interface List<E> extends Collection<E> {
 
 ## ArrayList 내부 구조
 
-`ArrayList`는 이름 그대로 배열(`Object[] elementData`)을 기반으로 한다. **동적 배열(Dynamic Array)**이라고도 부른다.
+`ArrayList`는 이름 그대로 배열(`Object[] elementData`)을 기반으로 한다. **동적 배열**(Dynamic Array)이라고도 부른다.
 
 ```java
 // ArrayList 핵심 필드 (OpenJDK 기준)
@@ -51,7 +51,7 @@ private Object[] elementData; // 실제 데이터 저장 배열
 private int size;             // 현재 원소 수 (≤ elementData.length)
 ```
 
-`size`는 원소 수이고, 배열의 길이(`elementData.length`)는 **용량(capacity)**이다. 용량은 항상 size 이상이다.
+`size`는 원소 수이고, 배열의 길이(`elementData.length`)는 **용량**(capacity)이다. 용량은 항상 size 이상이다.
 
 ![ArrayList 내부 구조](/assets/posts/java-list-arraylist-structure.svg)
 
@@ -69,7 +69,7 @@ private Object[] grow(int minCapacity) {
 }
 ```
 
-확장 시 `Arrays.copyOf`로 전체 배열을 복사하므로 **O(n)**이 걸린다. 하지만 확장 횟수가 log(n)이므로 **분할 상환(amortized) O(1)**으로 볼 수 있다.
+확장 시 `Arrays.copyOf`로 전체 배열을 복사하므로 **O**(n)이 걸린다. 하지만 확장 횟수가 log(n)이므로 **분할 상환(amortized) O**(1)으로 볼 수 있다.
 
 ## initialCapacity — 확장 비용 줄이기
 

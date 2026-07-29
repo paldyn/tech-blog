@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/mysql-explain-formats/)에서 EXPLAIN의 네 가지 포맷과 핵심 컬럼을 해석하는 방법을 살펴봤습니다. 이번 글에서는 옵티마이저가 선택한 실행 계획이 최선이 아닐 때 **힌트(Hint)**로 직접 제어하는 방법을 다룹니다.
+[지난 글](/posts/mysql-explain-formats/)에서 EXPLAIN의 네 가지 포맷과 핵심 컬럼을 해석하는 방법을 살펴봤습니다. 이번 글에서는 옵티마이저가 선택한 실행 계획이 최선이 아닐 때 **힌트**(Hint)로 직접 제어하는 방법을 다룹니다.
 
 ## 힌트가 필요한 상황
 

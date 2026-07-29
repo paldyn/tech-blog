@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-mo-algorithm/)에서 Mo's Algorithm을 이용해 정적 구간 쿼리를 O((N+Q)√N)에 처리하는 방법을 다뤘습니다. 이번에는 Mo's Algorithm이 속하는 더 큰 패러다임인 **오프라인 쿼리 처리(Offline Query Processing)**의 개념과 다양한 기법을 체계적으로 정리합니다.
+[지난 글](/posts/dsa-mo-algorithm/)에서 Mo's Algorithm을 이용해 정적 구간 쿼리를 O((N+Q)√N)에 처리하는 방법을 다뤘습니다. 이번에는 Mo's Algorithm이 속하는 더 큰 패러다임인 **오프라인 쿼리 처리**(Offline Query Processing)의 개념과 다양한 기법을 체계적으로 정리합니다.
 
 ## 온라인 vs 오프라인
 

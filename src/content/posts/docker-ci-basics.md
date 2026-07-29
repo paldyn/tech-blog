@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/docker-debug-dns/)에서 컨테이너 네트워크·DNS 문제를 진단하는 방법을 살펴봤다. 디버깅까지 익혔다면 이제 빌드·배포를 자동화할 차례다. **CI(Continuous Integration)**는 코드가 푸시될 때마다 자동으로 빌드·테스트·패키징하는 과정이며, Docker는 이 과정의 환경 일관성 문제를 깔끔하게 해결한다.
+[지난 글](/posts/docker-debug-dns/)에서 컨테이너 네트워크·DNS 문제를 진단하는 방법을 살펴봤다. 디버깅까지 익혔다면 이제 빌드·배포를 자동화할 차례다. **CI**(Continuous Integration)는 코드가 푸시될 때마다 자동으로 빌드·테스트·패키징하는 과정이며, Docker는 이 과정의 환경 일관성 문제를 깔끔하게 해결한다.
 
 ## 왜 컨테이너 기반 CI인가
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ml-supervised-vs-unsupervised/)에서 지도 학습의 개념을 살펴봤다. 이번에는 지도 학습의 가장 기본적인 알고리즘인 **선형 회귀(Linear Regression)**를 다룬다. 1800년대 Legendre와 Gauss가 천문학 문제를 풀기 위해 개발한 이 방법은, 200년이 지난 지금도 실무에서 가장 먼저 시도해야 할 베이스라인 모델이다. 단순하지만 해석 가능성이 높고, 신경망의 선형 레이어도 결국 이 연산이다.
+[지난 글](/posts/ml-supervised-vs-unsupervised/)에서 지도 학습의 개념을 살펴봤다. 이번에는 지도 학습의 가장 기본적인 알고리즘인 **선형 회귀**(Linear Regression)를 다룬다. 1800년대 Legendre와 Gauss가 천문학 문제를 풀기 위해 개발한 이 방법은, 200년이 지난 지금도 실무에서 가장 먼저 시도해야 할 베이스라인 모델이다. 단순하지만 해석 가능성이 높고, 신경망의 선형 레이어도 결국 이 연산이다.
 
 ## 선형 회귀란
 
@@ -31,7 +31,7 @@ draft: false
 
 ## 손실 함수와 최소 제곱법
 
-선형 회귀의 손실 함수는 **평균 제곱 오차(MSE)**다.
+선형 회귀의 손실 함수는 **평균 제곱 오차**(MSE)다.
 
 ```python
 import numpy as np
@@ -57,7 +57,7 @@ def compute_gradients(w, b, X, y):
     return dw, db
 ```
 
-MSE를 w에 대해 미분하고 0으로 놓으면 **해석적 해(Closed-form Solution)**를 구할 수 있다.
+MSE를 w에 대해 미분하고 0으로 놓으면 **해석적 해**(Closed-form Solution)를 구할 수 있다.
 
 ```python
 # 최소 제곱법 (Ordinary Least Squares, OLS)

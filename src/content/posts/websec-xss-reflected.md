@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-xss-overview/)에서 XSS의 세 가지 유형을 개괄적으로 살펴봤습니다. 이번 글에서는 그 중 가장 흔하게 발견되는 **반사형 XSS(Reflected XSS)**를 집중적으로 파헤칩니다. 공격자가 어떻게 악성 URL 하나로 피해자의 쿠키를 탈취하는지, 서버와 브라우저 사이에서 정확히 무슨 일이 벌어지는지 단계별로 추적합니다.
+[지난 글](/posts/websec-xss-overview/)에서 XSS의 세 가지 유형을 개괄적으로 살펴봤습니다. 이번 글에서는 그 중 가장 흔하게 발견되는 **반사형 XSS**(Reflected XSS)를 집중적으로 파헤칩니다. 공격자가 어떻게 악성 URL 하나로 피해자의 쿠키를 탈취하는지, 서버와 브라우저 사이에서 정확히 무슨 일이 벌어지는지 단계별로 추적합니다.
 
 ## 반사형 XSS란?
 
@@ -95,7 +95,7 @@ response.getWriter().write("결과: " + Encode.forHtml(q));
 
 ![Reflected XSS 방어 기법](/assets/posts/websec-xss-reflected-defense.svg)
 
-**출력 인코딩(Output Encoding)**이 가장 핵심적인 방어책입니다. HTML 컨텍스트에 따라 적절한 인코딩을 적용해야 합니다:
+**출력 인코딩**(Output Encoding)이 가장 핵심적인 방어책입니다. HTML 컨텍스트에 따라 적절한 인코딩을 적용해야 합니다:
 
 ```javascript
 // HTML 컨텍스트 인코딩 (DOMPurify 라이브러리)

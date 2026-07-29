@@ -17,7 +17,7 @@ draft: false
 
 ## Redux란
 
-Redux는 **예측 가능한 상태 컨테이너(Predictable State Container)**입니다. 2015년 Dan Abramov가 Elm 아키텍처에서 영감을 받아 만들었습니다. 핵심 아이디어는 애플리케이션의 전체 상태를 하나의 JavaScript 객체에 담고, 그 상태를 바꾸는 유일한 방법을 "Action을 dispatch하는 것"으로 제한한다는 것입니다.
+Redux는 **예측 가능한 상태 컨테이너**(Predictable State Container)입니다. 2015년 Dan Abramov가 Elm 아키텍처에서 영감을 받아 만들었습니다. 핵심 아이디어는 애플리케이션의 전체 상태를 하나의 JavaScript 객체에 담고, 그 상태를 바꾸는 유일한 방법을 "Action을 dispatch하는 것"으로 제한한다는 것입니다.
 
 ![Redux 단방향 데이터 흐름](/assets/posts/state-redux-core-flow.svg)
 
@@ -334,7 +334,7 @@ Redux가 도입된 초기에는 "React를 쓰면 Redux가 필수"라는 인식�
 
 - **여러 컴포넌트가 같은 state를 공유**하고 prop drilling이 깊어질 때
 - **서버 데이터 + 클라이언트 UI 상태**가 복잡하게 얽혀 있을 때
-- **실행 취소/재실행(Undo/Redo)**이 필요할 때
+- **실행 취소/재실행**(Undo/Redo)이 필요할 때
 - **Redux DevTools**로 상태 변화를 시각적으로 추적해야 할 때
 - 팀 전체가 일관된 패턴으로 상태를 관리해야 할 때
 

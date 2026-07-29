@@ -17,7 +17,7 @@ draft: false
 
 자바 생태계에는 로깅 라이브러리가 많습니다. `java.util.logging`(JUL), Log4j, Log4j 2, Logback이 각자의 API를 가지고 있었습니다. 라이브러리 의존성에 따라 여러 로깅 시스템이 섞이면 설정이 충돌합니다.
 
-**SLF4J(Simple Logging Facade for Java)**는 이 문제를 해결하는 **추상화 레이어**입니다. 개발자는 SLF4J API만 사용하고, 어떤 구현체(Logback, Log4j 2 등)를 쓸지는 의존성 설정으로 결정합니다.
+**SLF4J**(Simple Logging Facade for Java)는 이 문제를 해결하는 **추상화 레이어**입니다. 개발자는 SLF4J API만 사용하고, 어떤 구현체(Logback, Log4j 2 등)를 쓸지는 의존성 설정으로 결정합니다.
 
 ![SLF4J + Logback 아키텍처](/assets/posts/springboot-logback-slf4j-architecture.svg)
 

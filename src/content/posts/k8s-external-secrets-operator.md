@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-sealed-secrets/)에서 GitOps 친화적인 Sealed Secrets를 살펴봤다. 이번에는 **External Secrets Operator(ESO)**를 다룬다. Sealed Secrets가 "암호화된 시크릿을 Git에 저장"하는 접근이라면, ESO는 "외부 시크릿 저장소(AWS, GCP, Vault 등)에서 직접 가져와 K8s Secret으로 동기화"하는 접근이다. 엔터프라이즈 환경에서 이미 Vault나 클라우드 시크릿 서비스를 쓰고 있다면 ESO가 가장 자연스러운 연동 방법이다.
+[지난 글](/posts/k8s-sealed-secrets/)에서 GitOps 친화적인 Sealed Secrets를 살펴봤다. 이번에는 **External Secrets Operator**(ESO)를 다룬다. Sealed Secrets가 "암호화된 시크릿을 Git에 저장"하는 접근이라면, ESO는 "외부 시크릿 저장소(AWS, GCP, Vault 등)에서 직접 가져와 K8s Secret으로 동기화"하는 접근이다. 엔터프라이즈 환경에서 이미 Vault나 클라우드 시크릿 서비스를 쓰고 있다면 ESO가 가장 자연스러운 연동 방법이다.
 
 ## ESO 아키텍처
 

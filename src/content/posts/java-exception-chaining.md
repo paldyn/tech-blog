@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-custom-exception/)에서 도메인에 맞는 커스텀 예외 계층을 설계하는 방법을 살펴봤다. 이번에는 **예외 체이닝(Exception Chaining)**을 다룬다. 하위 계층에서 발생한 원인 예외를 소실 없이 상위 계층으로 전달하는 핵심 기법이다.
+[지난 글](/posts/java-custom-exception/)에서 도메인에 맞는 커스텀 예외 계층을 설계하는 방법을 살펴봤다. 이번에는 **예외 체이닝**(Exception Chaining)을 다룬다. 하위 계층에서 발생한 원인 예외를 소실 없이 상위 계층으로 전달하는 핵심 기법이다.
 
 ## 예외 체이닝이란
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/jvm-class-loader-delegation/)에서 부모 위임 모델이 클래스를 로드하는 원리를 살펴봤습니다. 클래스가 로드되면 JVM의 다양한 메모리 영역에 데이터가 흩어져 저장되기 시작합니다. 이번 글에서는 **JVM 런타임 데이터 영역(Runtime Data Areas)**의 구조와 각 영역이 어떤 데이터를 어떻게 관리하는지 살펴봅니다.
+[지난 글](/posts/jvm-class-loader-delegation/)에서 부모 위임 모델이 클래스를 로드하는 원리를 살펴봤습니다. 클래스가 로드되면 JVM의 다양한 메모리 영역에 데이터가 흩어져 저장되기 시작합니다. 이번 글에서는 **JVM 런타임 데이터 영역**(Runtime Data Areas)의 구조와 각 영역이 어떤 데이터를 어떻게 관리하는지 살펴봅니다.
 
 ## 전체 구조: 공유 vs. 전용
 
@@ -58,7 +58,7 @@ G1GC 기준 Heap 레이아웃
 
 ## Metaspace (Method Area)
 
-Java 8 이전에는 **PermGen(Permanent Generation)**이라 불렸고 Heap의 일부였습니다. Java 8부터 **Metaspace**로 이름이 바뀌고 Native Memory(OS 직접 관리)로 이동했습니다.
+Java 8 이전에는 **PermGen**(Permanent Generation)이라 불렸고 Heap의 일부였습니다. Java 8부터 **Metaspace**로 이름이 바뀌고 Native Memory(OS 직접 관리)로 이동했습니다.
 
 Metaspace에는 다음 데이터가 저장됩니다.
 
@@ -99,7 +99,7 @@ Native 메서드를 실행하는 동안에는 PC Register 값이 undefined(정�
 
 ## JVM Stack
 
-메서드가 호출될 때마다 **스택 프레임(Stack Frame)**이 하나 추가되고, 메서드가 반환되면 팝(pop)됩니다. 각 프레임은 세 부분으로 구성됩니다.
+메서드가 호출될 때마다 **스택 프레임**(Stack Frame)이 하나 추가되고, 메서드가 반환되면 팝(pop)됩니다. 각 프레임은 세 부분으로 구성됩니다.
 
 ![JVM 스택 프레임 구조와 피연산자 스택 동작](/assets/posts/jvm-runtime-data-areas-stack-frame.svg)
 

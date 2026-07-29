@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-multi-container-pod/)에서 멀티 컨테이너 파드 패턴을 다뤘습니다. 실제 운영 환경에서는 컨테이너가 distroless 이미지로 빌드되거나 CrashLoopBackOff 상태에 빠져 `kubectl exec`조차 불가능한 상황이 종종 생깁니다. 이때 **Ephemeral Container(임시 컨테이너)**를 사용하면 실행 중인 Pod에 shell이나 진단 도구를 갖춘 컨테이너를 삽입해 문제를 분석할 수 있습니다. Kubernetes 1.23에서 GA(정식 기능)로 승격됐으며, 현재 대부분의 클러스터에서 기본 활성화돼 있습니다.
+[지난 글](/posts/k8s-multi-container-pod/)에서 멀티 컨테이너 파드 패턴을 다뤘습니다. 실제 운영 환경에서는 컨테이너가 distroless 이미지로 빌드되거나 CrashLoopBackOff 상태에 빠져 `kubectl exec`조차 불가능한 상황이 종종 생깁니다. 이때 **Ephemeral Container**(임시 컨테이너)를 사용하면 실행 중인 Pod에 shell이나 진단 도구를 갖춘 컨테이너를 삽입해 문제를 분석할 수 있습니다. Kubernetes 1.23에서 GA(정식 기능)로 승격됐으며, 현재 대부분의 클러스터에서 기본 활성화돼 있습니다.
 
 ## Ephemeral Container란
 

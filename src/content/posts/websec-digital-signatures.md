@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-key-derivation-functions/)에서 KDF로 비밀번호를 안전하게 저장하는 방법을 살펴봤다. 이번 글에서는 **디지털 서명(Digital Signature)**을 다룬다. 디지털 서명은 공개키 암호화를 역방향으로 활용해 인증, 무결성, 부인 방지를 동시에 제공한다.
+[지난 글](/posts/websec-key-derivation-functions/)에서 KDF로 비밀번호를 안전하게 저장하는 방법을 살펴봤다. 이번 글에서는 **디지털 서명**(Digital Signature)을 다룬다. 디지털 서명은 공개키 암호화를 역방향으로 활용해 인증, 무결성, 부인 방지를 동시에 제공한다.
 
 ## 디지털 서명 vs HMAC
 

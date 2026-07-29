@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sec-xss/)에서 XSS의 세 가지 유형과 방어 방법을 살펴봤습니다. 이번에는 XSS와 함께 OWASP 최상위 취약점에 항상 등장하는 **CSRF(Cross-Site Request Forgery)**를 다룹니다.
+[지난 글](/posts/sec-xss/)에서 XSS의 세 가지 유형과 방어 방법을 살펴봤습니다. 이번에는 XSS와 함께 OWASP 최상위 취약점에 항상 등장하는 **CSRF**(Cross-Site Request Forgery)를 다룹니다.
 
 ## CSRF란 무엇인가
 

@@ -84,7 +84,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 ## Context 분리 기준
 
-분리할 기준은 **"어떤 상태가 함께 바뀌는가"**다.
+분리할 기준은 <strong>"어떤 상태가 함께 바뀌는가"</strong>다.
 
 | 상태 묶음 | Context |
 |---|---|

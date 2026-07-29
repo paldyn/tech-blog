@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-graph-dfs/)에서 DFS의 동작 원리와 사이클 감지를 다뤘습니다. 이번에는 BFS의 강력한 변형인 **다중 소스 BFS(Multi-Source BFS)**를 소개합니다. 여러 시작점에서 동시에 확산하는 이 기법은 단일 BFS K번 실행의 O(K×(V+E))를 **O(V+E)** 로 줄여줍니다.
+[지난 글](/posts/dsa-graph-dfs/)에서 DFS의 동작 원리와 사이클 감지를 다뤘습니다. 이번에는 BFS의 강력한 변형인 **다중 소스 BFS**(Multi-Source BFS)를 소개합니다. 여러 시작점에서 동시에 확산하는 이 기법은 단일 BFS K번 실행의 O(K×(V+E))를 **O(V+E)** 로 줄여줍니다.
 
 ## 문제 예시
 

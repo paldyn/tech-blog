@@ -15,7 +15,7 @@ draft: false
 
 ## Qwen: 알리바바의 이중 언어 LLM 제국
 
-**Qwen(通义千问, 통의천문)**은 2023년 알리바바 클라우드가 공개한 LLM 시리즈다. "통의"는 알리바바의 AI 브랜드이고, "천문"은 "천 가지 질문"을 의미한다.
+**Qwen**(通义千问, 통의천문)은 2023년 알리바바 클라우드가 공개한 LLM 시리즈다. "통의"는 알리바바의 AI 브랜드이고, "천문"은 "천 가지 질문"을 의미한다.
 
 Qwen의 가장 큰 강점은 **중국어와 영어 이중 언어 능력**이다. 대부분의 서구 LLM이 중국어를 지원하더라도 영어에서 파인튜닝된 모델을 번역에 의존하는 것과 달리, Qwen은 중국어 데이터를 방대하게 포함해 사전학습했다.
 
@@ -62,7 +62,7 @@ DeepSeek의 목표는 명확했다. "제한된 GPU 자원으로 최고 성능을
 
 **DeepSeek V2(2024.05): Multi-head Latent Attention**
 
-DeepSeek V2의 핵심 혁신은 **MLA(Multi-head Latent Attention)**다. 기존 KV 캐시는 각 Attention Head의 Key와 Value를 모두 저장하므로 메모리를 많이 차지한다. MLA는 KV를 저차원 잠재 벡터로 압축해 저장하고, 필요할 때 복원한다. 이로써 KV 캐시 메모리를 93.3% 줄였다.
+DeepSeek V2의 핵심 혁신은 **MLA**(Multi-head Latent Attention)다. 기존 KV 캐시는 각 Attention Head의 Key와 Value를 모두 저장하므로 메모리를 많이 차지한다. MLA는 KV를 저차원 잠재 벡터로 압축해 저장하고, 필요할 때 복원한다. 이로써 KV 캐시 메모리를 93.3% 줄였다.
 
 총 236B 파라미터의 MoE 구조지만, 추론 시 21B만 활성화된다. GPT-4급 성능을 당시 대비 약 1/10 비용으로 API 제공.
 

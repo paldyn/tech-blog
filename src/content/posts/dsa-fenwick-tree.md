@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-segment-tree-lazy-propagation/)에서 세그먼트 트리에 지연 전파(lazy propagation)를 붙여 구간 업데이트를 O(log n)으로 처리하는 방법을 살펴봤습니다. 이번에는 그보다 훨씬 간결한 코드로 prefix sum 쿼리·업데이트를 O(log n)에 처리하는 **펜윅 트리(Fenwick Tree / Binary Indexed Tree)**를 다룹니다.
+[지난 글](/posts/dsa-segment-tree-lazy-propagation/)에서 세그먼트 트리에 지연 전파(lazy propagation)를 붙여 구간 업데이트를 O(log n)으로 처리하는 방법을 살펴봤습니다. 이번에는 그보다 훨씬 간결한 코드로 prefix sum 쿼리·업데이트를 O(log n)에 처리하는 **펜윅 트리**(Fenwick Tree / Binary Indexed Tree)를 다룹니다.
 
 ## 왜 펜윅 트리인가
 

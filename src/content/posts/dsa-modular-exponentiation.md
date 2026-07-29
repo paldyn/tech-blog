@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-modular-arithmetic/)에서 모듈러 세계의 사칙연산 규칙을 정리했습니다. 이번에는 그 위에서 가장 많이 쓰이는 연산인 **모듈러 거듭제곱(aⁿ mod m)**을 다룹니다. n이 10¹⁸이어도 단 60번 남짓의 곱셈으로 답을 구하는 **반복 제곱법(Binary Exponentiation)**은 조합론, 역원 계산, 행렬 거듭제곱, RSA 암호까지 어디에나 등장하는 필수 도구입니다.
+[지난 글](/posts/dsa-modular-arithmetic/)에서 모듈러 세계의 사칙연산 규칙을 정리했습니다. 이번에는 그 위에서 가장 많이 쓰이는 연산인 **모듈러 거듭제곱**(aⁿ mod m)을 다룹니다. n이 10¹⁸이어도 단 60번 남짓의 곱셈으로 답을 구하는 **반복 제곱법**(Binary Exponentiation)은 조합론, 역원 계산, 행렬 거듭제곱, RSA 암호까지 어디에나 등장하는 필수 도구입니다.
 
 ## 순진한 방법의 한계
 
@@ -38,7 +38,7 @@ def slow_pow(a, n, m):
 
 ![반복 제곱법](/assets/posts/dsa-modular-exponentiation-squaring.svg)
 
-지수의 비트 수는 log₂n + 1이므로 전체 곱셈 횟수는 **O(log n)**입니다.
+지수의 비트 수는 log₂n + 1이므로 전체 곱셈 횟수는 **O**(log n)입니다.
 
 ## 반복 구현 (실전 표준)
 

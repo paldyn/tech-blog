@@ -30,7 +30,7 @@ telinit 3   # 텍스트 모드로 전환
 
 ## systemd 타겟
 
-systemd는 런레벨 대신 **타겟(target)**을 사용합니다. 타겟은 `.target` 유닛 파일로 정의되며, 특정 시스템 상태에 도달하기 위해 필요한 의존성들을 선언합니다.
+systemd는 런레벨 대신 **타겟**(target)을 사용합니다. 타겟은 `.target` 유닛 파일로 정의되며, 특정 시스템 상태에 도달하기 위해 필요한 의존성들을 선언합니다.
 
 ![systemd 타겟 의존 그래프](/assets/posts/linux-runlevels-vs-targets-deps.svg)
 

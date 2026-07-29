@@ -27,7 +27,7 @@ SQL 명령어는 목적에 따라 네 범주로 나뉜다. 이 구분은 단순�
 
 ## DDL — 데이터 정의 언어
 
-**Data Definition Language**. 데이터베이스 **구조(스키마)**를 정의하고 변경한다. 마치 건물 도면을 그리는 것과 같다.
+**Data Definition Language**. 데이터베이스 **구조**(스키마)를 정의하고 변경한다. 마치 건물 도면을 그리는 것과 같다.
 
 ```sql
 -- 테이블 생성
@@ -50,7 +50,7 @@ TRUNCATE TABLE employees;
 
 ### DDL과 암묵적 COMMIT
 
-DDL의 핵심 특성은 **자동 커밋(implicit COMMIT)**이다. Oracle, MySQL 등 대부분의 DBMS에서 DDL 명령을 실행하면 즉시 커밋된다. 이는 진행 중인 트랜잭션도 함께 커밋한다는 뜻이다.
+DDL의 핵심 특성은 **자동 커밋**(implicit COMMIT)이다. Oracle, MySQL 등 대부분의 DBMS에서 DDL 명령을 실행하면 즉시 커밋된다. 이는 진행 중인 트랜잭션도 함께 커밋한다는 뜻이다.
 
 ```sql
 BEGIN;

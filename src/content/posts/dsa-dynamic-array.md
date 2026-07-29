@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-array-basics/)에서 정적 배열의 메모리 구조를 살펴봤습니다. 정적 배열은 크기를 미리 알아야 한다는 단점이 있습니다. **동적 배열(Dynamic Array)**은 이 제한을 해결해 자동으로 크기가 늘어납니다.
+[지난 글](/posts/dsa-array-basics/)에서 정적 배열의 메모리 구조를 살펴봤습니다. 정적 배열은 크기를 미리 알아야 한다는 단점이 있습니다. **동적 배열**(Dynamic Array)은 이 제한을 해결해 자동으로 크기가 늘어납니다.
 
 ## 동적 배열의 아이디어
 
-정적 배열보다 **더 큰 내부 버퍼(capacity)**를 유지하되, 실제 원소 수(size)는 따로 관리합니다. 버퍼가 꽉 차면 더 큰 버퍼를 새로 만들고 모든 원소를 복사합니다.
+정적 배열보다 **더 큰 내부 버퍼**(capacity)를 유지하되, 실제 원소 수(size)는 따로 관리합니다. 버퍼가 꽉 차면 더 큰 버퍼를 새로 만들고 모든 원소를 복사합니다.
 
 ```python
 # Python의 sys.getsizeof로 list 내부 capacity 관찰
@@ -36,7 +36,7 @@ for i in range(20):
 
 ![동적 배열 크기 확장 전략](/assets/posts/dsa-dynamic-array-resize.svg)
 
-핵심은 **기하급수적 성장(geometric growth)**입니다. 1씩 늘리면 n번 append에 O(n²) 총 비용이 들지만, 2배씩 늘리면 O(n)입니다.
+핵심은 **기하급수적 성장**(geometric growth)입니다. 1씩 늘리면 n번 append에 O(n²) 총 비용이 들지만, 2배씩 늘리면 O(n)입니다.
 
 - 확장 횟수: n번 append 시 log₂n번만 확장
 - 총 복사 비용: 1+2+4+...+n = 2n-1 = O(n)

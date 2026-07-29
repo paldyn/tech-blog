@@ -15,7 +15,7 @@ draft: false
 
 ## MobileNet: 모바일 환경을 위한 경량화
 
-스마트폰, IoT 기기에서 CNN을 실행하려면 파라미터와 연산량을 획기적으로 줄여야 한다. MobileNet은 **깊이별 분리 합성곱(Depthwise Separable Convolution)**으로 이를 달성했다.
+스마트폰, IoT 기기에서 CNN을 실행하려면 파라미터와 연산량을 획기적으로 줄여야 한다. MobileNet은 **깊이별 분리 합성곱**(Depthwise Separable Convolution)으로 이를 달성했다.
 
 ![깊이별 분리 합성곱](/assets/posts/cnn-modern-mobilenet.svg)
 
@@ -58,7 +58,7 @@ print(sum(p.numel() for p in dws.parameters()))
 
 ## MobileNetV2: 역전 잔차 블록
 
-V2는 **역전 잔차(Inverted Residual)**를 도입했다. 일반 ResNet 블록이 넓은 → 좁은 → 넓은(병목 구조)인 반면, V2는 좁은 → 넓은 → 좁은으로 뒤집는다.
+V2는 **역전 잔차**(Inverted Residual)를 도입했다. 일반 ResNet 블록이 넓은 → 좁은 → 넓은(병목 구조)인 반면, V2는 좁은 → 넓은 → 좁은으로 뒤집는다.
 
 ```python
 class InvertedResidual(nn.Module):

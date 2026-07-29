@@ -15,7 +15,7 @@ draft: false
 
 ## LangGraph란
 
-LangGraph는 **순환 가능한 방향 그래프(Cyclic Directed Graph)**로 에이전트 로직을 모델링한다. LangChain의 LCEL이 선형 파이프라인에 강점이 있다면, LangGraph는 루프·분기·병렬 실행이 섞인 복잡한 워크플로우에 최적화되어 있다.
+LangGraph는 **순환 가능한 방향 그래프**(Cyclic Directed Graph)로 에이전트 로직을 모델링한다. LangChain의 LCEL이 선형 파이프라인에 강점이 있다면, LangGraph는 루프·분기·병렬 실행이 섞인 복잡한 워크플로우에 최적화되어 있다.
 
 핵심 개념은 세 가지다:
 - **State**: 그래프 전체가 공유하는 TypedDict 형태의 상태 객체

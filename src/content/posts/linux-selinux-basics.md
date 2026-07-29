@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-x11-forwarding/)에서 X11 포워딩으로 원격 GUI 앱을 실행하는 방법을 살펴봤습니다. 보안 챕터로 넘어가 **SELinux(Security-Enhanced Linux)**를 다룹니다. RHEL/CentOS/Fedora 계열에서 기본 활성화되어 있는 SELinux는 많은 관리자가 처음 만나면 당황해서 비활성화부터 합니다. 하지만 원리를 이해하면 강력한 방어 계층이 됩니다.
+[지난 글](/posts/linux-x11-forwarding/)에서 X11 포워딩으로 원격 GUI 앱을 실행하는 방법을 살펴봤습니다. 보안 챕터로 넘어가 **SELinux**(Security-Enhanced Linux)를 다룹니다. RHEL/CentOS/Fedora 계열에서 기본 활성화되어 있는 SELinux는 많은 관리자가 처음 만나면 당황해서 비활성화부터 합니다. 하지만 원리를 이해하면 강력한 방어 계층이 됩니다.
 
 ## DAC와 MAC의 차이
 
-기존 Linux 파일 권한은 **DAC(Discretionary Access Control, 임의 접근 제어)**입니다. 파일 소유자가 `chmod`로 권한을 마음대로 바꿀 수 있습니다. root는 모든 파일에 접근할 수 있습니다.
+기존 Linux 파일 권한은 **DAC**(Discretionary Access Control, 임의 접근 제어)입니다. 파일 소유자가 `chmod`로 권한을 마음대로 바꿀 수 있습니다. root는 모든 파일에 접근할 수 있습니다.
 
-SELinux는 **MAC(Mandatory Access Control, 강제 접근 제어)**입니다. 정책이 커널 수준에서 강제되며, root도 정책에 정의된 범위를 넘을 수 없습니다. Apache가 침해당해도 `httpd_t` 컨텍스트의 범위 밖에는 접근할 수 없습니다.
+SELinux는 **MAC**(Mandatory Access Control, 강제 접근 제어)입니다. 정책이 커널 수준에서 강제되며, root도 정책에 정의된 범위를 넘을 수 없습니다. Apache가 침해당해도 `httpd_t` 컨텍스트의 범위 밖에는 접근할 수 없습니다.
 
 ## 세 가지 모드
 

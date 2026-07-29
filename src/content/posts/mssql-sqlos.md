@@ -137,7 +137,7 @@ WHERE name = 'automatic soft-NUMA disabled';
 
 ## 대기 통계 진단
 
-SQL Server 성능 진단의 핵심은 **대기 통계(Wait Statistics)**다. 모든 병목은 `sys.dm_os_wait_stats`에 누적된다.
+SQL Server 성능 진단의 핵심은 **대기 통계**(Wait Statistics)다. 모든 병목은 `sys.dm_os_wait_stats`에 누적된다.
 
 ```sql
 -- 누적 대기 통계 (인스턴스 시작 이후 전체)

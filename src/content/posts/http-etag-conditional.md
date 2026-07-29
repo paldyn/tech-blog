@@ -15,7 +15,7 @@ draft: false
 
 ## ETag는 불투명 토큰이다
 
-ETag(Entity Tag)는 리소스의 **특정 버전**을 식별하는 문자열이다. 핵심 성질은 **불투명(opaque)**하다는 것 — 클라이언트는 ETag 값의 의미를 해석하지 않고, 그대로 보관했다가 그대로 돌려보낼 뿐이다.
+ETag(Entity Tag)는 리소스의 **특정 버전**을 식별하는 문자열이다. 핵심 성질은 **불투명**(opaque)하다는 것 — 클라이언트는 ETag 값의 의미를 해석하지 않고, 그대로 보관했다가 그대로 돌려보낼 뿐이다.
 
 ```http
 HTTP/1.1 200 OK
@@ -127,7 +127,7 @@ If-None-Match: *
 
 ## If-Match — ETag로 동시 수정 충돌 막기
 
-ETag의 진짜 강력한 활용은 캐시가 아니라 **낙관적 동시성 제어(Optimistic Concurrency Control)**다.
+ETag의 진짜 강력한 활용은 캐시가 아니라 **낙관적 동시성 제어**(Optimistic Concurrency Control)다.
 
 두 사용자가 같은 문서를 편집하는 상황을 보자. A와 B가 동시에 버전 "v1"을 읽고, A가 먼저 저장하고, B가 나중에 저장하면 — 아무 보호 장치가 없다면 **B의 저장이 A의 변경을 통째로 덮어쓴다.** 이것이 갱신 분실(Lost Update) 문제다.
 

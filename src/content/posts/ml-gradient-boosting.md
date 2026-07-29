@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ml-random-forest/)에서 랜덤 포레스트가 수백 개의 트리를 **병렬로** 만들어 다수결로 예측하는 방법을 배웠다. 이번에는 전혀 다른 전략을 취하는 **그래디언트 부스팅(Gradient Boosting)**을 다룬다. 부스팅은 트리를 **순차적으로** 쌓되, 각 트리가 이전 트리들이 저지른 실수를 집중적으로 교정하는 방식으로 동작한다. 이 단순한 아이디어에서 XGBoost, LightGBM, CatBoost라는 캐글 플랫폼을 수년간 지배한 알고리즘이 탄생했다.
+[지난 글](/posts/ml-random-forest/)에서 랜덤 포레스트가 수백 개의 트리를 **병렬로** 만들어 다수결로 예측하는 방법을 배웠다. 이번에는 전혀 다른 전략을 취하는 **그래디언트 부스팅**(Gradient Boosting)을 다룬다. 부스팅은 트리를 **순차적으로** 쌓되, 각 트리가 이전 트리들이 저지른 실수를 집중적으로 교정하는 방식으로 동작한다. 이 단순한 아이디어에서 XGBoost, LightGBM, CatBoost라는 캐글 플랫폼을 수년간 지배한 알고리즘이 탄생했다.
 
 ## 부스팅의 직관: 이전의 실수를 고쳐나가기
 
 부스팅의 핵심 아이디어는 매우 직관적이다. 처음에는 간단한 모델(약한 학습기)을 만들고, 그 모델이 틀린 샘플에 집중해 다음 모델을 학습한다. 이 과정을 반복하면 처음에는 형편없던 모델들의 합이 강력한 예측기로 거듭난다.
 
-가장 오래된 부스팅 알고리즘인 **에이다부스트(AdaBoost, 1997)**는 이 아이디어를 잘못 분류된 샘플의 **가중치**를 높이는 방식으로 구현했다. 각 라운드마다 이전 모델이 오분류한 샘플들에 더 높은 가중치를 부여해 다음 모델이 그 샘플들에 집중하도록 강제한다.
+가장 오래된 부스팅 알고리즘인 **에이다부스트**(AdaBoost, 1997)는 이 아이디어를 잘못 분류된 샘플의 **가중치**를 높이는 방식으로 구현했다. 각 라운드마다 이전 모델이 오분류한 샘플들에 더 높은 가중치를 부여해 다음 모델이 그 샘플들에 집중하도록 강제한다.
 
 ```python
 from sklearn.ensemble import AdaBoostClassifier
@@ -34,11 +34,11 @@ ada.fit(X_train, y_train)
 print(f"AdaBoost 정확도: {ada.score(X_test, y_test):.4f}")
 ```
 
-에이다부스트는 분류 문제에만 자연스럽게 적용되고, 손실 함수를 교체하기 어렵다는 한계가 있었다. 이를 일반화한 것이 **그래디언트 부스팅 머신(GBM, 2001)**이다.
+에이다부스트는 분류 문제에만 자연스럽게 적용되고, 손실 함수를 교체하기 어렵다는 한계가 있었다. 이를 일반화한 것이 **그래디언트 부스팅 머신**(GBM, 2001)이다.
 
 ## 그래디언트 부스팅의 수학적 원리: 잔차 학습
 
-그래디언트 부스팅을 이해하는 가장 직관적인 방법은 **잔차(residual)**에서 출발하는 것이다.
+그래디언트 부스팅을 이해하는 가장 직관적인 방법은 **잔차**(residual)에서 출발하는 것이다.
 
 회귀 문제를 예로 들자. 실제 값이 $y$이고 첫 번째 트리의 예측이 $\hat{y}_1$이라면 잔차는 $r_1 = y - \hat{y}_1$이다. 두 번째 트리는 $X$를 입력받아 $r_1$을 예측하도록 학습된다. 이 두 트리를 합친 앙상블의 예측은 다음과 같다.
 
@@ -48,7 +48,7 @@ $$\hat{y}_2 = \hat{y}_1 + \text{lr} \cdot h_2(X)$$
 
 $$\hat{y}_M = \sum_{m=1}^{M} \text{lr} \cdot h_m(X)$$
 
-수학적으로 더 깊이 들어가면, 잔차는 **평균 제곱 오차(MSE)** 손실 함수의 **음의 기울기(Negative Gradient)**와 같다.
+수학적으로 더 깊이 들어가면, 잔차는 **평균 제곱 오차(MSE)** 손실 함수의 **음의 기울기**(Negative Gradient)와 같다.
 
 $$r_i = -\frac{\partial L(y_i, \hat{y})}{\partial \hat{y}} = y_i - \hat{y}$$
 
@@ -92,7 +92,7 @@ print(f"GBM 정확도: {accuracy_score(y_test, gbm.predict(X_test)):.4f}")
 
 ## 서브샘플링으로 과적합 방지
 
-`subsample < 1.0`으로 설정하면 각 트리를 훈련할 때 훈련 데이터의 일부만 무작위로 사용한다. 이를 **확률적 그래디언트 부스팅(Stochastic GBM)**이라 한다.
+`subsample < 1.0`으로 설정하면 각 트리를 훈련할 때 훈련 데이터의 일부만 무작위로 사용한다. 이를 **확률적 그래디언트 부스팅**(Stochastic GBM)이라 한다.
 
 서브샘플링의 두 가지 효과:
 1. **분산 감소**: 각 트리가 다른 서브셋을 보므로 다양성이 증가한다.
@@ -102,7 +102,7 @@ print(f"GBM 정확도: {accuracy_score(y_test, gbm.predict(X_test)):.4f}")
 
 ## XGBoost: 정규화 + 병렬 처리 + 결측치 처리
 
-**XGBoost(eXtreme Gradient Boosting, 2014)**는 Chen과 Guestrin이 개발해 2016년 캐글을 석권한 라이브러리다. 기존 GBM에 세 가지 핵심 개선을 더했다.
+**XGBoost**(eXtreme Gradient Boosting, 2014)는 Chen과 Guestrin이 개발해 2016년 캐글을 석권한 라이브러리다. 기존 GBM에 세 가지 핵심 개선을 더했다.
 
 **1. 내장 정규화**: 손실 함수에 $L_1$ (alpha)과 $L_2$ (lambda) 정규화 항을 추가해 과적합을 줄인다.
 
@@ -138,7 +138,7 @@ print(f"XGBoost CV 평균: {scores.mean():.4f} ± {scores.std():.4f}")
 
 ## LightGBM: Leaf-wise 성장과 히스토그램 기법
 
-**LightGBM(2017, Microsoft)**은 XGBoost보다 빠른 것이 최대 장점이다. 두 가지 핵심 기법이 속도를 끌어올린다.
+**LightGBM**(2017, Microsoft)은 XGBoost보다 빠른 것이 최대 장점이다. 두 가지 핵심 기법이 속도를 끌어올린다.
 
 **Leaf-wise 트리 성장**: XGBoost가 레벨 단위로 트리를 키우는 것과 달리, LightGBM은 현재 가장 손실을 줄이는 **리프 하나를 선택해 분기**한다. 같은 리프 수에서 더 낮은 손실을 달성하지만, 소규모 데이터에서 과적합에 주의해야 한다.
 
@@ -169,7 +169,7 @@ LightGBM은 `num_leaves`가 핵심 하이퍼파라미터다. `num_leaves = 2^max
 
 ## CatBoost: 범주형 특성 자동 처리
 
-**CatBoost(2017, Yandex)**는 범주형 특성이 많은 데이터에 특히 강하다. 기존 방법에서는 범주형 특성에 원-핫 인코딩이나 레이블 인코딩을 수동으로 적용해야 했지만, CatBoost는 **Ordered Target Statistics**라는 기법으로 타깃 누출 없이 범주형 변수를 자동으로 처리한다.
+**CatBoost**(2017, Yandex)는 범주형 특성이 많은 데이터에 특히 강하다. 기존 방법에서는 범주형 특성에 원-핫 인코딩이나 레이블 인코딩을 수동으로 적용해야 했지만, CatBoost는 **Ordered Target Statistics**라는 기법으로 타깃 누출 없이 범주형 변수를 자동으로 처리한다.
 
 ```python
 from catboost import CatBoostClassifier
@@ -194,7 +194,7 @@ print(f"CatBoost 정확도: {model_cat.score(X_test, y_test):.4f}")
 
 ## 조기 종료(Early Stopping)
 
-학습률을 낮추고 n_estimators를 크게 잡으면 몇 번째 트리에서 멈춰야 할지 알 수 없다. 이를 위해 **조기 종료(Early Stopping)**를 사용한다. 검증 손실이 `early_stopping_rounds` 동안 개선되지 않으면 학습을 자동으로 중단한다.
+학습률을 낮추고 n_estimators를 크게 잡으면 몇 번째 트리에서 멈춰야 할지 알 수 없다. 이를 위해 **조기 종료**(Early Stopping)를 사용한다. 검증 손실이 `early_stopping_rounds` 동안 개선되지 않으면 학습을 자동으로 중단한다.
 
 ```python
 import xgboost as xgb

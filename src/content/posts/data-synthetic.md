@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/data-augmentation/)에서 기존 데이터를 변형해 양을 늘리는 증강(Augmentation)을 다뤘다. 증강이 '있는 것을 변형'하는 방법이라면, **합성 데이터(Synthetic Data)**는 실제 데이터를 아예 처음부터 생성하는 접근이다. 의료 기록처럼 수집 자체가 어렵거나, GDPR·개인정보보호법으로 원본 데이터를 공유하기 어려운 상황에서 합성 데이터는 실질적인 대안이 된다.
+[지난 글](/posts/data-augmentation/)에서 기존 데이터를 변형해 양을 늘리는 증강(Augmentation)을 다뤘다. 증강이 '있는 것을 변형'하는 방법이라면, **합성 데이터**(Synthetic Data)는 실제 데이터를 아예 처음부터 생성하는 접근이다. 의료 기록처럼 수집 자체가 어렵거나, GDPR·개인정보보호법으로 원본 데이터를 공유하기 어려운 상황에서 합성 데이터는 실질적인 대안이 된다.
 
 ## 왜 합성 데이터인가
 
@@ -57,7 +57,7 @@ print(df.head())
 
 ### 통계·수식 기반 생성
 
-실제 데이터의 분포와 상관 구조를 학습해 새 샘플을 뽑는 방법이다. **SDV(Synthetic Data Vault)**가 대표적이다.
+실제 데이터의 분포와 상관 구조를 학습해 새 샘플을 뽑는 방법이다. **SDV**(Synthetic Data Vault)가 대표적이다.
 
 ![합성 데이터 코드 예시](/assets/posts/data-synthetic-code.svg)
 
@@ -79,7 +79,7 @@ synthetic_df = synthesizer.sample(num_rows=len(real_df))
 
 **Gaussian Copula**는 각 변수를 독립적으로 모델링한 뒤, Copula 함수로 변수 간 의존 구조를 별도로 모델링한다. 이렇게 하면 분포 형태와 상관관계를 동시에 보존할 수 있다.
 
-클래스 불균형 해소에는 **SMOTE(Synthetic Minority Over-sampling Technique)**가 효과적이다. 소수 클래스 샘플의 k-최근접 이웃 사이를 보간해 새 샘플을 만든다.
+클래스 불균형 해소에는 **SMOTE**(Synthetic Minority Over-sampling Technique)가 효과적이다. 소수 클래스 샘플의 k-최근접 이웃 사이를 보간해 새 샘플을 만든다.
 
 ```python
 from imblearn.over_sampling import SMOTE
@@ -96,7 +96,7 @@ print(f"After:  {dict(pd.Series(y_res).value_counts())}")
 
 가장 현실적인 합성 데이터를 만들 수 있지만, 학습 비용이 높다.
 
-**CTGAN(Conditional Tabular GAN)**은 표 형식 데이터에 특화된 GAN이다. 생성자(Generator)와 판별자(Discriminator)가 경쟁하며 실제 데이터와 구분하기 어려운 합성 데이터를 학습한다.
+**CTGAN**(Conditional Tabular GAN)은 표 형식 데이터에 특화된 GAN이다. 생성자(Generator)와 판별자(Discriminator)가 경쟁하며 실제 데이터와 구분하기 어려운 합성 데이터를 학습한다.
 
 ```python
 from sdv.single_table import CTGANSynthesizer

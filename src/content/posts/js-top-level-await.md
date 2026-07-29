@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-numeric-separator/)에서 숫자 구분자를 살펴봤습니다. 이번에는 ES2022에 추가된 **최상위 await(Top-level await, TLA)**를 다룹니다. async 함수 내부에서만 사용 가능했던 `await`를 ES 모듈의 최상위 스코프에서도 쓸 수 있게 된 기능입니다.
+[지난 글](/posts/js-numeric-separator/)에서 숫자 구분자를 살펴봤습니다. 이번에는 ES2022에 추가된 **최상위 await**(Top-level await, TLA)를 다룹니다. async 함수 내부에서만 사용 가능했던 `await`를 ES 모듈의 최상위 스코프에서도 쓸 수 있게 된 기능입니다.
 
 ## TLA란?
 

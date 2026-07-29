@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/react-event-handling/)에서 사용자 이벤트를 처리하는 방법을 살펴봤습니다. 이번에는 React에서 UI를 동적으로 만드는 핵심 메커니즘인 **state(상태)**가 무엇인지, 어떻게 동작하는지 깊이 이해해 봅니다.
+[지난 글](/posts/react-event-handling/)에서 사용자 이벤트를 처리하는 방법을 살펴봤습니다. 이번에는 React에서 UI를 동적으로 만드는 핵심 메커니즘인 **state**(상태)가 무엇인지, 어떻게 동작하는지 깊이 이해해 봅니다.
 
 ---
 
@@ -81,7 +81,7 @@ function ShoppingCart({ cartItems }) {
 
 ## state는 스냅샷이다
 
-React state를 이해하는 가장 중요한 개념은 **"state는 렌더링 시점의 스냅샷"**이라는 것입니다.
+React state를 이해하는 가장 중요한 개념은 <strong>"state는 렌더링 시점의 스냅샷"</strong>이라는 것입니다.
 
 ![State 스냅샷 개념](/assets/posts/react-state-concept-snapshot.svg)
 
@@ -103,7 +103,7 @@ function Counter() {
 
 동일한 렌더 안에서 `count`는 항상 `0`입니다. `setCount(count + 1)`를 아무리 여러 번 호출해도 `0 + 1 = 1`로 계산됩니다.
 
-이전 state를 기반으로 업데이트하려면 **업데이터 함수(updater function)**를 사용합니다.
+이전 state를 기반으로 업데이트하려면 **업데이터 함수**(updater function)를 사용합니다.
 
 ```jsx
 function handleClick() {
@@ -143,7 +143,7 @@ function App() {
 
 ## state 업데이트는 배치(Batch) 처리된다
 
-React 18부터는 이벤트 핸들러 안의 모든 `setState` 호출이 **일괄 처리(batching)**됩니다. 여러 `setState`를 호출해도 리렌더링은 한 번만 발생합니다.
+React 18부터는 이벤트 핸들러 안의 모든 `setState` 호출이 **일괄 처리**(batching)됩니다. 여러 `setState`를 호출해도 리렌더링은 한 번만 발생합니다.
 
 ```jsx
 function handleClick() {

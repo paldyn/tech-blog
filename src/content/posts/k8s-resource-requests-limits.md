@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-probes-liveness-readiness/)에서 프로브로 컨테이너 상태를 모니터링하는 방법을 살펴봤습니다. 이번에는 **리소스 요청과 제한(Requests & Limits)**을 다룹니다. 쿠버네티스에서 리소스 관리는 안정적인 클러스터 운영의 핵심입니다. requests와 limits를 올바르게 설정하지 않으면 한 Pod가 노드 전체 자원을 독점해 다른 Pod가 죽는 "노이지 네이버(Noisy Neighbor)" 문제가 발생합니다.
+[지난 글](/posts/k8s-probes-liveness-readiness/)에서 프로브로 컨테이너 상태를 모니터링하는 방법을 살펴봤습니다. 이번에는 **리소스 요청과 제한**(Requests & Limits)을 다룹니다. 쿠버네티스에서 리소스 관리는 안정적인 클러스터 운영의 핵심입니다. requests와 limits를 올바르게 설정하지 않으면 한 Pod가 노드 전체 자원을 독점해 다른 Pod가 죽는 "노이지 네이버(Noisy Neighbor)" 문제가 발생합니다.
 
 ## requests와 limits의 차이
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-structured-clone/)에서 `structuredClone()`을 살펴봤습니다. 이번에는 ES2024에 추가된 **`Object.groupBy()`**와 **`Map.groupBy()`**를 다룹니다. 배열을 특정 기준으로 분류하는 작업을 위해 매번 `reduce()`를 직접 구현하던 번거로움을 해결하는 내장 메서드입니다.
+[지난 글](/posts/js-structured-clone/)에서 `structuredClone()`을 살펴봤습니다. 이번에는 ES2024에 추가된 <strong>`Object.groupBy()`</strong>와 <strong>`Map.groupBy()`</strong>를 다룹니다. 배열을 특정 기준으로 분류하는 작업을 위해 매번 `reduce()`를 직접 구현하던 번거로움을 해결하는 내장 메서드입니다.
 
 ## 배열 그룹화란?
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-generics-pitfalls/)에서 제네릭 사용 시 주의해야 할 함정들을 정리했다. 이번에는 **Java 컬렉션 프레임워크(Collection Framework)**를 개관한다. 컬렉션 프레임워크는 데이터를 저장·검색·수정·순회하는 데이터 구조와 알고리즘의 통합 체계다. Java 2(1.2)에서 도입되어 이후 버전마다 꾸준히 확장되었다.
+[지난 글](/posts/java-generics-pitfalls/)에서 제네릭 사용 시 주의해야 할 함정들을 정리했다. 이번에는 **Java 컬렉션 프레임워크**(Collection Framework)를 개관한다. 컬렉션 프레임워크는 데이터를 저장·검색·수정·순회하는 데이터 구조와 알고리즘의 통합 체계다. Java 2(1.2)에서 도입되어 이후 버전마다 꾸준히 확장되었다.
 
 ## 전체 계층 구조
 

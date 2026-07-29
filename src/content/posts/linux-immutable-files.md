@@ -171,7 +171,7 @@ sudo lsattr -R / 2>/dev/null | grep '^....i'
 | 파일 속성 | chattr | root도 차단하는 추가 보호 |
 | 마운트 수준 | ro mount, ProtectSystem | 파티션·서비스 격리 |
 
-이 계층들을 조합해 **심층 방어(Defence in Depth)**를 구현하는 것이 리눅스 보안의 핵심입니다.
+이 계층들을 조합해 **심층 방어**(Defence in Depth)를 구현하는 것이 리눅스 보안의 핵심입니다.
 
 ---
 

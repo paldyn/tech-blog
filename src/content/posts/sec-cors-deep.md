@@ -15,7 +15,7 @@ draft: false
 
 ## 동일 출처 정책(SOP)이란
 
-브라우저는 기본적으로 **동일 출처 정책(Same-Origin Policy, SOP)**을 강제합니다. `https://app.example.com`에서 실행 중인 JavaScript가 `https://api.example.com`의 리소스를 읽으려 하면, 출처(scheme + hostname + port)가 다르므로 브라우저가 차단합니다.
+브라우저는 기본적으로 **동일 출처 정책**(Same-Origin Policy, SOP)을 강제합니다. `https://app.example.com`에서 실행 중인 JavaScript가 `https://api.example.com`의 리소스를 읽으려 하면, 출처(scheme + hostname + port)가 다르므로 브라우저가 차단합니다.
 
 SOP는 CSRF와 데이터 탈취 공격을 막기 위한 보안 메커니즘입니다. CORS는 이 정책을 **서버가 명시적으로 허용한 범위 내에서 완화**하는 표준입니다.
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-fuse-overview/)에서 FUSE로 사용자 공간 파일시스템을 구현하는 방법을 살펴봤습니다. 이번에는 스토리지 성능의 세 가지 핵심 지표인 **IOPS, 처리량(Throughput), 지연 시간(Latency)**을 이해하고 측정하는 방법을 알아봅니다.
+[지난 글](/posts/linux-fuse-overview/)에서 FUSE로 사용자 공간 파일시스템을 구현하는 방법을 살펴봤습니다. 이번에는 스토리지 성능의 세 가지 핵심 지표인 **IOPS, 처리량(Throughput), 지연 시간**(Latency)을 이해하고 측정하는 방법을 알아봅니다.
 
 ## 세 가지 성능 지표
 

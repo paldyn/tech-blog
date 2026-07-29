@@ -46,7 +46,7 @@ U extends any ? (x: U) => void : never
 
 ## 2단계: 반공변 위치에서 infer 하기
 
-핵심은 두 번째 단계다. 함수의 **매개변수 위치는 반공변(contravariant)**이다. 여러 함수 타입의 유니온에서 매개변수 타입을 하나로 `infer`하면, TypeScript는 모든 호출에 안전한 타입 — 즉 **인터섹션**을 추론한다.
+핵심은 두 번째 단계다. 함수의 **매개변수 위치는 반공변**(contravariant)이다. 여러 함수 타입의 유니온에서 매개변수 타입을 하나로 `infer`하면, TypeScript는 모든 호출에 안전한 타입 — 즉 **인터섹션**을 추론한다.
 
 ```typescript
 ((x: A) => void) | ((x: B) => void)

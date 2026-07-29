@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/springboot-starter-structure/)에서 Spring Boot Starter가 의존성 묶음과 Auto-Configuration을 어떻게 패키징하는지 살펴봤습니다. 이번에는 Spring Boot의 또 다른 핵심 특징인 **내장 서버(Embedded Server)**를 파헤칩니다. `java -jar myapp.jar` 한 줄로 서버가 뜨는 것은 당연한 게 아닙니다. 그 배경에는 꽤 정교한 설계가 있습니다.
+[지난 글](/posts/springboot-starter-structure/)에서 Spring Boot Starter가 의존성 묶음과 Auto-Configuration을 어떻게 패키징하는지 살펴봤습니다. 이번에는 Spring Boot의 또 다른 핵심 특징인 **내장 서버**(Embedded Server)를 파헤칩니다. `java -jar myapp.jar` 한 줄로 서버가 뜨는 것은 당연한 게 아닙니다. 그 배경에는 꽤 정교한 설계가 있습니다.
 
 ## 전통적 배포 vs. 내장 서버 배포
 

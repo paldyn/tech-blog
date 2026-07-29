@@ -18,7 +18,7 @@ draft: false
 GET과 POST의 가장 큰 차이는 **데이터를 어디에 담느냐**다.
 
 - **GET**: 데이터를 **URL의 쿼리스트링**에 담는다
-- **POST**: 데이터를 **요청 본문(Body)**에 담는다
+- **POST**: 데이터를 **요청 본문**(Body)에 담는다
 
 ![GET vs POST 요청 구조](/assets/posts/http-method-get-post-anatomy.svg)
 

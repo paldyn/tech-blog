@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-zero-one-bfs/)에서 가중치 0/1 그래프의 최단 경로를 O(V+E)로 구하는 0-1 BFS를 다뤘습니다. 이번에는 **방향 비순환 그래프(DAG)**에서 선행 관계를 지키는 노드 순서를 구하는 **위상 정렬(Topological Sort)**을 알아봅니다.
+[지난 글](/posts/dsa-zero-one-bfs/)에서 가중치 0/1 그래프의 최단 경로를 O(V+E)로 구하는 0-1 BFS를 다뤘습니다. 이번에는 **방향 비순환 그래프**(DAG)에서 선행 관계를 지키는 노드 순서를 구하는 **위상 정렬**(Topological Sort)을 알아봅니다.
 
 ## 위상 정렬이란
 

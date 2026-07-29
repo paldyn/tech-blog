@@ -81,7 +81,7 @@ CRD가 등록되면 Kubernetes API Server가 해당 리소스의 CRUD 작업을 
 
 ## Controller와 Reconcile Loop
 
-Operator의 두 번째 구성 요소는 **Controller**다. Controller는 끊임없이 실행되는 루프로, Custom Resource의 **Desired State**(사용자가 원하는 상태)와 **Current State**(현재 클러스터 상태)를 비교하고 차이를 해소한다. 이 과정을 **Reconciliation(조화)**이라 한다.
+Operator의 두 번째 구성 요소는 **Controller**다. Controller는 끊임없이 실행되는 루프로, Custom Resource의 **Desired State**(사용자가 원하는 상태)와 **Current State**(현재 클러스터 상태)를 비교하고 차이를 해소한다. 이 과정을 **Reconciliation**(조화)이라 한다.
 
 ![Operator Reconcile Loop](/assets/posts/k8s-operators-pattern.svg)
 

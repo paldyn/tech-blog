@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-apparmor-basics/)에서 AppArmor로 애플리케이션을 격리하는 방법을 살펴봤습니다. 이번에는 외부에서 들어오는 **무차별 대입 공격(brute-force)**을 자동으로 차단하는 **fail2ban**을 다룹니다. 인터넷에 노출된 서버는 SSH 포트를 향한 로그인 시도가 끊임없이 들어옵니다. fail2ban은 로그를 감시하다 일정 횟수 이상 실패한 IP를 iptables로 차단합니다.
+[지난 글](/posts/linux-apparmor-basics/)에서 AppArmor로 애플리케이션을 격리하는 방법을 살펴봤습니다. 이번에는 외부에서 들어오는 **무차별 대입 공격**(brute-force)을 자동으로 차단하는 **fail2ban**을 다룹니다. 인터넷에 노출된 서버는 SSH 포트를 향한 로그인 시도가 끊임없이 들어옵니다. fail2ban은 로그를 감시하다 일정 횟수 이상 실패한 IP를 iptables로 차단합니다.
 
 ## 동작 원리
 

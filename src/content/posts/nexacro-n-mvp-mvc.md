@@ -19,9 +19,9 @@ Nexacro N Form은 기본적으로 모든 코드(UI 배치 + 이벤트 핸들러 
 
 ![MVP vs MVC 패턴 비교](/assets/posts/nexacro-n-mvp-mvc-patterns.svg)
 
-**MVP(Model-View-Presenter)**는 View와 Presenter를 1:1로 분리하는 패턴이다. Form(View)은 UI 컴포넌트 배치와 이벤트 진입점만 담당하고, 실제 로직은 별도 `.xjs` Presenter 파일에서 처리한다. View가 Presenter를 참조하고, Presenter가 View의 컴포넌트에 접근하는 방향이다.
+**MVP**(Model-View-Presenter)는 View와 Presenter를 1:1로 분리하는 패턴이다. Form(View)은 UI 컴포넌트 배치와 이벤트 진입점만 담당하고, 실제 로직은 별도 `.xjs` Presenter 파일에서 처리한다. View가 Presenter를 참조하고, Presenter가 View의 컴포넌트에 접근하는 방향이다.
 
-**MVC(Model-View-Controller)**는 Form Script 안에서 Controller 역할을 수행하는 함수들이 직접 Model(Dataset)을 조작하는 방식이다. Nexacro N의 기본 개발 방식에 가까우며, 코드량이 적고 설정이 단순하다.
+**MVC**(Model-View-Controller)는 Form Script 안에서 Controller 역할을 수행하는 함수들이 직접 Model(Dataset)을 조작하는 방식이다. Nexacro N의 기본 개발 방식에 가까우며, 코드량이 적고 설정이 단순하다.
 
 규모가 큰 화면(Script 300줄 이상)이나 단위 테스트가 필요한 경우 MVP가 유리하다. 간단한 조회·저장 화면이라면 MVC가 실용적이다.
 

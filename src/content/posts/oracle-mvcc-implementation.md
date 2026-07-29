@@ -15,19 +15,19 @@ draft: false
 
 ## MVCC란 무엇인가
 
-**MVCC(Multi-Version Concurrency Control)**는 데이터의 여러 버전을 유지해 읽기와 쓰기가 서로를 차단하지 않게 하는 동시성 제어 방식이다.
+**MVCC**(Multi-Version Concurrency Control)는 데이터의 여러 버전을 유지해 읽기와 쓰기가 서로를 차단하지 않게 하는 동시성 제어 방식이다.
 
 Oracle의 MVCC 구현 핵심 원칙:
 - **읽기는 쓰기를 차단하지 않는다** (SELECT가 UPDATE를 막지 않음)
 - **쓰기는 읽기를 차단하지 않는다** (UPDATE가 SELECT를 막지 않음)
-- 데이터 파일에는 항상 **최신 버전(Current Block)**만 보관
+- 데이터 파일에는 항상 **최신 버전**(Current Block)만 보관
 - 과거 버전은 **Undo 세그먼트**에서 재구성
 
 ---
 
 ## 블록 내부 구조: ITL
 
-Oracle의 모든 데이터 블록 헤더에는 **ITL(Interest Transaction List)**이 있다. ITL은 해당 블록을 수정한 활성 트랜잭션 목록이다. 각 엔트리는 다음을 포함한다.
+Oracle의 모든 데이터 블록 헤더에는 **ITL**(Interest Transaction List)이 있다. ITL은 해당 블록을 수정한 활성 트랜잭션 목록이다. 각 엔트리는 다음을 포함한다.
 
 | 필드 | 내용 |
 |------|------|

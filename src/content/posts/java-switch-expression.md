@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-control-flow/)에서 if/else, for, while 같은 제어 흐름 구조를 정리했다. 이번에는 Java 14에 정식 표준(Standard Feature)으로 도입된 **switch 표현식(switch expression)**을 깊이 살펴본다. 기존 switch 문이 가진 fall-through 버그, 반복 코드, 값 반환 불가 문제를 어떻게 해결했는지 코드 예제로 설명한다.
+[지난 글](/posts/java-control-flow/)에서 if/else, for, while 같은 제어 흐름 구조를 정리했다. 이번에는 Java 14에 정식 표준(Standard Feature)으로 도입된 **switch 표현식**(switch expression)을 깊이 살펴본다. 기존 switch 문이 가진 fall-through 버그, 반복 코드, 값 반환 불가 문제를 어떻게 해결했는지 코드 예제로 설명한다.
 
 ## 전통 switch 문의 한계
 
 Java 1 시절부터 쓰던 switch 문은 세 가지 고질적인 문제를 안고 있었다.
 
-첫째, `break`를 빠뜨리면 **fall-through**가 발생한다. 의도치 않게 다음 case로 실행이 흘러 버그의 온상이 된다. 둘째, 여러 case에 같은 로직을 적용하려면 `case A: case B: case C:` 처럼 레이블을 줄줄이 나열해야 한다. 셋째, switch 문은 **문(statement)**이기 때문에 값을 반환하지 못한다. 결과를 담으려면 반드시 별도 변수를 먼저 선언해야 했다.
+첫째, `break`를 빠뜨리면 **fall-through**가 발생한다. 의도치 않게 다음 case로 실행이 흘러 버그의 온상이 된다. 둘째, 여러 case에 같은 로직을 적용하려면 `case A: case B: case C:` 처럼 레이블을 줄줄이 나열해야 한다. 셋째, switch 문은 **문**(statement)이기 때문에 값을 반환하지 못한다. 결과를 담으려면 반드시 별도 변수를 먼저 선언해야 했다.
 
 ```java
 // 전통 switch 문 — break 누락 시 fall-through 위험
@@ -40,7 +40,7 @@ switch (day) {
 
 ## switch 표현식 기본 문법
 
-Java 12, 13에서 Preview Feature로 소개되고 Java 14에서 정식 도입됐다. 핵심은 **화살표 레이블(`->`)**과 **표현식으로서의 값 반환**이다.
+Java 12, 13에서 Preview Feature로 소개되고 Java 14에서 정식 도입됐다. 핵심은 **화살표 레이블**(`->`)과 **표현식으로서의 값 반환**이다.
 
 ```java
 // switch 표현식 — 화살표 레이블, fall-through 없음
@@ -145,7 +145,7 @@ switch (command) {
 
 ## switch 표현식이 등장한 배경
 
-Java 12(JEP 325)에서 처음 Preview로 등장한 이유는 단순히 편의성만이 아니었다. Java 17부터 시작된 **패턴 매칭 switch(JEP 406→441)**의 기반 문법이 필요했기 때문이다. switch 표현식이 있어야 뒤에서 다룰 타입 패턴, guarded pattern, record pattern 같은 강력한 기능이 자연스럽게 switch 안에 들어올 수 있었다.
+Java 12(JEP 325)에서 처음 Preview로 등장한 이유는 단순히 편의성만이 아니었다. Java 17부터 시작된 **패턴 매칭 switch**(JEP 406→441)의 기반 문법이 필요했기 때문이다. switch 표현식이 있어야 뒤에서 다룰 타입 패턴, guarded pattern, record pattern 같은 강력한 기능이 자연스럽게 switch 안에 들어올 수 있었다.
 
 ## 정리
 

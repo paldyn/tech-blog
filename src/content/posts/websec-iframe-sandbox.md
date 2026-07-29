@@ -125,7 +125,7 @@ sandbox가 적용된 iframe은 브라우저의 보안 경계(Security Boundary)�
 
 ## CSP의 frame-ancestors와 함께 사용
 
-sandbox는 임베드하는 쪽(부모)이 설정한다. 반대로 **임베드 당하는 쪽(자식)**이 자신이 어디에 임베드될 수 있는지 제어하려면 CSP `frame-ancestors`를 사용한다.
+sandbox는 임베드하는 쪽(부모)이 설정한다. 반대로 **임베드 당하는 쪽**(자식)이 자신이 어디에 임베드될 수 있는지 제어하려면 CSP `frame-ancestors`를 사용한다.
 
 ```http
 Content-Security-Policy: frame-ancestors 'self' https://trusted.example

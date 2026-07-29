@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-generic-constraints/)에서 `extends` 제약과 `keyof` 활용을 살펴봤다. 이번에는 TypeScript 타입 시스템의 가장 강력한 기능 중 하나인 **조건부 타입(Conditional Types)**을 다룬다. 조건부 타입은 마치 타입 수준의 `if/else`처럼 동작하며, 이를 통해 TypeScript 표준 라이브러리의 핵심 유틸리티 타입들이 구현되어 있다.
+[지난 글](/posts/ts-generic-constraints/)에서 `extends` 제약과 `keyof` 활용을 살펴봤다. 이번에는 TypeScript 타입 시스템의 가장 강력한 기능 중 하나인 **조건부 타입**(Conditional Types)을 다룬다. 조건부 타입은 마치 타입 수준의 `if/else`처럼 동작하며, 이를 통해 TypeScript 표준 라이브러리의 핵심 유틸리티 타입들이 구현되어 있다.
 
 ## 기본 문법
 
@@ -70,7 +70,7 @@ type UserType = Awaited<ReturnType<typeof fetchUser>>;
 
 ## 분배 조건부 타입
 
-제네릭 조건부 타입에 유니언을 전달하면 각 멤버에 **분배(distribute)**된다. 이 동작이 기본이며, 다음의 내장 유틸리티 타입들은 이 원리로 구현되어 있다.
+제네릭 조건부 타입에 유니언을 전달하면 각 멤버에 **분배**(distribute)된다. 이 동작이 기본이며, 다음의 내장 유틸리티 타입들은 이 원리로 구현되어 있다.
 
 ![분배 조건부 타입 (Distributive)](/assets/posts/ts-conditional-types-distributive.svg)
 

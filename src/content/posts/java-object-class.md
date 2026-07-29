@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-record-patterns/)에서 record 패턴으로 중첩 구조를 분해하는 방법을 살펴봤다. 이번에는 Java 모든 클래스의 최상위 조상인 **`java.lang.Object`**를 다룬다. `extends` 절 없는 모든 클래스는 컴파일러가 암묵적으로 `extends Object`를 추가한다.
+[지난 글](/posts/java-record-patterns/)에서 record 패턴으로 중첩 구조를 분해하는 방법을 살펴봤다. 이번에는 Java 모든 클래스의 최상위 조상인 <strong>`java.lang.Object`</strong>를 다룬다. `extends` 절 없는 모든 클래스는 컴파일러가 암묵적으로 `extends Object`를 추가한다.
 
 ## Object가 루트인 이유
 
@@ -71,7 +71,7 @@ protected void finalize() throws Throwable  // Java 9부터 deprecated
 
 ## equals() 기본 동작
 
-`Object.equals()`의 기본 구현은 **참조 동등성(reference equality)**이다. 같은 객체를 가리키는지만 확인한다.
+`Object.equals()`의 기본 구현은 **참조 동등성**(reference equality)이다. 같은 객체를 가리키는지만 확인한다.
 
 ```java
 String a = new String("hello");

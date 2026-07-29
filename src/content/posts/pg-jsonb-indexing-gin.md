@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/pg-json-vs-jsonb/)에서 JSON과 JSONB의 저장 구조 차이를 살펴봤다. JSONB가 강력한 이유 중 하나는 **GIN(Generalized Inverted Index)**와 결합해 문서 내 임의 경로를 고속으로 검색할 수 있다는 점이다.
+[지난 글](/posts/pg-json-vs-jsonb/)에서 JSON과 JSONB의 저장 구조 차이를 살펴봤다. JSONB가 강력한 이유 중 하나는 **GIN**(Generalized Inverted Index)와 결합해 문서 내 임의 경로를 고속으로 검색할 수 있다는 점이다.
 
 ## GIN 인덱스란
 
-GIN은 **역인덱스(Inverted Index)**다. 전통적인 B-tree 인덱스가 "행 → 값"을 저장한다면, GIN은 "값 → 행 ID 목록"을 저장한다. 전문 검색(Full-Text Search)이나 배열, JSONB처럼 **하나의 행이 여러 검색 키를 가지는 경우**에 적합하다.
+GIN은 **역인덱스**(Inverted Index)다. 전통적인 B-tree 인덱스가 "행 → 값"을 저장한다면, GIN은 "값 → 행 ID 목록"을 저장한다. 전문 검색(Full-Text Search)이나 배열, JSONB처럼 **하나의 행이 여러 검색 키를 가지는 경우**에 적합하다.
 
 JSONB의 각 키-값 쌍이 GIN 엔트리가 된다. `{"plan":"pro","tier":2}` 문서는 `"plan"="pro"`, `"tier"=2` 두 개의 엔트리를 GIN에 등록한다.
 
@@ -64,7 +64,7 @@ WHERE payload ?& ARRAY['name', 'email'];
 
 ## 표현식 인덱스 — 특정 키만 인덱싱
 
-전체 JSONB 문서가 아니라 특정 키의 값만 인덱싱할 때는 **표현식 인덱스(Expression Index)**를 사용한다. B-tree 인덱스를 활용할 수 있으므로 `=`, `<`, `>`, `BETWEEN` 등 범위 검색에도 유리하다.
+전체 JSONB 문서가 아니라 특정 키의 값만 인덱싱할 때는 **표현식 인덱스**(Expression Index)를 사용한다. B-tree 인덱스를 활용할 수 있으므로 `=`, `<`, `>`, `BETWEEN` 등 범위 검색에도 유리하다.
 
 ```sql
 -- plan 키의 값을 B-tree 인덱스로

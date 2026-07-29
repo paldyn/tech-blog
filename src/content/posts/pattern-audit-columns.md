@@ -64,7 +64,7 @@ created_at TIMESTAMP NOT NULL DEFAULT NOW()
 
 ## version 컬럼과 낙관적 잠금
 
-`version` 컬럼은 동시 수정 충돌을 감지하는 **낙관적 잠금(Optimistic Locking)**에 사용됩니다.
+`version` 컬럼은 동시 수정 충돌을 감지하는 **낙관적 잠금**(Optimistic Locking)에 사용됩니다.
 
 ```sql
 -- version 컬럼 추가

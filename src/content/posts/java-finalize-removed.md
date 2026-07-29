@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-clone/)에서 `clone()` 메서드와 복사 생성자 대안을 살펴봤다. 이번에는 `Object`의 또 다른 문제적 메서드인 **`finalize()`**를 다룬다. 왜 폐기됐는지, 그리고 올바른 자원 관리 방법은 무엇인지 살펴본다.
+[지난 글](/posts/java-clone/)에서 `clone()` 메서드와 복사 생성자 대안을 살펴봤다. 이번에는 `Object`의 또 다른 문제적 메서드인 <strong>`finalize()`</strong>를 다룬다. 왜 폐기됐는지, 그리고 올바른 자원 관리 방법은 무엇인지 살펴본다.
 
 ## finalize()란
 
@@ -130,7 +130,7 @@ try (var in  = new FileInputStream("input.txt");
 
 ## 대안 2: java.lang.ref.Cleaner (Java 9+)
 
-`Cleaner`는 `finalize()`의 안전한 대체재다. `close()`를 호출하지 않았을 때 GC 시 자동 정리하는 **안전망(safety net)**으로 사용한다.
+`Cleaner`는 `finalize()`의 안전한 대체재다. `close()`를 호출하지 않았을 때 GC 시 자동 정리하는 **안전망**(safety net)으로 사용한다.
 
 ```java
 import java.lang.ref.Cleaner;
@@ -183,7 +183,7 @@ Java 9+ 컴파일러 경고 `-Xlint:deprecation`이 나타나면 다음 순서�
 4. 안전망이 필요하면 `Cleaner` 등록 추가
 5. `finalize()` 메서드 제거
 
-`finalize()`는 Java 역사에서 가장 큰 실수 중 하나로 평가된다. 새 코드에서는 절대 사용하지 말고, 기존 코드도 마이그레이션을 검토하라. 다음 글에서는 **`Comparable`과 `Comparator`**를 다룬다. 자연 순서와 커스텀 정렬을 정의하는 두 인터페이스의 차이와 활용법을 살펴볼 것이다.
+`finalize()`는 Java 역사에서 가장 큰 실수 중 하나로 평가된다. 새 코드에서는 절대 사용하지 말고, 기존 코드도 마이그레이션을 검토하라. 다음 글에서는 <strong>`Comparable`과 `Comparator`</strong>를 다룬다. 자연 순서와 커스텀 정렬을 정의하는 두 인터페이스의 차이와 활용법을 살펴볼 것이다.
 
 ---
 

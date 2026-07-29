@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/transformer-multi-head/)에서 Multi-Head Attention이 서로 다른 관점에서 병렬로 어텐션을 계산하는 방식을 살펴봤다. 그런데 Self-Attention에는 치명적인 약점이 하나 있다. "나는 AI를 공부한다"와 "AI를 나는 공부한다"를 완전히 같은 입력으로 본다. 단어 집합은 동일하고 어텐션은 순열에 불변(permutation-invariant)하기 때문이다. 이 문제를 해결하는 것이 **Positional Encoding(PE)**이다.
+[지난 글](/posts/transformer-multi-head/)에서 Multi-Head Attention이 서로 다른 관점에서 병렬로 어텐션을 계산하는 방식을 살펴봤다. 그런데 Self-Attention에는 치명적인 약점이 하나 있다. "나는 AI를 공부한다"와 "AI를 나는 공부한다"를 완전히 같은 입력으로 본다. 단어 집합은 동일하고 어텐션은 순열에 불변(permutation-invariant)하기 때문이다. 이 문제를 해결하는 것이 **Positional Encoding**(PE)이다.
 
 ## Self-Attention은 왜 순서를 모르는가
 

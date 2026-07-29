@@ -17,11 +17,11 @@ draft: false
 
 LLM의 텍스트 생성은 자동회귀(Autoregressive) 방식으로 작동한다. 토큰 하나를 생성하고, 그것을 다시 입력에 추가해 다음 토큰을 생성하는 과정을 반복한다. 이론적으로 가능한 시퀀스의 수는 |V|^L인데, 어휘 크기 |V|=50,000에 시퀀스 길이 L=100이라면 10^480가지가 된다. 이 방대한 공간을 어떻게 효율적으로 탐색할 것인가가 디코딩 방법의 핵심 문제다.
 
-**완전 탐색(Exhaustive Search)**은 불가능하다. **Greedy**는 한 스텝씩 국소 최적을 선택하고, **Beam Search**는 중간 어딘가에서 균형을 찾는다.
+**완전 탐색**(Exhaustive Search)은 불가능하다. **Greedy**는 한 스텝씩 국소 최적을 선택하고, **Beam Search**는 중간 어딘가에서 균형을 찾는다.
 
 ## Greedy Decoding의 한계
 
-Greedy Decoding은 매 스텝마다 $\hat{t} = \arg\max_v P(v \mid t_1, \ldots, t_{k-1})$을 선택한다. 단순하고 빠르지만, **지역 최적(local optimum)**에 갇히는 문제가 있다.
+Greedy Decoding은 매 스텝마다 $\hat{t} = \arg\max_v P(v \mid t_1, \ldots, t_{k-1})$을 선택한다. 단순하고 빠르지만, **지역 최적**(local optimum)에 갇히는 문제가 있다.
 
 예를 들어, "I want to go to the [store/bank/library]"라는 문장이 있을 때, "store"의 확률이 0.45로 가장 높더라도, "bank"(0.35)로 시작하는 시퀀스가 전체적으로 더 자연스럽고 맥락에 맞는 문장을 만들어낼 수 있다. Greedy는 첫 스텝의 지역 최적을 선택해 전역 최적 시퀀스를 놓친다.
 
@@ -53,7 +53,7 @@ Beam Search는 품질을 높이지만 두 가지 핵심 문제가 있다.
 
 ## Diverse Beam Search
 
-Vijayakumar et al. (2016)이 제안한 **Diverse Beam Search**는 일반 Beam Search의 다양성 문제를 해결한다. 빔들을 여러 **그룹(beam_groups)**으로 나누고, 각 그룹이 서로 다른 방향으로 탐색하도록 **다양성 패널티(diversity_penalty)**를 부여한다. 같은 그룹 내에서는 일반 Beam Search, 그룹 간에는 서로 다른 시퀀스를 생성하도록 유도한다.
+Vijayakumar et al. (2016)이 제안한 **Diverse Beam Search**는 일반 Beam Search의 다양성 문제를 해결한다. 빔들을 여러 **그룹**(beam_groups)으로 나누고, 각 그룹이 서로 다른 방향으로 탐색하도록 **다양성 패널티**(diversity_penalty)를 부여한다. 같은 그룹 내에서는 일반 Beam Search, 그룹 간에는 서로 다른 시퀀스를 생성하도록 유도한다.
 
 ## 실전 코드: 디코딩 방법 비교
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-csrf-samesite/)에서 CSRF와 SameSite 쿠키를 깊이 살펴봤습니다. 이번 글의 주제인 **SSRF(Server-Side Request Forgery, 서버 사이드 요청 위조)**는 이름이 비슷하지만 완전히 다른 공격입니다. 공격자가 취약한 서버로 하여금 공격자가 지정한 내부 또는 외부 URL로 HTTP 요청을 보내게 만드는 취약점입니다. 방화벽 뒤의 내부 서비스를 외부에서 직접 공격하는 것은 불가능하지만, 공개 서버를 프록시로 사용하면 가능해집니다.
+[지난 글](/posts/websec-csrf-samesite/)에서 CSRF와 SameSite 쿠키를 깊이 살펴봤습니다. 이번 글의 주제인 **SSRF**(Server-Side Request Forgery, 서버 사이드 요청 위조)는 이름이 비슷하지만 완전히 다른 공격입니다. 공격자가 취약한 서버로 하여금 공격자가 지정한 내부 또는 외부 URL로 HTTP 요청을 보내게 만드는 취약점입니다. 방화벽 뒤의 내부 서비스를 외부에서 직접 공격하는 것은 불가능하지만, 공개 서버를 프록시로 사용하면 가능해집니다.
 
 ## SSRF란?
 

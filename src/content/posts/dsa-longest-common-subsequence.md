@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-longest-increasing-subsequence/)에서 LIS를 O(n log n)으로 해결하는 이분 탐색 기법을 다뤘습니다. 이번 글에서는 두 문자열(또는 수열) 사이의 공통 구조를 찾는 **최장 공통 부분 수열(LCS, Longest Common Subsequence)**을 다룹니다. LCS는 편집 거리, diff 도구, DNA 분석 등 수많은 분야의 핵심 알고리즘입니다.
+[지난 글](/posts/dsa-longest-increasing-subsequence/)에서 LIS를 O(n log n)으로 해결하는 이분 탐색 기법을 다뤘습니다. 이번 글에서는 두 문자열(또는 수열) 사이의 공통 구조를 찾는 **최장 공통 부분 수열**(LCS, Longest Common Subsequence)을 다룹니다. LCS는 편집 거리, diff 도구, DNA 분석 등 수많은 분야의 핵심 알고리즘입니다.
 
 ## 문제 정의
 
@@ -20,7 +20,7 @@ draft: false
 예시: X = "ABCBDAB", Y = "BDCAB"
 - LCS: "BCAB" 또는 "BDAB" → 길이 **4**
 
-부분 **문자열(Substring)**과 달리 부분 **수열(Subsequence)**은 원래 순서만 유지하면 되고, 연속일 필요가 없습니다.
+부분 **문자열**(Substring)과 달리 부분 **수열**(Subsequence)은 원래 순서만 유지하면 되고, 연속일 필요가 없습니다.
 
 ## DP 점화식
 

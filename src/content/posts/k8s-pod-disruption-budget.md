@@ -15,7 +15,7 @@ draft: false
 
 ## 자발적 중단이란?
 
-쿠버네티스에서 Pod 중단은 크게 두 종류로 나뉩니다. **비자발적 중단(Involuntary Disruption)**은 노드 하드웨어 장애, 커널 패닉, OOM 킬처럼 예기치 않게 발생합니다. 반면 **자발적 중단(Voluntary Disruption)**은 `kubectl drain`, 롤링 업데이트, Cluster Autoscaler의 노드 축소처럼 _사람 또는 시스템이 의도적으로_ 시작하는 작업에서 발생합니다.
+쿠버네티스에서 Pod 중단은 크게 두 종류로 나뉩니다. **비자발적 중단**(Involuntary Disruption)은 노드 하드웨어 장애, 커널 패닉, OOM 킬처럼 예기치 않게 발생합니다. 반면 **자발적 중단**(Voluntary Disruption)은 `kubectl drain`, 롤링 업데이트, Cluster Autoscaler의 노드 축소처럼 _사람 또는 시스템이 의도적으로_ 시작하는 작업에서 발생합니다.
 
 PDB는 자발적 중단에만 효과가 있습니다. 비자발적 중단은 막을 수 없으므로, 그쪽은 레플리케이션과 멀티존 배포로 대비해야 합니다.
 

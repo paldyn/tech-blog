@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-acl-getfacl-setfacl/)에서 ACL로 사용자별 세밀한 권한을 설정하는 방법을 배웠습니다. 이번에는 권한 시스템과는 별개로 **inode에 저장되는 파일 속성(attribute)**을 제어하는 `chattr`와 `lsattr`를 다룹니다. 이 속성은 **root조차 우회하기 어려운 보호**를 제공합니다.
+[지난 글](/posts/linux-acl-getfacl-setfacl/)에서 ACL로 사용자별 세밀한 권한을 설정하는 방법을 배웠습니다. 이번에는 권한 시스템과는 별개로 **inode에 저장되는 파일 속성**(attribute)을 제어하는 `chattr`와 `lsattr`를 다룹니다. 이 속성은 **root조차 우회하기 어려운 보호**를 제공합니다.
 
 ## chattr란
 

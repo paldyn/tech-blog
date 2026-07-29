@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-paths-and-path/)에서 `Path` 인터페이스로 파일 경로를 다루는 법을 익혔다. 이번에는 Java NIO의 핵심 기둥인 **채널(Channel)과 버퍼(Buffer)**를 다룬다. 전통적인 스트림 I/O와 근본적으로 다른 데이터 이동 모델을 이해하면 고성능 파일 처리와 네트워크 프로그래밍의 토대가 마련된다.
+[지난 글](/posts/java-paths-and-path/)에서 `Path` 인터페이스로 파일 경로를 다루는 법을 익혔다. 이번에는 Java NIO의 핵심 기둥인 **채널(Channel)과 버퍼**(Buffer)를 다룬다. 전통적인 스트림 I/O와 근본적으로 다른 데이터 이동 모델을 이해하면 고성능 파일 처리와 네트워크 프로그래밍의 토대가 마련된다.
 
 ## 스트림 I/O vs NIO
 

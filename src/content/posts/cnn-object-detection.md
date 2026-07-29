@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cnn-image-classification/)에서 이미지 분류 파이프라인을 완성했다. 분류는 이미지 전체에 하나의 레이블을 붙이는 것이었다. **객체 탐지(Object Detection)**는 한 발 더 나아간다: 이미지에서 **여러 물체의 위치(bounding box)와 클래스**를 동시에 찾아야 한다.
+[지난 글](/posts/cnn-image-classification/)에서 이미지 분류 파이프라인을 완성했다. 분류는 이미지 전체에 하나의 레이블을 붙이는 것이었다. **객체 탐지**(Object Detection)는 한 발 더 나아간다: 이미지에서 **여러 물체의 위치(bounding box)와 클래스**를 동시에 찾아야 한다.
 
 ## 문제 정의
 
@@ -172,7 +172,7 @@ names: ['cat', 'dog', 'bird']
 
 ## FPN: 다중 스케일 탐지
 
-작은 물체와 큰 물체를 동시에 잘 탐지하려면 **Feature Pyramid Network(FPN)**이 필요하다.
+작은 물체와 큰 물체를 동시에 잘 탐지하려면 **Feature Pyramid Network**(FPN)이 필요하다.
 
 ```python
 # FPN 개념 (torchvision에 내장)

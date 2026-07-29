@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ai-bias-fairness/)에서 AI 편향의 문제를 다뤘다. 편향을 발견하고 수정하려면 AI가 왜 그 결정을 내렸는지 이해해야 한다. 이것이 **설명 가능한 AI(Explainable AI, XAI)**가 필요한 이유다.
+[지난 글](/posts/ai-bias-fairness/)에서 AI 편향의 문제를 다뤘다. 편향을 발견하고 수정하려면 AI가 왜 그 결정을 내렸는지 이해해야 한다. 이것이 **설명 가능한 AI**(Explainable AI, XAI)가 필요한 이유다.
 
 ## 블랙박스 문제
 
@@ -35,7 +35,7 @@ XAI 기법은 두 축으로 분류할 수 있다.
 
 ## SHAP: 게임이론 기반의 설명
 
-**SHAP(SHapley Additive exPlanations)**은 협력 게임이론의 샤플리 값을 머신러닝에 적용한다. 각 특성이 예측에 기여한 정도를 공정하게 분배한다.
+**SHAP**(SHapley Additive exPlanations)은 협력 게임이론의 샤플리 값을 머신러닝에 적용한다. 각 특성이 예측에 기여한 정도를 공정하게 분배한다.
 
 ```python
 import shap
@@ -67,7 +67,7 @@ SHAP 값의 핵심 성질: 모든 특성의 SHAP 값 합 + 기대값 = 실제 �
 
 ## LIME: 지역 선형 근사
 
-**LIME(Local Interpretable Model-agnostic Explanations)**은 설명하고자 하는 예측 주변에서 간단한 선형 모델로 근사한다.
+**LIME**(Local Interpretable Model-agnostic Explanations)은 설명하고자 하는 예측 주변에서 간단한 선형 모델로 근사한다.
 
 ```python
 from lime.lime_tabular import LimeTabularExplainer

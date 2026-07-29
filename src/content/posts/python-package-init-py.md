@@ -15,7 +15,7 @@ draft: false
 
 ## __init__.py 란
 
-디렉터리를 **패키지(package)**로 만드는 파일입니다. `__init__.py`가 있는 디렉터리는 `import myapp`처럼 패키지로 임포트할 수 있습니다.
+디렉터리를 **패키지**(package)로 만드는 파일입니다. `__init__.py`가 있는 디렉터리는 `import myapp`처럼 패키지로 임포트할 수 있습니다.
 
 ```
 myapp/

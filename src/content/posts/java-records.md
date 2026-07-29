@@ -63,7 +63,7 @@ record는 암묵적으로 `final class`다. 다른 클래스를 `extends`할 수
 
 ## 컴팩트 생성자
 
-유효성 검사나 정규화 로직이 필요할 때 **컴팩트 생성자(Compact Constructor)**를 사용한다. 파라미터 목록과 `this.x = x` 형태의 할당을 생략하고 검사 로직만 작성한다.
+유효성 검사나 정규화 로직이 필요할 때 **컴팩트 생성자**(Compact Constructor)를 사용한다. 파라미터 목록과 `this.x = x` 형태의 할당을 생략하고 검사 로직만 작성한다.
 
 ```java
 record Range(int min, int max) {
@@ -202,7 +202,7 @@ record CustomerId(UUID value) {
 | `native` 메서드 불가 | 네이티브 메서드 선언 금지 |
 | 가변성 없음 | 컴포넌트는 `private final`, setter 없음 |
 
-sealed 인터페이스와 record를 함께 쓰면 불변 대수적 데이터 타입을 간결하게 정의할 수 있다. 다음 글에서는 Java 21에서 추가된 **record 패턴(record pattern)**을 다룬다. 중첩 record 구조를 패턴 매칭으로 분해하는 방법을 살펴볼 것이다.
+sealed 인터페이스와 record를 함께 쓰면 불변 대수적 데이터 타입을 간결하게 정의할 수 있다. 다음 글에서는 Java 21에서 추가된 **record 패턴**(record pattern)을 다룬다. 중첩 record 구조를 패턴 매칭으로 분해하는 방법을 살펴볼 것이다.
 
 ---
 

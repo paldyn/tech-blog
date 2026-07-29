@@ -105,7 +105,7 @@ GQA는 MHA 수준 품질을 유지하면서 8배 절감을 달성한다. MQA는 
 
 ## MHA에서 GQA로 업사이클링
 
-기존 MHA 모델을 GQA로 변환하는 방법도 있다. Ainslie et al.은 그룹 내 KV 헤드를 **평균 풀링(Mean Pooling)**해 초기화한 후 소량 파인튜닝하는 업사이클링을 제안했다. 전체 재학습 없이 GQA의 효율을 얻을 수 있다.
+기존 MHA 모델을 GQA로 변환하는 방법도 있다. Ainslie et al.은 그룹 내 KV 헤드를 **평균 풀링**(Mean Pooling)해 초기화한 후 소량 파인튜닝하는 업사이클링을 제안했다. 전체 재학습 없이 GQA의 효율을 얻을 수 있다.
 
 ```python
 def mha_to_gqa(w_k, num_heads, num_kv_heads):

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-singly-linked-list/)에서 단일 연결 리스트를 구현했습니다. 단일 연결 리스트의 가장 큰 약점은 **뒤 방향으로 이동할 수 없다**는 점입니다. **이중 연결 리스트(Doubly Linked List)**는 각 노드에 `prev`와 `next` 두 개의 포인터를 두어 이 문제를 해결합니다.
+[지난 글](/posts/dsa-singly-linked-list/)에서 단일 연결 리스트를 구현했습니다. 단일 연결 리스트의 가장 큰 약점은 **뒤 방향으로 이동할 수 없다**는 점입니다. **이중 연결 리스트**(Doubly Linked List)는 각 노드에 `prev`와 `next` 두 개의 포인터를 두어 이 문제를 해결합니다.
 
 ## 이중 연결 리스트의 구조
 

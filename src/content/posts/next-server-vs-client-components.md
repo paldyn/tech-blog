@@ -119,7 +119,7 @@ export default function Page() {
 import { UserInfo } from './UserInfo'; // ❌ 서버 전용 코드가 클라이언트로 끌려옴
 ```
 
-이 패턴은 **컴포넌트 합성(Composition)**의 핵심입니다. 다음 글에서 더 깊이 다룹니다.
+이 패턴은 **컴포넌트 합성**(Composition)의 핵심입니다. 다음 글에서 더 깊이 다룹니다.
 
 ## 클라이언트 컴포넌트의 서버 사이드 렌더링
 

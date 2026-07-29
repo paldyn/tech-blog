@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/rnn-basics/)에서 RNN의 핵심 문제—기울기 소실과 긴 의존성 포착의 어려움—를 확인했다. **LSTM(Long Short-Term Memory)**은 1997년 Hochreiter & Schmidhuber가 제안한 구조로, **게이트(gate)** 메커니즘을 통해 정보를 선택적으로 저장하고 삭제한다. 30년 가까이 지난 지금도 시계열, 음성 인식, 임베디드 AI 환경에서 널리 쓰인다.
+[지난 글](/posts/rnn-basics/)에서 RNN의 핵심 문제—기울기 소실과 긴 의존성 포착의 어려움—를 확인했다. **LSTM**(Long Short-Term Memory)은 1997년 Hochreiter & Schmidhuber가 제안한 구조로, **게이트(gate)** 메커니즘을 통해 정보를 선택적으로 저장하고 삭제한다. 30년 가까이 지난 지금도 시계열, 음성 인식, 임베디드 AI 환경에서 널리 쓰인다.
 
 ## LSTM의 핵심 아이디어: 셀 상태
 
@@ -96,7 +96,7 @@ out, (h_n, c_n) = lstm(x, (h0, c0))
 
 ## 실전 팁
 
-**다층 LSTM(Stacked LSTM)**은 레이어 수를 늘려 표현력을 높인다. 단, 레이어가 깊어질수록 dropout 정규화가 중요해진다.
+**다층 LSTM**(Stacked LSTM)은 레이어 수를 늘려 표현력을 높인다. 단, 레이어가 깊어질수록 dropout 정규화가 중요해진다.
 
 ```python
 # 다층 LSTM 후 분류 헤드

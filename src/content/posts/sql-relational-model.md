@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-what-is-rdb/)에서 파일 시스템의 한계를 살펴보고 DBMS가 왜 필요한지 확인했습니다. 그렇다면 DBMS는 데이터를 어떤 수학적 원리로 저장하고 조작할까요? 그 답이 **관계형 모델(Relational Model)**입니다.
+[지난 글](/posts/sql-what-is-rdb/)에서 파일 시스템의 한계를 살펴보고 DBMS가 왜 필요한지 확인했습니다. 그렇다면 DBMS는 데이터를 어떤 수학적 원리로 저장하고 조작할까요? 그 답이 **관계형 모델**(Relational Model)입니다.
 
 ## Codd의 혁명 (1970)
 
-1970년 IBM 연구원 E.F. Codd는 논문 *"A Relational Model of Data for Large Shared Data Banks"*를 발표했습니다. 당시 데이터베이스는 탐색 방식이 제각각인 계층형·네트워크형이 주류였습니다. Codd는 **집합론(Set Theory)**과 **1차 술어 논리(First-Order Predicate Logic)**를 바탕으로 완전히 새로운 접근을 제안했습니다.
+1970년 IBM 연구원 E.F. Codd는 논문 *"A Relational Model of Data for Large Shared Data Banks"*를 발표했습니다. 당시 데이터베이스는 탐색 방식이 제각각인 계층형·네트워크형이 주류였습니다. Codd는 **집합론**(Set Theory)과 **1차 술어 논리**(First-Order Predicate Logic)를 바탕으로 완전히 새로운 접근을 제안했습니다.
 
-핵심 아이디어: "데이터를 수학적 **관계(relation)**로 표현하면, 물리적 저장 방법과 무관하게 데이터를 선언적으로 조작할 수 있다."
+핵심 아이디어: "데이터를 수학적 **관계**(relation)로 표현하면, 물리적 저장 방법과 무관하게 데이터를 선언적으로 조작할 수 있다."
 
 ## 릴레이션의 구조
 
@@ -25,7 +25,7 @@ draft: false
 
 ### 속성(Attribute)
 
-릴레이션의 **열(column)**에 해당합니다. 각 속성은 이름과 **도메인**을 가집니다.
+릴레이션의 **열**(column)에 해당합니다. 각 속성은 이름과 **도메인**을 가집니다.
 
 ```sql
 -- 속성 정의 = 컬럼 정의
@@ -42,7 +42,7 @@ CREATE TABLE customers (
 
 ### 튜플(Tuple)
 
-릴레이션의 **행(row)**입니다. 하나의 튜플은 각 속성에 대응하는 값들의 순서 있는 집합입니다.
+릴레이션의 **행**(row)입니다. 하나의 튜플은 각 속성에 대응하는 값들의 순서 있는 집합입니다.
 
 ```sql
 -- 튜플 삽입 = 행 삽입
@@ -51,7 +51,7 @@ VALUES (1, '김민준', 'minjun@ex.com', 'GOLD');
 ```
 
 - **카디널리티(Cardinality)**: 튜플의 수. 위에서 행이 3개면 카디널리티 3.
-- 수학적으로 튜플은 **순서쌍(ordered pair)**이지만, 릴레이션 안에서 튜플 간 순서는 의미 없습니다.
+- 수학적으로 튜플은 **순서쌍**(ordered pair)이지만, 릴레이션 안에서 튜플 간 순서는 의미 없습니다.
 
 ### 릴레이션 스키마 vs 인스턴스
 
@@ -97,7 +97,7 @@ SELECT * FROM customers WHERE email IS NOT NULL;
 
 ### SQL 테이블은 다중집합(Multiset)
 
-엄밀한 관계형 모델의 릴레이션은 중복 튜플을 허용하지 않습니다. 그러나 실제 SQL 테이블은 PRIMARY KEY가 없으면 완전히 동일한 행을 여러 개 저장할 수 있습니다. 이는 수학적 집합이 아닌 **다중집합(bag)**입니다.
+엄밀한 관계형 모델의 릴레이션은 중복 튜플을 허용하지 않습니다. 그러나 실제 SQL 테이블은 PRIMARY KEY가 없으면 완전히 동일한 행을 여러 개 저장할 수 있습니다. 이는 수학적 집합이 아닌 **다중집합**(bag)입니다.
 
 ```sql
 -- 중복 허용 테이블 (순수 관계형 모델 위반)

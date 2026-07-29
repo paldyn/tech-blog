@@ -19,7 +19,7 @@ draft: false
 
 ## NDCG: 등급별 관련도와 순위 가중치
 
-**NDCG(Normalized Discounted Cumulative Gain)**는 세 단계로 계산된다.
+**NDCG**(Normalized Discounted Cumulative Gain)는 세 단계로 계산된다.
 
 **1. DCG (Discounted Cumulative Gain)**: 각 위치의 관련도 점수에 순위 할인을 적용해 합산한다.
 
@@ -72,7 +72,7 @@ print(f"sklearn NDCG@5: {ndcg:.4f}")
 
 ## MAP: 여러 쿼리에 걸친 전반적 랭킹 품질
 
-**MAP(Mean Average Precision)**는 여러 쿼리에 대한 AP(Average Precision)의 평균이다. AP는 관련 문서가 나타날 때마다의 Precision을 평균한 것이다.
+**MAP**(Mean Average Precision)는 여러 쿼리에 대한 AP(Average Precision)의 평균이다. AP는 관련 문서가 나타날 때마다의 Precision을 평균한 것이다.
 
 ```
 AP = (1/R) Σₖ P@k × rel(k)
@@ -127,7 +127,7 @@ print(f"MAP: {map_score:.4f}")
 
 ## MRR: 첫 번째 정답의 순위
 
-**MRR(Mean Reciprocal Rank)**는 각 쿼리에서 첫 번째 관련 문서의 순위 역수를 평균한다.
+**MRR**(Mean Reciprocal Rank)는 각 쿼리에서 첫 번째 관련 문서의 순위 역수를 평균한다.
 
 ```
 MRR = (1/|Q|) Σₖ 1 / rank_k

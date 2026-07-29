@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-function-declaration-vs-expression/)에서 함수 선언식과 표현식의 호이스팅 차이를 살펴봤습니다. 이번에는 ES2015가 도입한 **화살표 함수(arrow function)**를 다룹니다. 화살표 함수는 단순히 짧은 문법이 아닙니다. `this`를 **렉시컬(lexical)**하게 바인딩하는 근본적으로 다른 함수 타입입니다.
+[지난 글](/posts/js-function-declaration-vs-expression/)에서 함수 선언식과 표현식의 호이스팅 차이를 살펴봤습니다. 이번에는 ES2015가 도입한 **화살표 함수**(arrow function)를 다룹니다. 화살표 함수는 단순히 짧은 문법이 아닙니다. `this`를 **렉시컬**(lexical)하게 바인딩하는 근본적으로 다른 함수 타입입니다.
 
 ## 문법
 

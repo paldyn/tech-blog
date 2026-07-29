@@ -124,7 +124,7 @@ EXEC DBMS_SQLTUNE.accept_sql_profile(
 
 ## SQL Access Advisor (SAA)
 
-STA가 단일 SQL을 분석한다면, **SAA(SQL Access Advisor)**는 전체 워크로드를 분석해 인덱스·Materialized View 생성을 일괄 권고한다.
+STA가 단일 SQL을 분석한다면, **SAA**(SQL Access Advisor)는 전체 워크로드를 분석해 인덱스·Materialized View 생성을 일괄 권고한다.
 
 ```sql
 -- 워크로드 기반 SAA 실행

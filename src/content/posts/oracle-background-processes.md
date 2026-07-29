@@ -31,7 +31,7 @@ ORDER BY name;
 
 ## DBWR (Database Writer)
 
-**Buffer Cache의 Dirty 버퍼(변경됐지만 디스크에 아직 쓰지 않은 블록)**를 데이터 파일에 기록한다.
+**Buffer Cache의 Dirty 버퍼**(변경됐지만 디스크에 아직 쓰지 않은 블록)를 데이터 파일에 기록한다.
 
 DBWR가 쓰기를 수행하는 시점:
 - 체크포인트(CKPT) 신호를 받을 때

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-ssrf-cloud-metadata/)에서 SSRF를 통한 클라우드 메타데이터 탈취를 살펴봤습니다. 이번 글에서는 **OWASP Top 10 2021에서 1위를 차지한 Broken Access Control(접근 제어 취약점)**을 다룹니다. OWASP 데이터에 따르면 테스트된 애플리케이션의 94%에서 이 취약점이 발견될 만큼 만연합니다.
+[지난 글](/posts/websec-ssrf-cloud-metadata/)에서 SSRF를 통한 클라우드 메타데이터 탈취를 살펴봤습니다. 이번 글에서는 **OWASP Top 10 2021에서 1위를 차지한 Broken Access Control**(접근 제어 취약점)을 다룹니다. OWASP 데이터에 따르면 테스트된 애플리케이션의 94%에서 이 취약점이 발견될 만큼 만연합니다.
 
 ## 접근 제어란?
 

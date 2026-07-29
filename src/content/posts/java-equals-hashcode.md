@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-object-class/)에서 `java.lang.Object`가 제공하는 11가지 메서드를 살펴봤다. 이번에는 그 중 가장 중요하고 가장 자주 잘못 구현되는 **`equals()`와 `hashCode()`**를 상세히 다룬다. 이 두 메서드는 독립적으로 존재하지 않고 엄격한 **계약(contract)**으로 묶여 있다.
+[지난 글](/posts/java-object-class/)에서 `java.lang.Object`가 제공하는 11가지 메서드를 살펴봤다. 이번에는 그 중 가장 중요하고 가장 자주 잘못 구현되는 <strong>`equals()`와 `hashCode()`</strong>를 상세히 다룬다. 이 두 메서드는 독립적으로 존재하지 않고 엄격한 **계약**(contract)으로 묶여 있다.
 
 ## equals()의 기본 동작과 한계
 

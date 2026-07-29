@@ -15,7 +15,7 @@ draft: false
 
 ## 병렬 라우트 — @slot
 
-`@`로 시작하는 폴더는 **슬롯(slot)**이 됩니다. 같은 레벨의 `layout.tsx`에서 슬롯 이름으로 props를 받아 화면에 동시에 렌더링할 수 있습니다.
+`@`로 시작하는 폴더는 **슬롯**(slot)이 됩니다. 같은 레벨의 `layout.tsx`에서 슬롯 이름으로 props를 받아 화면에 동시에 렌더링할 수 있습니다.
 
 ![병렬 라우트 슬롯 구조](/assets/posts/next-parallel-intercepting-routes-slots.svg)
 

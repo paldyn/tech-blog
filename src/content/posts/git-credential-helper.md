@@ -36,7 +36,7 @@ git config --global credential.helper 'cache --timeout=900'
 
 ## GitHub Personal Access Token (PAT) 설정
 
-2021년부터 GitHub는 HTTPS 인증 시 비밀번호 대신 **Personal Access Token(PAT)**을 사용하도록 요구한다.
+2021년부터 GitHub는 HTTPS 인증 시 비밀번호 대신 **Personal Access Token**(PAT)을 사용하도록 요구한다.
 
 ```text
 GitHub → Settings → Developer settings

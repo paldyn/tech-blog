@@ -19,7 +19,7 @@ draft: false
 
 ### 메모리 정렬 vs External Sort
 
-정렬 알고리즘은 기본적으로 **O(N log N)**이다. 문제는 데이터가 메모리에 다 들어오느냐에 달려 있다.
+정렬 알고리즘은 기본적으로 **O**(N log N)이다. 문제는 데이터가 메모리에 다 들어오느냐에 달려 있다.
 
 ![정렬 비용 구조](/assets/posts/sql-sort-aggregate-cost-sort.svg)
 

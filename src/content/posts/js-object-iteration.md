@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/js-object-cloning-structured/)에서 객체 복사의 다양한 방법을 살펴봤습니다. 복사만큼 자주 쓰이는 작업이 바로 **순회(iteration)**입니다. JavaScript에는 객체 프로퍼티를 열거하는 방법이 여러 가지 있고, 각각 프로토타입 체인 포함 여부, Symbol 키 처리 방식, 반환 타입이 제각각입니다. 잘못 고르면 의도치 않은 프로퍼티가 섞이거나 Symbol 키가 누락될 수 있습니다.
+[지난 글](/posts/js-object-cloning-structured/)에서 객체 복사의 다양한 방법을 살펴봤습니다. 복사만큼 자주 쓰이는 작업이 바로 **순회**(iteration)입니다. JavaScript에는 객체 프로퍼티를 열거하는 방법이 여러 가지 있고, 각각 프로토타입 체인 포함 여부, Symbol 키 처리 방식, 반환 타입이 제각각입니다. 잘못 고르면 의도치 않은 프로퍼티가 섞이거나 Symbol 키가 누락될 수 있습니다.
 
 ![객체 순회 메서드 비교](/assets/posts/js-object-iteration-methods.svg)
 

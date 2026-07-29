@@ -127,7 +127,7 @@ curl -sI -H 'Accept-Encoding: br' https://example.com/app.js \
 - Brotli = 큰 윈도 + 컨텍스트 모델 + 웹 특화 내장 사전. **정적 자산은 빌드 때 -11로 사전 압축**이 정석.
 - 이미 압축된 미디어와 초소형 응답은 건드리지 말 것. 비밀값+공격자 입력이 섞인 응답은 BREACH를 기억할 것.
 
-다음 글에서는 `Accept-Encoding: zstd`로 슬쩍 등장했던 막내 — 페이스북이 만든 **Zstandard(zstd)**가 HTTP 압축의 판도를 어떻게 바꾸고 있는지 다룬다.
+다음 글에서는 `Accept-Encoding: zstd`로 슬쩍 등장했던 막내 — 페이스북이 만든 **Zstandard**(zstd)가 HTTP 압축의 판도를 어떻게 바꾸고 있는지 다룬다.
 
 ---
 

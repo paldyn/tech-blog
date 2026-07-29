@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/python-mmap/)에서 mmap으로 대용량 파일을 처리하는 방법을 살펴봤다. 파일 I/O 챕터의 마지막 주제는 **줄 끝 문자(line endings)**다. 개발자라면 누구나 한 번쯤 "Windows에서 작성한 파일이 Linux에서 이상하게 보인다"거나 "Git diff에서 줄 끝 경고가 뜬다"는 상황을 겪는다. 이 문제의 원인과 Python에서 처리하는 방법을 알아보자.
+[지난 글](/posts/python-mmap/)에서 mmap으로 대용량 파일을 처리하는 방법을 살펴봤다. 파일 I/O 챕터의 마지막 주제는 **줄 끝 문자**(line endings)다. 개발자라면 누구나 한 번쯤 "Windows에서 작성한 파일이 Linux에서 이상하게 보인다"거나 "Git diff에서 줄 끝 경고가 뜬다"는 상황을 겪는다. 이 문제의 원인과 Python에서 처리하는 방법을 알아보자.
 
 ## 줄 끝 문자의 역사
 

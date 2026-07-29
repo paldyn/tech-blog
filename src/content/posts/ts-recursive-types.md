@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-intrinsic-string-types/)에서 인트린직 문자열 타입을 살펴봤다. 이번에는 **재귀 타입(Recursive Types)**을 다룬다. 재귀 타입은 자기 자신을 포함하는 타입 정의로, 트리, 링크드 리스트, 중첩 배열, JSON 구조처럼 깊이가 정해지지 않은 데이터를 타이핑할 때 필수다. TypeScript는 특정 조건에서 재귀 타입을 허용하며, 이 규칙을 이해하면 강력한 타입 패턴을 만들 수 있다.
+[지난 글](/posts/ts-intrinsic-string-types/)에서 인트린직 문자열 타입을 살펴봤다. 이번에는 **재귀 타입**(Recursive Types)을 다룬다. 재귀 타입은 자기 자신을 포함하는 타입 정의로, 트리, 링크드 리스트, 중첩 배열, JSON 구조처럼 깊이가 정해지지 않은 데이터를 타이핑할 때 필수다. TypeScript는 특정 조건에서 재귀 타입을 허용하며, 이 규칙을 이해하면 강력한 타입 패턴을 만들 수 있다.
 
 ## 가장 단순한 재귀 타입
 
@@ -51,7 +51,7 @@ type Json =
 
 ## 즉시 평가 vs 지연 평가
 
-TypeScript가 재귀 타입을 허용하는 핵심 규칙은 **지연 평가(deferred evaluation)**다.
+TypeScript가 재귀 타입을 허용하는 핵심 규칙은 **지연 평가**(deferred evaluation)다.
 
 ```typescript
 // ✗ 즉시 평가 — 타입 오류 (순환 참조)

@@ -19,7 +19,7 @@ Nexacro N의 폼 재사용 전략은 세 층위로 나뉜다.
 
 ![폼 재사용 아키텍처](/assets/posts/nexacro-n-form-reuse-architecture.svg)
 
-**상속(Inheritance)**은 부모 폼의 코드와 이벤트를 자식 폼이 그대로 물려받는 구조다. `BaseForm.xfdl`에 공통 변수, 단축키 핸들러, 권한 체크, 공통 Transaction 래퍼를 구현하고, 모든 업무 폼이 이를 상속한다.
+**상속**(Inheritance)은 부모 폼의 코드와 이벤트를 자식 폼이 그대로 물려받는 구조다. `BaseForm.xfdl`에 공통 변수, 단축키 핸들러, 권한 체크, 공통 Transaction 래퍼를 구현하고, 모든 업무 폼이 이를 상속한다.
 
 **Include**는 UI 조각을 현재 폼에 삽입하는 방식이다. 검색 바, 페이지 컨트롤, 버튼 영역 같은 반복 UI를 독립 파일로 만들어 필요한 곳에 삽입한다. Include된 폼은 독립적으로 레이아웃과 이벤트를 갖고, 부모 폼과는 커스텀 이벤트로 통신한다.
 

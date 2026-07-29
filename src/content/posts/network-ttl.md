@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-ip-fragmentation/)에서 MTU를 초과한 패킷이 단편화되는 과정을 살펴봤다. 이번 글에서는 IPv4 헤더의 또 다른 중요한 필드인 **TTL(Time To Live)**을 다룬다. TTL은 패킷이 무한히 순환하지 못하도록 막는 안전장치이며, 동시에 `traceroute`라는 강력한 진단 도구의 근간이 된다.
+[지난 글](/posts/network-ip-fragmentation/)에서 MTU를 초과한 패킷이 단편화되는 과정을 살펴봤다. 이번 글에서는 IPv4 헤더의 또 다른 중요한 필드인 **TTL**(Time To Live)을 다룬다. TTL은 패킷이 무한히 순환하지 못하도록 막는 안전장치이며, 동시에 `traceroute`라는 강력한 진단 도구의 근간이 된다.
 
 ## TTL의 역할
 

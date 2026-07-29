@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/distsql-cockroachdb/)에서 CockroachDB의 Raft 기반 분산 아키텍처를 살펴봤다. 이번에는 다른 접근 방식을 택한 분산 SQL, TiDB를 다룬다. TiDB의 핵심 차별점은 **HTAP(Hybrid Transactional and Analytical Processing)**이다. 같은 데이터에 대해 OLTP와 OLAP 쿼리를 별도 데이터 이동 없이 동시에 처리한다.
+[지난 글](/posts/distsql-cockroachdb/)에서 CockroachDB의 Raft 기반 분산 아키텍처를 살펴봤다. 이번에는 다른 접근 방식을 택한 분산 SQL, TiDB를 다룬다. TiDB의 핵심 차별점은 **HTAP**(Hybrid Transactional and Analytical Processing)이다. 같은 데이터에 대해 OLTP와 OLAP 쿼리를 별도 데이터 이동 없이 동시에 처리한다.
 
 ## TiDB 핵심 구성요소
 

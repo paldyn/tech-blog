@@ -23,7 +23,7 @@ GC 로그는 모든 수집 이벤트를 시각으로 기록한 1차 사료입니
 
 JDK 8까지는 GC 로그를 `-XX:+PrintGCDetails`, `-XX:+PrintGCDateStamps`, `-Xloggc:gc.log` 같은 플래그를 조합해서 켰습니다. 수집기마다 출력 포맷이 제각각이라 파싱 도구도 수집기별로 달라야 했습니다.
 
-JDK 9부터는 **Unified Logging(JEP 158/271)**으로 통일됐습니다. 모든 JVM 로그가 `-Xlog` 하나로 일원화되고, `[tags]`·level·데코레이터(시각·uptime 등)를 일관된 포맷으로 출력합니다. GC 로그도 그 일부일 뿐입니다.
+JDK 9부터는 **Unified Logging**(JEP 158/271)으로 통일됐습니다. 모든 JVM 로그가 `-Xlog` 하나로 일원화되고, `[tags]`·level·데코레이터(시각·uptime 등)를 일관된 포맷으로 출력합니다. GC 로그도 그 일부일 뿐입니다.
 
 | 구분 | JDK 8 이하 | JDK 9+ (Unified) |
 |---|---|---|
@@ -139,7 +139,7 @@ young에서 충분히 죽었어야 할 객체가 너무 일찍 old로 승격되�
 
 ## JFR 연계
 
-더 깊은 진단이 필요하면 **JFR(Java Flight Recorder)**를 함께 켜는 것이 정석입니다. `-XX:+FlightRecorder`로 기록하면 GC 이벤트뿐 아니라 **어떤 코드 경로가 얼마나 객체를 할당했는지(allocation profiling)**까지 추적되어, "allocation rate가 높다"에서 "이 메서드가 범인이다"로 한 단계 더 좁힐 수 있습니다.
+더 깊은 진단이 필요하면 **JFR**(Java Flight Recorder)를 함께 켜는 것이 정석입니다. `-XX:+FlightRecorder`로 기록하면 GC 이벤트뿐 아니라 **어떤 코드 경로가 얼마나 객체를 할당했는지**(allocation profiling)까지 추적되어, "allocation rate가 높다"에서 "이 메서드가 범인이다"로 한 단계 더 좁힐 수 있습니다.
 
 ## 정리
 

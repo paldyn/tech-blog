@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-clone-bare/)에서 Bare 저장소를 다뤘다. 이번에는 `git branch -a`를 실행했을 때 보이는 `remotes/origin/main` 같은 **원격 추적 브랜치(remote-tracking branch)**가 무엇인지, 그리고 fetch·push·pull이 이 브랜치를 어떻게 다루는지 살펴본다.
+[지난 글](/posts/git-clone-bare/)에서 Bare 저장소를 다뤘다. 이번에는 `git branch -a`를 실행했을 때 보이는 `remotes/origin/main` 같은 **원격 추적 브랜치**(remote-tracking branch)가 무엇인지, 그리고 fetch·push·pull이 이 브랜치를 어떻게 다루는지 살펴본다.
 
 ## 원격 추적 브랜치란
 

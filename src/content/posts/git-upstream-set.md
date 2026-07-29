@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/git-tracking-branches/)에서 원격 추적 브랜치가 무엇인지 살펴봤다. 이번에는 로컬 브랜치가 어떤 원격 추적 브랜치를 **추적(tracking)**하는지 설정하는 방법을 다룬다. 업스트림이 설정되면 `git push origin feature/x` 대신 `git push`만 입력해도 Git이 어디로 보내야 할지 알아서 판단한다.
+[지난 글](/posts/git-tracking-branches/)에서 원격 추적 브랜치가 무엇인지 살펴봤다. 이번에는 로컬 브랜치가 어떤 원격 추적 브랜치를 **추적**(tracking)하는지 설정하는 방법을 다룬다. 업스트림이 설정되면 `git push origin feature/x` 대신 `git push`만 입력해도 Git이 어디로 보내야 할지 알아서 판단한다.
 
 ## 업스트림이 없을 때의 문제
 

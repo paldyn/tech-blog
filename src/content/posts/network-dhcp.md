@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-icmp-ping/)에서 ICMP와 ping으로 네트워크를 진단하는 방법을 살펴봤다. 이번 글에서는 네트워크에 연결될 때 자동으로 IP 주소를 받아오는 **DHCP(Dynamic Host Configuration Protocol)**를 다룬다.
+[지난 글](/posts/network-icmp-ping/)에서 ICMP와 ping으로 네트워크를 진단하는 방법을 살펴봤다. 이번 글에서는 네트워크에 연결될 때 자동으로 IP 주소를 받아오는 **DHCP**(Dynamic Host Configuration Protocol)를 다룬다.
 
 ## DHCP란?
 
@@ -56,7 +56,7 @@ DHCP는 IP를 **임대 기간(lease time)** 동안만 제공한다. 기간이 �
 
 ![DHCP 옵션과 ISC 서버 설정](/assets/posts/network-dhcp-options.svg)
 
-DHCP는 기본 네트워크 설정 외에도 다양한 **옵션(Option)**으로 추가 정보를 전달한다.
+DHCP는 기본 네트워크 설정 외에도 다양한 **옵션**(Option)으로 추가 정보를 전달한다.
 
 ```bash
 # Linux에서 DHCP로 받은 정보 확인

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-replicaset/)에서 ReplicaSet의 컨트롤 루프와 자가 치유 동작을 살펴봤습니다. 이번에는 Kubernetes 역사를 거슬러 올라가 최초의 Pod 복제 오브젝트인 **ReplicationController(RC)**와, 현재의 표준인 **Deployment**를 비교합니다. 레거시 클러스터를 유지보수하거나 RC로 작성된 YAML을 마이그레이션해야 할 때 이 차이를 아는 것이 중요합니다.
+[지난 글](/posts/k8s-replicaset/)에서 ReplicaSet의 컨트롤 루프와 자가 치유 동작을 살펴봤습니다. 이번에는 Kubernetes 역사를 거슬러 올라가 최초의 Pod 복제 오브젝트인 **ReplicationController**(RC)와, 현재의 표준인 **Deployment**를 비교합니다. 레거시 클러스터를 유지보수하거나 RC로 작성된 YAML을 마이그레이션해야 할 때 이 차이를 아는 것이 중요합니다.
 
 ## ReplicationController의 등장
 

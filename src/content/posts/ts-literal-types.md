@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-const-enum/)에서 `const enum`을 살펴봤다. enum을 컴파일 타임 상수로 다루는 방법을 이해했다면, 이번에는 그 기반이 되는 개념인 **리터럴 타입(Literal Types)**을 깊이 살펴볼 차례다. 리터럴 타입은 TypeScript 타입 시스템에서 가장 작은 단위의 타입으로, 정확한 값 자체를 타입으로 표현한다. 유니언, `as const`, 판별 유니언 등 TypeScript의 고급 패턴들이 모두 리터럴 타입을 기반으로 동작한다.
+[지난 글](/posts/ts-const-enum/)에서 `const enum`을 살펴봤다. enum을 컴파일 타임 상수로 다루는 방법을 이해했다면, 이번에는 그 기반이 되는 개념인 **리터럴 타입**(Literal Types)을 깊이 살펴볼 차례다. 리터럴 타입은 TypeScript 타입 시스템에서 가장 작은 단위의 타입으로, 정확한 값 자체를 타입으로 표현한다. 유니언, `as const`, 판별 유니언 등 TypeScript의 고급 패턴들이 모두 리터럴 타입을 기반으로 동작한다.
 
 ## 리터럴 타입이란
 
@@ -111,7 +111,7 @@ addEventListener("hover", (e) => { /* ... */ });  // 오류
 
 ## 타입 확장(Widening)과 const
 
-TypeScript는 변수를 선언할 때 **타입 확장(widening)**을 수행한다. 리터럴 값으로 초기화된 변수의 타입을 리터럴 타입 그대로 유지하지 않고, 더 넓은 기본 타입으로 확장하는 것이다.
+TypeScript는 변수를 선언할 때 **타입 확장**(widening)을 수행한다. 리터럴 값으로 초기화된 변수의 타입을 리터럴 타입 그대로 유지하지 않고, 더 넓은 기본 타입으로 확장하는 것이다.
 
 ```typescript
 let x = "hello";   // 추론된 타입: string (확장됨)

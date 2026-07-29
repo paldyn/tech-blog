@@ -44,7 +44,7 @@ UPDATE accounts SET balance = balance + 10000 WHERE id = 2;
 COMMIT;
 ```
 
-DB는 커밋되지 않은 변경 사항을 **Undo Log(롤백 세그먼트)**에 기록한다. 장애 발생 시 DB는 재시작 후 Undo Log를 사용해 커밋되지 않은 변경을 자동으로 되돌린다.
+DB는 커밋되지 않은 변경 사항을 **Undo Log**(롤백 세그먼트)에 기록한다. 장애 발생 시 DB는 재시작 후 Undo Log를 사용해 커밋되지 않은 변경을 자동으로 되돌린다.
 
 - `COMMIT` → 변경 영구 반영
 - `ROLLBACK` 또는 오류 → Undo Log로 전체 취소

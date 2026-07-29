@@ -20,7 +20,7 @@ Encoder 한 블록은 두 개의 서브레이어로 이루어진다.
 1. **Multi-Head Self-Attention** — 모든 위치가 서로를 참조해 관련성을 계산한다.
 2. **Position-wise Feed-Forward Network (FFN)** — 위치별로 독립적인 비선형 변환을 적용한다.
 
-각 서브레이어에는 **잔차 연결(Residual Connection)**과 **Layer Normalization**이 뒤따른다.
+각 서브레이어에는 **잔차 연결**(Residual Connection)과 **Layer Normalization**이 뒤따른다.
 
 ```
 output = LayerNorm( x + Sublayer(x) )

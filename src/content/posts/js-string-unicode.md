@@ -118,7 +118,7 @@ String.fromCodePoint(0x1F600); // '😀'
 
 ## 문자열 불변성
 
-JavaScript의 문자열은 **불변(immutable)**입니다. `str[0] = 'X'`는 조용히 무시됩니다(strict mode에서도 에러 없음). 모든 문자열 메서드는 새 문자열을 반환합니다.
+JavaScript의 문자열은 **불변**(immutable)입니다. `str[0] = 'X'`는 조용히 무시됩니다(strict mode에서도 에러 없음). 모든 문자열 메서드는 새 문자열을 반환합니다.
 
 ```javascript
 let str = 'hello';

@@ -11,13 +11,13 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-digital-signatures/)에서 디지털 서명의 동작 원리를 살펴봤다. 이번 글에서는 인터넷 보안의 근간인 **PKI(Public Key Infrastructure)**와 X.509 인증서가 어떻게 신뢰를 구축하는지 다룬다.
+[지난 글](/posts/websec-digital-signatures/)에서 디지털 서명의 동작 원리를 살펴봤다. 이번 글에서는 인터넷 보안의 근간인 **PKI**(Public Key Infrastructure)와 X.509 인증서가 어떻게 신뢰를 구축하는지 다룬다.
 
 ## 신뢰의 문제
 
 공개키 암호화로 통신을 암호화하더라도 한 가지 문제가 남는다: "내가 교환하는 공개키가 정말 example.com의 것인가?" 공격자가 중간에서 자신의 공개키를 삽입하면 어떻게 알아챌 수 있을까?
 
-PKI는 **신뢰할 수 있는 제3자(CA)**를 통해 이 문제를 해결한다. CA가 "이 공개키는 정말 example.com의 것"이라고 디지털 서명으로 보증한다.
+PKI는 **신뢰할 수 있는 제3자**(CA)를 통해 이 문제를 해결한다. CA가 "이 공개키는 정말 example.com의 것"이라고 디지털 서명으로 보증한다.
 
 ## X.509 인증서 구조
 

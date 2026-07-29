@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-eBPF-overview/)에서 eBPF의 전체 생태계를 살펴봤습니다. 이번에는 eBPF/perf 샘플링 결과를 직관적으로 시각화하는 **Flame Graph(플레임 그래프)**를 알아봅니다. Brendan Gregg가 설계한 이 시각화 기법은 수천 개의 스택 트레이스를 한 화면에서 병목을 즉시 파악할 수 있게 해줍니다.
+[지난 글](/posts/linux-eBPF-overview/)에서 eBPF의 전체 생태계를 살펴봤습니다. 이번에는 eBPF/perf 샘플링 결과를 직관적으로 시각화하는 **Flame Graph**(플레임 그래프)를 알아봅니다. Brendan Gregg가 설계한 이 시각화 기법은 수천 개의 스택 트레이스를 한 화면에서 병목을 즉시 파악할 수 있게 해줍니다.
 
 ## Flame Graph 읽는 법
 

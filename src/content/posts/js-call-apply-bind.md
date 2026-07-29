@@ -74,7 +74,7 @@ boundGreet.call({ name: 'Charlie' }, 'Hello', '?');
 // 여전히 "Hello, I'm Bob?" — bind는 영구 고정
 ```
 
-`bind`로 인수도 미리 고정할 수 있습니다. 이를 **부분 적용(Partial Application)**이라 합니다.
+`bind`로 인수도 미리 고정할 수 있습니다. 이를 **부분 적용**(Partial Application)이라 합니다.
 
 ```javascript
 function multiply(a, b) { return a * b; }

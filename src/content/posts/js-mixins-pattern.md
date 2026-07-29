@@ -187,7 +187,7 @@ console.log(u.isActive);  // false
 
 ## 믹스인 vs 컴포지션
 
-믹스인 대신 **컴포지션(composition)**을 사용하는 방법도 있습니다.
+믹스인 대신 **컴포지션**(composition)을 사용하는 방법도 있습니다.
 
 ```javascript
 // 컴포지션: 기능 객체를 멤버로 보유

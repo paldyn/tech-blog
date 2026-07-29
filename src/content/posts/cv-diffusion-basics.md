@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/cv-clip/)에서 이미지와 텍스트를 공동 임베딩 공간에 정렬하는 CLIP을 다뤘다. 이번 글에서는 그 CLIP을 컨디셔닝으로 활용해 텍스트로 이미지를 생성하는 **확산 모델(Diffusion Model)**의 수학적 원리와 구현을 완전 해설한다. Stable Diffusion, DALL-E 3, Imagen 모두 이 원리 위에 세워졌다.
+[지난 글](/posts/cv-clip/)에서 이미지와 텍스트를 공동 임베딩 공간에 정렬하는 CLIP을 다뤘다. 이번 글에서는 그 CLIP을 컨디셔닝으로 활용해 텍스트로 이미지를 생성하는 **확산 모델**(Diffusion Model)의 수학적 원리와 구현을 완전 해설한다. Stable Diffusion, DALL-E 3, Imagen 모두 이 원리 위에 세워졌다.
 
 ## 확산 모델의 직관
 
@@ -214,7 +214,7 @@ image = pipe(
 
 ## Classifier-Free Guidance
 
-텍스트 컨디셔닝 확산 모델에서는 **Classifier-Free Guidance(CFG)**가 품질을 크게 높인다. 조건부 예측과 무조건부 예측을 섞어 텍스트 프롬프트 방향으로 더 강하게 이동시킨다.
+텍스트 컨디셔닝 확산 모델에서는 **Classifier-Free Guidance**(CFG)가 품질을 크게 높인다. 조건부 예측과 무조건부 예측을 섞어 텍스트 프롬프트 방향으로 더 강하게 이동시킨다.
 
 ```text
 ε̃_θ(x_t, c) = ε_θ(x_t, ∅) + w·(ε_θ(x_t, c) - ε_θ(x_t, ∅))

@@ -40,7 +40,7 @@ ALTER DATABASE RECOVER MANAGED STANDBY DATABASE
 
 Primary가 Redo를 Standby에 보내는 방식은 두 가지다.
 
-**SYNC (동기)**: LGWR가 Redo를 로컬 Redo Log와 Standby에 동시에 기록한다. Standby가 수신을 확인해야만 트랜잭션이 커밋된다. **데이터 손실 없음(RPO=0)**이지만 네트워크 지연이 성능에 영향을 준다.
+**SYNC (동기)**: LGWR가 Redo를 로컬 Redo Log와 Standby에 동시에 기록한다. Standby가 수신을 확인해야만 트랜잭션이 커밋된다. **데이터 손실 없음**(RPO=0)이지만 네트워크 지연이 성능에 영향을 준다.
 
 **ASYNC (비동기)**: LGWR 또는 ARCH가 로컬 기록 후 별도로 Standby에 전송한다. Primary 성능에 영향 없이 최소한의 지연으로 전달하지만 약간의 데이터 손실 가능성이 있다.
 

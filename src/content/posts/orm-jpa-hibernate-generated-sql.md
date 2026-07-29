@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/orm-raw-sql-vs-orm/)에서 Raw SQL과 ORM의 트레이드오프를 살펴봤다. 이번에는 Java 진영에서 가장 많이 사용되는 Full ORM인 **JPA(Jakarta Persistence API)**와 그 구현체인 **Hibernate**가 실제로 어떤 SQL을 언제 발행하는지 집중적으로 알아본다. ORM 성능 문제의 대부분은 "어떤 SQL이 발행되는지 모르는 것"에서 비롯된다.
+[지난 글](/posts/orm-raw-sql-vs-orm/)에서 Raw SQL과 ORM의 트레이드오프를 살펴봤다. 이번에는 Java 진영에서 가장 많이 사용되는 Full ORM인 **JPA**(Jakarta Persistence API)와 그 구현체인 **Hibernate**가 실제로 어떤 SQL을 언제 발행하는지 집중적으로 알아본다. ORM 성능 문제의 대부분은 "어떤 SQL이 발행되는지 모르는 것"에서 비롯된다.
 
 ## 영속성 컨텍스트와 엔티티 생명주기
 
-JPA의 핵심 개념은 **영속성 컨텍스트(Persistence Context)**다. `EntityManager`가 관리하는 1차 캐시이며, 여기에 등록된 엔티티를 **Managed(영속) 상태**라고 한다.
+JPA의 핵심 개념은 **영속성 컨텍스트**(Persistence Context)다. `EntityManager`가 관리하는 1차 캐시이며, 여기에 등록된 엔티티를 **Managed(영속) 상태**라고 한다.
 
 ![JPA 엔티티 생명주기](/assets/posts/orm-jpa-hibernate-lifecycle.svg)
 

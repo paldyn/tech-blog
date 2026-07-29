@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-discriminated-union/)에서 판별 유니언으로 상태를 모델링하는 방법을 살펴봤다. 이번에는 그 연장선에서 **완전성 검사(Exhaustiveness Check)**를 다룬다. 판별 유니언에 새로운 변체(variant)를 추가했을 때, 처리 코드를 빠뜨리면 컴파일러가 즉시 알려주도록 만드는 기법이다.
+[지난 글](/posts/ts-discriminated-union/)에서 판별 유니언으로 상태를 모델링하는 방법을 살펴봤다. 이번에는 그 연장선에서 **완전성 검사**(Exhaustiveness Check)를 다룬다. 판별 유니언에 새로운 변체(variant)를 추가했을 때, 처리 코드를 빠뜨리면 컴파일러가 즉시 알려주도록 만드는 기법이다.
 
 ## 문제: 빠진 케이스를 런타임에야 알게 된다
 

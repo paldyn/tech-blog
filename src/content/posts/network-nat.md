@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/network-bgp/)에서 BGP로 AS 간 경로를 교환하는 방식을 살펴봤다. 이번 글에서는 IPv4 주소 부족 문제를 실용적으로 해결한 **NAT(Network Address Translation)**을 다룬다. 가정용 공유기부터 대규모 엔터프라이즈 네트워크까지, NAT은 현대 네트워크의 핵심 기술이다.
+[지난 글](/posts/network-bgp/)에서 BGP로 AS 간 경로를 교환하는 방식을 살펴봤다. 이번 글에서는 IPv4 주소 부족 문제를 실용적으로 해결한 **NAT**(Network Address Translation)을 다룬다. 가정용 공유기부터 대규모 엔터프라이즈 네트워크까지, NAT은 현대 네트워크의 핵심 기술이다.
 
 ## NAT이란?
 

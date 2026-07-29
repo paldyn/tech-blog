@@ -11,11 +11,11 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/java-list-arraylist/)에서 ArrayList의 동적 배열 구조와 성능 특성을 살펴봤다. 이번에는 **`LinkedList`**를 다룬다. LinkedList는 ArrayList와 달리 연속된 메모리 블록 대신 노드 체인으로 데이터를 저장한다. "항상 ArrayList를 쓰라"는 통설 너머에 LinkedList가 진정 빛나는 상황이 존재한다.
+[지난 글](/posts/java-list-arraylist/)에서 ArrayList의 동적 배열 구조와 성능 특성을 살펴봤다. 이번에는 <strong>`LinkedList`</strong>를 다룬다. LinkedList는 ArrayList와 달리 연속된 메모리 블록 대신 노드 체인으로 데이터를 저장한다. "항상 ArrayList를 쓰라"는 통설 너머에 LinkedList가 진정 빛나는 상황이 존재한다.
 
 ## 내부 구조: 이중 연결 리스트
 
-Java의 `LinkedList`는 **이중 연결 리스트(Doubly Linked List)**로 구현되어 있다. 각 원소는 독립적인 `Node<E>` 객체에 저장되며, 이전 노드와 다음 노드를 참조하는 두 포인터를 보유한다.
+Java의 `LinkedList`는 **이중 연결 리스트**(Doubly Linked List)로 구현되어 있다. 각 원소는 독립적인 `Node<E>` 객체에 저장되며, 이전 노드와 다음 노드를 참조하는 두 포인터를 보유한다.
 
 ```java
 // java.util.LinkedList 내부 (간략화)

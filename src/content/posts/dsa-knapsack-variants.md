@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-knapsack/)에서 0/1 배낭 문제의 DP 테이블과 역추적을 다뤘습니다. 배낭 문제는 선택 제약 조건을 바꾸면 전혀 다른 변형이 됩니다. 이번 글에서는 **무한 배낭(Unbounded Knapsack)**, **유계 배낭(Bounded Knapsack)**, **분할 가능 배낭(Fractional Knapsack)**의 차이와 구현 패턴을 살펴봅니다.
+[지난 글](/posts/dsa-knapsack/)에서 0/1 배낭 문제의 DP 테이블과 역추적을 다뤘습니다. 배낭 문제는 선택 제약 조건을 바꾸면 전혀 다른 변형이 됩니다. 이번 글에서는 **무한 배낭(Unbounded Knapsack)**, **유계 배낭(Bounded Knapsack)**, **분할 가능 배낭**(Fractional Knapsack)의 차이와 구현 패턴을 살펴봅니다.
 
 ## 네 가지 배낭 문제 한눈에 보기
 
@@ -74,7 +74,7 @@ def bounded_knapsack(W: int, weights: list, values: list, counts: list) -> int:
 
 ## 분할 가능 배낭 문제 (Fractional Knapsack)
 
-물품을 잘라서 일부만 넣을 수 있습니다. 이 경우 **그리디(Greedy)**가 최적해를 보장합니다. 단위 무게당 가치(`v/w`)가 높은 순서로 물품을 넣고, 배낭이 꽉 차면 나머지를 잘라 넣습니다.
+물품을 잘라서 일부만 넣을 수 있습니다. 이 경우 **그리디**(Greedy)가 최적해를 보장합니다. 단위 무게당 가치(`v/w`)가 높은 순서로 물품을 넣고, 배낭이 꽉 차면 나머지를 잘라 넣습니다.
 
 ```python
 def fractional_knapsack(W: int, weights: list, values: list) -> float:

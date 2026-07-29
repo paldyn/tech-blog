@@ -33,7 +33,7 @@ DOCKER_BUILDKIT=1 docker build .
 
 ## 내부 구조: LLB
 
-BuildKit의 핵심은 **LLB(Low-Level Build)**라는 중간 표현이다. Dockerfile 파서(Frontend)가 LLB 그래프를 생성하고, Solver가 의존성을 분석해 병렬로 실행한다. 
+BuildKit의 핵심은 **LLB**(Low-Level Build)라는 중간 표현이다. Dockerfile 파서(Frontend)가 LLB 그래프를 생성하고, Solver가 의존성을 분석해 병렬로 실행한다. 
 
 기존 Docker 빌드는 각 레이어를 순차적으로 실행했다. BuildKit은 의존성이 없는 단계를 동시에 실행한다.
 

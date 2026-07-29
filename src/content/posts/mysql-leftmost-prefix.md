@@ -114,7 +114,7 @@ CREATE INDEX idx_posts_list
 -- 단, title이 길면 인덱스 크기가 커져 득실 계산 필요
 ```
 
-Leftmost Prefix 규칙을 이해하면 복합 인덱스 칼럼 순서 결정이 더 이상 직관적 판단이 아닌 논리적 근거를 갖게 됩니다. 다음 글에서는 MySQL 5.6에서 도입된 **Index Condition Pushdown(ICP)**을 다룹니다.
+Leftmost Prefix 규칙을 이해하면 복합 인덱스 칼럼 순서 결정이 더 이상 직관적 판단이 아닌 논리적 근거를 갖게 됩니다. 다음 글에서는 MySQL 5.6에서 도입된 **Index Condition Pushdown**(ICP)을 다룹니다.
 
 ---
 

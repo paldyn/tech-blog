@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/spring-jpa-orm-intro/)에서 ORM과 JPA의 개념, Hibernate와 Spring Data JPA의 관계를 정리했습니다. 이 글에서는 JPA 내부 동작의 핵심인 **EntityManager**와 **영속성 컨텍스트(Persistence Context)**를 깊이 파고듭니다. JPA를 단순히 "SQL을 대신 써주는 도구"로 쓰는 것과 영속성 컨텍스트를 이해하고 쓰는 것은 실제 성능·버그 측면에서 완전히 다른 결과를 낳습니다.
+[지난 글](/posts/spring-jpa-orm-intro/)에서 ORM과 JPA의 개념, Hibernate와 Spring Data JPA의 관계를 정리했습니다. 이 글에서는 JPA 내부 동작의 핵심인 **EntityManager**와 **영속성 컨텍스트**(Persistence Context)를 깊이 파고듭니다. JPA를 단순히 "SQL을 대신 써주는 도구"로 쓰는 것과 영속성 컨텍스트를 이해하고 쓰는 것은 실제 성능·버그 측면에서 완전히 다른 결과를 낳습니다.
 
 ## EntityManagerFactory와 EntityManager
 

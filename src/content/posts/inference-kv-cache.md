@@ -135,7 +135,7 @@ for i, q in enumerate(questions):
 
 ### ④ PagedAttention: 메모리 단편화 제거
 
-전통적 KV 캐시는 최대 시퀀스 길이만큼 연속 메모리를 선점한다. 대부분의 요청이 훨씬 짧게 끝나도 메모리를 반납하지 않아 단편화가 심하다. PagedAttention은 고정 크기 **블록(block)**으로 KV를 나눠 필요한 만큼만 동적 할당한다.
+전통적 KV 캐시는 최대 시퀀스 길이만큼 연속 메모리를 선점한다. 대부분의 요청이 훨씬 짧게 끝나도 메모리를 반납하지 않아 단편화가 심하다. PagedAttention은 고정 크기 **블록**(block)으로 KV를 나눠 필요한 만큼만 동적 할당한다.
 
 ```python
 # vLLM PagedAttention 설정 (내부 동작 이해용)

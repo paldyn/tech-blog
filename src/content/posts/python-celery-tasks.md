@@ -23,7 +23,7 @@ Celery를 이해하는 핵심은 세 역할의 분리다. 작업을 요청하는
 
 ## 작업 정의하기
 
-Celery 앱을 만들고, 함수에 `@app.task` 데코레이터를 붙이면 그 함수가 백그라운드로 보낼 수 있는 **작업(task)**이 된다.
+Celery 앱을 만들고, 함수에 `@app.task` 데코레이터를 붙이면 그 함수가 백그라운드로 보낼 수 있는 **작업**(task)이 된다.
 
 ```python
 from celery import Celery

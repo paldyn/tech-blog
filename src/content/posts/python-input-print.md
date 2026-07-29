@@ -15,7 +15,7 @@ draft: false
 
 ## print() — 화면에 값을 출력하는 함수
 
-Python 2에서 `print`는 **문장(statement)**이었다. 괄호 없이 `print "hello"` 처럼 쓸 수 있었다. Python 3에서는 완전한 **함수**가 되었다. 반드시 괄호로 인수를 감싸야 한다.
+Python 2에서 `print`는 **문장**(statement)이었다. 괄호 없이 `print "hello"` 처럼 쓸 수 있었다. Python 3에서는 완전한 **함수**가 되었다. 반드시 괄호로 인수를 감싸야 한다.
 
 ```python
 print("Hello, Python!")   # OK
@@ -45,7 +45,7 @@ print(1, 2, 3, sep="\n")      # 각 값이 한 줄씩
 
 ### end — 줄 끝 문자 바꾸기
 
-`print()`는 기본적으로 출력 후 **줄바꿈(`\n`)**을 추가한다. 이 동작을 `end` 인수로 바꿀 수 있다.
+`print()`는 기본적으로 출력 후 **줄바꿈**(`\n`)을 추가한다. 이 동작을 `end` 인수로 바꿀 수 있다.
 
 ```python
 for i in range(5):

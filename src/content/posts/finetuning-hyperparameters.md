@@ -55,7 +55,7 @@ for lr in [1e-5, 5e-5, 2e-4]:
 
 Warmup은 학습 초반에 LR을 0에서 목표값까지 선형으로 증가시키는 기법이다. 파인튜닝 초기에 랜덤 초기화된 adapter 레이어(LoRA의 경우 행렬 B)가 갑작스럽게 큰 그래디언트를 발생시키는 것을 방지한다.
 
-권장 warmup 비율은 전체 훈련 스텝의 **3~10%**다. 데이터가 적을수록, 학습률이 높을수록 더 긴 warmup이 필요하다.
+권장 warmup 비율은 전체 훈련 스텝의 <strong>3~10%</strong>다. 데이터가 적을수록, 학습률이 높을수록 더 긴 warmup이 필요하다.
 
 ```python
 # 전체 스텝 계산
@@ -68,7 +68,7 @@ print(f"총 스텝: {total_steps}, Warmup 스텝: {warmup_steps}")
 
 ### 실효 배치 크기 (Effective Batch Size)
 
-LLM 파인튜닝에서는 큰 배치 크기가 안정적인 그래디언트 추정과 빠른 수렴에 도움을 준다. 하지만 GPU 메모리 한계로 인해 직접 큰 배치를 사용하기 어렵다. 이때 **그래디언트 누적(Gradient Accumulation)**을 활용한다.
+LLM 파인튜닝에서는 큰 배치 크기가 안정적인 그래디언트 추정과 빠른 수렴에 도움을 준다. 하지만 GPU 메모리 한계로 인해 직접 큰 배치를 사용하기 어렵다. 이때 **그래디언트 누적**(Gradient Accumulation)을 활용한다.
 
 ```text
 실효 배치 크기 = per_device_batch × gradient_accumulation × num_gpus
@@ -110,7 +110,7 @@ LLM 파인튜닝에서는 **3~5 에폭**이 일반적인 출발점이다. 데이
 | > 10,000개 | 1~3 | 과적합 위험 증가 |
 | > 100,000개 | 1~2 | 1 에폭도 충분 |
 
-에폭을 늘릴수록 훈련 손실은 낮아지지만, **validation loss가 높아지기 시작하는 지점(early stopping point)**을 찾아 조기 종료하는 것이 핵심이다.
+에폭을 늘릴수록 훈련 손실은 낮아지지만, **validation loss가 높아지기 시작하는 지점**(early stopping point)을 찾아 조기 종료하는 것이 핵심이다.
 
 ### 조기 종료 설정
 
@@ -233,7 +233,7 @@ training_args = TrainingArguments(
 
 ## 실험 추적: WandB / MLflow 연동
 
-하이퍼파라미터 실험을 체계적으로 관리하지 않으면 "어떤 설정이 좋았는지" 기억하기 어렵다. **Weights & Biases(WandB)**는 LLM 파인튜닝 커뮤니티에서 가장 널리 사용하는 실험 추적 도구다.
+하이퍼파라미터 실험을 체계적으로 관리하지 않으면 "어떤 설정이 좋았는지" 기억하기 어렵다. **Weights & Biases**(WandB)는 LLM 파인튜닝 커뮤니티에서 가장 널리 사용하는 실험 추적 도구다.
 
 ```python
 import wandb

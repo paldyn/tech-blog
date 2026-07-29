@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-composite-index-column-order/)에서 복합 인덱스 컬럼 순서를 정리했다. 이번에는 인덱스 성능 최적화의 끝판왕인 **커버링 인덱스(Covering Index)**를 다룬다.
+[지난 글](/posts/sql-composite-index-column-order/)에서 복합 인덱스 컬럼 순서를 정리했다. 이번에는 인덱스 성능 최적화의 끝판왕인 **커버링 인덱스**(Covering Index)를 다룬다.
 
 ---
 

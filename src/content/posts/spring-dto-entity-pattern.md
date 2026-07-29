@@ -19,7 +19,7 @@ draft: false
 
 **Entity**는 도메인 모델입니다. JPA가 관리하는 영속성 객체로, 데이터베이스 테이블과 1:1로 매핑됩니다. 비즈니스 불변식과 도메인 로직을 포함하며, `passwordHash`, `createdAt`, `deletedAt` 같은 내부 관리 필드도 포함합니다.
 
-**DTO(Data Transfer Object)**는 계층 간 데이터 전달 전용 객체입니다. 외부에 노출할 필드만 선택적으로 담고, 입력 검증 어노테이션(`@NotBlank`, `@Email` 등)을 붙입니다. 크게 두 종류로 나뉩니다.
+**DTO**(Data Transfer Object)는 계층 간 데이터 전달 전용 객체입니다. 외부에 노출할 필드만 선택적으로 담고, 입력 검증 어노테이션(`@NotBlank`, `@Email` 등)을 붙입니다. 크게 두 종류로 나뉩니다.
 
 - **RequestDTO**: 클라이언트 입력을 수신. 유효성 검증 어노테이션 포함
 - **ResponseDTO**: 클라이언트에 반환하는 응답. 필요한 필드만 선택

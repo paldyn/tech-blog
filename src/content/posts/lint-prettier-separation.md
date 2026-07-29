@@ -19,7 +19,7 @@ draft: false
 
 ESLint는 **의미 분석기**입니다. `no-unused-vars`, `no-undef`, `eqeqeq` 같은 규칙은 코드가 무엇을 하는지를 분석합니다. 일부 포맷 규칙(`indent`, `quotes`, `semi`)도 있지만, 이것들이 Prettier와 충돌합니다.
 
-Prettier는 **의견 있는 포맷터(Opinionated Formatter)**입니다. 코드를 파싱한 뒤 자체 규칙으로 재출력합니다. 설정 옵션이 의도적으로 적어서 팀 내 스타일 논쟁을 없앱니다. 줄 바꿈, 들여쓰기, 세미콜론, 따옴표, 후행 쉼표는 Prettier에 맡깁니다.
+Prettier는 **의견 있는 포맷터**(Opinionated Formatter)입니다. 코드를 파싱한 뒤 자체 규칙으로 재출력합니다. 설정 옵션이 의도적으로 적어서 팀 내 스타일 논쟁을 없앱니다. 줄 바꿈, 들여쓰기, 세미콜론, 따옴표, 후행 쉼표는 Prettier에 맡깁니다.
 
 ![ESLint vs Prettier — 역할 분리](/assets/posts/lint-prettier-separation-roles.svg)
 

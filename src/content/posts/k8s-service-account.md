@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-external-secrets-operator/)에서 External Secrets Operator로 외부 시크릿을 쿠버네티스로 가져오는 방법을 살펴봤다. 이번에는 쿠버네티스 워크로드가 API Server와 통신하거나 외부 클라우드 서비스에 접근할 때 사용하는 **ServiceAccount(서비스 어카운트)**를 다룬다. 사람이 사용하는 User Account와 달리 ServiceAccount는 파드가 사용하는 계정이다.
+[지난 글](/posts/k8s-external-secrets-operator/)에서 External Secrets Operator로 외부 시크릿을 쿠버네티스로 가져오는 방법을 살펴봤다. 이번에는 쿠버네티스 워크로드가 API Server와 통신하거나 외부 클라우드 서비스에 접근할 때 사용하는 **ServiceAccount**(서비스 어카운트)를 다룬다. 사람이 사용하는 User Account와 달리 ServiceAccount는 파드가 사용하는 계정이다.
 
 ## ServiceAccount란?
 

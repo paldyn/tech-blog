@@ -21,11 +21,11 @@ GPU는 반대로 **처리량(Throughput)** 최적화를 추구한다. 단순한 
 
 ![CPU vs GPU 아키텍처 비교](/assets/posts/gpu-cuda-architecture.svg)
 
-딥러닝의 핵심 연산인 **행렬 곱셈(GEMM)**은 독립적인 곱셈-덧셈 연산의 집합이다. 1000×1000 행렬 두 개를 곱하면 10억 번의 독립 연산이 발생한다. CPU의 16개 코어로 이를 처리하는 것보다, GPU의 수천 개 작은 코어가 병렬 처리하는 것이 압도적으로 유리하다. NVIDIA A100 기준 FP16 행렬 연산 성능은 약 312 TFLOPS — CPU의 수백 배다.
+딥러닝의 핵심 연산인 **행렬 곱셈**(GEMM)은 독립적인 곱셈-덧셈 연산의 집합이다. 1000×1000 행렬 두 개를 곱하면 10억 번의 독립 연산이 발생한다. CPU의 16개 코어로 이를 처리하는 것보다, GPU의 수천 개 작은 코어가 병렬 처리하는 것이 압도적으로 유리하다. NVIDIA A100 기준 FP16 행렬 연산 성능은 약 312 TFLOPS — CPU의 수백 배다.
 
 ## CUDA 아키텍처: SM, Warp, Thread
 
-CUDA GPU는 **Streaming Multiprocessor(SM)**라는 단위로 구성된다. SM은 독립적인 연산 유닛 묶음으로, 각각 CUDA 코어(FP32/INT32), Tensor Core(행렬 연산 전용), Shared Memory, Warp Scheduler를 포함한다. H100 기준 132개 SM, 각 SM에 128개 CUDA 코어 → 총 16,896개 CUDA 코어.
+CUDA GPU는 **Streaming Multiprocessor**(SM)라는 단위로 구성된다. SM은 독립적인 연산 유닛 묶음으로, 각각 CUDA 코어(FP32/INT32), Tensor Core(행렬 연산 전용), Shared Memory, Warp Scheduler를 포함한다. H100 기준 132개 SM, 각 SM에 128개 CUDA 코어 → 총 16,896개 CUDA 코어.
 
 GPU 실행의 기본 단위는 **Warp**다. Warp는 동시에 실행되는 32개 스레드의 묶음이다. Warp 내 모든 스레드는 동일한 명령어를 실행한다(SIMT: Single Instruction, Multiple Thread). 스레드가 서로 다른 분기(if/else)를 탈 경우 **Warp Divergence**가 발생해 직렬화되므로 성능이 저하된다.
 
@@ -112,7 +112,7 @@ print(f"Peak memory: {peak:.2f} GB")
 
 ### cuda.synchronize(): 비동기 실행 이해하기
 
-PyTorch GPU 연산은 기본적으로 **비동기(asynchronous)**다. CPU는 GPU 작업을 큐에 올리고 바로 다음 코드로 넘어간다. 정확한 시간 측정을 위해서는 동기화가 필요하다.
+PyTorch GPU 연산은 기본적으로 **비동기**(asynchronous)다. CPU는 GPU 작업을 큐에 올리고 바로 다음 코드로 넘어간다. 정확한 시간 측정을 위해서는 동기화가 필요하다.
 
 ```python
 import torch

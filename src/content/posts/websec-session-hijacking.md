@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/websec-session-fixation/)에서 세션 고정 공격을 다뤘다. 이번에는 세션을 탈취하는 더 넓은 범주인 **세션 하이재킹(Session Hijacking)**을 다룬다.
+[지난 글](/posts/websec-session-fixation/)에서 세션 고정 공격을 다뤘다. 이번에는 세션을 탈취하는 더 넓은 범주인 **세션 하이재킹**(Session Hijacking)을 다룬다.
 
 ## 세션 하이재킹이란
 

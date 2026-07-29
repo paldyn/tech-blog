@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/linux-getent-passwd-group/)에서 NSS와 getent를 살펴봤습니다. 이번에는 **PAM(Pluggable Authentication Modules)**을 다룹니다. PAM은 리눅스 인증 시스템의 핵심 레이어로, `login`, `sshd`, `sudo` 등이 모두 PAM을 통해 인증을 처리합니다.
+[지난 글](/posts/linux-getent-passwd-group/)에서 NSS와 getent를 살펴봤습니다. 이번에는 **PAM**(Pluggable Authentication Modules)을 다룹니다. PAM은 리눅스 인증 시스템의 핵심 레이어로, `login`, `sshd`, `sudo` 등이 모두 PAM을 통해 인증을 처리합니다.
 
 ## PAM이 해결하는 문제
 

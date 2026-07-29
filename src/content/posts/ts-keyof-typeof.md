@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/ts-readonly-const-assertions/)에서 readonly와 as const를 살펴봤다. 이번에는 TypeScript의 두 가지 핵심 타입 연산자 **`keyof`와 `typeof`**를 다룬다. 기존 타입이나 값에서 새로운 타입을 파생시키는 강력한 도구다.
+[지난 글](/posts/ts-readonly-const-assertions/)에서 readonly와 as const를 살펴봤다. 이번에는 TypeScript의 두 가지 핵심 타입 연산자 <strong>`keyof`와 `typeof`</strong>를 다룬다. 기존 타입이나 값에서 새로운 타입을 파생시키는 강력한 도구다.
 
 ## keyof 연산자
 

@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/dsa-max-flow-ford-fulkerson/)에서 포드-풀커슨(Ford-Fulkerson)과 Edmonds-Karp를 통해 최대 유량의 핵심 원리인 증가 경로와 잔여 그래프를 살펴봤습니다. 이번 글에서는 **Dinic 알고리즘**을 다룹니다. Dinic은 BFS로 레벨 그래프를 구성하고 DFS로 블로킹 플로우를 한 번에 흘려 Edmonds-Karp(O(VE²))보다 빠른 **O(V²E)**를 달성합니다.
+[지난 글](/posts/dsa-max-flow-ford-fulkerson/)에서 포드-풀커슨(Ford-Fulkerson)과 Edmonds-Karp를 통해 최대 유량의 핵심 원리인 증가 경로와 잔여 그래프를 살펴봤습니다. 이번 글에서는 **Dinic 알고리즘**을 다룹니다. Dinic은 BFS로 레벨 그래프를 구성하고 DFS로 블로킹 플로우를 한 번에 흘려 Edmonds-Karp(O(VE²))보다 빠른 **O**(V²E)를 달성합니다.
 
 ## 핵심 아이디어
 
@@ -97,7 +97,7 @@ Edmonds-Karp의 O(VE²)에 비해 실전에서 압도적으로 빠르며, 이분
 
 ## 이분 그래프에서의 Dinic
 
-이분 매칭 문제를 `s → 좌측 → 우측 → t` 형태로 변환하면 모든 용량이 1이 됩니다. 이때 레벨 수가 O(√V)로 줄어들어 전체 복잡도가 **O(E√V)**가 됩니다. 일반 이분 매칭의 Hopcroft-Karp와 동일한 복잡도를 자동으로 달성합니다.
+이분 매칭 문제를 `s → 좌측 → 우측 → t` 형태로 변환하면 모든 용량이 1이 됩니다. 이때 레벨 수가 O(√V)로 줄어들어 전체 복잡도가 **O**(E√V)가 됩니다. 일반 이분 매칭의 Hopcroft-Karp와 동일한 복잡도를 자동으로 달성합니다.
 
 ```cpp
 // 이분 매칭을 유량으로
