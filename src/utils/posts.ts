@@ -128,7 +128,7 @@ const CATEGORY_LOGOS: Record<string, string> = {
   Network: '/assets/logos/network.jpg',
   Algorithm: '/assets/logos/algorithm.jpg',
   'Next.js': '/assets/logos/nextjs.jpg',
-  Security: '/assets/logos/security.jpg',
+  Security: '/assets/logos/security.svg',
   Python: '/assets/logos/python.jpg',
   Team: '/assets/logo-symbol-dark.png',
 };
@@ -137,20 +137,20 @@ export function logoFor(post: Post): string | undefined {
   return CATEGORY_LOGOS[post.data.category];
 }
 
-// 흰 배경이 이미지에 구워진 로고들. 타일에 브랜드 색을 깔고 img를 multiply로 합성하면
-// 흰 배경만 색에 녹고 로고 아트워크는 그대로 남는다.
-const LOGO_TINTS: Record<string, string> = {
-  'java.png': '#eaf0f7',
-  'kubernetes.png': '#e8eefc',
-  'docker.png': '#e6f2fd',
-  'react.png': '#e4f6fb',
-  'git.png': '#fceae4',
-  'linux.png': '#fdf1dd',
+// 배경이 투명한 로고들의 브랜드 포인트 컬러.
+// 라이트 모드에서 타일 배경으로 깔고 로고는 흰색으로 녹아웃한다.
+const LOGO_BRAND: Record<string, string> = {
+  'java.png': '#5382a1',
+  'kubernetes.png': '#326ce5',
+  'docker.png': '#2496ed',
+  'react.png': '#087ea4',
+  'git.png': '#f05033',
+  'linux.png': '#c98a00',
 };
 
-export function logoTint(logo: string | undefined): string | undefined {
+export function logoBrand(logo: string | undefined): string | undefined {
   if (!logo) return undefined;
-  return LOGO_TINTS[logo.slice(logo.lastIndexOf('/') + 1)];
+  return LOGO_BRAND[logo.slice(logo.lastIndexOf('/') + 1)];
 }
 
 export function readingTimeFor(post: Post): string {
