@@ -26,14 +26,14 @@ git hash-object -w README.md
 
 # stdin에서 읽기
 echo "hello world" | git hash-object --stdin
-# 8ab686e8a729f4b0ccd04e3176f26c78fbf00dcc
+# 3b18e512dba79e4c8300dd08aeb37f8e728b8dad
 ```
 
 ## SHA 계산 원리
 
 Git은 파일 내용을 그대로 해시하지 않는다. 오브젝트 타입·크기를 나타내는 헤더를 앞에 붙인 뒤 SHA-1을 계산한다.
 
-```
+```text
 헤더 형식: "{type} {size}\0{content}"
 예시: "blob 12\0hello world\n"
 ```
@@ -54,10 +54,10 @@ Git은 파일 내용을 그대로 해시하지 않는다. 오브젝트 타입·�
 ```bash
 SHA=$(git hash-object -w file.txt)
 echo $SHA
-# 8ab686e8a729f4b0ccd04e3176f26c78fbf00dcc
+# 3b18e512dba79e4c8300dd08aeb37f8e728b8dad
 
-ls .git/objects/8a/
-# b686e8a729f4b0ccd04e3176f26c78fbf00dcc
+ls .git/objects/3b/
+# 18e512dba79e4c8300dd08aeb37f8e728b8dad
 
 # 저장된 내용 확인 (zlib 압축됨)
 git cat-file -p $SHA
@@ -145,7 +145,7 @@ header = f"blob {len(content)}\0".encode()
 data = header + content
 
 sha = hashlib.sha1(data).hexdigest()
-print(sha)  # 8ab686e8a729f4b0ccd04e3176f26c78fbf00dcc
+print(sha)  # 3b18e512dba79e4c8300dd08aeb37f8e728b8dad
 ```
 
 `git hash-object`의 결과와 동일하다. 이를 통해 Git SHA가 암호학적으로 안전한 체크섬이며 내용에 의해 완전히 결정됨을 확인할 수 있다.

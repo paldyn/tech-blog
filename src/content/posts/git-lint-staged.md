@@ -17,7 +17,7 @@ draft: false
 
 규모 있는 프로젝트에서 pre-commit마다 `eslint src/` 전체 검사를 실행하면 수십 초가 걸릴 수 있다. lint-staged는 이번 커밋에 포함되는 파일만 lint해서 실행 시간을 대폭 단축한다.
 
-```
+```text
 커밋 전 스테이징: src/foo.ts, src/bar.tsx, README.md
 → lint-staged: 세 파일에만 lint 실행 (전체 프로젝트 무관)
 ```
@@ -80,7 +80,7 @@ npx lint-staged
 
 lint-staged는 도구가 파일을 수정하면(`--fix`, `--write`) **수정된 파일을 자동으로 다시 `git add`** 한다. 개발자가 수동으로 재스테이징할 필요 없이 포맷팅된 결과가 커밋에 포함된다.
 
-```
+```text
 git add src/foo.ts    ← 수동 스테이징
 git commit            ← lint-staged 실행
   → eslint --fix src/foo.ts  ← 자동 수정
@@ -120,7 +120,7 @@ npx tsc --noEmit
 
 ### glob이 매칭되지 않는 경우
 
-lint-staged의 glob은 파일명(basename)만 매칭하는 것이 아니라 전체 경로를 기준으로 한다.
+lint-staged의 glob은 슬래시가 없는 패턴(`*.ts`)은 파일명(basename) 기준으로, 슬래시가 포함된 패턴(`src/**/*.ts`)은 경로 기준으로 매칭한다.
 
 ```json
 {

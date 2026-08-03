@@ -70,7 +70,7 @@ GitHub에서 PR을 머지할 때 세 가지 전략을 선택할 수 있다.
 
 ### Merge commit (기본)
 
-```
+```text
 main:    A - B - M      (M = merge commit)
                 /
 feature: C - D
@@ -80,7 +80,7 @@ feature: C - D
 
 ### Squash and merge
 
-```
+```text
 main:    A - B - S      (S = 모든 피처 커밋을 하나로 합침)
 ```
 
@@ -88,7 +88,7 @@ main:    A - B - S      (S = 모든 피처 커밋을 하나로 합침)
 
 ### Rebase and merge
 
-```
+```text
 main:    A - B - C' - D'    (C', D' = 재작성된 커밋)
 ```
 
@@ -98,7 +98,7 @@ main:    A - B - C' - D'    (C', D' = 재작성된 커밋)
 
 ## PR 작성 시 좋은 습관
 
-```
+```text
 PR 제목: feat: add dark mode support
 PR 본문:
 ## 변경 이유

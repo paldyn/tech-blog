@@ -82,13 +82,13 @@ git log -G "validate.*Password" --oneline
 
 ```bash
 # 특정 파일을 수정한 커밋만
-git log -- src/auth.js --oneline
+git log --oneline -- src/auth.js
 
 # 디렉터리
-git log -- src/auth/ --oneline
+git log --oneline -- src/auth/
 
 # 이름 변경 이전도 추적
-git log --follow -- src/auth.js --oneline
+git log --oneline --follow -- src/auth.js
 ```
 
 ## 필터 조합

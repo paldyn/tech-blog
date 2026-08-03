@@ -147,7 +147,7 @@ git stash list --format="%gd %s"
 
 Plumbing 명령이 필요한 상황은 다음과 같다.
 
-- Git 훅 스크립트에서 oject·ref 값을 추출할 때
+- Git 훅 스크립트에서 object·ref 값을 추출할 때
 - CI/CD 파이프라인에서 브랜치·커밋 정보를 추출할 때
 - 커스텀 Git 도구를 개발할 때
 - Git 내부 구조를 이해하고 디버깅할 때

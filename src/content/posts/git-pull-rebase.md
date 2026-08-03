@@ -17,7 +17,7 @@ draft: false
 
 팀원이 원격 `main`에 커밋을 올린 상태에서 나도 로컬 `main`에 새 커밋을 만들었다면, 두 히스토리가 분기된 상태가 된다. 이 상태에서 `git pull`을 실행하면 Git은 **머지 커밋**을 자동으로 생성한다.
 
-```
+```text
 # 기본 pull 후 히스토리
 * Merge branch 'main' of github.com:user/repo  ← 원하지 않는 커밋
 |\
@@ -43,7 +43,7 @@ git pull --rebase origin main
 
 결과적으로 히스토리는 일직선이 된다.
 
-```
+```text
 # pull --rebase 후 히스토리
 * 나의 로컬 커밋 (재적용됨, SHA가 바뀜)
 * 팀원 커밋

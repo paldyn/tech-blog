@@ -70,10 +70,9 @@ git mergetool src/auth.py
 git mergetool -t vimdiff
 ```
 
-도구에서 저장 후 종료하면 Git은 파일을 자동으로 스테이지에 올리지 않는다. 직접 `git add`를 실행해야 한다.
+도구에서 저장 후 종료하면 Git은 해결된 파일을 자동으로 스테이지에 올린다. 남은 충돌 파일이 없으면 바로 커밋하면 된다.
 
 ```bash
-git add src/auth.py
 git commit
 ```
 

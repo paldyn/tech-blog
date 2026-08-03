@@ -86,7 +86,7 @@ git config gc.auto
 
 ![gc 과정](/assets/posts/git-loose-vs-pack-gc.svg)
 
-Git은 커밋이나 fetch 시 `gc.auto` 임계치를 넘으면 자동으로 gc를 실행한다. `--quiet` 로그에서 `Auto packing the repository for optimum performance.` 메시지를 볼 수 있다.
+Git은 커밋이나 fetch 시 `gc.auto` 임계치를 넘으면 자동으로 gc를 실행한다. 이때 터미널 로그에서 `Auto packing the repository for optimum performance.` 메시지를 볼 수 있다.
 
 ## pack 파일 조회 명령
 
@@ -111,7 +111,7 @@ git count-objects -v
 
 loose 오브젝트와 pack 파일은 함께 존재할 수 있다. Git은 오브젝트를 조회할 때 두 곳을 모두 검색한다.
 
-```
+```text
 1. .git/objects/{2자}/{38자} (loose)
 2. .git/objects/pack/*.idx (pack)
 ```

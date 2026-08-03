@@ -15,7 +15,7 @@ draft: false
 
 ## Husky가 필요한 이유
 
-`.git/hooks/`는 Git이 자동으로 생성하는 디렉터리로, `.gitignore`에 의해 추적되지 않는다. 훅 스크립트를 직접 만들어도 다른 팀원에게 배포하려면 별도 설치 안내가 필요하다.
+`.git/hooks/`는 Git이 자동으로 생성하는 디렉터리로, `.git/` 내부라서 Git이 추적하지 않는다. 훅 스크립트를 직접 만들어도 다른 팀원에게 배포하려면 별도 설치 안내가 필요하다.
 
 Husky는 훅 파일을 `.husky/` 폴더에 저장해 **커밋에 포함**시키고, `npm install` 시 자동으로 Git 훅 경로를 연결해 준다.
 
@@ -123,7 +123,7 @@ git commit --no-verify -m "WIP: 임시 저장"
 
 ## 프로젝트 구조 예시
 
-```
+```text
 my-project/
 ├── .husky/
 │   ├── pre-commit       ← lint-staged 실행

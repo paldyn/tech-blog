@@ -25,7 +25,7 @@ git merge -s <전략> <브랜치>
 
 ## ort: 현재 기본 전략
 
-Git 2.34부터 기본 전략이 `recursive`에서 `ort`(Orthogonal Recursive Text)로 바뀌었다.
+Git 2.34부터 기본 전략이 `recursive`에서 `ort`(Ostensibly Recursive's Twin)로 바뀌었다.
 
 ```bash
 git merge feature
@@ -53,7 +53,7 @@ git merge -s octopus feat-a feat-b feat-c
 # Merge made by the 'octopus' strategy.
 ```
 
-단, **충돌이 발생하면 즉시 중단**된다. 충돌 없는 단순 통합 작업, 예를 들어 모놀리포에서 여러 독립 서비스 브랜치를 통합 브랜치로 합칠 때 유용하다.
+단, **충돌이 발생하면 즉시 중단**된다. 충돌 없는 단순 통합 작업, 예를 들어 모노레포에서 여러 독립 서비스 브랜치를 통합 브랜치로 합칠 때 유용하다.
 
 ## ours 전략: 상대 변경 완전 무시
 

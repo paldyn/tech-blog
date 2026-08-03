@@ -25,9 +25,9 @@ Git의 델타 압축은 텍스트 파일에 매우 효과적이지만 바이너�
 
 LFS를 사용하면 저장소에 커밋되는 것은 실제 파일이 아니라 134바이트 남짓한 텍스트 파일이다.
 
-```
+```text
 version https://git-lfs.github.com/spec/v1
-oid sha256:4d7a214614ab2935c943f9e0ff69d22eadbb8f32
+oid sha256:4d7a214614ab2935c943f9e0ff69d22eadbb8f32b1c56b30576e1c48c2609dcb
 size 209715200
 ```
 

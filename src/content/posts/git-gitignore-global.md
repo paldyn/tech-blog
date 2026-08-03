@@ -49,7 +49,7 @@ git config --global core.excludesFile
 
 ## 전역 gitignore 내용
 
-```
+```text
 # ====== macOS ======
 .DS_Store
 .DS_Store?
@@ -127,10 +127,10 @@ EOF
 
 ```bash
 # 전역 설정이 제대로 동작하는지 확인
-touch test-ignore-check.DS_Store
-git check-ignore -v test-ignore-check.DS_Store
-# 전역 gitignore 경로:1:... test-ignore-check.DS_Store
-rm test-ignore-check.DS_Store
+touch .DS_Store
+git check-ignore -v .DS_Store
+# 전역 gitignore 경로:1:.DS_Store	.DS_Store
+rm .DS_Store
 ```
 
 ---

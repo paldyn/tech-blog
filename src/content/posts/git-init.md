@@ -35,7 +35,7 @@ ls -la
 
 `.git` 안의 주요 구성 요소를 알아두면 Git의 동작 방식을 이해하는 데 도움이 된다.
 
-```
+```text
 .git/
 ├── HEAD          # 현재 브랜치 포인터
 ├── config        # 저장소별 설정 (git config --local)

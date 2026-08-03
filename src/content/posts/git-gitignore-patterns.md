@@ -35,7 +35,7 @@ git commit -m "stop tracking file"
 - 디렉터리는 `/`로 끝낸다: `build/`
 - 루트에서만 매칭하려면 앞에 `/`를 붙인다: `/TODO`
 
-```
+```text
 # 빌드 결과물
 build/
 dist/
@@ -57,7 +57,7 @@ dist/
 
 ### 와일드카드
 
-```
+```text
 # * : 슬래시 제외 임의 문자열
 *.log          # 모든 .log 파일
 temp*          # temp로 시작하는 파일
@@ -73,7 +73,7 @@ log?.txt       # log1.txt, logA.txt
 
 ### 경로 구분
 
-```
+```text
 # 앞에 / 없음: 모든 위치에서 매칭
 *.log          # src/app.log, logs/error.log 모두 무시
 
@@ -88,7 +88,7 @@ build/         # build 디렉터리 전체 (build 파일은 무시 안 됨)
 
 이전에 무시된 파일을 다시 추적 대상에 포함한다.
 
-```
+```text
 # logs/ 아래 전체 무시, 단 important.log 예외
 logs/
 !logs/important.log
@@ -100,7 +100,7 @@ logs/
 
 **주의**: 상위 디렉터리가 이미 무시된 경우 하위 파일에 `!`를 써도 효과 없다.
 
-```
+```text
 # 잘못된 예: build/가 무시됐으면 하위 파일도 무시됨
 build/
 !build/output.txt  # 효과 없음 — build/ 자체가 무시됨
@@ -116,7 +116,7 @@ build/*
 
 같은 파일에 여러 패턴이 매칭되면 **파일 내에서 나중에 나온 패턴**이 이긴다.
 
-```
+```text
 *.log          # 모든 .log 무시
 !debug.log     # 단, debug.log 예외 (아래 줄이 우선)
 ```

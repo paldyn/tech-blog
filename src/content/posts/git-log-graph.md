@@ -36,7 +36,7 @@ git log --graph --oneline --decorate --all
 - `(HEAD -> main)`: 현재 체크아웃된 브랜치
 - `(feature/login)`: 다른 로컬/원격 브랜치 ref
 
-머지 커밋은 부모가 두 개라 `|\` 혹은 `/|` 형태로 선이 갈라진다.
+머지 커밋은 부모가 두 개라 `|\` 혹은 `|/` 형태로 선이 갈라진다.
 
 ## alias 등록 권장
 

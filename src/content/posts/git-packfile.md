@@ -35,7 +35,7 @@ ls .git/objects/pack/
 .pack 파일은 세 부분으로 구성된다.
 
 **헤더 (12 bytes)**
-```
+```text
 PACK  (4 bytes: magic number 'P','A','C','K')
 0002  (4 bytes: 버전, 현재 2)
 NNNN  (4 bytes: 오브젝트 개수)

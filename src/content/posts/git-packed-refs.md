@@ -33,16 +33,16 @@ cat .git/packed-refs
 
 파일의 첫 줄은 헤더다.
 
-```
+```text
 # pack-refs with: peeled fully-peeled sorted
 ```
 
 이후 각 줄은 `{SHA40} {refname}` 형태다.
 
-```
-abc123def456789abcdef1234567890abcdef12  refs/heads/main
-ttt999fff888777666555444333222111000aaa  refs/tags/v1.0.0
-^abc123def456789abcdef1234567890abcdef12
+```text
+abc123def456789abcdef1234567890abcdef123  refs/heads/main
+9f86d081884c7d659a2feaa0c55ad015a3bf4f1b  refs/tags/v1.0.0
+^abc123def456789abcdef1234567890abcdef123
 ```
 
 `^`로 시작하는 줄은 **peeled ref**다. annotated tag 바로 다음에 나타나며, tag 오브젝트가 가리키는 실제 commit SHA를 나타낸다. `git rev-parse v1.0.0^{}`와 같은 값이다. lightweight tag는 peeled 줄이 없다.
@@ -51,7 +51,7 @@ ttt999fff888777666555444333222111000aaa  refs/tags/v1.0.0
 
 Git이 ref를 조회할 때 규칙은 단순하다.
 
-```
+```text
 1. .git/refs/{경로}에 파일이 있으면 → loose ref 사용
 2. 없으면 → packed-refs에서 해당 refname 검색
 ```

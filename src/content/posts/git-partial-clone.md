@@ -102,9 +102,9 @@ git sparse-checkout set apps/backend packages/shared
 **서버 호환성 확인**: 회사 내부 Git 서버가 partial clone을 지원하는지 확인 후 사용한다.
 
 ```bash
-# partial clone 지원 여부 확인
-git ls-remote --filter=blob:none <url>
-# 오류 없이 응답하면 지원함
+# partial clone 지원 여부 확인: 필터를 준 시험 clone
+git clone --filter=blob:none --no-checkout <url> probe-clone
+# 서버가 지원하지 않으면 "warning: filtering not recognized by server, ignoring" 경고가 출력된다
 ```
 
 ---

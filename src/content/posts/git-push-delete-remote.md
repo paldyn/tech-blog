@@ -110,13 +110,13 @@ git branch -r | grep 'origin/feature/old-' \
   | xargs -I{} git push origin --delete {}
 ```
 
-일괄 삭제는 강력한 만큼 신중하게 사용한다. `--dry-run` 옵션이 없으므로, 삭제 대상을 먼저 출력해서 확인한 뒤 실행한다.
+일괄 삭제는 강력한 만큼 신중하게 사용한다. `--dry-run` 옵션으로 시험 실행하거나, 삭제 대상을 먼저 출력해서 확인한 뒤 실행한다.
 
 ## 삭제 보호: 브랜치 보호 규칙
 
 중요한 브랜치가 실수로 삭제되는 것을 막으려면 GitHub의 branch protection 설정을 활용한다.
 
-```
+```text
 GitHub: Settings → Branches → Branch protection rules
 → "Do not allow deletions"
 ```

@@ -19,13 +19,13 @@ draft: false
 
 `pre-commit`·`commit-msg`와 다른 가장 큰 특징: **stdin으로 push 정보가 전달된다**.
 
-```
+```text
 <local-ref> <local-sha1> <remote-ref> <remote-sha1>
 ```
 
 예를 들어 `git push origin main`을 실행하면:
 
-```
+```text
 refs/heads/main abc1234 refs/heads/main def5678
 ```
 
@@ -144,7 +144,7 @@ npm run test:smoke
 
 진정한 강제는 **GitHub Branch protection rules**로 서버 측에서 설정한다.
 
-```
+```text
 Settings → Branches → Branch protection rules → main
 ☑ Require a pull request before merging
 ☑ Require status checks to pass before merging

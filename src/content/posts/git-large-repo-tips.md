@@ -45,7 +45,7 @@ git rev-list --objects --all \
 진단 후 가장 먼저 해볼 수 있는 조치다. 저장소를 바꾸지 않고 내부 구조만 최적화한다.
 
 ```bash
-# 기본 gc (30일 이상 unreachable 오브젝트 제거)
+# 기본 gc (2주 이상 지난 unreachable 오브젝트 제거)
 git gc
 
 # 모든 unreachable 오브젝트 즉시 제거 + 공격적 재압축

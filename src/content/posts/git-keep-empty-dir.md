@@ -51,7 +51,7 @@ git commit -m "chore: add .gitkeep to preserve directory structure"
 
 파일에 실제 내용을 넣어두는 팀도 있다.
 
-```
+```text
 # This file exists only to preserve this directory in git.
 # Do not commit any files here.
 ```

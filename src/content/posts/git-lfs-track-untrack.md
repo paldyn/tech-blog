@@ -39,7 +39,7 @@ git lfs track
 
 `git lfs track`을 사용하지 않고 `.gitattributes`를 직접 편집해도 된다. 결과는 동일하다.
 
-```
+```text
 # .gitattributes
 *.psd  filter=lfs diff=lfs merge=lfs -text
 *.mp4  filter=lfs diff=lfs merge=lfs -text
@@ -96,7 +96,7 @@ git commit -m "revert: PNG files back to regular Git objects"
 
 팀에서 공통으로 쓰기 좋은 LFS 패턴을 `.gitattributes`에 미리 등록해두면 편리하다.
 
-```
+```text
 # 이미지
 *.png  filter=lfs diff=lfs merge=lfs -text
 *.jpg  filter=lfs diff=lfs merge=lfs -text

@@ -101,7 +101,7 @@ git cat-file -p v1.0.0
 
 오브젝트는 `.git/objects/`에 저장된다.
 
-```
+```text
 .git/objects/
 ├── 4b/
 │   └── 825dc642cb6eb9a060e54bf8d69288fbee4904   # blob

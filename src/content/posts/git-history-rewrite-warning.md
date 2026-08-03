@@ -90,8 +90,8 @@ git push --force origin main
 # 재작성 전 SHA 확인
 git reflog | head -20
 
-# 복구
-git reset --hard abc1234@{5}
+# 복구 (reflog에서 확인한 재작성 전 SHA로)
+git reset --hard abc1234
 ```
 
 하지만 `git gc`가 실행되거나 원격에서 강제 삭제된 객체는 reflog로도 복구 불가다. 중요한 재작성 전엔 항상 백업 브랜치를 만든다.
