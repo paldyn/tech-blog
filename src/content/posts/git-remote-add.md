@@ -67,7 +67,7 @@ git remote -v
 
 `git remote -v` 출력에서 각 원격마다 `(fetch)`와 `(push)` 두 줄이 나타난다. 기본적으로 둘 다 같은 URL을 가리키지만, `git remote set-url --push`로 push URL만 별도로 설정할 수도 있다.
 
-```
+```text
 origin  https://github.com/user/my-project.git (fetch)
 origin  https://github.com/user/my-project.git (push)
 upstream  https://github.com/original/my-project.git (fetch)

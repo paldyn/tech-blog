@@ -49,7 +49,7 @@ git rebase -i HEAD~3
 
 에디터에서 수정할 커밋 앞을 `pick`에서 `edit`으로 변경한다.
 
-```
+```text
 edit abc111 feat: 로그인
 pick def222 feat: 회원가입
 edit ghi333 fix: 버그 수정

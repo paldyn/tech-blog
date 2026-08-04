@@ -87,7 +87,7 @@ force push가 필요한 상황이라면 `--force` 대신 항상 `--force-with-le
 
 GitHub, GitLab, Bitbucket 모두 **branch protection rules**를 지원한다. `main` 브랜치에 force push 금지 규칙을 설정하면 실수로 인한 피해를 방지할 수 있다.
 
-```
+```text
 GitHub: Settings → Branches → Branch protection rules
 → "Require pull request reviews before merging"
 → "Do not allow bypassing the above settings"

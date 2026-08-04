@@ -46,7 +46,7 @@ git rebase -i origin/main
 
 feature 브랜치에서 개발하다 보면 아래 같은 히스토리가 쌓인다.
 
-```
+```text
 abc1234 feat: add user authentication
 def5678 wip: save progress
 ghi9abc fix: typo in auth handler
@@ -62,7 +62,7 @@ git rebase -i origin/main
 
 에디터에서:
 
-```
+```text
 pick abc1234 feat: add user authentication
 squash def5678 wip: save progress
 fixup ghi9abc fix: typo in auth handler
@@ -72,7 +72,7 @@ fixup mno4567 fix: remove debug log
 
 저장하면 squash된 커밋들의 메시지를 합칠 수 있는 에디터가 다시 열린다. 최종 메시지를 정리하고 저장하면 아래처럼 한 커밋이 된다.
 
-```
+```text
 xyz7890 feat: add user authentication
 ```
 

@@ -17,7 +17,7 @@ draft: false
 
 `feature` 브랜치가 `main`의 C2에서 분기했고, 그 사이 `main`에 C3이 추가된 상황이라 하자.
 
-```
+```text
       C3  (main)
      /
 C1-C2
@@ -34,7 +34,7 @@ C1-C2
 
 결과적으로 히스토리가 직선이 된다.
 
-```
+```text
 C1-C2-C3-F1'-F2'  (feature, C3 위에 재적용)
 ```
 

@@ -33,7 +33,7 @@ git rev-parse refs/heads/main
 
 ## .git/refs/ 디렉터리 구조
 
-```
+```text
 .git/
 ├── HEAD                    ← 현재 체크아웃 위치 (symbolic ref)
 ├── packed-refs             ← 압축된 refs (git pack-refs 실행 후)

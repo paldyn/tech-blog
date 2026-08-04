@@ -28,7 +28,7 @@ git rebase -i HEAD~4
 
 에디터가 열리면:
 
-```
+```text
 pick abc111 feat: 로그인
 drop def222 debug: console.log 추가
 pick ghi333 fix: 버그 수정

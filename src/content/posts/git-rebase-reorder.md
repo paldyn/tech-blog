@@ -31,7 +31,7 @@ git rebase -i origin/main
 
 에디터가 열리면 커밋이 **오래된 것부터 위에** 표시된다. `git log`와 반대 순서임에 주의한다.
 
-```
+```text
 pick abc111 docs: README 업데이트
 pick def222 feat: login UI
 pick ghi333 feat: login API
@@ -44,7 +44,7 @@ API → UI 순서가 더 자연스럽다면 `def222`와 `ghi333` 줄을 교환�
 
 ## vim으로 줄 이동하기
 
-```
+```text
 # vim에서 줄 이동
 dd   # 현재 줄 잘라내기
 p    # 커서 아래 줄에 붙여넣기
@@ -83,7 +83,7 @@ git rebase -i HEAD~6
 
 에디터에서:
 
-```
+```text
 pick a1 feat: 데이터 모델
 pick b2 feat: API 엔드포인트
 pick c3 test: 데이터 모델 테스트
@@ -94,7 +94,7 @@ pick f6 fix: 엣지케이스 수정
 
 리뷰어 친화적 순서로 재배열:
 
-```
+```text
 pick a1 feat: 데이터 모델
 pick c3 test: 데이터 모델 테스트
 pick b2 feat: API 엔드포인트
@@ -113,7 +113,7 @@ reorder와 squash를 한 편집 세션에서 함께 적용할 수 있다.
 git rebase -i HEAD~5
 ```
 
-```
+```text
 pick a1 feat: 데이터 모델
 squash c3 test: 데이터 모델 테스트
 pick b2 feat: API 엔드포인트

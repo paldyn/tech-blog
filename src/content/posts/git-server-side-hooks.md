@@ -17,7 +17,7 @@ draft: false
 
 서버 사이드 훅은 **bare 레포지토리**의 `hooks/` 디렉터리에 위치한다. 일반 클론에 있는 `.git/hooks/`가 아니라, 원격 서버의 `myrepo.git/hooks/`다.
 
-```
+```text
 /srv/git/myrepo.git/
 ├── config
 ├── HEAD
@@ -40,7 +40,7 @@ GitHub·GitLab 같은 호스팅 서비스에서는 이 훅 대신 **Webhook**이
 
 push된 모든 ref를 한 번에 처리한다. stdin으로 입력을 받는다.
 
-```
+```text
 <old-sha> <new-sha> <ref-name>
 <old-sha> <new-sha> <ref-name>
 ...

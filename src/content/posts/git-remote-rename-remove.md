@@ -102,7 +102,7 @@ git remote show origin
 
 출력 예시:
 
-```
+```text
 * remote origin
   Fetch URL: git@github.com:user/repo.git
   Push  URL: git@github.com:user/repo.git

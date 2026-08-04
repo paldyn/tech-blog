@@ -45,7 +45,7 @@ git reflog --date=relative   # "2 hours ago" 형태
 
 각 줄은 세 부분으로 구성된다.
 
-```
+```text
 abc1234 HEAD@{0}: commit: feat: 로그인 구현
 def5678 HEAD@{1}: reset: moving to HEAD~1
 zzz9999 HEAD@{2}: commit (amend): refactor: 정리

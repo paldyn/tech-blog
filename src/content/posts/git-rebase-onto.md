@@ -19,7 +19,7 @@ draft: false
 
 ## --onto 문법
 
-```
+```text
 git rebase --onto <new-base> <exclude-from> [<branch>]
 ```
 
