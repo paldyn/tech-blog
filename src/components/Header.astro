@@ -136,15 +136,18 @@ const navItems = NAV_LINKS.map(({ href, label }) => ({
     var closeBtn = overlay.querySelector('.search-close');
     var scopeButtons = [].slice.call(overlay.querySelectorAll('.search-scopes button'));
 
-    // 한 번에 그리는 최대 줄 수. 두 글자짜리 검색어는 수천 건이 걸리는데,
-    // 그만큼 DOM을 만들면 입력이 한 글자마다 멈춘다. 총 건수는 아래에 적는다.
-    var RENDER_LIMIT = 50;
+    // 결과는 전부 보여주되 한 번에 다 그리지는 않는다. 두 글자짜리 검색어는
+    // 수천 건이 걸리는데 그만큼 DOM을 한 번에 만들면 글자마다 입력이 멈춘다.
+    // 아래로 내려가면 이어서 그린다.
+    var CHUNK = 60;
 
     var index = [];
     var indexLoading = null;
     var scope = 'all';
     var cursor = 0;
     var hits = [];
+    var query = '';
+    var drawn = 0;
     var lastFocused = null;
     var inerted = [];
 
@@ -185,16 +188,20 @@ const navItems = NAV_LINKS.map(({ href, label }) => ({
       return item.type !== 'knowledge';
     }
 
-    function setCursor(next) {
+    function setCursor(next, follow) {
       if (!hits.length) return;
       cursor = (next + hits.length) % hits.length;
+      // 아직 안 그린 줄로 넘어갔으면 거기까지 그려서 따라간다. 첫 줄에서 위로 감으면
+      // 마지막 줄이라 결과 전체를 그리게 되는데, 그건 사용자가 그리로 간 경우뿐이다.
+      while (drawn <= cursor && drawChunk()) {}
       var rows = list.querySelectorAll('.search-hit');
       for (var i = 0; i < rows.length; i++) {
         var on = i === cursor;
         rows[i].setAttribute('aria-selected', on ? 'true' : 'false');
         if (on) {
           input.setAttribute('aria-activedescendant', rows[i].id);
-          rows[i].scrollIntoView({ block: 'nearest' });
+          // 마우스로 짚었을 때는 스크롤하지 않는다 — 커서 밑에서 목록이 움직인다.
+          if (follow) rows[i].scrollIntoView({ block: 'nearest' });
         }
       }
     }
@@ -234,15 +241,55 @@ const navItems = NAV_LINKS.map(({ href, label }) => ({
       meta.textContent = formatDate(item.pubDate);
       a.appendChild(meta);
 
-      a.addEventListener('pointerenter', function () { setCursor(position); });
       li.appendChild(a);
       return li;
     }
 
+    // 줄마다 리스너를 붙이면 결과가 수천 건일 때 그만큼 쌓인다. 목록 하나로 받는다.
+    list.addEventListener('pointerover', function (e) {
+      var row = e.target.closest ? e.target.closest('.search-hit') : null;
+      if (row) setCursor(Number(row.id.replace('search-hit-', '')), false);
+    });
+
+    // 다음 CHUNK줄을 이어 그린다. 결과를 자르지는 않는다 — 그리는 시점만 미룬다.
+    function drawChunk() {
+      if (drawn >= hits.length) return false;
+      var end = Math.min(hits.length, drawn + CHUNK);
+      var fragment = document.createDocumentFragment();
+      for (var i = drawn; i < end; i++) fragment.appendChild(buildRow(hits[i], query, i));
+      list.appendChild(fragment);
+      drawn = end;
+      return true;
+    }
+
+    // 목록이 아직 스크롤되지 않을 만큼 짧으면 채운다. 안 그러면 스크롤 이벤트가
+    // 영영 안 와서 나머지를 그릴 기회가 없다.
+    function fillViewport() {
+      var guard = 0;
+      while (drawn < hits.length && list.scrollHeight <= list.clientHeight + 240 && guard++ < 20) {
+        drawChunk();
+      }
+    }
+
+    var extending = false;
+    list.addEventListener('scroll', function () {
+      if (extending || drawn >= hits.length) return;
+      extending = true;
+      requestAnimationFrame(function () {
+        extending = false;
+        if (list.scrollTop + list.clientHeight >= list.scrollHeight - 240) {
+          drawChunk();
+          fillViewport();
+        }
+      });
+    }, { passive: true });
+
     function render() {
-      var query = input.value.trim().toLowerCase();
+      query = input.value.trim().toLowerCase();
       list.innerHTML = '';
+      list.scrollTop = 0;
       cursor = 0;
+      drawn = 0;
       input.removeAttribute('aria-activedescendant');
 
       if (!query) {
@@ -269,19 +316,12 @@ const navItems = NAV_LINKS.map(({ href, label }) => ({
       emptyNote.hidden = hits.length > 0;
       list.hidden = hits.length === 0;
       input.setAttribute('aria-expanded', hits.length > 0 ? 'true' : 'false');
-
-      var shown = Math.min(hits.length, RENDER_LIMIT);
-      var fragment = document.createDocumentFragment();
-      for (var i = 0; i < shown; i++) fragment.appendChild(buildRow(hits[i], query, i));
-      list.appendChild(fragment);
-      // 잘라 그렸으면 그 사실을 적는다 — 숫자만 보이면 다 봤다고 읽힌다.
-      countNote.textContent = hits.length > shown
-        ? '상위 ' + shown + '건 · 총 ' + hits.length + '건'
-        : hits.length + '건';
+      countNote.textContent = hits.length + '건';
 
       if (hits.length) {
-        hits = hits.slice(0, shown);
-        setCursor(0);
+        drawChunk();
+        fillViewport();
+        setCursor(0, false);
       }
     }
 
@@ -339,8 +379,8 @@ const navItems = NAV_LINKS.map(({ href, label }) => ({
     panel.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { e.preventDefault(); close(); return; }
       if (!hits.length) return;
-      if (e.key === 'ArrowDown') { e.preventDefault(); setCursor(cursor + 1); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); setCursor(cursor - 1); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); setCursor(cursor + 1, true); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setCursor(cursor - 1, true); }
       else if (e.key === 'Enter') {
         e.preventDefault();
         var row = list.querySelector('.search-hit[aria-selected="true"]');
