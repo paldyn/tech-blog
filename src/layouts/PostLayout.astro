@@ -361,6 +361,7 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     const LINE = 120; // 뷰포트 상단에서 이만큼 내려온 지점을 '읽는 줄'로 본다
     let current = -1;
     let ticking = false;
+    let locked = false;
 
     function activate(index: number) {
       if (index === current) return;
@@ -382,6 +383,9 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
 
     function update() {
       ticking = false;
+      // 목차를 눌러 이동하는 동안에는 스파이를 재우고, 누른 항목을 그대로 켜 둔다.
+      // 안 그러면 지나가는 섹션들이 차례로 켜졌다가 도착해서야 제자리를 찾는다.
+      if (locked) return;
       let index = 0;
       for (let i = 0; i < targets.length; i++) {
         const el = targets[i];
@@ -403,6 +407,63 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+
+    // 목차 클릭 — 표시는 즉시 옮기고 스크롤은 짧게 끝낸다.
+    // 브라우저 기본(scroll-behavior: smooth)은 거리가 멀수록 오래 끌어서,
+    // 다 내려간 뒤에야 강조가 따라붙는 것처럼 보였다.
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+    let animation = 0;
+
+    function glideTo(top: number, done: () => void) {
+      cancelAnimationFrame(animation);
+      const start = window.scrollY;
+      const limit = document.documentElement.scrollHeight - window.innerHeight;
+      const distance = Math.max(0, Math.min(top, limit)) - start;
+      if (Math.abs(distance) < 2) { done(); return; }
+
+      // 가까우면 더 짧게. 멀어도 320ms를 넘기지 않는다.
+      const duration = Math.min(320, Math.max(160, Math.abs(distance) * 0.25));
+      const began = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min(1, (now - began) / duration);
+        window.scrollTo({ top: start + distance * easeOut(progress), behavior: 'instant' as ScrollBehavior });
+        if (progress < 1) animation = requestAnimationFrame(step);
+        else done();
+      };
+      animation = requestAnimationFrame(step);
+    }
+
+    // 이동하는 도중 사용자가 직접 굴리면 즉시 손을 뗀다 — 화면을 두고 다투지 않는다.
+    function stopGlide() {
+      if (!locked) return;
+      cancelAnimationFrame(animation);
+      locked = false;
+      onScroll();
+    }
+    window.addEventListener('wheel', stopGlide, { passive: true });
+    window.addEventListener('touchstart', stopGlide, { passive: true });
+
+    links.forEach((link, index) => {
+      link.addEventListener('click', (event) => {
+        const target = targets[index];
+        // 새 탭·다운로드 같은 보조 클릭은 브라우저에 맡긴다
+        if (!target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+
+        locked = true;
+        current = -1; // 같은 항목을 다시 눌러도 목차가 제자리를 잡도록
+        activate(index);
+
+        // 헤딩에 걸어 둔 scroll-margin-top(고정 헤더 높이 + 여백)을 그대로 쓴다
+        const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        glideTo(top, () => {
+          locked = false;
+          history.replaceState(null, '', link.hash);
+        });
+      });
+    });
+
     update();
   })();
 </script>
