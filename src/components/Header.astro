@@ -2,6 +2,13 @@
 import { NAV_LINKS, SITE_SUFFIX } from '../consts';
 import ThemeToggle from './ThemeToggle.astro';
 
+interface Props {
+  // 경로만으로는 어느 메뉴에 있는지 알 수 없는 화면이 켤 항목. 글 상세가 그렇다 —
+  // 주소가 /posts/<슬러그>라 아카이브에 걸리지만, 실제로는 기록이나 지식에 속한다.
+  activeNav?: string;
+}
+const { activeNav } = Astro.props;
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pathname = Astro.url.pathname.replace(base, '') || '/';
 const searchIndexUrl = `${base}/search-index.json`;
@@ -21,7 +28,9 @@ const searchIndexUrl = `${base}/search-index.json`;
       <nav class="main-nav">
         {NAV_LINKS.map(({ href, label }) => {
           const fullHref = `${base}${href}`;
-          const active = pathname === href || (href !== '/' && pathname.startsWith(href));
+          const active = activeNav
+            ? href === activeNav
+            : pathname === href || (href !== '/' && pathname.startsWith(href));
           return <a href={fullHref} class:list={[{ active }]}>{label}</a>;
         })}
       </nav>

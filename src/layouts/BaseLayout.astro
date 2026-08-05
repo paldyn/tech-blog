@@ -10,9 +10,11 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  /** 경로만으로 판정되지 않는 화면에서 켤 내비 항목 (예: 글 상세) */
+  activeNav?: string;
 }
 
-const { title, description = SITE_DESCRIPTION, ogImage } = Astro.props;
+const { title, description = SITE_DESCRIPTION, ogImage, activeNav } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL;
@@ -53,7 +55,7 @@ const base = import.meta.env.BASE_URL;
   </script>
 </head>
 <body>
-  <Header />
+  <Header activeNav={activeNav} />
   <main>
     <slot />
   </main>
