@@ -207,16 +207,22 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     color: var(--text-dim);
     text-decoration: none;
     line-height: 1.45;
-    padding: 6px 0;
+    padding: 6px 0 6px 10px;
     border-bottom: 1px solid var(--border);
-    transition: color 0.2s;
+    border-left: 2px solid transparent;
+    transition: color 0.2s, border-left-color 0.2s;
   }
   .toc-link:hover {
     color: var(--accent-bright);
   }
   .toc-link.depth-3 {
-    padding-left: 12px;
+    padding-left: 22px;
     font-size: 12px;
+  }
+  /* 현재 읽고 있는 섹션 */
+  .toc-link.is-active {
+    color: var(--accent-bright);
+    border-left-color: var(--accent-bright);
   }
 
   .post-footer {
@@ -337,4 +343,64 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox && !lightbox.hidden) close();
   });
+
+  // 목차 스크롤 스파이 — 지금 읽고 있는 섹션을 강조한다.
+  // IntersectionObserver 대신 "화면 상단 기준선을 지난 마지막 헤딩"으로 판정한다.
+  // 섹션이 화면보다 길면 어떤 헤딩도 교차하지 않는 구간이 생겨 강조가 끊기기 때문이다.
+  (() => {
+    const links = Array.from(document.querySelectorAll('.toc-link')) as HTMLAnchorElement[];
+    if (links.length === 0) return;
+
+    const targets = links.map((a) => {
+      const id = decodeURIComponent(a.hash.slice(1));
+      return document.getElementById(id);
+    });
+    const tocInner = document.querySelector('.toc-inner') as HTMLElement | null;
+    const LINE = 120; // 뷰포트 상단에서 이만큼 내려온 지점을 '읽는 줄'로 본다
+    let current = -1;
+    let ticking = false;
+
+    function activate(index: number) {
+      if (index === current) return;
+      current = index;
+      links.forEach((a, i) => a.classList.toggle('is-active', i === index));
+
+      // 목차가 자체 스크롤을 가질 만큼 길 때, 활성 항목이 보이도록 목차만 스크롤한다
+      // (scrollIntoView는 페이지까지 움직여서 쓰지 않는다)
+      const active = links[index];
+      if (!tocInner || !active) return;
+      const box = tocInner.getBoundingClientRect();
+      const item = active.getBoundingClientRect();
+      if (item.top < box.top) {
+        tocInner.scrollTop -= box.top - item.top + 8;
+      } else if (item.bottom > box.bottom) {
+        tocInner.scrollTop += item.bottom - box.bottom + 8;
+      }
+    }
+
+    function update() {
+      ticking = false;
+      let index = 0;
+      for (let i = 0; i < targets.length; i++) {
+        const el = targets[i];
+        if (el && el.getBoundingClientRect().top - LINE <= 0) index = i;
+        else break;
+      }
+      // 문서 끝에 닿으면 마지막 섹션을 읽고 있는 것으로 본다
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+        index = targets.length - 1;
+      }
+      activate(index);
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
 </script>
