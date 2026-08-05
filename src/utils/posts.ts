@@ -115,8 +115,6 @@ const CATEGORY_LOGOS: Record<string, string> = {
   JavaScript: '/assets/logos/javascript.jpeg',
   TypeScript: '/assets/logos/typescript.svg',
   Backend: '/assets/logos/backend.svg',
-  Math: '/assets/logos/math.svg',
-  AI: '/assets/logos/ai.jpg',
   Nexacro: '/assets/logos/nexacro.png',
   Spring: '/assets/logos/spring.png',
   SQL: '/assets/logos/sql.png',
