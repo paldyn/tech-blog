@@ -12,6 +12,14 @@ const { activeNav } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pathname = Astro.url.pathname.replace(base, '') || '/';
 const searchIndexUrl = `${base}/search-index.json`;
+
+const navItems = NAV_LINKS.map(({ href, label }) => ({
+  href: `${base}${href}`,
+  label,
+  active: activeNav
+    ? href === activeNav
+    : pathname === href || (href !== '/' && pathname.startsWith(href)),
+}));
 ---
 
 <header class="site-header">
@@ -25,329 +33,367 @@ const searchIndexUrl = `${base}/search-index.json`;
         <span class="logo-suffix">{SITE_SUFFIX}</span>
       </a>
 
-      <nav class="main-nav">
-        {NAV_LINKS.map(({ href, label }) => {
-          const fullHref = `${base}${href}`;
-          const active = activeNav
-            ? href === activeNav
-            : pathname === href || (href !== '/' && pathname.startsWith(href));
-          return <a href={fullHref} class:list={[{ active }]}>{label}</a>;
-        })}
+      <nav class="main-nav" aria-label="주요 메뉴">
+        {navItems.map(({ href, label, active }) => (
+          <a href={href} class:list={[{ active }]}>{label}</a>
+        ))}
       </nav>
 
       <div class="nav-right">
-        <div class="nav-search" id="navSearch">
-          <svg class="search-mark" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0"></path>
+        {/*
+          모양은 입력창이지만 실제로는 버튼이다 — 누르면 오버레이가 열린다.
+          input으로 두면 여기 칠 수 있어 보이는데 첫 글자가 오버레이로 넘어가야 해서
+          두 곳에 포커스가 오가고 한글 조합이 끊긴다. 보이는 것만 맞추고 동작은 넘긴다.
+        */}
+        <button type="button" class="nav-search-trigger" id="navSearchTrigger" aria-label="글 검색 열기" title="검색 ( / )">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
           </svg>
-          <input
-            id="navSearchInput"
-            type="search"
-            autocomplete="off"
-            placeholder="'/'로 검색"
-            aria-label="Search posts"
-          />
-
-          <div class="search-panel" hidden>
-            <p class="search-caption" hidden></p>
-            <ul class="search-results"></ul>
-            <p class="search-empty" hidden>검색 결과가 없습니다.</p>
-          </div>
-
-          <span class="search-index" data-src={searchIndexUrl} hidden></span>
-        </div>
+          <span>'/'로 검색</span>
+        </button>
 
         <ThemeToggle />
+
+        <button type="button" class="menu-toggle" id="navMenuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav">
+          <svg class="icon-menu" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+          </svg>
+        </button>
       </div>
     </div>
   </div>
 
-  <script is:inline>
-    (function () {
-      var root = document.getElementById('navSearch');
-      if (!root) return;
-
-      var input = root.querySelector('#navSearchInput');
-      var panel = root.querySelector('.search-panel');
-      var caption = root.querySelector('.search-caption');
-      var list = root.querySelector('.search-results');
-      var empty = root.querySelector('.search-empty');
-      var raw = root.querySelector('.search-index');
-      if (!input || !panel || !caption || !list || !empty || !raw) return;
-
-      var index = [];
-      var indexLoading = null;
-      function loadIndex() {
-        if (indexLoading) return indexLoading;
-        var src = raw.getAttribute('data-src');
-        if (!src) {
-          indexLoading = Promise.resolve([]);
-          return indexLoading;
-        }
-        indexLoading = fetch(src, { credentials: 'same-origin' })
-          .then(function (r) { return r.ok ? r.json() : []; })
-          .then(function (data) { index = Array.isArray(data) ? data : []; return index; })
-          .catch(function () { return []; });
-        return indexLoading;
-      }
-      // Prefetch on focus so the first keystroke feels instant
-      input.addEventListener('focus', loadIndex, { once: true });
-
-      function formatDate(isoDate) {
-        if (!isoDate) return '';
-        return isoDate.replace(/-/g, '.');
-      }
-
-      function closePanel() {
-        panel.hidden = true;
-        root.classList.remove('open');
-      }
-
-      function openPanel() {
-        panel.hidden = false;
-        root.classList.add('open');
-      }
-
-      function render(query) {
-        var q = query.trim().toLowerCase();
-        list.innerHTML = '';
-        caption.hidden = true;
-        empty.hidden = true;
-
-        if (!q) {
-          closePanel();
-          return;
-        }
-
-        // If index isn't loaded yet, kick off load and show a loading note.
-        if (!index.length) {
-          openPanel();
-          caption.hidden = false;
-          caption.textContent = '검색 인덱스 로딩 중…';
-          loadIndex().then(function () {
-            // Re-render only if the input value is still the same
-            if (input.value.trim().toLowerCase() === q) render(input.value);
-          });
-          return;
-        }
-
-        var results = index
-          .filter(function (item) { return item.searchText.indexOf(q) !== -1; });
-
-        if (results.length === 0) {
-          openPanel();
-          caption.hidden = false;
-          caption.textContent = '검색 결과 0건';
-          empty.hidden = false;
-          return;
-        }
-
-        caption.hidden = false;
-        caption.textContent = '검색 결과 ' + results.length + '건';
-
-        var fragment = document.createDocumentFragment();
-        results.forEach(function (item, idx) {
-          var li = document.createElement('li');
-          li.style.position = 'relative';
-          if (idx > 0) {
-            li.style.marginTop = '10px';
-            li.style.paddingTop = '10px';
-            li.style.borderTop = '1px solid var(--border)';
-          }
-
-          var a = document.createElement('a');
-          a.href = item.url;
-          a.className = 'search-link';
-          a.style.display = 'grid';
-          a.style.gridTemplateColumns = '30px minmax(0, 1fr)';
-          a.style.columnGap = '10px';
-          a.style.alignItems = 'start';
-          a.style.textDecoration = 'none';
-          a.style.padding = '10px 12px';
-          a.style.border = '1px solid var(--border)';
-          a.style.borderRadius = '10px';
-          a.style.background = 'var(--bg)';
-          a.style.color = 'var(--text)';
-
-          var order = document.createElement('span');
-          order.className = 'search-order';
-          order.textContent = String(idx + 1).padStart(2, '0');
-          order.style.display = 'inline-flex';
-          order.style.width = '22px';
-          order.style.height = '22px';
-          order.style.alignItems = 'center';
-          order.style.justifyContent = 'center';
-          order.style.border = '1px solid var(--border)';
-          order.style.borderRadius = '999px';
-          order.style.fontFamily = 'var(--font-mono)';
-          order.style.fontSize = '10px';
-          order.style.color = 'var(--text-dim)';
-          order.style.lineHeight = '1';
-          order.style.marginTop = '1px';
-          a.appendChild(order);
-
-          var body = document.createElement('span');
-          body.className = 'search-body';
-          body.style.minWidth = '0';
-
-          var top = document.createElement('span');
-          top.className = 'search-top';
-          top.style.display = 'flex';
-          top.style.alignItems = 'center';
-          top.style.justifyContent = 'space-between';
-          top.style.gap = '10px';
-          top.style.marginBottom = '7px';
-
-          var cat = document.createElement('span');
-          cat.className = 'search-chip';
-          var categoryText = (item.category || 'General').toUpperCase();
-          cat.textContent = item.typeLabel ? (item.typeLabel + ' · ' + categoryText) : categoryText;
-          cat.style.display = 'inline-block';
-          cat.style.border = '1px solid var(--border)';
-          cat.style.borderRadius = '999px';
-          cat.style.padding = '1px 7px';
-          cat.style.lineHeight = '1.6';
-          cat.style.fontSize = '10px';
-          cat.style.letterSpacing = '0.08em';
-          cat.style.color = 'var(--text-dim)';
-          cat.style.background = 'var(--bg)';
-          top.appendChild(cat);
-
-          var date = document.createElement('span');
-          date.className = 'search-date';
-          date.textContent = formatDate(item.pubDate);
-          date.style.fontFamily = 'var(--font-mono)';
-          date.style.fontSize = '10px';
-          date.style.letterSpacing = '0.04em';
-          date.style.color = 'var(--text-muted)';
-          top.appendChild(date);
-          body.appendChild(top);
-
-          var title = document.createElement('strong');
-          title.className = 'search-title';
-          title.textContent = item.title;
-          title.style.display = 'block';
-          title.style.fontSize = '13.5px';
-          title.style.fontWeight = '600';
-          title.style.lineHeight = '1.35';
-          title.style.marginBottom = '5px';
-          title.style.color = 'var(--accent-bright)';
-          title.style.letterSpacing = '0.005em';
-          title.style.whiteSpace = 'nowrap';
-          title.style.overflow = 'hidden';
-          title.style.textOverflow = 'ellipsis';
-          body.appendChild(title);
-
-          var desc = document.createElement('span');
-          desc.className = 'search-desc';
-          desc.textContent = item.description || '';
-          desc.style.display = 'block';
-          desc.style.fontSize = '11px';
-          desc.style.lineHeight = '1.45';
-          desc.style.color = 'var(--text-dim)';
-          desc.style.marginBottom = '6px';
-          desc.style.overflow = 'hidden';
-          desc.style.display = '-webkit-box';
-          desc.style.webkitLineClamp = '2';
-          desc.style.webkitBoxOrient = 'vertical';
-          body.appendChild(desc);
-
-          var meta = document.createElement('span');
-          meta.className = 'search-meta';
-          meta.textContent = [item.author, item.tags.slice(0, 2).map(function (tag) { return '#' + tag; }).join(' ')].filter(Boolean).join(' · ');
-          meta.style.display = 'block';
-          meta.style.fontFamily = 'var(--font-mono)';
-          meta.style.fontSize = '10px';
-          meta.style.letterSpacing = '0.04em';
-          meta.style.color = 'var(--text-dim)';
-          body.appendChild(meta);
-
-          a.appendChild(body);
-
-          li.appendChild(a);
-          fragment.appendChild(li);
-        });
-
-        list.appendChild(fragment);
-        openPanel();
-      }
-
-      input.addEventListener('input', function () {
-        render(input.value);
-      });
-
-      input.addEventListener('focus', function () {
-        if (input.value.trim()) render(input.value);
-      });
-
-      document.addEventListener('click', function (event) {
-        if (!root.contains(event.target)) {
-          closePanel();
-        }
-      });
-
-      document.addEventListener('keydown', function (event) {
-        var target = event.target;
-        var tag = target && target.tagName ? String(target.tagName).toUpperCase() : '';
-        var isTypingTarget = !!(target && (
-          target.isContentEditable ||
-          tag === 'INPUT' ||
-          tag === 'TEXTAREA' ||
-          tag === 'SELECT'
-        ));
-
-        if (event.key === 'Escape') {
-          closePanel();
-          input.blur();
-        }
-
-        if (
-          event.key === '/' &&
-          !event.metaKey &&
-          !event.ctrlKey &&
-          !event.altKey &&
-          !isTypingTarget
-        ) {
-          event.preventDefault();
-          input.focus();
-          input.select();
-          return;
-        }
-
-        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-          event.preventDefault();
-          input.focus();
-          input.select();
-        }
-      });
-    })();
-  </script>
+  <nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴" hidden>
+    <div class="wrap mobile-nav-grid">
+      {navItems.map(({ href, label, active }) => (
+        <a href={href} class:list={['mobile-nav-link', { active }]}>{label}</a>
+      ))}
+    </div>
+  </nav>
 </header>
+
+{/*
+  검색 오버레이는 헤더 밖에 둔다. 고정 헤더에 backdrop-filter가 걸려 있어서
+  그 안에 두면 position: fixed의 기준이 화면이 아니라 헤더가 된다.
+*/}
+<div class="search-backdrop" id="searchOverlay" role="presentation" data-index-src={searchIndexUrl} hidden>
+  <section class="search-panel" role="dialog" aria-modal="true" aria-label="글 검색">
+    <div class="search-panel-input">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input
+        id="searchOverlayInput"
+        type="text"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="searchResults"
+        aria-autocomplete="list"
+        autocomplete="off"
+        placeholder="제목, 카테고리, 태그로 검색"
+      />
+      <button type="button" class="search-close" aria-label="검색 닫기">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="search-scopes" role="group" aria-label="검색 범위">
+      <button type="button" data-scope="all" class="active" aria-pressed="true">전체<span></span></button>
+      <button type="button" data-scope="record" aria-pressed="false">기록<span></span></button>
+      <button type="button" data-scope="knowledge" aria-pressed="false">지식<span></span></button>
+    </div>
+
+    <ul class="search-results" id="searchResults" role="listbox" aria-label="검색 결과" hidden></ul>
+    <p class="search-empty" hidden>일치하는 글이 없습니다.</p>
+
+    <footer class="search-panel-foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> 이동</span>
+      <span><kbd>↵</kbd> 열기</span>
+      <span><kbd>esc</kbd> 닫기</span>
+      <b class="search-count"></b>
+    </footer>
+  </section>
+</div>
+
+<script is:inline>
+  (function () {
+    var overlay = document.getElementById('searchOverlay');
+    var trigger = document.getElementById('navSearchTrigger');
+    var input = document.getElementById('searchOverlayInput');
+    if (!overlay || !trigger || !input) return;
+
+    var panel = overlay.querySelector('.search-panel');
+    var list = overlay.querySelector('.search-results');
+    var emptyNote = overlay.querySelector('.search-empty');
+    var countNote = overlay.querySelector('.search-count');
+    var closeBtn = overlay.querySelector('.search-close');
+    var scopeButtons = [].slice.call(overlay.querySelectorAll('.search-scopes button'));
+
+    // 한 번에 그리는 최대 줄 수. 두 글자짜리 검색어는 수천 건이 걸리는데,
+    // 그만큼 DOM을 만들면 입력이 한 글자마다 멈춘다. 총 건수는 아래에 적는다.
+    var RENDER_LIMIT = 50;
+
+    var index = [];
+    var indexLoading = null;
+    var scope = 'all';
+    var cursor = 0;
+    var hits = [];
+    var lastFocused = null;
+    var inerted = [];
+
+    function loadIndex() {
+      if (indexLoading) return indexLoading;
+      var src = overlay.getAttribute('data-index-src');
+      indexLoading = fetch(src, { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (data) {
+          index = Array.isArray(data) ? data : [];
+          updateCounts();
+          return index;
+        })
+        .catch(function () { return []; });
+      return indexLoading;
+    }
+    // 트리거에 마우스만 올려도 미리 받아 둔다 — 첫 글자가 바로 걸린다.
+    trigger.addEventListener('pointerenter', loadIndex, { once: true });
+
+    function updateCounts() {
+      var total = index.length;
+      var records = 0;
+      for (var i = 0; i < index.length; i++) if (index[i].type !== 'knowledge') records++;
+      var counts = { all: total, record: records, knowledge: total - records };
+      scopeButtons.forEach(function (btn) {
+        var el = btn.querySelector('span');
+        if (el) el.textContent = String(counts[btn.getAttribute('data-scope')] || 0);
+      });
+    }
+
+    function formatDate(iso) {
+      return iso ? iso.replace(/-/g, '.') : '';
+    }
+
+    function inScope(item) {
+      if (scope === 'all') return true;
+      if (scope === 'knowledge') return item.type === 'knowledge';
+      return item.type !== 'knowledge';
+    }
+
+    function setCursor(next) {
+      if (!hits.length) return;
+      cursor = (next + hits.length) % hits.length;
+      var rows = list.querySelectorAll('.search-hit');
+      for (var i = 0; i < rows.length; i++) {
+        var on = i === cursor;
+        rows[i].setAttribute('aria-selected', on ? 'true' : 'false');
+        if (on) {
+          input.setAttribute('aria-activedescendant', rows[i].id);
+          rows[i].scrollIntoView({ block: 'nearest' });
+        }
+      }
+    }
+
+    function buildRow(item, query, position) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.className = 'search-hit';
+      a.id = 'search-hit-' + position;
+      a.href = item.url;
+      a.setAttribute('role', 'option');
+      a.setAttribute('aria-selected', position === 0 ? 'true' : 'false');
+
+      var cat = document.createElement('span');
+      cat.className = 'search-hit-category';
+      cat.textContent = (item.category || 'GENERAL').toUpperCase();
+      a.appendChild(cat);
+
+      var title = document.createElement('span');
+      title.className = 'search-hit-title';
+      // 제목에서 검색어가 걸린 자리만 표시한다. 본문·태그로 걸린 결과는 제목에
+      // 검색어가 없을 수 있고, 그때는 그냥 제목만 그린다.
+      var at = item.title.toLowerCase().indexOf(query);
+      if (query && at !== -1) {
+        title.appendChild(document.createTextNode(item.title.slice(0, at)));
+        var mark = document.createElement('mark');
+        mark.textContent = item.title.slice(at, at + query.length);
+        title.appendChild(mark);
+        title.appendChild(document.createTextNode(item.title.slice(at + query.length)));
+      } else {
+        title.textContent = item.title;
+      }
+      a.appendChild(title);
+
+      var meta = document.createElement('span');
+      meta.className = 'search-hit-meta';
+      meta.textContent = formatDate(item.pubDate);
+      a.appendChild(meta);
+
+      a.addEventListener('pointerenter', function () { setCursor(position); });
+      li.appendChild(a);
+      return li;
+    }
+
+    function render() {
+      var query = input.value.trim().toLowerCase();
+      list.innerHTML = '';
+      cursor = 0;
+      input.removeAttribute('aria-activedescendant');
+
+      if (!query) {
+        hits = [];
+        list.hidden = true;
+        emptyNote.hidden = true;
+        countNote.textContent = '';
+        input.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      if (!index.length) {
+        countNote.textContent = '불러오는 중…';
+        loadIndex().then(function () {
+          if (input.value.trim().toLowerCase() === query) render();
+        });
+        return;
+      }
+
+      hits = index.filter(function (item) {
+        return inScope(item) && item.searchText.indexOf(query) !== -1;
+      });
+
+      emptyNote.hidden = hits.length > 0;
+      list.hidden = hits.length === 0;
+      input.setAttribute('aria-expanded', hits.length > 0 ? 'true' : 'false');
+
+      var shown = Math.min(hits.length, RENDER_LIMIT);
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < shown; i++) fragment.appendChild(buildRow(hits[i], query, i));
+      list.appendChild(fragment);
+      // 잘라 그렸으면 그 사실을 적는다 — 숫자만 보이면 다 봤다고 읽힌다.
+      countNote.textContent = hits.length > shown
+        ? '상위 ' + shown + '건 · 총 ' + hits.length + '건'
+        : hits.length + '건';
+
+      if (hits.length) {
+        hits = hits.slice(0, shown);
+        setCursor(0);
+      }
+    }
+
+    function open() {
+      if (!overlay.hidden) return;
+      lastFocused = document.activeElement;
+      overlay.hidden = false;
+      // 뒤 화면은 잠근다. 오버레이 자신은 body 자식이라 건드리지 않는다.
+      inerted = [];
+      [].forEach.call(document.body.children, function (el) {
+        if (el === overlay || el.hasAttribute('inert')) return;
+        el.setAttribute('inert', '');
+        inerted.push(el);
+      });
+      document.body.style.overflow = 'hidden';
+      loadIndex();
+      input.focus();
+      render();
+    }
+
+    function close() {
+      if (overlay.hidden) return;
+      overlay.hidden = true;
+      inerted.forEach(function (el) { el.removeAttribute('inert'); });
+      inerted = [];
+      document.body.style.overflow = '';
+      input.value = '';
+      render();
+      // inert를 벗긴 뒤에 돌려줘야 포커스가 들어간다. '/'로 열었으면 직전 포커스가
+      // body라 돌려줄 데가 없으니, 그때는 트리거를 짚어 준다.
+      var back = lastFocused && lastFocused !== document.body && lastFocused.focus ? lastFocused : trigger;
+      back.focus();
+    }
+
+    trigger.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('mousedown', function (e) {
+      if (e.target === overlay) close();
+    });
+    input.addEventListener('input', render);
+
+    scopeButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        scope = btn.getAttribute('data-scope');
+        scopeButtons.forEach(function (other) {
+          var on = other === btn;
+          other.classList.toggle('active', on);
+          other.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        render();
+        input.focus();
+      });
+    });
+
+    panel.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (!hits.length) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); setCursor(cursor + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setCursor(cursor - 1); }
+      else if (e.key === 'Enter') {
+        e.preventDefault();
+        var row = list.querySelector('.search-hit[aria-selected="true"]');
+        if (row) window.location.href = row.href;
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      var t = e.target;
+      var tag = t && t.tagName ? String(t.tagName).toUpperCase() : '';
+      var typing = !!(t && (t.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT'));
+
+      if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !typing) {
+        e.preventDefault();
+        open();
+      } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        open();
+      }
+    });
+  })();
+
+  (function () {
+    var toggle = document.getElementById('navMenuToggle');
+    var nav = document.getElementById('mobileNav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', function () {
+      var willOpen = nav.hidden;
+      nav.hidden = !willOpen;
+      toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      toggle.setAttribute('aria-label', willOpen ? '메뉴 닫기' : '메뉴 열기');
+      toggle.classList.toggle('is-open', willOpen);
+    });
+  })();
+</script>
 
 <style>
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     border-bottom: 1px solid var(--border);
     padding: 18px 0;
-    background: var(--bg);
+    background: var(--header-bg);
+    backdrop-filter: blur(16px);
     transition: background 0.4s, border-color 0.4s;
-  }
-  /* 스크롤해도 따라오는 상단 띠. 세 요소가 한 줄에 들어가는 폭에서만 고정한다 —
-     좁은 화면에서는 3줄(149px)로 접혀 화면을 너무 많이 가린다. */
-  @media (min-width: 820px) {
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--header-bg);
-      backdrop-filter: blur(16px);
-    }
   }
   .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    flex-wrap: wrap;
   }
 
   .nav-logo {
@@ -357,6 +403,7 @@ const searchIndexUrl = `${base}/search-index.json`;
     text-decoration: none;
     color: var(--text);
     height: 28px;
+    flex-shrink: 0;
   }
   .logo-symbol {
     height: 28px;
@@ -387,12 +434,12 @@ const searchIndexUrl = `${base}/search-index.json`;
     color: var(--text-dim);
     letter-spacing: 0.08em;
     font-weight: 400;
+    white-space: nowrap;
   }
 
   .main-nav {
     display: flex;
     gap: 28px;
-    flex-wrap: wrap;
   }
   .main-nav a {
     color: var(--text-dim);
@@ -402,6 +449,7 @@ const searchIndexUrl = `${base}/search-index.json`;
     letter-spacing: 0.08em;
     transition: color 0.25s;
     position: relative;
+    white-space: nowrap;
   }
   .main-nav a:hover { color: var(--accent-bright); }
   .main-nav a.active { color: var(--accent-bright); }
@@ -420,232 +468,362 @@ const searchIndexUrl = `${base}/search-index.json`;
     gap: 12px;
   }
 
-  .nav-search {
-    position: relative;
+  /* 검색 트리거 — 입력창처럼 생긴 알약 */
+  .nav-search-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     width: min(206px, 42vw);
     min-width: 164px;
-  }
-  .nav-search input {
-    width: 100%;
     height: 32px;
+    padding-inline: 12px;
     border: 1px solid var(--border);
     border-radius: 999px;
     background: var(--bg);
-    color: var(--text);
+    color: var(--text-muted);
+    font-family: inherit;
     font-size: 12px;
     letter-spacing: 0.02em;
-    padding: 0 12px 0 34px;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+    transition: border-color 200ms ease, background-color 200ms ease;
   }
-  .nav-search input::placeholder { color: var(--text-muted); }
-  .nav-search input:focus {
+  .nav-search-trigger:hover {
     border-color: var(--text-dim);
     background: var(--bg-subtle);
   }
-  .search-mark {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-dim);
+  .nav-search-trigger svg {
     width: 16px;
     height: 16px;
-    display: block;
+    flex-shrink: 0;
+    color: var(--text-dim);
     stroke: currentColor;
     stroke-width: 1.8;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    pointer-events: none;
   }
 
-  :global(#navSearch .search-panel) {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    width: min(430px, 80vw);
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    max-height: 380px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--text-dim) transparent;
-    z-index: 50;
-    padding: 8px 8px 10px;
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(8px);
-  }
-  :global([data-theme="dark"] #navSearch .search-panel) {
-    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.4);
-    scrollbar-color: #5b5b5b transparent;
-  }
-  :global(#navSearch .search-panel::-webkit-scrollbar) {
-    width: 10px;
-  }
-  :global(#navSearch .search-panel::-webkit-scrollbar-track) {
-    background: transparent;
-  }
-  :global(#navSearch .search-panel::-webkit-scrollbar-thumb) {
-    background: #b6b6b6;
-    border-radius: 999px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-  }
-  :global([data-theme="dark"] #navSearch .search-panel::-webkit-scrollbar-thumb) {
-    background: #555555;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-  }
-  :global(#navSearch .search-caption) {
-    margin: 0;
-    padding: 4px 8px 8px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.09em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-  }
-  :global(#navSearch .search-results) {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  :global(#navSearch .search-results li) {
-    position: relative;
-  }
-  :global(#navSearch .search-results li + li) {
-    margin-top: 10px;
-  }
-  :global(#navSearch .search-results li + li::before) {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: 10px;
-    right: 10px;
-    border-top: 1px solid var(--border);
-    opacity: 0.5;
-  }
-  :global(#navSearch .search-link) {
-    display: block;
-    display: grid;
-    grid-template-columns: 30px minmax(0, 1fr);
-    align-items: start;
-    column-gap: 10px;
-    text-decoration: none;
-    padding: 10px 12px;
-    color: var(--text);
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    transition: background 0.18s, border-color 0.18s, transform 0.18s;
-  }
-  :global(#navSearch .search-link:hover) {
-    background: var(--bg);
-    border-color: var(--text-muted);
-    transform: translateY(-1px);
-  }
-  :global(#navSearch .search-link:focus-visible) {
-    outline: 2px solid var(--text-dim);
-    outline-offset: 1px;
-  }
-  :global(#navSearch .search-order) {
-    display: inline-flex;
-    width: 22px;
-    height: 22px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
+  /* 테마 토글과 같은 34px 원 */
+  .menu-toggle {
+    display: none;
+    width: 34px;
+    height: 34px;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.01em;
-    color: var(--text-dim);
-    line-height: 1;
-    margin-top: 1px;
-  }
-  :global(#navSearch .search-body) {
-    min-width: 0;
-  }
-  :global(#navSearch .search-top) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 7px;
-  }
-  :global(#navSearch .search-chip) {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
     border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 1px 7px;
-    line-height: 1.6;
-    background: var(--bg);
+    background: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
   }
-  :global(#navSearch .search-date) {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-  }
-  :global(#navSearch .search-title) {
-    display: block;
-    font-size: 13.5px;
-    line-height: 1.35;
-    margin-bottom: 5px;
+  .menu-toggle:hover {
+    background: var(--bg-subtle);
     color: var(--accent-bright);
-    letter-spacing: 0.005em;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
-  :global(#navSearch .search-desc) {
-    display: block;
-    font-size: 11px;
-    line-height: 1.45;
+  .menu-toggle svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .menu-toggle .icon-close { display: none; }
+  .menu-toggle.is-open .icon-menu { display: none; }
+  .menu-toggle.is-open .icon-close { display: block; }
+
+  .mobile-nav {
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    padding: 10px 0 16px;
+    margin-top: 18px;
+    margin-bottom: -18px;
+  }
+  .mobile-nav[hidden] { display: none; }
+  .mobile-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+  .mobile-nav-link {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
     color: var(--text-dim);
-    margin-bottom: 6px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 13px;
+    letter-spacing: 0.08em;
     text-decoration: none;
   }
-  :global(#navSearch .search-meta) {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    color: var(--text-dim);
-    text-decoration: none;
-  }
-  :global(#navSearch .search-empty) {
-    margin: 0;
-    padding: 4px 10px 8px;
-    font-size: 12px;
-    color: var(--text-dim);
+  .mobile-nav-link.active { color: var(--accent-bright); }
+  .mobile-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 28px;
+    height: 2px;
+    background: var(--brand-vivid);
   }
 
+  /* ── 검색 오버레이 ────────────────────────────────── */
+  .search-backdrop {
+    position: fixed;
+    inset: 0;
+    /* 50=헤더, 1000=이미지 라이트박스. 그 사이에 둔다. */
+    z-index: 120;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 12vh 20px 20px;
+    background: rgba(0, 0, 0, 0.52);
+    backdrop-filter: blur(7px);
+    animation: searchFade 140ms ease-out;
+  }
+  .search-backdrop[hidden] { display: none; }
+
+  .search-panel {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 620px);
+    max-height: 74vh;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    /* 본문과 같은 --bg를 쓰면 다크에서 검은 위의 검은 면이라 떠 있는지 알기 어렵다 */
+    background: var(--surface);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    animation: searchRise 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .search-panel-input {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 18px;
+    color: var(--text-muted);
+  }
+  .search-panel-input > svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .search-panel-input input {
+    border: 0;
+    background: none;
+    color: var(--accent-bright);
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    min-width: 0;
+  }
+  .search-panel-input input::placeholder { color: var(--text-muted); }
+  .search-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    transition: color 150ms ease;
+  }
+  .search-close:hover { color: var(--accent-bright); }
+  .search-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .search-scopes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+  }
+  .search-scopes button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: none;
+    padding: 5px 12px;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+  }
+  .search-scopes button span {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .search-scopes button:hover {
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+  .search-scopes button.active {
+    border-color: var(--accent-bright);
+    background: var(--accent-bright);
+    color: var(--bg);
+  }
+  .search-scopes button.active span {
+    color: var(--bg);
+    opacity: 0.66;
+  }
+
+  .search-results {
+    /* 결과 수만큼만 차지하고 넘칠 때만 스크롤한다. flex: 1이면 한 건만 나와도
+       패널이 끝까지 늘어난다. */
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 6px;
+    margin: 0;
+    list-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-dim) transparent;
+  }
+  .search-results[hidden] { display: none; }
+
+  .search-panel-foot {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-top: 1px solid var(--border);
+    padding: 10px 18px;
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+  .search-panel-foot span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .search-panel-foot b {
+    margin-left: auto;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .search-panel-foot kbd {
+    display: inline-flex;
+    min-width: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+
+  .search-empty {
+    padding: 26px 12px;
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 13px;
+    text-align: center;
+  }
+  .search-empty[hidden] { display: none; }
+
+  /* 결과 줄은 스크립트가 만들어 스코프 속성이 붙지 않는다 */
+  :global(#searchOverlay .search-hit) {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+  :global(#searchOverlay .search-hit[aria-selected='true']) {
+    background: var(--bg-subtle);
+  }
+  :global(#searchOverlay .search-hit-category) {
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  :global(#searchOverlay .search-hit-title) {
+    overflow: hidden;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  :global(#searchOverlay .search-hit[aria-selected='true'] .search-hit-title) {
+    color: var(--accent-bright);
+  }
+  :global(#searchOverlay .search-hit-title mark) {
+    background: var(--brand-soft);
+    color: inherit;
+  }
+  :global(#searchOverlay .search-hit-meta) {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+
+  @keyframes searchFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes searchRise {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 좁은 화면 — 메뉴는 햄버거로 접고 검색은 34px 원으로 줄여 헤더를 한 줄로 둔다.
+     한 줄이라야 스크롤해도 따라오는 헤더가 화면을 덜 먹는다. */
   @media (max-width: 780px) {
-    .header-inner { gap: 14px; }
-    .main-nav { order: 3; width: 100%; gap: 18px; }
-    .nav-right { width: 100%; justify-content: space-between; }
-    .nav-search { width: calc(100% - 46px); max-width: none; }
-    :global(#navSearch .search-panel) {
-      left: 0;
-      right: auto;
-      width: 100%;
+    .main-nav { display: none; }
+    .menu-toggle { display: inline-flex; }
+    .nav-search-trigger {
+      width: 34px;
+      min-width: 0;
+      height: 34px;
+      justify-content: center;
+      padding-inline: 0;
     }
+    .nav-search-trigger span { display: none; }
+    .header-inner { gap: 14px; }
     .logo-suffix { font-size: 12px; }
     .logo-divider { font-size: 15px; }
+  }
+
+  @media (max-width: 480px) {
+    /* 로고·검색·테마·메뉴가 한 줄에 다 들어가야 해서 접미사를 접는다 */
+    .logo-divider, .logo-suffix { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .search-backdrop { padding: 8vh 12px 12px; }
+    .search-panel { max-height: 80vh; }
   }
 </style>
