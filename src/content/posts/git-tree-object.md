@@ -77,7 +77,7 @@ git cat-file -p abc123def
 
 tree는 자식을 SHA로만 참조한다. 자식 blob이 바뀌면 SHA가 바뀌고, 부모 tree도 새 SHA가 되어 루트 tree까지 연쇄적으로 바뀐다. 이것이 Git의 **Merkle tree** 구조다.
 
-```
+```text
 루트 tree abc123
     ├── blob 8ab686e  README.md   ← 내용 변경
     └── tree d7c3a9b  src/

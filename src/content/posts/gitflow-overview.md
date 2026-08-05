@@ -35,7 +35,7 @@ Gitflow는 **두 개의 영구 브랜치**와 **세 가지 임시 브랜치**로
 
 ## 브랜치 명명 규칙
 
-```
+```text
 feature/user-authentication
 feature/JIRA-123-payment-integration
 release/1.2.0
@@ -68,7 +68,7 @@ Version tag prefix? []
 
 ## 워크플로우 요약
 
-```
+```text
 1. develop에서 feature 시작
    → git flow feature start user-auth
 
@@ -92,7 +92,7 @@ Version tag prefix? []
 
 Gitflow의 핵심 원칙은 **main은 항상 프로덕션 상태**를 반영한다는 것이다. 개발 중인 코드는 develop에만 있고, main에는 릴리즈·hotfix를 통해 검증된 코드만 들어간다.
 
-```
+```text
 main  ─────●─────────────●──────●
            v1.0          v1.1   v1.1.1
 develop ───────────●─────●─────────────

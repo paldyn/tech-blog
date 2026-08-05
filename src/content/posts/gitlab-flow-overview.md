@@ -22,7 +22,7 @@ GitLab Flow는 두 가지 변형이 있다.
 
 두 변형 모두 공통 원칙이 있다: **머지는 항상 업스트림 방향으로만** 한다.
 
-```
+```text
 feature → main → staging → production  ← 환경 브랜치 기반
 feature → main → release/1.x          ← 릴리즈 브랜치 기반
 ```

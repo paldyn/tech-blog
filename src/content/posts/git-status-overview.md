@@ -102,7 +102,7 @@ git status -sb
 
 ## 브랜치 정보 읽기
 
-```
+```text
 ## main...origin/main [ahead 2]
 ```
 

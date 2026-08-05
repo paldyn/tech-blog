@@ -108,7 +108,7 @@ git push origin --delete feature/user-authentication
 
 `--no-ff` (no fast-forward)는 develop에 feature의 모든 커밋이 직렬로 들어가는 대신 **머지 커밋을 강제로 생성**한다.
 
-```
+```text
 fast-forward (--ff):
 develop ─────────────●──●──●  ← feature 커밋이 develop에 직접 붙음
                      ↑feature 분기점

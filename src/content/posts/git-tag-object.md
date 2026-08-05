@@ -43,7 +43,7 @@ cat .git/refs/tags/v1.0.0
 
 `git cat-file -p v1.0.0`으로 tag 오브젝트를 읽으면 다음과 같이 나온다.
 
-```
+```text
 object abc123def456…
 type   commit
 tag    v1.0.0
