@@ -1,8 +1,8 @@
-<button class="scroll-top" id="scrollTopButton" type="button" aria-label="맨 위로 이동" hidden>
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 6l-6 6h4v6h4v-6h4z"></path>
+<button class="scroll-top" id="scrollTopButton" type="button" aria-label="맨 위로 이동" title="맨 위로">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5"></path>
+    <path d="m5 12 7-7 7 7"></path>
   </svg>
-  <span>TOP</span>
 </button>
 
 <script is:inline>
@@ -10,79 +10,83 @@
     var button = document.getElementById('scrollTopButton');
     if (!button) return;
 
-    var threshold = 360;
+    // 한 화면 넘게 내려가야 내놓는다. 고정 픽셀을 기준으로 삼으면 좁은 화면에서는
+    // 너무 일찍, 넓은 화면에서는 너무 늦게 뜬다.
+    function measure() {
+      button.classList.toggle('is-shown', window.scrollY >= window.innerHeight);
+    }
 
-    function updateVisibility() {
-      var visible = window.scrollY > threshold;
-      button.hidden = !visible;
-      button.classList.toggle('is-visible', visible);
+    var frame = 0;
+    function onScroll() {
+      if (frame) return;
+      frame = requestAnimationFrame(function () {
+        frame = 0;
+        measure();
+      });
     }
 
     button.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    window.addEventListener('scroll', updateVisibility, { passive: true });
-    updateVisibility();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    measure();
   })();
 </script>
 
 <style>
+  /*
+    맨 위로. 헤더의 아이콘 버튼과 같은 테두리 있는 원이되, 글 위에 떠 있으므로
+    배경과 테두리를 항상 칠한다 — 투명하게 두면 본문 글자와 겹쳐 읽히지 않는다.
+    44px은 손끝으로 누르는 최소 크기다.
+  */
   .scroll-top {
     position: fixed;
+    /* 50=헤더, 1000=이미지 라이트박스. 본문 위, 라이트박스 아래에 둔다. */
+    z-index: 45;
     right: 24px;
     bottom: 24px;
-    z-index: 40;
-    width: 54px;
-    height: 54px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    width: 44px;
+    height: 44px;
     display: inline-flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text-dim);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.16);
     cursor: pointer;
+    padding: 0;
+    /* 숨을 때 visibility까지 꺼야 탭 순서와 접근성 트리에서 빠진다.
+       opacity만 0으로 두면 보이지 않는 버튼에 Tab이 한 번 멈춘다. */
+    visibility: hidden;
     opacity: 0;
     transform: translateY(8px);
-    transition: opacity 0.2s, transform 0.2s, border-color 0.2s, color 0.2s;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms,
+      border-color 160ms ease, color 160ms ease, background-color 160ms ease;
   }
-  .scroll-top[hidden] {
-    display: none;
-  }
-  .scroll-top.is-visible {
+  .scroll-top.is-shown {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
+    transition-delay: 0s;
   }
   .scroll-top:hover {
-    border-color: var(--text-dim);
+    background: var(--bg-subtle);
     color: var(--accent-bright);
   }
   .scroll-top svg {
     width: 18px;
     height: 18px;
-    fill: currentColor;
-  }
-  .scroll-top span {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    line-height: 1;
   }
 
   @media (max-width: 640px) {
+    /* 좌우 여백이 20px로 좁아지므로 버튼도 같이 안쪽으로 당긴다 */
     .scroll-top {
-      right: 14px;
+      right: 16px;
       bottom: 16px;
-      width: 48px;
-      height: 48px;
-    }
-    .scroll-top svg {
-      width: 16px;
-      height: 16px;
     }
   }
 </style>

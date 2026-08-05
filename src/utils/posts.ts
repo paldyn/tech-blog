@@ -153,7 +153,7 @@ export function logoBrandStyle(logo: string | undefined): string | undefined {
   const brand = LOGO_BRAND[logo.slice(logo.lastIndexOf('/') + 1)];
   if (!brand) return undefined;
   const filter = brand.knockout ? 'brightness(0) invert(1)' : 'none';
-  return `--brand:${brand.bg};--logo-filter:${filter}`;
+  return `--logo-brand:${brand.bg};--logo-filter:${filter}`;
 }
 
 export function readingTimeFor(post: Post): string {

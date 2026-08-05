@@ -322,6 +322,17 @@ const searchIndexUrl = `${base}/search-index.json`;
     background: var(--bg);
     transition: background 0.4s, border-color 0.4s;
   }
+  /* 스크롤해도 따라오는 상단 띠. 세 요소가 한 줄에 들어가는 폭에서만 고정한다 —
+     좁은 화면에서는 3줄(149px)로 접혀 화면을 너무 많이 가린다. */
+  @media (min-width: 820px) {
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: blur(16px);
+    }
+  }
   .header-inner {
     display: flex;
     align-items: center;
@@ -385,12 +396,13 @@ const searchIndexUrl = `${base}/search-index.json`;
   }
   .main-nav a:hover { color: var(--accent-bright); }
   .main-nav a.active { color: var(--accent-bright); }
+  /* 지금 보고 있는 메뉴 — 목차의 활성 막대와 같은 포인트 컬러로 짚는다 */
   .main-nav a.active::after {
     content: '';
     position: absolute;
     bottom: -6px; left: 0; right: 0;
-    height: 1px;
-    background: var(--accent-bright);
+    height: 2px;
+    background: var(--brand-vivid);
   }
 
   .nav-right {
