@@ -71,7 +71,7 @@ Page는 InnoDB I/O의 **최소 단위**입니다. 기본 크기는 **16KB**이�
 
 ## 페이지 내부 구조
 
-```
+```text
 [File Header   38 bytes] ← Checksum, PageNo, Prev/Next, LSN, Type
 [Page Header   56 bytes] ← 레코드 수, Free Space Offset, 최근 INSERT 위치
 [Infimum       13 bytes] ← 레코드 링크의 시작 경계

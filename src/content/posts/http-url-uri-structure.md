@@ -21,7 +21,7 @@ draft: false
 - **URL(Uniform Resource Locator)**: URI의 부분집합. 리소스의 **위치**(어디에 있는지)로 식별. 웹에서 주로 사용.
 - **URN(Uniform Resource Name)**: URI의 부분집합. 리소스의 **이름**(무엇인지)으로 식별. 위치와 무관한 영구 식별자.
 
-```
+```text
 URI (상위 개념)
 ├── URL: https://example.com/page     ← 위치 기반
 └── URN: urn:isbn:978-0-13-110362-7   ← 이름 기반
@@ -33,7 +33,7 @@ URI (상위 개념)
 
 ![URL 구조 완전 해부](/assets/posts/http-url-uri-anatomy.svg)
 
-```
+```text
 https://user:pass@api.example.com:8443/v1/items?q=test&lang=ko#section2
   │         │          │           │       │          │              │
 스킴    사용자정보     호스트      포트    경로     쿼리스트링    프래그먼트
@@ -43,7 +43,7 @@ https://user:pass@api.example.com:8443/v1/items?q=test&lang=ko#section2
 
 어떤 프로토콜을 사용할지 지정한다. 대소문자 무관.
 
-```
+```text
 https   → HTTP over TLS
 http    → 평문 HTTP
 ftp     → 파일 전송
@@ -55,7 +55,7 @@ wss     → WebSocket over TLS
 
 ### 호스트 (Host)와 포트
 
-```
+```text
 api.example.com:8443
 │               │
 도메인         포트 (생략 시 스킴 기본값)
@@ -72,7 +72,7 @@ ftp    → 21
 
 서버 내 리소스의 계층적 위치를 나타낸다. 슬래시(`/`)로 구분된다.
 
-```
+```text
 /v1/items          → API 버전 1의 items 리소스
 /users/42/profile  → 사용자 42번의 프로필
 /                  → 루트 경로
@@ -84,7 +84,7 @@ ftp    → 21
 
 `?`로 시작하고 `key=value` 쌍을 `&`로 연결한다.
 
-```
+```text
 ?q=test&lang=ko&page=2
 ```
 
@@ -96,7 +96,7 @@ ftp    → 21
 
 `#` 이후 부분. **서버로 전송되지 않는다.** 브라우저가 클라이언트 측에서 처리한다.
 
-```
+```text
 https://example.com/docs#installation
                            │
                     해당 섹션으로 스크롤
@@ -108,7 +108,7 @@ SPA(Single Page Application)에서는 해시 라우팅(`#/about`, `#/profile`)�
 
 URL에는 ASCII 문자만 사용할 수 있다. 한글이나 특수문자는 퍼센트 인코딩이 필요하다.
 
-```
+```text
 인코딩 규칙: %XX (XX = 문자의 UTF-8 바이트 16진수)
 
 예시:
@@ -155,7 +155,7 @@ const decoded = decodeURIComponent('%EA%B0%80');
 
 ## 실무 URL 설계 팁
 
-```
+```text
 # REST API URL 설계
 GET    /users         → 사용자 목록
 GET    /users/42      → 특정 사용자
@@ -174,6 +174,8 @@ GET /products + Accept: application/vnd.api+json;version=2  # 헤더 버전닝
 ---
 
 **지난 글:** [HTTP란 무엇인가 — 웹 통신의 기초](/posts/http-what-is-http/)
+
+**다음 글:** [HTTP 요청·응답 메시지 해부 — 구조와 형식](/posts/http-request-response-anatomy/)
 
 <br>
 읽어주셔서 감사합니다. 😊

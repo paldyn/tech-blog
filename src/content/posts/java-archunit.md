@@ -59,7 +59,6 @@ static final ArchRule 레이어_아키텍처 =
         .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
         .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller")
         .whereLayer("Repository").mayOnlyBeAccessedByLayers("Service");
-}
 ```
 
 이 한 덩어리가 "컨트롤러는 누구에게도 접근되지 않고, 서비스는 컨트롤러만, 리포지토리는 서비스만 접근한다"는 레이어드 아키텍처 전체를 표현합니다.

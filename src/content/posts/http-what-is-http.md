@@ -32,7 +32,7 @@ HTTP는 **요청(Request)과 응답(Response)** 한 쌍으로 이루어진다.
 
 ### 요청 메시지 구조
 
-```
+```text
 GET /index.html HTTP/1.1        ← 시작줄 (메서드 + 경로 + 버전)
 Host: example.com               ← 헤더들
 Accept: text/html, */*
@@ -43,7 +43,7 @@ User-Agent: Mozilla/5.0
 
 ### 응답 메시지 구조
 
-```
+```text
 HTTP/1.1 200 OK                 ← 상태줄 (버전 + 상태코드 + 사유구문)
 Content-Type: text/html; charset=utf-8  ← 헤더들
 Content-Length: 1234
@@ -59,7 +59,7 @@ Date: Sat, 07 Jun 2026 05:00:00 GMT
 
 HTTP 서버는 **이전 요청을 기억하지 않는다**. 각 요청은 완전히 독립적이다.
 
-```
+```text
 요청 1: GET /login  (로그인)
 요청 2: GET /profile  (서버는 요청 1을 모름)
 ```
@@ -110,7 +110,7 @@ TCP 대신 **QUIC**(UDP 기반) 사용. 0-RTT 빠른 연결, TCP HOL Blocking �
 
 HTTPS는 HTTP + TLS다. 별도 프로토콜이 아니라 TLS 위에서 HTTP가 동작하는 것이다.
 
-```
+```text
 HTTP:  클라이언트 → TCP → 서버
 HTTPS: 클라이언트 → TCP → TLS → HTTP → 서버
 ```

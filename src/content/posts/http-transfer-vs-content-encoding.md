@@ -15,7 +15,7 @@ draft: false
 
 ## 한 문장 정의
 
-```
+```text
 Content-Encoding  = 표현(representation)의 일부
                     "이 리소스를 gzip으로 압축한 형태로 보낸다"
                     종단 간(end-to-end) — 끝에서 끝까지 유지
@@ -46,7 +46,7 @@ Transfer-Encoding = 메시지의 운송 포장
 
 ![포장 순서](/assets/posts/http-transfer-vs-content-encoding-layers.svg)
 
-```
+```text
 송신: 원본 100KB
       → Content-Encoding: gzip 적용 (28KB의 "표현" 완성)
       → 그 28KB를 chunked로 잘라 전송
@@ -100,7 +100,7 @@ HTTP/2·3에는 `Transfer-Encoding`이 **존재하지 않는다.** 운송 포장
 
 반면 `Content-Encoding`은 **그대로 살아 있다.** 표현의 속성은 프로토콜 버전과 무관하기 때문이다. 이 비대칭이 두 헤더의 본질 차이를 가장 깔끔하게 증명한다 — **운송 수단은 바뀌어도 화물은 그대로다.**
 
-```
+```text
                      | HTTP/1.1        | HTTP/2 · HTTP/3
 ─────────────────────────────────────────────────────────
 Content-Encoding     | 사용            | 동일하게 사용
