@@ -313,7 +313,6 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
 <script>
   const lightbox = document.getElementById('image-lightbox') as HTMLElement | null;
   const lightboxImg = lightbox?.querySelector('.lightbox-img') as HTMLImageElement | null;
-  const closeBtn = lightbox?.querySelector('.lightbox-close') as HTMLButtonElement | null;
   const body = document.querySelector('.post-body');
 
   function open(src: string, alt: string) {
@@ -339,9 +338,9 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
       open(img.currentSrc || img.src, img.alt);
     }
   });
-  lightbox?.addEventListener('click', (e) => {
-    if (e.target === closeBtn || e.target === lightbox) close();
-  });
+  // 확대 화면은 어디를 눌러도 닫는다. 커서가 이미 축소 돋보기인데 이미지 위에서만
+  // 아무 일도 없으면, 커서가 없는 동작을 가리키는 셈이다.
+  lightbox?.addEventListener('click', () => close());
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox && !lightbox.hidden) close();
   });
