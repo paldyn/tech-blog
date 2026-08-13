@@ -221,9 +221,9 @@ list.stream().filter(this::complexFilter).collect(toList());
 
 ---
 
-**지난 글:** [Stream vs for 루프 — 성능·가독성·선택 기준](/posts/java-stream-vs-loop/)
+**지난 글:** [Stream vs for 루프 — 성능·가독성·선택 기준 완전 비교](/posts/java-stream-vs-loop/)
 
-**다음 글:** [메서드 참조 — 4가지 종류와 활용법](/posts/java-method-reference/)
+**다음 글:** [메서드 참조 — 4가지 유형 완전 정리](/posts/java-method-reference/)
 
 <br>
 읽어주셔서 감사합니다. 😊

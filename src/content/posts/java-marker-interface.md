@@ -32,7 +32,7 @@ public class Data implements Serializable {
     private int value;
 }
 
-Object obj = new Data("key", 42);
+Object obj = new Data();
 System.out.println(obj instanceof Serializable); // true
 ```
 

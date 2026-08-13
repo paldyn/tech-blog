@@ -253,7 +253,7 @@ JShell은 프로덕션 코드를 작성하는 IDE와 병행해 쓰는 보조 도
 
 **지난 글:** [Javadoc으로 API 문서 작성하기](/posts/java-javadoc/)
 
-**다음 글:** [JVM 아키텍처 완전 정복](/posts/jvm-architecture/)
+**다음 글:** [JVM 아키텍처 완전 해부](/posts/jvm-architecture/)
 
 <br>
 읽어주셔서 감사합니다. 😊

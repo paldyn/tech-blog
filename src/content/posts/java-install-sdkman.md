@@ -280,7 +280,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 **지난 글:** [JDK · JRE · JVM — 세 개념의 차이](/posts/java-jdk-jre-jvm/)
 
-**다음 글:** [JDK 핵심 도구 완전 정복](/posts/java-jdk-tools/)
+**다음 글:** [JDK 내장 도구 완전 정복](/posts/java-jdk-tools/)
 
 <br>
 읽어주셔서 감사합니다. 😊
