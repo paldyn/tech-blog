@@ -129,7 +129,7 @@ const CATEGORY_LOGOS: Record<string, string> = {
   'Next.js': '/assets/logos/nextjs.jpg',
   Security: '/assets/logos/security.svg',
   Python: '/assets/logos/python.jpg',
-  Team: '/assets/logo-symbol-dark.svg',
+  Team: '/assets/logo-symbol-dark.png',
 };
 
 export function logoFor(post: Post): string | undefined {
