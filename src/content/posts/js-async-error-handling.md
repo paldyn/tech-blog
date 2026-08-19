@@ -147,7 +147,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 좋은 에러 처리는 계층별로 역할을 분리합니다.
 
-```
+```text
 UI 레이어:   사용자에게 표시할 메시지 결정
 Service 레이어: 도메인 에러로 래핑
 API 레이어:  네트워크 에러 분류 (4xx vs 5xx)

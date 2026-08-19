@@ -148,7 +148,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 ![에러 처리 계층 설계](/assets/posts/js-async-error-layer.svg)
 
-```
+```text
 API 계층:    HTTP 상태 코드 → 도메인 에러 변환
 서비스 계층: 도메인 에러로 래핑 + 재시도/fallback
 UI 계층:     AppError → 사용자 메시지 표시
