@@ -48,7 +48,7 @@ new EvalError('...');                // eval 관련 (드물게)
 
 `e.stack`은 에러 발생 위치부터 최초 호출 지점까지의 함수 호출 경로를 담은 문자열입니다.
 
-```
+```text
 Error: 사용자 로드 실패
     at fetchUser (api.js:12:5)
     at loadDashboard (ui.js:34:20)
