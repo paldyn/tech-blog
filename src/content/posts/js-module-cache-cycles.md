@@ -60,7 +60,7 @@ const mod = await import(`./counter.js?v=${Date.now()}`);
 
 A가 B를 import하고 B가 다시 A를 import하는 구조를 **순환 의존성(circular dependency)** 이라고 합니다. 규모 있는 프로젝트에서는 의도치 않게 발생하기 쉽습니다.
 
-```
+```text
 a.js → b.js → a.js (순환)
 ```
 

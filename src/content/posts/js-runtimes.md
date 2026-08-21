@@ -17,7 +17,7 @@ draft: false
 
 엔진은 JavaScript 코드를 해석·실행하는 핵심 부품입니다. 런타임은 엔진 위에 **외부 세계와 소통하는 API**를 얹은 완성된 실행 환경입니다.
 
-```
+```text
 런타임 = JS 엔진 + 환경 API + 이벤트 루프
 
 브라우저 = V8/SpiderMonkey/JSC + DOM/fetch/localStorage + 브라우저 이벤트 루프

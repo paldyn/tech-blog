@@ -126,7 +126,7 @@ Chrome 117+, Firefox 119+, Safari 17.4+, Node.js 21+에서 지원됩니다. 이�
 
 **지난 글:** [structuredClone()](/posts/js-structured-clone/)
 
-**다음 글:** [배열 불변 메서드 (toSorted, toReversed, with)](/posts/js-array-immutable-methods/)
+**다음 글:** [실행 컨텍스트 — JavaScript 코드가 동작하는 환경](/posts/js-execution-context/)
 
 <br>
 읽어주셔서 감사합니다. 😊

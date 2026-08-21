@@ -109,7 +109,7 @@ requestIdleCallback((deadline) => {
 
 실행 우선순위 요약:
 
-```
+```text
 동기 코드 → queueMicrotask/Promise.then → rAF → setTimeout/setInterval → rIC
 ```
 

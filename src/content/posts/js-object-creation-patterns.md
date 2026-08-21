@@ -234,5 +234,7 @@ class Bar {}
 
 **지난 글:** [이벤트 핸들러와 this — currentTarget과 바인딩](/posts/js-this-in-event-handler/)
 
+**다음 글:** [프로퍼티 디스크립터 — 객체 속성을 정밀하게 제어하는 메타데이터](/posts/js-property-descriptor/)
+
 <br>
 읽어주셔서 감사합니다. 😊

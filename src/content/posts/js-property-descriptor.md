@@ -173,6 +173,8 @@ Object.defineProperty(obj, 'x', { writable: true });
 
 ---
 
+**지난 글:** [객체 생성 패턴 — 팩토리, 생성자, 클래스, Object.create](/posts/js-object-creation-patterns/)
+
 **다음 글:** [getter와 setter — 프로퍼티 접근을 함수로 위장하기](/posts/js-getter-setter/)
 
 <br>

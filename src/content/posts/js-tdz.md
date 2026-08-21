@@ -164,7 +164,7 @@ function increment() {
 
 TDZ는 실행 컨텍스트의 생성 단계(Creation Phase)와 연결됩니다. 블록이 시작될 때 엔진은 해당 블록 스코프의 `let`/`const` 선언을 환경 레코드(Environment Record)에 등록합니다. 이때 상태는 `<uninitialized>`입니다.
 
-```
+```text
 블록 시작 →  환경 레코드: { x: <uninitialized> }  ← TDZ
           →  console.log(x)  → ReferenceError
           →  let x = 5;      → 환경 레코드: { x: 5 }  ← TDZ 끝

@@ -228,5 +228,7 @@ next.users[0].score;  // 10
 
 **지난 글:** [프로토타입 메서드 총정리 — 객체 탐색과 복제 도구](/posts/js-prototype-methods/)
 
+**다음 글:** [객체 순회 완전 정복 — for...in부터 Reflect.ownKeys까지](/posts/js-object-iteration/)
+
 <br>
 읽어주셔서 감사합니다. 😊
