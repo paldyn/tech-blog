@@ -150,7 +150,7 @@ type(c); // "mycollection"
 v === null
 
 // undefined 판별
-v === undefined  또는  typeof v === 'undefined'
+v === undefined  // 또는  typeof v === 'undefined'
 
 // 배열 판별 (가장 중요)
 Array.isArray(v)

@@ -23,7 +23,7 @@ CNI 플러그인은 설치 후 교체가 매우 어렵습니다. 전체 클러�
 
 Flannel은 **가장 단순한 CNI**입니다. VXLAN 오버레이 네트워크로 노드 간 통신을 처리합니다. 각 노드에 `/24` 서브넷을 할당하고, VXLAN 터널로 패킷을 캡슐화합니다.
 
-```yaml
+```bash
 # Flannel DaemonSet 설치
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 

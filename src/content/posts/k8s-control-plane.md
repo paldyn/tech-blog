@@ -35,7 +35,7 @@ draft: false
 
 API Server는 K8s의 RESTful API를 제공하는 프론트엔드다. 들어오는 요청을 처리하는 순서는 다음과 같다.
 
-```
+```text
 요청 수신
 → 인증(Authentication): TLS 인증서, ServiceAccount 토큰, OIDC 등
 → 인가(Authorization): RBAC, ABAC 정책 확인

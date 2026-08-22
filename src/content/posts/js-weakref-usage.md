@@ -151,7 +151,7 @@ class Service {
   }
   run() {
     const d = this.dep.deref();
-    if (!d) throw new Error('dep was GC'd!'); // 언제든 발생 가능
+    if (!d) throw new Error("dep was GC'd!"); // 언제든 발생 가능
   }
 }
 

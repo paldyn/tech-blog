@@ -51,7 +51,7 @@ int x = 42;
 
 JavaScript는 구현체이고, **ECMAScript**는 그 명세(specification)입니다. ECMA International의 TC39 위원회가 ECMAScript 표준을 관리하며, 각 브라우저 벤더(Google, Mozilla, Apple 등)가 이 표준에 따라 각자의 엔진을 구현합니다.
 
-```
+```text
 ECMAScript 명세
     ├── V8 (Chrome, Node.js)       ← Google 구현체
     ├── SpiderMonkey (Firefox)     ← Mozilla 구현체

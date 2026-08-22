@@ -89,7 +89,7 @@ API Aggregation에서 가장 중요하고 복잡한 부분은 **인증 정보의
 
 확장 서버로 전달되는 헤더는 다음과 같다.
 
-```
+```text
 X-Remote-User: alice
 X-Remote-Group: system:authenticated
 X-Remote-Group: team-a

@@ -94,7 +94,7 @@ ETCDCTL_API=3 etcdctl snapshot save /backup/etcd-snapshot.db \
 
 ![파드 배포 흐름](/assets/posts/k8s-cluster-architecture-flow.svg)
 
-```
+```text
 ① kubectl apply -f deployment.yaml
    → API Server에 HTTP POST 요청
 
