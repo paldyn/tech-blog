@@ -19,7 +19,7 @@ draft: false
 
 Deployment는 "이 이미지로 이 사양의 Pod를 N개 항상 실행해라"는 선언이다. 실제 Pod 복제는 Deployment가 생성하는 **ReplicaSet**이 담당한다.
 
-```
+```text
 Deployment (선언적 업데이트 관리)
   └── ReplicaSet v1 (replicas: 3)
         ├── Pod-1 (Running)

@@ -185,7 +185,7 @@ kubebuilder create webhook \
 
 kubebuilder가 생성하는 구조:
 
-```
+```text
 myapp-operator/
 ├── api/v1alpha1/
 │   ├── myapp_types.go      # CRD 타입 정의

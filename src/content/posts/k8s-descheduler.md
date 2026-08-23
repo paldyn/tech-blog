@@ -96,7 +96,7 @@ profiles:
 
 새 노드가 추가된 후 기존 Pod들이 균등하게 분산되지 않은 상황에서 `RemovePodsViolatingTopologySpreadConstraints`가 자동으로 재배치를 트리거한다.
 
-## CronJob vs Deployment 실행 모式
+## CronJob vs Deployment 실행 모드
 
 Descheduler는 두 가지 방식으로 실행할 수 있다.
 

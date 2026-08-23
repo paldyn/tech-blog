@@ -97,7 +97,7 @@ CR을 생성해도 기본적으로 아무 일도 일어나지 않는다. CRD는 
 
 Custom Controller는 CRD의 CR을 Watch하고, desired state와 actual state를 비교해 차이를 조정(reconcile)한다.
 
-```
+```text
 CR 생성/수정/삭제
     │
     ▼

@@ -36,7 +36,7 @@ kubectl -n kube-system get configmap kube-proxy -o yaml | grep mode
 
 기본 모드인 iptables 모드의 동작을 따라가 보자.
 
-```
+```text
 ① Client Pod → Service IP 10.96.0.100:8080 으로 패킷 전송
 
 ② 노드의 커널 netfilter가 패킷 가로챔

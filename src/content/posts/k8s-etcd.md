@@ -51,7 +51,7 @@ etcd는 **Raft 합의 알고리즘**으로 분산 일관성을 보장한다. 핵
 
 클러스터는 항상 하나의 **Leader**와 나머지 **Follower**로 구성된다.
 
-```
+```text
 쓰기 과정:
 1. 클라이언트(API Server)가 Leader에 쓰기 요청
 2. Leader가 AppendEntries 메시지로 Follower에 Log 전파

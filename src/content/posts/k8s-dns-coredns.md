@@ -31,7 +31,7 @@ kubelet은 Pod를 생성할 때 `/etc/resolv.conf`에 CoreDNS의 ClusterIP를 `n
 
 쿠버네티스 Service의 완전 정규화 도메인 이름(FQDN)은 다음 형식을 따릅니다.
 
-```
+```text
 <service-name>.<namespace>.svc.cluster.local
 ```
 
@@ -52,14 +52,14 @@ curl http://my-app.prod
 
 일반 Pod의 DNS 이름은 IP 주소의 점(`.`)을 하이픈(`-`)으로 바꾼 형태입니다.
 
-```
+```text
 <pod-ip-with-dashes>.<namespace>.pod.cluster.local
 # 예: 10-244-1-5.prod.pod.cluster.local
 ```
 
 StatefulSet Pod는 헤드리스 서비스와 결합하여 안정적인 이름을 가집니다.
 
-```
+```text
 <pod-name>.<headless-svc>.<namespace>.svc.cluster.local
 # 예: web-0.web-svc.prod.svc.cluster.local
 ```
@@ -101,7 +101,7 @@ kubectl -n kube-system get configmap coredns -o yaml
 
 기본 Corefile 구조:
 
-```
+```text
 .:53 {
     errors
     health {

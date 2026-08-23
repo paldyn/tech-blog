@@ -23,12 +23,12 @@ HPA는 쿠버네티스 컨트롤러로, Deployment·StatefulSet·ReplicaSet의 `
 
 HPA는 다음 공식으로 필요한 replica 수를 계산합니다.
 
-```
+```text
 desiredReplicas = ceil(currentReplicas × (currentMetricValue / desiredMetricValue))
 ```
 
 예를 들어 현재 Pod 2개, CPU 평균 사용률 80%, 목표 50%라면:
-```
+```text
 ceil(2 × 80 / 50) = ceil(3.2) = 4
 ```
 

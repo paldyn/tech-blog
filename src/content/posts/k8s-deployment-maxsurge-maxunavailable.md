@@ -50,7 +50,7 @@ spec:
 - **maxSurge**: `ceil(replicas × 비율)` — 올림
 - **maxUnavailable**: `floor(replicas × 비율)` — 내림
 
-```
+```text
 replicas=10, maxSurge="25%", maxUnavailable="25%" 기준:
   maxSurge = ceil(10 × 0.25) = ceil(2.5) = 3
   maxUnavailable = floor(10 × 0.25) = floor(2.5) = 2

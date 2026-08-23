@@ -156,7 +156,7 @@ helm dependency build ./mychart
 
 ## 실전 패턴: 환경별 values 파일
 
-```
+```text
 mychart/
 ├── values.yaml            # 공통 기본값
 ├── values-staging.yaml    # 스테이징 오버라이드

@@ -41,7 +41,7 @@ helm install myapp ./chart \
 
 ![환경별 Values 파일 전략](/assets/posts/k8s-helm-values-strategy-envfiles.svg)
 
-```
+```text
 helm-chart/
 ├── Chart.yaml
 ├── values.yaml          # 공통 기본값 (모든 환경 공통)
