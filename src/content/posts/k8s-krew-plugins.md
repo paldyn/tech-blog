@@ -183,7 +183,7 @@ kubectl who-can get secrets -n production
 kubectl krew install resource-capacity
 kubectl resource-capacity --sort cpu.limit
 
-# rolloput-restart (내장 기능이지만 알아두면 좋음)
+# rollout restart (내장 기능이지만 알아두면 좋음)
 kubectl rollout restart deployment/my-app
 ```
 

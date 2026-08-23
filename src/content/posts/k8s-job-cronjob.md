@@ -152,8 +152,8 @@ Cron 표현식 `"0 3 * * *"`는 분/시/일/월/요일 순서입니다. 몇 가�
 # CronJob 목록
 kubectl get cronjob
 
-# CronJob이 생성한 Job 목록
-kubectl get jobs -l job-name=daily-backup
+# CronJob이 생성한 Job 목록 (이름이 daily-backup-<타임스탬프> 형태)
+kubectl get jobs
 
 # 즉시 수동 실행 (테스트 시)
 kubectl create job manual-backup \
