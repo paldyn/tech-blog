@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/k8s-ingress-controllers/)에서 nginx-ingress, Traefik, Contour 등 다양한 Ingress 컨트롤러를 비교했습니다. Ingress는 수년간 쿠버네티스 L7 라우팅의 표준이었지만, Annotation에 의존하는 비표준 확장과 단일 리소스에 모든 설정이 집중되는 구조적 한계가 있었습니다. **Gateway API**는 이 문제를 해결하기 위해 CNCF SIG Network에서 설계한 차세대 표준입니다.
+[지난 글](/posts/k8s-ingress-controllers/)에서 nginx-ingress, Traefik, Contour 등 다양한 Ingress 컨트롤러를 비교했습니다. Ingress는 수년간 쿠버네티스 L7 라우팅의 표준이었지만, Annotation에 의존하는 비표준 확장과 단일 리소스에 모든 설정이 집중되는 구조적 한계가 있었습니다. **Gateway API**는 이 문제를 해결하기 위해 쿠버네티스 SIG Network에서 설계한 차세대 표준입니다.
 
 ## Gateway API 등장 배경
 
