@@ -17,7 +17,7 @@ draft: false
 
 Helm은 `{{ .Values.image.tag }}`와 같은 Go 템플릿 문법을 사용해 설정을 주입한다. Kustomize는 원본 YAML을 그대로 두고, 변환(Transform)과 패치(Patch)를 통해 최종 YAML을 만들어낸다.
 
-```
+```text
 helm install             kustomize build
 └── templates/*.yaml     └── base YAML (변환하지 않음)
     ({{ }} 문법 포함)         패치/변환 따로 정의

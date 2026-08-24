@@ -48,7 +48,7 @@ kubelet이 수행하는 주요 작업은 다음과 같다.
 
 Scheduler가 파드의 `nodeName`을 설정하면 kubelet이 이를 감지하고 다음 단계를 수행한다.
 
-```
+```text
 ① PodSpec 검증 및 준비
    - 볼륨 마운트 준비
    - ConfigMap / Secret 주입 준비

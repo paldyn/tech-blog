@@ -54,12 +54,12 @@ kubectl get pods -o wide
 Pod가 생성되면 CNI 플러그인이 **veth pair(가상 이더넷 쌍)** 를 만듭니다. 한쪽 끝(`eth0`)은 Pod의 네트워크 네임스페이스 안에 배치되고, 다른 쪽 끝(`vethXXXX`)은 호스트 네트워크 네임스페이스에 남습니다. 그 호스트 측 끝을 브리지(`cbr0`, `cni0` 등)에 연결합니다.
 
 같은 노드의 두 Pod 사이 패킷 흐름:
-```
+```text
 Pod-A eth0 → vethA → cbr0 → vethB → Pod-B eth0
 ```
 
 노드를 넘어가는 패킷 흐름(Flannel VXLAN 기준):
-```
+```text
 Pod-A eth0 → vethA → cbr0 → flannel.1(VXLAN 캡슐화) → eth0(노드1)
 → 물리 네트워크 → eth0(노드2) → flannel.1(디캡슐화) → cbr0 → vethC → Pod-C eth0
 ```

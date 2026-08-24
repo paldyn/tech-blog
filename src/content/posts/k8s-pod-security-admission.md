@@ -25,7 +25,7 @@ draft: false
 
 PSA 레이블의 전체 형식은 다음과 같다.
 
-```
+```text
 pod-security.kubernetes.io/{mode}: {level}
 pod-security.kubernetes.io/{mode}-version: {version}
 ```

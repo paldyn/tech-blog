@@ -140,7 +140,7 @@ kubectl describe pod my-pod | tail -20
 
 restartPolicy=Always일 때 컨테이너가 계속 실패하면 K8s는 재시작 간격을 지수적으로 증가시킨다.
 
-```
+```text
 10s → 20s → 40s → 80s → 160s → 300s (최대)
 ```
 

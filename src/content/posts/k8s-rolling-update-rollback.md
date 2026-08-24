@@ -133,7 +133,7 @@ kubectl rollout resume deployment/web
 
 ---
 
-**지난 글:** [쿠버네티스 Deployment 기초](/posts/k8s-deployment-basics/)
+**지난 글:** [ReplicationController vs Deployment — 진화의 역사](/posts/k8s-replicationcontroller-vs-deployment/)
 
 **다음 글:** [maxSurge와 maxUnavailable 심층 분석](/posts/k8s-deployment-maxsurge-maxunavailable/)
 

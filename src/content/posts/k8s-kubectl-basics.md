@@ -19,7 +19,7 @@ kubectl 명령어는 일관된 구조를 갖는다.
 
 ![kubectl 명령어 구조 해부](/assets/posts/k8s-kubectl-basics-structure.svg)
 
-```
+```text
 kubectl <동사> <리소스타입> [<이름>] [플래그...]
 ```
 

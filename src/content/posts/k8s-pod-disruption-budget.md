@@ -49,7 +49,7 @@ spec:
 
 `kubectl drain`이나 롤링 업데이트 컨트롤러는 Pod를 직접 삭제하지 않고 **Eviction API**(`v1/eviction` 서브리소스)를 통해 제거 요청을 보냅니다. kube-apiserver는 이 요청을 받으면 해당 Pod가 속한 PDB를 검색하고 `disruptionsAllowed` 값을 확인합니다.
 
-```
+```text
 disruptionsAllowed = currentReplicas - minAvailable
                    = 4 - 2 = 2  →  최대 2개 동시 제거 가능
 ```

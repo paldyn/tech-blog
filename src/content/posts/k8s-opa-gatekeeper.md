@@ -170,7 +170,7 @@ violation[{"msg": msg}] {
 
 ### 2. 루트 컨테이너 금지
 
-```yaml
+```rego
 # ConstraintTemplate rego 부분
 violation[{"msg": msg}] {
   container := input.review.object.spec.containers[_]
