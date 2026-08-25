@@ -33,7 +33,7 @@ apt search web server | grep -i proxy
 
 출력 형식: `패키지명/배포판 버전 아키텍처 [설치됨/자동]`
 
-```
+```text
 nginx/bookworm 1.26.0-1 amd64
   small, powerful, scalable web/proxy server
 ```

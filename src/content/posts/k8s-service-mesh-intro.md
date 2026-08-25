@@ -34,7 +34,7 @@ draft: false
 
 **Control Plane**: 모든 Envoy 인스턴스에 라우팅 설정, 엔드포인트 목록, TLS 인증서를 배포한다. Istio에서는 `istiod`가 이 역할을 담당한다.
 
-```yaml
+```bash
 # 네임스페이스에 사이드카 자동 주입 활성화 (Istio)
 kubectl label namespace default istio-injection=enabled
 

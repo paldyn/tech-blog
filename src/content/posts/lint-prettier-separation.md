@@ -49,7 +49,7 @@ npm install -D prettier eslint-config-prettier
 
 `.prettierignore`로 포맷에서 제외할 파일을 지정합니다.
 
-```
+```text
 node_modules/
 dist/
 *.min.js
@@ -208,7 +208,7 @@ Biome은 2024년부터 빠르게 채택되고 있습니다. ESLint 플러그인 
 
 ## 팀 표준 설정 체크리스트
 
-```
+```text
 □ .prettierrc.json 버전 관리에 포함
 □ .prettierignore 설정
 □ eslint.config.js 마지막에 eslint-config-prettier 적용

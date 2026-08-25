@@ -135,7 +135,7 @@ sudo aureport --file
 
 ## audit.log 형식 이해
 
-```
+```text
 type=SYSCALL msg=audit(1716534000.123:456): arch=c000003e syscall=59
 success=yes exit=0 a0=55a1b... a1=7ffe... ppid=1234 pid=5678
 auid=1000 uid=0 gid=0 euid=0 comm="passwd" exe="/usr/bin/passwd"

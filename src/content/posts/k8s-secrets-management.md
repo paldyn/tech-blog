@@ -164,7 +164,7 @@ kubectl annotate deployment my-app \
 | 감사 | K8s Audit Log + Vault Audit Log |
 | 환경 분리 | 환경(dev/stg/prod)별 별도 Vault namespace 또는 Secret Store |
 
-```bash
+```yaml
 # Secret에 대한 RBAC — get은 값 노출, list는 이름만 노출
 # 최소 권한: list는 허용, get/watch는 특정 서비스어카운트만
 apiVersion: rbac.authorization.k8s.io/v1

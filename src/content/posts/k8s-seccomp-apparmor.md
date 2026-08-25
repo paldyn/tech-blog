@@ -114,7 +114,7 @@ sudo aa-status | grep docker
 cat /etc/apparmor.d/k8s-my-app-profile
 ```
 
-```
+```text
 #include <tunables/global>
 
 profile k8s-my-app flags=(attach_disconnected) {

@@ -172,7 +172,7 @@ lastb username    # 실패한 로그인 시도
 
 ## 요약 체크리스트
 
-```
+```text
 [ ] passwd -S username  → 계정 상태 확인
 [ ] faillock --user username  → 잠금 여부
 [ ] getent passwd username  → 쉘 확인

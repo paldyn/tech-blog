@@ -119,7 +119,7 @@ spec:
 
 K8s는 Service마다 내부 DNS 이름을 자동 생성한다.
 
-```
+```text
 {서비스명}.{네임스페이스}.svc.cluster.local
 ```
 

@@ -17,7 +17,7 @@ draft: false
 
 `apt`는 저수준 패키지 도구인 `dpkg` 위에 올라간 **고수준 프론트엔드**입니다. 저장소에서 메타데이터를 받아 의존성을 자동으로 해결하고, `.deb` 파일을 다운로드·설치까지 자동화합니다.
 
-```
+```text
 사용자  →  apt  →  dpkg  →  파일시스템
               ↘  apt-cache (검색/조회)
 ```
@@ -28,7 +28,7 @@ draft: false
 
 apt가 패키지를 어디서 가져올지를 `/etc/apt/sources.list`와 `/etc/apt/sources.list.d/*.list`에 정의합니다.
 
-```
+```text
 deb  https://deb.debian.org/debian  bookworm  main contrib non-free
 ^    ^                               ^          ^
 |    URL                             배포판     컴포넌트

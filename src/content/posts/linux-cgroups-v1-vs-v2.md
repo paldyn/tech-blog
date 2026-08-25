@@ -21,7 +21,7 @@ cgroups는 프로세스 그룹의 CPU·메모리·I/O·네트워크 대역폭 �
 
 2007년 Linux 2.6.24에 도입된 v1은 **서브시스템별로 독립된 계층 구조**를 가집니다.
 
-```
+```text
 /sys/fs/cgroup/
   memory/
     myapp/
@@ -44,7 +44,7 @@ cgroups는 프로세스 그룹의 CPU·메모리·I/O·네트워크 대역폭 �
 
 2016년 Linux 4.5에 도입된 v2는 **단일 계층**에 모든 서브시스템을 통합합니다.
 
-```
+```text
 /sys/fs/cgroup/
   myapp/
     cgroup.procs     (프로세스 목록)
