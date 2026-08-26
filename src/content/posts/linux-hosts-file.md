@@ -17,7 +17,7 @@ draft: false
 
 파일 구조는 단순합니다. 한 줄에 IP 주소, 정규 호스트명, 별칭(들)을 공백/탭으로 구분합니다. `#`으로 시작하는 줄은 주석입니다.
 
-```
+```text
 IP주소     정규호스트명        [별칭1] [별칭2] ...
 127.0.0.1  localhost
 ::1        localhost ip6-localhost ip6-loopback
@@ -47,7 +47,7 @@ grep hosts /etc/nsswitch.conf
 
 ## 기본으로 들어있는 항목
 
-```
+```text
 127.0.0.1   localhost
 127.0.1.1   <hostname>         # 호스트명→IP 매핑
 ::1         localhost ip6-localhost ip6-loopback
@@ -80,7 +80,7 @@ EOF
 
 `0.0.0.0`은 연결 자체를 즉시 거부합니다. 광고 도메인을 `0.0.0.0`으로 매핑하면 DNS를 우회한 빠른 차단이 가능합니다.
 
-```
+```text
 0.0.0.0  ads.example.com
 0.0.0.0  tracker.example.com
 0.0.0.0  telemetry.example.com
@@ -92,7 +92,7 @@ EOF
 
 실제 외부 API 서버를 로컬 서버로 리다이렉트할 때 유용합니다.
 
-```
+```text
 127.0.0.1  api.payment-provider.com
 127.0.0.1  smtp.sendgrid.com
 ```
@@ -136,7 +136,7 @@ sudo nscd --invalidate=hosts
 
 **IPv6**: IPv4 항목과 IPv6 항목을 모두 추가해야 합니다. IPv4만 추가하면 IPv6를 먼저 시도하는 애플리케이션이 DNS로 폴백할 수 있습니다.
 
-```
+```text
 # 양쪽 모두 추가
 192.168.1.10  db.internal
 fd00::10      db.internal

@@ -45,7 +45,7 @@ ls -la
 ```
 
 주요 구성:
-```
+```text
 /init           ← 진입점 (셸 스크립트 또는 systemd)
 /bin/sh         ← BusyBox 셸
 /sbin/          ← 기본 도구 (mount, umount, modprobe, ...)
@@ -56,7 +56,7 @@ ls -la
 
 ## 부팅 과정에서 initramfs의 역할
 
-```
+```text
 커널이 initramfs cpio를 tmpfs에 압축 해제
     → /init 실행 (또는 systemd)
     → udev 시작, 장치 탐색

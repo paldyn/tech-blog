@@ -52,7 +52,7 @@ jobs -r     # Running 중인 작업만
 jobs -s     # Stopped 상태만
 ```
 
-```
+```text
 [1]- 1234 Running    sleep 100 &
 [2]+ 1235 Stopped    vim config
 ```
@@ -106,8 +106,10 @@ echo "압축 완료"
 
 ```bash
 # 각 PID를 저장해 선택적 대기
-task_a &; PID_A=$!
-task_b &; PID_B=$!
+task_a &
+PID_A=$!
+task_b &
+PID_B=$!
 wait $PID_A         # task_a만 기다림
 echo "A 완료, B는 아직 실행 중"
 wait $PID_B

@@ -92,7 +92,7 @@ if (result == 0)
 
 ## 실전: 쉘은 어떻게 명령어를 실행하는가
 
-```bash
+```text
 # bash 소스 기준 간략 의사 코드
 pid = fork()
 if pid == 0:

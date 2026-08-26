@@ -17,7 +17,7 @@ draft: false
 
 `dpkg`는 **Debian Package**의 약자로, `.deb` 파일을 파일시스템에 풀고 데이터베이스를 관리하는 저수준 도구입니다. 의존성 해결은 하지 않으며, 그 역할은 `apt`가 담당합니다.
 
-```
+```text
 apt (의존성 해결 + 저장소 관리)
  └── dpkg (실제 설치·제거·DB 관리)
       └── dpkg-deb (.deb 아카이브 처리)
@@ -89,7 +89,7 @@ dpkg -s nginx
 
 `dpkg -l` 출력의 첫 두 컬럼은 원하는 상태(want)와 실제 상태(status)를 나타냅니다.
 
-```
+```text
 ii  nginx  1.24.0  - 정상 설치됨
 rc  nginx  ...     - 제거됐지만 설정파일 남아 있음
 un  nginx  ...     - 알 수 없음 (설치 안 됨)

@@ -31,7 +31,7 @@ dmesg | grep -E "I/O error|EXT4-fs error|Buffer I/O|SCSI error" | tail -20
 
 출력 예:
 
-```
+```text
 EXT4-fs error (device sda1): ext4_journal_check_start:61: Detected aborted journal
 EXT4-fs (sda1): Remounting filesystem read-only
 Buffer I/O error on device sda1, logical block 12345
@@ -115,7 +115,7 @@ cat /etc/fstab | grep -v "^#"
 
 마운트 옵션 컬럼에 `ro`가 있으면 `defaults`로 변경한다.
 
-```
+```text
 # 수정 전
 /dev/sda1  /  ext4  ro,relatime  0 1
 

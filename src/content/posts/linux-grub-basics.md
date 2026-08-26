@@ -110,7 +110,7 @@ GRUB 설정이 깨지면 `grub rescue>` 프롬프트로 빠집니다.
 
 ![GRUB 복구 — grub rescue 탈출](/assets/posts/linux-grub-basics-rescue.svg)
 
-```bash
+```text
 # 1. 파티션 탐색
 grub rescue> ls
 # (hd0) (hd0,gpt1) (hd0,gpt2) ...

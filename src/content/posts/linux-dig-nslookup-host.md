@@ -40,7 +40,7 @@ dig CNAME www.github.com
 
 ![dig 출력 해석](/assets/posts/linux-dig-nslookup-host-output.svg)
 
-```
+```text
 ;; ANSWER SECTION:
 google.com.   300  IN  A  142.250.196.142
 ```

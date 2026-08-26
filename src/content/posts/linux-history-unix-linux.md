@@ -33,7 +33,7 @@ Unix는 AT&T 내부와 대학에 소스코드와 함께 배포됐다. UC 버클�
 
 1991년 8월 25일, 핀란드 헬싱키 대학원생 리누스 토르발스(Linus Torvalds)는 `comp.os.minix` 뉴스그룹에 역사적인 메시지를 올린다.
 
-```
+```text
 "Hello everybody out there using minix -
 I'm doing a (free) operating system (just a hobby, won't be big and
 professional like gnu) for 386(486) AT clones."

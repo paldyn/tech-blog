@@ -19,7 +19,7 @@ draft: false
 
 ![/etc/fstab 구조 — 6개 필드](/assets/posts/linux-fstab-structure.svg)
 
-```
+```text
 <장치>           <마운트포인트>  <타입>  <옵션>          <dump>  <pass>
 UUID=1234-abcd   /              ext4    defaults,noatime  0       1
 UUID=5678-efgh   /home          ext4    defaults          0       2
@@ -52,7 +52,7 @@ UUID는 파일시스템을 생성할 때 자동으로 부여되는 128비트 식
 
 ## 자주 쓰는 마운트 옵션
 
-```
+```text
 defaults   = rw, suid, dev, exec, auto, nouser, async 의 묶음
 noatime    = 파일 접근 시 atime 갱신 안 함 — 성능 향상
 nodiratime = 디렉터리 atime 갱신 안 함

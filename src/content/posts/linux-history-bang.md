@@ -80,7 +80,7 @@ git statsu
 
 히스토리에서 특정 명령을 찾을 때 가장 빠른 방법은 `Ctrl+R`이다. 인터랙티브 검색 창이 열리고 입력할수록 매칭 범위가 좁아진다.
 
-```
+```text
 Ctrl+R          # 검색 시작
   (reverse-i-search)`doc': docker run -it ubuntu
 Ctrl+R          # 다음 이전 결과

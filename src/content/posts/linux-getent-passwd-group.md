@@ -39,7 +39,7 @@ getent group
 
 `getent passwd alice`의 출력은 `/etc/passwd`와 같은 콜론 구분 형식입니다.
 
-```
+```text
 alice:x:1001:1001:Alice:/home/alice:/bin/bash
 ```
 
@@ -49,7 +49,7 @@ alice:x:1001:1001:Alice:/home/alice:/bin/bash
 
 `getent`가 조회하는 순서는 `/etc/nsswitch.conf`(Name Service Switch)가 결정합니다.
 
-```
+```text
 passwd:   files systemd ldap
 group:    files systemd
 hosts:    files dns

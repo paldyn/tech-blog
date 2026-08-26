@@ -37,7 +37,7 @@ stat /etc/hostname
 
 디렉터리 `/etc/nginx/`의 데이터 블록에는 이런 내용이 들어 있다.
 
-```
+```text
 inode 262146  →  "nginx.conf"
 inode 262147  →  "conf.d"
 inode 262148  →  "sites-available"

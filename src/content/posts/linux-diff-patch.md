@@ -31,7 +31,7 @@ diff -u old.txt new.txt
 
 `diff -u`의 출력은 다음 구조를 가집니다.
 
-```
+```diff
 --- a/config.txt   2026-05-20
 +++ b/config.txt   2026-05-22
 @@ -1,5 +1,6 @@
