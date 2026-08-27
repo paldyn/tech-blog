@@ -45,7 +45,7 @@ ls /etc/pam.d/
 
 각 줄은 `유형 제어플래그 모듈 [인수]` 형식입니다.
 
-```
+```text
 auth    required   pam_unix.so nullok
 auth    sufficient pam_google_authenticator.so
 account required   pam_unix.so
@@ -60,7 +60,7 @@ session required   pam_limits.so
 
 `/etc/shadow`의 비밀번호 해시로 인증합니다. 가장 기본적인 모듈입니다.
 
-```
+```text
 auth    required pam_unix.so nullok
 # nullok: 빈 비밀번호 허용 (개발 환경에서만)
 ```

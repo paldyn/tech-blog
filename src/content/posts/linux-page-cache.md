@@ -27,7 +27,7 @@ draft: false
 free -h
 ```
 
-```
+```text
               total  used  free  shared  buff/cache  available
 Mem:           16Gi  4.2Gi  802Mi   234Mi      11Gi     11Gi
 Swap:          2.0Gi     0     0

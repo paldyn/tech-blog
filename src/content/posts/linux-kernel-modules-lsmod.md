@@ -140,7 +140,7 @@ echo "blacklist nouveau" | sudo tee /etc/modprobe.d/blacklist-nouveau.conf
 
 ## 요약
 
-```
+```text
 .ko 파일                 lsmod (조회)
     |                        |
     v                  /proc/modules

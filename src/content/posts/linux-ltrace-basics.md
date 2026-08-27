@@ -52,7 +52,7 @@ ltrace -o /tmp/ltrace.log ./myprogram
 
 출력 형식은 strace와 유사합니다.
 
-```
+```text
 라이브러리함수(인자, ...) = 반환값
 ```
 

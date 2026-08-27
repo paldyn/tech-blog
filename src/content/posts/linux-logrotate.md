@@ -42,7 +42,7 @@ logrotate가 실행되면 다음 순서로 처리합니다.
 
 ## 핵심 옵션 정리
 
-```
+```text
 # 로테이션 주기
 daily        # 매일
 weekly       # 매주
@@ -70,7 +70,7 @@ dateformat -%Y%m%d
 
 ## 실전 설정 예시: 애플리케이션 로그
 
-```
+```text
 /var/log/myapp/*.log {
     daily
     rotate 14

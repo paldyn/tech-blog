@@ -49,7 +49,7 @@ ss -s
 
 ### ss 출력 예시
 
-```
+```text
 State   Recv-Q  Send-Q  Local Address:Port   Peer Address:Port  Process
 LISTEN       0     128     0.0.0.0:22          0.0.0.0:*      users:(("sshd",pid=1234))
 ESTAB        0       0  192.168.1.10:22   192.168.1.5:51234    users:(("sshd",pid=5678))

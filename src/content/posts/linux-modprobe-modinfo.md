@@ -101,7 +101,7 @@ modinfo -F vermagic ext4
 
 `vermagic`은 해당 `.ko` 파일을 컴파일한 커널 버전의 서명입니다. 실행 중인 커널과 `vermagic`이 다르면 `modprobe`는 로드를 거부합니다.
 
-```
+```text
 insmod: ERROR: could not insert module: Invalid module format
 ```
 

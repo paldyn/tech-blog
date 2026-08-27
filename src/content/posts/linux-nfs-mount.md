@@ -41,7 +41,7 @@ sudo systemctl enable --now nfs-server
 
 ### /etc/exports 구성
 
-```bash
+```text
 # 형식: 공유경로  클라이언트(옵션)
 /data  192.168.1.0/24(rw,sync,no_subtree_check)
 /pub   *(ro,no_root_squash)

@@ -44,7 +44,7 @@ man -f stat       # 모든 섹션의 stat 항목 나열 (whatis 동일)
 
 매뉴얼 페이지는 고정된 섹션 순서로 구성된다.
 
-```
+```text
 NAME        — 이름과 한 줄 설명
 SYNOPSIS    — 사용법 (대괄호: 선택, 밑줄: 필수)
 DESCRIPTION — 상세 설명

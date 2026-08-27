@@ -34,7 +34,7 @@ locale
 
 출력 예 (문제 있는 상태):
 
-```
+```text
 LANG=
 LC_CTYPE="POSIX"
 LC_ALL=
@@ -44,7 +44,7 @@ LC_ALL=
 
 올바른 출력:
 
-```
+```text
 LANG=ko_KR.UTF-8
 LC_CTYPE="ko_KR.UTF-8"
 ```

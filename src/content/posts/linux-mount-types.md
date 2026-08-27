@@ -140,7 +140,7 @@ findmnt /dev/sda1
 
 ## /etc/fstab — 영구 마운트 설정
 
-```
+```text
 # <device>    <mountpoint>  <type>    <options>           <dump> <pass>
 /dev/sda1     /             ext4      defaults            1      1
 /dev/sda2     /home         ext4      defaults,nodev,nosuid 0   2

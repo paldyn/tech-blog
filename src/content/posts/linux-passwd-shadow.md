@@ -17,7 +17,7 @@ draft: false
 
 `/etc/shadow`는 9개의 콜론 구분 필드로 구성됩니다.
 
-```
+```text
 alice:$6$salt$hash...:19900:0:99999:7:::
 ```
 
@@ -41,7 +41,7 @@ alice:$6$salt$hash...:19900:0:99999:7:::
 
 `$알고리즘$salt$hash` 형식으로 구성됩니다.
 
-```
+```text
 $6$rounds=656000$randomsalt$hashedvalue
 ```
 
@@ -140,7 +140,7 @@ sudo chage -E -1 alice   # 만료일 제거
 grep -E 'PASS_|ENCRYPT_METHOD|LOGIN_RETRIES' /etc/login.defs
 ```
 
-```
+```text
 PASS_MAX_DAYS   90       # 비밀번호 최대 유효기간 (일)
 PASS_MIN_DAYS   0        # 비밀번호 최소 유효기간 (일)
 PASS_WARN_AGE   7        # 만료 경고 일수

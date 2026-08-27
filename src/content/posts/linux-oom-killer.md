@@ -80,7 +80,7 @@ sudo dmesg --follow | grep -i oom
 ```
 
 OOM 로그 예시:
-```
+```text
 [Thu May 26 10:12:34 2026] Out of memory: Kill process 12345 (java) score 450 or sacrifice child
 [Thu May 26 10:12:34 2026] Killed process 12345 (java) total-vm:2048000kB, anon-rss:1024000kB, file-rss:0kB
 ```
