@@ -128,6 +128,8 @@ findmnt -S /dev/sdb1
 
 ---
 
+**지난 글:** [리눅스 파일 유형 7가지: - d l c b p s](/posts/linux-file-types/)
+
 **다음 글:** [/etc/fstab — 부팅 자동 마운트 설정](/posts/linux-fstab/)
 
 <br>
