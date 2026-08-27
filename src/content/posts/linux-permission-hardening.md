@@ -187,7 +187,7 @@ sudo setcap -r /usr/bin/node
 
 | Capability | 설명 |
 |---|---|
-| `CAP_NET_BIND_SERVICE` | 1024 이하 포트 바인딩 |
+| `CAP_NET_BIND_SERVICE` | 1024 미만 포트 바인딩 |
 | `CAP_NET_RAW` | raw 소켓 (ping, tcpdump) |
 | `CAP_SYS_PTRACE` | 다른 프로세스 디버깅 |
 | `CAP_DAC_OVERRIDE` | 파일 퍼미션 무시 |
