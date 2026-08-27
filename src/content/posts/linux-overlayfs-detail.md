@@ -138,7 +138,7 @@ docker system df -v
 docker history ubuntu:22.04
 ```
 
-Ubuntu 22.04(100MB)를 기반으로 한 nginx 이미지(60MB)와 Node.js 이미지(200MB)가 있다면, 실제 디스크 사용량은 360MB가 아니라 360MB - 공유된 ubuntu 레이어 크기입니다.
+Ubuntu 22.04(100MB)를 기반으로 한 nginx 이미지(추가 레이어 60MB)와 Node.js 이미지(추가 레이어 200MB)가 있다면, 두 이미지의 표시 크기를 단순히 더하면 460MB입니다. 하지만 공유된 ubuntu 레이어 100MB는 디스크에 한 번만 저장되므로 실제 사용량은 360MB입니다.
 
 ## 성능 특성과 주의사항
 
