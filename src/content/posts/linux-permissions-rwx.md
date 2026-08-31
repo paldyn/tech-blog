@@ -72,7 +72,7 @@ srw-rw---- root docker /var/run/docker.sock  ← s: 소켓
 
 권한의 각 그룹(소유자·그룹·기타)은 세 비트(r=4, w=2, x=1)의 합으로 표현합니다.
 
-```
+```text
 rwx = 4+2+1 = 7
 rw- = 4+2+0 = 6
 r-x = 4+0+1 = 5

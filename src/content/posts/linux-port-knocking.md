@@ -127,7 +127,7 @@ grep knockd /var/log/syslog
 
 시퀀스가 맞으면 아래와 같은 로그가 남습니다.
 
-```
+```text
 knockd: 192.168.1.100: openSSH: Stage 1
 knockd: 192.168.1.100: openSSH: Stage 2
 knockd: 192.168.1.100: openSSH: Stage 3

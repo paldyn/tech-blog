@@ -19,7 +19,7 @@ draft: false
 
 config 파일은 `Host` 블록으로 구성됩니다. 각 블록에 해당 호스트의 접속 옵션을 지정합니다.
 
-```
+```text
 Host <별칭>
     <지시어>  <값>
     <지시어>  <값>
@@ -37,7 +37,7 @@ chmod 600 ~/.ssh/config
 
 ## 기본 호스트 설정
 
-```
+```text
 Host work
     HostName     192.168.10.5
     User         admin
@@ -58,7 +58,7 @@ rsync -av ./dist/ work:/var/www/html/
 
 ## 글로벌 기본값: Host *
 
-```
+```text
 Host *
     ServerAliveInterval  60
     ServerAliveCountMax  3
@@ -77,7 +77,7 @@ Host *
 
 방화벽 안의 내부 서버에 접근할 때 베스천(Bastion) 서버를 경유합니다.
 
-```
+```text
 Host bastion
     HostName     1.2.3.4
     User         ec2-user
@@ -104,7 +104,7 @@ ssh -J bastion1,bastion2 target
 
 OpenSSH 7.3 미만에서는 `ProxyJump` 대신 `ProxyCommand`를 사용합니다.
 
-```
+```text
 Host internal
     ProxyCommand ssh bastion -W %h:%p
 ```
@@ -113,7 +113,7 @@ Host internal
 
 ## 와일드카드 패턴
 
-```
+```text
 Host dev-*
     User         ubuntu
     IdentityFile ~/.ssh/dev_key
@@ -134,7 +134,7 @@ Host prod-*
 
 동일 서버에 여러 SSH 세션을 열 때 매번 인증하지 않고 기존 연결을 재사용합니다.
 
-```
+```text
 Host *
     ControlMaster   auto
     ControlPath     ~/.ssh/sockets/%r@%h:%p
@@ -152,7 +152,7 @@ mkdir -p ~/.ssh/sockets
 
 ## 주요 지시어 참조
 
-```
+```text
 Host        alias          # 별칭
 HostName    1.2.3.4        # 실제 주소
 User        ubuntu         # 사용자명

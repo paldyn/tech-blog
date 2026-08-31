@@ -70,7 +70,7 @@ sudo edquota -t
 
 에디터가 열리면 다음과 같은 형식을 볼 수 있습니다.
 
-```
+```text
 Disk quotas for user alice (uid 1001):
   Filesystem  blocks  soft    hard  inodes  soft  hard
   /dev/sda1   3276800 4194304 5242880  0     0     0
@@ -105,7 +105,7 @@ repquota -a
 
 `repquota` 출력 예시:
 
-```
+```text
 User            used    soft    hard  grace    used  soft  hard  grace
 root      --      16       0       0              2     0     0
 alice     --    3200    4096    5120              8     0     0

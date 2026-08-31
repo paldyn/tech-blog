@@ -49,7 +49,7 @@ tmux는 **세션 → 윈도우 → 팬** 계층으로 구성됩니다.
 
 tmux의 모든 단축키는 **prefix** 다음에 명령 키를 누릅니다. 기본 prefix는 `Ctrl+b`입니다.
 
-```
+```text
 Ctrl+b  c     새 윈도우 생성
 Ctrl+b  n/p   다음/이전 윈도우 이동
 Ctrl+b  0~9   번호로 윈도우 이동
@@ -85,7 +85,7 @@ screen -dr dev
 
 ## .tmux.conf 커스터마이징
 
-```
+```text
 # ~/.tmux.conf
 
 # prefix를 Ctrl+a로 변경 (screen 사용자 편의)

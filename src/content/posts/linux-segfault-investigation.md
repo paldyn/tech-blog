@@ -74,7 +74,7 @@ gdb ./myapp core
 
 gdb 안에서 실행할 명령:
 
-```
+```text
 (gdb) bt              # 백트레이스 (호출 스택)
 (gdb) bt full         # 지역 변수 포함 상세 스택
 (gdb) frame 2         # 특정 스택 프레임 선택

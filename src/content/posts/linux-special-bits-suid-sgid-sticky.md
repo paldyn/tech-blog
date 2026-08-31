@@ -17,7 +17,7 @@ draft: false
 
 8진수 권한의 네 번째(맨 앞) 자리가 특수 비트를 나타냅니다.
 
-```
+```text
 4 = SUID (Set User ID)
 2 = SGID (Set Group ID)
 1 = Sticky bit

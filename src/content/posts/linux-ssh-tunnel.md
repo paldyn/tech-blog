@@ -75,7 +75,7 @@ ssh -J bastion1,bastion2 user@target
 
 매번 긴 옵션을 입력하지 않으려면 설정 파일에 저장합니다.
 
-```
+```text
 Host bastion
     HostName 203.0.113.1
     User ec2-user
@@ -109,7 +109,7 @@ kill $(pgrep -f "ssh -fNT")
 
 SSH 터널은 강력한 만큼 남용될 여지가 있습니다. 서버에서 터널을 제한하려면 `sshd_config`에 다음을 추가합니다.
 
-```
+```text
 AllowTcpForwarding no      # 포트 포워딩 전체 비활성
 PermitTunnel no            # tun 디바이스 터널 비활성
 GatewayPorts no            # 리모트 포워딩을 127.0.0.1만 바인딩

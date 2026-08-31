@@ -17,7 +17,7 @@ draft: false
 
 애플리케이션이 `getaddrinfo("example.com")` 같은 호출을 하면, glibc는 `/etc/nsswitch.conf`의 `hosts` 항목을 읽어 해석 순서를 결정합니다.
 
-```
+```text
 hosts: files mdns4_minimal [NOTFOUND=return] dns myhostname
 ```
 
@@ -33,7 +33,7 @@ hosts: files mdns4_minimal [NOTFOUND=return] dns myhostname
 
 `/etc/resolv.conf`는 DNS 질의에 쓸 네임서버와 옵션을 지정합니다.
 
-```
+```text
 # /etc/resolv.conf
 nameserver 127.0.0.53        # systemd-resolved가 관리하는 경우
 nameserver 8.8.8.8           # 직접 지정하는 경우

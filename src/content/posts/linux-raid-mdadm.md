@@ -62,7 +62,7 @@ sudo mdadm --create /dev/md0 \
 
 생성 직후 `/proc/mdstat`을 보면 동기화(resync)가 시작됩니다.
 
-```
+```text
 $ cat /proc/mdstat
 Personalities : [raid5]
 md0 : active raid5 sdd[2] sdc[1] sdb[0]
@@ -105,7 +105,7 @@ watch -n1 cat /proc/mdstat
 
 `--detail` 출력에서 중요한 항목:
 
-```
+```text
 State : clean          ← 정상 상태
 Active Devices : 3
 Rebuild Status : 0% complete   ← 재구성 중

@@ -98,7 +98,7 @@ fi
 
 `AddKeysToAgent yes`를 설정하면 처음 키를 사용할 때 자동으로 agent에 추가됩니다. 별도로 `ssh-add`를 실행할 필요가 없습니다.
 
-```
+```text
 Host *
     AddKeysToAgent yes
 ```

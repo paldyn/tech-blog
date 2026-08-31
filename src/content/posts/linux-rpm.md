@@ -17,7 +17,7 @@ draft: false
 
 rpm 파일명은 형식이 정해져 있습니다.
 
-```
+```text
 nginx-1.26.0-1.el9.x86_64.rpm
 │      │       │    │      └── 아키텍처 (noarch, x86_64, aarch64)
 │      │       │    └── 배포판 태그 (el9=RHEL9, fc40=Fedora40)

@@ -33,7 +33,7 @@ Podman은 **데몬리스(daemonless)** 설계입니다. `podman` 명령 자체�
 
 `/etc/subuid`와 `/etc/subgid` 파일에 사용자별 UID/GID 범위가 정의됩니다.
 
-```
+```text
 # /etc/subuid
 alice:100000:65536
 # alice가 100000~165535 범위의 UID를 user ns 내에서 사용 가능

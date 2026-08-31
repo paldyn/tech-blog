@@ -100,7 +100,7 @@ ssh -p 2222 user@localhost
 
 TCG(Tiny Code Generator)는 QEMU가 KVM 없이 동작할 때 사용하는 동적 번역 엔진입니다.
 
-```
+```text
 Guest ARM 명령어 블록
         ↓ (번역)
 호스트 x86_64 TCG 중간 표현 (IR)

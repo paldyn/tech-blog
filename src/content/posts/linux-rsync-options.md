@@ -67,7 +67,7 @@ rsync -av --exclude-from=.rsyncignore src/ dst/
 
 `.rsyncignore` 파일 예:
 
-```
+```text
 *.log
 *.tmp
 .git/

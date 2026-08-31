@@ -39,7 +39,7 @@ pstree -puc
 
 ## 트리 구조 읽는 법
 
-```
+```text
 systemd(1)─┬─NetworkManager(812)─┬─dhclient(1023)
             │                    └─{NetworkManager}(813)
             ├─sshd(892)─┬─sshd(3001)

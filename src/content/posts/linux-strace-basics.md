@@ -20,7 +20,7 @@ strace는 Linux의 `ptrace()` 시스템 콜을 이용합니다. 대상 프로세
 ![strace 동작 원리](/assets/posts/linux-strace-basics-concept.svg)
 
 strace 출력 형식:
-```
+```text
 syscall_name(인자1, 인자2, ...) = 반환값
 ```
 에러 시에는 `-1 ERRNO_NAME (설명)` 형태로 표시됩니다.

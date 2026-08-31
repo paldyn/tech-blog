@@ -56,7 +56,7 @@ ps aux
 
 첫 문자가 메인 상태, 두 번째 문자가 수식자입니다.
 
-```
+```text
 R  Running 또는 실행 대기열에 있음
 S  Sleeping — 인터럽트 가능한 대기
 D  Uninterruptible Sleep — 주로 I/O 대기. kill 불가

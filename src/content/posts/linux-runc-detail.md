@@ -27,7 +27,7 @@ runc는 [opencontainers/runc](https://github.com/opencontainers/runc) 저장소�
 
 runc가 받는 입력은 **OCI Bundle** — 두 부분으로 구성됩니다.
 
-```
+```text
 mycontainer/
 ├── config.json    ← OCI Runtime Spec (격리 설정 전체)
 └── rootfs/        ← 컨테이너 루트 파일시스템
