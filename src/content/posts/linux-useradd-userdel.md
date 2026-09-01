@@ -50,13 +50,15 @@ nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
 useradd -m -s /bin/bash alice
 
 # 상세 옵션 지정
+#   -m: 홈 디렉터리 생성   -s: 로그인 셸        -c: 코멘트(GECOS)
+#   -u: UID 지정          -g: 기본 그룹        -G: 보조 그룹
 useradd \
-  -m \              # 홈 디렉터리 생성
-  -s /bin/bash \    # 로그인 셸
-  -c "Alice Kim" \  # 코멘트 (GECOS)
-  -u 1500 \         # UID 지정
-  -g developers \   # 기본 그룹
-  -G sudo,docker \  # 보조 그룹
+  -m \
+  -s /bin/bash \
+  -c "Alice Kim" \
+  -u 1500 \
+  -g developers \
+  -G sudo,docker \
   alice
 
 # 비밀번호 설정 (생성 직후 반드시 설정)
