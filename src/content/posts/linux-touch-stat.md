@@ -102,7 +102,7 @@ touch -m -d "yesterday" src/main.c  # mtime 을 어제로 설정 → 재빌드 �
 쉘 스크립트에서 "파일이 없으면 만들고, 있으면 건드리지 않는다"는 패턴이 자주 쓰인다.
 
 ```bash
-# 파일이 없을 때만 생성 (-n 으로 분기)
+# 파일이 없을 때만 생성 (-f 로 분기)
 [ -f lockfile ] || touch lockfile
 
 # 임시 작업 완료 마커 생성

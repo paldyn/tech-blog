@@ -171,5 +171,7 @@ lsof -p $(pgrep myapp) | awk '{print $5}' | sort | uniq -c | sort -rn
 
 **지난 글:** [디스크 풀 문제 해결 — df·du·find로 공간 확보](/posts/linux-disk-full-troubleshoot/)
 
+**다음 글:** [Network Unreachable — 네트워크 연결 불가 트러블슈팅](/posts/linux-network-unreachable/)
+
 <br>
 읽어주셔서 감사합니다. 😊

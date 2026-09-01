@@ -35,7 +35,7 @@ draft: false
 
 각 줄은 `타입 경로 모드 소유자 그룹 나이 인자` 형식입니다.
 
-```
+```conf
 # 타입  경로              모드  소유자  그룹   나이
 d       /run/myapp        0755  root    root   -
 D       /tmp/cache        1777  root    root   10d
@@ -62,7 +62,7 @@ r       /tmp/old-files    -     -       -      -
 
 ## 실전 예제: 서비스 런타임 디렉터리
 
-```ini
+```conf
 # /etc/tmpfiles.d/myapp.conf
 d /run/myapp         0750 myapp myapp -
 d /run/myapp/sockets 0750 myapp myapp -

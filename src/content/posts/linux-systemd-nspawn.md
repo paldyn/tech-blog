@@ -80,7 +80,7 @@ machinectl enable mydebian
 ```bash
 # 네트워크 없음 (격리)
 sudo systemd-nspawn -bD /var/lib/machines/mydebian \
-    --network-veth
+    --private-network
 
 # veth 가상 인터페이스 (브리지 연결)
 sudo systemd-nspawn -bD /var/lib/machines/mydebian \

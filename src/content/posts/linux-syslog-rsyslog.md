@@ -25,7 +25,7 @@ severity를 지정하면 그 수준 **이상**의 메시지가 모두 해당됩�
 
 주 설정 파일은 `/etc/rsyslog.conf`이며, `/etc/rsyslog.d/*.conf`에서 추가 설정을 읽습니다.
 
-```
+```conf
 # /etc/rsyslog.conf 기본 형식
 # facility.severity  destination
 
@@ -64,7 +64,7 @@ module(load="imjournal")  # journald 직접 연동
 
 rsyslog 7 이상은 RainerScript라는 스크립트 언어를 지원합니다.
 
-```
+```conf
 # nginx 접근 로그만 별도 파일로
 if $programname == 'nginx' and $syslogseverity <= 6 then {
     action(type="omfile" file="/var/log/nginx-access.log")
@@ -81,7 +81,7 @@ if $msg contains '192.168.' then {
 
 기본 포맷 외에 JSON 출력을 설정할 수 있습니다.
 
-```
+```conf
 # JSON 템플릿 정의
 template(name="json_lines" type="list") {
     constant(value="{")
