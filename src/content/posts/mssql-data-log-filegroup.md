@@ -143,12 +143,10 @@ ALTER DATABASE AdventureWorks MODIFY FILE (
 
 SQL Server가 새 데이터 파일을 할당하거나 크기를 늘릴 때 Windows는 기본적으로 0으로 초기화한다. 이 과정이 수 분이 걸릴 수 있다. **IFI**(Instant File Initialization)를 활성화하면 데이터 파일 초기화를 건너뛰어 증가가 즉시 완료된다.
 
-```bash
-# Windows: SQL Server 서비스 계정에 "볼륨 관리 작업 수행" 권한 부여
-# (Local Security Policy → User Rights Assignment)
-# → SE_MANAGE_VOLUME_NAME
+Windows에서는 SQL Server 서비스 계정에 "볼륨 관리 작업 수행"(`SE_MANAGE_VOLUME_NAME`) 권한을 부여하면 활성화된다. Local Security Policy → User Rights Assignment에서 설정한다.
 
-# 확인 방법 (SQL Server 2016+)
+```sql
+-- 활성화 여부 확인 (SQL Server 2016+)
 SELECT instant_file_initialization_enabled
 FROM sys.dm_server_services
 WHERE servicename LIKE 'SQL Server%';

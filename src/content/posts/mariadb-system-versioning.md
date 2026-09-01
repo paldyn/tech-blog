@@ -136,10 +136,10 @@ WHERE id = 1
 ORDER BY row_start;
 
 -- 특정 시점 이후 변경된 모든 직원 조회
-SELECT DISTINCT id, name
+SELECT DISTINCT e.id, e.name
 FROM employees
-FOR SYSTEM_TIME FROM '2026-01-01' TO NOW()
-WHERE salary != (
+FOR SYSTEM_TIME FROM '2026-01-01' TO NOW() AS e
+WHERE e.salary != (
     SELECT salary FROM employees
     FOR SYSTEM_TIME AS OF '2026-01-01'
     WHERE id = e.id
