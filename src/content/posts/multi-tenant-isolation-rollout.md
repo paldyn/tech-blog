@@ -69,7 +69,7 @@ COLUMN project_code` 한 줄이면 데이터를 가를 수 있다고. 결과적�
 
 진짜 옵션 비교는 이렇게 정리됐다.
 
-```
+```text
 A. 단일 프로젝트 + 사용자 active/disable 강화
    → 멀티 프로젝트 안 함. 1 PR 분량.
    → 멀티 운영 시작하면 되돌리기 힘듦.
@@ -97,7 +97,7 @@ A 는 보수적, C 는 위험. **B 를 골랐다**. 그리고 그 결정이 한 
 
 ![멀티테넌시 도입 — 3단계 Phase 로드맵](/assets/posts/multi-tenant-phase-roadmap.svg)
 
-```
+```text
 Phase 1 — 인증 서비스 만:
   · 프로젝트 CRUD + 멤버 grant API
   · /auth/projects 가 사용자가 grant 받은 활성 프로젝트만 반환
@@ -259,7 +259,7 @@ JPA 에선 `@IdClass(UserProjectKey.class)` 로 표현. repository 의
 ID 타입도 String → UserProjectKey 로 바뀌고, service 에서
 `repository.findById(new UserProjectKey(currentProject, userId))` 패턴으로 호출.
 
-```
+```text
 4 서비스 × 4가지 격리 패턴
 ─────────────────────────
 인증 서비스       → JWT claim (grant 정보 자체)
@@ -334,7 +334,7 @@ curl -H "X-Tenant-Project: nonexistent" ...
 문제들.
 
 1. **CORS preflight 의 allowedHeaders 누락**
-   ```
+   ```text
    Request header field x-tenant-project is not allowed by
    Access-Control-Allow-Headers in preflight response
    ```

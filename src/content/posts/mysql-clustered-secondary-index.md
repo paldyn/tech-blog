@@ -41,7 +41,7 @@ PRIMARY KEY 이외 칼럼에 생성한 인덱스를 세컨더리 인덱스(보�
 
 세컨더리 인덱스로 행을 조회할 때는 두 단계 탐색이 발생합니다.
 
-```
+```text
 SELECT * FROM orders WHERE customer = 'Alice';
 
 ① 세컨더리 인덱스 B-tree 탐색

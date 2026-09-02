@@ -38,7 +38,7 @@ MVCC 읽기를 수행할 때 InnoDB는 **ReadView**를 생성합니다. ReadView
 
 ReadView는 네 가지 정보를 담습니다.
 
-```
+```text
 m_ids:         ReadView 생성 시점에 열려 있는 모든 트랜잭션 ID 목록
 min_trx_id:    m_ids 중 최솟값 (가장 오래된 열린 트랜잭션)
 max_trx_id:    이 ReadView 생성 후 부여될 다음 트랜잭션 ID
@@ -47,7 +47,7 @@ creator_trx_id: 이 ReadView를 만든 트랜잭션 ID
 
 행의 `DB_TRX_ID`를 보고 다음 규칙으로 가시성을 판단합니다.
 
-```
+```text
 TRX_ID = creator_trx_id → 내 트랜잭션이 수정 → 볼 수 있음
 TRX_ID < min_trx_id     → ReadView 전에 커밋됨 → 볼 수 있음
 TRX_ID >= max_trx_id    → ReadView 이후에 시작 → 볼 수 없음

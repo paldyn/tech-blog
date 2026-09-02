@@ -76,7 +76,7 @@ SET GLOBAL max_connections = 300;
 
 **메모리 계산 공식**:
 
-```
+```text
 총 메모리 필요량 = innodb_buffer_pool_size
                  + max_connections × (sort_buffer_size
                                     + join_buffer_size
@@ -106,7 +106,7 @@ spring:
 ```
 
 **권장 설계 공식 (HikariCP)**:
-```
+```text
 pool_size = (core_count * 2) + effective_spindle_count
 ```
 
