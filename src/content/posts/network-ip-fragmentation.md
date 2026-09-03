@@ -17,7 +17,7 @@ draft: false
 
 MTU는 특정 링크 계층 프로토콜이 한 번에 전달할 수 있는 **최대 페이로드 크기**(바이트)다.
 
-```
+```text
 링크 유형별 MTU:
 이더넷 (IEEE 802.3): 1500 bytes (가장 일반적)
 Wi-Fi (802.11):      2304 bytes (실제로는 이더넷 MTU 사용)
@@ -35,7 +35,7 @@ VXLAN:               1450 bytes (50바이트 오버헤드)
 
 IPv4 헤더에는 단편화를 제어하는 세 가지 필드가 있다.
 
-```
+```text
 IPv4 헤더 단편화 관련 필드 (Byte 6~9):
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -183,7 +183,7 @@ iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
 
 IPv6는 **라우터에서의 단편화를 완전히 금지**한다. 오직 송신 호스트만 단편화할 수 있다. 따라서 모든 IPv6 구현은 PMTUD를 반드시 지원해야 한다.
 
-```
+```text
 IPv6 최소 MTU = 1280 bytes (RFC 2460)
 IPv6 단편화: Extension Header(Fragment Header, 8bytes) 사용
 
@@ -202,7 +202,7 @@ tracepath6 2001:4860:4860::8888
 
 ## 단편화 방지 모범 사례
 
-```
+```text
 1. TCP: MSS 협상으로 단편화 사전 방지
    - SYN 패킷에 MSS 옵션 포함
    - MSS = MTU - IP 헤더(20) - TCP 헤더(20) = 1460 bytes (이더넷)

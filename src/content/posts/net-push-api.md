@@ -38,7 +38,7 @@ VAPID(Voluntary Application Server Identification)는 App Server가 Push Service
 npx web-push generate-vapid-keys
 ```
 
-```js
+```text
 // 결과
 {
   publicKey: 'BNRGm…',  // 클라이언트에게 공개

@@ -44,7 +44,7 @@ SSE는 HTTP 위에서 동작하는 **단방향 서버 → 클라이언트** 스�
 
 SSE 메시지는 `field: value\n` 형식의 텍스트이며, **빈 줄**(`\n\n`)이 이벤트 구분자입니다.
 
-```
+```text
 data: {"temperature": 24.5}
 
 event: alert
@@ -162,27 +162,29 @@ HTTP/1.1에서는 브라우저당 도메인 연결이 최대 6개로 제한되�
 OpenAI·Anthropic API의 스트리밍 응답은 SSE를 사용합니다.
 
 ```js
-const es = await fetch('/api/chat', {
-  method: 'POST',
-  body: JSON.stringify({ message: userInput }),
-});
+async function streamChat(userInput) {
+  const es = await fetch('/api/chat', {
+    method: 'POST',
+    body: JSON.stringify({ message: userInput }),
+  });
 
-const reader = es.body.pipeThrough(new TextDecoderStream()).getReader();
-let buffer = '';
+  const reader = es.body.pipeThrough(new TextDecoderStream()).getReader();
+  let buffer = '';
 
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
-  buffer += value;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += value;
 
-  const lines = buffer.split('\n');
-  buffer = lines.pop(); // 마지막 미완성 줄 보존
+    const lines = buffer.split('\n');
+    buffer = lines.pop(); // 마지막 미완성 줄 보존
 
-  for (const line of lines) {
-    if (line.startsWith('data: ')) {
-      const payload = line.slice(6);
-      if (payload === '[DONE]') return;
-      appendToken(JSON.parse(payload).delta);
+    for (const line of lines) {
+      if (line.startsWith('data: ')) {
+        const payload = line.slice(6);
+        if (payload === '[DONE]') return;
+        appendToken(JSON.parse(payload).delta);
+      }
     }
   }
 }

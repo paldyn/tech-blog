@@ -147,7 +147,6 @@ async function shareCurrentPage(extraText = '') {
 Web Share Target은 **반대 방향** — 다른 앱에서 내 PWA로 공유받는 기능입니다. `manifest.json`에 설정합니다.
 
 ```json
-// manifest.json
 {
   "name": "My App",
   "share_target": {

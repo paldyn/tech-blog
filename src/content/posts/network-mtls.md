@@ -19,7 +19,7 @@ draft: false
 
 단방향 TLS의 핸드셰이크와 mTLS의 차이는 단 두 가지 메시지에 있습니다.
 
-```
+```text
 단방향 TLS:
   서버 → Certificate (서버 인증서)
   서버 → CertificateVerify (서버 서명)
@@ -32,7 +32,7 @@ mTLS 추가:
 
 ## mTLS 핸드셰이크 단계별
 
-```
+```text
 1. ClientHello (클라이언트 → 서버)
    지원 암호 스위트, 클라이언트 key_share
 
@@ -198,7 +198,7 @@ def check_client_cert():
 
 mTLS는 **제로트러스트(Zero Trust) 아키텍처**의 핵심 구성 요소입니다.
 
-```
+```text
 전통적 보안 모델:
   "내부 네트워크는 신뢰" → VPN으로 내부 진입 후 자유 이동
 

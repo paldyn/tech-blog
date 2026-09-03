@@ -38,7 +38,7 @@ dig example.com A
 
 TTL은 응답 레코드에 포함된 초 단위 숫자로, **캐시 유효 기간**을 나타냅니다. 리졸버는 레코드를 저장할 때 TTL을 카운트다운하며, 0에 도달하면 캐시를 폐기합니다.
 
-```
+```text
 example.com.  3600  IN  A  93.184.216.34
               ^^^^
               TTL = 3600초 (1시간)
@@ -74,7 +74,7 @@ example.com.  3600  IN  A  93.184.216.34
 
 SOA 레코드의 마지막 필드인 MINIMUM이 이 TTL을 결정합니다.
 
-```
+```text
 example.com. SOA ns1.example.com. admin.example.com. (
     2024010101  ; serial
     3600        ; refresh
@@ -88,7 +88,7 @@ example.com. SOA ns1.example.com. admin.example.com. (
 
 DNS 캐시는 한 곳에만 있지 않습니다.
 
-```
+```text
 브라우저 캐시
   → OS 스텁 리졸버 (nscd, systemd-resolved)
     → ISP/기업 리졸버 캐시

@@ -44,7 +44,7 @@ PoP는 **CDN 제공사가 물리적으로 서버를 배치한 거점**이다. �
 
 엣지 서버가 요청된 콘텐츠를 캐시에 갖고 있는 경우. Origin에 요청이 가지 않으므로 응답이 매우 빠르다. 응답 헤더에 `X-Cache: HIT`가 붙는 경우가 많다.
 
-```
+```bash
 $ curl -I https://cdn.example.com/image.jpg
 HTTP/2 200
 X-Cache: HIT
@@ -56,7 +56,7 @@ Cache-Control: public, max-age=86400
 
 엣지가 캐시를 갖고 있지 않은 경우. 엣지가 Origin에 요청을 보내고, 응답을 캐시한 뒤 클라이언트에 전달한다.
 
-```
+```bash
 $ curl -I https://cdn.example.com/new-image.jpg
 HTTP/2 200
 X-Cache: MISS      # 처음 요청 → Origin에서 가져옴
@@ -68,7 +68,7 @@ Cache-Control: public, max-age=86400
 
 CDN이 얼마나 오래 콘텐츠를 캐시할지는 **Origin 서버의 응답 헤더**가 결정한다.
 
-```
+```text
 # 정적 파일 (버전닝된 URL)
 Cache-Control: public, max-age=31536000, immutable
 # → 1년간 캐시, 내용 변경 없음 선언
@@ -86,7 +86,7 @@ Cache-Control: private, no-store
 
 CDN은 요청 URL 전체(또는 일부)를 키로 캐시를 저장한다. 기본적으로 `Host + Path + Query String`이 키가 된다.
 
-```
+```text
 # 이 두 요청은 서로 다른 캐시 키
 GET /api/search?q=hello  (key1)
 GET /api/search?q=world  (key2)
@@ -94,7 +94,7 @@ GET /api/search?q=world  (key2)
 
 쿼리스트링을 무시하도록 설정하거나, 특정 헤더(Accept-Language 등)를 키에 포함하는 방식을 Vary 설정이라 한다.
 
-```
+```text
 # Origin 응답
 Vary: Accept-Encoding
 # → Accept-Encoding 헤더가 다르면 별도 캐시 항목 생성
@@ -118,7 +118,7 @@ aws cloudfront create-invalidation \
 
 Purge는 모든 PoP에 전파되는 데 수~수십 초가 걸린다. 빠른 무효화가 필요하면 파일명에 해시를 포함하는 **파일명 버전닝** 전략이 더 안정적이다.
 
-```
+```text
 # 버전닝 전략 — Purge 없이 즉시 반영
 image-v1.jpg  → image-abc123.jpg (빌드 시 해시 포함)
 ```

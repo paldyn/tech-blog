@@ -17,7 +17,7 @@ draft: false
 
 인터넷에서 처음 만나는 서버가 "나는 example.com입니다"라고 말하면 어떻게 믿을 수 있을까요? PKI는 **신뢰할 수 있는 제3자**(Certificate Authority)를 통해 이 문제를 해결합니다.
 
-```
+```text
 신뢰 체인의 원리:
   브라우저/OS: "나는 DigiCert의 Root CA를 신뢰한다" (미리 내장)
   DigiCert:    "나는 Intermediate CA를 신뢰한다" (Root CA 서명)
@@ -34,7 +34,7 @@ draft: false
 
 최상위 신뢰 기관입니다.
 
-```
+```text
 특징:
   - 자체 서명(Self-Signed): 발급자 = 주체
   - OS/브라우저에 사전 설치
@@ -58,7 +58,7 @@ security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates
 
 Root CA와 Leaf 인증서 사이에 위치합니다.
 
-```
+```text
 역할:
   - 실제 서버/클라이언트 인증서 발급
   - Root CA 대신 위험 노출
@@ -110,7 +110,7 @@ openssl x509 -in cert.pem -noout \
 
 **Key Usage와 Extended Key Usage**
 
-```
+```text
 Key Usage: digitalSignature, keyEncipherment
            → 서명과 키 암호화에 사용 가능
 

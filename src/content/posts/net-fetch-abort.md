@@ -99,7 +99,7 @@ const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
 
 `useEffect`의 cleanup 함수에서 `controller.abort()`를 호출하면 컴포넌트 언마운트나 의존성 변경 시 자동으로 이전 요청을 취소합니다.
 
-```js
+```jsx
 import { useState, useEffect } from 'react';
 
 function SearchResults({ query }) {

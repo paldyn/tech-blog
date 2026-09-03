@@ -36,7 +36,7 @@ sudo tcpdump -i eth0
 
 ![tcpdump 출력 구조](/assets/posts/network-packet-capture-tcpdump.svg)
 
-```
+```text
 시각                   src IP.포트 > dst IP.포트:  플래그  시퀀스  크기
 14:22:01.123456  IP 10.0.0.5.52001 > 1.2.3.4.80: Flags [S], seq 0, win 65535, length 0
 ```
@@ -115,7 +115,7 @@ ssh user@server "sudo tcpdump -i eth0 -nn -s 0 -U -w - host 1.2.3.4" \
 
 Wireshark에서는 캡처 후 분석 필터를 추가로 적용할 수 있다.
 
-```
+```text
 # 특정 IP
 ip.addr == 1.2.3.4
 

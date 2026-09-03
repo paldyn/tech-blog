@@ -19,7 +19,7 @@ draft: false
 
 WebSocket은 **HTTP Upgrade 핸드셰이크**를 거쳐 확립되는 지속적인 TCP 연결입니다. 한 번 연결되면 서버와 클라이언트가 **동시에 양방향**으로 메시지를 주고받을 수 있습니다. HTTP의 요청-응답 모델과 달리 서버가 먼저 메시지를 보낼 수 있습니다.
 
-```
+```text
 HTTP/1.1 101 Switching Protocols
 Upgrade: websocket
 Connection: Upgrade

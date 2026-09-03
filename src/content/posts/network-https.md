@@ -19,7 +19,7 @@ HTTPS 연결이 열리는 과정은 세 단계로 나뉩니다.
 
 ![HTTPS 전체 흐름](/assets/posts/network-https-flow.svg)
 
-```
+```text
 Phase 1: TCP 3-Way Handshake (포트 443)
   클라이언트 → SYN → 서버
   서버 → SYN-ACK → 클라이언트
@@ -66,7 +66,7 @@ server {
 
 301 리다이렉트 방식은 **최초 HTTP 요청**이 평문으로 나가는 문제가 있습니다.
 
-```
+```text
 공격자가 최초 HTTP 요청을 가로챌 수 있음:
   클라이언트 → http://bank.com → [공격자 MITM]
   공격자 → 응답 조작 (리다이렉트 없이 가짜 페이지)
@@ -83,7 +83,7 @@ add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; prelo
 
 HSTS가 작동하는 방식:
 
-```
+```text
 최초 방문 (HTTPS): 서버 응답에 HSTS 헤더 포함
 브라우저: "example.com은 max-age=31536000초 동안 HTTPS만 사용"
 
@@ -211,7 +211,7 @@ curl -I https://example.com | grep -i strict
 
 HTTP/3는 TCP 대신 UDP 기반 QUIC을 사용합니다.
 
-```
+```text
 HTTP/1.1: TCP (80/443) → TLS → HTTP
 HTTP/2:   TCP (443) → TLS → HTTP/2
 HTTP/3:   UDP (443) → QUIC(TLS 1.3 내장) → HTTP/3

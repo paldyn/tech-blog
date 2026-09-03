@@ -35,7 +35,7 @@ draft: false
 
 로드 밸런서는 주기적으로 각 서버의 상태를 점검한다.
 
-```
+```text
 # HAProxy 헬스 체크 설정 예시
 backend web_servers
     balance roundrobin
@@ -60,7 +60,7 @@ backend web_servers
 
 가장 기본적인 방식. 서버 목록을 순서대로 순환하며 요청을 배분한다.
 
-```
+```text
 요청 1 → 서버 A
 요청 2 → 서버 B
 요청 3 → 서버 C
@@ -73,7 +73,7 @@ backend web_servers
 
 현재 활성 연결 수가 가장 적은 서버로 요청을 보낸다.
 
-```
+```text
 서버 A: 활성 연결 5개
 서버 B: 활성 연결 2개  ← 다음 요청은 여기
 서버 C: 활성 연결 4개
@@ -95,7 +95,7 @@ server_index = hash(client_ip) % num_servers
 
 서버마다 가중치를 부여해 고성능 서버에 더 많은 트래픽을 보낸다.
 
-```
+```text
 서버 A (weight=3): 요청 3개
 서버 B (weight=1): 요청 1개
 → 순서: A, A, A, B, A, A, A, B ...
@@ -111,7 +111,7 @@ server_index = hash(client_ip) % num_servers
 
 로드 밸런서가 첫 응답에 쿠키를 심고, 이후 요청에서 같은 쿠키가 있으면 동일 서버로 라우팅한다.
 
-```
+```nginx
 # Nginx sticky module 예시
 upstream app {
     sticky cookie srv_id expires=1h domain=.example.com path=/;

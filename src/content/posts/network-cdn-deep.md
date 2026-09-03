@@ -25,7 +25,7 @@ CDN PoP가 전 세계 수백 개 있을 때, 동일 파일에 대해 수백 개 
 
 결과적으로 수백 개 PoP가 Origin을 직접 두드리는 대신, 소수의 미드티어가 집약해서 Origin 요청을 95% 이상 줄인다.
 
-```
+```text
 # Cloudflare Tiered Cache 설정
 Cache Rules → Tiered Cache Topology: Smart
 # "Smart" 모드는 HIT율 데이터를 기반으로 최적 미드티어 자동 선택
@@ -49,7 +49,7 @@ CDN이 사용자를 가장 가까운 PoP로 보내는 방법은 두 가지가 �
 
 DNS 서버가 클라이언트 IP 기반으로 지역을 파악해 해당 지역 PoP의 IP를 반환한다.
 
-```
+```text
 # AWS Route 53 지리적 라우팅
 api.example.com → 클라이언트가 아시아 → 1.2.3.4 (도쿄 NLB)
 api.example.com → 클라이언트가 유럽 → 5.6.7.8 (프랑크푸르트 NLB)
@@ -108,7 +108,7 @@ echo "Cache warming complete"
 
 캐시가 만료됐을 때 즉시 Origin에 요청하면 레이턴시 스파이크가 생긴다. **SWR**은 만료된 캐시를 일단 사용자에게 반환하면서 백그라운드에서 Origin을 재검증한다.
 
-```
+```text
 # Origin 응답 헤더
 Cache-Control: public, max-age=60, stale-while-revalidate=30
 

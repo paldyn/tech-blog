@@ -35,14 +35,14 @@ draft: false
 
 **1. 클라이언트 IP 숨기기**
 
-```
+```text
 직접 연결: 클라이언트(1.2.3.4) → 서버 (서버는 1.2.3.4 봄)
 프록시 경유: 클라이언트(1.2.3.4) → 프록시(5.6.7.8) → 서버 (서버는 5.6.7.8 봄)
 ```
 
 **2. 콘텐츠 필터링 (기업 환경)**
 
-```
+```text
 직원 PC → 포워드 프록시 → 인터넷
   - SNS, 게임 사이트 차단
   - HTTPS 복호화 검사 (SSL Bump)
@@ -71,7 +71,7 @@ export no_proxy="localhost,127.0.0.1,192.168.0.0/16"
 
 HTTP 프록시를 통해 HTTPS를 연결할 때 CONNECT 메서드를 씁니다.
 
-```
+```text
 클라이언트 → 프록시:
   CONNECT example.com:443 HTTP/1.1
   Host: example.com:443
@@ -139,7 +139,7 @@ server {
 
 리버스 프록시가 HTTPS를 처리하고 백엔드에는 HTTP로 전달합니다.
 
-```
+```text
 클라이언트 ──HTTPS──→ [Nginx:443] ──HTTP──→ 백엔드:8080
 
 장점:
@@ -198,7 +198,7 @@ upstream backend {
 
 ## HAProxy 설정 예시
 
-```
+```text
 # HAProxy 리버스 프록시
 frontend web_frontend
     bind *:443 ssl crt /etc/ssl/haproxy.pem

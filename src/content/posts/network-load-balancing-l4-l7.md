@@ -28,7 +28,7 @@ draft: false
 
 L4 LB는 TCP 연결을 보고 대상 서버를 결정한다. 패킷의 IP 헤더와 TCP/UDP 헤더만 분석하므로 **처리 속도가 매우 빠르다**. HTTP 페이로드(URL, 헤더 등)는 들여다보지 않는다.
 
-```
+```text
 클라이언트 → LB:443 (TCP SYN)
 LB → 서버 A:8443 (TCP SYN 포워드)
 
@@ -45,7 +45,7 @@ LB → 서버 A:8443 (TCP SYN 포워드)
 
 ### AWS NLB 예시
 
-```
+```text
 NLB 리스너: TCP:443
   Target Group A (서버 A, B, C)
   → 알고리즘: Flow Hash (IP + Port + Protocol)
@@ -58,7 +58,7 @@ NLB 리스너: TCP:443
 
 L7 LB는 TCP 연결을 맺고 HTTP 요청을 완전히 파싱한 뒤 라우팅한다. 요청의 URL 경로, Host 헤더, 메서드, 쿠키를 모두 볼 수 있다.
 
-```
+```text
 클라이언트 → LB (TLS 종료)
 LB → HTTP 파싱 →
   GET /api/users    → API 서버 풀
@@ -73,7 +73,7 @@ LB → HTTP 파싱 →
 
 L7 LB가 클라이언트와의 TLS를 종료하고, 내부 서버와는 HTTP(비암호화) 또는 별도 TLS로 통신한다.
 
-```
+```text
 [클라이언트] --TLS--> [LB] --HTTP 또는 TLS--> [서버]
 ```
 
@@ -81,7 +81,7 @@ L7 LB가 클라이언트와의 TLS를 종료하고, 내부 서버와는 HTTP(비
 
 ### AWS ALB 규칙 예시
 
-```
+```text
 리스너 규칙 (우선순위 순):
   1. 조건: path-pattern = /api/*
      액션: forward → api-target-group
@@ -141,7 +141,7 @@ server {
 
 L4 LB의 고급 기법. 클라이언트 → LB → 서버로 요청이 가지만, **응답은 서버 → 클라이언트로 직접** 간다. LB를 응답 경로에서 제외해 처리량을 극대화한다. 주로 고트래픽 미디어 서버나 게임 서버에서 사용된다.
 
-```
+```text
 요청:  클라이언트 → LB → 서버
 응답:  서버 → 클라이언트 (LB 우회)
 ```

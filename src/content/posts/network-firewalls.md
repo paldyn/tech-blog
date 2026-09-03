@@ -76,7 +76,7 @@ HTTP URL, 메서드, 헤더 등 L7 내용을 검사합니다.
 
 DPI, IPS/IDS, 앱 인식, 사용자 기반 정책, SSL 검사까지 통합합니다.
 
-```
+```text
 NGFW 주요 기능:
   - Deep Packet Inspection (DPI): 페이로드 내용 검사
   - Application Identification: Facebook, YouTube 등 앱 인식
@@ -92,7 +92,7 @@ NGFW 주요 기능:
 
 DMZ(Demilitarized Zone)는 외부망과 내부망 사이의 **중립 지대**입니다.
 
-```
+```text
 트래픽 정책:
 
 외부망 → DMZ:
