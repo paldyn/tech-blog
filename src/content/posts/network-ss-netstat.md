@@ -51,7 +51,7 @@ ss -tunap
 
 ## TCP 연결 상태
 
-```
+```bash
 ss -tn state established     # ESTABLISHED 연결만
 ss -tn state listen          # LISTEN 소켓만
 ss -tn state time-wait       # TIME-WAIT 소켓만

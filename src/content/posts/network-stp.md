@@ -17,7 +17,7 @@ draft: false
 
 이더넷 프레임에는 TTL 필드가 없다. 루프 경로가 생기면 브로드캐스트 프레임이 영원히 순환하면서 두 가지 재앙이 발생한다.
 
-```
+```text
 루프 시나리오:
 SW1 ─── SW2
 │        │
@@ -42,7 +42,7 @@ STP는 물리 루프 위에서 **논리적 트리**(스패닝 트리)를 만들�
 
 모든 스위치는 자신을 루트로 가정하고 **BPDU**(Bridge Protocol Data Unit)를 주고받는다. 우선순위가 가장 낮은 스위치가 루트 브리지로 선출된다.
 
-```
+```text
 Bridge ID (BID) = Bridge Priority (2B) + MAC Address (6B)
 선출 기준: 낮은 BID가 우선
 → 동점이면 MAC 주소가 낮은 쪽
@@ -62,7 +62,7 @@ SW1(config)# spanning-tree vlan 1 root primary
 
 루트 브리지를 제외한 모든 스위치는 루트 브리지까지의 **최단 경로 포트 하나**를 루트 포트로 선정한다.
 
-```
+```text
 경로 비용 (Path Cost):
 링크 속도     | 비용 (802.1D)
 10 Mbps      | 100
@@ -130,7 +130,7 @@ STP의 가장 큰 단점은 **수렴 시간이 30~50초**라는 점이다. 링�
 
 IEEE 802.1w는 STP를 대폭 개선해 **1~2초 내 수렴**을 달성한다. 802.1D와 하위 호환되며 현대 스위치의 기본 프로토콜이다.
 
-```
+```text
 RSTP 개선 핵심:
 1. 포트 역할 추가: Alternate(백업 루트 포트), Backup(백업 지정 포트)
 2. 즉시 전이(Rapid Transition): 엣지 포트와 P2P 링크는 Forwarding 즉시 전환

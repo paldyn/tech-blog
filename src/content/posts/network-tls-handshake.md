@@ -33,7 +33,7 @@ TLS 1.3은 TLS 1.2의 2-RTT 구조를 1-RTT로 줄이는 데 성공했습니다.
 
 클라이언트가 연결을 시작합니다.
 
-```
+```text
 ClientHello:
   - TLS 버전: TLS 1.3 (legacy_version=0x0303)
   - 클라이언트 랜덤값: 32바이트
@@ -50,7 +50,7 @@ TLS 1.3의 결정적인 변화는 **ClientHello에 `key_share`를 즉시 포함*
 
 서버가 응답합니다.
 
-```
+```text
 ServerHello:
   - 선택된 암호 스위트: TLS_AES_256_GCM_SHA384
   - 서버 랜덤값: 32바이트
@@ -64,7 +64,7 @@ ServerHello:
 
 ServerHello 이후의 메시지는 **모두 암호화**됩니다.
 
-```
+```text
 {EncryptedExtensions}  ← 서버 확장(ALPN, SNI 등)
 {Certificate}          ← 서버 X.509 인증서
 {CertificateVerify}    ← 서버 개인키로 핸드셰이크 내용 서명
@@ -93,7 +93,7 @@ if cert_valid and sig_valid and finished_valid:
 
 ![TLS 1.3 키 파생 구조](/assets/posts/network-tls-handshake-keys.svg)
 
-```
+```text
 Early Secret  ──(PSK 재개 시 사용)──
       ↓ + ECDHE Shared Secret
 Handshake Secret
@@ -123,7 +123,7 @@ Master Secret
 
 TLS 1.3은 이전 연결에서 발급받은 PSK(Pre-Shared Key)를 이용해 재연결 시 0번의 추가 왕복 없이 앱 데이터를 보낼 수 있습니다.
 
-```
+```bash
 # 0-RTT 활성화 예시 (OpenSSL)
 openssl s_client \
   -connect example.com:443 \

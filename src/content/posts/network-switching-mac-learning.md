@@ -17,7 +17,7 @@ draft: false
 
 과거의 **허브**(Hub)는 한 포트로 들어온 신호를 **모든 포트에 그대로 복사**한다. 충돌 도메인도 하나고 대역폭도 공유된다. 반면 스위치는 프레임의 목적지 MAC 주소를 읽어 **해당 포트에만** 전달한다.
 
-```
+```text
 허브 (10Mbps, 4포트):
 포트1 수신 → 포트2, 3, 4 동시 전송
 충돌 도메인: 1개 (전체 공유)
@@ -35,7 +35,7 @@ draft: false
 
 ![MAC 학습 과정](/assets/posts/network-switching-mac-learning-process.svg)
 
-```
+```text
 MAC 주소 테이블 구조:
 ┌──────────────────────┬────────┬──────┬──────────┐
 │ MAC Address          │ Port   │ VLAN │ Age(sec) │
@@ -197,7 +197,7 @@ SW(config-if)# switchport port-security mac-address sticky  # 동적 학습 후 
 
 ---
 
-**지난 글:** [이더넷 완전 이해](/posts/network-ethernet/)
+**지난 글:** [오류 감지와 CRC: 데이터 무결성 보장의 핵심](/posts/network-error-detection-crc/)
 
 **다음 글:** [VLAN: 논리적 네트워크 분리](/posts/network-vlan/)
 

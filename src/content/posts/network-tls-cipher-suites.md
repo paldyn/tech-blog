@@ -17,7 +17,7 @@ draft: false
 
 TLS 연결 한 개를 안전하게 만들기 위해 여러 종류의 암호 알고리즘이 협력합니다. 이를 하나의 이름으로 묶어 표현한 것이 **암호 스위트**입니다.
 
-```
+```text
 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
  │     │      │        │    │     │
  │     │      │        │    │     └─ 해시 (PRF/MAC)
@@ -38,7 +38,7 @@ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 
 **ECDHE (Elliptic Curve Diffie-Hellman Ephemeral)** — 권장
 
-```
+```text
 타원곡선 DH + 임시(Ephemeral) 키
   - 세션마다 새 키 쌍 생성
   - 세션 종료 후 키 폐기
@@ -56,7 +56,7 @@ ECDHE보다 느리지만 Forward Secrecy 보장. TLS 1.2에서 RSA 대신 사용
 
 **RSA 키 교환** — TLS 1.3에서 제거
 
-```
+```text
 # RSA 키 교환 (비권장, TLS 1.2)
 클라이언트: pre_master_secret 생성
           → 서버 공개키로 암호화
@@ -97,7 +97,7 @@ ciphertext, auth_tag = AES_GCM.encrypt(
 
 **ChaCha20-Poly1305** — AES 하드웨어 없는 환경 권장
 
-```
+```text
 ChaCha20: 스트림 암호 (AES보다 SW 구현 빠름)
 Poly1305: MAC (무결성 보장)
 사용 환경: 모바일, IoT (AES-NI 없는 장치)
@@ -111,7 +111,7 @@ Poly1305: MAC (무결성 보장)
 
 TLS 1.2에서는 키 파생 함수(PRF)와 MAC에 같은 해시를 씁니다. TLS 1.3에서는 HKDF의 해시 알고리즘으로 사용됩니다.
 
-```
+```text
 SHA-256: 256비트 출력, TLS_AES_128_GCM_SHA256에 사용
 SHA-384: 384비트 출력, TLS_AES_256_GCM_SHA384에 사용
 SHA-1:   완전 폐기 (충돌 공격 가능)
@@ -136,7 +136,7 @@ openssl ciphers -v 'ECDHE+AESGCM:ECDHE+CHACHA20' | head -10
 
 TLS 1.3에서는 암호 스위트 이름 구조가 단순해졌습니다.
 
-```
+```text
 TLS 1.2: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
          (키 교환 + 인증 + 대칭키 + 해시 모두 포함)
 
@@ -149,7 +149,7 @@ TLS 1.3: TLS_AES_256_GCM_SHA384
 
 TLS 1.3의 세 가지 필수 암호 스위트:
 
-```
+```text
 TLS_AES_128_GCM_SHA256          (필수 구현)
 TLS_AES_256_GCM_SHA384          (권장)
 TLS_CHACHA20_POLY1305_SHA256    (권장)

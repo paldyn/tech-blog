@@ -17,7 +17,7 @@ draft: false
 
 traceroute는 **TTL(Time To Live)** 값을 1부터 순차적으로 늘려가며 프로브 패킷을 보낸다.
 
-```
+```text
 TTL=1 패킷 → 첫 번째 라우터에서 TTL 만료 → ICMP Time Exceeded 반환 → 1홉 IP 확인
 TTL=2 패킷 → 두 번째 라우터에서 만료 → 2홉 IP 확인
 ...
@@ -98,7 +98,7 @@ mtr -T -P 443 example.com
 
 ### 레이턴시 급증 구간
 
-```
+```text
 홉 1:  0.4 ms
 홉 2:  2.1 ms
 홉 3:  2.3 ms
@@ -110,7 +110,7 @@ mtr -T -P 443 example.com
 
 ### 패킷 유실 구간
 
-```
+```text
 홉 3:  0.0% Loss
 홉 4: 20.0% Loss  ← 여기서 유실 시작
 홉 5: 20.0% Loss

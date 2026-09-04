@@ -17,7 +17,7 @@ draft: false
 
 TLS는 Netscape의 SSL을 기반으로 IETF가 표준화한 프로토콜입니다.
 
-```
+```text
 SSL 2.0 (1995)  ← 심각한 취약점, 완전 폐기
 SSL 3.0 (1996)  ← POODLE 공격, RFC 7568로 금지
 TLS 1.0 (1999)  ← BEAST 공격, 2021년 공식 폐기
@@ -44,7 +44,7 @@ TLS 1.2는 서버가 어떤 키 교환 방식을 쓸지 알려준 후에야 클�
 
 TLS 1.2까지는 RSA로 키 교환이 가능했습니다. 클라이언트가 서버 공개키로 `pre_master_secret`을 암호화해 보내는 방식입니다.
 
-```
+```text
 TLS 1.2 RSA 방식 (취약):
 Client → [RSA 암호화된 pre_master_secret] → Server
 
@@ -57,7 +57,7 @@ TLS 1.3은 RSA를 **인증 전용**으로만 허용하고, 키 교환은 ECDHE/D
 
 **취약 암호 스위트 제거**
 
-```
+```text
 제거된 알고리즘:
   - RC4: 편향 공격 취약 (RFC 7465)
   - 3DES: Sweet32 공격 (64비트 블록)
@@ -84,7 +84,7 @@ for c in '0123456789abcdef..':
 
 TLS 1.2는 기존 연결 안에서 새로운 핸드셰이크를 수행해 키를 교체할 수 있었습니다. 이는 구현 복잡성을 높이고 취약점의 원인이 됐습니다(CVE-2009-3555). TLS 1.3은 재협상을 완전히 제거하고 `KeyUpdate` 메시지로 대체했습니다.
 
-```
+```text
 TLS 1.3 키 갱신:
 Client → KeyUpdate (update_requested) → Server
 Server → KeyUpdate (not_requested) ← Server

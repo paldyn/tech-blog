@@ -17,7 +17,7 @@ draft: false
 
 Nexacro N이 구동되면 다음과 같은 객체 트리가 메모리에 만들어집니다. 최상위는 `Application` 싱글턴 객체이며, 그 아래로 `MainFrame`, `ChildFrame`, `Form` 이 중첩됩니다.
 
-```
+```text
 Application (nexacro.getApplication())
 └── MainFrame (.mainframe)
     ├── Div — divHeader

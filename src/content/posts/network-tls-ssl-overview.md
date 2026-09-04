@@ -48,7 +48,7 @@ ECDHE(타원곡선 Diffie-Hellman Ephemeral)를 사용해 **Perfect Forward Secr
 
 브라우저는 서버 인증서를 검증하기 위해 **신뢰 체인**을 따라 올라갑니다.
 
-```
+```text
 End-Entity Cert (example.com)
   → Intermediate CA (Let's Encrypt R3)
     → Root CA (ISRG Root X1)  ← 브라우저에 사전 탑재

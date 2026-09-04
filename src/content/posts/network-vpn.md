@@ -23,7 +23,7 @@ VPN은 공용 인터넷 위에 **암호화된 가상 전용 터널**을 만들�
 
 ![VPN 터널링 원리](/assets/posts/network-vpn-tunnel.svg)
 
-```
+```text
 캡슐화(Encapsulation):
   원본 패킷: [IP: 10.0.0.2→192.168.1.5][TCP 443][HTTP 데이터]
                          ↓ ESP로 암호화 + 새 IP 헤더 추가
@@ -129,7 +129,7 @@ AllowedIPs = 192.168.0.0/16, 10.0.0.0/8   # 사내 대역만
 
 ## VPN 유형: Site-to-Site vs Remote Access
 
-```
+```text
 Site-to-Site VPN (사이트 간):
   본사(192.168.1.0/24) ←→ 지사(192.168.2.0/24)
   

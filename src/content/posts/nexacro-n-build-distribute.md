@@ -76,7 +76,7 @@ nexacro-studio-cli build \
 
 ![빌드 결과물 구조 — dist/ 폴더 해부](/assets/posts/nexacro-n-build-distribute-output.svg)
 
-```
+```text
 dist/
 ├── index.html          ← 앱 진입점 (브라우저가 처음 로드)
 ├── Environment.xml     ← 운영 환경 설정
@@ -102,7 +102,7 @@ dist/
 
 운영 환경마다 API 서버 주소가 다르므로, `Environment.xml`을 환경별로 분리해두는 것이 표준 패턴입니다.
 
-```
+```text
 conf/
 ├── dev.Environment.xml    ← 개발 서버
 ├── staging.Environment.xml← 스테이징

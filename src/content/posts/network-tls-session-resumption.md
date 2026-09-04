@@ -21,7 +21,7 @@ draft: false
 
 가장 오래된 방식입니다.
 
-```
+```text
 최초 연결:
   서버 → ServerHello (session_id=abc123)
   서버: session_id=abc123 → {마스터 시크릿, 암호 스위트} 메모리 저장
@@ -45,7 +45,7 @@ draft: false
 
 서버 측 상태 저장 문제를 해결한 방식입니다.
 
-```
+```text
 최초 연결 후:
   서버 → NewSessionTicket 메시지
          (마스터 시크릿 + 암호 스위트를 서버 비밀키로 암호화)
@@ -83,7 +83,7 @@ TLS 1.3은 Session Ticket과 개념은 비슷하지만 메커니즘이 더 정�
 
 **흐름**
 
-```
+```text
 최초 TLS 1.3 핸드셰이크 완료 후:
   서버 → NewSessionTicket
     - ticket: 암호화된 PSK 정보
@@ -113,7 +113,7 @@ binder = HMAC(binder_key, transcript_hash)
 
 0-RTT를 사용하면 서버 응답 전에 앱 데이터를 보낼 수 있습니다.
 
-```
+```text
 일반 재개 (1-RTT):
 클라이언트: ClientHello + PSK
 서버:       ServerHello + {Extensions + Finished}
@@ -128,7 +128,7 @@ binder = HMAC(binder_key, transcript_hash)
 
 **0-RTT 재전송 공격 위험**
 
-```
+```text
 정상: 클라이언트 → [Early Data: DELETE /resource] → 서버 (처리)
 
 공격:
@@ -139,7 +139,7 @@ binder = HMAC(binder_key, transcript_hash)
 
 따라서 0-RTT 적용 기준:
 
-```
+```text
 ✓ 사용 가능: GET, HEAD (멱등)
 ✓ 사용 가능: 읽기 전용 조회 API
 ✗ 사용 금지: POST, PUT, DELETE (상태 변경)
@@ -165,7 +165,7 @@ if ($http_early_data = "1") {
 
 ## 세션 재개 방식 선택 기준
 
-```
+```text
 단일 서버: Session ID 또는 Session Ticket 둘 다 OK
 다중 서버: Session Ticket (공유 키 필요) 또는 외부 Redis 세션 저장소
 TLS 1.3 환경: PSK 자동 사용 (NewSessionTicket 포함)

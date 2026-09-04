@@ -189,7 +189,7 @@ check_cache "$BASE/assets/logo.png"
 ```
 
 예상 출력:
-```
+```text
 TypeDef.xml => Cache-Control: no-store, no-cache, must-revalidate
 index.html  => Cache-Control: no-store, no-cache, must-revalidate
 nexacro.a1b2c3.js => Cache-Control: public, max-age=31536000, immutable

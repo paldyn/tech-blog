@@ -33,7 +33,7 @@ Nexacro N의 `transaction()` 호출이 서버에 도달했을 때, 그 요청을
 
 전체 흐름을 요약하면 다음과 같다.
 
-```
+```text
 클라이언트 transaction()
   → PL 직렬화
     → HTTP POST 전송
