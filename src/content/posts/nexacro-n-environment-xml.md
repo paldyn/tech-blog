@@ -63,7 +63,7 @@ draft: false
 
 실무에서는 개발/스테이징/운영 환경별로 별도 `Environment.xml`을 두고 빌드 시 교체하는 방식을 사용합니다.
 
-```
+```text
 config/
 ├── Environment.dev.xml      ← 로컬 개발
 ├── Environment.stage.xml    ← 스테이징 서버

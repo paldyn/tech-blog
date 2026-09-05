@@ -26,7 +26,7 @@ draft: false
 
 ## 설정 파일 구조
 
-```
+```text
 config/
 ├── TypeDef_common.xml    # 환경 무관 공통 설정
 ├── TypeDef_dev.xml       # 개발 환경 전용

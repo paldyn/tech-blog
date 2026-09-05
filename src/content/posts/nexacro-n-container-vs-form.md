@@ -129,7 +129,7 @@ function fn_toggleSearchMode() {
 
 실제 업무 시스템에서 흔히 쓰이는 구조 예시입니다.
 
-```
+```text
 MainFrame.xfdl
 ├── divHeader (고정 헤더 Div)
 ├── divNav    (사이드 내비게이션 Div)

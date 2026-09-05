@@ -23,7 +23,7 @@ Nexacro N에서 일반 데이터는 `transaction()`으로 주고받지만, 파�
 
 ## fileupload() 파라미터
 
-```
+```text
 fileupload(svcID, ctrlID, dsID, arg1, arg2, callbackFn)
 ```
 
@@ -40,7 +40,7 @@ fileupload(svcID, ctrlID, dsID, arg1, arg2, callbackFn)
 
 ## filedownload() 파라미터
 
-```
+```text
 filedownload(svcID, fileURL, arg, callbackFn)
 ```
 

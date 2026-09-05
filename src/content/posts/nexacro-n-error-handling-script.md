@@ -177,7 +177,7 @@ function fn_saveCb(svcId, errCode, errMsg) {
 
 ## 오류 처리 체크리스트
 
-```
+```text
 ✅ 모든 트랜잭션 콜백에 errCode 체크
 ✅ 세션 만료 코드 별도 분기 처리
 ✅ 에러 처리 후 반드시 return

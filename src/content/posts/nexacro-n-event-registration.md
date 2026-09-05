@@ -17,7 +17,7 @@ draft: false
 
 가장 기본적인 방법입니다. Studio에서 버튼 등 컴포넌트를 선택한 뒤, 우측 속성창 상단의 **Event 탭**(번개 아이콘)을 클릭합니다. 이벤트 목록이 표시되며, 등록하고 싶은 이벤트(예: `onclick`) 항목을 더블클릭하면 자동으로 스크립트에 핸들러 함수가 생성됩니다.
 
-```
+```text
 // Studio가 자동 생성하는 xfdl 마크업 예시
 <Button id="btn_search" text="조회" onclick="btn_search_onclick" ... />
 ```
