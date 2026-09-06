@@ -171,7 +171,7 @@ function fn_callParent(fnName, args) {
 
 화면 수가 많아지면 Include할 조각도 늘어납니다. 조각 파일 관리 규칙을 미리 정해두면 혼란을 막을 수 있습니다.
 
-```
+```text
 common/
 ├── ButtonBar.xfdl    ← 조회/신규/저장/삭제 버튼
 ├── SearchBar.xfdl    ← 날짜·키워드 검색 바

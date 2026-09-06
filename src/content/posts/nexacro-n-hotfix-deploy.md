@@ -173,7 +173,7 @@ git push origin main develop --tags
 
 핫픽스 배포 후 팀 내 사후 검토를 진행한다. 무너진 것보다 앞으로 같은 문제가 발생하지 않도록 하는 것이 목적이다.
 
-```
+```markdown
 핫픽스 사후 검토 (Post-mortem)
 HOT-123 / 2026-05-20
 

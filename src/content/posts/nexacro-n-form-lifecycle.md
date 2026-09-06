@@ -17,7 +17,7 @@ draft: false
 
 Form 하나의 전체 생애는 세 단계로 나눌 수 있습니다. **로드 단계**, **활성 단계**, **언로드 단계**입니다.
 
-```
+```text
 [로드]
 oncreate → onprecreate → onload ★ → onloaded
 

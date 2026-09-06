@@ -126,7 +126,7 @@ function edt_reg_dt_onchanged(obj, e) {
 
 형식이 고정된 입력(전화번호, 사업자번호, 우편번호)은 MaskEdit 컴포넌트를 사용하면 정규식 검사가 불필요하다. Mask 속성 자체가 입력을 제어하기 때문이다.
 
-```
+```javascript
 MaskEdit.mask = "000-0000-0000"   // 전화번호
 MaskEdit.mask = "000-00-00000"    // 사업자번호
 ```

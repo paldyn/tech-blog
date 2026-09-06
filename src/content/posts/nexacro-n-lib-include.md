@@ -64,7 +64,7 @@ Nexacro N에서 `.xjs` 파일을 포함하는 방법은 두 가지다. TypeDefin
 
 Nexacro Studio에서 TypeDefinition.xml을 직접 텍스트로 편집하거나, 프로젝트 설정 화면에서 GUI로 파일을 추가할 수 있다.
 
-```
+```text
 Project Explorer → [프로젝트명] → TypeDefinition.xml 더블클릭
 → Includes 탭 → Add FileRef 버튼
 ```

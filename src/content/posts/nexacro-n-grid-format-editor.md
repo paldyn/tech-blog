@@ -17,7 +17,7 @@ draft: false
 
 Grid의 XML 내부는 `Formats → Format → Columns/Rows → Band → Cell` 순서로 중첩됩니다.
 
-```
+```text
 Grid
   └── Formats
         └── Format (id="default")
