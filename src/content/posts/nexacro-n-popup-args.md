@@ -179,5 +179,7 @@ function Form_onload(obj, e) {
 
 **지난 글:** [[Nexacro N] 팝업 기초 — openPopup과 팝업 생명주기](/posts/nexacro-n-popup/)
 
+**다음 글:** [[Nexacro N] 팝업 콜백 패턴](/posts/nexacro-n-popup-callback/)
+
 <br>
 읽어주셔서 감사합니다. 😊

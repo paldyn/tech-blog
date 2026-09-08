@@ -125,6 +125,8 @@ function fn_callback(objPopup, nReturn) {
 
 ---
 
+**지난 글:** [[Nexacro N] 팝업 파라미터 전달과 수신](/posts/nexacro-n-popup-args/)
+
 **다음 글:** [[Nexacro N] 모달과 모달리스 팝업](/posts/nexacro-n-modal-modaless/)
 
 <br>

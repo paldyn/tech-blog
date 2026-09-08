@@ -228,5 +228,7 @@ function fn_searchCallback(sId, nErrCode, sErrMsg) {
 
 **지난 글:** [스타일 파일 관리](/posts/nexacro-n-style-files/)
 
+**다음 글:** [[Nexacro N] 대용량 데이터 처리 전략](/posts/nexacro-n-large-dataset-handling/)
+
 <br>
 읽어주셔서 감사합니다. 😊

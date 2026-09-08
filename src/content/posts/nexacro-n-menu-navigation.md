@@ -27,7 +27,7 @@ Nexacro N 업무 시스템의 메뉴는 크게 세 부분으로 나뉩니다.
 
 메뉴 데이터는 Tree 컴포넌트의 계층 구조에 맞게 설계합니다.
 
-```
+```text
 ds_menu 컬럼:
   menu_id    — 메뉴 고유 ID
   parent_id  — 부모 메뉴 ID (최상위는 null)

@@ -32,7 +32,7 @@ Nexacro N의 `this.transaction()`은 HTTP POST 요청을 보낸다. 요청 본�
 
 헤더에서 세션 토큰, Content-Type, 인증 정보가 제대로 전송되는지 확인한다.
 
-```
+```http
 POST /api/selectList.do HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Cookie: JSESSIONID=abcdef123456
@@ -166,7 +166,7 @@ function form_onunload(obj, e) {
 
 동일 출처 정책(SOP)으로 인한 CORS 오류는 DevTools Console 탭에서 확인할 수 있다.
 
-```
+```text
 Access to XMLHttpRequest at 'https://api.example.com/svc/list.do'
 from origin 'https://app.example.com' has been blocked by CORS policy
 ```

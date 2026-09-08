@@ -124,5 +124,7 @@ function dsMaster_oncurrentchanged(obj, e) {
 
 **지난 글:** [[Nexacro N] 동적 바인딩 — 런타임에 Dataset 교체하기](/posts/nexacro-n-binding-dynamic/)
 
+**다음 글:** [[Nexacro N] 이벤트와 스크립트 기초](/posts/nexacro-n-events-and-scripts/)
+
 <br>
 읽어주셔서 감사합니다. 😊

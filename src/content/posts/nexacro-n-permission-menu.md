@@ -29,7 +29,7 @@ Nexacro N 환경에서 권한 처리는 두 계층으로 나뉜다.
 
 로그인 성공 후 서버에서 두 가지 Dataset을 받는다.
 
-```
+```text
 gds_menu:     menuId | parentId | menuNm | menuUrl | menuLevel
 gds_menuAuth: menuId | auth_read | auth_new | auth_save | auth_del
 ```
@@ -118,6 +118,8 @@ function this_onInit(obj, e) {
 ---
 
 **지난 글:** [[Nexacro N] 메뉴 컨트롤](/posts/nexacro-n-menu-control/)
+
+**다음 글:** [[Nexacro N] 다국어 메뉴 구성](/posts/nexacro-n-multilingual-menu/)
 
 <br>
 읽어주셔서 감사합니다. 😊

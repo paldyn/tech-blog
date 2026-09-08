@@ -100,7 +100,7 @@ function fn_search() {
 
 Form 파일명(xfdl)도 일관된 규칙을 따릅니다.
 
-```
+```text
 // 업무화면: {업무코드}{화면구분}.xfdl
 USERR010.xfdl     // 사용자관리 조회
 USERR020.xfdl     // 사용자관리 등록
@@ -133,7 +133,7 @@ this.transaction("svcFileUpload",  "/api/file/upload", ...);
 
 ## 네이밍 규칙 요약 체크리스트
 
-```
+```text
 ✅ 컴포넌트 ID: {접두사}_{camelCase}  ex) btn_searchAll
 ✅ Dataset: ds_{camelCase}            ex) ds_searchResult
 ✅ 전역 변수: g_{타입접두사}{PascalCase}  ex) g_sUserId

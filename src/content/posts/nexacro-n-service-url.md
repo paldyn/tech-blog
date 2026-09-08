@@ -93,7 +93,7 @@ Studio에서 **프로젝트 탐색기 > TypeDefinition.xml**을 더블 클릭하
 
 ### 서비스 ID 명명 규칙
 
-```
+```text
 SVC_{도메인명}
 예: SVC_EMP, SVC_DEPT, SVC_ORDER, SVC_CODE
 ```

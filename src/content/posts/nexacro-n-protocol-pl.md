@@ -39,7 +39,7 @@ PL 패킷은 요청과 응답 모두 동일한 구조를 따른다. 헤더, Vari
 
 Nexacro N의 HTTP 요청은 다음 헤더를 사용한다.
 
-```
+```http
 POST /nexacro/svc HTTP/1.1
 Content-Type: application/x-www-form-urlencoded; charset=UTF-8
 ```
@@ -86,8 +86,8 @@ function fn_transaction(svcId, inDs, outDs, callback) {
 
 Nexacro N Studio의 **Tools → Trace** 메뉴나 크롬 개발자 도구 Network 탭에서 PL 패킷을 확인할 수 있다.
 
-```
-// 어댑터 서버 사이드 디버그 로그 (application.yml)
+```yaml
+# 어댑터 서버 사이드 디버그 로그 (application.yml)
 nexacro:
   debug: true   # PL 파싱 로그 출력
   log-level: DEBUG
@@ -99,7 +99,7 @@ nexacro:
 
 서버에서 오류가 발생하면 응답 PL의 헤더에 `ErrorCode`와 `ErrorMsg`가 설정된다.
 
-```
+```text
 NexacroProtocol
 ErrorCode=-1
 ErrorMsg=DB 연결 오류

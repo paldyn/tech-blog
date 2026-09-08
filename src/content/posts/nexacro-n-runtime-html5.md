@@ -62,7 +62,7 @@ Nexacro N은 이 플러그인 의존성을 완전히 제거했습니다. 렌더�
 
 Nexacro Studio N으로 빌드(패키징)하면 다음과 같은 파일 구조가 만들어집니다.
 
-```
+```text
 dist/
   nexacro.js          ← 런타임 엔진 번들
   service.xml         ← 서비스 URL·환경 설정

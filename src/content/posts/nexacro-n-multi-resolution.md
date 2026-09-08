@@ -87,7 +87,7 @@ function Application_onload(obj, e) {
 
 로고, 아이콘처럼 선명하게 보여야 하는 이미지는 1x와 2x 두 버전을 준비하고 DPR에 따라 분기합니다.
 
-```
+```text
 res/images/
 ├── logo.png       ← 1x (96×32)
 ├── logo@2x.png    ← 2x (192×64)

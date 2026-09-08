@@ -164,7 +164,7 @@ import com.nexacro.xapi.tx.*;
 
 ## 마이그레이션 체크리스트
 
-```
+```text
 Nexacro 14 → Platform 마이그레이션 체크리스트
 
 프로젝트 구조

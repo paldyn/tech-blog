@@ -17,7 +17,7 @@ draft: false
 
 Studio N에서 새 프로젝트를 생성하면 다음과 같은 폴더·파일이 자동으로 만들어집니다.
 
-```
+```text
 MyProject/
 ├── Application.xadl       ← 앱 진입점·전역 설정
 ├── TypeDef.xadl           ← 컴포넌트 타입 등록
@@ -178,7 +178,7 @@ function fn_formatNumber(nVal) {
 
 Studio N에서 **빌드(Build)** 를 실행하면 `Output/` 폴더에 배포 가능한 HTML5 파일 셋이 생성됩니다. 이 폴더의 내용물만 웹 서버에 올리면 사용자가 브라우저로 접근할 수 있습니다.
 
-```
+```text
 Output/
 ├── index.html         ← 앱 진입 HTML
 ├── nexacro/           ← 넥사크로 런타임 라이브러리
@@ -195,7 +195,7 @@ Output/
 
 실무에서는 업무 단위로 폴더를 나누는 것이 유지보수에 유리합니다.
 
-```
+```text
 Forms/
 ├── Login/          ← 로그인 관련
 ├── Main/           ← 메인 프레임

@@ -93,7 +93,7 @@ function cboLang_onitemchanged(obj, e) {
 
 Combo의 Dataset은 지원 언어 목록(`dsLangList`)으로 구성한다.
 
-```
+```text
 LANG_CD | LANG_NM
 KO      | 한국어
 EN      | English

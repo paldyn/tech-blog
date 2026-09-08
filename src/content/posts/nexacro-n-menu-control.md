@@ -21,7 +21,7 @@ Menu 컴포넌트는 계층형 메뉴를 표현하는 전용 컴포넌트다. Da
 
 ## 메뉴 Dataset 구조
 
-```
+```text
 ds_menu 컬럼: menuId | menuNm | parentId | menuUrl | menuLevel | menuOrder
 ```
 

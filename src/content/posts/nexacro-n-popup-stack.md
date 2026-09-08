@@ -19,7 +19,7 @@ Nexacro N은 팝업을 LIFO(후입선출) 스택으로 관리한다. 가장 마�
 
 ![팝업 스택 — 중첩 팝업 구조](/assets/posts/nexacro-n-popup-stack-diagram.svg)
 
-```
+```text
 Main → openPopup(ListPopup)
          ↳ ListPopup → openPopup(DetailPopup)
                           ↳ DetailPopup → openPopup(ConfirmPopup)
