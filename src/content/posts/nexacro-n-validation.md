@@ -60,7 +60,7 @@ function fn_save() {
     ])) return;
 
     this.transaction("save", "svc/save.do",
-        "in:ds_input=ds_input", "", "fn_saveCb");
+        "in:ds_input=ds_input", "", "", "fn_saveCb");
 }
 ```
 

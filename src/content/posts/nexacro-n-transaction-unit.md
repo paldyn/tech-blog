@@ -32,7 +32,7 @@ function grd_status_oncelldblclick(obj, e) {
     this.transaction("updateStatus",
         "svc/updateStatus.do",
         "in:ds_req=ds_list",
-        "", "fn_statusCb"
+        "", "", "fn_statusCb"
     );
 }
 ```
@@ -48,7 +48,7 @@ function grd_status_oncelldblclick(obj, e) {
 var nCnt = this.ds_list.getRowCount("A");
 if (nCnt == 0) { alert("변경 없음"); return; }
 this.transaction("saveList", "svc/saveList.do",
-    "in:ds_list=ds_list", "", "fn_saveCb");
+    "in:ds_list=ds_list", "", "", "fn_saveCb");
 ```
 
 서버 요청이 최소화되어 네트워크 비용이 낮다. 단, 저장 도중 브라우저를 닫으면 미저장 데이터가 손실되므로 `beforeunload` 이벤트에 경고를 추가하는 것이 좋다.
@@ -64,6 +64,7 @@ this.transaction(
     "saveOrder",
     "svc/order/save.do",
     "in:ds_hdr=ds_header in:ds_itm=ds_item",
+    "",
     "",
     "fn_saveOrderCb"
 );
@@ -96,7 +97,7 @@ function fn_commonCallback(sId, nEC, sEM) {
 function fn_save() {
     this.btn_save.enable = false; // 전송 시작 시 비활성화
     this.transaction("save", "svc/save.do",
-        "in:ds_list=ds_list", "", "fn_saveCb");
+        "in:ds_list=ds_list", "", "", "fn_saveCb");
 }
 
 function fn_saveCb(sId, nEC, sEM) {

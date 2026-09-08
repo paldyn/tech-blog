@@ -108,7 +108,7 @@ function fn_save() {
     if (!gfn_validate(this.ds_input, rules, ctrl)) return;
 
     this.transaction("save", "svc/save.do",
-        "in:ds_input=ds_input", "", "fn_saveCb");
+        "in:ds_input=ds_input", "", "", "fn_saveCb");
 }
 ```
 
