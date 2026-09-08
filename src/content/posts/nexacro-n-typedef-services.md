@@ -100,7 +100,7 @@ draft: false
 this.transaction(
     "txGetUserList",   // ① 트랜잭션 식별자
     "getUserList",     // ② Service.xml id → URL 자동 조회
-    "",                // ③ 폼 변수 (FV)
+    "",                // ③ 입력 Dataset 매핑 (inDatasets)
     "ds_list=result",  // ④ 출력 Dataset 매핑
     "",                // ⑤ 추가 인자 (args)
     "fn_onGetUserList" // ⑥ 콜백 함수명
