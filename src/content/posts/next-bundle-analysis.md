@@ -110,7 +110,7 @@ import FaUser from 'react-icons/fa/FaUser'
 
 분석 도구 없이도 `next build` 출력에서 각 페이지의 번들 크기를 확인할 수 있다.
 
-```
+```text
 Route (app)                   Size     First Load JS
 ┌ ○ /                         5.1 kB         102 kB
 ├ ○ /about                    1.2 kB          98 kB

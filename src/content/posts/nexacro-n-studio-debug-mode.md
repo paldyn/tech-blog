@@ -96,7 +96,7 @@ this.fnSearch()                      // 함수 직접 호출
 
 Call Stack 창에서는 현재 실행 위치까지 어떤 함수들이 호출됐는지 체인을 볼 수 있다. 이벤트 핸들러가 연쇄적으로 호출될 때 흐름을 파악하는데 유용하다.
 
-```
+```text
 fnSave          ← 현재 위치
 btnSave_onclick ← 버튼 클릭 핸들러
 [browser event] ← 브라우저 이벤트

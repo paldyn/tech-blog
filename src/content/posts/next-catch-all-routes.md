@@ -19,7 +19,7 @@ draft: false
 
 ![Catch-all 라우트 세그먼트 캡처](/assets/posts/next-catch-all-routes-segments.svg)
 
-```
+```text
 app/docs/[...slug]/page.tsx
 
 /docs/intro              → slug = ['intro']
@@ -60,7 +60,7 @@ export default async function DocsPage({
 
 ![선택적 Catch-all 비교](/assets/posts/next-catch-all-routes-optional.svg)
 
-```
+```text
 app/docs/[[...slug]]/page.tsx
 
 /docs                    → slug = undefined
@@ -92,7 +92,7 @@ export default async function DocsPage({
 
 문서 사이트처럼 계층적 URL이 많은 경우 catch-all 라우트가 이상적입니다.
 
-```
+```text
 app/
 └── [locale]/        ← 언어 코드 (ko, en, ja)
     └── docs/

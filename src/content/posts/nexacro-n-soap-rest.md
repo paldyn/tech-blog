@@ -138,14 +138,16 @@ public void getItemWithStock(DataSet dsIn, DataSet dsOut, VariableList vl)
     Mono<Map> stockMono = stockApiClient.get().uri("/stock/{cd}", itemCd)
         .retrieve().bodyToMono(Map.class);
 
-    // 두 API를 동시에 호출하고 결과를 합침
-    Mono.zip(itemMono, stockMono).subscribe(tuple -> {
-        Map item  = tuple.getT1();
-        Map stock = tuple.getT2();
-        int row = dsOut.newRow();
-        dsOut.set(row, "ITEM_NM",    (String) item.get("name"));
-        dsOut.set(row, "STOCK_QTY",  String.valueOf(stock.get("quantity")));
-    });
+    // 두 API를 동시에 호출하고 결과를 합침 (block()으로 완료를 기다림)
+    Tuple2<Map, Map> tuple = Mono.zip(itemMono, stockMono).block();
+    Map item  = tuple.getT1();
+    Map stock = tuple.getT2();
+
+    dsOut.addStringColumn("ITEM_NM");
+    dsOut.addStringColumn("STOCK_QTY");
+    int row = dsOut.newRow();
+    dsOut.set(row, "ITEM_NM",    (String) item.get("name"));
+    dsOut.set(row, "STOCK_QTY",  String.valueOf(stock.get("quantity")));
 
     vl.addVariable("errCode", "0");
 }

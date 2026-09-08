@@ -156,7 +156,7 @@ function fn_callbackFill(sId, nErrorCode, sErrorMsg) {
 
 사내 배포 환경이라면 그룹 정책이나 브라우저 설정으로 특정 도메인을 팝업 허용 목록에 추가할 수 있다.
 
-```
+```text
 Chrome: 설정 → 개인 정보 보호 및 보안 → 사이트 설정 → 팝업 및 리디렉션 → 허용 목록에 추가
 예: https://erp.company.intranet
 ```
@@ -167,7 +167,7 @@ Chrome: 설정 → 개인 정보 보호 및 보안 → 사이트 설정 → 팝�
 
 팝업 차단은 브라우저 콘솔에 다음과 같은 메시지로 나타난다.
 
-```
+```text
 The following error originated from a script:
 Pop-up window creation failed because the request was not triggered
 by user activation.

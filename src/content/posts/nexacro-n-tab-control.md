@@ -17,7 +17,7 @@ draft: false
 
 `TabControl`은 탭 헤더와 탭 패널로 구성됩니다. 각 탭은 `Tab` 객체이며, 패널 영역에 별도 Form 파일을 연결하거나 직접 컴포넌트를 배치할 수 있습니다.
 
-```
+```text
 TabControl (tab_main)
   ├── Tab[0] — "기본 정보"  → form: frm_basicInfo.xfdl
   ├── Tab[1] — "상세 내역"  → form: frm_detail.xfdl

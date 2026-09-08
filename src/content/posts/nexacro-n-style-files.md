@@ -97,7 +97,7 @@ TypeDefinition에서 `<StyleSheet>`을 등록하는 순서가 곧 적용 우선�
 
 ## 스타일 우선순위 요약
 
-```
+```text
 인라인 스타일 > cssclass > 테마 ESS > 공통 ESS
 ```
 

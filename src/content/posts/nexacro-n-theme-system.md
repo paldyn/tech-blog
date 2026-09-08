@@ -17,7 +17,7 @@ draft: false
 
 Nexacro N의 스타일은 CSS와 유사한 **ESS(Extended Style Sheet)** 파일에 정의한다. 테마는 이 ESS 파일의 묶음이다. 하나의 테마 = 컴포넌트별 스타일 집합이며, `nexacro.setTheme()`으로 테마를 전환하면 앱 전체 컴포넌트가 즉시 해당 테마 스타일로 적용된다.
 
-```
+```text
 styles/
   light/
     button.ess

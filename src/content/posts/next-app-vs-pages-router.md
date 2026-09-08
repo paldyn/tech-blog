@@ -65,7 +65,7 @@ App Router 방식이 더 직관적이고 코드가 적습니다. 또한 서버 �
 
 Pages Router는 `_app.tsx` 하나로만 전역 레이아웃을 관리했습니다. App Router는 각 라우트 세그먼트마다 `layout.tsx`를 둘 수 있어 **중첩 레이아웃**이 가능합니다.
 
-```
+```text
 app/
 ├── layout.tsx        # 전체 공통 레이아웃
 ├── (marketing)/
