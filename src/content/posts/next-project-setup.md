@@ -34,7 +34,7 @@ npx create-next-app@latest my-app
 
 실행하면 다음과 같은 대화형 질문이 나타납니다.
 
-```
+```text
 Would you like to use TypeScript?          Yes
 Would you like to use ESLint?              Yes
 Would you like to use Tailwind CSS?        Yes (선택)
@@ -50,7 +50,7 @@ Would you like to customize the import alias? No
 
 생성 직후 폴더 구조는 다음과 같습니다.
 
-```
+```text
 my-app/
 ├── src/
 │   └── app/
@@ -74,7 +74,7 @@ npm run dev
 
 터미널에 다음이 출력되면 성공입니다.
 
-```
+```text
 ▲ Next.js 15.x.x (turbopack)
 - Local:   http://localhost:3000
 - Network: http://192.168.x.x:3000

@@ -23,7 +23,7 @@ draft: false
 
 `src/` 디렉토리를 사용하면 설정 파일(`next.config.ts`, `tsconfig.json` 등)과 소스 코드가 분리돼 프로젝트 루트가 깔끔해집니다. create-next-app 설치 시 `src/` 사용 여부를 물어보는데, 특별한 이유가 없다면 **Yes**를 권장합니다.
 
-```
+```text
 src/
 ├── app/          # App Router 라우트 + 특수 파일
 ├── components/   # 재사용 UI 컴포넌트
@@ -35,7 +35,7 @@ src/
 
 `app/`이 App Router의 핵심입니다. 이 안의 **폴더 구조가 곧 URL 경로**가 됩니다. 단, 라우트로 처리되려면 반드시 `page.tsx`(또는 `.js`, `.jsx`, `.mdx`)가 존재해야 합니다.
 
-```
+```text
 app/
 ├── layout.tsx        → 모든 페이지에 공통 적용되는 루트 레이아웃
 ├── page.tsx          → / 경로
@@ -54,7 +54,7 @@ app/
 
 `public/` 폴더의 파일은 빌드 결과물에 그대로 포함되며, **파일 이름이 곧 URL**이 됩니다.
 
-```
+```text
 public/images/logo.png → /images/logo.png 으로 직접 접근
 ```
 
@@ -105,7 +105,7 @@ export default function BlogPage() {
 
 공유 컴포넌트는 `src/components/`에 두되, 내부를 역할별로 나누면 관리하기 편합니다.
 
-```
+```text
 components/
 ├── ui/           # 버튼, 인풋 등 원자 단위 UI
 │   ├── Button.tsx
@@ -120,7 +120,7 @@ components/
 
 ## lib/ 디렉토리 활용
 
-```
+```text
 lib/
 ├── db.ts         # Prisma / 데이터베이스 클라이언트
 ├── auth.ts       # NextAuth 설정

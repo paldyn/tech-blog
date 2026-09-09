@@ -17,7 +17,7 @@ draft: false
 
 폴더 이름을 괄호로 감싸면 라우트 그룹이 됩니다.
 
-```
+```text
 app/
 ├── (marketing)/
 │   ├── page.tsx      → /
@@ -82,7 +82,7 @@ export default async function AppLayout({
 
 `app/layout.tsx`를 삭제하고 각 라우트 그룹에 루트 레이아웃을 두면 **완전히 다른 HTML 구조**를 가진 앱을 만들 수 있습니다.
 
-```
+```text
 app/
 ├── (shop)/
 │   ├── layout.tsx   ← <html>과 <body> 정의 (쇼핑몰 전용)
@@ -98,7 +98,7 @@ app/
 
 라우트 그룹은 URL 영향 없이 폴더를 정리하는 용도로도 씁니다.
 
-```
+```text
 app/
 ├── (auth)/
 │   ├── login/page.tsx    → /login
@@ -116,7 +116,7 @@ app/
 
 같은 URL을 생성하는 라우트 그룹이 있으면 빌드 오류가 발생합니다.
 
-```
+```text
 app/
 ├── (a)/
 │   └── about/page.tsx  → /about

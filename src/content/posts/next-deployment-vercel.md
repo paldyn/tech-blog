@@ -80,7 +80,7 @@ vercel env pull .env.local   # Vercel에 등록된 환경 변수를 로컬로 �
 
 대시보드 **Settings → Domains → Add** → 도메인 입력 → DNS 레코드(A 또는 CNAME)를 도메인 등록 기관에서 설정. SSL 인증서는 Vercel이 Let's Encrypt로 자동 발급·갱신한다.
 
-```
+```text
 A     @     76.76.21.21
 CNAME www   cname.vercel-dns.com
 ```

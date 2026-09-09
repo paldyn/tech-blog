@@ -19,7 +19,7 @@ Next.js에서 `app/` 폴더의 **디렉토리 이름**이 URL 경로 세그먼�
 
 ![파일 구조 → URL 매핑](/assets/posts/next-file-based-routing-map.svg)
 
-```
+```text
 app/page.tsx          →  /
 app/about/page.tsx    →  /about
 app/blog/page.tsx     →  /blog
@@ -34,7 +34,7 @@ app/blog/[slug]/page.tsx  →  /blog/:slug
 
 폴더 이름 그대로 URL에 반영됩니다.
 
-```
+```text
 app/products/page.tsx  →  /products
 app/docs/intro/page.tsx  →  /docs/intro
 ```
@@ -89,7 +89,7 @@ export default async function DocsPage({
 
 괄호로 감싼 폴더는 **URL에 포함되지 않습니다.** 주로 레이아웃을 분리하거나 관련 라우트를 논리적으로 묶을 때 사용합니다.
 
-```
+```text
 app/
 ├── (marketing)/
 │   ├── layout.tsx   ← 마케팅 전용 레이아웃
@@ -112,7 +112,7 @@ app/
 
 폴더가 중첩될수록 URL도 중첩되고, 각 레벨의 `layout.tsx`가 자동으로 중첩됩니다.
 
-```
+```text
 app/
 ├── layout.tsx          ← 전체 공통 레이아웃
 └── blog/

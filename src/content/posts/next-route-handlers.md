@@ -17,7 +17,7 @@ draft: false
 
 `app/api` 디렉토리 아래에 `route.ts` 파일을 만들면 자동으로 API 엔드포인트가 생성됩니다.
 
-```
+```text
 app/
   api/
     posts/

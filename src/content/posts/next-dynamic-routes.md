@@ -19,7 +19,7 @@ draft: false
 
 ![동적 라우트 params 흐름](/assets/posts/next-dynamic-routes-params.svg)
 
-```
+```text
 app/
 └── blog/
     ├── page.tsx          → /blog

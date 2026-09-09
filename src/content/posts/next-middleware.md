@@ -27,7 +27,7 @@ Middleware는 Next.js 서버가 요청을 처리하는 파이프라인 가장 �
 
 `middleware.ts`는 반드시 **프로젝트 루트** 또는 `src/` 디렉터리 바로 아래에 위치해야 한다. `app/` 폴더 안에 두면 동작하지 않는다.
 
-```
+```text
 my-app/
 ├── src/
 │   ├── app/
@@ -140,7 +140,7 @@ DB 조회가 필요한 복잡한 인증은 Middleware에서 하지 말고, JWT �
 
 Middleware는 다음 우선순위로 처리된다.
 
-```
+```text
 요청
  ↓
 Headers (next.config.js의 headers 설정)

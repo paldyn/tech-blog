@@ -65,7 +65,7 @@ export default function AnalyticsDefault() {
 - 클라이언트 이동: URL은 `/photos/42`로 바뀌지만 갤러리 배경 유지 + 모달 표시
 - 직접 URL 접근: 사진 전체 화면 페이지 표시
 
-```
+```text
 app/photos/
 ├── page.tsx               → /photos (갤러리)
 ├── layout.tsx             (슬롯 수신)
@@ -141,7 +141,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
 
 경로 앞에 붙이는 접두사로 어느 레벨의 라우트를 인터셉트할지 지정합니다.
 
-```
+```text
 (.)    같은 레벨의 라우트 인터셉트
 (..)   한 레벨 위의 라우트 인터셉트
 (...)  app/ 루트 레벨의 라우트 인터셉트

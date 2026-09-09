@@ -123,7 +123,7 @@ export async function generateStaticParams() {
 
 동일 세그먼트에서 충돌하는 설정이 있을 때의 우선순위:
 
-```
+```text
 개별 fetch 옵션 > Segment Config > 전역 설정
 ```
 

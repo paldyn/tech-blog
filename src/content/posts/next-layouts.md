@@ -78,7 +78,7 @@ export default function DashboardLayout({
 
 `/dashboard`, `/dashboard/settings`, `/dashboard/profile` 모두 이 레이아웃을 공유합니다. 레이아웃 중첩 순서는:
 
-```
+```text
 RootLayout (app/layout.tsx)
   └── DashboardLayout (app/dashboard/layout.tsx)
         └── page.tsx (app/dashboard/page.tsx)
@@ -98,7 +98,7 @@ RootLayout (app/layout.tsx)
 
 괄호 폴더(`(group)`)를 활용하면 URL 구조는 유지하면서 레이아웃을 다르게 적용할 수 있습니다.
 
-```
+```text
 app/
 ├── (marketing)/
 │   ├── layout.tsx   ← 마케팅 레이아웃 (헤더, 푸터)

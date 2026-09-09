@@ -19,14 +19,14 @@ draft: false
 
 Next.js는 여러 `.env` 파일을 지원하며, **더 구체적인 파일이 일반 파일을 덮어씁니다.**
 
-```
+```text
 우선순위 (높음 → 낮음)
 .env.local  >  .env.development (또는 .env.production)  >  .env
 ```
 
 실제로 많이 쓰는 패턴은 다음과 같습니다.
 
-```
+```text
 .env              → 기본값 (공통 설정, git 추적 가능)
 .env.local        → 로컬 개발 전용 비밀값 (.gitignore 필수)
 .env.production   → 프로덕션 기본값 (시크릿 제외)

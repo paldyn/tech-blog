@@ -76,7 +76,7 @@ export const routing = defineRouting({
 
 ## 파일 구조
 
-```
+```text
 app/
   [locale]/
     layout.tsx      ← locale을 html lang에 적용
