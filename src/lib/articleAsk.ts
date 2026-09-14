@@ -1,4 +1,4 @@
-export const ARTICLE_AI_ENDPOINT = 'https://paldyn-ai-lab.dev21mo-508.workers.dev';
+export const ARTICLE_AI_ENDPOINT = 'https://paldyn-article-ai.dev21mo-508.workers.dev';
 
 export const MAX_ARTICLE_CONTEXT_CHARS = 7_000;
 export const MAX_SELECTED_TEXT_CHARS = 4_000;
