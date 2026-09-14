@@ -46,57 +46,40 @@ const blocks: ArticleContextBlock[] = [
 describe('글 질문 패널 배치', () => {
   it('넓은 화면에서는 384px을 최대 폭으로 쓴다', () => {
     expect(
-      calculateArticlePanelGeometry(2_048, 980, {
-        left: 770,
+      calculateArticlePanelGeometry(2_048, {
         right: 1_530,
-        top: 100,
-        bottom: 3_000,
       }),
     ).toEqual({ placement: 'right', left: 1_648, width: 384 });
   });
 
-  it('오른쪽이 좁고 본문을 읽는 중이면 왼쪽 여백을 사용한다', () => {
+  it('오른쪽이 좁으면 왼쪽 여백 대신 하단 시트를 사용한다', () => {
     expect(
-      calculateArticlePanelGeometry(1_416, 738, {
-        left: 462,
+      calculateArticlePanelGeometry(1_416, {
         right: 1_222,
-        top: 100,
-        bottom: 3_000,
-      }),
-    ).toEqual({ placement: 'left', left: 38, width: 384 });
-  });
-
-  it('목차가 있는 넓은 화면에서는 본문 바로 왼쪽을 우선한다', () => {
-    expect(
-      calculateArticlePanelGeometry(
-        1_920,
-        1_080,
-        { left: 443, right: 1_477, top: 360, bottom: 3_000 },
-        true,
-      ),
-    ).toEqual({ placement: 'left', left: 19, width: 384 });
-  });
-
-  it('본문이 아직 패널 옆까지 올라오지 않았으면 하단 시트를 사용한다', () => {
-    expect(
-      calculateArticlePanelGeometry(1_416, 738, {
-        left: 462,
-        right: 1_222,
-        top: 900,
-        bottom: 4_000,
       }),
     ).toEqual({ placement: 'sheet', left: 16, width: 640 });
   });
 
-  it('1280px급 화면에도 320px 이상이 남으면 측면 배치한다', () => {
+  it('목차가 있는 넓은 화면에서도 목차 바깥 오른쪽에 배치한다', () => {
     expect(
-      calculateArticlePanelGeometry(1_280, 720, {
-        left: 386.5,
-        right: 1_146.5,
-        top: -80,
-        bottom: 3_000,
+      calculateArticlePanelGeometry(1_920, { right: 1_477 }),
+    ).toEqual({ placement: 'right', left: 1_520, width: 384 });
+  });
+
+  it('왼쪽 여백이 넓어도 오른쪽이 좁으면 왼쪽으로 전환하지 않는다', () => {
+    expect(
+      calculateArticlePanelGeometry(1_920, {
+        right: 1_600,
       }),
-    ).toEqual({ placement: 'left', left: 17, width: 330 });
+    ).toEqual({ placement: 'sheet', left: 16, width: 640 });
+  });
+
+  it('1280px급 화면에서 오른쪽 320px이 안 남으면 시트를 사용한다', () => {
+    expect(
+      calculateArticlePanelGeometry(1_280, {
+        right: 1_146.5,
+      }),
+    ).toEqual({ placement: 'sheet', left: 16, width: 640 });
   });
 
   it('390×844의 visual viewport 안에 12px 여백과 60% 높이를 유지한다', () => {

@@ -1,0 +1,256 @@
+---
+interface Props {
+  title: string;
+  label: string;
+  backHref: string;
+  backLabel: string;
+  initialSection?: string;
+}
+
+const { title, label, backHref, backLabel, initialSection } = Astro.props;
+---
+
+<div class="article-titlebar" data-article-titlebar aria-hidden="true" inert>
+  <div class="wrap article-titlebar-row">
+    <a href={backHref} class="article-titlebar-back" aria-label={`${backLabel} 목록으로 돌아가기`}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m15 18-6-6 6-6"></path>
+      </svg>
+      <span>{backLabel}</span>
+    </a>
+
+    <span class="article-titlebar-label">{label}</span>
+
+    <button type="button" class="article-titlebar-stack" title="글 맨 위로 이동">
+      <span class="article-titlebar-title">{title}</span>
+      {initialSection && <span class="article-titlebar-section" data-article-titlebar-section>{initialSection}</span>}
+    </button>
+  </div>
+
+  <div
+    class="article-titlebar-progress"
+    data-article-titlebar-progress
+    role="progressbar"
+    aria-label="글 읽기 진행률"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  ></div>
+</div>
+
+<script>
+  import { calculateArticleReadingProgress } from '../lib/articleTitleBar';
+
+  const bar = document.querySelector<HTMLElement>('[data-article-titlebar]');
+  const watchedTitle = document.querySelector<HTMLElement>('[data-article-title]');
+  const articleBody = document.querySelector<HTMLElement>('[data-article-body]');
+  const progressBar = bar?.querySelector<HTMLElement>('[data-article-titlebar-progress]') ?? null;
+  const titleButton = bar?.querySelector<HTMLButtonElement>('.article-titlebar-stack') ?? null;
+  let frame = 0;
+
+  function setShown(shown: boolean): void {
+    if (!bar) return;
+    const changed = bar.classList.contains('is-shown') !== shown;
+    bar.classList.toggle('is-shown', shown);
+    bar.setAttribute('aria-hidden', String(!shown));
+    bar.toggleAttribute('inert', !shown);
+    if (changed) window.dispatchEvent(new CustomEvent('article-titlebar-visibility'));
+  }
+
+  function measureProgress(): void {
+    frame = 0;
+    if (!articleBody || !progressBar) return;
+
+    const box = articleBody.getBoundingClientRect();
+    const progress = calculateArticleReadingProgress(
+      { top: box.top, height: box.height },
+      window.innerHeight,
+    );
+    progressBar.style.transform = `scaleX(${progress})`;
+    progressBar.setAttribute('aria-valuenow', String(Math.round(progress * 100)));
+  }
+
+  function scheduleProgress(): void {
+    if (frame) return;
+    frame = window.requestAnimationFrame(measureProgress);
+  }
+
+  if (bar && watchedTitle && articleBody && progressBar && titleButton) {
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const headerHeight = Math.round(header?.getBoundingClientRect().height ?? 71);
+
+    if (typeof IntersectionObserver === 'function') {
+      const observer = new IntersectionObserver(
+        (entries) => setShown(!entries[0].isIntersecting),
+        { rootMargin: `-${headerHeight}px 0px 0px 0px` },
+      );
+      observer.observe(watchedTitle);
+    } else {
+      const measureVisibility = () => {
+        setShown(watchedTitle.getBoundingClientRect().bottom <= headerHeight);
+      };
+      window.addEventListener('scroll', measureVisibility, { passive: true });
+      window.addEventListener('resize', measureVisibility, { passive: true });
+      measureVisibility();
+    }
+
+    titleButton.addEventListener('click', () => {
+      watchedTitle.tabIndex = -1;
+      watchedTitle.focus({ preventScroll: true });
+      window.scrollTo({ top: 0 });
+    });
+    window.addEventListener('scroll', scheduleProgress, { passive: true });
+    window.addEventListener('resize', scheduleProgress, { passive: true });
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(scheduleProgress).observe(articleBody);
+    }
+    measureProgress();
+  }
+</script>
+
+<style>
+  :global(body.has-article-ai) {
+    --article-titlebar-h: 54px;
+    --anchor-offset: calc(var(--header-h) + var(--article-titlebar-h) + 16px);
+  }
+
+  .article-titlebar {
+    position: fixed;
+    top: var(--header-h);
+    right: 0;
+    left: 0;
+    z-index: 40;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms,
+      background-color 400ms, border-color 400ms;
+  }
+
+  .article-titlebar.is-shown {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .article-titlebar-row {
+    display: flex;
+    height: 54px;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .article-titlebar-back {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .article-titlebar-back:hover { color: var(--accent-bright); }
+  .article-titlebar-back svg { width: 16px; height: 16px; }
+  .article-titlebar-back span { display: none; }
+
+  .article-titlebar-label {
+    display: none;
+    flex: 0 0 auto;
+    color: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .article-titlebar-stack {
+    display: flex;
+    min-width: 0;
+    min-height: 44px;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font-family: var(--font-sans);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .article-titlebar-title {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--accent-bright);
+    font-size: 14px;
+    font-weight: 450;
+    line-height: 1.5;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .article-titlebar-section {
+    overflow: hidden;
+    color: var(--text-muted);
+    font-size: 11px;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .article-titlebar-progress {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: var(--brand);
+  }
+
+  @media (min-width: 1024px) {
+    :global(body.has-article-ai) { --article-titlebar-h: 48px; }
+
+    .article-titlebar-row { height: 48px; }
+    .article-titlebar-back {
+      width: auto;
+      justify-content: flex-start;
+    }
+    .article-titlebar-back span { display: inline; }
+    .article-titlebar-label { display: inline; }
+    .article-titlebar-stack {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+    .article-titlebar-title { flex: 1 1 auto; }
+    .article-titlebar-section {
+      max-width: 34%;
+      flex: 0 0 auto;
+      font-size: 12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-titlebar {
+      transform: none;
+      transition: opacity 180ms ease, visibility 0s linear 180ms;
+    }
+  }
+</style>

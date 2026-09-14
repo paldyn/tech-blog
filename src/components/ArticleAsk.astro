@@ -304,11 +304,16 @@
     const headerBottom = document
       .querySelector<HTMLElement>('.site-header')
       ?.getBoundingClientRect().bottom ?? 0;
+    const titleBar = document.querySelector<HTMLElement>('[data-article-titlebar]');
+    const titleBarBottom =
+      titleBar?.getAttribute('aria-hidden') === 'false'
+        ? titleBar.getBoundingClientRect().bottom
+        : 0;
     const viewportTop = Math.max(0, viewport?.offsetTop ?? 0);
     const goTopTop = mobile.top - 56;
     document.body.toggleAttribute(
       'data-article-ai-top-cramped',
-      goTopTop < Math.max(viewportTop + 12, headerBottom + 8),
+      goTopTop < Math.max(viewportTop + 12, headerBottom + 8, titleBarBottom + 8),
     );
 
     for (const [property, value] of Object.entries(properties)) {
@@ -324,14 +329,9 @@
     const tocRect = toc && getComputedStyle(toc).display !== 'none' ? toc.getBoundingClientRect() : null;
     const geometry = calculateArticlePanelGeometry(
       document.documentElement.clientWidth,
-      window.innerHeight,
       {
-        left: rect.left,
         right: Math.max(rect.right, tocRect?.right ?? rect.right),
-        top: rect.top,
-        bottom: rect.bottom,
       },
-      Boolean(tocRect),
     );
 
     panel.dataset.placement = geometry.placement;
@@ -613,6 +613,7 @@
       scheduleSelectionInspection();
     }, { passive: true });
     window.addEventListener('orientationchange', scheduleGeometry, { passive: true });
+    window.addEventListener('article-titlebar-visibility', scheduleGeometry);
     window.visualViewport?.addEventListener('resize', scheduleGeometry, { passive: true });
     window.visualViewport?.addEventListener('scroll', scheduleGeometry, { passive: true });
 
@@ -726,8 +727,14 @@
     display: flex;
     width: var(--article-ai-panel-width, 320px);
     max-width: calc(100vw - 32px);
-    height: min(620px, calc(100dvh - 112px));
-    min-height: min(420px, calc(100dvh - 112px));
+    height: min(
+      620px,
+      calc(100dvh - var(--header-h) - var(--article-titlebar-h, 48px) - 32px)
+    );
+    min-height: min(
+      420px,
+      calc(100dvh - var(--header-h) - var(--article-titlebar-h, 48px) - 32px)
+    );
     flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--border);
@@ -742,8 +749,7 @@
     display: none;
   }
 
-  .article-ai-panel[data-placement='right'],
-  .article-ai-panel[data-placement='left'] {
+  .article-ai-panel[data-placement='right'] {
     right: auto;
     left: var(--article-ai-panel-left);
   }

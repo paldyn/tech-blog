@@ -66,13 +66,10 @@ export interface ArticleTextSelection {
   };
 }
 
-export type ArticlePanelPlacement = 'right' | 'left' | 'sheet';
+export type ArticlePanelPlacement = 'right' | 'sheet';
 
 export interface ArticlePanelBounds {
-  left: number;
   right: number;
-  top: number;
-  bottom: number;
 }
 
 export interface ArticlePanelGeometry {
@@ -100,9 +97,7 @@ const ARTICLE_MOBILE_SHEET_INSET = 12;
 /** Keep the article fixed and use a side panel only when at least 320px remains. */
 export function calculateArticlePanelGeometry(
   viewportWidth: number,
-  viewportHeight: number,
   proseBounds: ArticlePanelBounds | null,
-  preferLeft = false,
 ): ArticlePanelGeometry {
   const sheet = (): ArticlePanelGeometry => ({
     placement: 'sheet',
@@ -115,31 +110,6 @@ export function calculateArticlePanelGeometry(
 
   if (viewportWidth < ARTICLE_PANEL_SIDE_MIN_VIEWPORT || !proseBounds) return sheet();
 
-  // Near the article header a left panel would cover the title. Use it only after
-  // the body has reached the vertical region occupied by the panel.
-  const panelHeight = Math.min(620, Math.max(0, viewportHeight - 112));
-  const panelTop = viewportHeight - ARTICLE_PANEL_EDGE_INSET - panelHeight;
-  const proseVisibleBesidePanel = proseBounds.top <= panelTop && proseBounds.bottom > panelTop;
-  const leftWidth = Math.floor(
-    proseBounds.left - ARTICLE_PANEL_PROSE_GAP - ARTICLE_PANEL_EDGE_INSET,
-  );
-  const leftPanel = (): ArticlePanelGeometry | null => {
-    if (!proseVisibleBesidePanel || leftWidth < ARTICLE_PANEL_MIN_SIDE_WIDTH) return null;
-    const width = Math.min(ARTICLE_PANEL_MAX_WIDTH, leftWidth);
-    return {
-      placement: 'left',
-      left: Math.round(proseBounds.left - ARTICLE_PANEL_PROSE_GAP - width),
-      width,
-    };
-  };
-
-  // Tech Blog keeps its table of contents to the right of the prose. On those
-  // pages the left gutter preserves both the TOC and the direct 40px prose gap.
-  if (preferLeft) {
-    const preferred = leftPanel();
-    if (preferred) return preferred;
-  }
-
   const rightLeft = Math.round(proseBounds.right + ARTICLE_PANEL_PROSE_GAP);
   const rightWidth = Math.floor(viewportWidth - ARTICLE_PANEL_EDGE_INSET - rightLeft);
   if (rightWidth >= ARTICLE_PANEL_MIN_SIDE_WIDTH) {
@@ -150,9 +120,6 @@ export function calculateArticlePanelGeometry(
       width,
     };
   }
-
-  const left = leftPanel();
-  if (left) return left;
 
   return sheet();
 }

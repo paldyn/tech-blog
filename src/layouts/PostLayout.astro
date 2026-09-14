@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import ArticleAsk from '../components/ArticleAsk.astro';
+import ArticleTitleBar from '../components/ArticleTitleBar.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import type { CollectionEntry } from 'astro:content';
 import { postTypeLabel } from '../utils/posts';
@@ -14,10 +15,20 @@ const { post, readingTime, headings = [] } = Astro.props;
 const { title, description, author, pubDate, updatedDate, category, tags } = post.data;
 const typeLabel = postTypeLabel(post.data.type);
 const tocHeadings = headings.filter((h) => h.slug && h.text);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const collectionPath = `${base}/${post.data.type === 'knowledge' ? 'knowledge' : 'records'}/`;
 ---
 
 <BaseLayout title={title} description={description} activeNav={post.data.type === 'knowledge' ? '/knowledge' : '/records'} hasArticleAsk>
   <article class="post">
+    <ArticleTitleBar
+      title={title}
+      label={`${typeLabel} / ${category}`}
+      backHref={collectionPath}
+      backLabel={typeLabel}
+      initialSection={tocHeadings[0]?.text}
+    />
+
     <header class="post-header">
       <div class:list={['post-shell', { 'has-toc': tocHeadings.length > 0 }]}>
         <div class="post-primary">
@@ -175,12 +186,12 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
   .toc {
     min-width: 0;
     position: sticky;
-    /* 고정 헤더 바로 아래에 붙는다 */
-    top: calc(var(--header-h) + 23px);
+    /* 고정 헤더와 읽기 제목 띠 바로 아래에 붙는다 */
+    top: calc(var(--header-h) + var(--article-titlebar-h, 0px) + 23px);
     align-self: start;
   }
   .toc-inner {
-    max-height: calc(100vh - var(--header-h) - 43px);
+    max-height: calc(100vh - var(--header-h) - var(--article-titlebar-h, 0px) - 43px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     border-top: 1px solid var(--border);
@@ -360,7 +371,12 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
       return document.getElementById(id);
     });
     const tocInner = document.querySelector('.toc-inner') as HTMLElement | null;
-    const LINE = 120; // 뷰포트 상단에서 이만큼 내려온 지점을 '읽는 줄'로 본다
+    function readLine() {
+      const first = targets.find((target): target is HTMLElement => Boolean(target));
+      const anchor = first ? parseFloat(getComputedStyle(first).scrollMarginTop) : NaN;
+      return (Number.isFinite(anchor) ? anchor : 120) + 2;
+    }
+    let line = readLine();
     let current = -1;
     let ticking = false;
     let locked = false;
@@ -368,7 +384,15 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     function activate(index: number) {
       if (index === current) return;
       current = index;
-      links.forEach((a, i) => a.classList.toggle('is-active', i === index));
+      links.forEach((a, i) => {
+        const active = i === index;
+        a.classList.toggle('is-active', active);
+        if (active) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+      });
+
+      const section = document.querySelector<HTMLElement>('[data-article-titlebar-section]');
+      if (section) section.textContent = links[index]?.textContent?.trim() ?? '';
 
       // 목차가 자체 스크롤을 가질 만큼 길 때, 활성 항목이 보이도록 목차만 스크롤한다
       // (scrollIntoView는 페이지까지 움직여서 쓰지 않는다)
@@ -391,7 +415,7 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
       let index = 0;
       for (let i = 0; i < targets.length; i++) {
         const el = targets[i];
-        if (el && el.getBoundingClientRect().top - LINE <= 0) index = i;
+        if (el && el.getBoundingClientRect().top <= line) index = i;
         else break;
       }
       // 문서 끝에 닿으면 마지막 섹션을 읽고 있는 것으로 본다
@@ -408,7 +432,10 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      line = readLine();
+      onScroll();
+    }, { passive: true });
 
     // 목차 클릭 — 표시는 즉시 옮기고 스크롤은 짧게 끝낸다.
     // 브라우저 기본(scroll-behavior: smooth)은 거리가 멀수록 오래 끌어서,
