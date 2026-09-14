@@ -1,0 +1,1311 @@
+<div id="article-assistant-root" class="article-ai-root" data-article-ai-root>
+  <div class="article-ai-layer">
+    <button
+      type="button"
+      class="article-ai-trigger"
+      aria-haspopup="dialog"
+      aria-controls="article-ai-panel"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m12 3-1.15 3.1a4.4 4.4 0 0 1-2.6 2.6L5 10l3.25 1.3a4.4 4.4 0 0 1 2.6 2.6L12 17l1.15-3.1a4.4 4.4 0 0 1 2.6-2.6L19 10l-3.25-1.3a4.4 4.4 0 0 1-2.6-2.6L12 3Z"></path>
+        <path d="m19 16-.55 1.45A2.6 2.6 0 0 1 17 18.9l-1.5.6 1.5.6a2.6 2.6 0 0 1 1.45 1.45L19 23l.55-1.45A2.6 2.6 0 0 1 21 20.1l1.5-.6-1.5-.6a2.6 2.6 0 0 1-1.45-1.45L19 16Z"></path>
+      </svg>
+      <span>AI에게 질문하기</span>
+    </button>
+
+    <button type="button" class="article-selection-ask" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m12 3-1.15 3.1a4.4 4.4 0 0 1-2.6 2.6L5 10l3.25 1.3a4.4 4.4 0 0 1 2.6 2.6L12 17l1.15-3.1a4.4 4.4 0 0 1 2.6-2.6L19 10l-3.25-1.3a4.4 4.4 0 0 1-2.6-2.6L12 3Z"></path>
+      </svg>
+      AI에게 물어보기
+    </button>
+
+    <section
+      id="article-ai-panel"
+      class="article-ai-panel"
+      data-placement="sheet"
+      role="dialog"
+      aria-labelledby="article-ai-title"
+      aria-describedby="article-ai-disclosure"
+      hidden
+    >
+      <header class="article-ai-bar">
+        <p id="article-ai-title"><span aria-hidden="true"></span> PALDYN / ARTICLE AI</p>
+        <button type="button" class="article-ai-close" aria-label="AI 질문 패널 닫기" title="닫기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </header>
+
+      <div class="article-ai-content" aria-live="polite" aria-busy="false">
+        <aside class="article-ai-selection" aria-label="선택한 본문" hidden>
+          <div>
+            <span>선택한 본문</span>
+            <button type="button" class="article-ai-selection-clear">선택 해제</button>
+          </div>
+          <blockquote></blockquote>
+        </aside>
+
+        <div class="article-ai-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3-1.15 3.1a4.4 4.4 0 0 1-2.6 2.6L5 10l3.25 1.3a4.4 4.4 0 0 1 2.6 2.6L12 17l1.15-3.1a4.4 4.4 0 0 1 2.6-2.6L19 10l-3.25-1.3a4.4 4.4 0 0 1-2.6-2.6L12 3Z"></path>
+          </svg>
+          <p>글의 개념, 수식, 코드에 대해 물어보세요.</p>
+          <span>질문과 관련된 문단을 골라 답변의 문맥으로 사용합니다.</span>
+        </div>
+
+        <div class="article-ai-loading" role="status" hidden>
+          <span class="article-ai-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <p>생각 중<span class="article-ai-loading-time" aria-hidden="true"> · 0초</span></p>
+        </div>
+
+        <div class="article-ai-error" role="alert" hidden>
+          <p></p>
+        </div>
+
+        <div class="article-ai-answer" hidden>
+          <p class="article-ai-question"></p>
+          <div class="article-ai-markdown"></div>
+        </div>
+      </div>
+
+      <form class="article-ai-form" style="height: 170px">
+        <div
+          class="article-ai-resize-handle"
+          role="slider"
+          aria-label="질문 입력 영역 높이 조절"
+          aria-orientation="vertical"
+          aria-valuemin="142"
+          aria-valuemax="320"
+          aria-valuenow="170"
+          tabindex="0"
+        ></div>
+        <label for="article-ai-question" class="sr-only">현재 글에 질문하기</label>
+        <textarea
+          id="article-ai-question"
+          placeholder="이 글에 대해 질문하세요"
+          rows="3"
+          maxlength="1000"
+        ></textarea>
+        <div class="article-ai-form-foot">
+          <div class="article-ai-form-notes">
+            <p class="article-ai-shortcut"><kbd>Enter</kbd> 전송 · <kbd>Shift + Enter</kbd> 줄바꿈</p>
+            <p id="article-ai-disclosure" class="article-ai-disclosure">
+              질문과 관련 본문이 AI 답변 생성을 위해 전송됩니다.<br />
+              개인정보는 입력하지 마세요.
+            </p>
+          </div>
+          <button type="submit" disabled>
+            <span>전송</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m5 12 7-7 7 7"></path>
+              <path d="M12 19V5"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+  import {
+    articleAskErrorMessage,
+    buildArticleQuestionContext,
+    buildArticleSelectionContext,
+    calculateArticleMobileViewport,
+    calculateArticlePanelGeometry,
+    captureArticleTextSelection,
+    normalizeArticleText,
+    requestArticleAnswer,
+    type ArticleTextSelection,
+  } from '../lib/articleAsk';
+
+  interface ActiveSelection {
+    context: string;
+    text: string;
+  }
+
+  const REQUEST_TIMEOUT_MS = 45_000;
+  const DEFAULT_COMPOSER_HEIGHT = 170;
+  const MIN_COMPOSER_HEIGHT = 142;
+  const MAX_COMPOSER_HEIGHT = 320;
+  const MOBILE_PANEL_BREAKPOINT = 640;
+
+  const root = document.querySelector<HTMLElement>('[data-article-ai-root]');
+  const article = root?.closest<HTMLElement>('.post') ?? null;
+  const prose = article?.querySelector<HTMLElement>('[data-article-body]') ?? null;
+  const titleElement = article?.querySelector<HTMLElement>('[data-article-title]') ?? null;
+  const descriptionElement = article?.querySelector<HTMLElement>('.post-header .description') ?? null;
+
+  const trigger = root?.querySelector<HTMLButtonElement>('.article-ai-trigger') ?? null;
+  const selectionButton = root?.querySelector<HTMLButtonElement>('.article-selection-ask') ?? null;
+  const panel = root?.querySelector<HTMLElement>('.article-ai-panel') ?? null;
+  const closeButton = root?.querySelector<HTMLButtonElement>('.article-ai-close') ?? null;
+  const content = root?.querySelector<HTMLElement>('.article-ai-content') ?? null;
+  const selectionBox = root?.querySelector<HTMLElement>('.article-ai-selection') ?? null;
+  const selectionQuote = selectionBox?.querySelector<HTMLElement>('blockquote') ?? null;
+  const selectionClear = root?.querySelector<HTMLButtonElement>('.article-ai-selection-clear') ?? null;
+  const emptyState = root?.querySelector<HTMLElement>('.article-ai-empty') ?? null;
+  const loadingState = root?.querySelector<HTMLElement>('.article-ai-loading') ?? null;
+  const loadingTime = root?.querySelector<HTMLElement>('.article-ai-loading-time') ?? null;
+  const errorState = root?.querySelector<HTMLElement>('.article-ai-error') ?? null;
+  const errorText = errorState?.querySelector<HTMLElement>('p') ?? null;
+  const answerState = root?.querySelector<HTMLElement>('.article-ai-answer') ?? null;
+  const answerQuestion = root?.querySelector<HTMLElement>('.article-ai-question') ?? null;
+  const answerMarkdown = root?.querySelector<HTMLElement>('.article-ai-markdown') ?? null;
+  const form = root?.querySelector<HTMLFormElement>('.article-ai-form') ?? null;
+  const resizeHandle = root?.querySelector<HTMLElement>('.article-ai-resize-handle') ?? null;
+  const textarea = root?.querySelector<HTMLTextAreaElement>('#article-ai-question') ?? null;
+  const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]') ?? null;
+
+  let isOpen = false;
+  let loading = false;
+  let activeSelection: ActiveSelection | null = null;
+  let selectionPrompt: ArticleTextSelection | null = null;
+  let answerHtml = '';
+  let submittedQuestion = '';
+  let error = '';
+  let requestController: AbortController | null = null;
+  let requestSerial = 0;
+  let thinkingStartedAt = 0;
+  let thinkingTimer = 0;
+  let selectionFrame = 0;
+  let geometryFrame = 0;
+  let composerHeight = DEFAULT_COMPOSER_HEIGHT;
+  let returnFocus: HTMLElement | null = null;
+  let resizeStart: { pointerId: number; y: number; height: number } | null = null;
+
+  function clamp(value: number, min: number, max: number): number {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function readTitle(): string {
+    return normalizeArticleText(titleElement?.textContent ?? document.title.split('—')[0] ?? '');
+  }
+
+  function fallbackContext(): string {
+    return normalizeArticleText(descriptionElement?.textContent ?? '');
+  }
+
+  function renderSelectionPrompt(): void {
+    if (!selectionButton) return;
+    selectionButton.hidden = !selectionPrompt;
+    if (!selectionPrompt) return;
+
+    selectionButton.style.left = `${selectionPrompt.placement.left}px`;
+    selectionButton.style.top = `${selectionPrompt.placement.top}px`;
+    selectionButton.style.setProperty(
+      '--selection-ask-shift',
+      selectionPrompt.placement.above ? '-100%' : '0%',
+    );
+  }
+
+  function renderPanelState(): void {
+    if (!panel || !content || !textarea || !submitButton) return;
+
+    panel.toggleAttribute('data-has-selection', Boolean(activeSelection));
+    if (selectionBox && selectionQuote) {
+      selectionBox.hidden = !activeSelection;
+      selectionQuote.textContent = activeSelection?.text ?? '';
+    }
+
+    if (emptyState) emptyState.hidden = loading || Boolean(error) || Boolean(answerHtml);
+    if (loadingState) loadingState.hidden = !loading;
+    if (errorState && errorText) {
+      errorState.hidden = !error;
+      errorText.textContent = error;
+    }
+    if (answerState && answerQuestion && answerMarkdown) {
+      answerState.hidden = !answerHtml;
+      answerQuestion.textContent = answerHtml ? `Q. ${submittedQuestion}` : '';
+      if (!answerHtml) answerMarkdown.replaceChildren();
+    }
+
+    content.setAttribute('aria-busy', String(loading));
+    textarea.readOnly = loading;
+    textarea.setAttribute('aria-disabled', String(loading));
+    submitButton.disabled = loading || !textarea.value.trim();
+  }
+
+  function stopThinkingTimer(): void {
+    if (thinkingTimer) window.clearInterval(thinkingTimer);
+    thinkingTimer = 0;
+  }
+
+  function startThinkingTimer(): void {
+    stopThinkingTimer();
+    thinkingStartedAt = Date.now();
+    if (loadingTime) loadingTime.textContent = ' · 0초';
+    thinkingTimer = window.setInterval(() => {
+      if (loadingTime) {
+        loadingTime.textContent = ` · ${Math.floor((Date.now() - thinkingStartedAt) / 1_000)}초`;
+      }
+    }, 1_000);
+  }
+
+  function abortRequest(): void {
+    requestSerial += 1;
+    requestController?.abort();
+    requestController = null;
+    loading = false;
+    stopThinkingTimer();
+  }
+
+  function composerBounds(): { min: number; max: number } {
+    const panelHeight = panel?.getBoundingClientRect().height ?? window.innerHeight;
+    return {
+      min: MIN_COMPOSER_HEIGHT,
+      max: Math.max(MIN_COMPOSER_HEIGHT, Math.min(MAX_COMPOSER_HEIGHT, panelHeight - 165)),
+    };
+  }
+
+  function setComposerHeight(next: number): void {
+    if (!form || !resizeHandle) return;
+    const bounds = composerBounds();
+    composerHeight = clamp(next, bounds.min, bounds.max);
+    form.style.height = `${composerHeight}px`;
+    resizeHandle.setAttribute('aria-valuemax', String(Math.round(bounds.max)));
+    resizeHandle.setAttribute('aria-valuenow', String(Math.round(composerHeight)));
+  }
+
+  function syncMobileViewport(): void {
+    if (!panel) return;
+    if (document.documentElement.clientWidth > MOBILE_PANEL_BREAKPOINT) {
+      document.body.removeAttribute('data-article-ai-top-cramped');
+      for (const property of [
+        '--article-ai-mobile-height',
+        '--article-ai-mobile-left',
+        '--article-ai-mobile-top',
+        '--article-ai-mobile-width',
+      ]) {
+        panel.style.removeProperty(property);
+        document.body.style.removeProperty(property);
+      }
+      return;
+    }
+
+    const viewport = window.visualViewport;
+    const mobile = calculateArticleMobileViewport(
+      viewport?.width ?? document.documentElement.clientWidth,
+      viewport?.height ?? window.innerHeight,
+      viewport?.offsetLeft ?? 0,
+      viewport?.offsetTop ?? 0,
+    );
+    const properties = {
+      '--article-ai-mobile-height': `${mobile.height}px`,
+      '--article-ai-mobile-left': `${mobile.left}px`,
+      '--article-ai-mobile-top': `${mobile.top}px`,
+      '--article-ai-mobile-width': `${mobile.width}px`,
+    };
+
+    const headerBottom = document
+      .querySelector<HTMLElement>('.site-header')
+      ?.getBoundingClientRect().bottom ?? 0;
+    const viewportTop = Math.max(0, viewport?.offsetTop ?? 0);
+    const goTopTop = mobile.top - 56;
+    document.body.toggleAttribute(
+      'data-article-ai-top-cramped',
+      goTopTop < Math.max(viewportTop + 12, headerBottom + 8),
+    );
+
+    for (const [property, value] of Object.entries(properties)) {
+      panel.style.setProperty(property, value);
+      document.body.style.setProperty(property, value);
+    }
+  }
+
+  function syncPanelGeometry(): void {
+    if (!panel || !prose) return;
+    const rect = prose.getBoundingClientRect();
+    const toc = article?.querySelector<HTMLElement>('.toc') ?? null;
+    const tocRect = toc && getComputedStyle(toc).display !== 'none' ? toc.getBoundingClientRect() : null;
+    const geometry = calculateArticlePanelGeometry(
+      document.documentElement.clientWidth,
+      window.innerHeight,
+      {
+        left: rect.left,
+        right: Math.max(rect.right, tocRect?.right ?? rect.right),
+        top: rect.top,
+        bottom: rect.bottom,
+      },
+      Boolean(tocRect),
+    );
+
+    panel.dataset.placement = geometry.placement;
+    panel.style.setProperty('--article-ai-panel-left', `${geometry.left}px`);
+    panel.style.setProperty('--article-ai-panel-width', `${geometry.width}px`);
+    document.body.dataset.articleAiPlacement = geometry.placement;
+    syncMobileViewport();
+  }
+
+  function scheduleGeometry(): void {
+    if (!isOpen || geometryFrame) return;
+    geometryFrame = window.requestAnimationFrame(() => {
+      geometryFrame = 0;
+      syncPanelGeometry();
+      setComposerHeight(composerHeight);
+    });
+  }
+
+  function focusTextarea(): void {
+    try {
+      textarea?.focus({ preventScroll: true });
+    } catch {
+      textarea?.focus();
+    }
+  }
+
+  function openPanel(opener: HTMLElement | null): void {
+    if (!panel || !trigger) return;
+    if (!isOpen) returnFocus = opener;
+    isOpen = true;
+    trigger.hidden = true;
+    panel.hidden = false;
+    document.body.dataset.articleAiOpen = '';
+    syncPanelGeometry();
+    if (document.documentElement.clientWidth <= MOBILE_PANEL_BREAKPOINT) {
+      composerHeight = MIN_COMPOSER_HEIGHT;
+    }
+    setComposerHeight(composerHeight);
+    focusTextarea();
+  }
+
+  function closePanel(): void {
+    if (!isOpen || !panel || !trigger) return;
+    abortRequest();
+    isOpen = false;
+    panel.hidden = true;
+    trigger.hidden = false;
+    document.body.removeAttribute('data-article-ai-open');
+    document.body.removeAttribute('data-article-ai-placement');
+    document.body.removeAttribute('data-article-ai-top-cramped');
+    for (const property of [
+      '--article-ai-mobile-height',
+      '--article-ai-mobile-left',
+      '--article-ai-mobile-top',
+      '--article-ai-mobile-width',
+    ]) {
+      document.body.style.removeProperty(property);
+    }
+    renderPanelState();
+
+    const destination = returnFocus?.isConnected && !returnFocus.hidden ? returnFocus : trigger;
+    returnFocus = null;
+    window.requestAnimationFrame(() => destination.focus({ preventScroll: true }));
+  }
+
+  function clearResult(): void {
+    answerHtml = '';
+    submittedQuestion = '';
+    error = '';
+    answerMarkdown?.replaceChildren();
+  }
+
+  function applySelection(): void {
+    if (!prose || !selectionPrompt) return;
+    const wasOpen = isOpen;
+    const prompt = selectionPrompt;
+    abortRequest();
+    activeSelection = {
+      context: buildArticleSelectionContext(prose, prompt.range, prompt.selectedText),
+      text: prompt.selectedText,
+    };
+    selectionPrompt = null;
+    clearResult();
+    if (textarea) textarea.value = '';
+    renderSelectionPrompt();
+    renderPanelState();
+    openPanel(wasOpen ? returnFocus : selectionButton);
+    focusTextarea();
+  }
+
+  function clearActiveSelection(): void {
+    if (!activeSelection) return;
+    abortRequest();
+    activeSelection = null;
+    clearResult();
+    renderPanelState();
+    focusTextarea();
+  }
+
+  async function submitQuestion(): Promise<void> {
+    if (!textarea || !prose || loading) return;
+    const question = textarea.value.trim();
+    if (!question) return;
+
+    abortRequest();
+    const controller = new AbortController();
+    const serial = requestSerial + 1;
+    requestSerial = serial;
+    requestController = controller;
+    loading = true;
+    error = '';
+    answerHtml = '';
+    submittedQuestion = question;
+    textarea.value = '';
+    content?.scrollTo({ top: 0 });
+    startThinkingTimer();
+    renderPanelState();
+
+    const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    try {
+      const response = await requestArticleAnswer(
+        {
+          title: readTitle(),
+          context:
+            activeSelection?.context ??
+            buildArticleQuestionContext(prose, question, fallbackContext()),
+          selectedText: activeSelection?.text ?? '',
+          question,
+        },
+        controller.signal,
+      );
+
+      if (requestSerial !== serial) return;
+      const { renderAiMarkdown } = await import('../lib/aiMarkdown');
+      if (requestSerial !== serial) return;
+
+      answerHtml = renderAiMarkdown(response.answer);
+      if (answerMarkdown) answerMarkdown.innerHTML = answerHtml;
+    } catch (caught) {
+      if (requestSerial !== serial) return;
+      error = articleAskErrorMessage(caught);
+    } finally {
+      window.clearTimeout(timeout);
+      if (requestSerial === serial) {
+        requestController = null;
+        loading = false;
+        stopThinkingTimer();
+        renderPanelState();
+      }
+    }
+  }
+
+  function inspectSelection(): void {
+    selectionFrame = 0;
+    if (!prose) return;
+    const next = captureArticleTextSelection(prose, document.getSelection());
+    if (!next && document.activeElement === selectionButton) return;
+    selectionPrompt = next;
+    renderSelectionPrompt();
+  }
+
+  function scheduleSelectionInspection(): void {
+    if (selectionFrame) return;
+    selectionFrame = window.requestAnimationFrame(inspectSelection);
+  }
+
+  if (
+    root &&
+    article &&
+    prose &&
+    trigger &&
+    selectionButton &&
+    panel &&
+    closeButton &&
+    form &&
+    resizeHandle &&
+    textarea &&
+    selectionClear
+  ) {
+    document.body.classList.add('has-article-ai');
+    renderPanelState();
+
+    trigger.addEventListener('click', () => {
+      activeSelection = null;
+      selectionPrompt = null;
+      clearResult();
+      renderSelectionPrompt();
+      renderPanelState();
+      openPanel(trigger);
+    });
+    selectionButton.addEventListener('pointerdown', (event) => event.preventDefault());
+    selectionButton.addEventListener('click', applySelection);
+    closeButton.addEventListener('click', closePanel);
+    selectionClear.addEventListener('click', clearActiveSelection);
+
+    textarea.addEventListener('input', renderPanelState);
+    textarea.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
+      event.preventDefault();
+      form.requestSubmit();
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void submitQuestion();
+    });
+
+    resizeHandle.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      event.preventDefault();
+      resizeStart = {
+        pointerId: event.pointerId,
+        y: event.clientY,
+        height: form.getBoundingClientRect().height,
+      };
+      resizeHandle.setPointerCapture(event.pointerId);
+      form.toggleAttribute('data-resizing', true);
+    });
+    resizeHandle.addEventListener('pointermove', (event) => {
+      if (!resizeStart || resizeStart.pointerId !== event.pointerId) return;
+      setComposerHeight(resizeStart.height + resizeStart.y - event.clientY);
+    });
+    const stopResize = (event: PointerEvent) => {
+      if (!resizeStart || resizeStart.pointerId !== event.pointerId) return;
+      resizeStart = null;
+      if (resizeHandle.hasPointerCapture(event.pointerId)) {
+        resizeHandle.releasePointerCapture(event.pointerId);
+      }
+      form.removeAttribute('data-resizing');
+    };
+    resizeHandle.addEventListener('pointerup', stopResize);
+    resizeHandle.addEventListener('pointercancel', stopResize);
+    resizeHandle.addEventListener('lostpointercapture', () => {
+      resizeStart = null;
+      form.removeAttribute('data-resizing');
+    });
+    resizeHandle.addEventListener('keydown', (event) => {
+      const bounds = composerBounds();
+      let next: number | null = null;
+      if (event.key === 'ArrowUp') next = composerHeight + 16;
+      if (event.key === 'ArrowDown') next = composerHeight - 16;
+      if (event.key === 'Home') next = bounds.min;
+      if (event.key === 'End') next = bounds.max;
+      if (next === null) return;
+      event.preventDefault();
+      setComposerHeight(next);
+    });
+
+    document.addEventListener('selectionchange', scheduleSelectionInspection);
+    prose.addEventListener('pointerup', scheduleSelectionInspection);
+    prose.addEventListener('keyup', scheduleSelectionInspection);
+    document.addEventListener(
+      'pointerdown',
+      (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (prose.contains(target) || selectionButton.contains(target)) return;
+        selectionPrompt = null;
+        renderSelectionPrompt();
+      },
+      true,
+    );
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || event.defaultPrevented || !isOpen) return;
+      const search = document.getElementById('searchOverlay');
+      const lightbox = document.getElementById('image-lightbox');
+      if ((search && !search.hidden) || (lightbox && !lightbox.hidden)) return;
+      event.preventDefault();
+      closePanel();
+    });
+
+    window.addEventListener('scroll', () => {
+      scheduleGeometry();
+      scheduleSelectionInspection();
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+      scheduleGeometry();
+      scheduleSelectionInspection();
+    }, { passive: true });
+    window.addEventListener('orientationchange', scheduleGeometry, { passive: true });
+    window.visualViewport?.addEventListener('resize', scheduleGeometry, { passive: true });
+    window.visualViewport?.addEventListener('scroll', scheduleGeometry, { passive: true });
+
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(scheduleGeometry).observe(prose);
+    }
+  }
+</script>
+
+<style>
+  .article-ai-root {
+    position: relative;
+    z-index: 90;
+  }
+
+  .article-ai-layer {
+    pointer-events: none;
+  }
+
+  .article-ai-trigger,
+  .article-selection-ask,
+  .article-ai-panel {
+    pointer-events: auto;
+  }
+
+  .article-ai-trigger {
+    position: fixed;
+    z-index: 1;
+    right: 24px;
+    bottom: 24px;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.16);
+    padding: 0 16px;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .article-ai-trigger svg {
+    width: 16px;
+    height: 16px;
+    color: var(--brand);
+  }
+
+  .article-ai-trigger:hover {
+    border-color: var(--text-muted);
+    background: var(--bg-subtle);
+    color: var(--accent-bright);
+    transform: translateY(-1px);
+  }
+
+  .article-selection-ask {
+    position: fixed;
+    z-index: 2;
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 7px;
+    transform: translate(-50%, var(--selection-ask-shift, 0%));
+    border: 1px solid var(--accent-bright);
+    border-radius: 999px;
+    background: var(--accent-bright);
+    box-shadow: 0 10px 28px rgb(0 0 0 / 0.24);
+    padding: 0 13px;
+    color: var(--bg);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 550;
+    white-space: nowrap;
+    cursor: pointer;
+    animation: article-ai-selection-in 120ms ease-out both;
+  }
+
+  .article-ai-trigger[hidden],
+  .article-selection-ask[hidden],
+  .article-ai-content [hidden] {
+    display: none;
+  }
+
+  .article-selection-ask svg {
+    width: 14px;
+    height: 14px;
+    color: var(--brand);
+  }
+
+  .article-selection-ask:hover {
+    opacity: 0.9;
+  }
+
+  @keyframes article-ai-selection-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .article-ai-panel {
+    position: fixed;
+    z-index: 1;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    width: var(--article-ai-panel-width, 320px);
+    max-width: calc(100vw - 32px);
+    height: min(620px, calc(100dvh - 112px));
+    min-height: min(420px, calc(100dvh - 112px));
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--bg);
+    box-shadow: 0 24px 70px rgb(0 0 0 / 0.32), 0 0 0 1px rgb(0 0 0 / 0.04);
+    color: var(--text);
+    animation: article-ai-panel-in 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .article-ai-panel[hidden] {
+    display: none;
+  }
+
+  .article-ai-panel[data-placement='right'],
+  .article-ai-panel[data-placement='left'] {
+    right: auto;
+    left: var(--article-ai-panel-left);
+  }
+
+  .article-ai-panel::before {
+    position: absolute;
+    z-index: 2;
+    top: -1px;
+    left: -1px;
+    width: 66px;
+    height: 3px;
+    background: var(--brand);
+    content: '';
+  }
+
+  @keyframes article-ai-panel-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .article-ai-bar {
+    display: grid;
+    min-height: 49px;
+    flex: 0 0 auto;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 4px 0 16px;
+  }
+
+  .article-ai-bar p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .article-ai-bar p > span {
+    width: 17px;
+    height: 1px;
+    flex: 0 0 auto;
+    background: var(--brand);
+  }
+
+  .article-ai-bar button {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .article-ai-bar button:hover {
+    background: var(--surface);
+    color: var(--accent-bright);
+  }
+
+  .article-ai-bar svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .article-ai-content {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 18px;
+    user-select: text;
+    -webkit-user-select: text;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-dim) transparent;
+  }
+
+  .article-ai-selection {
+    border-left: 2px solid var(--brand);
+    background: var(--surface);
+    padding: 11px 12px;
+  }
+
+  .article-ai-selection > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .article-ai-selection > div > span {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .article-ai-selection button {
+    min-height: 32px;
+    border: 0;
+    background: none;
+    padding: 4px;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 11px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .article-ai-selection button:hover {
+    color: var(--accent-bright);
+  }
+
+  .article-ai-selection blockquote {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text-dim);
+    font-size: 12px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .article-ai-empty,
+  .article-ai-loading {
+    display: flex;
+    min-height: 210px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .article-ai-content > :is(.article-ai-empty, .article-ai-loading):only-child {
+    height: 100%;
+  }
+
+  .article-ai-selection + .article-ai-loading {
+    min-height: 80px;
+  }
+
+  .article-ai-empty svg {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 13px;
+    color: var(--brand);
+  }
+
+  .article-ai-empty p,
+  .article-ai-loading p {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .article-ai-empty > span {
+    max-width: 270px;
+    margin-top: 5px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .article-ai-loading-dots {
+    display: inline-flex;
+    height: 20px;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 9px;
+  }
+
+  .article-ai-loading-dots i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--brand);
+    animation: article-ai-dot 900ms ease-in-out infinite;
+  }
+
+  .article-ai-loading-dots i:nth-child(2) { animation-delay: 120ms; }
+  .article-ai-loading-dots i:nth-child(3) { animation-delay: 240ms; }
+
+  .article-ai-loading-time {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @keyframes article-ai-dot {
+    0%, 70%, 100% { opacity: 0.3; transform: translateY(0); }
+    35% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  .article-ai-error {
+    margin-top: 6px;
+    border-left: 2px solid var(--brand);
+    background: var(--surface);
+    padding: 14px;
+  }
+
+  .article-ai-error p {
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .article-ai-question {
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    color: var(--text-dim);
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .article-ai-markdown {
+    overflow-x: auto;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.72;
+  }
+
+  .article-ai-markdown > :global(:first-child) { margin-top: 0; }
+  .article-ai-markdown > :global(:last-child) { margin-bottom: 0; }
+
+  .article-ai-markdown :global(h1),
+  .article-ai-markdown :global(h2),
+  .article-ai-markdown :global(h3),
+  .article-ai-markdown :global(h4),
+  .article-ai-markdown :global(h5),
+  .article-ai-markdown :global(h6) {
+    margin: 22px 0 9px;
+    color: var(--accent-bright);
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.5;
+  }
+
+  .article-ai-markdown :global(p),
+  .article-ai-markdown :global(ul),
+  .article-ai-markdown :global(ol),
+  .article-ai-markdown :global(blockquote),
+  .article-ai-markdown :global(pre),
+  .article-ai-markdown :global(table) {
+    margin: 0 0 13px;
+  }
+
+  .article-ai-markdown :global(ul),
+  .article-ai-markdown :global(ol) {
+    padding-left: 21px;
+  }
+
+  .article-ai-markdown :global(li + li) { margin-top: 5px; }
+  .article-ai-markdown :global(strong) { color: var(--accent-bright); font-weight: 700; }
+
+  .article-ai-markdown :global(a) {
+    color: var(--accent-bright);
+    text-decoration: underline;
+    text-decoration-color: var(--brand);
+    text-underline-offset: 3px;
+  }
+
+  .article-ai-markdown :global(blockquote) {
+    border-left: 2px solid var(--border-strong);
+    padding-left: 11px;
+    color: var(--text-dim);
+  }
+
+  .article-ai-markdown :global(:not(pre) > code) {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--surface);
+    padding: 1px 4px;
+    color: var(--accent-bright);
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+
+  .article-ai-markdown :global(pre) {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 12px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.65;
+    white-space: pre;
+  }
+
+  .article-ai-markdown :global(pre code) { font: inherit; }
+
+  .article-ai-markdown :global(table) {
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .article-ai-markdown :global(th),
+  .article-ai-markdown :global(td) {
+    border: 1px solid var(--border);
+    padding: 7px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .article-ai-markdown :global(th) {
+    background: var(--surface);
+    color: var(--accent-bright);
+    font-weight: 600;
+  }
+
+  .article-ai-form {
+    position: relative;
+    display: flex;
+    min-height: 142px;
+    max-height: 320px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    background: var(--surface);
+    padding: 15px 12px 12px;
+  }
+
+  .article-ai-panel[data-has-selection] .article-ai-form {
+    margin-top: 12px;
+  }
+
+  .article-ai-resize-handle {
+    position: absolute;
+    z-index: 3;
+    top: -14px;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    cursor: ns-resize;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    outline: none;
+    touch-action: none;
+  }
+
+  .article-ai-resize-handle::before {
+    position: absolute;
+    top: 13px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    content: '';
+  }
+
+  .article-ai-resize-handle::after {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 42px;
+    height: 3px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: var(--text-dim);
+    box-shadow: 0 0 0 4px var(--surface);
+    content: '';
+    transition: background-color 140ms ease, width 140ms ease;
+  }
+
+  .article-ai-resize-handle:hover::after,
+  .article-ai-resize-handle:focus-visible::after,
+  .article-ai-form[data-resizing] .article-ai-resize-handle::after {
+    width: 56px;
+    background: var(--brand);
+  }
+
+  .article-ai-resize-handle:focus-visible {
+    outline: 2px solid var(--text-muted);
+    outline-offset: 2px;
+  }
+
+  .article-ai-form:focus-within {
+    box-shadow: inset 2px 0 0 var(--brand);
+  }
+
+  .article-ai-form textarea {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    flex: 1 1 auto;
+    resize: none;
+    border: 0;
+    background: transparent;
+    padding: 2px 3px 7px;
+    color: var(--accent-bright);
+    font: inherit;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    outline: none;
+  }
+
+  .article-ai-form textarea::placeholder { color: var(--text-muted); }
+  .article-ai-form textarea[aria-disabled='true'] { opacity: 0.62; }
+
+  .article-ai-form-foot {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .article-ai-form-notes {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-wrap: anywhere;
+  }
+
+  .article-ai-shortcut {
+    color: var(--text-muted);
+    font-size: 10px;
+  }
+
+  .article-ai-shortcut kbd {
+    font-family: var(--font-mono);
+    font-size: 9px;
+  }
+
+  .article-ai-form-foot button {
+    display: inline-flex;
+    min-width: 68px;
+    min-height: 40px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid var(--accent-bright);
+    border-radius: 999px;
+    background: var(--accent-bright);
+    padding: 0 13px;
+    color: var(--bg);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 150ms ease, transform 150ms ease;
+  }
+
+  .article-ai-form-foot button svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .article-ai-form-foot button:hover:not(:disabled) { transform: translateY(-1px); }
+  .article-ai-form-foot button:disabled { cursor: default; opacity: 0.35; }
+
+  .article-ai-disclosure {
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .article-ai-panel[data-placement='sheet'] {
+      right: 16px;
+      left: 16px;
+      width: auto;
+      max-width: 640px;
+      height: min(52dvh, 500px);
+      min-height: 0;
+      max-height: calc(100dvh - 32px);
+      margin-inline: auto;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 767px) {
+    .article-ai-panel {
+      right: 16px;
+      left: 16px;
+      bottom: 16px;
+      width: auto;
+      max-width: 640px;
+      height: min(52dvh, 500px);
+      min-height: 0;
+      max-height: calc(100dvh - 32px);
+      margin-inline: auto;
+    }
+
+    .article-ai-content { padding: 15px; }
+    .article-ai-empty, .article-ai-loading { min-height: 140px; }
+  }
+
+  @media (max-width: 640px) {
+    .article-ai-trigger {
+      right: 16px;
+      bottom: 16px;
+    }
+
+    .article-selection-ask {
+      min-height: 44px;
+      max-width: calc(100vw - 24px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .article-ai-panel {
+      top: var(--article-ai-mobile-top, auto);
+      right: auto;
+      bottom: auto;
+      left: var(--article-ai-mobile-left, 12px);
+      width: var(--article-ai-mobile-width, calc(100vw - 24px));
+      max-width: none;
+      height: var(--article-ai-mobile-height, clamp(320px, 60dvh, 520px));
+      min-height: 0;
+      max-height: calc(100dvh - 24px);
+    }
+
+    .article-ai-form textarea { font-size: 16px; }
+    .article-ai-selection button,
+    .article-ai-form-foot button {
+      min-height: 44px;
+    }
+    .article-ai-content { padding: 15px; }
+    .article-ai-empty, .article-ai-loading { min-height: 140px; }
+    .article-ai-form-foot { align-items: flex-end; }
+    .article-ai-form-notes { max-width: 230px; }
+    .article-ai-shortcut { display: none; }
+  }
+
+  @media (max-height: 520px) {
+    .article-ai-panel {
+      height: var(--article-ai-mobile-height, min(72dvh, 360px));
+      min-height: 0;
+    }
+
+    .article-ai-content { padding-block: 10px; }
+    .article-ai-empty, .article-ai-loading { min-height: 0; }
+    .article-ai-empty svg { margin-bottom: 6px; }
+    .article-ai-empty > span { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-ai-trigger,
+    .article-selection-ask,
+    .article-ai-panel,
+    .article-ai-loading-dots i {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>

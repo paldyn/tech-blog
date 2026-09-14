@@ -1,4 +1,12 @@
-<button class="scroll-top" id="scrollTopButton" type="button" aria-label="맨 위로 이동" title="맨 위로">
+---
+interface Props {
+  hasArticleAsk?: boolean;
+}
+
+const { hasArticleAsk = false } = Astro.props;
+---
+
+<button class:list={['scroll-top', { 'has-article-ai': hasArticleAsk }]} id="scrollTopButton" type="button" aria-label="맨 위로 이동" title="맨 위로">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M12 19V5"></path>
     <path d="m5 12 7-7 7 7"></path>
@@ -73,6 +81,28 @@
     transform: translateY(0);
     transition-delay: 0s;
   }
+  .scroll-top.has-article-ai {
+    bottom: 80px;
+  }
+
+  /* 열린 측면 패널과 겹치지 않도록 빈 반대편 하단으로 옮깁니다. */
+  :global(body[data-article-ai-open][data-article-ai-placement='right']) .scroll-top.has-article-ai {
+    right: auto;
+    bottom: 24px;
+    left: 24px;
+  }
+  :global(body[data-article-ai-open][data-article-ai-placement='left']) .scroll-top.has-article-ai {
+    right: 24px;
+    bottom: 24px;
+    left: auto;
+  }
+
+  /* 중앙 시트는 좌우를 거의 채울 수 있으므로 패널 위에 둡니다. */
+  :global(body[data-article-ai-open][data-article-ai-placement='sheet']) .scroll-top.has-article-ai {
+    right: 24px;
+    bottom: calc(min(52dvh, 500px) + 32px);
+    left: auto;
+  }
   .scroll-top:hover {
     background: var(--bg-subtle);
     color: var(--accent-bright);
@@ -87,6 +117,19 @@
     .scroll-top {
       right: 16px;
       bottom: 16px;
+    }
+    .scroll-top.has-article-ai {
+      bottom: 72px;
+    }
+    :global(body[data-article-ai-open][data-article-ai-placement='sheet']) .scroll-top.has-article-ai {
+      right: 16px;
+      top: calc(var(--article-ai-mobile-top, 12px) - 56px);
+      bottom: auto;
+    }
+    :global(body[data-article-ai-open][data-article-ai-top-cramped]) .scroll-top.has-article-ai {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
   }
 </style>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import ArticleAsk from '../components/ArticleAsk.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import type { CollectionEntry } from 'astro:content';
 import { postTypeLabel } from '../utils/posts';
@@ -15,7 +16,7 @@ const typeLabel = postTypeLabel(post.data.type);
 const tocHeadings = headings.filter((h) => h.slug && h.text);
 ---
 
-<BaseLayout title={title} description={description} activeNav={post.data.type === 'knowledge' ? '/knowledge' : '/records'}>
+<BaseLayout title={title} description={description} activeNav={post.data.type === 'knowledge' ? '/knowledge' : '/records'} hasArticleAsk>
   <article class="post">
     <header class="post-header">
       <div class:list={['post-shell', { 'has-toc': tocHeadings.length > 0 }]}>
@@ -24,7 +25,7 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
             <div class:list={['type-badge', post.data.type]}>{typeLabel}</div>
             <div class="category">{category}</div>
           </div>
-          <h1>{title}</h1>
+          <h1 data-article-title>{title}</h1>
           <p class="description">{description}</p>
           <div class="meta">
             <FormattedDate date={pubDate} />
@@ -44,7 +45,7 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
     </header>
 
     <div class:list={['post-shell', 'post-main', { 'has-toc': tocHeadings.length > 0 }]}>
-      <div class="post-primary post-body prose">
+      <div class="post-primary post-body prose" data-article-body>
         <slot />
       </div>
 
@@ -78,6 +79,8 @@ const tocHeadings = headings.filter((h) => h.slug && h.text);
         </div>
       </footer>
     )}
+
+    <ArticleAsk />
   </article>
 </BaseLayout>
 
