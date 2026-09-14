@@ -188,6 +188,7 @@
   let thinkingStartedAt = 0;
   let thinkingTimer = 0;
   let selectionFrame = 0;
+  let pointerSelecting = false;
   let geometryFrame = 0;
   let composerHeight = DEFAULT_COMPOSER_HEIGHT;
   let returnFocus: HTMLElement | null = null;
@@ -612,6 +613,8 @@
   }
 
   function scheduleSelectionInspection(): void {
+    // 마우스·터치로 선택하는 중에는 CTA를 그리지 않고 포인터를 놓은 뒤 측정한다.
+    if (pointerSelecting) return;
     if (selectionFrame) return;
     selectionFrame = window.requestAnimationFrame(inspectSelection);
   }
@@ -759,20 +762,38 @@
       setComposerHeight(next);
     });
 
-    document.addEventListener('selectionchange', scheduleSelectionInspection);
-    prose.addEventListener('pointerup', scheduleSelectionInspection);
-    prose.addEventListener('keyup', scheduleSelectionInspection);
-    document.addEventListener(
-      'pointerdown',
-      (event) => {
-        const target = event.target;
-        if (!(target instanceof Node)) return;
-        if (prose.contains(target) || selectionButton.contains(target)) return;
+    const handleSelectionChange = () => {
+      // 키보드·보조기술로 만든 선택은 selectionchange 경로로 계속 지원한다.
+      if (!pointerSelecting) scheduleSelectionInspection();
+    };
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (selectionButton.contains(target)) return;
+      if (prose.contains(target)) {
+        pointerSelecting = true;
+        if (selectionFrame) window.cancelAnimationFrame(selectionFrame);
+        selectionFrame = 0;
         selectionPrompt = null;
         renderSelectionPrompt();
-      },
-      true,
-    );
+        return;
+      }
+      pointerSelecting = false;
+      selectionPrompt = null;
+      renderSelectionPrompt();
+    };
+    const finishPointerSelection = () => {
+      if (!pointerSelecting) return;
+      pointerSelecting = false;
+      scheduleSelectionInspection();
+    };
+
+    document.addEventListener('selectionchange', handleSelectionChange);
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    document.addEventListener('pointerup', finishPointerSelection, true);
+    document.addEventListener('pointercancel', finishPointerSelection, true);
+    prose.addEventListener('keyup', scheduleSelectionInspection);
 
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape' || event.defaultPrevented || !isOpen) return;
