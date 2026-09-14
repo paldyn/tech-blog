@@ -97,6 +97,20 @@ const { hasArticleAsk = false } = Astro.props;
     bottom: calc(min(52dvh, 500px) + 32px);
     left: auto;
   }
+  /* visualViewport 시트는 세로폰뿐 아니라 낮은 가로폰에서도 적용됩니다. */
+  :global(body[data-article-ai-open][data-article-ai-mobile-viewport][data-article-ai-placement='sheet'])
+    .scroll-top.has-article-ai {
+    right: 16px;
+    top: calc(var(--article-ai-mobile-top, 12px) - 56px);
+    bottom: auto;
+    left: auto;
+  }
+  :global(body[data-article-ai-open][data-article-ai-mobile-viewport][data-article-ai-top-cramped])
+    .scroll-top.has-article-ai {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
   .scroll-top:hover {
     background: var(--bg-subtle);
     color: var(--accent-bright);
@@ -114,16 +128,6 @@ const { hasArticleAsk = false } = Astro.props;
     }
     .scroll-top.has-article-ai {
       bottom: 72px;
-    }
-    :global(body[data-article-ai-open][data-article-ai-placement='sheet']) .scroll-top.has-article-ai {
-      right: 16px;
-      top: calc(var(--article-ai-mobile-top, 12px) - 56px);
-      bottom: auto;
-    }
-    :global(body[data-article-ai-open][data-article-ai-top-cramped]) .scroll-top.has-article-ai {
-      visibility: hidden;
-      opacity: 0;
-      pointer-events: none;
     }
   }
 </style>

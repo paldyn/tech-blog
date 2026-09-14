@@ -92,7 +92,10 @@ const ARTICLE_PANEL_MAX_WIDTH = 384;
 const ARTICLE_PANEL_SHEET_MAX_WIDTH = 640;
 const ARTICLE_PANEL_SIDE_MIN_VIEWPORT = 768;
 const ARTICLE_SELECTION_BUTTON_GAP = 12;
-const ARTICLE_MOBILE_SHEET_INSET = 12;
+const ARTICLE_MOBILE_SHEET_HORIZONTAL_INSET = 12;
+const ARTICLE_MOBILE_SHEET_TOP_INSET = 12;
+const ARTICLE_MOBILE_SHEET_BOTTOM_INSET = 16;
+const ARTICLE_MOBILE_KEYBOARD_BOTTOM_INSET = 20;
 
 /** Keep the article fixed and use a side panel only when at least 320px remains. */
 export function calculateArticlePanelGeometry(
@@ -130,19 +133,28 @@ export function calculateArticleMobileViewport(
   height: number,
   offsetLeft = 0,
   offsetTop = 0,
+  keyboardOpen = false,
 ): ArticleMobileViewport {
   const viewportLeft = Math.max(0, offsetLeft);
   const viewportTop = Math.max(0, offsetTop);
   const viewportWidth = Math.max(0, width);
   const viewportHeight = Math.max(0, height);
-  const availableHeight = Math.max(0, viewportHeight - ARTICLE_MOBILE_SHEET_INSET * 2);
+  const bottomInset = keyboardOpen
+    ? ARTICLE_MOBILE_KEYBOARD_BOTTOM_INSET
+    : ARTICLE_MOBILE_SHEET_BOTTOM_INSET;
+  const availableHeight = Math.max(
+    0,
+    viewportHeight - ARTICLE_MOBILE_SHEET_TOP_INSET - bottomInset,
+  );
   const sheetHeight = Math.min(520, Math.max(320, viewportHeight * 0.6), availableHeight);
 
   return {
-    height: sheetHeight,
-    left: viewportLeft + ARTICLE_MOBILE_SHEET_INSET,
-    top: viewportTop + viewportHeight - sheetHeight - ARTICLE_MOBILE_SHEET_INSET,
-    width: Math.max(0, viewportWidth - ARTICLE_MOBILE_SHEET_INSET * 2),
+    height: Math.floor(sheetHeight),
+    left: Math.ceil(viewportLeft + ARTICLE_MOBILE_SHEET_HORIZONTAL_INSET),
+    top: Math.floor(viewportTop + viewportHeight - sheetHeight - bottomInset),
+    width: Math.floor(
+      Math.max(0, viewportWidth - ARTICLE_MOBILE_SHEET_HORIZONTAL_INSET * 2),
+    ),
   };
 }
 

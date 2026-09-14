@@ -84,24 +84,24 @@ describe('글 질문 패널 배치', () => {
 
   it('390×844의 visual viewport 안에 12px 여백과 60% 높이를 유지한다', () => {
     expect(calculateArticleMobileViewport(390, 844)).toEqual({
-      height: 506.4,
+      height: 506,
       left: 12,
-      top: 325.6,
+      top: 321,
       width: 366,
     });
   });
 
-  it('키보드가 올라온 390×500에서는 320px compact sheet를 쓴다', () => {
-    expect(calculateArticleMobileViewport(390, 500, 0, 24)).toEqual({
+  it('키보드가 올라온 390×500에서는 하단 20px을 남긴다', () => {
+    expect(calculateArticleMobileViewport(390, 500, 0, 24, true)).toEqual({
       height: 320,
       left: 12,
-      top: 192,
+      top: 184,
       width: 366,
     });
   });
 
   it('가용 높이가 320px보다 작으면 화면을 넘지 않는다', () => {
-    expect(calculateArticleMobileViewport(390, 300).height).toBe(276);
+    expect(calculateArticleMobileViewport(390, 300).height).toBe(272);
   });
 });
 
