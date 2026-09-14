@@ -105,7 +105,7 @@ npm의 플랫 `node_modules`에서는 직접 의존하지 않은 패키지도 `r
 
 pnpm은 심링크 기반 구조로 이를 방지합니다.
 
-```
+```text
 node_modules/
   .pnpm/                   ← 실제 파일 (콘텐츠 주소 스토어 하드 링크)
     react@18.3.0/

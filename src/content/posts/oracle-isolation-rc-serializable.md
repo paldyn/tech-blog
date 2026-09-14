@@ -71,7 +71,7 @@ Serializable 격리 수준에서는 **트랜잭션이 시작될 때 SCN을 고�
 
 Serializable 격리 수준에서 트랜잭션 A가 읽은 행을 트랜잭션 B가 먼저 수정·커밋했다면, 트랜잭션 A가 해당 행을 UPDATE하려 할 때 `ORA-08177`이 발생한다.
 
-```
+```text
 ORA-08177: can't serialize access for this transaction
 ```
 

@@ -97,7 +97,7 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 FBI가 제대로 동작하면 실행 계획에 아래처럼 나타난다.
 
-```
+```text
 | Id | Operation                          | Name               |
 |----|------------------------------------|---------------------|
 |  0 | SELECT STATEMENT                   |                     |

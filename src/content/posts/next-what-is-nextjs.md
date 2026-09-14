@@ -28,7 +28,7 @@ Next.js는 서버에서 HTML을 미리 생성해 보내는 **서버 사이드 �
 
 Next.js는 React를 *대체*하지 않습니다. React가 **UI 레이어**라면 Next.js는 그 위에 올라서는 **애플리케이션 레이어**입니다. React의 컴포넌트 모델·훅·상태 관리는 그대로 사용하면서, Next.js가 라우팅·렌더링 전략·빌드 최적화를 담당합니다.
 
-```
+```text
 React (컴포넌트·훅)
   └─ Next.js (라우팅·렌더링·최적화)
         └─ Node.js / Edge Runtime (실행 환경)

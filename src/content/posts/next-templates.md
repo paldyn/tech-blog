@@ -130,7 +130,7 @@ export default function ChatTemplate({
 
 같은 경로에 `layout.tsx`와 `template.tsx`를 함께 쓸 수 있습니다. 렌더 순서는 다음과 같습니다.
 
-```
+```text
 Layout (마운트 1회)
   └── Template (이동마다 재마운트)
         └── Page
@@ -140,7 +140,7 @@ Layout (마운트 1회)
 
 ## 언제 layout, 언제 template?
 
-```
+```text
 페이지 이동 시 상태를 유지해야 한다  →  layout.tsx
 매 이동마다 초기화/Effect 재실행 필요  →  template.tsx
 ```

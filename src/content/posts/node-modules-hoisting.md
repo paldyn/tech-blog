@@ -52,7 +52,7 @@ ESM `import`도 동일한 알고리즘을 사용하지만, 파일 확장자를 �
 
 npm v3+는 중첩을 최소화하기 위해 패키지를 루트 `node_modules`로 **호이스팅**합니다.
 
-```
+```text
 프로젝트 의존성:
   myapp → react@18, react-dom@18
   react-dom@18 → scheduler@0.23
@@ -76,7 +76,7 @@ const { unstable_scheduleCallback } = require('scheduler');
 
 두 패키지가 서로 다른 버전의 같은 의존성을 요구할 때:
 
-```
+```text
 myapp:
   dep-a@1.0.0 → lodash@4.17.0
   dep-b@2.0.0 → lodash@3.10.0
@@ -97,7 +97,7 @@ npm은 호이스팅 알고리즘으로 중복을 최소화하지만, 완벽히 �
 
 pnpm은 루트 `node_modules`에 **심링크**만 노출합니다.
 
-```
+```text
 node_modules/
   react           → .pnpm/react@18.3.0/node_modules/react
   react-dom       → .pnpm/react-dom@18.3.0/node_modules/react-dom
