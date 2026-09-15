@@ -19,7 +19,7 @@ draft: false
 
 HTTP 메서드로 보면 `GET`, `PUT`, `DELETE`는 멱등이지만 `POST`는 멱등이 아닙니다. "결제" API를 `POST /payments`로 설계했을 때 클라이언트가 응답을 받지 못해 재시도하면 결제가 두 번 처리될 수 있습니다.
 
-```
+```text
 클라이언트: POST /payments { amount: 10000 }
 서버: 결제 처리 완료
 네트워크 단절 → 클라이언트 응답 못 받음

@@ -138,7 +138,7 @@ ORDER BY
 
 ![SQL 인젝션 방어 레이어](/assets/posts/pattern-sql-injection-defense-layers.svg)
 
-```
+```text
 파라미터 바인딩 → ORM 안전 사용 → 최소 권한 계정 → 입력 검증 + WAF
 ```
 

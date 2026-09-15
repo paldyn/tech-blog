@@ -53,7 +53,7 @@ setInterval(() => {
 
 ### 단계별 절차
 
-```
+```text
 1. DevTools → Memory 탭
 2. "Heap snapshot" 선택
 3. "Take snapshot" → Snapshot 1
@@ -72,7 +72,7 @@ setInterval(() => {
 
 힙 스냅샷이 "지금 어떤 상태인가"를 본다면, Allocation Timeline은 "어떤 객체가 생성되어 해제되지 않고 있는가"를 시간 축으로 보여줍니다.
 
-```
+```text
 1. DevTools → Memory 탭
 2. "Allocation instrumentation on timeline" 선택
 3. "Start" 클릭

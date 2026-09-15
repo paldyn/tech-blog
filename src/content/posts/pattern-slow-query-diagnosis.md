@@ -178,7 +178,7 @@ WHERE  idx_scan = 0 AND schemaname = 'public';
 
 ## 실무 체크리스트
 
-```
+```text
 슬로우 쿼리 발생 시 확인 순서:
 □ EXPLAIN ANALYZE 출력에서 Seq Scan·row 추정 오차 확인
 □ WHERE 조건 컬럼에 인덱스 있는지, 함수·캐스팅으로 무력화되지 않는지

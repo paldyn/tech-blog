@@ -133,7 +133,7 @@ ALTER TABLE products ADD CONSTRAINT products_status_check
 
 ## 선택 기준 요약
 
-```
+```text
 값이 코드로 굳어 있고 변경이 거의 없다  →  ENUM 또는 CHECK
 값을 관리자가 자유롭게 추가·수정해야 한다  →  룩업 테이블
 다국어 표시명, 정렬 순서, 부가 메타데이터가 필요하다  →  룩업 테이블

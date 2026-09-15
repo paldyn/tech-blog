@@ -28,7 +28,7 @@ next:
 
 Chrome DevTools → **Performance** 탭에서 녹화 버튼을 클릭하면 CPU 프로파일 수집이 시작됩니다.
 
-```
+```text
 1. DevTools → Performance 탭
 2. ⚙ 설정 → CPU throttling: 4x slowdown (모바일 환경 시뮬레이션)
 3. 🔴 Record 버튼 클릭
@@ -59,7 +59,7 @@ CPU throttling 4x는 고사양 데스크탑에서 중저가 안드로이드 환�
 
 ## Bottom-Up 뷰 — 셀프 시간 기준 정렬
 
-```
+```text
 DevTools Performance → Bottom-Up 탭
 "Self Time" 컬럼을 클릭해 내림차순 정렬
 → 가장 위 항목이 실제 CPU 시간을 가장 많이 쓴 함수

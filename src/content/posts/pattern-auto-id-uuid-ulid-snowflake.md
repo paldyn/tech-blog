@@ -98,7 +98,7 @@ UUID v4의 충돌 안전성을 유지하면서 단조 증가 특성을 더했습
 
 ULID는 48비트 타임스탬프 + 80비트 랜덤값을 Crockford Base32로 인코딩한 26자 문자열입니다.
 
-```
+```text
 01ARZ3NDEKTSV4RRFFQ69G5FAV
 └──────────┘└──────────────┘
   타임스탬프      랜덤
@@ -125,7 +125,7 @@ CREATE TABLE notifications (
 
 Twitter(현 X)가 2010년 공개한 방식으로, Discord·Instagram·Mastodon 등 대규모 서비스에서 채택했습니다.
 
-```
+```text
 비트 구조 (64bit):
 [부호 1bit] [타임스탬프 41bit] [노드 ID 10bit] [시퀀스 12bit]
 
@@ -136,7 +136,7 @@ Twitter(현 X)가 2010년 공개한 방식으로, Discord·Instagram·Mastodon �
 
 ```sql
 -- 애플리케이션 레이어에서 생성 (Java + Twitter Snowflake)
-// id = ((currentMs - epoch) << 22) | (nodeId << 12) | sequence
+-- id = ((currentMs - epoch) << 22) | (nodeId << 12) | sequence
 
 -- DB에는 BIGINT로 저장
 CREATE TABLE tweets (
