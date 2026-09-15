@@ -107,17 +107,29 @@
           tabindex="0"
         ></div>
 
-      <aside class="article-ai-selection" aria-label="선택한 본문" hidden></aside>
-
-      <!-- 붙인 문장 하나의 골격. 스크립트가 만든 노드에는 스코프 속성이 붙지 않는다. -->
-      <template class="article-ai-chip-template">
+      <aside class="article-ai-selection" aria-label="선택한 본문" hidden>
+        <!-- 마우스를 올리면 무엇을 골랐는지 위로 펼친다 -->
+        <div class="article-ai-picks"></div>
         <span class="article-ai-selection-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="m9 11-6 6v3h9l3-3"></path>
-            <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path>
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            <path d="M13 8H7"></path>
+            <path d="M17 12H7"></path>
           </svg>
-          <span class="article-ai-selection-text"></span>
-          <button type="button" class="article-ai-selection-clear" aria-label="선택 해제" title="선택 해제">
+          <span class="article-ai-selection-count"></span>
+          <button type="button" class="article-ai-selection-clear" aria-label="선택 모두 해제" title="모두 해제">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </span>
+      </aside>
+
+      <!-- 미리보기 한 줄의 골격. 스크립트가 만든 노드에는 스코프 속성이 붙지 않는다. -->
+      <template class="article-ai-pick-template">
+        <span class="article-ai-pick">
+          <span class="article-ai-pick-text"></span>
+          <button type="button" class="article-ai-pick-clear" aria-label="이 문장 빼기" title="빼기">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
               <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
             </svg>
@@ -208,7 +220,10 @@
   const closeButton = root?.querySelector<HTMLButtonElement>('.article-ai-close') ?? null;
   const content = root?.querySelector<HTMLElement>('.article-ai-content') ?? null;
   const selectionBox = root?.querySelector<HTMLElement>('.article-ai-selection') ?? null;
-  const chipTemplate = root?.querySelector<HTMLTemplateElement>('.article-ai-chip-template') ?? null;
+  const picksBox = root?.querySelector<HTMLElement>('.article-ai-picks') ?? null;
+  const selectionCount = root?.querySelector<HTMLElement>('.article-ai-selection-count') ?? null;
+  const selectionClear = root?.querySelector<HTMLButtonElement>('.article-ai-selection-clear') ?? null;
+  const pickTemplate = root?.querySelector<HTMLTemplateElement>('.article-ai-pick-template') ?? null;
   const emptyState = root?.querySelector<HTMLElement>('.article-ai-empty') ?? null;
   const thread = root?.querySelector<HTMLOListElement>('.article-ai-thread') ?? null;
   const resetButton = root?.querySelector<HTMLButtonElement>('.article-ai-reset') ?? null;
@@ -262,26 +277,30 @@
     );
   }
 
-  /** 붙인 문장마다 칩 하나. 개수 제한은 두지 않는다 — 넘치면 줄바꿈으로 쌓인다. */
+  /**
+   * 붙인 문장은 칩 하나로 세어 보여 준다 — 내용이 길면 입력 영역을 잡아먹는다.
+   * 무엇을 골랐는지는 마우스를 올렸을 때 위로 펼쳐서 보여 준다.
+   */
   function renderSelectionChips(): void {
-    if (!selectionBox || !chipTemplate) return;
+    if (!selectionBox || !picksBox || !selectionCount || !pickTemplate) return;
     selectionBox.hidden = activeSelections.length === 0;
-    selectionBox.replaceChildren();
+    selectionCount.textContent = `텍스트 ${activeSelections.length}개 선택`;
+    picksBox.replaceChildren();
 
     activeSelections.forEach((selection, index) => {
-      const chip = chipTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
-      if (!chip) return;
-      // 칩은 한 줄이므로 줄바꿈은 공백으로 눕힌다. 자르는 일은 CSS가 맡는다.
+      const pick = pickTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
+      if (!pick) return;
+      // 한 줄로 보여 주므로 줄바꿈은 공백으로 눕힌다. 자르는 일은 CSS가 맡는다.
       const label = selection.text.replace(/\s+/g, ' ').trim();
-      const text = chip.querySelector<HTMLElement>('.article-ai-selection-text');
+      const text = pick.querySelector<HTMLElement>('.article-ai-pick-text');
       if (text) {
-        text.textContent = label;
+        text.textContent = `“${label}”`;
         text.title = label;
       }
-      chip
-        .querySelector<HTMLButtonElement>('.article-ai-selection-clear')
+      pick
+        .querySelector<HTMLButtonElement>('.article-ai-pick-clear')
         ?.addEventListener('click', () => clearSelectionAt(index));
-      selectionBox.appendChild(chip);
+      picksBox.appendChild(pick);
     });
   }
 
@@ -789,6 +808,11 @@
     selectionButton.addEventListener('pointerdown', (event) => event.preventDefault());
     selectionButton.addEventListener('click', applySelection);
     closeButton.addEventListener('click', closePanel);
+    selectionClear?.addEventListener('click', () => {
+      abortRequest();
+      clearAllSelections();
+      focusTextarea();
+    });
 
     textarea.addEventListener('input', renderPanelState);
     textarea.addEventListener('keydown', (event) => {
@@ -1258,29 +1282,24 @@
     둬서 한 덩어리로 읽히고, 폼 밖에 두어 입력창 높이를 빼앗지 않는다.
   */
   /*
-    선택 본문은 입력창 위에 붙는 칩 하나다 — 클로드의 첨부 칩과 같은 꼴로,
-    무엇이 딸려 갈지 한 줄로 보이고 ✕로 뗀다. 여러 줄 인용은 입력 영역을
-    잡아먹어서, 넘치는 만큼은 말줄임으로 접는다.
+    선택 본문은 입력창 위에 붙는 칩 하나다 — 몇 개를 골랐는지만 세어 보여 주고,
+    무엇을 골랐는지는 마우스를 올렸을 때 위로 펼친다. 내용을 늘 펼쳐 두면
+    입력 영역이 그만큼 줄어든다.
   */
   .article-ai-selection {
+    position: relative;
     display: flex;
     flex: 0 0 auto;
     min-width: 0;
-    flex-wrap: wrap;
-    gap: 6px;
     border-top: 1px solid var(--border);
     background: var(--surface);
     padding: 10px 12px 0;
-    /* 많이 붙이면 이 영역만 스크롤한다 — 입력창까지 밀어내지 않는다. */
-    max-height: 96px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
   }
 
   .article-ai-selection-chip {
     display: inline-flex;
-    min-width: 0;
     max-width: 100%;
+    min-width: 0;
     align-items: center;
     gap: 7px;
     border: 1px solid var(--border);
@@ -1290,13 +1309,13 @@
   }
 
   .article-ai-selection-chip > svg {
-    width: 13px;
-    height: 13px;
+    width: 14px;
+    height: 14px;
     flex: 0 0 auto;
     color: var(--text-muted);
   }
 
-  .article-ai-selection-text {
+  .article-ai-selection-count {
     overflow: hidden;
     color: var(--text-dim);
     font-size: 12px;
@@ -1305,7 +1324,48 @@
     white-space: nowrap;
   }
 
-  .article-ai-selection-clear {
+  /* 고른 문장들. 칩 위로 떠서 답변 영역을 밀지 않는다. */
+  .article-ai-picks {
+    position: absolute;
+    bottom: calc(100% - 4px);
+    left: 12px;
+    display: none;
+    max-width: calc(100% - 24px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding-bottom: 8px;
+  }
+
+  .article-ai-selection:hover .article-ai-picks,
+  .article-ai-selection:focus-within .article-ai-picks {
+    display: flex;
+  }
+
+  .article-ai-pick {
+    display: inline-flex;
+    max-width: 100%;
+    min-width: 0;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    padding: 5px 5px 5px 11px;
+    box-shadow: 0 8px 20px rgb(0 0 0 / 0.28);
+  }
+
+  .article-ai-pick-text {
+    overflow: hidden;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .article-ai-selection-clear,
+  .article-ai-pick-clear {
     display: inline-flex;
     width: 20px;
     height: 20px;
@@ -1318,15 +1378,27 @@
     padding: 0;
     color: var(--text-muted);
     cursor: pointer;
-    transition: background-color 150ms ease, color 150ms ease;
+    transition: opacity 150ms ease, background-color 150ms ease, color 150ms ease;
   }
 
-  .article-ai-selection-clear:hover {
+  /* 평소에는 개수만 보이고, 손이 닿으면 뗄 수 있는 ✕가 나타난다. */
+  .article-ai-selection-clear {
+    opacity: 0;
+  }
+
+  .article-ai-selection:hover .article-ai-selection-clear,
+  .article-ai-selection:focus-within .article-ai-selection-clear {
+    opacity: 1;
+  }
+
+  .article-ai-selection-clear:hover,
+  .article-ai-pick-clear:hover {
     background: var(--border);
     color: var(--accent-bright);
   }
 
-  .article-ai-selection-clear svg {
+  .article-ai-selection-clear svg,
+  .article-ai-pick-clear svg {
     width: 11px;
     height: 11px;
   }
