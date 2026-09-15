@@ -85,11 +85,15 @@ const { hasArticleAsk = false } = Astro.props;
     bottom: 80px;
   }
 
-  /* 열린 측면 패널과 겹치지 않도록 빈 반대편 하단으로 옮깁니다. */
+  /* 측면 패널이 열리면 그 왼쪽 옆으로 비킨다. 반대편 구석으로 던지면 방금까지
+     오른쪽 아래에 있던 버튼을 화면을 가로질러 다시 찾아야 한다.
+     384px는 패널이 가질 수 있는 최대 폭(ARTICLE_PANEL_MAX_WIDTH)이라 어떤 폭에서도
+     겹치지 않는다. 패널이 자기 폭을 body에 알려 주면 그때 딱 맞게 붙는다.
+     16px(패널 여백) + 패널 폭 + 12px(간격). */
   :global(body[data-article-ai-open][data-article-ai-placement='right']) .scroll-top.has-article-ai {
-    right: auto;
+    right: calc(var(--article-ai-panel-width, 384px) + 28px);
     bottom: 24px;
-    left: 24px;
+    left: auto;
   }
   /* 중앙 시트는 좌우를 거의 채울 수 있으므로 패널 위에 둡니다. */
   :global(body[data-article-ai-open][data-article-ai-placement='sheet']) .scroll-top.has-article-ai {
