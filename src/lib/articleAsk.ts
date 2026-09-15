@@ -819,6 +819,23 @@ export function articleAskErrorMessage(error: unknown): string {
 }
 
 /** 오늘 치를 다 쓴 경우. 다시 시도해도 리셋 전까지 막히므로 버튼을 감춘다. */
+/**
+ * 잠깐 몰려 막힌 경우 워커가 알려 주는 대기 초. 모르면 0이다.
+ * 막힌 동안 다시 두드리면 거절당한 요청까지 한도를 먹어 풀리는 시각이 뒤로 밀린다 —
+ * 그래서 이 초가 지나기 전에는 화면에서 아예 보내지 못하게 막는다.
+ */
+export function articleAskRetryAfter(error: unknown): number {
+  if (!(error instanceof ArticleAskHttpError)) return 0;
+  if (error.status !== 429) return 0;
+  return Math.max(0, Math.round(error.detail.retryAfter));
+}
+
+/** 남은 초를 세어 보여 주는 문구. 워커가 처음 보낸 문장과 같은 꼴을 유지한다. */
+export function articleAskWaitMessage(seconds: number): string {
+  if (seconds > 0) return `질문이 잠시 몰렸어요. ${seconds}초 뒤에 다시 시도해 주세요.`;
+  return '질문이 잠시 몰렸어요. 다시 시도해 주세요.';
+}
+
 export function isArticleQuotaExhausted(error: unknown): boolean {
   return error instanceof ArticleAskHttpError && error.detail.scope === 'daily';
 }

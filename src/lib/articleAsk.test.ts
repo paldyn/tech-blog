@@ -4,6 +4,8 @@ import {
   ArticleAskHttpError,
   ArticleAskResponseError,
   articleAskErrorMessage,
+  articleAskRetryAfter,
+  articleAskWaitMessage,
   isArticleQuotaExhausted,
   articleQuestionTokens,
   buildArticleConversationContext,
@@ -396,5 +398,26 @@ describe('워커가 준 오류 문구', () => {
       status: 429,
       detail: { message: '오늘 다 썼어요.', scope: 'daily' },
     });
+  });
+});
+
+describe('한도가 풀리기까지 기다리기', () => {
+  it('429가 알려 준 초를 그대로 돌려준다', () => {
+    const error = new ArticleAskHttpError(429, {
+      message: '질문이 잠시 몰렸어요. 41초 뒤에 다시 시도해 주세요.',
+      scope: 'burst',
+      retryAfter: 41,
+    });
+    expect(articleAskRetryAfter(error)).toBe(41);
+  });
+
+  it('429가 아니면 기다리게 하지 않는다', () => {
+    expect(articleAskRetryAfter(new ArticleAskHttpError(502))).toBe(0);
+    expect(articleAskRetryAfter(new Error('네트워크'))).toBe(0);
+  });
+
+  it('남은 초를 세어 문구에 넣고, 다 세면 초를 뺀다', () => {
+    expect(articleAskWaitMessage(9)).toBe('질문이 잠시 몰렸어요. 9초 뒤에 다시 시도해 주세요.');
+    expect(articleAskWaitMessage(0)).toBe('질문이 잠시 몰렸어요. 다시 시도해 주세요.');
   });
 });

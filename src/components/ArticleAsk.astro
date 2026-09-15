@@ -207,6 +207,8 @@
 <script>
   import {
     articleAskErrorMessage,
+    articleAskRetryAfter,
+    articleAskWaitMessage,
     isArticleQuotaExhausted,
     buildArticleConversationContext,
     buildArticleQuestionContext,
@@ -241,6 +243,8 @@
     fresh: boolean;
     error: string;
     exhausted: boolean;
+    /** 한도가 풀리기를 기다리는 중인 오류인지. 남은 초를 여기에 세어 보여 준다. */
+    waiting: boolean;
   }
 
   interface ActiveSelection {
@@ -288,6 +292,7 @@
   const resizeHandle = root?.querySelector<HTMLElement>('.article-ai-resize-handle') ?? null;
   const textarea = root?.querySelector<HTMLTextAreaElement>('#article-ai-question') ?? null;
   const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]') ?? null;
+  const submitLabel = submitButton?.querySelector<HTMLElement>('span') ?? null;
 
   let isOpen = false;
   let loading = false;
@@ -298,6 +303,10 @@
   let pendingTurn: ConversationTurn | null = null;
   let requestController: AbortController | null = null;
   let requestSerial = 0;
+  // 한도가 풀리는 시각. 그전에는 보내지 않는다 — 거절당한 요청도 한도를 먹어서,
+  // 막힌 채 두드릴수록 풀리는 시각이 오히려 뒤로 밀린다(40초가 50초를 기다려도 28초였다).
+  let cooldownUntil = 0;
+  let cooldownTimer = 0;
   let thinkingStartedAt = 0;
   let thinkingTimer = 0;
   let selectionFrame = 0;
@@ -418,7 +427,48 @@
     content.setAttribute('aria-busy', String(loading));
     textarea.readOnly = loading;
     textarea.setAttribute('aria-disabled', String(loading));
-    submitButton.disabled = loading || !textarea.value.trim();
+    renderSendButton();
+  }
+
+  /** 전송 단추만 다시 그린다. 한도가 걸린 동안에는 남은 초를 세어 보여 준다. */
+  function renderSendButton(): void {
+    if (!textarea || !submitButton) return;
+    const left = cooldownLeft();
+    submitButton.disabled = loading || left > 0 || !textarea.value.trim();
+    if (submitLabel) submitLabel.textContent = left > 0 ? `${left}초` : '전송';
+    submitButton.title = left > 0 ? `한도가 풀리기까지 ${left}초` : '';
+  }
+
+  /** 한도가 풀리기까지 남은 초. 0이면 다시 보낼 수 있다. */
+  function cooldownLeft(): number {
+    if (!cooldownUntil) return 0;
+    return Math.max(0, Math.ceil((cooldownUntil - Date.now()) / 1_000));
+  }
+
+  /** 워커가 알려 준 대기 시간을 건다. 이미 걸려 있으면 더 먼 쪽을 남긴다. */
+  function startCooldown(seconds: number): void {
+    if (seconds <= 0) return;
+    cooldownUntil = Math.max(cooldownUntil, Date.now() + seconds * 1_000);
+    if (cooldownTimer) return;
+    cooldownTimer = window.setInterval(tickCooldown, 500);
+    tickCooldown();
+  }
+
+  /** 남은 초를 흘려보낸다 — 단추에도, 기다리는 차례의 문구에도. */
+  function tickCooldown(): void {
+    const left = cooldownLeft();
+    for (const turn of turns) {
+      if (!turn.waiting) continue;
+      turn.error = articleAskWaitMessage(left);
+      if (turn.reply.dataset.status === 'error') turn.label.textContent = turn.error;
+    }
+    if (left === 0) {
+      cooldownUntil = 0;
+      window.clearInterval(cooldownTimer);
+      cooldownTimer = 0;
+    }
+    syncRetryButtons();
+    renderSendButton();
   }
 
   function stopThinkingTimer(): void {
@@ -498,9 +548,10 @@
       fresh: true,
       error: '',
       exhausted: false,
+      waiting: false,
     };
     retry.addEventListener('click', () => {
-      if (loading || !turn.payload) return;
+      if (loading || cooldownLeft() > 0 || !turn.payload) return;
       void runTurn(turn);
     });
     turns.push(turn);
@@ -525,7 +576,8 @@
     // 답을 받지 못한 새 차례는 남겨 둘 이유가 없다 — 질문만 떠 있으면 실패로 읽힌다.
     // 다시 시도 중이던 차례는 이미 화면에 있던 것이므로 오류 상태로 되돌린다.
     if (pendingTurn?.fresh) dropTurn(pendingTurn);
-    else if (pendingTurn) showTurnError(pendingTurn, pendingTurn.error, pendingTurn.exhausted);
+    else if (pendingTurn)
+      showTurnError(pendingTurn, pendingTurn.error, pendingTurn.exhausted, pendingTurn.waiting);
     pendingTurn = null;
   }
 
@@ -830,6 +882,7 @@
    */
   function syncRetryButtons(): void {
     const last = turns[turns.length - 1] ?? null;
+    const left = cooldownLeft();
     for (const turn of turns) {
       const offer =
         turn === last &&
@@ -837,12 +890,21 @@
         !turn.exhausted &&
         turn.reply.dataset.status === 'error';
       turn.retry.hidden = !offer;
+      // 한도가 안 풀린 동안에는 누르지 못하게 둔다. 누르면 그 요청까지 한도를 먹는다.
+      turn.retry.disabled = left > 0;
+      turn.retry.title = left > 0 ? `한도가 풀리기까지 ${left}초` : '다시 시도';
     }
   }
 
-  function showTurnError(turn: ConversationTurn, message: string, exhausted = false): void {
+  function showTurnError(
+    turn: ConversationTurn,
+    message: string,
+    exhausted = false,
+    waiting = false,
+  ): void {
     turn.error = message;
     turn.exhausted = exhausted;
+    turn.waiting = waiting;
     turn.reply.dataset.status = 'error';
     turn.status.hidden = false;
     turn.label.textContent = message;
@@ -852,7 +914,7 @@
 
   /** 한 차례를 보낸다. 첫 질문도, 다시 시도도 이 길을 탄다. */
   async function runTurn(turn: ConversationTurn): Promise<void> {
-    if (!turn.payload || loading) return;
+    if (!turn.payload || loading || cooldownLeft() > 0) return;
 
     abortRequest();
     const controller = new AbortController();
@@ -886,7 +948,9 @@
     } catch (caught) {
       if (requestSerial !== serial) return;
       turn.fresh = false;
-      showTurnError(turn, articleAskErrorMessage(caught), isArticleQuotaExhausted(caught));
+      const wait = articleAskRetryAfter(caught);
+      showTurnError(turn, articleAskErrorMessage(caught), isArticleQuotaExhausted(caught), wait > 0);
+      startCooldown(wait);
     } finally {
       window.clearTimeout(timeout);
       if (requestSerial === serial) {
@@ -901,7 +965,7 @@
   }
 
   async function submitQuestion(): Promise<void> {
-    if (!textarea || !prose || loading) return;
+    if (!textarea || !prose || loading || cooldownLeft() > 0) return;
     const question = textarea.value.trim();
     if (!question) return;
 
