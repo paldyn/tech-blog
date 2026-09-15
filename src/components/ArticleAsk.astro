@@ -84,6 +84,12 @@
                 <span class="article-ai-status-dots" aria-hidden="true"><i></i><i></i><i></i></span>
                 <span class="article-ai-status-label">생각 중</span>
                 <span class="article-ai-status-time"> · 0초</span>
+                <button type="button" class="article-ai-retry" aria-label="다시 시도" title="다시 시도" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                    <path d="M21 3v5h-5"></path>
+                  </svg>
+                </button>
               </p>
               <div class="article-ai-markdown"></div>
             </div>
@@ -213,6 +219,7 @@
     captureArticleTextSelection,
     normalizeArticleText,
     requestArticleAnswer,
+    type ArticleAskPayload,
     type ArticleConversationEntry,
     type ArticleImageAttachment,
     type ArticleTextSelection,
@@ -225,7 +232,13 @@
     status: HTMLElement;
     label: HTMLElement;
     time: HTMLElement;
+    retry: HTMLButtonElement;
     markdown: HTMLElement;
+    /** 다시 시도할 때 그대로 다시 보낸다 — 그때 딛고 있던 문맥까지 같이. */
+    payload: ArticleAskPayload | null;
+    /** 이 요청이 만든 차례인지. 새 질문이 끼어들면 답 없는 차례만 걷어낸다. */
+    fresh: boolean;
+    error: string;
   }
 
   interface ActiveSelection {
@@ -465,8 +478,9 @@
     const status = element.querySelector<HTMLElement>('.article-ai-status');
     const label = element.querySelector<HTMLElement>('.article-ai-status-label');
     const time = element.querySelector<HTMLElement>('.article-ai-status-time');
+    const retry = element.querySelector<HTMLButtonElement>('.article-ai-retry');
     const markdown = element.querySelector<HTMLElement>('.article-ai-markdown');
-    if (!reply || !status || !label || !time || !markdown) return null;
+    if (!reply || !status || !label || !time || !retry || !markdown) return null;
 
     const turn: ConversationTurn = {
       question,
@@ -476,8 +490,16 @@
       status,
       label,
       time,
+      retry,
       markdown,
+      payload: null,
+      fresh: true,
+      error: '',
     };
+    retry.addEventListener('click', () => {
+      if (loading || !turn.payload) return;
+      void runTurn(turn);
+    });
     turns.push(turn);
     thread.appendChild(element);
     return turn;
@@ -495,8 +517,10 @@
     requestController = null;
     loading = false;
     stopThinkingTimer();
-    // 답을 받지 못한 차례는 남겨 둘 이유가 없다 — 질문만 떠 있으면 실패로 읽힌다.
-    if (pendingTurn) dropTurn(pendingTurn);
+    // 답을 받지 못한 새 차례는 남겨 둘 이유가 없다 — 질문만 떠 있으면 실패로 읽힌다.
+    // 다시 시도 중이던 차례는 이미 화면에 있던 것이므로 오류 상태로 되돌린다.
+    if (pendingTurn?.fresh) dropTurn(pendingTurn);
+    else if (pendingTurn) showTurnError(pendingTurn, pendingTurn.error);
     pendingTurn = null;
   }
 
@@ -785,10 +809,28 @@
     renderPanelState();
   }
 
-  async function submitQuestion(): Promise<void> {
-    if (!textarea || !prose || loading) return;
-    const question = textarea.value.trim();
-    if (!question) return;
+  function showTurnLoading(turn: ConversationTurn): void {
+    turn.reply.dataset.status = 'loading';
+    turn.status.hidden = false;
+    turn.label.textContent = '생각 중';
+    turn.time.hidden = false;
+    turn.retry.hidden = true;
+    turn.markdown.replaceChildren();
+  }
+
+  function showTurnError(turn: ConversationTurn, message: string): void {
+    turn.error = message;
+    turn.reply.dataset.status = 'error';
+    turn.status.hidden = false;
+    turn.label.textContent = message;
+    turn.time.hidden = true;
+    // 같은 질문을 다시 보낼 수 있게 한다 — 대개는 잠시 몰렸다가 풀린다.
+    turn.retry.hidden = !turn.payload;
+  }
+
+  /** 한 차례를 보낸다. 첫 질문도, 다시 시도도 이 길을 탄다. */
+  async function runTurn(turn: ConversationTurn): Promise<void> {
+    if (!turn.payload || loading) return;
 
     abortRequest();
     const controller = new AbortController();
@@ -796,6 +838,55 @@
     requestSerial = serial;
     requestController = controller;
     loading = true;
+    pendingTurn = turn;
+    showTurnLoading(turn);
+    startThinkingTimer();
+    renderPanelState();
+    scrollThreadToEnd();
+
+    const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    try {
+      const response = await requestArticleAnswer(turn.payload, controller.signal);
+
+      if (requestSerial !== serial) return;
+      const { renderAiMarkdown } = await import('../lib/aiMarkdown');
+      if (requestSerial !== serial) return;
+
+      turn.answer = response.answer;
+      turn.error = '';
+      turn.fresh = false;
+      turn.reply.dataset.status = 'done';
+      turn.status.hidden = true;
+      turn.retry.hidden = true;
+      turn.markdown.innerHTML = renderAiMarkdown(response.answer);
+
+      // 한 번 답이 나왔으면 붙인 문장은 모두 놓아 준다. 다음 질문까지 끌고 가면
+      // 엉뚱한 문단에 묶인 채 대화가 이어진다.
+      clearAllSelections();
+      activeImages.length = 0;
+      renderPanelState();
+    } catch (caught) {
+      if (requestSerial !== serial) return;
+      turn.fresh = false;
+      showTurnError(turn, articleAskErrorMessage(caught));
+    } finally {
+      window.clearTimeout(timeout);
+      if (requestSerial === serial) {
+        requestController = null;
+        loading = false;
+        pendingTurn = null;
+        stopThinkingTimer();
+        renderPanelState();
+        scrollThreadToEnd();
+      }
+    }
+  }
+
+  async function submitQuestion(): Promise<void> {
+    if (!textarea || !prose || loading) return;
+    const question = textarea.value.trim();
+    if (!question) return;
 
     // 이 질문이 딛고 선 선택들. 답이 오면 놓아 주므로 여기서 붙잡아 둔다.
     const picked = activeSelections.slice();
@@ -811,64 +902,21 @@
       picked.map((piece) => piece.text).join('\n'),
       images.map((image) => image.preview),
     );
-    if (!turn) {
-      loading = false;
-      renderPanelState();
-      return;
-    }
-    pendingTurn = turn;
+    if (!turn) return;
+
+    // 다시 시도할 때 그대로 다시 보낸다 — 그때의 문맥·선택·이미지까지 같이.
+    turn.payload = {
+      title: readTitle(),
+      context: buildArticleConversationContext(
+        merged.context || buildArticleQuestionContext(prose, question, fallbackContext()),
+        history,
+      ),
+      selectedText: merged.selectedText,
+      images: images.map((image) => ({ data: image.data, mimeType: image.mimeType })),
+      question,
+    };
     textarea.value = '';
-    startThinkingTimer();
-    renderPanelState();
-    scrollThreadToEnd();
-
-    const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-    try {
-      const response = await requestArticleAnswer(
-        {
-          title: readTitle(),
-          context: buildArticleConversationContext(
-            merged.context || buildArticleQuestionContext(prose, question, fallbackContext()),
-            history,
-          ),
-          selectedText: merged.selectedText,
-          images: images.map((image) => ({ data: image.data, mimeType: image.mimeType })),
-          question,
-        },
-        controller.signal,
-      );
-
-      if (requestSerial !== serial) return;
-      const { renderAiMarkdown } = await import('../lib/aiMarkdown');
-      if (requestSerial !== serial) return;
-
-      turn.answer = response.answer;
-      turn.reply.dataset.status = 'done';
-      turn.status.hidden = true;
-      turn.markdown.innerHTML = renderAiMarkdown(response.answer);
-
-      // 한 번 답이 나왔으면 붙인 문장은 모두 놓아 준다. 다음 질문까지 끌고 가면
-      // 엉뚱한 문단에 묶인 채 대화가 이어진다.
-      clearAllSelections();
-      activeImages.length = 0;
-      renderPanelState();
-    } catch (caught) {
-      if (requestSerial !== serial) return;
-      turn.reply.dataset.status = 'error';
-      turn.status.hidden = false;
-      turn.label.textContent = articleAskErrorMessage(caught);
-    } finally {
-      window.clearTimeout(timeout);
-      if (requestSerial === serial) {
-        requestController = null;
-        loading = false;
-        pendingTurn = null;
-        stopThinkingTimer();
-        renderPanelState();
-        scrollThreadToEnd();
-      }
-    }
+    await runTurn(turn);
   }
 
   function inspectSelection(): void {
@@ -1785,6 +1833,38 @@
     padding-left: 9px;
     color: var(--text);
     font-size: 12px;
+  }
+
+  /* 오류 옆에서만 나오는 다시 시도. 같은 질문을 그대로 다시 보낸다. */
+  .article-ai-retry {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+    padding: 0;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+  }
+
+  .article-ai-retry[hidden] {
+    display: none;
+  }
+
+  .article-ai-retry:hover {
+    border-color: var(--text-dim);
+    background: var(--surface);
+    color: var(--accent-bright);
+  }
+
+  .article-ai-retry svg {
+    width: 12px;
+    height: 12px;
   }
 
   .article-ai-status-time {
