@@ -107,6 +107,7 @@
           tabindex="0"
         ></div>
 
+      <div class="article-ai-attachments" hidden>
       <aside class="article-ai-selection" aria-label="선택한 본문" hidden>
         <!-- 마우스를 올리면 무엇을 골랐는지 위로 펼친다 -->
         <div class="article-ai-picks"></div>
@@ -141,6 +142,7 @@
           </button>
         </span>
       </aside>
+      </div>
 
       <!-- 붙여넣은 이미지 한 장의 골격 -->
       <template class="article-ai-shot-template">
@@ -257,6 +259,7 @@
   const selectionCount = root?.querySelector<HTMLElement>('.article-ai-selection-count') ?? null;
   const selectionClear = root?.querySelector<HTMLButtonElement>('.article-ai-selection-clear') ?? null;
   const pickTemplate = root?.querySelector<HTMLTemplateElement>('.article-ai-pick-template') ?? null;
+  const attachments = root?.querySelector<HTMLElement>('.article-ai-attachments') ?? null;
   const imagesBox = root?.querySelector<HTMLElement>('.article-ai-images') ?? null;
   const shotsBox = root?.querySelector<HTMLElement>('.article-ai-shots') ?? null;
   const imageCount = root?.querySelector<HTMLElement>('.article-ai-image-count') ?? null;
@@ -387,6 +390,9 @@
     panel.toggleAttribute('data-has-selection', activeSelections.length > 0);
     renderSelectionChips();
     renderImageChips();
+    if (attachments) {
+      attachments.hidden = activeSelections.length === 0 && activeImages.length === 0;
+    }
 
     const hasTurns = turns.length > 0;
     panel.toggleAttribute('data-has-turns', hasTurns);
@@ -1422,14 +1428,26 @@
     무엇을 골랐는지는 마우스를 올렸을 때 위로 펼친다. 내용을 늘 펼쳐 두면
     입력 영역이 그만큼 줄어든다.
   */
-  .article-ai-selection {
-    position: relative;
+  /* 문장 칩과 이미지 칩은 한 줄에 나란히 선다. 세로로 쌓으면 입력 영역이 그만큼 줄어든다. */
+  .article-ai-attachments {
     display: flex;
     flex: 0 0 auto;
-    min-width: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
     border-top: 1px solid var(--border);
     background: var(--surface);
     padding: 10px 12px 0;
+  }
+
+  .article-ai-attachments[hidden] {
+    display: none;
+  }
+
+  .article-ai-selection {
+    position: relative;
+    display: flex;
+    min-width: 0;
   }
 
   .article-ai-selection-chip {
@@ -1464,13 +1482,13 @@
   .article-ai-picks {
     position: absolute;
     bottom: 100%;
-    left: 12px;
+    left: 0;
     display: none;
-    max-width: calc(100% - 24px);
+    max-width: min(100%, 420px);
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
   }
 
   .article-ai-selection.is-open .article-ai-picks,
@@ -1533,31 +1551,22 @@
   .article-ai-images {
     position: relative;
     display: flex;
-    flex: 0 0 auto;
     min-width: 0;
-    background: var(--surface);
-    padding: 8px 12px 0;
   }
 
   .article-ai-images[hidden] {
     display: none;
   }
 
-  /* 선택 칩이 없을 때는 이미지 줄이 입력 묶음의 첫 줄이 된다 */
-  .article-ai-selection[hidden] + .article-ai-images {
-    border-top: 1px solid var(--border);
-    padding-top: 10px;
-  }
-
   .article-ai-shots {
     position: absolute;
     bottom: 100%;
-    left: 12px;
+    left: 0;
     display: none;
-    max-width: calc(100% - 24px);
+    max-width: min(100%, 420px);
     flex-wrap: wrap;
     gap: 6px;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
   }
 
   .article-ai-images.is-open .article-ai-shots,
