@@ -182,13 +182,26 @@ export interface ArticleAskResponse {
   model: string;
 }
 
+/** 워커가 429와 함께 알려 주는 것. daily면 리셋 전까지 다시 시도해도 막힌다. */
+export interface ArticleAskErrorDetail {
+  message: string;
+  scope: 'daily' | 'burst' | '';
+  retryAfter: number;
+}
+
 export class ArticleAskHttpError extends Error {
   readonly status: number;
+  readonly detail: ArticleAskErrorDetail;
 
-  constructor(status: number) {
+  constructor(status: number, detail?: Partial<ArticleAskErrorDetail>) {
     super(`Article AI request failed with ${status}`);
     this.name = 'ArticleAskHttpError';
     this.status = status;
+    this.detail = {
+      message: detail?.message ?? '',
+      scope: detail?.scope ?? '',
+      retryAfter: detail?.retryAfter ?? 0,
+    };
   }
 }
 
@@ -738,7 +751,26 @@ export async function requestArticleAnswer(
     signal,
   });
 
-  if (!response.ok) throw new ArticleAskHttpError(response.status);
+  if (!response.ok) {
+    // 워커가 사람이 읽을 문구를 실어 보낸다. 상태 코드만으로 지어내지 말고 그것을 쓴다.
+    let detail: Partial<ArticleAskErrorDetail> | undefined;
+    try {
+      const failure = (await response.json()) as {
+        error?: unknown;
+        scope?: unknown;
+        retryAfter?: unknown;
+      } | null;
+      detail = {
+        message: typeof failure?.error === 'string' ? failure.error : '',
+        scope:
+          failure?.scope === 'daily' || failure?.scope === 'burst' ? failure.scope : '',
+        retryAfter: typeof failure?.retryAfter === 'number' ? failure.retryAfter : 0,
+      };
+    } catch {
+      detail = undefined;
+    }
+    throw new ArticleAskHttpError(response.status, detail);
+  }
 
   let data: unknown;
   try {
@@ -773,6 +805,9 @@ export function articleAskErrorMessage(error: unknown): string {
     return '답변이 조금 늦어지고 있어요. 잠시 후 다시 시도해 주세요.';
   }
   if (error instanceof ArticleAskHttpError) {
+    // 워커가 보낸 문구가 있으면 그대로 쓴다 — 하루치를 다 썼는지, 잠깐 몰렸는지는
+    // 거기서만 알 수 있고, 상태 코드만 보고 "잠시 후"라고 하면 거짓말이 된다.
+    if (error.detail.message) return error.detail.message;
     if (error.status === 429) return '질문이 잠시 몰렸어요. 잠시 후 다시 시도해 주세요.';
     if (error.status >= 500) return 'AI가 잠시 응답하지 못했어요. 잠시 후 다시 시도해 주세요.';
     return '질문을 전송하지 못했어요. 내용을 확인한 뒤 다시 시도해 주세요.';
@@ -781,4 +816,9 @@ export function articleAskErrorMessage(error: unknown): string {
     return '답변을 읽지 못했어요. 다시 한 번 질문해 주세요.';
   }
   return '네트워크 연결을 확인한 뒤 다시 시도해 주세요.';
+}
+
+/** 오늘 치를 다 쓴 경우. 다시 시도해도 리셋 전까지 막히므로 버튼을 감춘다. */
+export function isArticleQuotaExhausted(error: unknown): boolean {
+  return error instanceof ArticleAskHttpError && error.detail.scope === 'daily';
 }

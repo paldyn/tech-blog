@@ -207,6 +207,7 @@
 <script>
   import {
     articleAskErrorMessage,
+    isArticleQuotaExhausted,
     buildArticleConversationContext,
     buildArticleQuestionContext,
     buildArticleSelectionContext,
@@ -239,6 +240,7 @@
     /** 이 요청이 만든 차례인지. 새 질문이 끼어들면 답 없는 차례만 걷어낸다. */
     fresh: boolean;
     error: string;
+    exhausted: boolean;
   }
 
   interface ActiveSelection {
@@ -495,6 +497,7 @@
       payload: null,
       fresh: true,
       error: '',
+      exhausted: false,
     };
     retry.addEventListener('click', () => {
       if (loading || !turn.payload) return;
@@ -520,7 +523,7 @@
     // 답을 받지 못한 새 차례는 남겨 둘 이유가 없다 — 질문만 떠 있으면 실패로 읽힌다.
     // 다시 시도 중이던 차례는 이미 화면에 있던 것이므로 오류 상태로 되돌린다.
     if (pendingTurn?.fresh) dropTurn(pendingTurn);
-    else if (pendingTurn) showTurnError(pendingTurn, pendingTurn.error);
+    else if (pendingTurn) showTurnError(pendingTurn, pendingTurn.error, pendingTurn.exhausted);
     pendingTurn = null;
   }
 
@@ -818,14 +821,16 @@
     turn.markdown.replaceChildren();
   }
 
-  function showTurnError(turn: ConversationTurn, message: string): void {
+  function showTurnError(turn: ConversationTurn, message: string, exhausted = false): void {
     turn.error = message;
+    turn.exhausted = exhausted;
     turn.reply.dataset.status = 'error';
     turn.status.hidden = false;
     turn.label.textContent = message;
     turn.time.hidden = true;
     // 같은 질문을 다시 보낼 수 있게 한다 — 대개는 잠시 몰렸다가 풀린다.
-    turn.retry.hidden = !turn.payload;
+    // 다만 하루치를 다 썼으면 눌러도 리셋 전까지 막히므로 내놓지 않는다.
+    turn.retry.hidden = !turn.payload || exhausted;
   }
 
   /** 한 차례를 보낸다. 첫 질문도, 다시 시도도 이 길을 탄다. */
@@ -869,7 +874,7 @@
     } catch (caught) {
       if (requestSerial !== serial) return;
       turn.fresh = false;
-      showTurnError(turn, articleAskErrorMessage(caught));
+      showTurnError(turn, articleAskErrorMessage(caught), isArticleQuotaExhausted(caught));
     } finally {
       window.clearTimeout(timeout);
       if (requestSerial === serial) {

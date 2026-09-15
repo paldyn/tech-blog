@@ -4,6 +4,7 @@ import {
   ArticleAskHttpError,
   ArticleAskResponseError,
   articleAskErrorMessage,
+  isArticleQuotaExhausted,
   articleQuestionTokens,
   buildArticleConversationContext,
   combineArticleSelections,
@@ -345,5 +346,55 @@ describe('붙여넣은 이미지', () => {
   it('너무 큰 이미지는 버린다', () => {
     const huge = `data:image/png;base64,${'A'.repeat(MAX_PASTED_IMAGE_CHARS + 1)}`;
     expect(readImageAttachment(huge)).toBeNull();
+  });
+});
+
+
+describe('워커가 준 오류 문구', () => {
+  it('본문에 실린 문구를 상태 코드보다 앞세운다', () => {
+    const error = new ArticleAskHttpError(429, {
+      message: '오늘 쓸 수 있는 AI 질문을 다 썼어요. 내일 다시 시도해 주세요.',
+      scope: 'daily',
+      retryAfter: 0,
+    });
+    expect(articleAskErrorMessage(error)).toBe(
+      '오늘 쓸 수 있는 AI 질문을 다 썼어요. 내일 다시 시도해 주세요.',
+    );
+    expect(isArticleQuotaExhausted(error)).toBe(true);
+  });
+
+  it('문구가 없으면 예전처럼 상태 코드로 고른다', () => {
+    const error = new ArticleAskHttpError(429);
+    expect(articleAskErrorMessage(error)).toContain('질문이 잠시 몰렸어요');
+    expect(isArticleQuotaExhausted(error)).toBe(false);
+  });
+
+  it('잠깐 몰린 것은 하루치 소진으로 보지 않는다', () => {
+    const error = new ArticleAskHttpError(429, {
+      message: '질문이 잠시 몰렸어요. 31초 뒤에 다시 시도해 주세요.',
+      scope: 'burst',
+      retryAfter: 31,
+    });
+    expect(isArticleQuotaExhausted(error)).toBe(false);
+    expect(error.detail.retryAfter).toBe(31);
+  });
+
+  it('오류 본문을 읽어 상세로 실어 온다', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        new Response(
+          JSON.stringify({ error: '오늘 다 썼어요.', scope: 'daily', retryAfter: 0 }),
+          { status: 429, headers: { 'Content-Type': 'application/json' } },
+        ),
+      ),
+    );
+
+    await expect(
+      requestArticleAnswer({ title: 't', context: 'c', selectedText: '', question: 'q' }),
+    ).rejects.toMatchObject({
+      status: 429,
+      detail: { message: '오늘 다 썼어요.', scope: 'daily' },
+    });
   });
 });
