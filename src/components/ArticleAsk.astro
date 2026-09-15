@@ -505,6 +505,7 @@
     });
     turns.push(turn);
     thread.appendChild(element);
+    syncRetryButtons();
     return turn;
   }
 
@@ -512,6 +513,7 @@
     const index = turns.indexOf(turn);
     if (index >= 0) turns.splice(index, 1);
     turn.element.remove();
+    syncRetryButtons();
   }
 
   function abortRequest(): void {
@@ -821,6 +823,23 @@
     turn.markdown.replaceChildren();
   }
 
+  /**
+   * 다시 시도는 마지막 차례에만 둔다. 줄줄이 실패했을 때 모든 줄에 단추가 서면
+   * 어느 것을 눌러야 할지부터 고르게 되고, 위쪽 질문을 다시 보내면 대화 순서도 꼬인다.
+   * 하루치를 다 썼을 때도 내놓지 않는다 — 눌러도 리셋 전까지 막힌다.
+   */
+  function syncRetryButtons(): void {
+    const last = turns[turns.length - 1] ?? null;
+    for (const turn of turns) {
+      const offer =
+        turn === last &&
+        Boolean(turn.payload) &&
+        !turn.exhausted &&
+        turn.reply.dataset.status === 'error';
+      turn.retry.hidden = !offer;
+    }
+  }
+
   function showTurnError(turn: ConversationTurn, message: string, exhausted = false): void {
     turn.error = message;
     turn.exhausted = exhausted;
@@ -828,9 +847,7 @@
     turn.status.hidden = false;
     turn.label.textContent = message;
     turn.time.hidden = true;
-    // 같은 질문을 다시 보낼 수 있게 한다 — 대개는 잠시 몰렸다가 풀린다.
-    // 다만 하루치를 다 썼으면 눌러도 리셋 전까지 막히므로 내놓지 않는다.
-    turn.retry.hidden = !turn.payload || exhausted;
+    syncRetryButtons();
   }
 
   /** 한 차례를 보낸다. 첫 질문도, 다시 시도도 이 길을 탄다. */
@@ -863,14 +880,9 @@
       turn.fresh = false;
       turn.reply.dataset.status = 'done';
       turn.status.hidden = true;
-      turn.retry.hidden = true;
+      syncRetryButtons();
       turn.markdown.innerHTML = renderAiMarkdown(response.answer);
 
-      // 한 번 답이 나왔으면 붙인 문장은 모두 놓아 준다. 다음 질문까지 끌고 가면
-      // 엉뚱한 문단에 묶인 채 대화가 이어진다.
-      clearAllSelections();
-      activeImages.length = 0;
-      renderPanelState();
     } catch (caught) {
       if (requestSerial !== serial) return;
       turn.fresh = false;
@@ -920,7 +932,13 @@
       images: images.map((image) => ({ data: image.data, mimeType: image.mimeType })),
       question,
     };
+    // 보낸 순간 입력 묶음을 비운다 — 글자도 칩도. 실패해도 다시 시도는 그때 보낸
+    // payload를 그대로 쓰므로 붙잡아 둘 이유가 없다.
     textarea.value = '';
+    clearAllSelections();
+    activeImages.length = 0;
+    renderPanelState();
+
     await runTurn(turn);
   }
 
