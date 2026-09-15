@@ -931,6 +931,25 @@
       focusTextarea();
     });
 
+    // 칩과 펼친 목록 사이를 지날 때 잠깐 밖으로 나가도 닫히지 않게 유예를 둔다.
+    // 순수 :hover로 두면 그 틈에서 목록이 사라져 안의 ✕를 누를 수가 없다.
+    for (const holder of [selectionBox, imagesBox]) {
+      if (!holder) continue;
+      let closeTimer = 0;
+      const open = () => {
+        window.clearTimeout(closeTimer);
+        holder.classList.add('is-open');
+      };
+      const close = () => {
+        window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(() => holder.classList.remove('is-open'), 220);
+      };
+      holder.addEventListener('pointerenter', open);
+      holder.addEventListener('pointerleave', close);
+      holder.addEventListener('focusin', open);
+      holder.addEventListener('focusout', close);
+    }
+
     textarea.addEventListener('input', renderPanelState);
     textarea.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' || event.shiftKey || event.isComposing) return;
@@ -1444,7 +1463,7 @@
   /* 고른 문장들. 칩 위로 떠서 답변 영역을 밀지 않는다. */
   .article-ai-picks {
     position: absolute;
-    bottom: calc(100% - 4px);
+    bottom: 100%;
     left: 12px;
     display: none;
     max-width: calc(100% - 24px);
@@ -1454,7 +1473,7 @@
     padding-bottom: 8px;
   }
 
-  .article-ai-selection:hover .article-ai-picks,
+  .article-ai-selection.is-open .article-ai-picks,
   .article-ai-selection:focus-within .article-ai-picks {
     display: flex;
   }
@@ -1498,16 +1517,6 @@
     transition: opacity 150ms ease, background-color 150ms ease, color 150ms ease;
   }
 
-  /* 평소에는 개수만 보이고, 손이 닿으면 뗄 수 있는 ✕가 나타난다. */
-  .article-ai-selection-clear {
-    opacity: 0;
-  }
-
-  .article-ai-selection:hover .article-ai-selection-clear,
-  .article-ai-selection:focus-within .article-ai-selection-clear {
-    opacity: 1;
-  }
-
   .article-ai-selection-clear:hover,
   .article-ai-pick-clear:hover {
     background: var(--border);
@@ -1542,7 +1551,7 @@
 
   .article-ai-shots {
     position: absolute;
-    bottom: calc(100% - 4px);
+    bottom: 100%;
     left: 12px;
     display: none;
     max-width: calc(100% - 24px);
@@ -1551,7 +1560,7 @@
     padding-bottom: 8px;
   }
 
-  .article-ai-images:hover .article-ai-shots,
+  .article-ai-images.is-open .article-ai-shots,
   .article-ai-images:focus-within .article-ai-shots {
     display: flex;
   }
@@ -1595,13 +1604,7 @@
     padding: 0;
     color: var(--text-muted);
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 150ms ease, background-color 150ms ease, color 150ms ease;
-  }
-
-  .article-ai-images:hover .article-ai-images-clear,
-  .article-ai-images:focus-within .article-ai-images-clear {
-    opacity: 1;
+    transition: background-color 150ms ease, color 150ms ease;
   }
 
   .article-ai-images-clear:hover {
