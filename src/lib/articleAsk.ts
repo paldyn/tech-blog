@@ -2,6 +2,11 @@ export const ARTICLE_AI_ENDPOINT = 'https://paldyn-article-ai.dev21mo-508.worker
 
 export const MAX_ARTICLE_CONTEXT_CHARS = 7_000;
 export const MAX_SELECTED_TEXT_CHARS = 4_000;
+/* 붙여넣은 이미지. 워커가 인라인으로 실어 보내므로 여기서 미리 줄여 둔다. */
+export const MAX_PASTED_IMAGES = 4;
+export const MAX_PASTED_IMAGE_EDGE = 1_600;
+export const MAX_PASTED_IMAGE_CHARS = 2_600_000;
+export const PASTED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
 export const MAX_ARTICLE_ANSWER_CHARS = 60_000;
 /** 지난 대화가 문서 발췌 자리를 다 빼앗지 않도록 이력에 쓸 수 있는 몫. */
 export const MAX_CONVERSATION_CONTEXT_CHARS = 2_400;
@@ -168,6 +173,8 @@ export interface ArticleAskPayload {
   context: string;
   selectedText: string;
   question: string;
+  /** 붙여넣은 이미지. 워커가 인라인 블록으로 모델에 넘긴다. */
+  images?: { data: string; mimeType: string }[];
 }
 
 export interface ArticleAskResponse {
@@ -646,6 +653,75 @@ export function combineArticleSelections(
   }
 
   return { context: truncate(blocks.join('\n\n'), MAX_ARTICLE_CONTEXT_CHARS), selectedText };
+}
+
+/** 붙여넣어 딸려 갈 이미지 한 장. data는 base64 본문만 담는다. */
+export interface ArticleImageAttachment {
+  data: string;
+  mimeType: string;
+  name: string;
+  preview: string;
+}
+
+/** 붙여넣기·드롭에서 이미지 파일만 골라낸다. 스크린샷은 대개 png 한 장으로 온다. */
+export function pickPastedImages(files: readonly File[]): File[] {
+  return files.filter((file) => PASTED_IMAGE_TYPES.includes(file.type));
+}
+
+/** data URL 한 줄을 첨부 한 장으로 바꾼다. 규격을 벗어나면 버린다. */
+export function readImageAttachment(
+  dataUrl: string,
+  name = '붙여넣은 이미지',
+): ArticleImageAttachment | null {
+  const match = dataUrl.match(/^data:([^;,]+);base64,(.*)$/s);
+  if (!match) return null;
+
+  const mimeType = match[1].toLowerCase();
+  const data = match[2];
+  if (!PASTED_IMAGE_TYPES.includes(mimeType)) return null;
+  if (!data || data.length > MAX_PASTED_IMAGE_CHARS) return null;
+
+  return { data, mimeType, name, preview: dataUrl };
+}
+
+function fileToDataUrl(file: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+/**
+ * 스크린샷을 그대로 실으면 몇 MB가 된다. 긴 변 기준으로 줄이고 jpeg로 다시 인코딩한다.
+ * 애니메이션 gif는 첫 프레임만 남으므로 손대지 않고 원본을 쓴다.
+ * 어느 단계든 실패하면 원본 data URL로 물러선다 — 줄이기는 거들 뿐이다.
+ */
+export async function prepareArticleImage(file: File): Promise<ArticleImageAttachment | null> {
+  if (!PASTED_IMAGE_TYPES.includes(file.type)) return null;
+
+  const name = file.name || '붙여넣은 이미지';
+  if (file.type === 'image/gif') return readImageAttachment(await fileToDataUrl(file), name);
+
+  let bitmap: ImageBitmap | null = null;
+  try {
+    bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, MAX_PASTED_IMAGE_EDGE / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return readImageAttachment(await fileToDataUrl(file), name);
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+    return readImageAttachment(canvas.toDataURL('image/jpeg', 0.82), name);
+  } catch {
+    return readImageAttachment(await fileToDataUrl(file), name);
+  } finally {
+    bitmap?.close();
+  }
 }
 
 export async function requestArticleAnswer(

@@ -7,10 +7,13 @@ import {
   articleQuestionTokens,
   buildArticleConversationContext,
   combineArticleSelections,
+  pickPastedImages,
+  readImageAttachment,
   calculateArticleMobileViewport,
   calculateArticlePanelGeometry,
   MAX_ARTICLE_ANSWER_CHARS,
   MAX_ARTICLE_CONTEXT_CHARS,
+  MAX_PASTED_IMAGE_CHARS,
   MAX_SELECTED_TEXT_CHARS,
   MAX_CONVERSATION_ANSWER_CHARS,
   MAX_CONVERSATION_CONTEXT_CHARS,
@@ -313,5 +316,34 @@ describe('combineArticleSelections', () => {
     const { context, selectedText } = combineArticleSelections(many);
     expect(context.length).toBeLessThanOrEqual(MAX_ARTICLE_CONTEXT_CHARS);
     expect(selectedText.length).toBeLessThanOrEqual(MAX_SELECTED_TEXT_CHARS);
+  });
+});
+
+describe('붙여넣은 이미지', () => {
+  const asFile = (type: string) => new File(['x'], 'shot.png', { type });
+
+  it('이미지 파일만 골라낸다', () => {
+    const files = [asFile('image/png'), asFile('text/plain'), asFile('image/webp')];
+    expect(pickPastedImages(files).map((file) => file.type)).toEqual(['image/png', 'image/webp']);
+  });
+
+  it('data URL을 첨부로 바꾼다', () => {
+    const attachment = readImageAttachment('data:image/png;base64,AAAA', '캡처.png');
+    expect(attachment).toEqual({
+      data: 'AAAA',
+      mimeType: 'image/png',
+      name: '캡처.png',
+      preview: 'data:image/png;base64,AAAA',
+    });
+  });
+
+  it('허용하지 않는 형식은 버린다', () => {
+    expect(readImageAttachment('data:image/bmp;base64,AAAA')).toBeNull();
+    expect(readImageAttachment('그냥 문자열')).toBeNull();
+  });
+
+  it('너무 큰 이미지는 버린다', () => {
+    const huge = `data:image/png;base64,${'A'.repeat(MAX_PASTED_IMAGE_CHARS + 1)}`;
+    expect(readImageAttachment(huge)).toBeNull();
   });
 });
