@@ -131,7 +131,7 @@ Turborepo는 이전 빌드 결과를 캐시합니다. 소스가 변경되지 않
 
 ## 공유 설정 패키지
 
-```
+```text
 tooling/
   eslint-config/
     index.js

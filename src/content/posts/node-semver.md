@@ -17,7 +17,7 @@ draft: false
 
 ## SemVer 구조
 
-```
+```text
 MAJOR.MINOR.PATCH[-prerelease][+buildmetadata]
   2  .  1  .   0  - beta.1    + 20240501
 ```

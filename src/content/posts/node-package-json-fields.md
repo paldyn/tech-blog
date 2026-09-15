@@ -58,7 +58,7 @@ draft: false
 `exports`가 있으면 `main`/`module`을 덮어씁니다. **서브경로 exports**로 `import 'my-lib/internal'` 같은 내부 경로 접근을 차단할 수 있습니다.
 
 조건 우선순위 (왼쪽이 높음):
-```
+```text
 browser → import → require → default
 ```
 
