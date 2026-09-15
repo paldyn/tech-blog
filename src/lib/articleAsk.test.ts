@@ -5,10 +5,13 @@ import {
   ArticleAskResponseError,
   articleAskErrorMessage,
   articleQuestionTokens,
+  buildArticleConversationContext,
   calculateArticleMobileViewport,
   calculateArticlePanelGeometry,
   MAX_ARTICLE_ANSWER_CHARS,
   MAX_ARTICLE_CONTEXT_CHARS,
+  MAX_CONVERSATION_ANSWER_CHARS,
+  MAX_CONVERSATION_CONTEXT_CHARS,
   normalizeArticleText,
   normalizeSelectedArticleText,
   requestArticleAnswer,
@@ -200,5 +203,63 @@ describe('글 질문 API', () => {
     expect(articleAskErrorMessage(new DOMException('timed out', 'AbortError'))).toContain(
       '답변이 조금 늦어지고 있어요',
     );
+  });
+});
+
+describe('buildArticleConversationContext', () => {
+  it('지난 대화가 없으면 문서 발췌를 그대로 둔다', () => {
+    expect(buildArticleConversationContext('본문 발췌', [])).toBe('본문 발췌');
+  });
+
+  it('지난 대화를 문서 발췌 앞에 오래된 순서로 붙인다', () => {
+    const context = buildArticleConversationContext('본문 발췌', [
+      { question: '첫 질문', answer: '첫 답변' },
+      { question: '두 번째 질문', answer: '두 번째 답변' },
+    ]);
+
+    expect(context).toContain('[지난 대화]');
+    expect(context).toContain('[문서 발췌]');
+    expect(context).toContain('본문 발췌');
+    expect(context.indexOf('첫 질문')).toBeLessThan(context.indexOf('두 번째 질문'));
+    expect(context.indexOf('두 번째 질문')).toBeLessThan(context.indexOf('[문서 발췌]'));
+  });
+
+  it('질문이나 답변이 빈 차례는 건너뛴다', () => {
+    const context = buildArticleConversationContext('본문', [
+      { question: '  ', answer: '답변' },
+      { question: '질문', answer: '' },
+    ]);
+    expect(context).toBe('본문');
+  });
+
+  it('긴 답변은 잘라서 담는다', () => {
+    const answer = '가'.repeat(MAX_CONVERSATION_ANSWER_CHARS + 500);
+    const context = buildArticleConversationContext('본문', [{ question: '질문', answer }]);
+    const transcript = context.slice(0, context.indexOf('[문서 발췌]'));
+
+    expect(transcript.length).toBeLessThanOrEqual(MAX_CONVERSATION_CONTEXT_CHARS + 40);
+    expect(context).toContain('…');
+  });
+
+  it('이력이 길어도 예산을 넘기지 않고 최신 대화를 남긴다', () => {
+    const history = Array.from({ length: 12 }, (_, index) => ({
+      question: `질문${index}`,
+      answer: '나'.repeat(600),
+    }));
+    const context = buildArticleConversationContext('본문 발췌', history);
+
+    expect(context.length).toBeLessThanOrEqual(MAX_ARTICLE_CONTEXT_CHARS);
+    expect(context).toContain('질문11');
+    expect(context).not.toContain('질문0\n');
+  });
+
+  it('전체 길이가 상한을 넘으면 문서 발췌 쪽을 줄인다', () => {
+    const context = buildArticleConversationContext('다'.repeat(MAX_ARTICLE_CONTEXT_CHARS), [
+      { question: '질문', answer: '답변' },
+    ]);
+
+    expect(context.length).toBeLessThanOrEqual(MAX_ARTICLE_CONTEXT_CHARS);
+    expect(context).toContain('[지난 대화]');
+    expect(context).toContain('다다다');
   });
 });

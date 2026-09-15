@@ -3,6 +3,11 @@ export const ARTICLE_AI_ENDPOINT = 'https://paldyn-article-ai.dev21mo-508.worker
 export const MAX_ARTICLE_CONTEXT_CHARS = 7_000;
 export const MAX_SELECTED_TEXT_CHARS = 4_000;
 export const MAX_ARTICLE_ANSWER_CHARS = 60_000;
+/** 지난 대화가 문서 발췌 자리를 다 빼앗지 않도록 이력에 쓸 수 있는 몫. */
+export const MAX_CONVERSATION_CONTEXT_CHARS = 2_400;
+export const MAX_CONVERSATION_ANSWER_CHARS = 700;
+export const MAX_CONVERSATION_TURNS = 6;
+const ARTICLE_SECTION_GAP = '\n\n[문서 발췌]\n';
 
 const MAX_CONTEXT_BLOCKS = 8;
 const MAX_BLOCK_CHARS = 1_600;
@@ -490,6 +495,49 @@ export function buildArticleQuestionContext(
     return truncate(normalizeArticleText(fallback), MAX_ARTICLE_CONTEXT_CHARS);
   }
   return selectRelevantArticleContext(blocks, question, focusBlockIndex(blocks));
+}
+
+/** 한 번 주고받은 질문과 답변. 다음 질문에 문맥으로 함께 보낸다. */
+export interface ArticleConversationEntry {
+  question: string;
+  answer: string;
+}
+
+/**
+ * 워커는 대화 이력을 받는 자리가 따로 없고 context 한 덩어리만 받는다. 그래서
+ * 문서 발췌 앞에 지난 대화를 붙여 "이어지는 질문"을 이해하게 한다.
+ *
+ * 문서 발췌 자리를 다 빼앗기면 정작 근거가 사라지므로 이력은 전체 예산의
+ * 일부까지만 쓰고, 긴 답변은 앞부분만 남긴다. 최신 대화부터 담다가 예산이
+ * 차면 거기서 끊는다 — 방금 나눈 말이 가장 많이 쓰인다.
+ */
+export function buildArticleConversationContext(
+  articleContext: string,
+  history: readonly ArticleConversationEntry[],
+): string {
+  if (history.length === 0) return articleContext;
+
+  const kept: string[] = [];
+  let used = 0;
+
+  for (const entry of history.slice(-MAX_CONVERSATION_TURNS).reverse()) {
+    const question = normalizeArticleText(entry.question);
+    const answer = truncate(normalizeArticleText(entry.answer), MAX_CONVERSATION_ANSWER_CHARS);
+    if (!question || !answer) continue;
+
+    const block = `Q. ${question}\nA. ${answer}`;
+    if (used + block.length > MAX_CONVERSATION_CONTEXT_CHARS) break;
+    used += block.length;
+    kept.unshift(block);
+  }
+
+  if (kept.length === 0) return articleContext;
+
+  const transcript = `[지난 대화]\n${kept.join('\n\n')}`;
+  const room = MAX_ARTICLE_CONTEXT_CHARS - transcript.length - ARTICLE_SECTION_GAP.length;
+  const body = truncate(articleContext, Math.max(0, room));
+
+  return body ? `${transcript}${ARTICLE_SECTION_GAP}${body}` : transcript;
 }
 
 function selectionRect(range: Range): DOMRect | null {
