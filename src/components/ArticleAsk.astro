@@ -107,10 +107,14 @@
           tabindex="0"
         ></div>
 
-      <aside class="article-ai-selection" aria-label="선택한 본문" hidden>
+      <aside class="article-ai-selection" aria-label="선택한 본문" hidden></aside>
+
+      <!-- 붙인 문장 하나의 골격. 스크립트가 만든 노드에는 스코프 속성이 붙지 않는다. -->
+      <template class="article-ai-chip-template">
         <span class="article-ai-selection-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M17 6H3"></path><path d="M21 12H8"></path><path d="M21 18H8"></path><path d="M3 12v6"></path>
+            <path d="m9 11-6 6v3h9l3-3"></path>
+            <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path>
           </svg>
           <span class="article-ai-selection-text"></span>
           <button type="button" class="article-ai-selection-clear" aria-label="선택 해제" title="선택 해제">
@@ -119,7 +123,7 @@
             </svg>
           </button>
         </span>
-      </aside>
+      </template>
 
       <form class="article-ai-form" style="height: 170px">
         <label for="article-ai-question" class="sr-only">현재 글에 질문하기</label>
@@ -157,6 +161,7 @@
     buildArticleConversationContext,
     buildArticleQuestionContext,
     buildArticleSelectionContext,
+    combineArticleSelections,
     calculateArticleMobileViewport,
     calculateArticlePanelGeometry,
     captureArticleTextSelection,
@@ -203,8 +208,7 @@
   const closeButton = root?.querySelector<HTMLButtonElement>('.article-ai-close') ?? null;
   const content = root?.querySelector<HTMLElement>('.article-ai-content') ?? null;
   const selectionBox = root?.querySelector<HTMLElement>('.article-ai-selection') ?? null;
-  const selectionQuote = selectionBox?.querySelector<HTMLElement>('.article-ai-selection-text') ?? null;
-  const selectionClear = root?.querySelector<HTMLButtonElement>('.article-ai-selection-clear') ?? null;
+  const chipTemplate = root?.querySelector<HTMLTemplateElement>('.article-ai-chip-template') ?? null;
   const emptyState = root?.querySelector<HTMLElement>('.article-ai-empty') ?? null;
   const thread = root?.querySelector<HTMLOListElement>('.article-ai-thread') ?? null;
   const resetButton = root?.querySelector<HTMLButtonElement>('.article-ai-reset') ?? null;
@@ -216,7 +220,7 @@
 
   let isOpen = false;
   let loading = false;
-  let activeSelection: ActiveSelection | null = null;
+  const activeSelections: ActiveSelection[] = [];
   let selectionPrompt: ArticleTextSelection | null = null;
   const turns: ConversationTurn[] = [];
   let pendingTurn: ConversationTurn | null = null;
@@ -258,16 +262,34 @@
     );
   }
 
+  /** 붙인 문장마다 칩 하나. 개수 제한은 두지 않는다 — 넘치면 줄바꿈으로 쌓인다. */
+  function renderSelectionChips(): void {
+    if (!selectionBox || !chipTemplate) return;
+    selectionBox.hidden = activeSelections.length === 0;
+    selectionBox.replaceChildren();
+
+    activeSelections.forEach((selection, index) => {
+      const chip = chipTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
+      if (!chip) return;
+      // 칩은 한 줄이므로 줄바꿈은 공백으로 눕힌다. 자르는 일은 CSS가 맡는다.
+      const label = selection.text.replace(/\s+/g, ' ').trim();
+      const text = chip.querySelector<HTMLElement>('.article-ai-selection-text');
+      if (text) {
+        text.textContent = label;
+        text.title = label;
+      }
+      chip
+        .querySelector<HTMLButtonElement>('.article-ai-selection-clear')
+        ?.addEventListener('click', () => clearSelectionAt(index));
+      selectionBox.appendChild(chip);
+    });
+  }
+
   function renderPanelState(): void {
     if (!panel || !content || !textarea || !submitButton) return;
 
-    panel.toggleAttribute('data-has-selection', Boolean(activeSelection));
-    if (selectionBox && selectionQuote) {
-      selectionBox.hidden = !activeSelection;
-      const picked = activeSelection ? activeSelection.text.replace(/\s+/g, ' ').trim() : '';
-      selectionQuote.textContent = picked;
-      selectionQuote.title = picked;
-    }
+    panel.toggleAttribute('data-has-selection', activeSelections.length > 0);
+    renderSelectionChips();
 
     const hasTurns = turns.length > 0;
     panel.toggleAttribute('data-has-turns', hasTurns);
@@ -614,24 +636,33 @@
     const wasOpen = isOpen;
     const prompt = selectionPrompt;
     abortRequest();
-    activeSelection = {
-      context: buildArticleSelectionContext(prose, prompt.range, prompt.selectedText),
-      text: prompt.selectedText,
-    };
+    // 이미 붙인 문장을 다시 고르면 칩만 늘고 문맥은 그대로다 — 한 번만 둔다.
+    const already = activeSelections.some((piece) => piece.text === prompt.selectedText);
+    if (!already) {
+      activeSelections.push({
+        context: buildArticleSelectionContext(prose, prompt.range, prompt.selectedText),
+        text: prompt.selectedText,
+      });
+    }
     selectionPrompt = null;
-    if (textarea) textarea.value = '';
     renderSelectionPrompt();
     renderPanelState();
     openPanel(wasOpen ? returnFocus : selectionButton);
     focusTextarea();
   }
 
-  function clearActiveSelection(): void {
-    if (!activeSelection) return;
+  function clearSelectionAt(index: number): void {
+    if (index < 0 || index >= activeSelections.length) return;
     abortRequest();
-    activeSelection = null;
+    activeSelections.splice(index, 1);
     renderPanelState();
     focusTextarea();
+  }
+
+  function clearAllSelections(): void {
+    if (activeSelections.length === 0) return;
+    activeSelections.length = 0;
+    renderPanelState();
   }
 
   async function submitQuestion(): Promise<void> {
@@ -646,14 +677,15 @@
     requestController = controller;
     loading = true;
 
-    // 이 질문이 딛고 선 선택 본문. 답이 오면 놓아 주므로 여기서 붙잡아 둔다.
-    const selection = activeSelection;
+    // 이 질문이 딛고 선 선택들. 답이 오면 놓아 주므로 여기서 붙잡아 둔다.
+    const picked = activeSelections.slice();
+    const merged = combineArticleSelections(picked);
     // 답변을 마친 차례만 문맥으로 보낸다. 실패한 차례를 넣으면 모델이 빈 답을 이어받는다.
     const history: ArticleConversationEntry[] = turns
       .filter((turn) => turn.answer)
       .map((turn) => ({ question: turn.question, answer: turn.answer }));
 
-    const turn = appendTurn(question, selection?.text ?? '');
+    const turn = appendTurn(question, picked.map((piece) => piece.text).join('\n'));
     if (!turn) {
       loading = false;
       renderPanelState();
@@ -672,10 +704,10 @@
         {
           title: readTitle(),
           context: buildArticleConversationContext(
-            selection?.context ?? buildArticleQuestionContext(prose, question, fallbackContext()),
+            merged.context || buildArticleQuestionContext(prose, question, fallbackContext()),
             history,
           ),
-          selectedText: selection?.text ?? '',
+          selectedText: merged.selectedText,
           question,
         },
         controller.signal,
@@ -690,9 +722,9 @@
       turn.status.hidden = true;
       turn.markdown.innerHTML = renderAiMarkdown(response.answer);
 
-      // 한 번 답이 나왔으면 선택은 놓아 준다. 다음 질문까지 끌고 가면 엉뚱한
-      // 문단에 묶인 채 대화가 이어진다.
-      if (selection && activeSelection === selection) activeSelection = null;
+      // 한 번 답이 나왔으면 붙인 문장은 모두 놓아 준다. 다음 질문까지 끌고 가면
+      // 엉뚱한 문단에 묶인 채 대화가 이어진다.
+      clearAllSelections();
     } catch (caught) {
       if (requestSerial !== serial) return;
       turn.reply.dataset.status = 'error';
@@ -737,8 +769,7 @@
     closeButton &&
     form &&
     resizeHandle &&
-    textarea &&
-    selectionClear
+    textarea
   ) {
     document.body.classList.add('has-article-ai');
     renderPanelState();
@@ -749,7 +780,7 @@
     });
 
     trigger.addEventListener('click', () => {
-      activeSelection = null;
+      activeSelections.length = 0;
       selectionPrompt = null;
       renderSelectionPrompt();
       renderPanelState();
@@ -758,7 +789,6 @@
     selectionButton.addEventListener('pointerdown', (event) => event.preventDefault());
     selectionButton.addEventListener('click', applySelection);
     closeButton.addEventListener('click', closePanel);
-    selectionClear.addEventListener('click', clearActiveSelection);
 
     textarea.addEventListener('input', renderPanelState);
     textarea.addEventListener('keydown', (event) => {
@@ -1236,9 +1266,15 @@
     display: flex;
     flex: 0 0 auto;
     min-width: 0;
+    flex-wrap: wrap;
+    gap: 6px;
     border-top: 1px solid var(--border);
     background: var(--surface);
     padding: 10px 12px 0;
+    /* 많이 붙이면 이 영역만 스크롤한다 — 입력창까지 밀어내지 않는다. */
+    max-height: 96px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .article-ai-selection-chip {

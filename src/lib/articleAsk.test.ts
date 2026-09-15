@@ -6,10 +6,12 @@ import {
   articleAskErrorMessage,
   articleQuestionTokens,
   buildArticleConversationContext,
+  combineArticleSelections,
   calculateArticleMobileViewport,
   calculateArticlePanelGeometry,
   MAX_ARTICLE_ANSWER_CHARS,
   MAX_ARTICLE_CONTEXT_CHARS,
+  MAX_SELECTED_TEXT_CHARS,
   MAX_CONVERSATION_ANSWER_CHARS,
   MAX_CONVERSATION_CONTEXT_CHARS,
   normalizeArticleText,
@@ -261,5 +263,55 @@ describe('buildArticleConversationContext', () => {
     expect(context.length).toBeLessThanOrEqual(MAX_ARTICLE_CONTEXT_CHARS);
     expect(context).toContain('[지난 대화]');
     expect(context).toContain('다다다');
+  });
+});
+
+describe('combineArticleSelections', () => {
+  it('하나뿐이면 번호를 붙이지 않는다', () => {
+    const { context, selectedText } = combineArticleSelections([
+      { context: '문단 문맥', text: '고른 문장' },
+    ]);
+    expect(selectedText).toBe('고른 문장');
+    expect(context).toBe('문단 문맥');
+  });
+
+  it('둘 이상이면 번호를 매겨 잇는다', () => {
+    const { selectedText } = combineArticleSelections([
+      { context: 'A', text: '첫 문장' },
+      { context: 'B', text: '둘째 문장' },
+    ]);
+    expect(selectedText).toBe('1) 첫 문장\n\n2) 둘째 문장');
+  });
+
+  it('같은 문단에서 고른 것이면 문맥을 한 번만 싣는다', () => {
+    const { context } = combineArticleSelections([
+      { context: '같은 문단', text: '첫 문장' },
+      { context: '같은 문단', text: '둘째 문장' },
+      { context: '다른 문단', text: '셋째 문장' },
+    ]);
+    expect(context).toBe('같은 문단\n\n다른 문단');
+  });
+
+  it('빈 선택은 건너뛴다', () => {
+    const { context, selectedText } = combineArticleSelections([
+      { context: '  ', text: '   ' },
+      { context: '문맥', text: '문장' },
+    ]);
+    expect(selectedText).toBe('문장');
+    expect(context).toBe('문맥');
+  });
+
+  it('아무것도 없으면 빈 값을 돌려준다', () => {
+    expect(combineArticleSelections([])).toEqual({ context: '', selectedText: '' });
+  });
+
+  it('길게 모아도 상한을 넘기지 않는다', () => {
+    const many = Array.from({ length: 40 }, (_, index) => ({
+      context: `문맥${index} ` + '가'.repeat(400),
+      text: '나'.repeat(300),
+    }));
+    const { context, selectedText } = combineArticleSelections(many);
+    expect(context.length).toBeLessThanOrEqual(MAX_ARTICLE_CONTEXT_CHARS);
+    expect(selectedText.length).toBeLessThanOrEqual(MAX_SELECTED_TEXT_CHARS);
   });
 });

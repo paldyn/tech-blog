@@ -606,6 +606,48 @@ export function buildArticleSelectionContext(
   return selectSurroundingArticleContext(blocks, selectedIndices, selectedText);
 }
 
+/** 패널에 붙어 있는 선택 하나. 문맥과 보여 줄 원문을 함께 들고 다닌다. */
+export interface ArticleSelectionPiece {
+  context: string;
+  text: string;
+}
+
+/**
+ * 여러 문장을 골라 붙였을 때 요청 한 건으로 합친다. 워커는 선택 본문도 문맥도
+ * 한 덩어리씩만 받으므로 여기서 이어 붙인다.
+ *
+ * 둘 이상이면 번호를 매긴다 — 모델이 "첫 번째 문장"처럼 짚어 답할 수 있어야 한다.
+ * 같은 문단에서 여러 문장을 고르면 문맥이 겹치므로 같은 덩어리는 한 번만 싣는다.
+ */
+export function combineArticleSelections(
+  selections: readonly ArticleSelectionPiece[],
+): { context: string; selectedText: string } {
+  const texts = selections
+    .map((piece) => normalizeSelectedArticleText(piece.text))
+    .filter(Boolean);
+
+  const selectedText = truncate(
+    texts.length > 1
+      ? texts.map((text, index) => `${index + 1}) ${text}`).join('\n\n')
+      : (texts[0] ?? ''),
+    MAX_SELECTED_TEXT_CHARS,
+  );
+
+  const seen = new Set<string>();
+  const blocks: string[] = [];
+  let used = 0;
+  for (const piece of selections) {
+    const context = piece.context.trim();
+    if (!context || seen.has(context)) continue;
+    seen.add(context);
+    if (used + context.length > MAX_ARTICLE_CONTEXT_CHARS) break;
+    used += context.length + 2;
+    blocks.push(context);
+  }
+
+  return { context: truncate(blocks.join('\n\n'), MAX_ARTICLE_CONTEXT_CHARS), selectedText };
+}
+
 export async function requestArticleAnswer(
   payload: ArticleAskPayload,
   signal?: AbortSignal,
