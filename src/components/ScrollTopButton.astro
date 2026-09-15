@@ -85,14 +85,14 @@ const { hasArticleAsk = false } = Astro.props;
     bottom: 80px;
   }
 
-  /* 측면 패널이 열리면 그 왼쪽 옆으로 비킨다. 반대편 구석으로 던지면 방금까지
-     오른쪽 아래에 있던 버튼을 화면을 가로질러 다시 찾아야 한다.
-     384px는 패널이 가질 수 있는 최대 폭(ARTICLE_PANEL_MAX_WIDTH)이라 어떤 폭에서도
-     겹치지 않는다. 패널이 자기 폭을 body에 알려 주면 그때 딱 맞게 붙는다.
-     16px(패널 여백) + 패널 폭 + 12px(간격). */
+  /* 측면 패널이 열리면 그 위에 쌓는다 (ai-lab과 같은 처리). 같은 세로줄에 있어야
+     방금까지 오른쪽 아래에 있던 버튼을 눈으로 다시 찾지 않는다.
+     값은 패널 자신의 높이 식 + 패널 아래 여백 16px + 사이 간격 16px이다. */
   :global(body[data-article-ai-open][data-article-ai-placement='right']) .scroll-top.has-article-ai {
-    right: calc(var(--article-ai-panel-width, 384px) + 28px);
-    bottom: 24px;
+    right: 24px;
+    bottom: calc(
+      min(620px, calc(100dvh - var(--header-h) - var(--article-titlebar-h, 48px) - 32px)) + 32px
+    );
     left: auto;
   }
   /* 중앙 시트는 좌우를 거의 채울 수 있으므로 패널 위에 둡니다. */
