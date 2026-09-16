@@ -156,9 +156,8 @@ SELECT jsonb_agg(to_jsonb(u))
 FROM (SELECT id, name FROM users LIMIT 5) u;
 
 -- 객체로 집계
-SELECT json_object_agg(name, score) AS leaderboard
-FROM player_score
-ORDER BY score DESC;
+SELECT json_object_agg(name, score ORDER BY score DESC) AS leaderboard
+FROM player_score;
 ```
 
 ## API 응답 캐싱 패턴

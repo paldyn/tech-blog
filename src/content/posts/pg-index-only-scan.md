@@ -106,8 +106,8 @@ SELECT count(*) FROM pg_visibility('orders') WHERE all_visible;
 ```sql
 -- 인덱스별 IOS 효과 측정
 SELECT
-    s.relname                                  AS table,
-    s.indexrelname                             AS index,
+    s.relname                                  AS table_name,
+    s.indexrelname                             AS index_name,
     s.idx_scan,
     s.idx_tup_read,
     s.idx_tup_fetch,

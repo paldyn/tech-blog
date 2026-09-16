@@ -17,7 +17,7 @@ draft: false
 
 PostgreSQL의 잠금은 크게 세 계층으로 나뉜다.
 
-1. **테이블 수준 락** — LWLock(Lightweight Lock)을 사용하며 SQL 문마다 자동 획득
+1. **테이블 수준 락** — 헤비웨이트 락(lock manager)으로 관리되며 SQL 문마다 자동 획득
 2. **행 수준 락** — 힙 튜플 헤더에 기록, MVCC와 연동
 3. **Advisory 락** — 애플리케이션이 임의 키로 잠금 설정
 
@@ -100,7 +100,9 @@ SELECT pg_advisory_unlock(42);
 -- log_lock_waits = on
 
 -- 락 대기 그래프 (blocker/blocked PID 쌍)
-SELECT blocking_pids, pid, query
+SELECT pid,
+       pg_blocking_pids(pid) AS blocking_pids,
+       query
 FROM   pg_stat_activity
 WHERE  cardinality(pg_blocking_pids(pid)) > 0;
 ```

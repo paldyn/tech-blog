@@ -104,10 +104,10 @@ SELECT gin_clean_pending_list('idx_payload'::regclass);
 
 ```sql
 -- 인덱스 크기 확인
-SELECT indexname,
+SELECT indexrelname AS index_name,
        pg_size_pretty(pg_relation_size(indexrelid)) AS idx_size
 FROM pg_stat_user_indexes
-WHERE tablename = 'user_profile';
+WHERE relname = 'user_profile';
 
 -- GIN pending list 크기
 SELECT relname,

@@ -49,15 +49,15 @@ REFRESH MATERIALIZED VIEW mv_daily_sales;
 ### 전체 갱신 vs CONCURRENTLY
 
 ```sql
--- 전체 갱신: ExclusiveLock, 갱신 중 조회 차단됨
+-- 전체 갱신: AccessExclusiveLock, 갱신 중 조회 차단됨
 REFRESH MATERIALIZED VIEW mv_daily_sales;
 
--- CONCURRENTLY: AccessShareLock만 획득, 조회 차단 없음
+-- CONCURRENTLY: ExclusiveLock만 획득, 조회 차단 없음
 -- 단, 유니크 인덱스가 반드시 존재해야 함
 REFRESH MATERIALIZED VIEW CONCURRENTLY mv_daily_sales;
 ```
 
-`CONCURRENTLY` 없이 REFRESH하면 테이블 수준의 ExclusiveLock이 걸려 조회가 블로킹됩니다. 운영 중인 시스템에서는 `CONCURRENTLY`를 기본으로 사용해야 하며, 이를 위해 유니크 인덱스가 필요합니다.
+`CONCURRENTLY` 없이 REFRESH하면 테이블 수준의 AccessExclusiveLock이 걸려 조회가 블로킹됩니다. 운영 중인 시스템에서는 `CONCURRENTLY`를 기본으로 사용해야 하며, 이를 위해 유니크 인덱스가 필요합니다.
 
 ```sql
 -- CONCURRENTLY를 위한 유니크 인덱스
