@@ -34,7 +34,7 @@ SELECT to_tsvector('english', 'PostgreSQL is running fast and efficiently');
 -- "is", "and" 불용어 제거, "running"→"run" 어간 추출
 ```
 
-각 렉심 뒤의 숫자는 원문에서의 위치다. `A:1 B:2` 형식에서 A, B는 가중치(A=가장 높음, D=가장 낮음)다.
+각 렉심 뒤의 숫자는 원문에서의 위치다. 위치 뒤에 `'word':1A`처럼 붙는 문자가 가중치(A=가장 높음, D=가장 낮음)이며, `setweight()`로 지정한다.
 
 ## 전문 검색 파이프라인
 

@@ -21,8 +21,8 @@ GiST Internal Node의 키는 자식 노드의 키를 **보수적으로 포함(Un
 -- GiST 인덱스는 오퍼레이터 클래스를 명시하거나 기본값 사용
 -- 범위 타입 기본 오퍼레이터 클래스: range_ops
 CREATE INDEX idx_reservations_dur
-  ON reservations(duration)
-  USING gist;
+  ON reservations
+  USING gist (duration);
 
 -- 검색 연산자 (GiST가 지원하는 범위 연산자)
 -- && : 겹침    @> : 포함    <@ : 포함됨
@@ -110,10 +110,10 @@ GiST의 `distance` 콜백을 구현한 오퍼레이터 클래스는 KNN(K-Neares
 
 ```sql
 -- PostGIS KNN: 서울 시청에서 가장 가까운 매장 5개
-SELECT name, ST_Distance(loc, ref) AS dist
-FROM   stores,
-       ST_MakePoint(126.977, 37.566)::geometry AS ref
-ORDER  BY loc <-> ref   -- <-> 연산자: GiST distance 활용
+SELECT s.name, ST_Distance(s.loc, r.ref) AS dist
+FROM   stores s,
+       LATERAL (SELECT ST_SetSRID(ST_MakePoint(126.977, 37.566), 4326) AS ref) r
+ORDER  BY s.loc <-> r.ref   -- <-> 연산자: GiST distance 활용
 LIMIT  5;
 -- EXPLAIN에서 Index Scan with ORDER BY 확인 가능
 ```

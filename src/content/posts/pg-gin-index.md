@@ -51,7 +51,7 @@ GIN은 INSERT 성능을 높이기 위해 **fastupdate** 모드를 제공한다. 
 
 ```sql
 -- fastupdate 비활성화 (배치 로드 후 권장)
-CREATE INDEX idx_tags ON articles(tags) USING gin
+CREATE INDEX idx_tags ON articles USING gin (tags)
   WITH (fastupdate = off);
 
 -- 이미 생성된 인덱스 옵션 변경
@@ -61,12 +61,13 @@ ALTER INDEX idx_tags SET (fastupdate = on);
 SELECT gin_clean_pending_list('idx_tags');
 
 -- Pending List 크기 확인
-SELECT indexrelid::regclass, pg_size_pretty(pendingPages * 8192::bigint)
-FROM   pg_index
-JOIN   (SELECT indexrelid, pendingPages
-        FROM   pgstatginindex(oid)
-        FROM   pg_index WHERE indisvalid) AS s
-ON     pg_index.indexrelid = s.indexrelid;
+SELECT i.indexrelid::regclass                       AS index_name,
+       pg_size_pretty(s.pending_pages * 8192::bigint) AS pending_size
+FROM   pg_index i
+JOIN   pg_class c ON c.oid = i.indexrelid
+                 AND c.relam = (SELECT oid FROM pg_am WHERE amname = 'gin'),
+LATERAL pgstatginindex(i.indexrelid) AS s
+WHERE  i.indisvalid;
 ```
 
 ## 배열과 JSONB GIN 인덱스

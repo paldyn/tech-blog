@@ -85,15 +85,16 @@ SELECT stxname,
 FROM   pg_statistic_ext
 WHERE  stxrelid = 'users'::regclass;
 
--- 수집된 통계 내용 (PG14+ pg_stats_ext 뷰)
+-- 수집된 통계 내용 (PG12+ pg_stats_ext 뷰)
 SELECT *
 FROM   pg_stats_ext
 WHERE  statistics_name = 'stat_city_country';
 
 -- dependencies 내용 직접 확인
-SELECT stxddinherit, stxddependencies
-FROM   pg_statistic_ext_data
-WHERE  stxoid = 'stat_city_country'::regclass;
+SELECT d.stxddependencies
+FROM   pg_statistic_ext_data d
+JOIN   pg_statistic_ext e ON e.oid = d.stxoid
+WHERE  e.stxname = 'stat_city_country';
 ```
 
 ![확장 통계 조회 및 활용 확인](/assets/posts/pg-extended-statistics-query.svg)
