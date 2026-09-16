@@ -64,7 +64,7 @@ RESET work_mem;
 
 `work_mem`은 **쿼리 하나당** 이 금액이 아니라 **노드 하나당** 이 금액이다. 복잡한 쿼리는 여러 정렬/해시 노드를 가질 수 있고, 병렬 작업자(`max_parallel_workers_per_gather`)가 추가되면 실제 소비는:
 
-```
+```text
 실제 work_mem 소비 ≈ work_mem × 노드 수 × 병렬 작업자 수
 ```
 
@@ -107,7 +107,7 @@ SELECT pg_terminate_backend(12345);
 
 ## max_connections 설계
 
-```
+```text
 max_connections 공식 (경험칙):
   여유 RAM(GB) × 100 / (work_mem MB)
 

@@ -1,6 +1,6 @@
 ---
 title: "PostgreSQL B-Tree 인덱스 내부 구조"
-description: "PostgreSQL B-Tree 인덱스의 Meta Page → Root → Branch → Leaf 계층 구조, 8KB 페이지 레이아웃(PageHeader, ItemId Array, BTPageOpaqueData), 페이지 분할과 fill_factor의 관계, VACUUM이 Dead 인덱스 튜플을 정리하는 방식을 심층 분석합니다."
+description: "PostgreSQL B-Tree 인덱스의 Meta Page → Root → Branch → Leaf 계층 구조, 8KB 페이지 레이아웃(PageHeader, ItemId Array, BTPageOpaqueData), 페이지 분할과 fillfactor의 관계, VACUUM이 Dead 인덱스 튜플을 정리하는 방식을 심층 분석합니다."
 author: "PALDYN Team"
 pubDate: "2026-05-13"
 archiveOrder: 6
@@ -41,7 +41,7 @@ LIMIT  10;
 
 모든 B-Tree 페이지는 PostgreSQL의 표준 8KB 페이지 형식을 따른다.
 
-```
+```text
 [PageHeader 24B][ItemId Array][Free Space][Items...][Special Space]
 ```
 
@@ -63,23 +63,23 @@ SELECT * FROM pgstatindex('accounts_pkey');
 -- leaf_fragmentation: 리프 페이지 단편화 %
 ```
 
-![B-Tree 페이지 레이아웃과 fill_factor](/assets/posts/pg-btree-internals-page-layout.svg)
+![B-Tree 페이지 레이아웃과 fillfactor](/assets/posts/pg-btree-internals-page-layout.svg)
 
-## fill_factor와 페이지 분할
+## fillfactor와 페이지 분할
 
-`fill_factor`(기본 90%)는 새 인덱스 행을 삽입할 때 페이지를 어느 수준까지 채울지 결정한다. 10%의 여유 공간을 남기면 향후 삽입 시 페이지 분할이 덜 발생한다.
+`fillfactor`(기본 90%)는 새 인덱스 행을 삽입할 때 페이지를 어느 수준까지 채울지 결정한다. 10%의 여유 공간을 남기면 향후 삽입 시 페이지 분할이 덜 발생한다.
 
 ```sql
 -- 읽기 전용(시계열 데이터) → 100%로 공간 절약
 CREATE INDEX idx_logs_ts ON logs(created_at)
-  WITH (fill_factor = 100);
+  WITH (fillfactor = 100);
 
 -- 자주 업데이트·삽입되는 컬럼 → 여유 확보
 CREATE INDEX idx_orders_status ON orders(status)
-  WITH (fill_factor = 70);
+  WITH (fillfactor = 70);
 
 -- 기존 인덱스 설정 변경
-ALTER INDEX idx_orders_status SET (fill_factor = 75);
+ALTER INDEX idx_orders_status SET (fillfactor = 75);
 REINDEX INDEX idx_orders_status;  -- 재구성 필요
 ```
 
@@ -104,7 +104,7 @@ REINDEX INDEX CONCURRENTLY accounts_pkey;
 
 ## HOT (Heap-Only Tuple) 최적화
 
-인덱스 컬럼을 변경하지 않는 UPDATE는 **HOT(Heap-Only Tuple)** 경로를 통해 인덱스 갱신 없이 힙만 수정할 수 있다. 기존 인덱스 엔트리가 힙 페이지 내 리다이렉트 체인을 따라 새 튜플을 찾는다. `fill_factor`를 낮게 설정하면 HOT 업데이트가 같은 페이지 내에서 발생할 확률이 높아져 인덱스 bloat을 줄일 수 있다.
+인덱스 컬럼을 변경하지 않는 UPDATE는 **HOT(Heap-Only Tuple)** 경로를 통해 인덱스 갱신 없이 힙만 수정할 수 있다. 기존 인덱스 엔트리가 힙 페이지 내 리다이렉트 체인을 따라 새 튜플을 찾는다. `fillfactor`를 낮게 설정하면 HOT 업데이트가 같은 페이지 내에서 발생할 확률이 높아져 인덱스 bloat을 줄일 수 있다.
 
 ---
 

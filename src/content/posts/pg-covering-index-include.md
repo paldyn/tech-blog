@@ -110,7 +110,7 @@ WHERE  relname = 'users';
 SELECT
     indexrelname,
     pg_size_pretty(pg_relation_size(indexrelid)) AS index_size,
-    pg_size_pretty(pg_relation_size(indrelid))   AS table_size
+    pg_size_pretty(pg_relation_size(relid))      AS table_size
 FROM   pg_stat_user_indexes
 WHERE  relname = 'users';
 ```

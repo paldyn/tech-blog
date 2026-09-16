@@ -67,7 +67,7 @@ FROM   pg_stat_subscription;
 
 논리 복제의 가장 강력한 활용 사례는 **무중단 메이저 버전 업그레이드**입니다.
 
-```
+```text
 [PG 15 구버전]  --논리 복제-->  [PG 17 신버전]
    Publication                    Subscription
 ```

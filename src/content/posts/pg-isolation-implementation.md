@@ -17,7 +17,7 @@ draft: false
 
 트랜잭션이 시작되어 첫 번째 쿼리를 실행하는 순간 PostgreSQL은 `GetSnapshotData()`를 호출해 현재 공유 메모리에서 활성 XID 목록을 수집한다. 스냅샷은 세 값으로 요약된다.
 
-```
+```text
 xmin  : 가장 오래된 활성 트랜잭션의 XID
 xmax  : 아직 할당되지 않은 다음 XID (스냅샷 생성 직후의 nextXid)
 xip[] : xmin ≤ XID < xmax 범위에서 아직 커밋되지 않은 XID 목록

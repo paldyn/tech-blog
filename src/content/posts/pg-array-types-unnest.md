@@ -176,7 +176,7 @@ SELECT array_positions(ARRAY[1,2,3,1], 1);      -- {1,4}
 SELECT array_length(ARRAY[1,2,3], 1);  -- 3 (1차원)
 
 -- 정렬
-SELECT array_sort(ARRAY[3,1,2]);  -- {1,2,3} (pg 16+)
+SELECT array_sort(ARRAY[3,1,2]);  -- {1,2,3} (pg 18+)
 ```
 
 ## 배열 vs 정규화 선택 기준

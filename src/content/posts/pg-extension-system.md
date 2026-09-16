@@ -29,7 +29,7 @@ PostgreSQL 확장은 함수, 데이터 타입, 연산자, 인덱스 접근 방�
 확장은 세 가지 파일로 구성된다.
 
 **1. 컨트롤 파일 (`myext.control`)**
-```
+```ini
 default_version = '1.0'
 module_pathname = '$libdir/myext'
 relocatable = true

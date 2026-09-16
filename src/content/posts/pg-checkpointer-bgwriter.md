@@ -57,13 +57,13 @@ SHOW max_wal_size;         -- 기본 1GB
 
 체크포인트가 시작되면 짧은 시간 안에 수백 MB의 더티 페이지를 디스크에 써야 한다. 이 **I/O 폭풍**(I/O Storm)이 발생하면 일반 쿼리 응답 시간이 급격히 증가한다.
 
-<strong>`checkpoint_completion_target`</strong>은 이를 완화한다. 기본값 0.5는 체크포인트 간격의 50% 안에 모든 기록을 끝내라는 의미다. 0.9로 올리면 체크포인트 간격의 90%에 걸쳐 I/O를 분산한다.
+<strong>`checkpoint_completion_target`</strong>은 이를 완화한다. 값 0.5는 체크포인트 간격의 50% 안에 모든 기록을 끝내라는 의미이고, 0.9면 간격의 90%에 걸쳐 I/O를 분산한다. PostgreSQL 14부터 기본값이 0.5에서 **0.9**로 바뀌었다.
 
 ```ini
 # 권장 설정 (쓰기 많은 OLTP)
 checkpoint_timeout           = 15min   # 기본 5분보다 길게
 max_wal_size                 = 4GB     # 기본 1GB보다 크게
-checkpoint_completion_target = 0.9     # I/O 분산 (기본 0.5)
+checkpoint_completion_target = 0.9     # I/O 분산 (PG 14+ 기본값)
 ```
 
 `checkpoint_timeout`과 `max_wal_size` 둘 중 먼저 도달하는 조건이 체크포인트를 트리거한다.

@@ -111,15 +111,17 @@ EXPLAIN ANALYZE에서 추정 rows와 actual rows 비율이 10배 이상 차이 �
 ```sql
 -- 통계 오류 진단 쿼리
 SELECT
-    tablename,
-    attname,
-    n_distinct,
-    null_frac,
-    array_length(histogram_bounds::text::text[], 1) AS histogram_buckets,
-    last_analyzed
-FROM   pg_stats
-WHERE  tablename = 'orders'
-  AND  last_analyzed < now() - INTERVAL '1 day';
+    s.tablename,
+    s.attname,
+    s.n_distinct,
+    s.null_frac,
+    array_length(s.histogram_bounds::text::text[], 1) AS histogram_buckets,
+    t.last_analyze,
+    t.last_autoanalyze
+FROM   pg_stats s
+JOIN   pg_stat_user_tables t ON t.relname = s.tablename
+WHERE  s.tablename = 'orders'
+  AND  COALESCE(t.last_analyze, t.last_autoanalyze) < now() - INTERVAL '1 day';
 
 -- 빠른 통계 갱신 (대형 테이블도 샘플링으로 빠름)
 ANALYZE orders (customer_id, status, created_at);
@@ -131,10 +133,10 @@ autovacuum 데몬은 VACUUM뿐 아니라 ANALYZE도 자동 실행한다. 트리�
 
 ```sql
 -- autovacuum_analyze 임계값 확인
-SHOW autovacuum_analyze_scale_factor;  -- 기본 0.2 (20%)
+SHOW autovacuum_analyze_scale_factor;  -- 기본 0.1 (10%)
 SHOW autovacuum_analyze_threshold;     -- 기본 50
 
--- 대형 테이블 (1억 행) — 20% = 2000만 행 변경 후에야 auto-analyze
+-- 대형 테이블 (1억 행) — 10% = 1000만 행 변경 후에야 auto-analyze
 -- 임계값을 낮춰서 더 자주 실행
 ALTER TABLE orders SET (
     autovacuum_analyze_scale_factor = 0.01,
