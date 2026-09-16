@@ -112,10 +112,10 @@ SELECT ST_Distance(
 );
 
 -- 반경 내 검색 (가장 자주 쓰는 패턴)
-SELECT name, ST_Distance(location, ref) AS dist_m
-FROM stores,
-  ST_MakePoint(127.0276, 37.4979)::geography AS ref(ref)
-WHERE ST_DWithin(location, ref, 1000)  -- 1000m 이내
+SELECT s.name, ST_Distance(s.location, r.ref) AS dist_m
+FROM stores s,
+  LATERAL (SELECT ST_MakePoint(127.0276, 37.4979)::geography AS ref) r
+WHERE ST_DWithin(s.location, r.ref, 1000)  -- 1000m 이내
 ORDER BY dist_m;
 ```
 

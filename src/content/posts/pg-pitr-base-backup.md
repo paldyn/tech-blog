@@ -25,14 +25,16 @@ PostgreSQL은 모든 변경을 WAL에 기록합니다. 어느 시점의 **베이
 
 ```bash
 # 운영 서버 데이터를 백업 서버로 복사
+# --format=tar: tar 형식, --gzip: 압축
+# --checkpoint=fast: 즉시 체크포인트 수행, -P: 진행 표시
 pg_basebackup \
   -h localhost \
   -U postgres \
   -D /backup/base_$(date +%Y%m%d) \
-  --format=tar \       # 압축 전송
+  --format=tar \
   --gzip \
-  --checkpoint=fast \  # 즉시 체크포인트 수행
-  -P                   # 진행 표시
+  --checkpoint=fast \
+  -P
 
 # 백업 완료 확인
 ls -lh /backup/base_20260516/
@@ -96,8 +98,9 @@ recovery_target_xid = '12345678'
 -- 특정 LSN 위치까지
 recovery_target_lsn = '0/15000000'
 
--- 가능한 한 최근으로 (default)
-recovery_target = 'immediate'   -- WAL 끝까지
+-- 일관성 확보 지점에서 즉시 중단 (가장 이른 복구 지점)
+recovery_target = 'immediate'
+-- recovery_target_* 를 아무것도 지정하지 않으면 WAL 끝까지 재생 (기본 동작)
 ```
 
 운영 환경에서는 **삭제 실수 직전 시각**을 `recovery_target_time`으로 지정하는 경우가 가장 많습니다.

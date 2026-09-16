@@ -111,15 +111,19 @@ CALL batch_archive(5000);
 ```sql
 CREATE OR REPLACE PROCEDURE upsert_with_retry(p_id INT, p_val TEXT)
 LANGUAGE plpgsql AS $$
+DECLARE
+  v_done boolean := false;
 BEGIN
   LOOP
     BEGIN
       INSERT INTO t VALUES (p_id, p_val);
-      COMMIT;
-      RETURN;
+      v_done := true;
     EXCEPTION WHEN unique_violation THEN
       -- 충돌 시 재시도
     END;
+
+    COMMIT;  -- EXCEPTION 블록(서브트랜잭션) 밖에서만 커밋 가능
+    EXIT WHEN v_done;
   END LOOP;
 END;
 $$;

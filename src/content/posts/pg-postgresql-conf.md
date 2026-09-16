@@ -75,7 +75,7 @@ max_wal_size                 = 4GB   # 대용량 쓰기 서버는 더 크게
 -- 특정 대용량 테이블에 개별 설정
 ALTER TABLE large_orders SET (
   autovacuum_vacuum_scale_factor = 0.01,   -- 1% 변경 시 진공 (기본 20%)
-  autovacuum_vacuum_cost_delay   = 2,      -- ms, 기본 20ms
+  autovacuum_vacuum_cost_delay   = 2,      -- ms (PG12+ 기본값, 구버전 기본 20ms)
   autovacuum_analyze_scale_factor= 0.005
 );
 ```
