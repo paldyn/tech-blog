@@ -67,8 +67,8 @@ BRIN은 인덱스 크기와 검색 효율을 극단적으로 절충한 구조다
 
 ```sql
 -- 시계열 로그 테이블 BRIN 인덱스
-CREATE INDEX idx_logs_brin ON logs(created_at)
-  USING brin
+CREATE INDEX idx_logs_brin ON logs
+  USING brin (created_at)
   WITH (pages_per_range = 128);
 
 -- 인덱스 통계
@@ -78,8 +78,11 @@ SELECT * FROM brin_page_items(get_raw_page('idx_logs_brin', 2), 'idx_logs_brin')
 -- BRIN 요약 강제 업데이트
 SELECT brin_summarize_new_values('idx_logs_brin');
 
--- 자동 요약 활성화 확인
-SHOW autosummarize;  -- BRIN은 autovacuum 시 자동 요약 갱신
+-- 자동 요약(autosummarize) 설정 확인 — 인덱스 스토리지 파라미터
+SELECT relname, reloptions
+FROM   pg_class
+WHERE  relname = 'idx_logs_brin';
+-- autosummarize=on이면 autovacuum 시 새 블록 범위가 자동 요약된다
 ```
 
 ![BRIN 블록 범위 필터링 원리](/assets/posts/pg-spgist-brin-index-brin-concept.svg)
@@ -93,11 +96,10 @@ SHOW autosummarize;  -- BRIN은 autovacuum 시 자동 요약 갱신
 -- 파티션당 평균 100만 행, 행당 200B → 200MB ÷ 8KB = 약 25,000 페이지
 -- pages_per_range = 256이면 BRIN 범위 약 100개 → 충분히 세밀
 
--- 범위 최적값 확인 쿼리
-SELECT pages_per_range,
-       regexp_match(range_min, '.*')  AS min_val,
-       regexp_match(range_max, '.*')  AS max_val
+-- 현재 인덱스의 pages_per_range 확인
+SELECT *
 FROM   brin_metapage_info(get_raw_page('idx_logs_brin', 0));
+-- magic | version | pagesperrange | lastrevmappage
 ```
 
 ## 인덱스 선택 요약

@@ -43,7 +43,7 @@ SELECT extname, extversion FROM pg_extension WHERE extname = 'pg_stat_statements
 
 ![pg_stat_statements 동작 구조](/assets/posts/pg-stat-statements-flow.svg)
 
-쿼리가 실행될 때마다 Executor Hook이 통계를 공유 메모리의 해시 테이블에 누적한다. 해시 키는 **QueryID**로, 리터럴 값을 `$1`, `$2`로 정규화한 쿼리 텍스트의 해시다. 통계는 주기적으로 `$PGDATA/pg_stat_statements.stat` 파일에 플러시되어 서버 재시작 후에도 보존된다.
+쿼리가 실행될 때마다 Executor Hook이 통계를 공유 메모리의 해시 테이블에 누적한다. 해시 키는 **QueryID**로, 리터럴 값을 `$1`, `$2`로 정규화한 쿼리 텍스트의 해시다. 통계는 서버 종료 시 `$PGDATA/pg_stat/pg_stat_statements.stat` 파일에 저장되어 재시작 후에도 보존된다.
 
 ## 주요 컬럼
 
@@ -125,7 +125,7 @@ LIMIT 10;
 -- 전체 초기화 (배포 전후 비교에 활용)
 SELECT pg_stat_statements_reset();
 
--- 특정 쿼리만 초기화 (PG14+)
+-- 특정 쿼리만 초기화 (PG12+)
 SELECT pg_stat_statements_reset(userid => 0, dbid => 0, queryid => 1234567890);
 ```
 

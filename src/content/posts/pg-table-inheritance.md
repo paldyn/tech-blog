@@ -177,7 +177,6 @@ JOIN pg_class child  ON i.inhrelid  = child.oid
 WHERE parent.relname = 'vehicle';
 -- vehicle | car
 -- vehicle | truck
--- vehicle | motorcycle
 
 -- 자식 테이블 나열
 SELECT c.relname

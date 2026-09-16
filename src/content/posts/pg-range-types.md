@@ -84,7 +84,8 @@ SELECT lower_inc('[3,9)'::int4range);     -- true (하한 포함)
 SELECT upper_inc('[3,9)'::int4range);     -- false (상한 제외)
 SELECT lower_inf('(,9]'::int4range);     -- true (무한대)
 SELECT isempty('empty'::int4range);      -- true
-SELECT range_length('[3,9)'::int4range); -- 6
+SELECT upper('[3,9)'::int4range)
+     - lower('[3,9)'::int4range);      -- 6 (길이 = 상한 - 하한)
 ```
 
 ## EXCLUDE 제약 — 겹침 방지의 핵심

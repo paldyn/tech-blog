@@ -29,13 +29,14 @@ PostgreSQL은 모든 변경을 WAL(Write-Ahead Log)에 먼저 기록합니다. �
 
 ```bash
 # Primary에서 Base Backup 생성 (Standby 서버에서 실행)
+# -R: recovery 설정 자동 생성, -P: 진행률 표시
 pg_basebackup \
   -h primary_host \
   -U replicator \
   -D /var/lib/postgresql/data \
   --slot=standby1_slot \
-  -R \          # recovery 설정 자동 생성
-  -P            # 진행률 표시
+  -R \
+  -P
 ```
 
 `-R` 플래그가 `standby.signal` 파일을 생성하고 `postgresql.auto.conf`에 `primary_conninfo`를 기록합니다.

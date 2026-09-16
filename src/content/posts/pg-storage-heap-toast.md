@@ -80,7 +80,7 @@ VACUUM (ANALYZE, VERBOSE) orders;
 PostgreSQL 행은 하나의 페이지(8KB)를 넘을 수 없다. `text`, `bytea`, `jsonb` 같은 가변 길이 타입이 크면 **TOAST**(The Oversized-Attribute Storage Technique)가 자동으로 개입한다.
 
 처리 순서:
-1. 값 크기가 **2KB 초과**이면 압축 시도 (기본 PGLZ, 14c부터 LZ4 선택 가능)
+1. 값 크기가 **2KB 초과**이면 압축 시도 (기본 PGLZ, PostgreSQL 14부터 LZ4 선택 가능)
 2. 압축 후에도 크면 별도 **TOAST 테이블**(`pg_toast.pg_toast_NNNN`)에 분리 저장
 3. 원본 행에는 포인터(va_toastpointer)만 남음
 
@@ -104,14 +104,17 @@ WHERE  attrelid = 'articles'::regclass
 ALTER TABLE articles
   ALTER COLUMN body SET STORAGE EXTERNAL;
 
--- 14c 이상: LZ4 압축 사용
+-- PostgreSQL 14 이상: LZ4 압축 사용
 ALTER TABLE articles
   ALTER COLUMN body SET COMPRESSION lz4;
 
--- TOAST 테이블 확인
-SELECT relname FROM pg_class
-WHERE  relkind = 't'  -- 't' = TOAST table
-  AND  reltoastrelid != 0;
+-- 테이블별 TOAST 테이블 확인
+SELECT c.relname       AS table_name,
+       t.relname       AS toast_table,
+       pg_size_pretty(pg_relation_size(t.oid)) AS toast_size
+FROM   pg_class c
+JOIN   pg_class t ON t.oid = c.reltoastrelid  -- 't' = TOAST table
+WHERE  c.relkind = 'r';
 ```
 
 ## Fillfactor — 업데이트 여유 공간
