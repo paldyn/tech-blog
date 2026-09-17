@@ -141,29 +141,33 @@ async def main():
 
 `finally`로 리소스를 정리하면 `aclose()` 호출 시 항상 실행된다.
 
-## asyncio.run_sync_in_executor와 비동기 제너레이터
+## run_in_executor와 비동기 제너레이터
 
 블로킹 동기 코드를 비동기로 감쌀 때도 비동기 제너레이터가 유용하다.
 
 ```python
 import asyncio
+import time
 
 def blocking_generator(n):
     """블로킹 동기 제너레이터"""
     for i in range(n):
-        import time; time.sleep(0.1)
+        time.sleep(0.1)
         yield i
+
+_DONE = object()
 
 async def non_blocking_wrapper(n):
     """블로킹 제너레이터를 스레드풀에서 실행"""
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
     it = iter(blocking_generator(n))
     while True:
-        try:
-            val = await loop.run_in_executor(None, next, it)
-            yield val
-        except StopIteration:
+        # next(it)를 그대로 넘기면 StopIteration이 Future에 담기지 못해
+        # RuntimeError가 난다 — 센티널 기본값으로 종료를 알린다
+        val = await loop.run_in_executor(None, next, it, _DONE)
+        if val is _DONE:
             return
+        yield val
 ```
 
 ## 비동기 제너레이터로 비동기 이터레이터 재구현
