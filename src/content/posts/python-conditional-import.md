@@ -71,7 +71,7 @@ def compute(data):
 무거운 라이브러리를 타입 힌트에만 쓰는 경우, 런타임에 임포트하지 않아도 됩니다.
 
 ```python
-from __future__ import annotations  # Python 3.10+ 에선 기본
+from __future__ import annotations  # 어노테이션 평가를 지연시킴
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
