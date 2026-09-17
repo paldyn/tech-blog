@@ -112,7 +112,7 @@ UPDATE orders SET status = 'unknown' WHERE id = 1;
 
 ### ENUM 레이블 추가
 
-`ALTER TYPE ... ADD VALUE`는 트랜잭션 블록 밖에서 실행해야 한다(pg 12 이전). pg 13+에서는 이 제한이 완화됐다.
+`ALTER TYPE ... ADD VALUE`는 트랜잭션 블록 밖에서 실행해야 한다(pg 12 이전). pg 12+에서는 이 제한이 완화됐다.
 
 ```sql
 -- 새 레이블 삽입 위치 지정

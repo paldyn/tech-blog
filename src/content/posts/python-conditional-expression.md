@@ -15,7 +15,7 @@ draft: false
 
 ## 문법
 
-```
+```text
 값_참  if  조건  else  값_거짓
 ```
 

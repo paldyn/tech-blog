@@ -32,7 +32,7 @@ WAL Writer 프로세스는 `wal_writer_delay`(기본 200ms) 주기로 WAL Buffer
 
 ## LSN — Log Sequence Number
 
-WAL 레코드는 64비트 단조 증가 포인터인 **LSN**(Log Sequence Number)으로 식별된다. `0/1A000028` 형태로 표시되며, 앞 32비트가 세그먼트 번호, 뒤 32비트가 세그먼트 내 오프셋이다.
+WAL 레코드는 64비트 단조 증가 포인터인 **LSN**(Log Sequence Number)으로 식별된다. `0/1A000028` 형태로 표시되며, 앞 32비트가 상위 워드, 뒤 32비트가 하위 워드이며, 둘을 이어붙인 값이 WAL 스트림 전체에서의 바이트 위치다.
 
 ```sql
 -- 현재 WAL LSN 확인
@@ -101,7 +101,7 @@ archive_command = 'cp %p /archive/%f'
 # Base Backup 생성
 pg_basebackup -D /backup/base -Fp -Xs -P
 
-# recovery.conf (또는 postgresql.conf 14c+)에서 복구 목표 설정
+# recovery.conf (또는 postgresql.conf 12+)에서 복구 목표 설정
 restore_command = 'cp /archive/%f %p'
 recovery_target_time = '2026-05-11 12:00:00'
 ```

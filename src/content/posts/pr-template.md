@@ -17,7 +17,7 @@ draft: false
 
 GitHub은 PR 생성 시 다음 경로에서 템플릿 파일을 자동으로 로드한다.
 
-```
+```text
 PULL_REQUEST_TEMPLATE.md          # 저장소 루트
 .github/PULL_REQUEST_TEMPLATE.md  # .github 디렉토리
 docs/PULL_REQUEST_TEMPLATE.md     # docs 디렉토리
@@ -59,7 +59,7 @@ Closes #
 
 `Closes #123` 형식을 본문에 넣으면 PR이 머지될 때 해당 이슈가 자동으로 닫힌다. 지원하는 키워드:
 
-```
+```text
 Closes #123
 Fixes #123
 Resolves #123
@@ -92,7 +92,7 @@ gh pr create \
 
 GitHub Organizations에서는 `.github` 저장소에 기본 PR 템플릿을 두면 Organization 내 모든 저장소에서 해당 템플릿이 폴백으로 사용된다.
 
-```
+```text
 org-name/.github/
 └── PULL_REQUEST_TEMPLATE.md  # 전사 기본 PR 템플릿
 ```

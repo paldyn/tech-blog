@@ -34,7 +34,7 @@ a()
 
 실행 순서를 따라가면 스택은 아래처럼 쌓입니다.
 
-```
+```text
 [module]  →  [a]  →  [a, b]  →  [a, b, c]  → 예외 발생
 ```
 
@@ -44,7 +44,7 @@ a()
 
 트레이스백(traceback)은 콜 스택의 스냅샷입니다. **아래에서 위로** 읽는 것이 핵심입니다.
 
-```
+```text
 Traceback (most recent call last):
   File "app.py", line 8, in <module>
     a()
@@ -72,7 +72,7 @@ except ValueError as e:
     raise RuntimeError("변환 실패") from e
 ```
 
-```
+```text
 Traceback (most recent call last):
   File "...", line 2, in <module>
     int("abc")
@@ -174,7 +174,7 @@ def infinite():
 infinite()
 ```
 
-```
+```text
 RecursionError: maximum recursion depth exceeded
 ```
 

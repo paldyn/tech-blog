@@ -54,7 +54,7 @@ VACUUM counter;
 -- 상세 출력
 VACUUM VERBOSE counter;
 -- INFO: table "counter": found 10 removable, 1 nonremovable row versions
--- INFO: table "counter": 0 removed, 1 remain
+-- INFO: table "counter": 10 removed, 1 remain
 
 -- ANALYZE와 함께 (통계 갱신 포함)
 VACUUM ANALYZE counter;
@@ -81,7 +81,7 @@ VACUUM ANALYZE counter;
 
 `autovacuum`은 백그라운드에서 주기적으로 VACUUM을 실행한다. 트리거 조건은 다음과 같다.
 
-```
+```text
 autovacuum 실행 기준:
   n_dead_tup > autovacuum_vacuum_threshold
               + autovacuum_vacuum_scale_factor * n_live_tup

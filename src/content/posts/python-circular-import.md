@@ -127,7 +127,7 @@ def B_func(order: Order):
 
 순환 임포트는 보통 **의존 방향이 단방향이지 않을 때** 발생합니다. 아래 레이어 구조를 지키면 순환이 생길 수가 없습니다.
 
-```
+```text
 presentation/  →  service/  →  domain/  →  infrastructure/
 (api, views)       (비즈니스)    (모델, 인터페이스)   (DB, 외부API)
 ```
