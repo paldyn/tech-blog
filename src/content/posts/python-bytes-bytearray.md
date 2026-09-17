@@ -52,7 +52,7 @@ print(bytes(ba))  # b'Hello! world'
 # str → bytes
 s = "안녕, Python!"
 b = s.encode("utf-8")   # bytes
-b_latin = s.encode("utf-8", errors="replace")  # 변환 불가 문자는 ?
+b_latin = s.encode("latin-1", errors="replace")  # 변환 불가 문자는 ?
 
 # bytes → str
 s2 = b.decode("utf-8")

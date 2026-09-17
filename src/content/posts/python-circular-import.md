@@ -78,7 +78,7 @@ def A_func():
 
 ```python
 # a.py
-from __future__ import annotations  # 타입 평가 지연 (Python 3.10+ 기본)
+from __future__ import annotations  # 어노테이션 평가를 런타임 이후로 미룸
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -89,8 +89,8 @@ def process(obj: "BModel") -> None:  # 문자열 어노테이션
 ```
 
 ```python
-# Python 3.10+ 에서는 __future__ 없이도 가능
-def process(obj: BModel) -> None:  # PEP 563 기본 동작
+# Python 3.14+ 에서는 __future__ 없이도 가능
+def process(obj: BModel) -> None:  # PEP 649 — 어노테이션 지연 평가가 기본
     ...
 ```
 

@@ -93,6 +93,7 @@ RuntimeError: 변환 실패
 `traceback` 모듈은 트레이스백을 프로그래밍으로 처리합니다.
 
 ```python
+import sys
 import traceback
 import logging
 
