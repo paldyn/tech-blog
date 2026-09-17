@@ -176,7 +176,8 @@ if not q:
 ```python
 3 > 2          # True
 "a" in "abc"   # True
-5 is 5         # True (소정수 캐시)
+a = b = 5
+a is b         # True (소정수 캐시)
 [] is []       # False (다른 객체)
 ```
 
