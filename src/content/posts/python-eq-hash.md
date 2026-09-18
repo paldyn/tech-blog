@@ -56,7 +56,7 @@ print(p1 == "xy") # False (NotImplemented → Python이 역방향 시도 후 Fal
 
 ## __eq__와 __hash__ 계약
 
-```
+```text
 a == b  →  반드시  hash(a) == hash(b)
 ```
 

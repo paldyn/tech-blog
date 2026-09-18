@@ -27,7 +27,7 @@ class AppError(Exception):
 raise AppError("처리 실패")
 ```
 
-```
+```text
 AppError: 처리 실패
 ```
 

@@ -17,7 +17,7 @@ draft: false
 
 Python 내장 예외는 모두 `BaseException`을 최상위로 하는 클래스 트리에 있다. `help('exceptions')`나 공식 문서에서 전체 트리를 볼 수 있지만, 실무에서 자주 만나는 부분만 추려보면 다음과 같다.
 
-```python
+```text
 BaseException
  ├── SystemExit
  ├── KeyboardInterrupt

@@ -49,7 +49,7 @@ raise eg
 ```
 
 출력:
-```
+```text
   + Exception Group Traceback (most recent call last):
   |   ...
   | ExceptionGroup: 여러 오류 발생 (3 sub-exceptions)

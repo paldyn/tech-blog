@@ -28,7 +28,7 @@ def get_user(user_id):
 
 `ValueError`가 발생했을 때 트레이스백에 `OSError`도 같이 보인다:
 
-```
+```text
 OSError: 연결 거부됨
 
 The above exception was the direct cause of the following exception:
@@ -72,7 +72,7 @@ except ValueError as e:
 ```
 
 트레이스백:
-```
+```text
 ValueError: invalid literal...
 
 During handling of the above exception, another exception occurred:
@@ -127,7 +127,7 @@ def find_user(uid):
 
 결과적으로 트레이스백에 원본 예외가 전혀 보이지 않는다.
 
-```
+```text
 DBError: 사용자 조회 실패
 ```
 

@@ -108,7 +108,7 @@ print(memoize(5))   # 25 (캐시 적중)
 
 **지난 글:** [위치 인수와 키워드 인수: Python 인수 전달 방식의 기본](/posts/python-positional-keyword-args/)
 
-**다음 글:** [*args와 **kwargs: 가변 인수 완전 정리](/posts/python-args-kwargs/)
+**다음 글:** [\*args와 \*\*kwargs: 가변 인수 완전 정리](/posts/python-args-kwargs/)
 
 <br>
 읽어주셔서 감사합니다. 😊
