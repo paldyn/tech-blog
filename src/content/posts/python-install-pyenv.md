@@ -223,7 +223,7 @@ git commit -m "chore: Python 3.12.3 버전 고정"
 
 `.python-version`은 단순한 텍스트 파일이다.
 
-```
+```text
 3.12.3
 ```
 

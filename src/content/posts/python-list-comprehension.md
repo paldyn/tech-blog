@@ -15,7 +15,7 @@ draft: false
 
 ## 기본 구조
 
-```
+```text
 [표현식 for 변수 in 이터러블 if 조건]
 ```
 

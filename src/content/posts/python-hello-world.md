@@ -198,7 +198,7 @@ if __name__ == "__main__":
 
 실행 결과:
 
-```
+```text
 이름을 입력하세요: 홍길동
 안녕, 홍길동!
 ```
@@ -212,7 +212,7 @@ if __name__ == "__main__":
 print("Hello"   # 괄호를 닫지 않음
 ```
 
-```
+```text
   File "hello.py", line 1
     print("Hello"
                ^
@@ -224,7 +224,7 @@ SyntaxError: '(' was never closed
 print(message)  # message 변수가 없음
 ```
 
-```
+```text
 NameError: name 'message' is not defined
 ```
 
