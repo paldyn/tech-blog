@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
 ![__main__.py 패턴](/assets/posts/python-name-main-idiom-main-py.svg)
 
-```
+```text
 myapp/
   __init__.py
   __main__.py   ← python -m myapp 시 실행됨

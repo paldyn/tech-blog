@@ -83,7 +83,7 @@ PYTHONPATH=/tmp/debug python myscript.py
 
 `site-packages` 디렉터리에 `.pth` 확장자 파일을 두면 Python 시작 시 자동으로 `sys.path`에 추가됩니다.
 
-```
+```text
 # /usr/local/lib/python3.12/site-packages/mylibs.pth
 /home/user/projects/mylibs
 /opt/shared/libs
@@ -146,6 +146,8 @@ python -c "import sys; print(sys.path)"
 - `importlib.util.find_spec("mymodule")`로 경로 탐색 없이 모듈 존재 여부만 확인할 수 있다.
 
 ---
+
+**지난 글:** [__slots__: 메모리 효율적인 클래스](/posts/python-slots/)
 
 **다음 글:** [상대 임포트 vs 절대 임포트](/posts/python-relative-vs-absolute-import/)
 

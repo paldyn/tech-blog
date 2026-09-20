@@ -17,7 +17,7 @@ draft: false
 
 디렉터리를 **패키지**(package)로 만드는 파일입니다. `__init__.py`가 있는 디렉터리는 `import myapp`처럼 패키지로 임포트할 수 있습니다.
 
-```
+```text
 myapp/
   __init__.py   ← 이것이 있어야 패키지
   utils.py

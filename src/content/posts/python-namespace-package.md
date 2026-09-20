@@ -91,7 +91,7 @@ from acme.rest.client import Rest   # acme-plugin-rest 제공
 
 ### 서브패키지도 네임스페이스여야 함
 
-```
+```text
 /path/a/acme/sql/backend.py
 ```
 

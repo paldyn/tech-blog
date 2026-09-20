@@ -123,7 +123,7 @@ except ImportError:
 
 Python은 `.py` 파일을 처음 임포트할 때 바이트코드로 컴파일해 `__pycache__/` 디렉터리에 저장합니다.
 
-```
+```text
 myapp/
   __pycache__/
     utils.cpython-312.pyc   ← 컴파일된 바이트코드

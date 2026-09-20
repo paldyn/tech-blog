@@ -162,5 +162,7 @@ Python은 완전한 접근 차단 대신 이름 규약으로 의도를 표현합
 
 **지난 글:** [조건부 임포트](/posts/python-conditional-import/)
 
+**다음 글:** [os 모듈 완전 정복: 파일·디렉토리·환경변수 다루기](/posts/python-os-module/)
+
 <br>
 읽어주셔서 감사합니다. 😊
