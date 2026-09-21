@@ -317,6 +317,7 @@
   let resizeStart: { pointerId: number; y: number; height: number } | null = null;
   let mobileViewportBaseline: { height: number; width: number } | null = null;
   let mobileKeyboardOpen = false;
+  const attachmentPreviewTimers = new Map<HTMLElement, number>();
 
   function clamp(value: number, min: number, max: number): number {
     return Math.min(max, Math.max(min, value));
@@ -343,6 +344,21 @@
     );
   }
 
+  function resetAttachmentPreview(holder: HTMLElement | null): void {
+    if (!holder) return;
+    window.clearTimeout(attachmentPreviewTimers.get(holder) ?? 0);
+    attachmentPreviewTimers.delete(holder);
+    holder.classList.remove('is-open');
+  }
+
+  function resetSelectionPreview(): void {
+    resetAttachmentPreview(selectionBox);
+  }
+
+  function resetImagePreview(): void {
+    resetAttachmentPreview(imagesBox);
+  }
+
   /**
    * 붙인 문장은 칩 하나로 세어 보여 준다 — 내용이 길면 입력 영역을 잡아먹는다.
    * 무엇을 골랐는지는 마우스를 올렸을 때 위로 펼쳐서 보여 준다.
@@ -350,6 +366,7 @@
   function renderSelectionChips(): void {
     if (!selectionBox || !picksBox || !selectionCount || !pickTemplate) return;
     selectionBox.hidden = activeSelections.length === 0;
+    if (activeSelections.length === 0) resetSelectionPreview();
     selectionCount.textContent = `텍스트 ${activeSelections.length}개 선택`;
     picksBox.replaceChildren();
 
@@ -374,6 +391,7 @@
   function renderImageChips(): void {
     if (!imagesBox || !shotsBox || !imageCount || !shotTemplate) return;
     imagesBox.hidden = activeImages.length === 0;
+    if (activeImages.length === 0) resetImagePreview();
     imageCount.textContent = `이미지 ${activeImages.length}개`;
     shotsBox.replaceChildren();
 
@@ -800,6 +818,8 @@
     document.body.removeAttribute('data-article-ai-mobile-viewport');
     mobileViewportBaseline = null;
     mobileKeyboardOpen = false;
+    resetSelectionPreview();
+    resetImagePreview();
     panel.removeAttribute('data-mobile-viewport');
     panel.removeAttribute('data-mobile-compact');
     panel.removeAttribute('data-mobile-keyboard');
@@ -837,6 +857,7 @@
     const wasOpen = isOpen;
     const prompt = selectionPrompt;
     abortRequest();
+    resetSelectionPreview();
     // 이미 붙인 문장을 다시 고르면 칩만 늘고 문맥은 그대로다 — 한 번만 둔다.
     const already = activeSelections.some((piece) => piece.text === prompt.selectedText);
     if (!already) {
@@ -1043,7 +1064,6 @@
     });
 
     trigger.addEventListener('click', () => {
-      activeSelections.length = 0;
       selectionPrompt = null;
       renderSelectionPrompt();
       renderPanelState();
@@ -1076,14 +1096,18 @@
     // 순수 :hover로 두면 그 틈에서 목록이 사라져 안의 ✕를 누를 수가 없다.
     for (const holder of [selectionBox, imagesBox]) {
       if (!holder) continue;
-      let closeTimer = 0;
       const open = () => {
-        window.clearTimeout(closeTimer);
+        window.clearTimeout(attachmentPreviewTimers.get(holder) ?? 0);
+        attachmentPreviewTimers.delete(holder);
         holder.classList.add('is-open');
       };
       const close = () => {
-        window.clearTimeout(closeTimer);
-        closeTimer = window.setTimeout(() => holder.classList.remove('is-open'), 220);
+        window.clearTimeout(attachmentPreviewTimers.get(holder) ?? 0);
+        const timer = window.setTimeout(() => {
+          holder.classList.remove('is-open');
+          attachmentPreviewTimers.delete(holder);
+        }, 220);
+        attachmentPreviewTimers.set(holder, timer);
       };
       holder.addEventListener('pointerenter', open);
       holder.addEventListener('pointerleave', close);
