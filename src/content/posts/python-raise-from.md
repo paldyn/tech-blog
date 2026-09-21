@@ -58,7 +58,7 @@ def load_config(path):
 `load_config`를 호출하는 쪽은 `ConfigError`만 알면 된다. 하지만 트레이스백에는 원본 `FileNotFoundError`나 `JSONDecodeError`도 함께 표시되어 디버깅이 쉽다.
 
 트레이스백 출력 예시:
-```
+```text
 FileNotFoundError: [Errno 2] No such file or directory: 'config.json'
 
 The above exception was the direct cause of the following exception:

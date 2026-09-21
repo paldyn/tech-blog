@@ -35,7 +35,7 @@ func = A(B(C(func)))
 
 wrap 순서와 실행 순서는 **반대**다. `func()`를 호출하면 가장 바깥인 `A wrapper`가 먼저 실행된다.
 
-```python
+```text
 # 실행 흐름
 A_wrapper 전처리
   B_wrapper 전처리

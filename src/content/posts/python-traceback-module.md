@@ -17,7 +17,7 @@ draft: false
 
 Python 트레이스백은 **아래에서 위로** 읽는다.
 
-```
+```text
 Traceback (most recent call last):
   File "app.py", line 12, in main         ← 호출 흐름 (오래된 것부터)
     result = process(data)
@@ -118,7 +118,7 @@ except Exception:
 ```
 
 출력:
-```
+```text
 /path/to/script.py:4 (main)
 /path/to/script.py:10 (process)
 ```

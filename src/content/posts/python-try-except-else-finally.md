@@ -49,14 +49,14 @@ demo(0)   # except실행 → finally실행
 ```
 
 `demo(2)` 출력:
-```
+```text
 try 완료
 else 실행, result=5.0
 finally 실행
 ```
 
 `demo(0)` 출력:
-```
+```text
 except 실행
 finally 실행
 ```
