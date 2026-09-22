@@ -136,7 +136,7 @@ function SearchPage() {
 
 ## 동시성 기능 선택 가이드
 
-```
+```text
 내 컴포넌트에서 setState를 직접 제어할 수 있다면
   → useTransition + startTransition
 

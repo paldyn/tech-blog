@@ -21,7 +21,7 @@ React DevTools는 Chrome과 Firefox의 브라우저 확장으로 설치한다. �
 
 Profiler 탭을 열면 세 가지 영역이 있다.
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │  ● (녹화 시작)  ↺ (리셋)  ⚙ (설정)     │  ← 툴바
 ├──────────────────────────────────────────┤
@@ -56,7 +56,7 @@ Profiler 탭을 열면 세 가지 영역이 있다.
 
 느린 커밋을 클릭하면 플레임 그래프가 나타난다.
 
-```
+```text
 App (12.4ms)         ← 루트. 가장 넓음
 ├── ProductList (9.2ms)   ← 병목 후보
 │   ├── ProductItem × 8 (0.8ms each)
@@ -74,14 +74,14 @@ App (12.4ms)         ← 루트. 가장 넓음
 
 가장 유용한 기능인 **리렌더 원인 추적**을 켜려면 먼저 설정이 필요하다.
 
-```
+```text
 ⚙ 버튼 클릭
 → "Record why each component rendered while profiling" 체크
 ```
 
 이후 프로파일링하면 각 컴포넌트 클릭 시 다음 정보가 표시된다.
 
-```
+```text
 Why did ProductCard render?
   Props changed:
     items (old: [...], new: [...])
@@ -95,7 +95,7 @@ Why did ProductCard render?
 
 ### 시나리오 1: 버튼 클릭 시 느림
 
-```
+```text
 커밋 분석: App (15ms) → Cart (12ms) → CartList (11ms) → CartItem × 20
 리렌더 원인: CartItem — "Props changed: onClick"
 원인: 부모가 리렌더될 때마다 onClick 함수 새 참조 생성
@@ -104,7 +104,7 @@ Why did ProductCard render?
 
 ### 시나리오 2: 입력창 타이핑이 버벅임
 
-```
+```text
 커밋 분석: Form (8ms) → FilteredList (7ms)
 리렌더 원인: FilteredList — "State changed: query"
 원인: 타이핑할 때마다 expensiveFilter 재실행

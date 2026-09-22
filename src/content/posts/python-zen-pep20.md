@@ -23,7 +23,7 @@ import this
 
 실행하면 Tim Peters가 1999년에 쓴 19가지 격언이 출력된다.
 
-```
+```text
 Beautiful is better than ugly.
 Explicit is better than implicit.
 Simple is better than complex.

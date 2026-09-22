@@ -17,7 +17,7 @@ draft: false
 
 UUID(Universally Unique Identifier)는 RFC 4122로 표준화된 128비트 식별자입니다. 32개의 16진수 숫자와 4개의 하이픈으로 구성됩니다.
 
-```
+```text
 550e8400-e29b-41d4-a716-446655440000
 ```
 

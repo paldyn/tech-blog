@@ -109,7 +109,7 @@ return () => unsubscribe();
 
 개발 환경의 Strict Mode에서는 마운트 시 Effect를 **의도적으로 두 번** 실행한다.
 
-```
+```text
 마운트 → Effect ① → Cleanup ① → Effect ②
 ```
 

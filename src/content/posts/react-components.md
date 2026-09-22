@@ -147,7 +147,7 @@ function App() {
 
 실무에서는 보통 컴포넌트 하나당 파일 하나를 만들고, 컴포넌트 이름과 파일 이름을 일치시킵니다.
 
-```
+```text
 src/
   components/
     Button.jsx        # Button 컴포넌트
