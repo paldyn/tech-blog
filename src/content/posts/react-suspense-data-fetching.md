@@ -34,7 +34,7 @@ function Profile({ id }: { id: string }) {
 
 문제: 컴포넌트가 렌더링되어야 fetch가 시작된다. 중첩 컴포넌트에서는 **워터폴**이 발생한다.
 
-```
+```text
 Parent 렌더
   → Parent fetch 완료
     → Child 렌더 (Parent 완료 후에야 시작)
@@ -194,7 +194,7 @@ async function Page() {
 
 ## Suspense 데이터 페칭 주의사항
 
-```
+```text
 ✓ useSuspenseQuery — 캐시, 재시도, 백그라운드 재검증 자동
 ✓ ErrorBoundary를 항상 Suspense 바깥에 배치
 ✓ 독립 섹션은 각각 Suspense로 분리

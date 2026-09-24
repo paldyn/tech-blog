@@ -131,7 +131,7 @@ function UserProvider({ children }: { children: React.ReactNode }) {
 
 ## 실무 체크리스트
 
-```
+```text
 ✓ 하나의 Context에 서로 독립적인 상태가 섞여 있는가?
 ✓ Profiler로 불필요한 리렌더가 실측됐는가?
 ✓ 분리 후 Context 이름이 책임을 명확히 드러내는가?

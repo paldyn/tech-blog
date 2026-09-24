@@ -212,5 +212,7 @@ startTransition(() => setSearchQuery(e.target.value));
 
 **지난 글:** [useDeferredValue로 후순위 업데이트 분리](/posts/react-usedeferredvalue/)
 
+**다음 글:** [use() 훅 — Promise와 Context를 조건문 안에서 읽기](/posts/react-use-hook/)
+
 <br>
 읽어주셔서 감사합니다. 😊

@@ -141,6 +141,8 @@ React 렌더링 모델의 핵심은 단순하다. 컴포넌트 함수는 순수�
 
 ---
 
+**지난 글:** [Prop Drilling 문제와 해결책](/posts/react-prop-drilling/)
+
 **다음 글:** [함수형 컴포넌트 생명주기](/posts/react-component-lifecycle/)
 
 <br>

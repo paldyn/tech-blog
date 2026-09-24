@@ -39,7 +39,7 @@ function regularFunction() {
 
 React는 컴포넌트의 훅 상태를 **Fiber 노드의 링크드 리스트**에 저장한다. 각 훅은 리스트의 한 노드다. React는 훅이 **항상 같은 순서로, 같은 수만큼** 호출된다고 가정하고 순서(인덱스)로 어떤 훅의 state인지 찾는다.
 
-```
+```text
 컴포넌트 함수 호출 시:
 useState(0)  → hooks[0]
 useEffect()  → hooks[1]
