@@ -17,7 +17,7 @@ draft: false
 
 가장 권장되는 구조는 기능(Feature) 별로 디렉터리를 만들고 그 안에 Slice, Selector, 컴포넌트를 함께 두는 방식이다.
 
-```
+```text
 src/
   features/
     auth/
@@ -249,6 +249,8 @@ Redux Toolkit의 Slice 패턴은 대규모 팀에서 상태를 체계적으로 �
 ---
 
 **지난 글:** [Redux Toolkit 완전 가이드 — createSlice와 configureStore](/posts/react-redux-toolkit/)
+
+**다음 글:** [RTK Query — Redux에서 서버 상태 관리하기](/posts/react-rtk-query/)
 
 <br>
 읽어주셔서 감사합니다. 😊

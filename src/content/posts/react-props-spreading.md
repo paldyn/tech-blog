@@ -148,7 +148,7 @@ function Button({ variant = 'primary', ...rest }: ButtonProps) {
 
 **지난 글:** [children prop으로 컴포넌트 조합하기](/posts/react-children/)
 
-**다음 글:** [조건부 렌더링](/posts/react-conditional-rendering/)
+**다음 글:** [함수형 업데이트: 이전 상태를 안전하게 읽는 법](/posts/react-functional-updates/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -17,7 +17,7 @@ draft: false
 
 어떤 데이터가 컴포넌트 트리 아래쪽에서 필요한데, 그 데이터를 실제로 사용하지 않는 중간 컴포넌트들도 전달받고 넘겨줘야 하는 상황이다.
 
-```
+```text
 App (user 데이터 보유)
   └── Page (user 필요 없음, 그냥 전달)
         └── Layout (user 필요 없음, 그냥 전달)
@@ -116,7 +116,7 @@ function UserProfile() {
 
 ## 세 가지 해결책 선택 기준
 
-```
+```text
 prop drilling인가?
 ├── 1~2 단계이면 → 그냥 props로 전달 (문제 아님)
 ├── 중간 컴포넌트가 3단계 이상이면:
@@ -130,6 +130,8 @@ prop drilling은 모든 경우에 나쁜 것이 아니다. 1~2 단계 전달은 
 ---
 
 **지난 글:** [key를 이용한 컴포넌트 리셋](/posts/react-key-as-reset/)
+
+**다음 글:** [React 렌더링 모델 — Render 단계와 Commit 단계](/posts/react-render-model/)
 
 <br>
 읽어주셔서 감사합니다. 😊
