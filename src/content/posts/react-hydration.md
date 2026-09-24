@@ -17,7 +17,7 @@ draft: false
 
 기본 React 앱(`createRoot + render`)은 브라우저에서만 HTML을 생성한다.
 
-```
+```text
 1. 서버가 빈 HTML 전송: <div id="root"></div>
 2. 브라우저가 JavaScript 다운로드 및 실행
 3. React가 DOM 생성 → 화면 표시
@@ -29,7 +29,7 @@ draft: false
 
 SSR은 서버에서 React 컴포넌트를 실행해 HTML 문자열을 만들어서 브라우저로 전송한다.
 
-```
+```text
 1. 서버가 React 컴포넌트 실행 → HTML 문자열 생성
 2. 브라우저가 완성된 HTML 즉시 표시 (FCP 빠름)
 3. JavaScript 로드 후 React가 이벤트 핸들러 연결 (하이드레이션)
@@ -83,7 +83,7 @@ app.get('/', (req, res) => {
 
 하이드레이션에서 가장 자주 만나는 문제다. 서버가 생성한 HTML과 클라이언트의 React가 렌더링한 결과가 다를 때 발생한다.
 
-```
+```text
 Warning: Text content did not match.
 Server: "2026년 6월 4일"
 Client: "2026년 6월 5일"

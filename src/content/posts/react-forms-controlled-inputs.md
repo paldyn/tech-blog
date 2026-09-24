@@ -199,5 +199,7 @@ function LoginForm() {
 
 **지난 글:** [자동 배칭(Automatic Batching): React 18](/posts/react-automatic-batching/)
 
+**다음 글:** [비제어 컴포넌트와 useRef 폼 처리](/posts/react-uncontrolled-inputs/)
+
 <br>
 읽어주셔서 감사합니다. 😊

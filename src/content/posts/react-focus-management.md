@@ -294,5 +294,7 @@ button:focus-visible {
 
 **지난 글:** [React 접근성(a11y) 기초 — 스크린 리더와 시맨틱](/posts/react-accessibility/)
 
+**다음 글:** [React에서 애니메이션 구현하기](/posts/react-animations/)
+
 <br>
 읽어주셔서 감사합니다. 😊

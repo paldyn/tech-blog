@@ -158,7 +158,7 @@ Fragment는 "DOM에 추가 노드를 만들고 싶지 않을 때"만 사용하�
 
 **지난 글:** [JSX 심화: 컴파일 과정과 표현식 규칙](/posts/react-jsx-deep/)
 
-**다음 글:** [컴포넌트의 개념](/posts/react-components/)
+**다음 글:** [children prop으로 컴포넌트 조합하기](/posts/react-children/)
 
 <br>
 읽어주셔서 감사합니다. 😊
