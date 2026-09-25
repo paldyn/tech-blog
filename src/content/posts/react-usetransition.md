@@ -172,7 +172,7 @@ function LikeButton({ postId }: { postId: string }) {
 
 ## useTransition 제약사항
 
-```
+```text
 ✗ transition 안에서 제어 컴포넌트의 input value 업데이트 금지
   → input은 즉각 업데이트 필요, transition으로 감싸면 지연됨
 

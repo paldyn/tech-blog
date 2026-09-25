@@ -42,7 +42,7 @@ console.log(process.env.DATABASE_URL); // .env에서 읽은 값
 
 `.env` 파일:
 
-```
+```ini
 DATABASE_URL=postgresql://user:pass@localhost:5432/mydb
 PORT=3000
 NODE_ENV=development
@@ -83,7 +83,7 @@ dotenvx run -- node server.js
 
 브라우저 번들에는 `process.env`가 없습니다. Vite는 **빌드 타임에** `.env` 파일을 읽어 `import.meta.env`로 치환합니다.
 
-```
+```ini
 # Vite .env 파일
 VITE_API_BASE=https://api.example.com
 VITE_APP_VERSION=1.0.0
