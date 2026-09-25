@@ -52,7 +52,7 @@ import App from './App';
 
 ## 번역 파일 구조
 
-```
+```text
 public/
 └── locales/
     ├── ko/

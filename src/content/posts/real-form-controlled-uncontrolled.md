@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/real-pagination-client/)에서 커서 페이지네이션과 무한 스크롤 구현을 살펴봤습니다. 이번에는 **폼(Form)<strong> 주제를 시작합니다. React에서 폼 입력을 다루는 두 가지 방식—</strong>제어 컴포넌트**(Controlled Component)와 **비제어 컴포넌트(Uncontrolled Component)**—의 차이와 React Hook Form이 두 방식을 어떻게 결합하는지 정리합니다.
+[지난 글](/posts/real-pagination-client/)에서 커서 페이지네이션과 무한 스크롤 구현을 살펴봤습니다. 이번에는 **폼(Form)** 주제를 시작합니다. React에서 폼 입력을 다루는 두 가지 방식—**제어 컴포넌트**(Controlled Component)와 **비제어 컴포넌트(Uncontrolled Component)**—의 차이와 React Hook Form이 두 방식을 어떻게 결합하는지 정리합니다.
 
 ![제어 vs 비제어 컴포넌트](/assets/posts/real-form-controlled-uncontrolled-concept.svg)
 
@@ -253,6 +253,8 @@ function RegisterForm() {
 ---
 
 **지난 글:** [페이지네이션 클라이언트 — 커서·오프셋·무한 스크롤 구현](/posts/real-pagination-client/)
+
+**다음 글:** [폼 유효성 검사 — RHF + Zod로 견고한 폼 만들기](/posts/real-form-validation/)
 
 <br>
 읽어주셔서 감사합니다. 😊
