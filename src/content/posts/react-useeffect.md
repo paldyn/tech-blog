@@ -38,7 +38,7 @@ function ChatRoom({ roomId }) {
 
 `useEffect`는 **브라우저가 화면을 페인트한 후** 비동기적으로 실행된다. DOM이 이미 반영된 상태다.
 
-```
+```text
 setState → 렌더 → DOM 반영 → 화면 페인트 → useEffect 실행
 ```
 
