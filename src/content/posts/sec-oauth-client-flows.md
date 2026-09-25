@@ -94,7 +94,7 @@ sessionStorage.removeItem('oauth_state');
 
 SPA에서 토큰 교환을 직접 하면 CORS 설정이 필요하고 토큰이 브라우저에 노출됩니다. **BFF(Backend for Frontend)** 패턴은 중간 서버를 두어 토큰 교환을 처리하고, 브라우저에는 HttpOnly 쿠키로만 세션을 전달합니다.
 
-```
+```text
 SPA → BFF 서버 → 인가 서버 (토큰 교환)
                 ↓
         HttpOnly 쿠키로 세션 발급 → SPA

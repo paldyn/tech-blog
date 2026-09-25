@@ -38,7 +38,7 @@ XSS는 공격자가 신뢰할 수 있는 사이트에 악성 스크립트를 주
 
 URL의 쿼리 파라미터나 폼 데이터를 서버가 응답에 즉시 반영할 때 발생합니다.
 
-```
+```text
 https://example.com/search?q=<script>alert(1)</script>
 ```
 
@@ -140,7 +140,7 @@ Content-Security-Policy:
 
 세션 쿠키에 `HttpOnly` 플래그를 설정하면 JavaScript에서 `document.cookie`로 읽을 수 없어, XSS가 성공해도 **세션 탈취**를 막을 수 있습니다.
 
-```
+```http
 Set-Cookie: sessionId=abc123; HttpOnly; Secure; SameSite=Strict
 ```
 

@@ -209,5 +209,7 @@ npx eslint --rulesdir ./rules src/
 
 **지난 글:** [eval과 new Function의 보안 위험](/posts/sec-eval-function-risk/)
 
+**다음 글:** [의존성 감사 — npm audit과 공급망 보안](/posts/sec-dependency-audit/)
+
 <br>
 읽어주셔서 감사합니다. 😊

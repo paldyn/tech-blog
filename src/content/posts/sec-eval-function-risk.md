@@ -64,7 +64,7 @@ fn(); // 쿠키 탈취 가능
 
 CSP의 `script-src`에 `'unsafe-eval'`이 없으면 `eval()`·`new Function()`·`setTimeout(문자열)`이 **모두 런타임 에러**로 차단됩니다.
 
-```
+```text
 EvalError: Refused to evaluate a string as JavaScript because
 'unsafe-eval' is not an allowed source of script in the
 Content-Security-Policy directive.
