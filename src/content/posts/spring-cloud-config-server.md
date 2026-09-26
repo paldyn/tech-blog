@@ -73,7 +73,7 @@ spring:
 
 Config Server가 읽어갈 Git 저장소의 권장 구조다.
 
-```
+```text
 service-configs/
 ├── application.yml           # 모든 서비스 공통 설정
 ├── application-dev.yml       # dev 환경 공통 설정
@@ -100,7 +100,7 @@ Config Server는 클라이언트가 `order-service` + `dev` 프로파일로 요�
 
 Config Server는 설정을 REST API로 노출한다.
 
-```
+```text
 GET /{application}/{profile}[/{label}]
 GET /{application}-{profile}.yml
 GET /{label}/{application}-{profile}.yml

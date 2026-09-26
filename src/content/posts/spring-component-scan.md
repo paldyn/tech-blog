@@ -89,7 +89,7 @@ public class JdbcOrderRepository implements OrderRepository {
 
 클래스 이름의 첫 글자를 소문자로 바꾼 것이 기본 빈 이름입니다.
 
-```
+```text
 OrderService    → orderService
 JdbcOrderRepository → jdbcOrderRepository
 RateDiscountPolicy  → rateDiscountPolicy
@@ -187,6 +187,8 @@ Spring Boot에서는 메인 클래스를 `com.example.myapp` 루트에 두면 �
 ---
 
 **지난 글:** [자바로 빈 설정하기 — @Configuration과 @Bean](/posts/spring-bean-java-config/)
+
+**다음 글:** [Spring DI 세 가지 방식: 생성자·세터·필드 주입 완전 비교](/posts/spring-di-three-ways/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -257,7 +257,7 @@ public void notify(@RequestBody NotificationRequest req) {
 
 Spring MVC는 복수의 패턴이 매칭될 때 다음 순서로 우선순위를 결정합니다.
 
-```
+```text
 1. 정확한 경로: /users/profile
 2. 접두사 와일드카드: /users/{id}
 3. 더블 와일드카드: /users/**
@@ -309,6 +309,8 @@ public ResponseEntity<OrderTotalResponse> getTotal(
 ---
 
 **지난 글:** [HandlerMapping과 HandlerAdapter 심화: 요청이 컨트롤러를 찾는 방법](/posts/spring-handler-mapping-adapter/)
+
+**다음 글:** [RESTful URL 매핑 전략: 자원·행위·계층을 URL에 담는 법](/posts/spring-restful-mapping/)
 
 <br>
 읽어주셔서 감사합니다. 😊

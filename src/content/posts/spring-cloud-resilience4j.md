@@ -213,7 +213,7 @@ resilience4j:
 
 여러 어노테이션을 함께 사용할 때는 적용 순서가 중요하다. Spring AOP는 바깥쪽 어노테이션이 먼저 적용된다.
 
-```
+```text
 @Bulkhead → @CircuitBreaker → @RateLimiter → @TimeLimiter → @Retry → 실제 메서드 호출
 ```
 
@@ -304,6 +304,8 @@ Resilience4j는 MSA에서 장애가 전파되지 않도록 각 서비스 호출 
 ---
 
 **지난 글:** [Spring Cloud Config Server: 중앙화된 설정 관리](/posts/spring-cloud-config-server/)
+
+**다음 글:** [Spring Cloud OpenFeign: 선언형 HTTP 클라이언트 완전 정복](/posts/spring-cloud-openfeign/)
 
 <br>
 읽어주셔서 감사합니다. 😊
