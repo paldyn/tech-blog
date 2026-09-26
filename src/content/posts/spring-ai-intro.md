@@ -137,7 +137,7 @@ public class ProductRecommender {
 }
 ```
 
-```
+```text
 {{! recommend.st }}
 {category} 카테고리에서 {budget}원 이하 제품을 3가지 추천해주세요.
 각 제품의 장단점도 함께 설명해주세요.
@@ -326,6 +326,8 @@ spring:
 ---
 
 **지난 글:** [Virtual Threads로 Spring MVC 성능 극대화하기](/posts/spring-modern-virtual-threads/)
+
+**다음 글:** [XML 설정에서 Java Config로: Spring 레거시 현대화 완전 가이드](/posts/spring-legacy-xml-to-javaconfig/)
 
 <br>
 읽어주셔서 감사합니다. 😊

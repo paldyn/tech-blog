@@ -115,7 +115,7 @@ Spring Boot 2.0부터는 인터페이스가 있어도 **CGLIB를 기본으로 �
 
 AOP 프레임워크는 Spring AOP 외에도 AspectJ가 있습니다.
 
-```
+```text
 Spring AOP:
 - 런타임 프록시 기반
 - 스프링 빈에만 적용 가능

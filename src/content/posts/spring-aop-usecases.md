@@ -388,7 +388,7 @@ public class InventoryService {
 
 ## AOP 적용 시 체크리스트
 
-```
+```text
 □ 대상 빈이 Spring 컨테이너가 관리하는 빈인가?
 □ 대상 메서드가 public인가? (private은 프록시 불가)
 □ self-invocation이 아닌가? (같은 클래스 내 호출)
@@ -410,6 +410,8 @@ public class InventoryService {
 ---
 
 **지난 글:** [Spring AOP Pointcut 표현식 심화: execution·within·@annotation 완전 정복](/posts/spring-aop-pointcut-expression/)
+
+**다음 글:** [Servlet · Filter · Listener 완전 정복: 웹 컨테이너 3요소의 역할과 실전 활용](/posts/spring-servlet-filter-listener/)
 
 <br>
 읽어주셔서 감사합니다. 😊

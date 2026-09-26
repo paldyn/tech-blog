@@ -229,7 +229,7 @@ public class RetryAspect { ... }
 
 `@Order` 값이 낮을수록 먼저 `@Before`/`@Around(start)`가 실행되고 나중에 `@After`/`@Around(end)`가 실행됩니다. 보안 검증이 가장 바깥쪽(먼저 진입, 나중 종료)에 위치해야 하므로 `@Order(1)`이 적합합니다.
 
-```
+```text
 요청 ──→ SecurityAspect.before
          → LoggingAspect.around(start)
            → RetryAspect.around(start)

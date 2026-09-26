@@ -249,5 +249,7 @@ public class TransactionAspect {
 
 **지난 글:** [Spring AOP 개념: 횡단 관심사를 분리하는 방법](/posts/spring-aop-concept/)
 
+**다음 글:** [Spring AOP 프록시: JDK 동적 프록시 vs CGLIB 완전 정리](/posts/spring-aop-proxy/)
+
 <br>
 읽어주셔서 감사합니다. 😊

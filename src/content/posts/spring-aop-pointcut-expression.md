@@ -19,7 +19,7 @@ draft: false
 
 `execution`은 Spring AOP에서 가장 많이 쓰는 지시자입니다. 메서드 실행 시그니처 전체를 대상으로 매칭합니다.
 
-```
+```text
 execution([수식어] 반환타입 [클래스.]메서드명(파라미터))
 ```
 
