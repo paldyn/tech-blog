@@ -141,7 +141,7 @@ Before 체인은 Order 오름차순, After 체인도 동일한 오름차순으�
 
 중요한 함정이 하나 있습니다. BPP 빈 자체는 다른 BPP의 After 단계를 거치지 않고 **일찍 초기화**됩니다.
 
-```
+```text
 ApplicationContext 초기화 순서:
 1. BeanPostProcessor 빈들을 먼저 모두 생성 (BPP 체인 없이)
 2. 일반 빈들을 생성하면서 BPP 체인 적용

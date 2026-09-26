@@ -198,7 +198,7 @@ public class UserPreference { /* ... */ }
 
 ## 실전 선택 기준
 
-```
+```text
 상태 없는 서비스·리포지터리    → singleton (기본)
 호출마다 새 상태가 필요한 빌더  → prototype + ObjectProvider
 요청별 로깅·트레이싱 컨텍스트  → @RequestScope

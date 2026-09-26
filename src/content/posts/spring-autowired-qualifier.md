@@ -45,7 +45,7 @@ public class OrderService {
 
 Spring은 `PaymentGateway` 타입의 후보 빈이 두 개(`kakaoPay`, `tossPay`)라는 것을 알지만 어느 쪽을 선택해야 할지 모릅니다. 결과는:
 
-```
+```text
 NoUniqueBeanDefinitionException:
   No qualifying bean of type 'PaymentGateway' available:
   expected single matching bean but found 2: kakaoPay, tossPay

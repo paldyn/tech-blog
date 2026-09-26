@@ -119,14 +119,14 @@ public class SchedulerConfig {
 
 동일 빈에 여러 콜백이 등록되면 다음 순서로 실행됩니다.
 
-```
+```text
 초기화: @PostConstruct → afterPropertiesSet() → initMethod
 소멸:   @PreDestroy    → destroy()            → destroyMethod
 ```
 
 실무 선택 기준:
 
-```
+```text
 내가 만든 클래스, 초기화 필요       → @PostConstruct / @PreDestroy
 외부 라이브러리, @Bean으로 등록     → initMethod / destroyMethod
 Spring 레거시 코드 분석 시          → InitializingBean / DisposableBean 이해 필요
