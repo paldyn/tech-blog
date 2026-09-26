@@ -83,7 +83,7 @@ JDK 대신 JRE 이미지를 사용하면 최종 이미지 크기가 약 200MB �
 
 빌드 컨텍스트가 크면 `docker build` 자체가 느려진다. `.dockerignore`로 불필요한 파일을 제외한다.
 
-```
+```text
 .gradle
 .git
 .idea
@@ -166,7 +166,7 @@ Buildpacks는 JVM 옵션, 레이어 분리, 보안 패치를 자동으로 처리
 
 ---
 
-**지난 글:** [Spring Boot JAR vs WAR 패키징](/posts/spring-jar-vs-war/)
+**지난 글:** [Spring Boot 멀티 모듈 프로젝트 — 구조 설계와 빌드 전략](/posts/spring-multi-module/)
 
 **다음 글:** [Spring Boot CI/CD 파이프라인 구성](/posts/spring-cicd-pipeline/)
 

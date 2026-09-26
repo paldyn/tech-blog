@@ -222,6 +222,8 @@ DTO와 Entity를 분리하면 레이어 간 결합을 낮추고 각 객체가 �
 
 ---
 
+**지난 글:** [Jackson 심층 분석 — JSON 직렬화·역직렬화 완전 정복](/posts/spring-jackson-deepdive/)
+
 **다음 글:** [MapStruct — 타입 안전한 객체 매핑 자동화](/posts/spring-mapstruct/)
 
 <br>

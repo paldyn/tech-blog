@@ -30,13 +30,13 @@ draft: false
 Span 정보는 서비스 간 HTTP 헤더로 전파된다. 대표적인 전파 형식은 두 가지다.
 
 **W3C Trace Context** (표준):
-```
+```text
 traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
               버전  traceId(32자리)          spanId(16자리)    플래그
 ```
 
 **B3 Propagation** (Zipkin):
-```
+```text
 X-B3-TraceId: 4bf92f3577b34da6a3ce929d0e0e4736
 X-B3-SpanId:  00f067aa0ba902b7
 X-B3-Sampled: 1
@@ -102,7 +102,7 @@ logging:
 
 설정만 마치면 `logback`이 출력하는 모든 로그에 `traceId`와 `spanId`가 자동으로 삽입된다. Micrometer Tracing이 MDC(Mapped Diagnostic Context)에 값을 주입하기 때문이다.
 
-```
+```text
 2026-05-31 10:23:14 [4bf92f3577b34da6/00f067aa0ba902b7] INFO  c.e.OrderController : 주문 생성 요청
 2026-05-31 10:23:14 [4bf92f3577b34da6/a3ce929d0e0e4736] INFO  c.e.OrderService    : 재고 확인 중
 2026-05-31 10:23:14 [4bf92f3577b34da6/a3ce929d0e0e4736] INFO  c.e.InventoryClient : HTTP GET /inventory/101

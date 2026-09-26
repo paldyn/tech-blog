@@ -291,5 +291,7 @@ Validator 로직 자체는 Spring 컨텍스트 없이 단위 테스트할 수 �
 
 **지난 글:** [Validation Groups — 상황별 유효성 검증 분리](/posts/spring-validation-groups/)
 
+**다음 글:** [API 응답 봉투 패턴 — 일관된 응답 구조 설계](/posts/spring-response-envelope/)
+
 <br>
 읽어주셔서 감사합니다. 😊

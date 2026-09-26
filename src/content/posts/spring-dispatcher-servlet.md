@@ -17,7 +17,7 @@ draft: false
 
 전통적인 서블릿 기반 웹 개발에서는 URL마다 별도의 Servlet을 등록해야 했습니다. `/login`이면 `LoginServlet`, `/product/list`면 `ProductListServlet`처럼 Servlet이 폭발적으로 늘어납니다. **Front Controller 패턴**은 이를 해결하기 위해 하나의 진입점(DispatcherServlet)이 모든 요청을 받아 적절한 핸들러에 위임하는 구조입니다.
 
-```
+```text
 전통 방식:
 /login    → LoginServlet
 /product  → ProductServlet   ← Servlet 수만큼 등록 필요
