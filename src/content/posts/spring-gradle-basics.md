@@ -36,7 +36,7 @@ XML에서는 불가능한 동적 설정입니다.
 
 Gradle 자체를 설치할 필요는 없습니다. **Gradle Wrapper**를 사용하면 됩니다. Spring Initializr에서 생성된 프로젝트에는 이미 Wrapper가 포함되어 있습니다.
 
-```
+```text
 my-project/
 ├── gradlew          ← Linux/macOS 실행 스크립트
 ├── gradlew.bat      ← Windows 실행 스크립트
@@ -248,7 +248,7 @@ buildCache {
 
 대규모 스프링 프로젝트는 여러 모듈로 나뉩니다. Gradle은 멀티 모듈 구성을 잘 지원합니다.
 
-```
+```text
 my-project/
 ├── settings.gradle.kts    ← 모듈 목록
 ├── build.gradle.kts       ← 공통 설정

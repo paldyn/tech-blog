@@ -192,7 +192,7 @@ Spring Boot 3.x는 Spring Framework 6.x를 사용하며, Jakarta EE 9+ 네임스
 
 실무 애플리케이션을 만든다면 일반적인 순서는 이렇습니다.
 
-```
+```text
 1단계: Spring Boot + spring-boot-starter-web
        → 기본 REST API 서버
 

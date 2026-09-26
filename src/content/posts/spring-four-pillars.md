@@ -218,7 +218,7 @@ public class TransferService {
 
 이 네 가지 개념은 독립적이 아니라 서로 맞물려 동작합니다.
 
-```
+```text
 IoC 컨테이너가 빈을 관리한다
       ↓
 DI로 빈들 사이의 의존성을 연결한다

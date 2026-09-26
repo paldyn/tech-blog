@@ -156,7 +156,7 @@ management:
 
 ## 종료 시퀀스 전체 정리
 
-```
+```text
 SIGTERM 수신
   → Readiness = OUT_OF_SERVICE (K8s가 트래픽 차단)
   → preStop sleep (LB 연결 해제 대기)

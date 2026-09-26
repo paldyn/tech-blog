@@ -180,7 +180,7 @@ public ResponseEntity<Resource> download(@PathVariable Long id) {
 
 한글 파일명을 위해 `filename*=UTF-8''` 형식(RFC 5987)을 사용합니다. 구형 브라우저 호환이 필요하다면 `filename`과 `filename*` 를 함께 보냅니다.
 
-```
+```http
 Content-Disposition: attachment; filename="report.pdf"; filename*=UTF-8''%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf
 ```
 

@@ -85,7 +85,7 @@ Windows에서는 **Winget**이나 **Temurin 공식 인스톨러**를 사용합�
 
 IntelliJ 설치 후 Spring Boot 프로젝트를 여는 방법:
 
-```
+```text
 File → Open → build.gradle (또는 pom.xml) 선택
 → "Open as Project" 클릭
 → Gradle/Maven이 자동으로 의존성 다운로드
@@ -105,7 +105,7 @@ $ code --install-extension vmware.vscode-boot-dev-pack
 
 IDE와 무관하게 반드시 설정해야 할 것들:
 
-```
+```text
 인코딩: UTF-8 (macOS/Linux 기본값, Windows 주의)
 줄 끝 문자: LF (UNIX 스타일, Windows는 CRLF가 기본)
 ```
@@ -198,7 +198,7 @@ $ ./gradlew dependencies # 의존성 트리 출력
 
 환경이 갖춰졌다면, **Spring Initializr**(`start.spring.io`)에서 프로젝트 뼈대를 만드는 것이 가장 빠릅니다.
 
-```
+```text
 Project: Gradle - Kotlin
 Language: Java
 Spring Boot: 3.3.x
