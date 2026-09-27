@@ -294,5 +294,7 @@ Jackson은 단순한 JSON 변환 도구가 아니라 타입 시스템, 다형성
 
 **지난 글:** [Spring REST Docs — 테스트 기반 API 문서 자동화](/posts/spring-rest-restdocs/)
 
+**다음 글:** [DTO와 Entity 패턴 — 계층 간 데이터 분리 설계](/posts/spring-dto-entity-pattern/)
+
 <br>
 읽어주셔서 감사합니다. 😊

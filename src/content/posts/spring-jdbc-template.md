@@ -133,7 +133,7 @@ public int delete(long id) {
 
 ```java
 // batchUpdate — 대량 처리
-public int[] bulkInsert(List<User> users) {
+public int[][] bulkInsert(List<User> users) {
     return jdbc.batchUpdate(
             "INSERT INTO users(name, email) VALUES(?, ?)",
             users,

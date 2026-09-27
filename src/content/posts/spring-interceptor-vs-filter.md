@@ -201,7 +201,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 인터셉터가 여러 개일 때 실행 순서는 `order()` 값이 작을수록 먼저 `preHandle`이 호출됩니다. 반환 경로(`postHandle`, `afterCompletion`)는 반대 순서입니다.
 
-```
+```text
 preHandle(A) → preHandle(B) → Controller
              → postHandle(B) → postHandle(A)
              → afterCompletion(B) → afterCompletion(A)

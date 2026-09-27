@@ -19,7 +19,7 @@ draft: false
 
 **Spring Boot의 Fat JAR**(Executable JAR)은 다르다. `spring-boot-maven-plugin`이나 `spring-boot-gradle-plugin`이 빌드 시 모든 의존성 JAR을 하나의 JAR 안에 중첩 포함(nested JARs)하는 방식으로, 단일 파일 하나만으로 독립 실행이 가능하다.
 
-```
+```bash
 java -jar myapp-1.0.jar
 ```
 
@@ -31,7 +31,7 @@ java -jar myapp-1.0.jar
 
 `jar tf myapp.jar`로 Fat JAR의 내용을 확인하면 다음 구조가 보인다.
 
-```
+```text
 BOOT-INF/classes/          ← 애플리케이션 클래스
 BOOT-INF/lib/              ← 의존성 JAR 파일들 (중첩 포함)
 META-INF/MANIFEST.MF       ← JarLauncher 지정
@@ -44,7 +44,7 @@ org/springframework/boot/  ← Spring Boot Loader (중첩 JAR 클래스로더)
 
 WAR은 서블릿 컨테이너(Tomcat, Jetty 등)에 배포하기 위한 표준 포맷이다.
 
-```
+```text
 WEB-INF/classes/           ← 애플리케이션 클래스
 WEB-INF/lib/               ← 앱 의존성 (서블릿 컨테이너 제외)
 WEB-INF/lib-provided/      ← 내장 Tomcat (java -jar 실행 시 사용)

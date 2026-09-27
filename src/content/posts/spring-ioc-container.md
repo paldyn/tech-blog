@@ -147,6 +147,8 @@ Spring Boot는 단일 컨테이너로 구성되므로 이 패턴을 직접 다�
 
 ---
 
+**지난 글:** [의존성 관리 — scope, transitive, BOM](/posts/spring-dependency-management/)
+
 **다음 글:** [XML로 빈 설정하기 — \<bean\> 태그 완전 정복](/posts/spring-bean-xml-config/)
 
 <br>
