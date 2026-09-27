@@ -49,7 +49,7 @@ Fielding은 다음 여섯 가지 제약조건을 모두 충족해야 RESTful이�
 
 URI는 **리소스를 식별**하는 이름입니다. 행위(동사)가 아니라 리소스(명사)를 표현해야 합니다.
 
-```
+```text
 # 잘못된 패턴 — 동사를 URI에 넣지 않는다
 GET  /getUsers
 POST /createOrder
@@ -147,7 +147,7 @@ Spring Boot는 기본적으로 `jackson-databind`를 통해 JSON을, `jackson-da
 
 REST API를 설계할 때 다음 질문을 자문하면 원칙에서 벗어나지 않을 수 있습니다.
 
-```
+```text
 1. URI에 동사가 포함되어 있지는 않은가?
 2. HTTP 메서드의 의미와 실제 행위가 일치하는가?
 3. 서버가 클라이언트 상태를 저장하고 있지는 않은가?

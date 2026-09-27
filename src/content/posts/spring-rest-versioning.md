@@ -43,7 +43,7 @@ draft: false
 
 URL 경로에 버전을 포함합니다. 가장 직관적이고 캐시하기 쉬워서 실무에서 가장 많이 쓰입니다.
 
-```
+```http
 GET /api/v1/users
 GET /api/v2/users
 ```
@@ -54,7 +54,7 @@ GET /api/v2/users
 
 쿼리 파라미터로 버전을 지정합니다.
 
-```
+```http
 GET /api/users?version=1
 GET /api/users?api-version=2
 ```
@@ -65,7 +65,7 @@ URI가 깔끔해 보이지만, 쿼리 파라미터가 없는 요청의 기본 �
 
 HTTP 헤더에 버전을 담습니다.
 
-```
+```http
 GET /api/users
 X-API-Version: 2
 ```
@@ -76,7 +76,7 @@ URL이 깔끔하고 리소스 URI가 버전에 독립적입니다. 단점은 브
 
 HTTP 표준 `Accept` 헤더의 미디어 타입에 버전을 포함합니다.
 
-```
+```http
 GET /api/users
 Accept: application/vnd.company.users.v2+json
 ```
@@ -201,7 +201,7 @@ public ResponseEntity<List<UserV1Dto>> listV1() {
 
 무한정 구 버전을 유지하면 운영 부담이 급증합니다. 명확한 정책이 필요합니다.
 
-```
+```text
 권장 정책:
 - 현재 버전 + 최대 1~2개 이전 버전 유지
 - 신 버전 출시 후 최소 6개월 마이그레이션 기간 제공
@@ -236,6 +236,8 @@ public ResponseEntity<Void> listV0Deprecated() {
 ---
 
 **지난 글:** [Spring REST API 페이징·필터·정렬 — Pageable과 Page 완전 가이드](/posts/spring-rest-paging-filter-sort/)
+
+**다음 글:** [REST API 오류 응답 표준화 — RFC 7807 Problem Details](/posts/spring-rest-error-rfc7807/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -25,7 +25,7 @@ Spring MVC 맥락에서 REST의 실천적 의미는 간단합니다. URL은 **�
 
 ### 규칙 1: 명사를 쓰고 복수형을 사용하라
 
-```
+```text
 ❌ GET /getUsers
 ❌ POST /createUser
 ✅ GET /users
@@ -36,7 +36,7 @@ Spring MVC 맥락에서 REST의 실천적 의미는 간단합니다. URL은 **�
 
 ### 규칙 2: 계층 관계는 슬래시 구분자로 표현하라
 
-```
+```text
 ✅ GET  /users/{id}             단일 사용자
 ✅ GET  /users/{id}/orders      사용자의 주문 목록
 ✅ GET  /orders/{id}/items      주문의 아이템 목록
@@ -47,7 +47,7 @@ Spring MVC 맥락에서 REST의 실천적 의미는 간단합니다. URL은 **�
 
 ### 규칙 3: 소문자 케밥-케이스(kebab-case)를 사용하라
 
-```
+```text
 ✅ /product-categories
 ✅ /shipping-addresses
 ❌ /ProductCategories
@@ -58,7 +58,7 @@ URL은 대소문자를 구분할 수 있으나, 관례적으로 소문자를 씁
 
 ### 규칙 4: CRUD 외 행위는 서브 리소스로 명사화하라
 
-```
+```text
 ❌ POST /orders/5/doCancel
 ✅ POST /orders/5/cancel
 
