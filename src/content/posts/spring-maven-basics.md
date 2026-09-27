@@ -27,7 +27,7 @@ Maven 등장 이전에는 이 모든 것을 개발팀이 직접 결정하고 관
 
 Maven 프로젝트는 디렉토리 구조가 고정입니다. 이 구조를 따르면 별도 설정 없이 Maven이 소스와 리소스를 자동으로 인식합니다.
 
-```
+```text
 my-app/
 ├── pom.xml                          ← 프로젝트 설정 파일
 └── src/
@@ -172,7 +172,7 @@ Spring Initializr에서 생성된 프로젝트는 기본적으로 Maven Wrapper(
 
 Maven은 의존성을 다음 순서로 찾습니다.
 
-```
+```text
 1. 로컬 저장소 (~/.m2/repository)
    → 있으면 사용
 

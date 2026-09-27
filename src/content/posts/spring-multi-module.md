@@ -25,7 +25,7 @@ draft: false
 
 정답은 없지만 가장 많이 쓰이는 패턴은 다음과 같다.
 
-```
+```text
 my-service/
 ├── domain/           ← Entity, Value Object, 도메인 규칙
 ├── application/      ← UseCase, Service, Port 인터페이스
@@ -168,7 +168,7 @@ jar.enabled = true
 
 **방법 1 — 패키지 구조 통일** (가장 단순):
 
-```
+```text
 com.example.myservice.domain.*
 com.example.myservice.application.*
 com.example.myservice.infra.*

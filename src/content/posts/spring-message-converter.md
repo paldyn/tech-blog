@@ -188,6 +188,8 @@ logging:
 
 ---
 
+**지난 글:** [Spring MVC 정적 리소스 처리: CSS·JS·이미지를 효율적으로 서빙하는 법](/posts/spring-static-resources/)
+
 **다음 글:** [Spring @RestController 완전 정복: @Controller와 차이, ResponseEntity 활용법](/posts/spring-restcontroller/)
 
 <br>

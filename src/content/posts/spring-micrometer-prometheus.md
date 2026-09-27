@@ -232,5 +232,7 @@ counter.tag("plan", user.getPlanType()).increment();  // "FREE", "PRO", "ENTERPR
 
 **지난 글:** [Spring Boot Actuator — 커스텀 HealthIndicator 구현](/posts/spring-custom-healthindicator/)
 
+**다음 글:** [Spring Boot 분산 추적 — Micrometer Tracing + Zipkin 실전 적용](/posts/spring-distributed-tracing/)
+
 <br>
 읽어주셔서 감사합니다. 😊
