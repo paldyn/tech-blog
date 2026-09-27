@@ -225,5 +225,7 @@ Item item = itemRepository.findById(1L).orElseThrow(); // 실제 타입으로 �
 
 **지난 글:** [JPA Cascade와 orphanRemoval 완전 정복](/posts/spring-jpa-cascade-orphan/)
 
+**다음 글:** [Spring Data JPA Repository 완전 정복 — JpaRepository부터 커스텀 쿼리까지](/posts/spring-data-jpa-repository/)
+
 <br>
 읽어주셔서 감사합니다. 😊

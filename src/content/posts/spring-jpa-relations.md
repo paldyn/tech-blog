@@ -301,5 +301,7 @@ cascade를 잘못 사용하면 의도치 않게 연관 엔티티까지 삭제될
 
 **지난 글:** [Spring JPA 1차 캐시와 변경 감지(Dirty Checking) 완전 정복](/posts/spring-jpa-first-cache-dirty-checking/)
 
+**다음 글:** [JPA 페치 전략 완전 정복 — EAGER vs LAZY](/posts/spring-jpa-fetch-strategy/)
+
 <br>
 읽어주셔서 감사합니다. 😊

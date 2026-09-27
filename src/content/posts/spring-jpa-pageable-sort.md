@@ -64,7 +64,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findByStatus(String status, Pageable pageable);
 
     // Slice<T> — count 쿼리 없음 (무한 스크롤 최적화)
-    Slice<User> findByStatus(String status, Pageable pageable);
+    Slice<User> findSliceByStatus(String status, Pageable pageable);
 
     // 정렬만 (페이징 없이) — Sort 파라미터 사용
     List<User> findByStatus(String status, Sort sort);
@@ -95,7 +95,7 @@ page.hasNext();            // true
 **Slice\<T\>** — 무한 스크롤 (모바일 앱, 피드)
 
 ```java
-Slice<User> slice = userRepository.findByStatus("ACTIVE", pageable);
+Slice<User> slice = userRepository.findSliceByStatus("ACTIVE", pageable);
 
 slice.getContent();   // List<User>
 slice.hasNext();      // true/false (size+1 건 조회로 판단)

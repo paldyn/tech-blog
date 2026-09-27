@@ -232,5 +232,7 @@ KRaft 모드(ZooKeeper 없음)로 Kafka 단일 노드를 실행하는 가장 간
 
 **지난 글:** [@TransactionalEventListener — 트랜잭션 완료 후 이벤트 처리](/posts/spring-transactional-event-listener/)
 
+**다음 글:** [Spring RabbitMQ — AMQP 메시지 발행·소비·오류 처리](/posts/spring-rabbitmq-amqp/)
+
 <br>
 읽어주셔서 감사합니다. 😊
