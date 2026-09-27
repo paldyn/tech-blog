@@ -206,7 +206,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 `type` 필드에 넣는 URI는 실제로 접근 가능한 오류 문서 URL이 이상적입니다. 현실적으로는 다음 전략 중 하나를 택합니다.
 
-```
+```text
 # 실제 문서 URL (이상적)
 https://api.example.com/docs/errors/not-found
 

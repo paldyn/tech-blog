@@ -45,7 +45,7 @@ public Page<UserDto> listUsers(
 
 HTTP 요청 예시입니다.
 
-```
+```http
 GET /users?page=0&size=10&sort=name,asc
 GET /users?page=2&size=5&sort=createdAt,desc&sort=name,asc
 GET /users?keyword=spring&status=ACTIVE&page=0&size=20
@@ -127,7 +127,7 @@ Page<User> findAll(Pageable pageable);
 Slice<User> findByStatus(String status, Pageable pageable);
 ```
 
-```java
+```jsonc
 // Slice 응답 예시 — hasNext로 다음 페이지 존재 여부만 판단
 {
   "content": [ ... ],

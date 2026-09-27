@@ -143,7 +143,7 @@ public ResponseEntity<ErrorResponse> handleDuplicateEmail(
 
 `5xx`는 서버 내부 문제입니다. 클라이언트는 잘못이 없으므로 **오류 메시지에 스택 트레이스나 내부 구현 정보를 노출해서는 안 됩니다**.
 
-```java
+```jsonc
 // ✗ 절대 금지 — 스택 트레이스 노출
 {
   "error": "NullPointerException at UserService.java:142...",

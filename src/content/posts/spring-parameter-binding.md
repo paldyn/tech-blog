@@ -239,7 +239,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 같은 이름이 여러 위치에 있을 때 Spring MVC의 처리 순서는 다음과 같습니다.
 
-```
+```text
 1. @PathVariable  → 경로 변수 (가장 우선)
 2. @RequestParam  → 쿼리 파라미터
 3. @ModelAttribute → 폼 필드 (객체 바인딩)

@@ -32,7 +32,7 @@ public class MailService {
 
 Spring은 여러 소스에서 프로퍼티를 읽어 하나의 `Environment` 객체에 합칩니다. 동일한 키가 여러 소스에 있으면 **우선순위가 높은 쪽이 이깁니다**.
 
-```
+```text
 JVM -D 인수 > OS 환경 변수 > @PropertySource > application.properties > 코드 내 기본값
 ```
 
@@ -84,7 +84,7 @@ public class AppSettings {
 
 ### ${...} — 프로퍼티 치환
 
-```
+```text
 ${key}          // 필수 키, 없으면 BeanCreationException
 ${key:default}  // 키 없을 때 default 값 사용
 ${key:}         // 키 없을 때 빈 문자열 사용
@@ -193,7 +193,8 @@ Spring Boot에서는 `application-{profile}.properties` 네이밍 컨벤션을 �
 ```properties
 # application-dev.properties
 mail.host=localhost
-mail.port=1025   # MailHog 포트
+# MailHog 포트
+mail.port=1025
 
 # application-prod.properties
 mail.host=smtp.sendgrid.net
