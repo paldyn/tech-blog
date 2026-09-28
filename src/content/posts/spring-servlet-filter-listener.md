@@ -219,7 +219,7 @@ public HttpSessionListener sessionCountListener() {
 
 Filter와 Spring AOP는 모두 횡단 관심사를 처리하지만 동작 레이어가 다릅니다.
 
-```
+```text
 HTTP Request
     │
     ▼

@@ -147,7 +147,7 @@ class StatefulServiceTest {
 
 계층별로 다른 격리 전략을 조합하면 속도와 격리 품질을 균형 있게 맞출 수 있다.
 
-```
+```text
 단위 테스트 (빠름, 격리 필요 없음)
   → @ExtendWith(MockitoExtension.class)
   → Spring 컨텍스트 없음, 순수 Mock

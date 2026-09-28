@@ -19,7 +19,7 @@ draft: false
 
 ![Spring Boot 정적 리소스 처리 흐름](/assets/posts/spring-static-resources-flow.svg)
 
-```
+```text
 classpath:/META-INF/resources/   (1순위)
 classpath:/resources/            (2순위)
 classpath:/static/               (3순위) ← 실무에서 가장 많이 사용
@@ -251,6 +251,8 @@ Spring Boot DevTools(`spring-boot-devtools`)를 사용하면 `dev` 프로필 없
 ---
 
 **지난 글:** [Spring MVC Model과 ViewResolver: 데이터를 뷰에 전달하는 방법](/posts/spring-model-view-resolver/)
+
+**다음 글:** [Spring HttpMessageConverter: JSON·XML 자동 변환의 핵심 원리](/posts/spring-message-converter/)
 
 <br>
 읽어주셔서 감사합니다. 😊
