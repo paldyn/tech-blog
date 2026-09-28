@@ -196,7 +196,7 @@ public class MailProperties {
 
 검증에 실패하면 애플리케이션 시작이 즉시 중단되고 어떤 필드가 왜 실패했는지 상세한 메시지가 출력됩니다.
 
-```
+```text
 Binding to target org.springframework.boot.context.properties.bind.BindException:
   Failed to bind properties under 'mail' to ...MailProperties:
     Property: mail.port
@@ -279,6 +279,8 @@ class MailPropertiesTest {
 ---
 
 **지난 글:** [Spring Boot DevTools & LiveReload로 개발 생산성 높이기](/posts/springboot-devtools-livereload/)
+
+**다음 글:** [Spring Boot @Conditional — 조건부 Bean 등록 완전 정복](/posts/springboot-conditional-bean/)
 
 <br>
 읽어주셔서 감사합니다. 😊

@@ -94,7 +94,7 @@ spring:
 
 HikariCP 공식 문서의 권장 공식입니다.
 
-```
+```text
 pool_size = (core_count × 2) + effective_spindle_count
 ```
 

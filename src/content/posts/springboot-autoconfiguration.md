@@ -65,14 +65,14 @@ public class DataSourceAutoConfiguration {
 
 Spring Boot 3.x 기준으로 `spring-boot-autoconfigure` JAR 내부의 구조를 살펴보면:
 
-```
+```text
 META-INF/spring/
 └── org.springframework.boot.autoconfigure.AutoConfiguration.imports
 ```
 
 이 파일에 Auto-Configuration 클래스들이 줄바꿈으로 구분되어 나열됩니다.
 
-```
+```text
 org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
 org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
 org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
@@ -92,7 +92,7 @@ java -jar app.jar --debug
 
 애플리케이션 로그에 **Conditions Evaluation Report**가 출력됩니다.
 
-```
+```text
 ============================
 CONDITIONS EVALUATION REPORT
 ============================

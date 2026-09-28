@@ -35,7 +35,7 @@ DevTools가 빠른 이유는 **ClassLoader를 두 계층으로 분리**하기 �
 
 결과적으로 재시작에 걸리는 시간이 JVM 전체를 새로 구동하는 것의 1/3~1/5 수준으로 줄어듭니다.
 
-```
+```text
 일반 재시작: JVM 기동 → 모든 클래스 로딩 → ApplicationContext → 10~30초
 DevTools  : Restart ClassLoader만 교체 → ApplicationContext → 1~3초
 ```

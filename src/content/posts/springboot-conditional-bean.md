@@ -174,7 +174,7 @@ debug=true
 
 실행 시 콘솔에 **Conditions Evaluation Report**가 출력됩니다.
 
-```
+```text
 ============================
 CONDITIONS EVALUATION REPORT
 ============================

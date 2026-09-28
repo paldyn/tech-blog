@@ -30,7 +30,7 @@ Spring Boot 공식 스타터는 두 개의 모듈로 나뉩니다.
 
 Gradle 멀티 프로젝트 기준으로 두 모듈을 만듭니다.
 
-```
+```text
 my-service-spring-boot-autoconfigure/
 ├── src/main/java/com/example/
 │   ├── MyService.java
@@ -94,7 +94,7 @@ public class MyServiceAutoConfiguration {
 
 Spring Boot 2.7 이상에서는 `spring.factories` 대신 이 파일을 사용합니다.
 
-```
+```text
 # src/main/resources/META-INF/spring/
 # org.springframework.boot.autoconfigure.AutoConfiguration.imports
 

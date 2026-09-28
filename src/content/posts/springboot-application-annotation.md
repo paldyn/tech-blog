@@ -106,7 +106,7 @@ spring.autoconfigure.exclude=\
 
 **메인 클래스의 패키지 위치가 곧 스캔 루트**입니다. `com.example.DemoApplication`에 `@SpringBootApplication`이 있다면 `com.example.**` 하위 전체가 스캔됩니다.
 
-```
+```text
 com.example/
 ├── DemoApplication.java          ← @SpringBootApplication (스캔 루트)
 ├── controller/
@@ -119,7 +119,7 @@ com.example/
 
 메인 클래스를 하위 패키지에 두면 상위 패키지의 Bean이 스캔되지 않습니다.
 
-```
+```text
 com.example/
 ├── controller/                   ← 스캔 안 됨!
 └── api/
@@ -149,7 +149,7 @@ public static void main(String[] args) {
 }
 ```
 
-```
+```text
 1. SpringApplication 객체 생성
    - 웹 환경 감지 (SERVLET / REACTIVE / NONE)
    - ApplicationContextInitializer 목록 로딩
@@ -215,7 +215,7 @@ class DemoApplicationTests {
 
 ### 메인 클래스 위치 오류
 
-```
+```text
 com.example/
 ├── Application.java          ← 여기에 @SpringBootApplication
 └── user/
@@ -249,6 +249,8 @@ com.example/
 ---
 
 **지난 글:** [Spring Initializr 완전 정복](/posts/springboot-initializr/)
+
+**다음 글:** [Spring Boot 설정 외부화 완전 정복 — application.properties와 application.yml](/posts/springboot-properties-config/)
 
 <br>
 읽어주셔서 감사합니다. 😊

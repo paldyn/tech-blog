@@ -30,7 +30,7 @@ Spring Boot는 이 모델을 뒤집었습니다. **서버가 애플리케이션 
 
 ## Fat JAR의 구조
 
-```
+```text
 myapp.jar
 ├── BOOT-INF/
 │   ├── classes/          ← 애플리케이션 클래스
@@ -185,7 +185,7 @@ class ApiIntegrationTest {
 
 Spring Boot 애플리케이션이 시작될 때 내장 서버는 이 순서로 초기화됩니다.
 
-```
+```text
 SpringApplication.run()
   → ApplicationContext 생성
   → 빈 등록 완료
