@@ -68,7 +68,7 @@ public class OrderController {
 
 **I/O 집약형 작업 (고동시성)**: Spring WebFlux가 압도적으로 유리하다. 스레드 풀 크기에 관계없이 수만 개의 동시 연결을 적은 메모리로 처리할 수 있다.
 
-```
+```text
 동시 요청 10,000개, 각 50ms DB 지연 시 비교:
 
 Spring MVC (200 threads):

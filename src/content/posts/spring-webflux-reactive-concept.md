@@ -17,7 +17,7 @@ draft: false
 
 전통적인 Spring MVC는 **Thread-per-Request** 모델이다. 요청이 들어오면 스레드 풀에서 스레드 하나를 할당하고, 그 스레드가 요청 처리를 완료할 때까지 점유한다. DB 쿼리나 외부 API 호출처럼 I/O를 기다리는 동안에도 스레드는 블록된 채로 유지된다.
 
-```
+```text
 요청 1 → Thread-1 [처리 중...DB 쿼리 대기...응답]  → 반환
 요청 2 → Thread-2 [처리 중...API 호출 대기...응답] → 반환
 요청 N → Thread 없음 → 대기열 또는 거절
@@ -27,7 +27,7 @@ draft: false
 
 리액티브 프로그래밍은 이 문제를 **이벤트 루프(Event Loop)** 로 해결한다.
 
-```
+```text
 [Event Loop (CPU 코어 수 스레드)]
   ↓
 요청 1 수신 → I/O 시작 → 스레드 반환 (다른 요청 처리)
@@ -163,7 +163,7 @@ public class WebFluxApplication {
 }
 ```
 
-```
+```text
 [로그] Netty started on port 8080
 ```
 

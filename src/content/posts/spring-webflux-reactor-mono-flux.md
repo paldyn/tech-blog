@@ -335,5 +335,7 @@ public class UserService {
 
 **지난 글:** [Spring WebFlux와 리액티브 프로그래밍 개념](/posts/spring-webflux-reactive-concept/)
 
+**다음 글:** [Spring MVC vs WebFlux: 언제 무엇을 선택해야 하는가](/posts/spring-webflux-vs-mvc/)
+
 <br>
 읽어주셔서 감사합니다. 😊

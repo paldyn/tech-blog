@@ -208,5 +208,7 @@ class UserRouterTest {
 
 **지난 글:** [R2DBC: 리액티브 관계형 DB 접근](/posts/spring-webflux-r2dbc/)
 
+**다음 글:** [Java EE에서 Jakarta EE로: Spring Boot 3 마이그레이션 완전 가이드](/posts/spring-modern-jakarta-migration/)
+
 <br>
 읽어주셔서 감사합니다. 😊
