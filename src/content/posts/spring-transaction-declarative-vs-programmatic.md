@@ -191,7 +191,7 @@ public class OrderService {
 
 ## 언제 어느 방식을 선택할까
 
-```
+```text
 선택 기준
 
 @Transactional 선택:

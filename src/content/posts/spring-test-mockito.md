@@ -256,5 +256,7 @@ void mockStaticMethod() {
 
 **지난 글:** [Spring 테스트 — JUnit 5 & AssertJ 완전 정복](/posts/spring-test-junit5-assertj/)
 
+**다음 글:** [Spring 테스트 슬라이스 — @WebMvcTest·@DataJpaTest·@JsonTest 완전 정복](/posts/spring-test-slices/)
+
 <br>
 읽어주셔서 감사합니다. 😊

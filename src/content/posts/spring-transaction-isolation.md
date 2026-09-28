@@ -21,7 +21,7 @@ draft: false
 
 커밋되지 않은 다른 트랜잭션의 변경을 읽는 현상입니다.
 
-```
+```text
 TX-A: UPDATE account SET balance = 0 WHERE id = 1  (미커밋)
 TX-B: SELECT balance FROM account WHERE id = 1  → 0  (오염된 데이터 읽음)
 TX-A: ROLLBACK  → balance 원복
@@ -32,7 +32,7 @@ TX-B: 이미 잘못된 0을 바탕으로 비즈니스 로직 수행
 
 같은 트랜잭션 안에서 같은 쿼리를 두 번 실행했을 때 결과가 달라지는 현상입니다.
 
-```
+```text
 TX-A T1: SELECT stock FROM product WHERE id=1  → 100
 TX-B   : UPDATE product SET stock=50 WHERE id=1; COMMIT
 TX-A T2: SELECT stock FROM product WHERE id=1  → 50 (달라짐!)
@@ -42,7 +42,7 @@ TX-A T2: SELECT stock FROM product WHERE id=1  → 50 (달라짐!)
 
 같은 트랜잭션에서 같은 범위 쿼리를 실행했을 때 없던 행이 나타나거나 있던 행이 사라지는 현상입니다.
 
-```
+```text
 TX-A T1: SELECT COUNT(*) FROM order WHERE user_id=1  → 5
 TX-B   : INSERT INTO order (user_id, ...) VALUES (1, ...); COMMIT
 TX-A T2: SELECT COUNT(*) FROM order WHERE user_id=1  → 6 (유령 행!)
@@ -187,7 +187,7 @@ public void deductStock(Long productId, int qty) {
 
 ## 실전 격리 수준 선택 가이드
 
-```
+```text
 격리 수준 선택 결정 트리
 
 1. 약간의 불일치 허용? (통계 대시보드 등)

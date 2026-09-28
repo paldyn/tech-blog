@@ -164,7 +164,7 @@ public void createOrderWithAudit(Order order) {
 
 ## 전파 속성 선택 가이드
 
-```
+```text
 상황별 전파 속성 선택
 
 1. 비즈니스 로직 (기본)          → REQUIRED

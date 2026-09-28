@@ -281,5 +281,7 @@ H2로 빠른 단위 수준 Repository 테스트를 하고, Testcontainers로 통
 
 **지난 글:** [Spring 테스트 — MockMvc 심화 완전 정복](/posts/spring-test-mockmvc/)
 
+**다음 글:** [Spring 테스트 — 픽스처 격리 전략 완전 정복](/posts/spring-test-fixtures-isolation/)
+
 <br>
 읽어주셔서 감사합니다. 😊
