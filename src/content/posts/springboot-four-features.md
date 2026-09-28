@@ -183,7 +183,7 @@ spring:
 
 네 가지 특징은 독립적이지 않고 서로 연결됩니다. Starter를 추가하면 Auto-Configuration이 자동으로 Bean을 등록하고, Embedded Server가 애플리케이션을 독립 실행 가능하게 만들며, Actuator가 운영 중 상태를 외부로 노출합니다.
 
-```
+```text
 [개발자] → Starter 추가
      ↓
 [Auto-Configuration] → 필요한 Bean 자동 등록

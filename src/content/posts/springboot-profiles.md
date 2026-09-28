@@ -25,7 +25,7 @@ draft: false
 
 가장 기본적인 방법은 `application-{profile}.yml` 파일을 만드는 것입니다.
 
-```
+```text
 src/main/resources/
 ├── application.yml          ← 공통 기본 설정 (모든 환경에 항상 로딩)
 ├── application-dev.yml      ← dev 프로파일 활성 시 추가 로딩

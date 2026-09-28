@@ -66,7 +66,7 @@ Java를 선택하는 것이 일반적입니다. Kotlin은 간결한 문법과 nu
 
 ## 생성된 프로젝트 구조 해설
 
-```
+```text
 my-project/
 ├── build.gradle                    ← 빌드 스크립트 (Gradle)
 ├── settings.gradle                 ← 루트 프로젝트 이름 설정

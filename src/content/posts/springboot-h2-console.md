@@ -97,7 +97,7 @@ spring:
 
 접속 화면에서 입력할 내용입니다.
 
-```
+```text
 Driver Class: org.h2.Driver
 JDBC URL: jdbc:h2:mem:testdb
 User Name: sa

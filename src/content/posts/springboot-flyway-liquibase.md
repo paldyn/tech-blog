@@ -53,7 +53,7 @@ implementation 'org.flywaydb:flyway-mysql'
 
 Flyway 스크립트는 파일명이 규칙을 결정합니다.
 
-```
+```text
 V{버전}__{설명}.sql
  │        │
  │        └── 언더스코어 두 개 (__)
@@ -121,7 +121,7 @@ CREATE TABLE orders (
 
 버전 없이 `R__` 접두사를 사용하면 체크섬이 바뀔 때마다 재실행됩니다. 뷰·프로시저처럼 자주 교체하는 객체에 적합합니다.
 
-```
+```text
 R__create_views.sql          ← 변경될 때마다 재실행
 R__insert_code_data.sql      ← 코드 테이블 초기화
 ```

@@ -25,7 +25,7 @@ draft: false
 
 `spring-boot-starter-web`이 전이적으로 끌어오는 주요 의존성입니다.
 
-```
+```text
 spring-boot-starter-web
 ├── spring-boot-starter                   ← 스프링 부트 핵심
 │   ├── spring-boot                       ← SpringApplication, ApplicationContext
@@ -91,7 +91,7 @@ dependencies {
 
 공식 권장 구조는 **두 모듈**입니다.
 
-```
+```text
 paldyn-slack/
 ├── slack-autoconfigure/          ← Auto-Configuration 클래스 + 메타데이터
 │   └── src/main/
@@ -136,7 +136,7 @@ public class SlackProperties {
 }
 ```
 
-```
+```text
 # META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
 io.paldyn.slack.SlackAutoConfiguration
 ```
