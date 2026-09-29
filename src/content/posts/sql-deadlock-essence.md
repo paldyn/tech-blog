@@ -21,7 +21,7 @@ draft: false
 
 ![데드락 순환 대기 다이어그램](/assets/posts/sql-deadlock-essence-cycle.svg)
 
-```
+```text
 Tx1: Row A 보유 → Row B 요청
 Tx2: Row B 보유 → Row A 요청
 → 둘 다 영원히 기다림 = Deadlock

@@ -149,7 +149,7 @@ WHERE created_at >= NOW() - INTERVAL '30 days'
 SELECT EXTRACT(YEAR FROM AGE(birth_date)) AS age FROM users;
 
 -- 해당 달의 마지막 날 (PostgreSQL)
-SELECT DATE_TRUNC('month', d) + INTERVAL '1 month' - 1 AS last_day;
+SELECT DATE_TRUNC('month', d) + INTERVAL '1 month' - INTERVAL '1 day' AS last_day;
 
 -- 요일별 집계 (0=일요일)
 SELECT

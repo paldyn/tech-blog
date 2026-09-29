@@ -113,7 +113,7 @@ UPDATE users
 SET deleted_at = CURRENT_TIMESTAMP
 WHERE user_id = 101;
 
--- 소프트 삭제된 데이터 조회
+-- 활성(삭제되지 않은) 데이터 조회
 SELECT * FROM users WHERE deleted_at IS NULL;
 
 -- 복구

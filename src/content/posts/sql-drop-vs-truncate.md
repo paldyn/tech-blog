@@ -93,7 +93,7 @@ DELETE FROM events;    -- 수십 분 소요, 트랜잭션 로그 대량 생성
 TRUNCATE TABLE events; -- 수 초 이내, 로그 최소
 
 -- TRUNCATE가 불가능한 경우에는 배치 DELETE 사용
-DELETE FROM events WHERE created_at < NOW() - INTERVAL '1 year'
+DELETE FROM events WHERE created_at < NOW() - INTERVAL 1 YEAR
     LIMIT 10000; -- MySQL: 청크 단위 반복
 ```
 
