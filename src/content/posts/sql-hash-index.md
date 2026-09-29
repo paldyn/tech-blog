@@ -19,7 +19,7 @@ draft: false
 
 해시 인덱스는 인덱스 키를 **해시 함수**에 통과시켜 버킷 번호를 계산한 뒤, 해당 버킷에 `(키, 힙 포인터)` 쌍을 저장한다.
 
-```
+```text
 bucket = hash(key) mod N
 Bucket[bucket] → [(key, tid), ...]
 ```

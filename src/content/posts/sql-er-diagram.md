@@ -27,7 +27,7 @@ ERD는 비즈니스 도메인을 테이블로 옮기기 전에 **개념 수준**
 
 실세계에서 독립적으로 식별 가능한 객체. 테이블에 대응한다.
 
-```
+```text
 강한 엔티티(Strong Entity):  독립적으로 존재 — CUSTOMER, PRODUCT
 약한 엔티티(Weak Entity):    강한 엔티티 없이 존재 불가 — ORDER_ITEM
 ```
@@ -36,7 +36,7 @@ ERD는 비즈니스 도메인을 테이블로 옮기기 전에 **개념 수준**
 
 엔티티가 갖는 성질. 컬럼에 대응한다.
 
-```
+```text
 단순 속성:   name, email (더 이상 분해 안 됨)
 복합 속성:   address = {city, street, zipcode} (분해 가능)
 다치 속성:   phone_numbers (여러 값 가질 수 있음) → 별도 테이블로
@@ -47,7 +47,7 @@ ERD는 비즈니스 도메인을 테이블로 옮기기 전에 **개념 수준**
 
 엔티티 간의 연관. FK로 구현된다.
 
-```
+```text
 CUSTOMER  --[PLACES]-->  ORDER
 ORDER     --[CONTAINS]--> ORDER_ITEM
 ORDER_ITEM --[INCLUDES]--> PRODUCT
@@ -137,7 +137,7 @@ CREATE TABLE order_items (
 
 기수성 외에 **참여 제약**(Participation Constraint)도 표기해야 한다.
 
-```
+```text
 전체 참여(Mandatory):  모든 고객은 반드시 주문을 가져야 한다
 부분 참여(Optional):   고객이 주문을 가질 수도, 없을 수도 있다
 ```

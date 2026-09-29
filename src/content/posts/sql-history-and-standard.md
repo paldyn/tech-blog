@@ -19,7 +19,7 @@ draft: false
 
 IBM의 Donald Chamberlin과 Raymond Boyce는 1974년 Codd의 관계형 모델을 구현하기 위해 **SEQUEL**(Structured English QUEry Language)을 설계했습니다. IBM의 System R 프로젝트에서 사용됐고, 상표권 문제로 이름이 **SQL**(Structured Query Language)로 바뀌었습니다.
 
-당시의 혁신은 "**무엇을<strong>"만 말하고 "</strong>어떻게**"는 DBMS에 맡기는 선언적 방식이었습니다.
+당시의 혁신은 "**무엇을**"만 말하고 "**어떻게**"는 DBMS에 맡기는 선언적 방식이었습니다.
 
 ```sql
 -- 1974년 SEQUEL의 원형 (현대 SQL과 거의 동일)
@@ -106,7 +106,7 @@ PostgreSQL 8.4+(2009), Oracle 9i+(2001), SQL Server 2005+에서 지원됩니다.
 
 2003년부터 SQL 표준은 여러 파트로 분리됐습니다.
 
-```
+```text
 ISO/IEC 9075
   Part 1: Framework
   Part 2: Foundation  ← 핵심 SQL

@@ -138,7 +138,7 @@ CREATE TABLE user_settings (
 
 식별 관계를 여러 단계 중첩하면 복합 PK가 점점 커진다.
 
-```
+```text
 ORDER(id)
   └─ ORDER_ITEM(order_id, seq)  ← 2컬럼 PK
        └─ ORDER_ITEM_TAG(order_id, seq, tag_id)  ← 3컬럼 PK
@@ -151,7 +151,7 @@ FK 인덱스가 비대해지고, ORM에서 복합 PK 처리가 번거로워진�
 
 ## 실무 결정 기준
 
-```
+```text
 Q: 자식이 부모 없이 논리적으로 존재할 수 있는가?
   → YES: 비식별 관계 (서로게이트 PK)
   → NO:  식별 관계 고려 (약한 엔티티, 교차 테이블)

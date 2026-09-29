@@ -19,7 +19,7 @@ draft: false
 
 풀스캔은 테이블의 모든 블록(페이지)을 처음부터 끝까지 순서대로 읽는 방식이다. 인덱스를 전혀 사용하지 않는다.
 
-```
+```sql
 SELECT * FROM orders WHERE status = 'shipped';
 ```
 
@@ -35,14 +35,14 @@ SELECT * FROM orders WHERE status = 'shipped';
 
 PostgreSQL의 비용 단위로 표현하면:
 
-```
+```text
 Seq Scan Cost = 블록 수 × seq_page_cost(기본값 1.0)
                 + 행 수 × cpu_tuple_cost(기본값 0.01)
 ```
 
 반면 인덱스 스캔은:
 
-```
+```text
 Index Scan Cost = 인덱스 블록 수 × random_page_cost(기본값 4.0)
                 + 힙 접근 수 × random_page_cost
 ```
