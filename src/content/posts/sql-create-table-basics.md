@@ -189,7 +189,7 @@ CTAS는 제약 조건(PK, FK, NOT NULL 등)이 복사되지 않는다. 단순 �
 |------|------|-----------|-------|--------|
 | 자동 증가 PK | `GENERATED ALWAYS AS IDENTITY` | `SERIAL` / `IDENTITY` | `AUTO_INCREMENT` | `GENERATED ALWAYS AS IDENTITY` |
 | 현재 시각 기본값 | `CURRENT_TIMESTAMP` | 동일 | 동일 | `SYSDATE` |
-| IF NOT EXISTS | 비표준 | 지원 | 지원 | 지원 (12c+) |
+| IF NOT EXISTS | 비표준 | 지원 | 지원 | 지원 (23c+) |
 
 ```sql
 -- PostgreSQL: 자동 증가 PK 두 가지 방식

@@ -29,7 +29,7 @@ draft: false
 
 커버링 인덱스가 있으면 B-Tree 리프에서 모든 컬럼 값을 읽고 끝난다. `SELECT name FROM orders WHERE status = 'pending'` 쿼리에서 `INDEX(status, name)`이 있으면:
 
-```
+```text
 인덱스 리프:  status='pending' → name='김길동'   ← 여기서 끝
              (테이블 블록 접근 없음)
 ```

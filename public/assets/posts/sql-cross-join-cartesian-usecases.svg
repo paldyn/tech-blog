@@ -1,47 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480">
-  <rect width="880" height="480" rx="12" fill="#0a0a0a"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="504" viewBox="0 0 880 504">
+  <rect width="880" height="504" rx="12" fill="#0a0a0a"/>
 
   <!-- Title -->
   <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">CROSS JOIN 실무 활용 패턴</text>
   <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">의도적 카테시안 곱이 필요한 경우</text>
 
+
   <!-- Use case 1: Calendar -->
-  <rect x="60" y="90" width="370" height="170" rx="8" fill="#111827" stroke="#3a4a6e"/>
+  <rect x="60" y="90" width="370" height="226" rx="8" fill="#111827" stroke="#3a4a6e"/>
   <text x="245" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">달력·날짜 시리즈 생성</text>
-  <rect x="72" y="124" width="346" height="126" rx="6" fill="#000000" stroke="#3a4a6e"/>
-  <text x="88" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 2024년 1월 모든 날짜</text>
-  <text x="88" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">WITH</text>
-  <text x="88" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  d AS (</text>
-  <text x="88" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">    SELECT</text>
-  <text x="88" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">      generate_series(</text>
-  <text x="88" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ce9178" xml:space="preserve">        '2024-01-01'::date,</text>
+  <rect x="72" y="124" width="346" height="178" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="88" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#9aa4b8">-- 2024년 1월 모든 날짜 × 사용자</tspan></text>
+  <text x="88" y="165" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan> d.dt, u.id</text>
+  <text x="88" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">FROM</tspan> generate_series(</text>
+  <text x="88" y="203" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#ce9178">'2024-01-01'</tspan>::date,</text>
+  <text x="88" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#ce9178">'2024-01-31'</tspan>::date,</text>
+  <text x="88" y="241" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">  <tspan fill="#ce9178">'1 day'</tspan>::interval</text>
+  <text x="88" y="260" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">) <tspan fill="#7ec8e3" font-weight="600">AS</tspan> d(dt)</text>
+  <text x="88" y="279" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">CROSS JOIN</tspan> users u;</text>
 
   <!-- Use case 2: Test data -->
-  <rect x="450" y="90" width="370" height="170" rx="8" fill="#111827" stroke="#3a4a6e"/>
+  <rect x="450" y="90" width="370" height="226" rx="8" fill="#111827" stroke="#3a4a6e"/>
   <text x="635" y="114" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#7ec8e3">테스트 데이터 · 조합표 생성</text>
-  <rect x="462" y="124" width="346" height="126" rx="6" fill="#000000" stroke="#3a4a6e"/>
-  <text x="478" y="144" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 상품×사이즈 조합 생성</text>
-  <text x="478" y="162" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SELECT</text>
-  <text x="478" y="180" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    p.name   AS product,</text>
-  <text x="478" y="198" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    s.label  AS size</text>
-  <text x="478" y="216" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM products p</text>
-  <text x="478" y="234" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">CROSS JOIN sizes s;</text>
+  <rect x="462" y="124" width="346" height="140" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="478" y="146" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#9aa4b8">-- 상품×사이즈 조합 생성</tspan></text>
+  <text x="478" y="165" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan></text>
+  <text x="478" y="184" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    p.name   <tspan fill="#7ec8e3" font-weight="600">AS</tspan> product,</text>
+  <text x="478" y="203" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    s.label  <tspan fill="#7ec8e3" font-weight="600">AS</tspan> size</text>
+  <text x="478" y="222" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">FROM</tspan> products p</text>
+  <text x="478" y="241" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">CROSS JOIN</tspan> sizes s;</text>
 
   <!-- Accidental Cartesian warning -->
-  <rect x="60" y="278" width="760" height="170" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
-  <text x="440" y="302" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">실수로 발생하는 카테시안 곱 — 방지 패턴</text>
-  <rect x="72" y="312" width="340" height="126" rx="6" fill="#000000" stroke="#3a1e1e"/>
-  <text x="88" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#e05555" xml:space="preserve">-- ✗ ON 조건 누락 (암묵적 CROSS JOIN)</text>
-  <text x="88" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SELECT *</text>
-  <text x="88" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM orders</text>
-  <text x="88" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">JOIN products</text>
-  <text x="88" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- ← ON 없음! 폭발</text>
-  <rect x="468" y="312" width="340" height="126" rx="6" fill="#000000" stroke="#1e3a1e"/>
-  <text x="484" y="330" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">-- ✓ ON 조건 명시</text>
-  <text x="484" y="348" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">SELECT *</text>
-  <text x="484" y="366" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">FROM orders o</text>
-  <text x="484" y="384" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">JOIN products p</text>
-  <text x="484" y="402" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    ON p.id = o.product_id</text>
-
-  <!-- Footer -->
+  <rect x="60" y="334" width="760" height="150" rx="8" fill="#1a0e0e" stroke="#e05555" stroke-width="1.5"/>
+  <text x="440" y="358" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="700" fill="#e05555">실수로 발생하는 카테시안 곱 — 방지 패턴</text>
+  <rect x="72" y="368" width="340" height="104" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="88" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#e05555">-- ✗ ON 조건 누락 (암묵적 CROSS JOIN)</tspan></text>
+  <text x="88" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan> *</text>
+  <text x="88" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">FROM</tspan> orders</text>
+  <text x="88" y="442" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">JOIN</tspan> products</text>
+  <text x="88" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#9aa4b8">-- ← ON 없음! 폭발</tspan></text>
+  <rect x="468" y="368" width="340" height="104" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="484" y="388" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#55c555">-- ✓ ON 조건 명시</tspan></text>
+  <text x="484" y="406" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">SELECT</tspan> *</text>
+  <text x="484" y="424" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">FROM</tspan> orders o</text>
+  <text x="484" y="442" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">JOIN</tspan> products p</text>
+  <text x="484" y="460" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve">    <tspan fill="#7ec8e3" font-weight="600">ON</tspan> p.id = o.product_id</text>
 </svg>

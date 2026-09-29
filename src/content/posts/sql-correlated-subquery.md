@@ -40,7 +40,7 @@ WHERE e.salary > (
 
 employees가 N행이면 서브쿼리도 최대 N번 실행된다. 인덱스가 있어도 함수 호출과 I/O가 누적된다.
 
-```
+```text
 행 1: Alice, dept='IT' → SELECT AVG(salary) FROM employees WHERE dept='IT' → 실행
 행 2: Bob,   dept='HR' → SELECT AVG(salary) FROM employees WHERE dept='HR' → 실행
 행 3: Carol, dept='IT' → SELECT AVG(salary) FROM employees WHERE dept='IT' → 재실행
