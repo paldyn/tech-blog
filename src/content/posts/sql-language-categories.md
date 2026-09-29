@@ -11,7 +11,9 @@ featured: false
 draft: false
 ---
 
-[지난 글](/posts/sql-client-server-protocol/)에 이어 ## SQL 명령어를 네 가지로 나누는 이유
+[지난 글](/posts/sql-client-server-protocol/)에 이어 이번에는 SQL 명령어의 분류를 살펴본다.
+
+## SQL 명령어를 네 가지로 나누는 이유
 
 이전 글들에서 SQL의 탄생 배경과 표준화 과정을 살펴봤다. 이제부터는 실제 SQL 문법을 배울 차례다. 그 전에 SQL 명령어가 어떻게 분류되는지 먼저 잡아두자.
 

@@ -90,7 +90,7 @@ WHERE o.status = 'pending';
 
 PostgreSQL 출력 예시:
 
-```
+```text
 Hash Join  (cost=310.50..2840.30 rows=1200 width=48)
   Hash Cond: (o.user_id = u.id)
   ->  Seq Scan on orders o
