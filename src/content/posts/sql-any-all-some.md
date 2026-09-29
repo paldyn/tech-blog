@@ -64,7 +64,7 @@ WHERE id IN (SELECT id FROM vip_customers)
 -- > ALL은 MAX()보다 큰 것과 동치
 WHERE salary > ALL (SELECT AVG(salary) FROM employees GROUP BY dept)
 -- 동일:
-WHERE salary > (SELECT MAX(AVG(salary)) FROM employees GROUP BY dept)
+WHERE salary > (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employees GROUP BY dept) t)
 
 -- < ANY는 MIN()보다 작은 것과 동치
 WHERE price < ANY (SELECT list_price FROM products WHERE category = 'A')
@@ -99,7 +99,8 @@ WHERE salary > ALL (
 
 -- ✓ MAX()로 대체 (MAX는 NULL 자동 무시)
 WHERE salary > (
-    SELECT MAX(AVG(salary)) FROM employees GROUP BY dept
+    SELECT MAX(avg_sal)
+    FROM (SELECT AVG(salary) AS avg_sal FROM employees GROUP BY dept) t
 )
 ```
 

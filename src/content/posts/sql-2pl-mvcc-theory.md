@@ -79,7 +79,7 @@ SELECT xmin, xmax, ctid, * FROM accounts LIMIT 5;
 
 행이 트랜잭션 스냅샷에서 보이려면:
 
-```
+```text
 xmin <= snapshot_xid  AND  (xmax = 0  OR  xmax > snapshot_xid)
 ```
 
@@ -125,8 +125,8 @@ PostgreSQL 9.1+는 SSI를 통해 MVCC로도 SERIALIZABLE을 구현한다. 직렬
 
 ```sql
 -- PostgreSQL SSI
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 BEGIN;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 -- ... 읽기/쓰기
 COMMIT;
 -- 직렬성 위반 시: ERROR: could not serialize access due to read/write dependencies

@@ -95,7 +95,7 @@ COMMIT;                       COMMIT;
 
 구현의 핵심은 **Write-Ahead Log(WAL)** 또는 **Redo Log**다.
 
-```
+```text
 COMMIT 처리 순서:
 1. 변경 내용을 Redo Log에 기록 (디스크 flush)
 2. "이 트랜잭션은 커밋됨"을 로그에 표시
@@ -129,8 +129,8 @@ NoSQL 진영에서는 높은 가용성·확장성을 위해 **BASE**(Basically A
 - **긴 트랜잭션 지양**: 트랜잭션이 길수록 잠금 보유 시간이 길어져 동시성이 감소한다.
 - **오류 처리**: `ROLLBACK`을 오류 핸들러에 반드시 포함해야 부분 커밋을 막을 수 있다.
 
-```sql
--- Python 예시: 자동 롤백 보장
+```python
+# Python 예시: 자동 롤백 보장
 try:
     conn.autocommit = False
     cur.execute("UPDATE accounts ...")

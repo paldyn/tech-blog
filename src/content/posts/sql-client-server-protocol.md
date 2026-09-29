@@ -138,7 +138,7 @@ spring:
 
 커넥션 풀 크기 공식으로 유명한 것은 HikariCP 권고입니다:
 
-```
+```text
 pool_size = (core_count × 2) + effective_spindle_count
 ```
 

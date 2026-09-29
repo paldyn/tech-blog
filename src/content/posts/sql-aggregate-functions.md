@@ -89,7 +89,7 @@ COUNT(\*)가 COUNT(컬럼)보다 빠른 경우가 많다. 특히 InnoDB(MySQL)�
 집계 함수 안에 또 다른 집계 함수를 직접 중첩하는 것은 표준 SQL에서 허용하지 않는다.
 
 ```sql
--- ✗ 문법 오류: SUM 안에 MAX
+-- ✗ 문법 오류: MAX 안에 SUM
 SELECT MAX(SUM(amount))
 FROM orders
 GROUP BY country;

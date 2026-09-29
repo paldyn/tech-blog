@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" style="background:#0a0a0a;border-radius:12px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" rx="12" fill="#0a0a0a"/>
   <text x="440" y="44" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="22" font-weight="700" fill="#e8e8e8">ALTER TABLE과 테이블 락 — 운영 중 변경의 위험</text>
   <text x="440" y="70" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="16" font-weight="600" fill="#888">대형 테이블 스키마 변경 전략</text>
 
   <!-- Risk matrix -->
-  <rect x="60" y="96" width="760" height="120" rx="10" fill="#111827" stroke="#3a4a6e"/>
+  <rect x="60" y="96" width="760" height="105" rx="10" fill="#111827" stroke="#3a4a6e"/>
   <text x="440" y="118" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="14" font-weight="600" fill="#e8e8e8">연산별 락 수준 (PostgreSQL 기준)</text>
   <line x1="80" y1="126" x2="800" y2="126" stroke="#3a4a6e"/>
   <!-- headers -->
@@ -19,17 +20,12 @@
   <text x="700" y="188" text-anchor="middle" font-family="'Wanted Sans Variable','Wanted Sans',-apple-system,sans-serif" font-size="12" fill="#e05555">장시간 차단 위험</text>
 
   <!-- Solution code block -->
-  <rect x="60" y="240" width="760" height="140" rx="6" fill="#000000" stroke="#3a4a6e"/>
-  <text x="80" y="262" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 안전한 NOT NULL 컬럼 추가 3단계 패턴</text>
-  <text x="80" y="280" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 1. NULL 허용으로 추가</text>
-  <text x="80" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#7ec8e3" xml:space="preserve">ALTER TABLE</text>
-  <text x="172" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> orders </text>
-  <text x="235" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#55c555" xml:space="preserve">ADD COLUMN</text>
-  <text x="339" y="298" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#ffffff" xml:space="preserve"> region VARCHAR(20);</text>
-  <text x="80" y="318" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 2. 기존 행 백필</text>
-  <text x="80" y="336" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3">UPDATE</tspan><tspan fill="#ffffff"> orders </tspan><tspan fill="#7ec8e3">SET</tspan><tspan fill="#ffffff"> region = </tspan><tspan fill="#ce9178">'KR'</tspan><tspan fill="#7ec8e3"> WHERE</tspan><tspan fill="#ffffff"> region </tspan><tspan fill="#7777cc">IS NULL</tspan><tspan fill="#ffffff">;</tspan></text>
-
-  <text x="80" y="356" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" fill="#9aa4b8" xml:space="preserve">-- 3. NOT NULL 제약 추가</text>
-  <text x="80" y="374" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3">ALTER TABLE</tspan><tspan fill="#ffffff"> orders </tspan><tspan fill="#7ec8e3">ALTER COLUMN</tspan><tspan fill="#ffffff"> region </tspan><tspan fill="#7ec8e3">SET NOT NULL</tspan><tspan fill="#ffffff">;</tspan></text>
-
+  <rect x="60" y="225" width="760" height="156" rx="6" fill="#000000" stroke="#3a4a6e"/>
+  <text x="80" y="250" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">-- 안전한 NOT NULL 컬럼 추가 3단계 패턴</tspan></text>
+  <text x="80" y="269" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">-- 1. NULL 허용으로 추가</tspan></text>
+  <text x="80" y="288" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">ALTER</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">TABLE</tspan><tspan fill="#ffffff"> orders </tspan><tspan fill="#7ec8e3" font-weight="600">ADD</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">COLUMN</tspan><tspan fill="#ffffff"> region VARCHAR(</tspan><tspan fill="#b5cea8">20</tspan><tspan fill="#ffffff">);</tspan></text>
+  <text x="80" y="307" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">-- 2. 기존 행 백필</tspan></text>
+  <text x="80" y="326" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">UPDATE</tspan><tspan fill="#ffffff"> orders </tspan><tspan fill="#7ec8e3" font-weight="600">SET</tspan><tspan fill="#ffffff"> region = </tspan><tspan fill="#ce9178">'KR'</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">WHERE</tspan><tspan fill="#ffffff"> region </tspan><tspan fill="#7ec8e3" font-weight="600">IS</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">NULL</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="80" y="345" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#9aa4b8">-- 3. NOT NULL 제약 추가</tspan></text>
+  <text x="80" y="364" font-family="'JetBrains Mono','Menlo','Consolas',monospace" font-size="13" xml:space="preserve"><tspan fill="#7ec8e3" font-weight="600">ALTER</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">TABLE</tspan><tspan fill="#ffffff"> orders </tspan><tspan fill="#7ec8e3" font-weight="600">ALTER</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">COLUMN</tspan><tspan fill="#ffffff"> region </tspan><tspan fill="#7ec8e3" font-weight="600">SET</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">NOT</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7ec8e3" font-weight="600">NULL</tspan><tspan fill="#ffffff">;</tspan></text>
 </svg>
