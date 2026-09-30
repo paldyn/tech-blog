@@ -21,7 +21,7 @@ SQLite는 DB 파일을 직접 수정하기 전에 **저널(journal)** 파일을 
 
 롤백 저널은 "변경 전 원본을 백업한다"는 방식이다.
 
-```
+```text
 트랜잭션 시작
   └─ 수정할 페이지 원본을 app.db-journal에 저장
   └─ 수정된 페이지를 app.db에 직접 씀
@@ -42,7 +42,7 @@ ROLLBACK
 
 WAL(Write-Ahead Logging) 모드는 "변경 내용을 별도 파일에 추가 기록한다"는 방식이다.
 
-```
+```text
 트랜잭션 시작
   └─ 현재 WAL 끝 위치(WAL read lock)를 기록
   └─ 변경된 페이지를 app.db-wal에 추가(append)
@@ -129,7 +129,7 @@ PRAGMA wal_checkpoint(TRUNCATE);
 
 WAL의 핵심 장점은 **읽기와 쓰기가 서로를 차단하지 않는다**는 점이다.
 
-```
+```text
 Writer    : [쓰기 중 ─────────────]
 Reader 1  :       [읽기 ────]
 Reader 2  :            [읽기 ──────]

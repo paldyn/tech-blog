@@ -200,7 +200,7 @@ unsubscribe()
 
 Reducer는 순수 함수이므로 API 호출·타이머 같은 비동기 작업을 직접 처리할 수 없습니다. **미들웨어**가 `dispatch`와 `Reducer` 사이에 끼어들어 이를 처리합니다.
 
-```
+```text
 dispatch(action)
   → [미들웨어 1]
   → [미들웨어 2]
@@ -345,7 +345,7 @@ Redux가 도입된 초기에는 "React를 쓰면 Redux가 필수"라는 인식�
 - React Query / SWR로 서버 상태만 관리하면 되는 경우
 - Zustand, Jotai, Recoil처럼 가벼운 대안이 더 적합한 경우
 
-```
+```text
 상태의 출처가 서버 데이터인가?
   → YES: React Query / RTK Query 우선 고려
   → NO: 클라이언트 상태

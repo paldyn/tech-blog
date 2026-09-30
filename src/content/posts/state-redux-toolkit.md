@@ -28,7 +28,7 @@ next:
 
 Redux 공식 문서도 오랫동안 "Redux는 너무 많은 코드가 필요하다"는 피드백을 받아왔습니다. 전통적인 Redux 프로젝트는 다음 세 가지 파일을 거의 항상 동반했습니다.
 
-```
+```text
 store/
   counter/
     actionTypes.js   // 상수 문자열 정의
