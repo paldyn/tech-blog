@@ -123,7 +123,7 @@ WITH paid_orders AS (
     WHERE o.status = 'paid'
 ),
 order_details AS (
-    SELECT po.id, po.amount, oi.product_id, oi.quantity
+    SELECT po.id, po.user_id, po.amount, oi.product_id, oi.quantity
     FROM paid_orders po
     JOIN order_items oi ON oi.order_id = po.id
 )

@@ -98,7 +98,7 @@ ON events((payload->>'type'));
 
 -- 3. 계산 컬럼 인덱스
 CREATE INDEX idx_total_price
-ON order_items(quantity * unit_price);
+ON order_items((quantity * unit_price));
 ```
 
 ---
