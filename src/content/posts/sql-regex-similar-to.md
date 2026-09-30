@@ -134,7 +134,7 @@ Oracle에도 `REGEXP_REPLACE`, `REGEXP_SUBSTR`, `REGEXP_INSTR`, `REGEXP_COUNT`�
 
 패턴 매칭 함수는 대부분 인덱스를 사용하지 못한다. 대량 데이터에서 성능 문제가 생기면:
 
-1. 전위 패턴 `LIKE 'prefix%`로 변환 가능한지 검토
+1. 전위 패턴 `LIKE 'prefix%'`로 변환 가능한지 검토
 2. 생성 컬럼(generated column)에 결과를 저장하고 인덱스 부여
 3. PostgreSQL: `pg_trgm` + GIN 인덱스
 4. 전문 검색이 필요하면 tsvector/tsquery(Full-Text Search)로 이동

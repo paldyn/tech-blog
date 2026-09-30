@@ -19,7 +19,7 @@ draft: false
 
 블로그 플랫폼에서 `댓글(Comment)`은 `글(Post)`에도, `상품(Product)`에도, `동영상(Video)`에도 달릴 수 있다. 이 "댓글의 대상이 여러 종류"라는 상황이 다형성 관계다.
 
-```
+```text
 Comment ---belongs_to---> Post     (게시글 댓글)
 Comment ---belongs_to---> Product  (상품 댓글)
 Comment ---belongs_to---> Video    (영상 댓글)
