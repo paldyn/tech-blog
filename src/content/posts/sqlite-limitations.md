@@ -60,8 +60,10 @@ PRAGMA foreign_keys = ON;
 
 -- 꺼진 상태에서는 이게 오류 없이 성공한다
 INSERT INTO orders(user_id) VALUES (99999);  -- user_id=99999 없어도 통과
+```
 
--- Python에서 항상 켜두려면
+```python
+# Python에서 항상 켜두려면
 def get_conn(path):
     conn = sqlite3.connect(path)
     conn.execute("PRAGMA foreign_keys = ON")
@@ -186,7 +188,7 @@ conn.execute("CREATE TABLE IF NOT EXISTS secrets (data TEXT)")
 
 ## SQLite vs 다른 DB — 실용적 선택 기준
 
-```
+```text
 SQLite 사용:
   ✓ 로컬 앱 저장소 (모바일, 데스크탑, IoT)
   ✓ 테스트 환경 (설치 없는 인메모리 DB)

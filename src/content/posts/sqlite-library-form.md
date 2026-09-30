@@ -41,8 +41,9 @@ SQLite 전체 소스 코드는 `sqlite3.c` 단일 파일 ("amalgamation") 약 23
 sudo apt install sqlite3 libsqlite3-dev
 
 # 소스에서 빌드 (amalgamation 단일 파일)
-wget https://sqlite.org/2026/sqlite-amalgamation-3450000.zip
+wget https://sqlite.org/2024/sqlite-amalgamation-3450000.zip
 unzip sqlite-amalgamation-3450000.zip
+cd sqlite-amalgamation-3450000
 gcc -o sqlite3 sqlite3.c shell.c -lpthread -ldl
 
 # Python은 표준 라이브러리에 포함 — 별도 설치 없음

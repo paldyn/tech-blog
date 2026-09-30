@@ -122,7 +122,7 @@ FROM daily_sales;
 
 윈도우 함수는 SQL 논리적 실행 순서에서 **SELECT 절 평가 단계**에서 실행된다.
 
-```
+```text
 FROM → WHERE → GROUP BY → HAVING → SELECT(윈도우 함수 포함) → ORDER BY → LIMIT
 ```
 

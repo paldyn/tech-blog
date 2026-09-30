@@ -192,7 +192,7 @@ sqlite3 app.db "INSERT INTO logs VALUES (datetime('now'), 'event');"
 
 SQLite는 초당 수만 건의 단순 INSERT를 처리할 수 있다. 하지만 **동시 쓰기가 많은 웹 서버** 환경에서는 병목이 된다.
 
-```
+```text
 단일 writer 한계가 문제인 경우:
   - 요청당 DB 쓰기가 필요한 웹 API (트래픽 > 수백 RPS)
   - 여러 서버 인스턴스가 공유 DB를 쓰는 경우
