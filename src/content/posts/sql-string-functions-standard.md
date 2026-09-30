@@ -151,7 +151,7 @@ GROUP BY dept;
 
 | 기능 | PostgreSQL | MySQL | Oracle | SQL Server |
 |---|---|---|---|---|
-| 연결 | `||` | `CONCAT()` | `||` | `+` |
+| 연결 | `\|\|` | `CONCAT()` | `\|\|` | `+` |
 | 부분 문자열 | `SUBSTRING` | `SUBSTR` | `SUBSTR` | `SUBSTRING` |
 | 위치 | `STRPOS` | `LOCATE` | `INSTR` | `CHARINDEX` |
 | 집계 연결 | `STRING_AGG` | `GROUP_CONCAT` | `LISTAGG` | `STRING_AGG` |

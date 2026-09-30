@@ -19,7 +19,7 @@ draft: false
 
 결제(Payment) 도메인을 생각해보자. 모든 결제는 `금액`, `결제일`, `주문 ID`를 공유하지만, 카드 결제는 `카드번호`와 `카드사`를, 계좌이체는 `은행코드`와 `계좌번호`를 추가로 갖는다.
 
-```
+```text
 PAYMENT (공통)
   ├─ CARD_PAYMENT    (카드번호, 카드사)
   ├─ BANK_TRANSFER   (은행코드, 계좌번호)
@@ -167,7 +167,7 @@ CREATE TABLE payments_crypto PARTITION OF payments FOR VALUES IN ('crypto');
 
 ## 실무 권장
 
-```
+```text
 서브타입 2~3개, 속성 차이 작음  → STI (단순함 우선)
 서브타입 많음, 속성 차이 큼     → CTI (정규화 우선)
 타입 간 공통 조회 거의 없음      → 서브타입별 독립 테이블

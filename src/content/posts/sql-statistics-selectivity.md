@@ -33,7 +33,7 @@ draft: false
 
 선택도는 조건을 만족하는 행의 비율이다.
 
-```
+```text
 selectivity = (조건 만족 행 수) / (전체 행 수)
 ```
 
@@ -77,7 +77,7 @@ WHERE tablename = 'orders'
 
 등치 조건의 선택도 공식(균등 분포 가정):
 
-```
+```text
 selectivity = 1 / NDV
 estimated_rows = reltuples × selectivity
 ```
@@ -97,7 +97,7 @@ ANALYZE orders;
 -- 특정 컬럼만 갱신
 ANALYZE orders(user_id, status, created_at);
 
--- 샘플링 비율 높이기 (기본 300 → 증가)
+-- 샘플링 비율 높이기 (기본 100 → 증가)
 ALTER TABLE orders ALTER COLUMN score
   SET STATISTICS 1000;
 ANALYZE orders;
