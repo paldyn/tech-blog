@@ -159,7 +159,7 @@ ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS';
 
 ## 전환 체크리스트
 
-```
+```text
 □ DBA_OBJECTS 내 모든 객체 VALID 상태 확인
 □ 핵심 트랜잭션 시나리오 기능 테스트 완료
 □ 응답 시간 벤치마크 (Oracle 대비 ±20% 이내)
