@@ -154,7 +154,7 @@ const d = Direction.Up;  // isolatedModules 환경에서 오류!
 
 TypeScript 컴파일러도 `isolatedModules: true`일 때 다른 파일에서 `const enum`을 import하면 오류를 표시한다.
 
-```
+```text
 error TS2748: Cannot access ambient const enums when
 'isolatedModules' is enabled.
 ```

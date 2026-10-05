@@ -36,7 +36,7 @@ TypeScript 컴파일러는 5단계를 거쳐 `.ts`를 `.js`로 변환한다.
 
 소스 코드를 읽어 토큰(Token) 스트림으로 분해한다. `function`, `const`, `"hello"`, `42` 같은 기본 단위를 인식한다.
 
-```
+```text
 function greet(name: string): string {
 ↓ 토큰화
 [keyword:function] [identifier:greet] [(] [identifier:name] [:] [keyword:string] [)] ...
@@ -179,7 +179,7 @@ tsc  # 0.3초
 
 TypeScript 오류는 처음에는 낯설지만, 패턴을 알면 쉽게 해석된다.
 
-```
+```text
 src/app.ts:15:3 - error TS2322: Type 'string' is not assignable to type 'number'.
 
 15     count = "hello";
