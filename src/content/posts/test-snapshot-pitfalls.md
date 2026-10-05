@@ -49,7 +49,7 @@ vitest -u   # 스냅샷 업데이트 → 실제 버그도 승인해버릴 수 �
 
 ### 3. 테스트 의도 불명확
 
-```
+```javascript
 // 이 스냅샷이 무엇을 검증하는지 알 수 없음
 expect(output).toMatchSnapshot()
 // vs 명시적 어서션
@@ -157,7 +157,7 @@ expect(screen.getByRole('img', { name: user.name })).toHaveAttribute('src', user
 
 PR에서 스냅샷 변경이 있을 때 확인해야 할 사항입니다.
 
-```
+```text
 □ 이 스냅샷 변경이 의도된 것인가?
 □ 변경된 diff를 실제로 읽었는가?
 □ 삭제된 내용이 있다면 그것이 누락되어도 괜찮은가?

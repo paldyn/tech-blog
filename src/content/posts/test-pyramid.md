@@ -94,7 +94,7 @@ cypress run  # 40분... CI timeout
 
 Kent C. Dodds가 제안한 **트로피(Trophy)** 모델은 통합 테스트에 가장 많은 비중을 둡니다. "구현이 아닌 동작을 테스트하라"는 Testing Library의 철학과 맞닿아 있습니다.
 
-```
+```text
   E2E (소수 — 핵심 경로만)
  통합 테스트 (가장 많음 — Testing Library 등)
   단위 테스트 (유틸·알고리즘)

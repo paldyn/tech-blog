@@ -129,7 +129,7 @@ vi.mock('./config', async (importActual) => {
 
 가장 중요한 질문은 "어디에 목을 놓을까"입니다.
 
-```
+```text
 [테스트 대상 코드] → [목 경계] → [실제 외부 의존성]
                               → HTTP API
                               → Database
