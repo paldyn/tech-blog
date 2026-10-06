@@ -114,7 +114,7 @@ request("/api/users", { timout: 1000 }); // TS2353 ❌ timeout이 맞음
 
 **지난 글:** [명목적 타입과 브랜드 타입 — 의미 있는 타입 구분](/posts/ts-nominal-branded-types/)
 
-**다음 글:** [매핑 타입 — keyof와 in으로 타입 변환](/posts/ts-mapped-types/)
+**다음 글:** [TypeScript 클래스 기초 — 객체지향의 출발점](/posts/ts-classes-basics/)
 
 <br>
 읽어주셔서 감사합니다. 😊
