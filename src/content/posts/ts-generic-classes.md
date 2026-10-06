@@ -185,5 +185,7 @@ class Util {
 
 **지난 글:** [제네릭 함수 — 타입 안전한 재사용](/posts/ts-generic-functions/)
 
+**다음 글:** [제네릭 기본값 — 타입 파라미터의 선택적 지정](/posts/ts-generic-defaults/)
+
 <br>
 읽어주셔서 감사합니다. 😊
