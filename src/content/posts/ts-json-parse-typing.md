@@ -129,5 +129,7 @@ else showError(r.error); // 실패 처리를 잊을 수 없음
 
 **지난 글:** [JSON 타이핑 — JSON 값을 안전하게 표현하기](/posts/ts-typing-json/)
 
+**다음 글:** [Result / Either 타입 — 예외 없는 에러 처리](/posts/ts-result-either-type/)
+
 <br>
 읽어주셔서 감사합니다. 😊
