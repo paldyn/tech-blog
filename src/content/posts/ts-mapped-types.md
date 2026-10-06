@@ -127,7 +127,7 @@ type DeepReadonly<T> = {
 | 유틸리티 | 설명 | 구현 핵심 |
 |---|---|---|
 | `Partial<T>` | 모든 속성 선택적으로 | `[K in keyof T]?: T[K]` |
-| `Required<T>` | 모든 속성 필수로 | `-readonly [K in keyof T]-?` |
+| `Required<T>` | 모든 속성 필수로 | `[K in keyof T]-?` |
 | `Readonly<T>` | 모든 속성 읽기 전용 | `readonly [K in keyof T]` |
 | `Record<K, V>` | 키-값 매핑 | `[P in K]: V` |
 | `Pick<T, K>` | 특정 키만 추출 | `[P in K]: T[P]` |
