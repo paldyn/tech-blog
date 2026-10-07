@@ -295,5 +295,7 @@ items.filter((item) => item.active);  // item 타입은 문맥에서 결정
 
 **지난 글:** [타입 추론 완전 정리 — TypeScript가 타입을 결정하는 방식](/posts/ts-type-inference/)
 
+**다음 글:** [TypeScript 완전 정복: 타입 단언(Type Assertion) 완전 이해](/posts/ts-type-assertions/)
+
 <br>
 읽어주셔서 감사합니다. 😊
