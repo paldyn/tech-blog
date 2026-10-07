@@ -70,7 +70,7 @@ npx tsc --init
 
 ## 디렉터리 구조 설정
 
-```
+```text
 my-ts-project/
 ├── src/            # TypeScript 소스 파일
 │   └── index.ts
@@ -120,7 +120,7 @@ EOF
 **`target`**: 출력 JavaScript 버전. Node.js 18+ 환경이라면 `ES2022`를 사용한다. 구형 브라우저를 지원해야 한다면 `ES5` 또는 `ES6`.
 
 **`strict`**: 여러 엄격 옵션을 한 번에 활성화한다. 처음부터 켜두는 게 나중에 더 쉽다.
-```
+```text
 strict: true 가 활성화하는 옵션들:
 - strictNullChecks     (null/undefined 별도 타입)
 - strictFunctionTypes  (함수 파라미터 반공변성)
