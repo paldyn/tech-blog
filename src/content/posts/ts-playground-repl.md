@@ -97,7 +97,7 @@ let x;         // Error: Variable 'x' implicitly has an 'any' type
 
 Playground의 가장 실용적인 기능이다. 작성한 코드가 URL에 인코딩되어 링크 하나로 공유할 수 있다.
 
-```
+```text
 https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAQwB7AgZzgMyhEcDkAJgHYBuAviAM...
 ```
 
