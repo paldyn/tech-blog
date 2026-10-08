@@ -38,8 +38,8 @@ return {"order_id": 1234, "customer_id": 5678, "details": ...}
 
 ### 체계적 방어: 소유권 강제
 
-```python
-# Spring Security 예시: @PreAuthorize로 소유자 강제
+```java
+// Spring Security 예시: @PreAuthorize로 소유자 강제
 @GetMapping("/api/documents/{docId}")
 @PreAuthorize("@docSecurity.isOwner(#docId, authentication.name)")
 public ResponseEntity<Document> getDocument(@PathVariable Long docId) {

@@ -23,7 +23,7 @@ function calculateArea(width, height) {
   return width * height;
 }
 
-console.log(calculateArea(10, "20")); // 문자열 "200" 반환 — 아무 경고 없음
+console.log(calculateArea(10, "20")); // 200 반환 ("20"이 암묵적으로 숫자로 변환됨) — 아무 경고 없음
 console.log(calculateArea(10));       // NaN 반환 — 아무 경고 없음
 ```
 
@@ -242,8 +242,8 @@ if (num !== undefined) {
 TypeScript가 항상 더 낫지는 않다.
 
 ```javascript
-// 단순 스크립트: TypeScript 설정 오버헤드가 더 클 수 있음
 #!/usr/bin/env node
+// 단순 스크립트: TypeScript 설정 오버헤드가 더 클 수 있음
 const fs = require("fs");
 const content = fs.readFileSync("./input.txt", "utf-8");
 console.log(content.split("\n").length + " 줄");

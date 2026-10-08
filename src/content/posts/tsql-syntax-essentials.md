@@ -101,8 +101,8 @@ T-SQL에서 예약어나 공백이 포함된 식별자는 **대괄호 `[]`** 또
 SELECT [Order ID], [From], [Customer Name]
 FROM dbo.[Order Details];
 
--- 쌍따옴표: ANSI_QUOTES 설정 시 사용 가능
--- (기본값은 문자열 리터럴로 처리됨)
+-- 쌍따옴표: QUOTED_IDENTIFIER ON 설정 시 사용 가능
+-- (OFF이면 문자열 리터럴로 처리됨)
 SET QUOTED_IDENTIFIER ON;  -- 기본 ON
 SELECT "Order ID" FROM "Order Details";
 ```

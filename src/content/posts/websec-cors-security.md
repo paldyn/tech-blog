@@ -104,10 +104,10 @@ Access-Control-Allow-Credentials: true
 
 ```javascript
 // 취약: suffix 검사
-if (origin.endsWith('.example.com')) {
+if (origin.endsWith('example.com')) {
   res.setHeader('Access-Control-Allow-Origin', origin);
 }
-// 우회: evil.example.com.attacker.io → .example.com으로 끝남
+// 우회: evilexample.com → example.com으로 끝남
 ```
 
 ```javascript
