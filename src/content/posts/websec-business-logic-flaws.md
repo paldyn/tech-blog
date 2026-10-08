@@ -50,7 +50,7 @@ Content-Type: application/json
 
 멀티 스텝 프로세스에서 각 단계를 서버가 순서대로 검증하지 않으면 중간 단계를 우회할 수 있다:
 
-```
+```text
 정상 흐름: 장바구니 → 배송지 입력 → 결제 → 완료
 공격 흐름: 완료 URL 직접 접근 → /checkout/complete?orderId=xyz
 ```
@@ -93,7 +93,7 @@ async function redeemInvite(code) {
 
 이메일 변경 후 구 토큰이 여전히 유효한 경우, 혹은 계정 비활성화 후에도 기존 세션이 유효한 경우다:
 
-```
+```text
 1. 사용자가 이메일을 a@old.com → b@new.com 으로 변경 신청
 2. 두 이메일 모두에 인증 링크 발송
 3. 공격자가 a@old.com 메일함에 접근해 구 링크 클릭

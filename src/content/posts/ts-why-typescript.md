@@ -17,7 +17,7 @@ draft: false
 
 JavaScript 개발자라면 이 오류를 한 번쯤 마주쳤을 것이다.
 
-```
+```text
 TypeError: Cannot read properties of undefined (reading 'name')
 ```
 
@@ -159,7 +159,7 @@ Angular 2.0부터 TypeScript를 기본 언어로 채택했다. 구글은 TypeScr
 
 2023년 State of JS 설문에서 TypeScript 사용 비율은 전체 JavaScript 개발자의 83%를 넘었다. npm 주간 다운로드 통계에서도 TypeScript는 꾸준히 상위권을 유지한다.
 
-```
+```text
 TypeScript 사용 비율 (State of JS 2023):
 사용 중 + 사용 의향: 83.1%
 사용 안 함:          16.9%

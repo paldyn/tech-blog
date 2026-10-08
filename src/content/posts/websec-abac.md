@@ -32,7 +32,7 @@ ABAC는 **주체(Subject), 객체(Object), 행동(Action), 환경**(Environment)
 
 RBAC은 역할 하나에 권한을 묶으므로 정책이 단순하지만, 세밀한 조건을 반영하려면 역할이 기하급수적으로 늘어난다. 반면 ABAC은 정책을 속성 표현식으로 작성하므로 역할 수 증가 없이 매우 정교한 접근 제어가 가능하다.
 
-```
+```python
 # RBAC: "재무-관리자-사내-주간" 역할이 필요
 if user.role == "finance_admin_intranet_daytime":
     allow()
