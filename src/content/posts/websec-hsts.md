@@ -19,7 +19,7 @@ draft: false
 
 SSL Stripping 공격은 이 첫 번째 HTTP 요청을 가로채서 공격자가 중간에서 피해자에게는 HTTP로 통신하고, 실제 서버와는 HTTPS로 통신하는 MITM 공격이다.
 
-```
+```text
 피해자 → (HTTP) → 공격자 → (HTTPS) → 서버
            ↑ 여기서 모든 통신이 평문 노출
 ```

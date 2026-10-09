@@ -72,7 +72,7 @@ result = hmac.new(key, message, hashlib.sha256).digest()
 
 SHA-256, MD5 등 Merkle-Damgård 구조 해시 함수는 `HASH(K ∥ M)` 형태에서 **길이 확장 공격**에 취약하다.
 
-```
+```text
 공격자가 알고 있는 것:
 - H(K ∥ M) 값
 - M의 길이 (K 길이 모름)
