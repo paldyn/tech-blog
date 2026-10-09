@@ -17,7 +17,7 @@ draft: false
 
 대부분의 레이스 컨디션은 다음 패턴에서 발생한다:
 
-```
+```text
 1. 상태 확인 (Check)
 2. 비즈니스 로직 처리
 3. 상태 변경 (Act)
@@ -59,7 +59,7 @@ async function applyCoupon(userId, couponId) {
 
 **잔액 초과 출금**
 
-```
+```text
 잔액: 100원
 요청 A: 잔액 100 확인 → 100원 출금 처리 중
 요청 B: 잔액 100 확인 (A 완료 전) → 100원 출금 처리 중
@@ -70,7 +70,7 @@ async function applyCoupon(userId, couponId) {
 
 악성 파일을 업로드하고, 검증과 이동 사이의 짧은 시간에 파일을 교체한다:
 
-```
+```text
 서버: 파일 검증 통과 (이미지 파일 확인)
 공격자: 검증된 파일을 웹쉘로 교체
 서버: 파일을 public 디렉토리로 이동
@@ -79,7 +79,7 @@ async function applyCoupon(userId, couponId) {
 
 **계정 제한 우회**
 
-```
+```text
 API 요청 횟수 제한: 1분에 10회
 공격자: 동시에 100개 요청 전송
 서버: 각 요청이 카운터를 읽을 때 9로 보임 (서로가 갱신 전)

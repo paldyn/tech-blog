@@ -21,7 +21,7 @@ draft: false
 
 해싱(Hashing)은 단방향이다. 해시에서 원본 비밀번호를 복원할 수 없다. 로그인 시 입력된 비밀번호를 같은 방식으로 해싱해 저장된 해시와 비교할 뿐이다.
 
-```
+```text
 비교:
 암호화: password → AES → 저장 → (키로 복호화) → password  [위험]
 해싱:   password → bcrypt → 저장                          [안전]

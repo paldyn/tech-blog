@@ -100,7 +100,7 @@ CI/CD 파이프라인 보안, 안전하지 않은 역직렬화, 무결성 검증
 
 앞으로 OWASP Top 10 항목을 포함해 웹 보안의 전 영역을 체계적으로 다룬다.
 
-```
+```text
 인젝션 계열:     A03 → SQL·Blind SQL → NoSQL → Command → Template → XSS
 브라우저 보안:   SOP → CORS → CSP → 쿠키 보안 → 클릭재킹
 암호화:          대칭/비대칭 → 해싱 → TLS → 인증서
