@@ -26,7 +26,7 @@ draft: false
 
 ## PKCE 작동 원리
 
-```
+```text
 code_verifier  →  SHA256  →  BASE64URL  =  code_challenge
 (랜덤 비밀값)                              (공개 전송)
 ```

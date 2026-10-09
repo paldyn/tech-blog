@@ -17,7 +17,7 @@ draft: false
 
 애플리케이션이 파라미터로 전달된 외부 URL을 검증 없이 `Location` 헤더로 설정해 사용자를 리다이렉트하는 취약점이다. 공격자는 신뢰할 수 있는 도메인 URL을 피싱 미끼로 사용한다:
 
-```
+```text
 https://trusted-bank.com/redirect?next=https://evil-phishing.com
 ```
 
@@ -50,7 +50,7 @@ def redirect_view(request):
 
 단순히 `url.startsWith('https://trusted.com')`로 검증하면 우회된다. 공격자들이 자주 사용하는 우회 기법들이다:
 
-```
+```text
 # @ 기호로 호스트 위장
 https://trusted.com@evil.com
 
@@ -80,7 +80,7 @@ https://trusted.com/\evil.com
 
 OAuth에서 `redirect_uri` 검증이 느슨하면 오픈 리다이렉트와 결합 가능하다:
 
-```
+```text
 https://auth-provider.com/authorize
   ?client_id=abc
   &redirect_uri=https://trusted-app.com/redirect
@@ -94,7 +94,7 @@ https://auth-provider.com/authorize
 
 서버 측 HTTP 클라이언트가 리다이렉트를 자동 추적할 경우, 오픈 리다이렉트를 통해 내부 서비스로 요청을 유도할 수 있다:
 
-```
+```text
 /fetch?url=https://trusted.com/redirect?next=http://169.254.169.254/
 ```
 

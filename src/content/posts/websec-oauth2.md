@@ -61,7 +61,7 @@ async def start_oauth(request: Request):
 
 인가 서버가 `redirect_uri`를 느슨하게 검증하면 공격자가 자신의 도메인으로 코드를 가로챌 수 있다.
 
-```
+```text
 # 취약: path traversal
 허용 등록: https://app.example.com/callback
 공격자 요청: https://app.example.com/callback/../evil
@@ -87,7 +87,7 @@ def validate_redirect_uri(uri: str) -> bool:
 
 Implicit Flow는 Access Token을 URL 프래그먼트(`#access_token=...`)로 반환한다. 이는 브라우저 히스토리, Referer 헤더, 자바스크립트로 노출될 수 있어 **RFC 9700에서 사용 금지**됐다.
 
-```
+```text
 # 사용 금지
 response_type=token
 
