@@ -19,7 +19,7 @@ draft: false
 
 핵심 전제: 데이터와 코드가 구분되지 않는다.
 
-```
+```text
 정상: "SELECT * FROM users WHERE id = 1"
                                         ↑ 데이터 (숫자)
 

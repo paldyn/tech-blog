@@ -57,7 +57,7 @@ print(S_alice == S_bob)  # True
 
 DH는 **인증**(Authentication)을 제공하지 않는다. 중간자(Mallory)가 Alice와 Bob 사이에서 각각 별도의 DH 교환을 수행하면 양쪽을 속일 수 있다.
 
-```
+```text
 Alice ←→ Mallory ←→ Bob
   (DH1)         (DH2)
 ```
@@ -140,7 +140,7 @@ openssl s_client -connect example.com:443 -tls1_3 2>&1 | grep -E "Protocol|Ciphe
 
 ECDHE의 핵심 장점이다. 매 연결마다 새로운 임시 키 쌍을 생성하기 때문에, 나중에 서버의 장기 비밀키가 노출되더라도 **과거 통신의 암호를 복호화할 수 없다**.
 
-```
+```text
 # PFS 없는 구 방식 (정적 RSA 키 교환)
 Client → [RSA로 암호화된 세션 키] → Server
 # 서버 비밀키 노출 시: 저장된 모든 과거 트래픽 복호화 가능
