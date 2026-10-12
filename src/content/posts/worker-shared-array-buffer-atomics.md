@@ -102,7 +102,7 @@ const lock = new Int32Array(sab); // lock[0] = 0: 해제, 1: 획득
 
 function acquire() {
   while (Atomics.compareExchange(lock, 0, 0, 1) !== 0) {
-    // 이미 잠겨 있으면 lock[0]이 1로 바뀔 때까지 대기
+    // 이미 잠겨 있으면 lock[0]이 1에서 다른 값으로 바뀔 때까지 대기
     Atomics.wait(lock, 0, 1);
   }
 }

@@ -169,7 +169,7 @@ const hash = blake3(dataPtr, dataLen);
 
 ## Wasm 모듈 캐싱
 
-컴파일된 Wasm은 `WebAssembly.Module` 객체로 캐싱해 같은 모듈을 여러 Worker에서 재사용할 수 있습니다. `Module`은 Transferable이므로 복사 없이 전달됩니다.
+컴파일된 Wasm은 `WebAssembly.Module` 객체로 캐싱해 같은 모듈을 여러 Worker에서 재사용할 수 있습니다. `Module`은 구조적 복제(serializable)가 가능하므로 postMessage로 전달해 재컴파일 없이 재사용할 수 있습니다.
 
 ```js
 // main.js — Wasm 모듈을 한 번 컴파일 후 모든 Worker에 공유
@@ -179,8 +179,8 @@ const compiledModule = await WebAssembly.compile(moduleBytes);
 
 for (let i = 0; i < 4; i++) {
   const w = new Worker('./wasm-worker.js');
-  // Module은 Transferable — 복사 없이 이전
-  w.postMessage({ module: compiledModule }, [compiledModule]);
+  // Module은 structured clone으로 전달 (transfer list에 넣으면 DataCloneError)
+  w.postMessage({ module: compiledModule });
 }
 
 // wasm-worker.js

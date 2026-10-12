@@ -223,7 +223,7 @@ self.onconnect = ({ ports: [port] }) => {
 
 ## 브라우저 지원
 
-Shared Worker는 Chrome·Firefox에서 잘 지원되지만, **Safari**는 데스크탑(MacOS 14+)에서만 지원하며 iOS에서는 미지원입니다. 범용 지원이 필요한 경우 BroadcastChannel + Dedicated Worker 조합을 고려하세요.
+Shared Worker는 데스크탑 Chrome·Firefox에서 잘 지원되고 **Safari**는 16 버전부터(macOS·iOS) 지원하지만, Android용 Chrome에서는 미지원입니다. 범용 지원이 필요한 경우 BroadcastChannel + Dedicated Worker 조합을 고려하세요.
 
 ---
 
