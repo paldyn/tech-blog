@@ -37,7 +37,7 @@ def greet():
 
 수식 삽입 페이로드로 취약 여부를 확인하고, 엔진별 동작 차이로 사용 중인 템플릿 엔진을 판별한다.
 
-```
+```text
 {{7*7}}      → 49가 출력되면: Twig, Jinja2, Smarty 등 후보
 {{7*'7'}}    → 7777777: Jinja2 (Python 문자열 반복)
 {{7*'7'}}    → 49:      Twig (PHP 숫자 연산)
@@ -49,7 +49,7 @@ ${7*7}       → 49:      FreeMarker (Java)
 
 Jinja2는 Python의 내부 클래스 계층에 접근할 수 있어 RCE까지 이어진다.
 
-```
+```text
 # Python 오브젝트 계층 탐색
 {{''.__class__}}                              → <class 'str'>
 {{''.__class__.__mro__}}                     → str의 MRO 체인
@@ -64,7 +64,7 @@ Jinja2는 Python의 내부 클래스 계층에 접근할 수 있어 RCE까지 �
 
 ## FreeMarker (Java) 익스플로잇
 
-```
+```text
 # FreeMarker 서버 사이드 실행
 ${"freemarker.template.utility.Execute"?new()("id")}
 <#assign ex="freemarker.template.utility.Execute"?new()>
@@ -161,7 +161,7 @@ def sanitize_template_input(value: str, max_length: int = 500) -> str:
 // ❌ 위험
 const html = pug.render(`h1 Hello, ${userInput}!`);
 // ✅ 안전
-const html = pug.render('h1 Hello, #{name}!', { name: userInput });
+const safeHtml = pug.render('h1 Hello, #{name}!', { name: userInput });
 ```
 
 SSTI는 커맨드 인젝션만큼 위험하지만 더 미묘하게 발생한다. 프레임워크를 사용할 때 **템플릿 렌더링 함수에 사용자 입력이 직접 들어가는 경로가 없는지** 항상 코드 리뷰에서 확인해야 한다. 다음 글에서는 브라우저에서 악성 스크립트를 실행시키는 XSS 취약점을 총괄 개요부터 살펴본다.

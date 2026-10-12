@@ -148,9 +148,11 @@ Content-Security-Policy-Report-Only: require-trusted-types-for 'script'; report-
 
 ```javascript
 // ESLint 플러그인으로 자동 탐지
-// @typescript-eslint/no-restricted-syntax 등 활용
+// ESLint no-restricted-syntax 등 활용
+```
 
-// 취약 패턴 검색
+```bash
+# 취약 패턴 검색
 grep -rn "innerHTML\s*=" src/
 grep -rn "document\.write" src/
 grep -rn "eval(" src/

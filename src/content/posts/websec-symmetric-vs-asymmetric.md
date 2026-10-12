@@ -99,7 +99,7 @@ pt = private_key.decrypt(ct, padding.OAEP(...))
 
 TLS는 두 방식의 장점만 취하는 하이브리드 구조다.
 
-```
+```text
 TLS 핸드셰이크 단계 (비대칭):
 1. 서버가 인증서(공개키 포함) 전송
 2. 키 교환으로 세션 키 합의 (ECDH)

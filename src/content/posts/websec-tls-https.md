@@ -60,7 +60,7 @@ print(f"Cipher: {info['cipher'][0]}")  # TLS_AES_256_GCM_SHA384
 
 TLS 1.3은 cipher suite를 5개로 줄이고 모두 AEAD(인증된 암호화)다:
 
-```
+```text
 TLS_AES_256_GCM_SHA384        ✅ 권장 (256 bit 보안)
 TLS_AES_128_GCM_SHA256        ✅ 허용 (128 bit 보안)
 TLS_CHACHA20_POLY1305_SHA256  ✅ 모바일/임베디드 최적

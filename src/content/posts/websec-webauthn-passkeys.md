@@ -88,6 +88,7 @@ def verify_registration(credential_json: str, session, db):
 
 ```python
 from webauthn import generate_authentication_options, verify_authentication_response
+from webauthn.helpers.structs import AuthenticationCredential
 
 def get_auth_options(session):
     challenge = secrets.token_bytes(32)

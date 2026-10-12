@@ -62,7 +62,7 @@ Cache-Control: public, max-age=3600
 
 일부 캐시는 쿼리 파라미터를 캐시 키에서 제외한다. 정규화 방식 차이를 이용한다:
 
-```
+```http
 GET /js/app.js?evil=<script>alert(1)</script>
 ```
 
