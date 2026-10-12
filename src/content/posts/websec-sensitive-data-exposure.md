@@ -56,7 +56,7 @@ def verify_password(password: str, hashed: str) -> bool:
 # 공격자가 GitHub에서 노출된 시크릿을 찾는 방법
 # (실제 공격 도구들이 24시간 GitHub을 스캔한다)
 grep -r "aws_access_key_id" .
-grep -r "sk-[a-zA-Z0-9]{32}" .  # OpenAI API 키 패턴
+grep -rE "sk-[a-zA-Z0-9]{32}" .  # OpenAI API 키 패턴
 grep -r "postgres://.*:.*@" .
 ```
 

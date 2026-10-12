@@ -25,7 +25,7 @@ HTTP 보안 헤더는 서버가 브라우저에게 보안 관련 동작을 지�
 
 XSS 방어에 가장 효과적인 헤더다.
 
-```
+```http
 Content-Security-Policy: default-src 'self';
   script-src 'self' 'nonce-{random}';
   style-src 'self';
@@ -39,7 +39,7 @@ Content-Security-Policy: default-src 'self';
 
 브라우저가 항상 HTTPS로만 접속하도록 강제한다.
 
-```
+```http
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 ```
 
@@ -47,7 +47,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 ## 권장 보안 헤더
 
-```
+```http
 X-Frame-Options: SAMEORIGIN
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
@@ -71,7 +71,7 @@ add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
 ```python
 from fastapi import FastAPI, Request, Response
-from fastapi.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
