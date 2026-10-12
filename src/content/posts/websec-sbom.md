@@ -19,7 +19,7 @@ draft: false
 
 SBOM은 소프트웨어에 포함된 모든 구성 요소(라이브러리, 프레임워크, OS 패키지)의 이름, 버전, 라이선스, 출처를 기계가 읽을 수 있는 형태로 기록한 문서다. 물리적 제품의 자재명세서(Bill of Materials)를 소프트웨어에 적용한 개념이다.
 
-2021년 SolarWinds 공급망 공격 이후 미국 정부는 행정명령 EO 14028을 통해 연방 정부에 납품하는 소프트웨어에 SBOM을 의무화했다. EU Cyber Resilience Act(CRA)도 2025년부터 SBOM 제출을 요구한다.
+2020년 SolarWinds 공급망 공격 이후 미국 정부는 행정명령 EO 14028을 통해 연방 정부에 납품하는 소프트웨어에 SBOM을 의무화했다. EU Cyber Resilience Act(CRA)도 2027년 12월부터 SBOM 작성을 요구한다.
 
 SBOM으로 할 수 있는 것:
 

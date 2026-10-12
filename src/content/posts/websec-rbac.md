@@ -17,7 +17,7 @@ draft: false
 
 RBAC(Role-Based Access Control)는 권한을 **역할**(Role)에 묶고, 사용자에게 역할을 부여하는 접근 제어 모델이다. 사용자에게 직접 권한을 부여하는 대신 역할을 통해 간접 부여한다.
 
-```
+```text
 사용자 → 역할 → 권한 → 리소스
 Alice  → admin → posts:delete → /posts/{id}
 ```

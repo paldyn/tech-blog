@@ -62,7 +62,7 @@ RSA의 수학적 안전성과 별개로 **구현 방식**에서 취약점이 자
 
 ```python
 # ❌ 위험: 패딩 없는 교과서적 RSA
-ciphertext = pow(plaintext, e, n)  # Bleichenbacher 공격에 취약
+ciphertext = pow(plaintext, e, n)  # 결정적·가변성(malleable) 문제로 취약
 
 # ✅ 안전: OAEP 패딩 사용 (암호화)
 from cryptography.hazmat.primitives.asymmetric import padding, rsa

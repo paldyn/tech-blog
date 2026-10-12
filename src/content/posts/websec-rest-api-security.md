@@ -48,7 +48,7 @@ def verify_jwt(token: str) -> dict:
 
 ## BOLA(Broken Object Level Authorization) 방어
 
-OWASP API Top 10 1위를 3년 연속 차지한 취약점이다. `/api/orders/1234` 같은 엔드포인트에서 ID만 바꾸면 타인의 주문에 접근할 수 있는 경우다.
+OWASP API Security Top 10에서 2019년판과 2023년판 모두 1위를 차지한 취약점이다. `/api/orders/1234` 같은 엔드포인트에서 ID만 바꾸면 타인의 주문에 접근할 수 있는 경우다.
 
 ```python
 # 취약한 코드

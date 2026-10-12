@@ -59,7 +59,7 @@ re.test("aaaaaaaaab")  // 오래 걸림...
 
 2016년 Stack Overflow는 ReDoS로 34분간 서비스 중단을 겪었다. 원인은 마크다운 파서의 취약한 정규식이었다.
 
-```
+```text
 # Stack Overflow 사고를 일으킨 패턴 (단순화)
 /\s+$/  → 무해해 보이지만...
 

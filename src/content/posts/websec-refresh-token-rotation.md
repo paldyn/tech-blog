@@ -32,8 +32,8 @@ Rotation의 진짜 가치는 **탐지**에 있다. 토큰을 훔친 공격자가
 
 이 시점에서 공격자의 `RT_new`도 함께 폐기된다. 결과적으로 양쪽 모두 재인증이 필요해진다. 합법적인 사용자에게는 불편하지만 **공격자도 즉시 차단**된다.
 
-```python
-# DB 스키마 설계
+```sql
+-- DB 스키마 설계
 CREATE TABLE refresh_tokens (
     id          SERIAL PRIMARY KEY,
     token_hash  VARCHAR(64) UNIQUE NOT NULL,  -- SHA-256 해시 저장

@@ -160,7 +160,7 @@ const redisClient = createClient({ url: process.env.REDIS_URL });
 export const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,  // 15분
   max: 100,
-  standardHeaders: true,      // X-RateLimit-* 헤더 포함
+  standardHeaders: true,      // RateLimit-* 표준 헤더 포함
   legacyHeaders: false,
   store: new RedisStore({ sendCommand: (...args) => redisClient.sendCommand(args) }),
   handler: (req, res) => {
