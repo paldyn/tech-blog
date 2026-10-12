@@ -17,7 +17,7 @@ draft: false
 
 서버가 사용자 입력으로 받은 URL에 직접 HTTP 요청을 보내는 기능이 취약점의 근원입니다. URL 미리보기, 웹훅, 파일 임포트, PDF 생성, 이미지 다운로드 같은 기능이 전형적인 SSRF 공격 벡터입니다.
 
-```
+```http
 # 정상 요청
 GET /fetch?url=https://api.partner.com/data
 
@@ -52,8 +52,10 @@ def fetch_url():
     # ❌ URL 검증 없이 바로 요청
     response = requests.get(url, timeout=5)
     return response.content
+```
 
-# Node.js axios (취약)
+```javascript
+// Node.js axios (취약)
 app.get('/preview', async (req, res) => {
   const url = req.query.url;
   // ❌ 검증 없음

