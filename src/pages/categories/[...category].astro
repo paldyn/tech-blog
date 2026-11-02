@@ -52,12 +52,21 @@ const title = subcategory ? `${category.name} / ${subcategory.name}` : category.
     </nav>
 
     {category.children.length > 0 && (
-      <nav class="sub-nav child-nav" aria-label={`${category.name} 하위 카테고리`}>
-        <a href={`${base}/categories/${category.slug}/`} class:list={['sub-link', { active: !subcategory }]} aria-current={!subcategory ? 'page' : undefined}>공통 ({category.posts.length})</a>
-        {category.children.map((child) => (
-          <a href={`${base}/categories/${category.slug}/${child.slug}/`} class:list={['sub-link', { active: child.slug === subcategory?.slug }]} aria-current={child.slug === subcategory?.slug ? 'page' : undefined}>{child.name} ({child.count})</a>
-        ))}
-      </nav>
+      <details class="child-categories" open={Boolean(subcategory)}>
+        <summary>
+          <span>{category.name} 하위 카테고리</span>
+          <span class="child-count">{category.children.length}개</span>
+          <svg class="child-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 6 6 6-6 6" />
+          </svg>
+        </summary>
+        <nav class="sub-nav child-nav" aria-label={`${category.name} 하위 카테고리`}>
+          <a href={`${base}/categories/${category.slug}/`} class:list={['sub-link', { active: !subcategory }]} aria-current={!subcategory ? 'page' : undefined}>공통 ({category.posts.length})</a>
+          {category.children.map((child) => (
+            <a href={`${base}/categories/${category.slug}/${child.slug}/`} class:list={['sub-link', { active: child.slug === subcategory?.slug }]} aria-current={child.slug === subcategory?.slug ? 'page' : undefined}>{child.name} ({child.count})</a>
+          ))}
+        </nav>
+      </details>
     )}
 
     {posts.length > 0 ? (
@@ -101,7 +110,29 @@ const title = subcategory ? `${category.name} / ${subcategory.name}` : category.
     padding-bottom: 2px;
   }
   .sub-nav::-webkit-scrollbar { display: none; }
-  .child-nav { flex-wrap: wrap; margin-top: -28px; gap: 6px; overflow: visible; }
+  .child-categories {
+    margin-top: -28px;
+    margin-bottom: 48px;
+    border: 1px solid var(--border);
+  }
+  .child-categories summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.4;
+    list-style: none;
+    cursor: pointer;
+  }
+  .child-categories summary::-webkit-details-marker { display: none; }
+  .child-categories summary:hover { color: var(--accent-bright); }
+  .child-categories summary:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
+  .child-count { color: var(--text-dim); font-family: var(--font-mono); font-size: 11px; white-space: nowrap; }
+  .child-chevron { width: 16px; height: 16px; margin-left: auto; flex-shrink: 0; }
+  .child-categories[open] .child-chevron { transform: rotate(90deg); }
+  .child-nav { flex-wrap: wrap; margin: 0; padding: 0 16px 16px; gap: 6px; overflow: visible; }
   .sub-link {
     font-family: var(--font-mono);
     font-size: 11px;
