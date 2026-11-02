@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 20
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "격리수준", "repeatable-read", "gap-lock", "next-key-lock", "mvcc"]
 featured: false
 draft: false

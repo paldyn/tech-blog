@@ -13,7 +13,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.pubDate,
-      categories: [post.data.category, ...post.data.tags],
+      categories: [post.data.category, ...(post.data.subcategory ? [post.data.subcategory] : []), ...post.data.tags],
       link: postUrl(post),
     })),
   });

@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 33
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "statistics", "information-schema", "cardinality", "analyze-table", "innodb-stats", "옵티마이저통계"]
 featured: false
 draft: false

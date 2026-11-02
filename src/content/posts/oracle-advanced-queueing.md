@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "advanced-queuing", "aq", "message-queue", "pub-sub", "dbms-aq", "dbms-aqadm", "transactional-messaging", "jms"]
 featured: false
 draft: false

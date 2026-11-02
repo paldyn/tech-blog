@@ -6,6 +6,7 @@ pubDate: "2026-05-27"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "Vitess"
 tags: ["Vitess", "MySQL샤딩", "VTGate", "VSchema", "수평확장", "분산SQL"]
 featured: false
 draft: false

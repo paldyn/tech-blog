@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "procedure", "call", "commit", "rollback", "batch-processing", "inout", "transaction-control", "plpgsql"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "SQLOS", "스케줄러", "Worker", "스레드", "협력적스케줄링", "병렬처리"]
 featured: false
 draft: false

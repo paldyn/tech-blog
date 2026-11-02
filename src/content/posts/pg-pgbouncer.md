@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "pgbouncer", "connection-pool", "커넥션풀", "성능최적화"]
 featured: false
 draft: false

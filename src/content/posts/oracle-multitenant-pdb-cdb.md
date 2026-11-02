@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "multitenant", "cdb", "pdb", "pluggable-database", "container", "12c", "pdb-seed", "unplug", "resource-manager"]
 featured: false
 draft: false

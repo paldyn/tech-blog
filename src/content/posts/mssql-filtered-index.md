@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "인덱스", "필터인덱스", "FilteredIndex", "소프트삭제", "성능최적화"]
 featured: false
 draft: false

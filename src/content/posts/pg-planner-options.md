@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "planner", "random-page-cost", "effective-cache-size", "work-mem", "enable-seqscan", "guc", "query-optimization"]
 featured: false
 draft: false

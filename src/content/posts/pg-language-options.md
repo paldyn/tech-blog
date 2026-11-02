@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "plpgsql", "plpython", "sql-function", "procedural-languages", "trusted", "untrusted", "spi", "c-extension", "plperl"]
 featured: false
 draft: false

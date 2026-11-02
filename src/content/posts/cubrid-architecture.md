@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "CUBRID"
 tags: ["CUBRID", "국산DB", "오픈소스", "RDBMS", "Broker", "HA"]
 featured: false
 draft: false

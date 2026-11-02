@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "격리수준", "SNAPSHOT", "RCSI", "트랜잭션", "동시성", "행버전"]
 featured: false
 draft: false

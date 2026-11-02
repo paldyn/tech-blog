@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "select-for-update", "skip-locked", "nowait", "row-lock", "job-queue", "pessimistic-lock", "concurrency", "pgbouncer"]
 featured: false
 draft: false

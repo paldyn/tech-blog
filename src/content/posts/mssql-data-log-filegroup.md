@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "MDF", "LDF", "FileGroup", "VLF", "파일관리", "트랜잭션로그"]
 featured: false
 draft: false

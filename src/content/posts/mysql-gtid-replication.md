@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "GTID", "리플리케이션", "Failover", "AUTO_POSITION", "고가용성"]
 featured: false
 draft: false

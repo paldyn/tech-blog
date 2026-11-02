@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 38
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "event-scheduler", "cron", "scheduled-job", "batch-processing", "recurring-event", "자동배치"]
 featured: false
 draft: false

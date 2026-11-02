@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "Tibero"
 tags: ["Tibero", "RDBMS", "Oracle호환", "국산DB", "아키텍처", "TmaxData"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "바이너리로그", "binlog", "ROW", "STATEMENT", "PITR", "리플리케이션"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "pitr", "backup", "wal-archive", "recovery", "베이스백업"]
 featured: false
 draft: false

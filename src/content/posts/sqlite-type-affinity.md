@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "타입어파이니티", "동적타입", "STRICT", "스토리지클래스"]
 featured: false
 draft: false

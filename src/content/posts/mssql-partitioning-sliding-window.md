@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "파티셔닝", "SlidingWindow", "SWITCH", "대용량", "아카이브"]
 featured: false
 draft: false

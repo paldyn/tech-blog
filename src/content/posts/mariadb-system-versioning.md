@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "MariaDB"
 tags: ["MariaDB", "SystemVersioning", "시간여행쿼리", "이력관리", "감사로그", "TEMPORAL"]
 featured: false
 draft: false

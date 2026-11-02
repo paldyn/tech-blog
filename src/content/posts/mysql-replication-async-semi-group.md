@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 40
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "replication", "async-replication", "semi-sync", "group-replication", "gtid", "ha", "고가용성"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "lock", "tx-lock", "tm-lock", "ddl-lock", "latch", "mutex", "row-lock", "contention", "v$lock"]
 featured: false
 draft: false

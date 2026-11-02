@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "MariaDB"
 tags: ["MariaDB", "MaxScale", "프록시", "ReadWriteSplit", "로드밸런싱", "고가용성"]
 featured: false
 draft: false

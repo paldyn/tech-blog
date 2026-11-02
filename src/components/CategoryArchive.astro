@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExploreNav from './ExploreNav.astro';
+import CategoryPostLinks from './CategoryPostLinks.astro';
+import { buildCategoryTree, type Post, type PostType } from '../utils/posts';
+
+interface Props { posts: Post[]; mode?: PostType; }
+const { posts, mode } = Astro.props;
+const categories = buildCategoryTree(posts);
+const title = mode === 'knowledge' ? '지식 · 카테고리' : mode === 'record' ? '기록 · 카테고리' : '카테고리';
+const label = mode === 'knowledge' ? 'KNOWLEDGE · CATEGORIES' : mode === 'record' ? 'RECORDS · CATEGORIES' : 'CATEGORIES';
+---
+
+<BaseLayout title={title}>
+  <div class="wrap">
+    <header class="page-header" id="all">
+      <div class="label">{label}</div>
+      <h1>{title}</h1>
+      <p>주제별로 글을 모았습니다. 공통 개념과 제품별 하위 카테고리를 나누어 볼 수 있습니다.</p>
+      {mode && <ExploreNav mode={mode} section="categories" showPrimary={false} />}
+    </header>
+
+    {categories.length ? (
+      <div class="layout">
+        <section class="main" aria-label="카테고리별 글">
+          {categories.map((cat) => (
+            <section class="group" id={`cat-${cat.slug}`}>
+              <div class="group-head">
+                <h2>{cat.name} <span class="heading-count">{cat.count}</span></h2>
+                {cat.children.length === 0 && cat.posts.length > 1 && (
+                  <a class="first-link" href={`#first-${cat.slug}`} aria-label={`${cat.name} 첫 글로 이동`}>맨 처음 ↓</a>
+                )}
+              </div>
+
+              {cat.posts.length > 0 && (
+                <section class:list={{ subgroup: cat.children.length > 0 }} id={`common-${cat.slug}`}>
+                  {cat.children.length > 0 && (
+                    <div class="group-head sub-head">
+                      <h3>공통 <span class="heading-count">{cat.posts.length}</span></h3>
+                      <a class="first-link" href={`#first-${cat.slug}`} aria-label={`${cat.name} 공통 첫 글로 이동`}>맨 처음 ↓</a>
+                    </div>
+                  )}
+                  <CategoryPostLinks posts={cat.posts} anchor={cat.slug} />
+                </section>
+              )}
+
+              {cat.children.map((child) => (
+                <section class="subgroup" id={`cat-${cat.slug}--${child.slug}`}>
+                  <div class="group-head sub-head">
+                    <h3>{child.name} <span class="heading-count">{child.count}</span></h3>
+                    {child.posts.length > 1 && (
+                      <a class="first-link" href={`#first-${cat.slug}--${child.slug}`} aria-label={`${cat.name} ${child.name} 첫 글로 이동`}>맨 처음 ↓</a>
+                    )}
+                  </div>
+                  <CategoryPostLinks posts={child.posts} anchor={`${cat.slug}--${child.slug}`} />
+                </section>
+              ))}
+            </section>
+          ))}
+        </section>
+
+        <aside class="side" aria-label="카테고리 목록">
+          <nav>
+            <a class="side-link" href="#all"><span>All</span><span class="count">{posts.length}</span></a>
+            {categories.map((cat) => (
+              <div class="category-branch">
+                <a class="side-link parent-link" href={`#cat-${cat.slug}`}><span>{cat.name}</span><span class="count">{cat.count}</span></a>
+                {cat.children.length > 0 && (
+                  <div class="child-links">
+                    {cat.posts.length > 0 && <a class="side-link child-link" href={`#common-${cat.slug}`}><span>공통</span><span class="count">{cat.posts.length}</span></a>}
+                    {cat.children.map((child) => (
+                      <a class="side-link child-link" href={`#cat-${cat.slug}--${child.slug}`}><span>{child.name}</span><span class="count">{child.count}</span></a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+        </aside>
+      </div>
+    ) : (
+      <section class="empty"><h2>아직 카테고리가 없습니다.</h2><p>첫 글이 올라오면 카테고리가 자동으로 나타납니다.</p></section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header { padding: 76px 0 32px; margin-bottom: 36px; }
+  .label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: .28em; margin-bottom: 14px; }
+  h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: .02em; margin-bottom: 10px; color: var(--accent-bright); }
+  .page-header p { color: var(--text-dim); font-size: 14px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 68px; margin-bottom: 80px; }
+  .group { padding: 24px 0 32px; border-top: 1px solid var(--border); scroll-margin-top: 90px; }
+  .group:first-child { padding-top: 8px; }
+  .group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+  h2 { font-size: 2rem; font-weight: 600; color: var(--accent-bright); letter-spacing: .01em; }
+  .heading-count { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); font-weight: 400; vertical-align: middle; margin-left: 8px; }
+  .subgroup { margin-top: 28px; padding-left: 20px; border-left: 2px solid var(--border); scroll-margin-top: 90px; }
+  .sub-head h3 { font-size: 1.2rem; font-weight: 500; color: var(--accent-bright); }
+  .first-link { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-decoration: none; padding: 5px 10px; border: 1px solid var(--border); border-radius: 3px; white-space: nowrap; }
+  .first-link:hover { color: var(--accent-bright); border-color: var(--accent-bright); }
+  .side { position: sticky; top: 96px; align-self: start; max-height: calc(100vh - 160px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--text-dim) transparent; padding-right: 4px; }
+  .side nav { border-top: 1px solid var(--border); }
+  .side-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; text-decoration: none; color: var(--text); padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .84rem; line-height: 1.3; }
+  .side-link:hover { color: var(--accent-bright); }
+  .child-links { margin-left: 8px; padding-left: 12px; border-left: 1px solid var(--border); }
+  .child-link { color: var(--text-dim); font-size: .78rem; padding: 8px 0; }
+  .count { min-width: 26px; height: 22px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-family: var(--font-mono); font-size: 10px; display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; color: var(--text); }
+  .empty { border: 1px solid var(--border); background: var(--bg-subtle); padding: 36px 28px; margin-bottom: 80px; }
+  .empty h2 { font-size: 1.2rem; font-weight: 400; margin-bottom: 10px; }
+  .empty p { color: var(--text-dim); font-size: 14px; }
+  @media (max-width: 1080px) { .layout { grid-template-columns: minmax(0, 1fr) 240px; gap: 44px; } }
+  @media (max-width: 860px) {
+    .layout { display: flex; flex-direction: column; gap: 32px; }
+    .side { position: static; order: -1; max-height: 320px; overflow-y: auto; align-self: stretch; }
+    .side nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; align-items: start; }
+  }
+  @media (max-width: 640px) {
+    .page-header { padding-top: 56px; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.75rem; }
+    .subgroup { padding-left: 12px; }
+    .side nav { grid-template-columns: 1fr; }
+  }
+</style>

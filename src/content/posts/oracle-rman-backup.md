@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "rman", "backup", "recovery", "incremental-backup", "pitr", "recovery-catalog", "archivelog", "fast-recovery-area", "flashback"]
 featured: false
 draft: false

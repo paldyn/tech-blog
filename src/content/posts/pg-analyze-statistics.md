@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "analyze", "statistics", "pg-stats", "n-distinct", "histogram", "mcv", "statistics-target", "autovacuum", "query-planner"]
 featured: false
 draft: false

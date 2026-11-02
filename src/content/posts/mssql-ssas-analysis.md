@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQL Server", "SSAS", "OLAP", "Tabular", "MDX", "DAX", "큐브", "분석"]
 featured: false
 draft: false

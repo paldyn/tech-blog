@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "AlwaysOn", "가용성그룹", "HA", "DR", "WSFC", "고가용성"]
 featured: false
 draft: false

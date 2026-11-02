@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "isolation", "mvcc", "snapshot", "read-committed", "repeatable-read", "serializable", "xid", "visibility", "concurrency"]
 featured: false
 draft: false

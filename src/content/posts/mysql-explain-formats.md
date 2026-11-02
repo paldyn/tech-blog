@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 31
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "explain", "explain-analyze", "query-optimization", "실행계획", "옵티마이저", "쿼리튜닝"]
 featured: false
 draft: false

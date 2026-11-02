@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "hash-index", "btree", "index", "linear-hashing", "uuid", "cardinality", "wal", "pageinspect", "performance"]
 featured: false
 draft: false

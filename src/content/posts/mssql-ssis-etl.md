@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "SSIS", "ETL", "데이터통합", "DW", "SCD"]
 featured: false
 draft: false

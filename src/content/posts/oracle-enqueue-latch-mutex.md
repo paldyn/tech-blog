@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "enqueue", "latch", "mutex", "concurrency", "shared-pool", "cache-buffers-chains", "cursor-pin", "v$latch", "v$mutex-sleep"]
 featured: false
 draft: false

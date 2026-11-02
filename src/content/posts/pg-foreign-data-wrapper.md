@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "fdw", "foreign-data-wrapper", "postgres-fdw", "mysql-fdw", "file-fdw", "import-foreign-schema", "pushdown", "remote-join"]
 featured: false
 draft: false

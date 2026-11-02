@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 16
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "doublewrite-buffer", "데이터무결성", "충돌복구", "partial-write"]
 featured: false
 draft: false

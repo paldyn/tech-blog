@@ -6,6 +6,7 @@ pubDate: "2026-05-27"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "YugabyteDB"
 tags: ["YugabyteDB", "YSQL", "YCQL", "DocDB", "분산SQL", "지오분산", "Raft"]
 featured: false
 draft: false

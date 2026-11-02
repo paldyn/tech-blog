@@ -6,6 +6,7 @@ pubDate: "2026-05-27"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "Spanner"
 tags: ["GoogleSpanner", "TrueTime", "CommitWait", "Paxos", "분산SQL", "글로벌일관성"]
 featured: false
 draft: false

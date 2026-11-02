@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "my.cnf", "튜닝", "InnoDB", "버퍼풀", "슬로우쿼리", "설정"]
 featured: false
 draft: false

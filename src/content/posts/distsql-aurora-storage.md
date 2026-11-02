@@ -6,6 +6,7 @@ pubDate: "2026-05-27"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "Aurora"
 tags: ["AmazonAurora", "Aurora", "분산스토리지", "쿼럼", "GlobalDatabase", "Serverless"]
 featured: false
 draft: false

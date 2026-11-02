@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "인덱스", "INCLUDE", "커버링인덱스", "KeyLookup", "성능최적화"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "rbo", "cbo", "optimizer", "statistics", "dbms-stats", "optimizer-mode", "explain-plan", "query-plan"]
 featured: false
 draft: false

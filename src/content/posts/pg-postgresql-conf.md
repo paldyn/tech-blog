@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "postgresql-conf", "튜닝", "shared-buffers", "work-mem", "autovacuum"]
 featured: false
 draft: false

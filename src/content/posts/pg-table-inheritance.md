@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "table-inheritance", "inherits", "only", "tableoid", "partitioning", "single-table-inheritance"]
 featured: false
 draft: false

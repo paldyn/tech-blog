@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "rac", "cache-fusion", "gcs", "ges", "interconnect", "high-availability", "asm", "cluster", "real-application-clusters"]
 featured: false
 draft: false

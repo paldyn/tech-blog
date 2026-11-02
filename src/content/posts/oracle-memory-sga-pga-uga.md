@@ -6,6 +6,7 @@ pubDate: "2026-05-07"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "sga", "pga", "uga", "buffer-cache", "shared-pool", "memory", "bind-variable", "soft-parse"]
 featured: false
 draft: false

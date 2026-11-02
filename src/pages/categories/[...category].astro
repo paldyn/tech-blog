@@ -3,8 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import {
   getPublishedPosts,
-  getCategories,
-  categorySlug,
+  buildCategoryTree,
+  categoryLabelFor,
   readingTimeFor,
   thumbFor,
   variantFor,
@@ -14,28 +14,30 @@ import {
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
-  const categories = await getCategories();
-  return categories.map((cat) => ({
-    params: { category: cat.slug },
-    props: {
-      category: cat.name,
-      posts: posts.filter((p) => p.data.category === cat.name),
-      categories,
+  const categories = buildCategoryTree(posts);
+  return categories.flatMap((category) => [
+    {
+      params: { category: category.slug },
+      props: { category, subcategory: undefined, posts: category.posts, categories },
     },
-  }));
+    ...category.children.map((subcategory) => ({
+      params: { category: `${category.slug}/${subcategory.slug}` },
+      props: { category, subcategory, posts: subcategory.posts, categories },
+    })),
+  ]);
 }
 
-const { category, posts, categories } = Astro.props;
+const { category, subcategory, posts, categories } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const activeSlug = categorySlug(category);
+const title = subcategory ? `${category.name} / ${subcategory.name}` : category.name;
 ---
 
-<BaseLayout title={category}>
+<BaseLayout title={title}>
   <div class="wrap">
     <header class="page-header">
       <div class="label">CATEGORY</div>
-      <h1>{category}</h1>
-      <p>{posts.length}개의 글이 있습니다.</p>
+      <h1>{title}</h1>
+      <p>{!subcategory && category.children.length > 0 ? `공통 ${posts.length}개 · 하위 카테고리 포함 전체 ${category.count}개` : `${posts.length}개의 글이 있습니다.`}</p>
     </header>
 
     <nav class="sub-nav">
@@ -43,10 +45,20 @@ const activeSlug = categorySlug(category);
       {categories.map((c) => (
         <a
           href={`${base}/categories/${c.slug}/`}
-          class:list={['sub-link', { active: c.slug === activeSlug }]}
+          class:list={['sub-link', { active: c.slug === category.slug }]}
+          aria-current={c.slug === category.slug ? 'true' : undefined}
         >{c.name}</a>
       ))}
     </nav>
+
+    {category.children.length > 0 && (
+      <nav class="sub-nav child-nav" aria-label={`${category.name} 하위 카테고리`}>
+        <a href={`${base}/categories/${category.slug}/`} class:list={['sub-link', { active: !subcategory }]} aria-current={!subcategory ? 'page' : undefined}>공통 ({category.posts.length})</a>
+        {category.children.map((child) => (
+          <a href={`${base}/categories/${category.slug}/${child.slug}/`} class:list={['sub-link', { active: child.slug === subcategory?.slug }]} aria-current={child.slug === subcategory?.slug ? 'page' : undefined}>{child.name} ({child.count})</a>
+        ))}
+      </nav>
+    )}
 
     {posts.length > 0 ? (
       <div class="grid">
@@ -57,7 +69,7 @@ const activeSlug = categorySlug(category);
             author={p.data.author}
             pubDate={p.data.pubDate}
             readingTime={readingTimeFor(p)}
-            category={p.data.category}
+            category={categoryLabelFor(p)}
             url={postUrl(p)}
             thumb={thumbFor(p)}
             thumbVariant={variantFor(p)}
@@ -67,8 +79,8 @@ const activeSlug = categorySlug(category);
       </div>
     ) : (
       <section class="empty">
-        <h2>아직 글이 없습니다.</h2>
-        <p>이 카테고리의 첫 글을 준비 중입니다. 곧 업데이트할게요.</p>
+        <h2>아직 공통 글이 없습니다.</h2>
+        <p>하위 카테고리를 선택해 제품별 글을 볼 수 있습니다.</p>
       </section>
     )}
   </div>
@@ -89,6 +101,7 @@ const activeSlug = categorySlug(category);
     padding-bottom: 2px;
   }
   .sub-nav::-webkit-scrollbar { display: none; }
+  .child-nav { flex-wrap: wrap; margin-top: -28px; gap: 6px; overflow: visible; }
   .sub-link {
     font-family: var(--font-mono);
     font-size: 11px;

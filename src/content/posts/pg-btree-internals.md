@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "btree", "index", "page-layout", "fill-factor", "page-split", "nbtree", "index-bloat", "vacuum", "pageinspect"]
 featured: false
 draft: false

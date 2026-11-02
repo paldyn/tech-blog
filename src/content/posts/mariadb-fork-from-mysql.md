@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "MariaDB"
 tags: ["MariaDB", "MySQL", "포크", "Galera", "시스템버저닝", "오픈소스", "RDBMS"]
 featured: false
 draft: false

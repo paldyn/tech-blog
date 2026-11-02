@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "TSQL", "CTE", "APPLY", "재귀CTE", "CROSSAPPLY", "OUTERAPPLY"]
 featured: false
 draft: false

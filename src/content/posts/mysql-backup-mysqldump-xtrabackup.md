@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "백업", "mysqldump", "XtraBackup", "PITR", "증분백업", "복구"]
 featured: false
 draft: false

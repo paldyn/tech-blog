@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "plsql", "trigger", "dml-trigger", "instead-of", "sequence", "identity-column", "synonym", "mutating-table", "before-after"]
 featured: false
 draft: false

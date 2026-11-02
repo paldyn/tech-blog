@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "explain", "explain-analyze", "query-plan", "cost", "buffers", "loops", "performance-tuning", "seq-scan", "index-scan"]
 featured: false
 draft: false

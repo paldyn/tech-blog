@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "mvcc", "undo", "scn", "cr-block", "itl", "concurrency", "consistent-read", "snapshot-too-old"]
 featured: false
 draft: false

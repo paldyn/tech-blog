@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "btree-index", "index", "leaf-block", "index-range-scan", "index-split", "clustering-factor", "rowid", "index-rebuild"]
 featured: false
 draft: false

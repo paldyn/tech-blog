@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 21
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "gap-lock", "next-key-lock", "phantom-read", "deadlock", "repeatable-read"]
 featured: false
 draft: false

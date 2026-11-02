@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "CUBRID"
 tags: ["CUBRID", "JDBC", "Java", "저장프로시저", "Spring", "연동"]
 featured: false
 draft: false

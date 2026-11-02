@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 32
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "optimizer-hints", "explain", "join-order", "index-hint", "set-var", "쿼리튜닝"]
 featured: false
 draft: false

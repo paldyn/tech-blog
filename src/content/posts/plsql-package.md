@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "plsql", "package", "package-spec", "package-body", "overloading", "initialization", "global-state", "information-hiding"]
 featured: false
 draft: false

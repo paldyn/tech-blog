@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "파일구조", "B-Tree", "페이지", "스토리지"]
 featured: false
 draft: false

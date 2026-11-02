@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "autovacuum", "vacuum", "freeze", "xid-wraparound", "bloat", "scale-factor", "pg-stat-user-tables", "storage-parameter"]
 featured: false
 draft: false

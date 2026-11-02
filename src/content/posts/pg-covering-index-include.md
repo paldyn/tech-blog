@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "covering-index", "include", "index-only-scan", "visibility-map", "vacuum", "btree", "performance"]
 featured: false
 draft: false

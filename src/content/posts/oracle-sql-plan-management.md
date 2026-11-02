@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "spm", "sql-plan-management", "baseline", "dbms-spm", "optimizer", "plan-stability", "evolution", "sql-profile"]
 featured: false
 draft: false

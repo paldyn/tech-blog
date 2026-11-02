@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "plsql", "block-structure", "declare", "begin", "exception", "if-elsif", "loop", "for-loop", "nested-block"]
 featured: false
 draft: false

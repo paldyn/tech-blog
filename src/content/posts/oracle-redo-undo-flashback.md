@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "redo", "undo", "flashback", "wal", "durability", "atomicity", "rollback", "read-consistency", "lgwr"]
 featured: false
 draft: false

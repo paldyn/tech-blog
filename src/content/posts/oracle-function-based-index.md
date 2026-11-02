@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "function-based-index", "fbi", "index", "query-rewrite", "upper", "expression-index", "cbo", "explain-plan"]
 featured: false
 draft: false

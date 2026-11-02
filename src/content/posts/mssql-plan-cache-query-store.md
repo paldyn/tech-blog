@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "플랜캐시", "QueryStore", "파라미터스니핑", "실행계획", "성능최적화"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 15
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "redo-log", "undo-log", "mvcc", "충돌복구", "WAL"]
 featured: false
 draft: false

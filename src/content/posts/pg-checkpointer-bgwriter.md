@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "checkpointer", "bgwriter", "checkpoint", "dirty-page", "io-storm", "checkpoint-completion-target", "pg-stat-bgwriter", "max-wal-size", "buffer-flush"]
 featured: false
 draft: false

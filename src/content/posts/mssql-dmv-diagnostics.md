@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "DMV", "성능진단", "블로킹", "대기통계", "누락인덱스"]
 featured: false
 draft: false

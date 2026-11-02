@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "파티셔닝", "RANGE", "LIST", "HASH", "파티션프루닝", "대용량테이블"]
 featured: false
 draft: false

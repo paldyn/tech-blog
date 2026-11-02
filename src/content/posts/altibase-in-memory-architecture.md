@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "Altibase"
 tags: ["Altibase", "인메모리DB", "IMDB", "국산DB", "메모리테이블", "HDB"]
 featured: false
 draft: false

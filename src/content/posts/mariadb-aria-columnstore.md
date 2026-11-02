@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "MariaDB"
 tags: ["MariaDB", "Aria", "ColumnStore", "스토리지엔진", "OLAP", "컬럼기반", "분석DB"]
 featured: false
 draft: false

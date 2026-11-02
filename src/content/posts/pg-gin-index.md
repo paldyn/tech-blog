@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "gin", "inverted-index", "full-text-search", "tsvector", "jsonb", "array", "fastupdate", "pending-list", "operator-class"]
 featured: false
 draft: false

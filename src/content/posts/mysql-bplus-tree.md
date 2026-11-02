@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 25
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "b-plus-tree", "index", "page-split", "페이지", "인덱스"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "logical-replication", "논리복제", "publication", "subscription", "버전업그레이드"]
 featured: false
 draft: false

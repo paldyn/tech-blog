@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "extended-statistics", "create-statistics", "dependencies", "ndistinct", "mcv", "query-planner", "multi-column"]
 featured: false
 draft: false

@@ -1,5 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import readingTime from 'reading-time';
+import { buildCategoryTree } from '../lib/categories';
+export { buildCategoryTree, categorySlug, categoryLabelFor } from '../lib/categories';
 
 export type Post = CollectionEntry<'posts'>;
 export type PostType = 'record' | 'knowledge';
@@ -9,10 +11,6 @@ function textSlug(name: string): string {
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\p{Letter}\p{Number}-]+/gu, '');
-}
-
-export function categorySlug(name: string): string {
-  return textSlug(name);
 }
 
 export function tagSlug(name: string): string {
@@ -37,14 +35,7 @@ export function categoryBadgeText(name: string): string {
 export type CategoryEntry = { name: string; slug: string; count: number };
 
 function buildCategoryEntries(posts: Post[]): CategoryEntry[] {
-  const counts = new Map<string, number>();
-  for (const p of posts) {
-    const c = p.data.category;
-    counts.set(c, (counts.get(c) ?? 0) + 1);
-  }
-  return Array.from(counts.entries())
-    .map(([name, count]) => ({ name, slug: categorySlug(name), count }))
-    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  return buildCategoryTree(posts).map(({ name, slug, count }) => ({ name, slug, count }));
 }
 
 export async function getCategories(): Promise<CategoryEntry[]> {
@@ -115,6 +106,7 @@ const CATEGORY_LOGOS: Record<string, string> = {
   JavaScript: '/assets/logos/javascript.jpeg',
   TypeScript: '/assets/logos/typescript.svg',
   Backend: '/assets/logos/backend.svg',
+  Infra: '/assets/logos/infra.svg',
   Nexacro: '/assets/logos/nexacro.png',
   Spring: '/assets/logos/spring.png',
   SQL: '/assets/logos/sql.png',

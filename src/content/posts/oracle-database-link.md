@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "database-link", "distributed-query", "2pc", "two-phase-commit", "synonym", "sqlnet", "distributed-transaction"]
 featured: false
 draft: false

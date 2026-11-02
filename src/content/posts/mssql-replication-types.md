@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "복제", "TransactionalReplication", "SnapshotReplication", "P2P", "HA"]
 featured: false
 draft: false

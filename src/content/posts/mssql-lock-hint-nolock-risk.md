@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "NOLOCK", "락힌트", "더티리드", "동시성", "RCSI", "UPDLOCK"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "function-overloading", "anyelement", "anyarray", "polymorphism", "variadic", "out-parameter", "inout", "default-parameter", "plpgsql"]
 featured: false
 draft: false

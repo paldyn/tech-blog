@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "TSQL", "변수", "제어흐름", "TRYCATCH", "WHILE", "오류처리"]
 featured: false
 draft: false

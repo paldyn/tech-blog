@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 39
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "json", "generated-column", "virtual-column", "json-index", "json-functions", "반정형데이터"]
 featured: false
 draft: false

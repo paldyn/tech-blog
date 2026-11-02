@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "range-types", "tstzrange", "daterange", "gist-index", "exclude-constraint", "reservation-system", "interval"]
 featured: false
 draft: false

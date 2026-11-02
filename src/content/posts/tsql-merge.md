@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "TSQL", "MERGE", "Upsert", "OUTPUT", "동기화", "데이터통합"]
 featured: false
 draft: false

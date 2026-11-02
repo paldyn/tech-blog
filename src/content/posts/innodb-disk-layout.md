@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 13
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "디스크레이아웃", "tablespace", "페이지", "extent", "segment"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "process-model", "backend-process", "work-mem", "shared-buffers", "local-memory", "pg_stat_activity", "fork", "connection-overhead", "maintenance_work_mem"]
 featured: false
 draft: false

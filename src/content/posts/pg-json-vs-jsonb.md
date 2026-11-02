@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "json", "jsonb", "jsonpath", "jsonb-operators", "gin-index", "semi-structured"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "스토리지엔진", "buffer-pool", "mvcc", "myisam"]
 featured: false
 draft: false

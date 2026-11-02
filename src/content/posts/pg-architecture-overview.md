@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "architecture", "postmaster", "backend-process", "shared-buffers", "wal", "bgwriter", "autovacuum", "checkpointer", "pg_stat_activity"]
 featured: false
 draft: false

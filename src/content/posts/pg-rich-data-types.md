@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "data-types", "uuid", "inet", "jsonb", "array", "numeric", "range", "type-system"]
 featured: false
 draft: false

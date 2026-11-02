@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 35
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "derived-merge", "subquery", "optimizer", "materialization", "explain", "쿼리최적화"]
 featured: false
 draft: false

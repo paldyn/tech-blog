@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getPublishedPosts, postUrl } from '../utils/posts';
+import { getPublishedPosts, postUrl, categoryLabelFor } from '../utils/posts';
 
 export const GET: APIRoute = async () => {
   const posts = await getPublishedPosts();
@@ -8,7 +8,8 @@ export const GET: APIRoute = async () => {
     description: post.data.description,
     type: post.data.type,
     typeLabel: post.data.type === 'knowledge' ? '지식' : '기록',
-    category: post.data.category,
+    category: categoryLabelFor(post),
+    subcategory: post.data.subcategory,
     tags: post.data.tags,
     author: post.data.author ?? 'PALDYN',
     pubDate: post.data.pubDate.toISOString().slice(0, 10),
@@ -17,7 +18,7 @@ export const GET: APIRoute = async () => {
       post.data.title,
       post.data.description,
       post.data.type === 'knowledge' ? '지식 knowledge' : '기록 record',
-      post.data.category,
+      categoryLabelFor(post),
       post.data.tags.join(' '),
       post.data.author ?? 'PALDYN',
     ].join(' ').toLowerCase(),

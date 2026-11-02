@@ -6,6 +6,7 @@ pubDate: "2026-05-31"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "DuckDB"
 tags: ["DuckDB", "임베디드", "OLAP", "Parquet", "벡터화실행", "FriendlySQL"]
 featured: false
 draft: false

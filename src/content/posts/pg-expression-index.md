@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "expression-index", "functional-index", "immutable", "lower", "date_part", "json-index", "index-performance"]
 featured: false
 draft: false

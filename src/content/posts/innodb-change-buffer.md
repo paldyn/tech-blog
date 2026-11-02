@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 18
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "change-buffer", "secondary-index", "랜덤I/O", "쓰기최적화"]
 featured: false
 draft: false

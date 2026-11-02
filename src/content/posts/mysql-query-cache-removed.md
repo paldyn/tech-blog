@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 12
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "쿼리캐시", "query-cache", "global-mutex", "redis", "mysql8"]
 featured: false
 draft: false

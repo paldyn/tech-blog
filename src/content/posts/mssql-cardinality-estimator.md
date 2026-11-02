@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "카디널리티추정기", "실행계획", "통계", "QueryStore", "CE150"]
 featured: false
 draft: false

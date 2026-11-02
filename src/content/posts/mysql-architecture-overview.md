@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "아키텍처", "innodb", "스토리지엔진", "서버레이어", "옵티마이저"]
 featured: false
 draft: false

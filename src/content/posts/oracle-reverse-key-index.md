@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "reverse-key-index", "rac", "index", "buffer-busy-waits", "gc-buffer-busy", "right-growing", "insert-contention", "cache-fusion"]
 featured: false
 draft: false

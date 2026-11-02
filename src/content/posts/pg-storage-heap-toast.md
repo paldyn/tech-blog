@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "heap", "toast", "page-layout", "ctid", "dead-tuple", "vacuum", "storage", "compression", "pglz"]
 featured: false
 draft: false

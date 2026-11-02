@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "extension", "create-extension", "pg-trgm", "pg-stat-statements", "pgcrypto", "hstore", "citext", "uuid-ossp", "tablefunc"]
 featured: false
 draft: false

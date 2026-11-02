@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "data-guard", "standby", "redo-transport", "switchover", "failover", "active-data-guard", "dgmgrl", "disaster-recovery", "high-availability"]
 featured: false
 draft: false

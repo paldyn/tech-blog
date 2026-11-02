@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 14
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "buffer-pool", "lru", "캐시", "성능튜닝"]
 featured: false
 draft: false

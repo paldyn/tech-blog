@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "jsonb", "gin-index", "jsonb-ops", "jsonb-path-ops", "expression-index", "full-text", "inverted-index"]
 featured: false
 draft: false

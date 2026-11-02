@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "plsql", "bulk-collect", "forall", "context-switch", "performance", "collections", "save-exceptions"]
 featured: false
 draft: false

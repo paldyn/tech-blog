@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "Tibero"
 tags: ["Tibero", "tbPSM", "PLSQL", "절차형SQL", "프로시저", "패키지", "트리거"]
 featured: false
 draft: false

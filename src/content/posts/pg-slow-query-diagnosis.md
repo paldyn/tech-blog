@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "slow-query", "explain-analyze", "pg-stat-statements", "성능진단", "인덱스"]
 featured: false
 draft: false

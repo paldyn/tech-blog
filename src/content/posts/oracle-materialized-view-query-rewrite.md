@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "materialized-view", "query-rewrite", "fast-refresh", "mv-log", "on-commit", "performance", "cbo"]
 featured: false
 draft: false

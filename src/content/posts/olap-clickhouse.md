@@ -6,6 +6,7 @@ pubDate: "2026-05-31"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "ClickHouse"
 tags: ["ClickHouse", "MergeTree", "OLAP", "열지향", "실시간분석", "SparseIndex"]
 featured: false
 draft: false

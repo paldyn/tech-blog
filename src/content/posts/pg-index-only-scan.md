@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "index-only-scan", "visibility-map", "vacuum", "covering-index", "btree", "heap-fetch", "mvcc"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 26
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "composite-index", "leftmost-prefix", "explain", "index-design", "복합인덱스"]
 featured: false
 draft: false

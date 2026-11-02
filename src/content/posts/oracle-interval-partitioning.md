@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "partitioning", "interval-partitioning", "range-partition", "auto-partition", "numtoyminterval", "partition-management"]
 featured: false
 draft: false

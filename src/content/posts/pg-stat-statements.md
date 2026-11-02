@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "pg-stat-statements", "slow-query", "performance", "monitoring", "query-statistics", "shared-blks", "mean-exec-time", "auto-explain"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 30
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "fulltext-index", "full-text-search", "inverted-index", "boolean-mode", "mecab", "전문검색"]
 featured: false
 draft: false

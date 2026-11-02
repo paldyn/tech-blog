@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "Altibase"
 tags: ["Altibase", "HybridDB", "티어링", "MVCC", "체크포인트", "메모리DB"]
 featured: false
 draft: false

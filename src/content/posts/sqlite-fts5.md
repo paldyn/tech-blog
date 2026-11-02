@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "FTS5", "전문검색", "역인덱스", "BM25", "한국어검색"]
 featured: false
 draft: false

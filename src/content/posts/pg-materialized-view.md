@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "materialized-view", "구체화뷰", "refresh", "성능최적화", "인덱스"]
 featured: false
 draft: false

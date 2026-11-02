@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 17
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "adaptive-hash-index", "AHI", "해시인덱스", "성능최적화"]
 featured: false
 draft: false

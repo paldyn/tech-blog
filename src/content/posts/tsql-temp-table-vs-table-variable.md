@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "TSQL", "임시테이블", "테이블변수", "tempdb", "성능최적화"]
 featured: false
 draft: false

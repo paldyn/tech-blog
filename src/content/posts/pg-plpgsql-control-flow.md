@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "plpgsql", "control-flow", "if-elsif", "loop", "for-loop", "exception", "cursor", "raise", "error-handling"]
 featured: false
 draft: false

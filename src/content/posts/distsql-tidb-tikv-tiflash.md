@@ -6,6 +6,7 @@ pubDate: "2026-05-27"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "TiDB"
 tags: ["TiDB", "TiKV", "TiFlash", "HTAP", "분산SQL", "Raft", "NewSQL"]
 featured: false
 draft: false

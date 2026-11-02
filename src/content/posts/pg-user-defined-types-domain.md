@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "domain", "enum", "composite-type", "create-type", "create-domain", "type-system", "check-constraint"]
 featured: false
 draft: false

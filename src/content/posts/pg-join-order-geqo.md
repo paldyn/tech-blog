@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "join-order", "geqo", "dynamic-programming", "join-collapse-limit", "pg-hint-plan", "query-planner", "optimization"]
 featured: false
 draft: false

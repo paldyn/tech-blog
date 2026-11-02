@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 23
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "autocommit", "transaction", "savepoint", "ddl", "commit", "rollback"]
 featured: false
 draft: false

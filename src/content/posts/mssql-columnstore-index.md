@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "컬럼스토어", "ColumnstoreIndex", "OLAP", "배치모드", "압축", "분석"]
 featured: false
 draft: false

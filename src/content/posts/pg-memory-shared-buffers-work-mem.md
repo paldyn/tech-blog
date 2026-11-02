@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "shared-buffers", "work-mem", "effective-cache-size", "clock-sweep", "pg-buffercache", "double-buffering", "temp-buffers", "maintenance-work-mem", "memory-tuning"]
 featured: false
 draft: false

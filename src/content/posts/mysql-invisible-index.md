@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 28
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "invisible-index", "index-management", "optimizer", "인덱스관리", "mysql8"]
 featured: false
 draft: false

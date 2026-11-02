@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "partitioning", "partition-wise-join", "parallel", "hash-join", "performance", "execution-plan", "pwj"]
 featured: false
 draft: false

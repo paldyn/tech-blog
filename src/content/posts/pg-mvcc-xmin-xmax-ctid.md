@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "mvcc", "xmin", "xmax", "ctid", "snapshot", "visibility", "transaction-id", "heap-tuple"]
 featured: false
 draft: false

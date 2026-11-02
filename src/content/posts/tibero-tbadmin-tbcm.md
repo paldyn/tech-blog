@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "Tibero"
 tags: ["Tibero", "tbAdmin", "tbcm", "DB관리", "모니터링", "DBA"]
 featured: false
 draft: false

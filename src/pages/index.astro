@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
 import SideItem from '../components/SideItem.astro';
 import PostCard from '../components/PostCard.astro';
-import { getPublishedPosts, readingTimeFor, thumbFor, variantFor, postUrl, logoFor } from '../utils/posts';
+import { getPublishedPosts, readingTimeFor, thumbFor, variantFor, postUrl, logoFor, categoryLabelFor } from '../utils/posts';
 
 const posts = await getPublishedPosts();
 const featured = posts.find(p => p.data.featured) ?? posts[0];
@@ -37,7 +37,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         pubDate={featured.data.pubDate}
         readingTime={readingTimeFor(featured)}
         url={postUrl(featured)}
-        category={featured.data.category}
+        category={categoryLabelFor(featured)}
         thumb={thumbFor(featured)}
         thumbVariant={variantFor(featured)}
         logo={logoFor(featured)}
@@ -46,7 +46,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         {sidePosts.map(p => (
           <SideItem
             title={p.data.title}
-            category={p.data.category}
+            category={categoryLabelFor(p)}
             pubDate={p.data.pubDate}
             readingTime={readingTimeFor(p)}
             url={postUrl(p)}
@@ -77,7 +77,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             author={p.data.author}
             pubDate={p.data.pubDate}
             readingTime={readingTimeFor(p)}
-            category={p.data.category}
+            category={categoryLabelFor(p)}
             url={postUrl(p)}
             thumb={thumbFor(p)}
             thumbVariant={variantFor(p)}

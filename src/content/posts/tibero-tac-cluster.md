@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "Tibero"
 tags: ["Tibero", "TAC", "클러스터", "HighAvailability", "CacheFusion", "GCS", "GES"]
 featured: false
 draft: false

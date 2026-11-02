@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "pgbackrest", "barman", "backup", "pitr", "백업솔루션"]
 featured: false
 draft: false

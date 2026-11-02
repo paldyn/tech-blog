@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 27
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "icp", "index-condition-pushdown", "optimizer", "explain", "인덱스최적화"]
 featured: false
 draft: false

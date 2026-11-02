@@ -13,7 +13,8 @@ const posts = defineCollection({
     type: z.enum(['record', 'knowledge']).default('record'),
     // 원래 type 외에 추가로 노출할 목록. 예) type: record + alsoIn: ["knowledge"]
     alsoIn: z.array(z.enum(['record', 'knowledge'])).default([]),
-    category: z.string().min(1),
+    category: z.string().trim().min(1),
+    subcategory: z.string().trim().min(1).optional(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),

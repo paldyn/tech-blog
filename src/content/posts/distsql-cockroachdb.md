@@ -6,6 +6,7 @@ pubDate: "2026-05-27"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "CockroachDB"
 tags: ["CockroachDB", "분산SQL", "Raft", "HLC", "멀티리전", "Serializable"]
 featured: false
 draft: false

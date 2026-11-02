@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "한계", "비교", "PostgreSQL", "MySQL", "선택기준"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "spgist", "brin", "block-range-index", "quadtree", "kd-tree", "timeseries", "inet", "pages-per-range", "index-size"]
 featured: false
 draft: false

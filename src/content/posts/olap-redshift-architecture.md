@@ -6,6 +6,7 @@ pubDate: "2026-05-31"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "Redshift"
 tags: ["Redshift", "MPP", "데이터웨어하우스", "DISTSTYLE", "SORTKEY", "열지향", "AWS"]
 featured: false
 draft: false

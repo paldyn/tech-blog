@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "gist", "r-tree", "spatial-index", "range-type", "postgis", "pg-trgm", "trigram", "operator-class", "index"]
 featured: false
 draft: false

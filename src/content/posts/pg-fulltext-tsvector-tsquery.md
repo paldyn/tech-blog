@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "full-text-search", "tsvector", "tsquery", "gin-index", "ts-rank", "ts-headline", "websearch-to-tsquery", "korean-search", "simple-config"]
 featured: false
 draft: false

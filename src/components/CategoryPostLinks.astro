@@ -1,0 +1,31 @@
+---
+import { postUrl, type Post } from '../utils/posts';
+
+interface Props { posts: Post[]; anchor: string; }
+const { posts, anchor } = Astro.props;
+const newWindowMs = 1000 * 60 * 60 * 24 * 30;
+const dotDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
+---
+
+<ul class="posts">
+  {posts.map((post, index) => (
+    <li id={index === posts.length - 1 ? `first-${anchor}` : undefined}>
+      <a href={postUrl(post)}>{post.data.title}</a>
+      {Date.now() - post.data.pubDate.getTime() <= newWindowMs && <span class="badge">NEW</span>}
+      <time datetime={post.data.pubDate.toISOString()}>{dotDate(post.data.pubDate)}</time>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  li { display: flex; align-items: center; gap: 10px; min-height: 28px; scroll-margin-top: 90px; }
+  time { margin-left: auto; flex-shrink: 0; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); white-space: nowrap; }
+  a { flex: 1; min-width: 0; color: var(--text); text-decoration: none; font-size: 1.05rem; line-height: 1.4; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .badge { background: #ff6400; color: #fff; font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em; line-height: 1; padding: 5px 7px 4px; border-radius: 3px; flex-shrink: 0; }
+  @media (max-width: 640px) {
+    li { flex-wrap: wrap; align-items: flex-start; gap: 6px 8px; border-bottom: 1px dashed var(--border); padding-bottom: 10px; }
+    a { flex-basis: 100%; font-size: 1rem; }
+  }
+</style>

@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "trigger", "before-trigger", "after-trigger", "instead-of", "row-level", "statement-level", "audit-log", "constraint-trigger", "plpgsql"]
 featured: false
 draft: false

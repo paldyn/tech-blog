@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "plsql", "variables", "cursor", "explicit-cursor", "rowtype", "type", "exception", "raise-application-error", "pragma-exception-init"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "ProxySQL", "MySQL Router", "읽기쓰기분리", "커넥션풀링", "고가용성", "로드밸런싱"]
 featured: false
 draft: false

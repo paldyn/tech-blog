@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "복구모델", "PITR", "백업복구", "로그체인", "Full복구"]
 featured: false
 draft: false

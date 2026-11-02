@@ -6,6 +6,7 @@ pubDate: "2026-05-14"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "create-function", "plpgsql", "sql-function", "returns-table", "setof", "immutable", "strict", "dollar-quoting"]
 featured: false
 draft: false

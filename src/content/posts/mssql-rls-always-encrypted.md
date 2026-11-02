@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "RLS", "AlwaysEncrypted", "보안", "멀티테넌트", "GDPR"]
 featured: false
 draft: false

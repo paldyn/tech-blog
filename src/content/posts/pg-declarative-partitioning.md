@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "partitioning", "range-partition", "list-partition", "hash-partition", "partition-pruning", "detach-partition", "sliding-window", "pg-partman"]
 featured: false
 draft: false

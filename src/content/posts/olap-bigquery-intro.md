@@ -6,6 +6,7 @@ pubDate: "2026-05-31"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "BigQuery"
 tags: ["BigQuery", "서버리스", "데이터웨어하우스", "Dremel", "Colossus", "파티션", "클러스터링"]
 featured: false
 draft: false

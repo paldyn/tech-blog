@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "SQLOS", "스케줄러", "Worker", "Task", "대기통계", "DMV"]
 featured: false
 draft: false

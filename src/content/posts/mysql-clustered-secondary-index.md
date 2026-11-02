@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 24
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "clustered-index", "secondary-index", "primary-key", "covering-index", "b-tree"]
 featured: false
 draft: false

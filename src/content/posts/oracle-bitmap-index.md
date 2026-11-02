@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "bitmap-index", "index", "dw", "olap", "cardinality", "bitmap-and", "bitmap-or", "oltp-danger", "bitmap-join-index"]
 featured: false
 draft: false

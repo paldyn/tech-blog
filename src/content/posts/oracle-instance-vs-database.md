@@ -6,6 +6,7 @@ pubDate: "2026-05-07"
 archiveOrder: 8
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "instance", "database", "sga", "pga", "startup", "listener", "sid", "architecture"]
 featured: false
 draft: false

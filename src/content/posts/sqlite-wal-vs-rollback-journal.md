@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "WAL", "트랜잭션", "저널", "동시성", "체크포인트"]
 featured: false
 draft: false

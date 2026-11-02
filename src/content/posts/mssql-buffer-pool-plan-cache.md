@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "버퍼풀", "플랜캐시", "메모리관리", "파라미터스니핑", "Checkpoint"]
 featured: false
 draft: false

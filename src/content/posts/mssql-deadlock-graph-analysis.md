@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "데드락", "교착상태", "DeadlockGraph", "XEvent", "락", "성능"]
 featured: false
 draft: false

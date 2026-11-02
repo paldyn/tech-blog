@@ -6,6 +6,7 @@ pubDate: "2026-05-16"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "streaming-replication", "고가용성", "wal", "hot-standby", "replication-slot"]
 featured: false
 draft: false

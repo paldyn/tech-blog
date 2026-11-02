@@ -6,6 +6,7 @@ pubDate: "2026-05-10"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "partitioning", "range-partition", "list-partition", "hash-partition", "partition-pruning", "composite-partition", "performance"]
 featured: false
 draft: false

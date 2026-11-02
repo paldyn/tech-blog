@@ -6,6 +6,7 @@ pubDate: "2026-05-24"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "백업복원", "PITR", "재해복구", "RPO", "RTO"]
 featured: false
 draft: false

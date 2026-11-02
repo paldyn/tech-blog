@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 22
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "deadlock", "show-engine-innodb-status", "lock", "트랜잭션"]
 featured: false
 draft: false

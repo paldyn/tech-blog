@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "동시성", "잠금", "WAL", "멀티스레드", "BEGIN IMMEDIATE"]
 featured: false
 draft: false

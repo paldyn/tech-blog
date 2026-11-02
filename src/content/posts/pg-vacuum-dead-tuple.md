@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "vacuum", "dead-tuple", "autovacuum", "bloat", "xid-wraparound", "pg-repack", "heap-page", "visibility-map"]
 featured: false
 draft: false

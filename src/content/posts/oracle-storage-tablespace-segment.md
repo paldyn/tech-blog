@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "tablespace", "segment", "extent", "data-block", "storage", "lmt", "assm", "undo", "temp"]
 featured: false
 draft: false

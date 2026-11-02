@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 19
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "innodb", "mvcc", "readview", "undo-log", "격리수준", "동시성"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-07"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "background-process", "dbwr", "lgwr", "ckpt", "smon", "pmon", "wal", "instance-recovery", "commit"]
 featured: false
 draft: false

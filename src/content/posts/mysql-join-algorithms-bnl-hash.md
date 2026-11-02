@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 34
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "join-algorithms", "nested-loop-join", "hash-join", "bnl", "join-buffer", "explain", "조인알고리즘"]
 featured: false
 draft: false

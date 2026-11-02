@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["MySQL", "Performance Schema", "sys스키마", "슬로우쿼리", "성능진단", "락대기"]
 featured: false
 draft: false

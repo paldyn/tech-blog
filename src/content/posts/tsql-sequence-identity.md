@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "TSQL", "IDENTITY", "SEQUENCE", "자동증가", "PK", "채번"]
 featured: false
 draft: false

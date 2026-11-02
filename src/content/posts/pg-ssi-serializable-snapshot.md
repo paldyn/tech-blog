@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "serializable", "ssi", "write-skew", "predicate-lock", "siread", "rw-anti-dependency", "isolation", "concurrency"]
 featured: false
 draft: false

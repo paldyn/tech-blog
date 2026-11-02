@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 37
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "trigger", "before-after", "old-new", "audit-log", "signal", "무결성보호"]
 featured: false
 draft: false

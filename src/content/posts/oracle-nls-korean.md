@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "nls", "charset", "al32utf8", "ko16mswin949", "korean", "nls_lang", "varchar2", "lengthb", "unicode"]
 featured: false
 draft: false

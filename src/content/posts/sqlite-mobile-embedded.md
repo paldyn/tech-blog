@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "Android", "iOS", "IoT", "WebAssembly", "오프라인", "모바일"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-20"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "MariaDB"
 tags: ["MariaDB", "Galera", "클러스터", "다중Primary", "고가용성", "wsrep", "동기복제"]
 featured: false
 draft: false

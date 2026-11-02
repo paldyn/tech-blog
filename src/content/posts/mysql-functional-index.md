@@ -6,6 +6,7 @@ pubDate: "2026-05-18"
 archiveOrder: 29
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "functional-index", "expression-index", "generated-column", "json", "인덱스", "mysql8"]
 featured: false
 draft: false

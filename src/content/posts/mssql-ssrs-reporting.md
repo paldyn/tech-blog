@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQL Server", "SSRS", "보고서", "RDL", "구독", "BI", "파라미터"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-25"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "SQLite"
 tags: ["SQLite", "임베디드DB", "라이브러리", "C API", "Python", "모바일"]
 featured: false
 draft: false

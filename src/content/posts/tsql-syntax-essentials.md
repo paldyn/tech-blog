@@ -6,6 +6,7 @@ pubDate: "2026-05-21"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "TSQL", "문법", "배치처리", "IDENTITY", "TOP", "시스템함수"]
 featured: false
 draft: false

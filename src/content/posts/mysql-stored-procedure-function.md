@@ -6,6 +6,7 @@ pubDate: "2026-05-19"
 archiveOrder: 36
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "stored-procedure", "stored-function", "delimiter", "cursor", "exception-handler", "서버사이드로직"]
 featured: false
 draft: false

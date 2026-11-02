@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 1
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "awr", "ash", "performance", "mmon", "snapshot", "wait-event", "addm", "sysaux", "dba_hist"]
 featured: false
 draft: false

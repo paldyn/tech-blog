@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "iot", "index-organized-table", "organization-index", "urowid", "overflow", "secondary-index", "heap-table"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "scn", "read-consistency", "cr-block", "undo", "mvcc", "snapshot", "consistent-read"]
 featured: false
 draft: false

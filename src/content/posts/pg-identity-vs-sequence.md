@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "identity", "sequence", "serial", "generated-always", "primary-key", "auto-increment", "bigserial"]
 featured: false
 draft: false

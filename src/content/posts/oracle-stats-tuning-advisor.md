@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "optimizer-statistics", "cbo", "dbms_stats", "sql-tuning-advisor", "sql-access-advisor", "sql-profile", "histogram", "stale-stats", "tuning-pack"]
 featured: false
 draft: false

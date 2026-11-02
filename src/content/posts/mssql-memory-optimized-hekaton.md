@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 10
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "InMemoryOLTP", "Hekaton", "메모리최적화", "네이티브컴파일", "고성능"]
 featured: false
 draft: false

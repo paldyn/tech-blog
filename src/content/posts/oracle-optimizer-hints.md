@@ -6,6 +6,7 @@ pubDate: "2026-05-09"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "optimizer-hints", "cbo", "full", "index", "leading", "use-nl", "use-hash", "parallel", "explain-plan"]
 featured: false
 draft: false

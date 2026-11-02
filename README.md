@@ -24,6 +24,7 @@ pubDate: 2026-04-18
 archiveOrder: 1           # 같은 날짜 안에서 보여줄 순서 (선택)
 type: "record"         # "record" | "knowledge"
 category: "Backend"      # 자유 입력 (예: Backend, Infra, Platform, Data-Infra ...)
+subcategory: "MySQL"     # 하위 카테고리 (선택, 예: category: SQL + subcategory: MySQL)
 tags: ["ts", "node"]
 featured: false          # 홈 히어로로 띄울지
 draft: false             # true면 숨김
@@ -40,6 +41,11 @@ heroGradient: "..."      # featured 글의 히어로 배경 (선택)
 - 기록형 카테고리/태그 → `/records/categories`, `/records/tags`
 - 지식형 카테고리/태그 → `/knowledge/categories`, `/knowledge/tags`
 - 통합 아카이브(기록+지식) → `/posts`
+
+카테고리에 `subcategory`를 지정하면 상위 카테고리 아래 별도 목록으로 표시됩니다.
+예를 들어 SQL 공통 글은 `category: "SQL"`만, MySQL 전용 글은 `subcategory: "MySQL"`도 지정합니다.
+`/categories/sql/`은 공통 글, `/categories/sql/mysql/`은 MySQL 글을 보여줍니다.
+기록·지식 카테고리 페이지에도 같은 계층이 적용됩니다. 상위 발행 수는 하위 글을 포함합니다.
 
 ### 글 작성 필수 규칙
 

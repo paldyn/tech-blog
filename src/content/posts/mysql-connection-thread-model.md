@@ -6,6 +6,7 @@ pubDate: "2026-05-17"
 archiveOrder: 11
 type: "knowledge"
 category: "SQL"
+subcategory: "MySQL"
 tags: ["mysql", "커넥션", "스레드모델", "thread-per-connection", "커넥션풀", "max-connections"]
 featured: false
 draft: false

@@ -6,6 +6,7 @@ pubDate: "2026-05-08"
 archiveOrder: 5
 type: "knowledge"
 category: "SQL"
+subcategory: "Oracle"
 tags: ["oracle", "isolation-level", "read-committed", "serializable", "mvcc", "scn", "ora-08177", "phantom-read", "dirty-read"]
 featured: false
 draft: false

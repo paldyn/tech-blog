@@ -6,6 +6,7 @@ pubDate: "2026-05-22"
 archiveOrder: 6
 type: "knowledge"
 category: "SQL"
+subcategory: "SQL Server"
 tags: ["SQLServer", "인덱스", "클러스터형", "비클러스터형", "KeyLookup", "BTree", "성능"]
 featured: false
 draft: false

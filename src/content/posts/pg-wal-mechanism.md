@@ -6,6 +6,7 @@ pubDate: "2026-05-11"
 archiveOrder: 9
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "wal", "write-ahead-log", "lsn", "synchronous-commit", "crash-recovery", "pitr", "wal-level", "archive-mode", "replication"]
 featured: false
 draft: false

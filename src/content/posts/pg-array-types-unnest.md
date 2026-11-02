@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 2
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "array", "unnest", "gin-index", "array-agg", "data-types", "text-array"]
 featured: false
 draft: false

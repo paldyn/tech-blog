@@ -6,6 +6,7 @@ pubDate: "2026-05-15"
 archiveOrder: 7
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "postgis", "spatial", "geometry", "geography", "gist-index", "st-dwithin", "st-contains", "wkt", "geojson", "srid"]
 featured: false
 draft: false

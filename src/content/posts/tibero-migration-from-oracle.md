@@ -6,6 +6,7 @@ pubDate: "2026-05-26"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "Tibero"
 tags: ["Tibero", "Oracle", "마이그레이션", "DB전환", "TMIG", "tbLoader"]
 featured: false
 draft: false

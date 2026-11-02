@@ -6,6 +6,7 @@ pubDate: "2026-05-13"
 archiveOrder: 4
 type: "knowledge"
 category: "SQL"
+subcategory: "PostgreSQL"
 tags: ["postgresql", "locks", "pg-locks", "deadlock", "table-lock", "row-lock", "advisory-lock", "lock-timeout", "concurrency", "pg-stat-activity"]
 featured: false
 draft: false

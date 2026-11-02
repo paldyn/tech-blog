@@ -6,6 +6,7 @@ pubDate: "2026-05-31"
 archiveOrder: 3
 type: "knowledge"
 category: "SQL"
+subcategory: "Snowflake"
 tags: ["Snowflake", "데이터웨어하우스", "VirtualWarehouse", "MicroPartition", "TimeTravel", "ZeroCopyClone"]
 featured: false
 draft: false
